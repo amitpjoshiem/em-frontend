@@ -1,7 +1,42 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import "./registerServiceWorker";
-import router from "./router";
-import store from "./store";
+import { createApp } from 'vue'
+import App from './App.vue'
+import './registerServiceWorker'
+import router from './router'
+import store from './store'
 
-createApp(App).use(store).use(router).mount("#app");
+import './styles/index.css'
+
+import {
+  ElButton,
+  ElSelect,
+  ElContainer,
+  ElHeader,
+  ElAside,
+  ElMain,
+  ElFooter,
+  ElRow,
+  ElCol,
+} from 'element-plus'
+
+const components = [
+  ElAside,
+  ElButton,
+  ElSelect,
+  ElHeader,
+  ElMain,
+  ElContainer,
+  ElFooter,
+  ElRow,
+  ElCol,
+]
+
+const app = createApp(App)
+
+app.use(router)
+app.use(store)
+
+components.forEach((component) => {
+  app.component(component.name, component)
+})
+
+app.mount('#app')

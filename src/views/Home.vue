@@ -1,18 +1,38 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="flex">
+    <SideBar />
+    <div class="flex flex-col w-full">
+      <Header />
+      <!-- <Dashboard /> -->
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import SideBar from '@/components/SideBar.vue'
+import Header from '@/components/Header.vue'
+// import Dashboard from '@/components/Dashboard.vue'
+
+import { mapState } from 'vuex'
 
 export default {
-  name: "Home",
+  name: 'Home',
+
   components: {
-    HelloWorld,
+    SideBar,
+    Header,
+    // Dashboard,
   },
-};
+
+  data() {
+    return {
+      // isLogin: true,
+    }
+  },
+
+  computed: mapState({
+    isAuth: (state) => state.auth.isAuth,
+  }),
+}
 </script>

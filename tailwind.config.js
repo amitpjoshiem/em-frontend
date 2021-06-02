@@ -1,0 +1,27 @@
+module.exports = {
+  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  darkMode: false,
+  theme: {
+    extend: {
+      colors: {
+        transparent: 'transparent',
+        current: 'currentColor',
+        main: '#424450',
+        gray03: '#AAB5CF',
+        lightgray03: '#E2E9F4',
+        'widget-bg': '#F2F5FA',
+        primary: '#042D52',
+      },
+      fontFamily: {
+        sans: ['Eina01', 'Comic Sans', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+      },
+    },
+    // fontFamily: {
+    //   body: ['Eina01', 'Comic Sans', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+    // },
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+}

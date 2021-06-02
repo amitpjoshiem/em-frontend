@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Eina01';
+  src: url('~@/assets/fonts/Eina01-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Eina04';
+  src: url('~@/assets/fonts/Eina04-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
