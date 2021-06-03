@@ -1,4 +1,4 @@
-# swd-pwa
+# swd-frontend
 
 ## Project setup
 ```
