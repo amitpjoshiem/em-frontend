@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import Flex from '../views/Flex.vue'
+import Home from '@/layouts/Home.vue'
+import Login from '@/layouts/Login.vue'
+import Flex from '@/views/Flex.vue'
 
 const routes = [
   {
@@ -21,9 +21,35 @@ const routes = [
 
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: Login,
     meta: { publicRoute: true },
+    children: [
+      {
+        path: '',
+        name: 'loginform',
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ '../components/LoginForm.vue'
+          ),
+      },
+      {
+        path: 'forgot',
+        name: 'forgotpassword',
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ '../components/ForgotPassword.vue'
+          ),
+      },
+      {
+        path: 'newpassword',
+        name: 'newpassword',
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ '../components/NewPassword.vue'
+          ),
+      },
+    ],
   },
   {
     path: '/flex',
