@@ -16,6 +16,7 @@ import {
   ElFooter,
   ElRow,
   ElCol,
+  ElInput,
 } from 'element-plus'
 
 const components = [
@@ -28,6 +29,7 @@ const components = [
   ElFooter,
   ElRow,
   ElCol,
+  ElInput,
 ]
 
 const app = createApp(App)

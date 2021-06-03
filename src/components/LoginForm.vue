@@ -1,24 +1,24 @@
 <template>
-  <div class="flex w-full items-center justify-center">
-    <div class="max-w-sm p-6 m-auto bg-widget-bg rounded-md">
-      <div class="flex items-center justify-center p-4">
+  <div class="flex flex-col w-full items-center justify-center">
+    <div class="form max-w-sm p-6 bg-widget-bg rounded-md">
+      <div class="flex items-center justify-center p-2">
         <div
           class="
             rounded-full
-            h-20
-            w-20
+            h-10
+            w-10
             flex
             items-center
             justify-center
             bg-lightgray03
           "
         >
-          <img src="../assets/img/vector.png" />
+          <img class="h-5 w-5" src="../assets/img/login.png" />
         </div>
       </div>
 
       <h1 class="text-center text-main font-semibold text-2xl">Login</h1>
-      <h1 class="text-center text-gray03">
+      <h1 class="text-center text-gray03 text-xss">
         Please enter you email and password
       </h1>
 
@@ -55,6 +55,17 @@
         </div>
       </form>
     </div>
+    <div class="flex justify-between w-full pt-3 max-w-sm rounded-md">
+      <span class="text-xss text-gray03 cursor-pointer">
+        <router-link :to="{ name: 'forgotpassword' }">
+          Forgot your password?
+        </router-link>
+      </span>
+      <div class="flex items-center">
+        <span class="text-link text-xss cursor-pointer">Reset password </span>
+        <img class="w-2.5 h2.5 m-1 ml-1" src="../assets/img/resetpass.png" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -73,7 +84,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-form {
+.form {
   width: 370px;
 }
 </style>
