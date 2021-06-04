@@ -1,22 +1,24 @@
 <template>
   <el-main>
-    <div class="grid grid-rows-3 grid-flow-col gap-4">
+    <div class="grid grid-cols-3 grid-flow-col gap-4">
       <div class="row-span-3 col-span-2 border border-red-500">
         <h3>Dashboard</h3>
       </div>
-      <div class="col-span-1 border border-red-500">2</div>
-      <div class="row-span-2 col-span-1 border border-red-500">3</div>
+      <PipeLine />
+      <LastActivity />
     </div>
   </el-main>
 </template>
 
 <script>
-// import Button from '@/components/Button/Button.vue'
+import PipeLine from '@/components/Dashboard/PipeLine.vue'
+import LastActivity from '@/components/Dashboard/LastActivity.vue'
 
 export default {
   name: 'Dashboard',
   components: {
-    // Button,
+    PipeLine,
+    LastActivity,
   },
 }
 </script>

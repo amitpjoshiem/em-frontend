@@ -13,6 +13,8 @@ module.exports = {
         'widget-bg': '#F2F5FA',
         primary: '#042D52',
         link: '#66B6FF',
+        activity: '#66B6FF',
+        'activity-item': '#A9B1CC',
       },
       fontFamily: {
         sans: [
@@ -26,6 +28,7 @@ module.exports = {
       },
       fontSize: {
         xss: '13px',
+        smm: '15px',
       },
     },
     // fontFamily: {
