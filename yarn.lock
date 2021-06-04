@@ -951,6 +951,11 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+"@j-t-mcc/vue3-chartjs@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@j-t-mcc/vue3-chartjs/-/vue3-chartjs-1.1.2.tgz#aa1ee95f2ecb9874e3d7af22d011519de7490d2b"
+  integrity sha512-O946UItfii751svX9HITqgyS45cR2JOArao7tYhUv7SUqcZs3AJtW8/mV6Nv7tvfuozEkWblyzlhw/DP+MD8Jw==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -2557,6 +2562,11 @@ chardet@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
+
+chart.js@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.3.2.tgz#667f3a0b6371b9719d8949c04a5bcbaec0d8c615"
+  integrity sha512-H0hSO7xqTIrwxoACqnSoNromEMfXvfuVnrbuSt2TuXfBDDofbnto4zuZlRtRvC73/b37q3wGAWZyUU41QPvNbA==
 
 check-types@^8.0.3:
   version "8.0.3"

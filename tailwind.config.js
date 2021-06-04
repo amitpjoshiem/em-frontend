@@ -15,6 +15,7 @@ module.exports = {
         link: '#66B6FF',
         activity: '#66B6FF',
         'activity-item': '#A9B1CC',
+        'color-border': '#EBF0FA',
       },
       fontFamily: {
         sans: [
