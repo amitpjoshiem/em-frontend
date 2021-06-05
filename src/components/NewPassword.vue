@@ -47,16 +47,8 @@
 </template>
 
 <script>
-import Input from '@/components/Input/Input.vue'
-import Button from '@/components/Button/Button.vue'
-
 export default {
   name: 'NewPassword',
-  components: {
-    Input,
-    Button,
-  },
-  setup() {},
 }
 </script>
 

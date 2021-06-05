@@ -16,6 +16,8 @@ module.exports = {
         activity: '#66B6FF',
         'activity-item': '#A9B1CC',
         'color-border': '#EBF0FA',
+        'input-border': '#D4DDEB',
+        'color-grey': '#EBF0FA',
       },
       fontFamily: {
         sans: [
