@@ -11,13 +11,14 @@
       pr-5
     "
   >
-    <span class="text-smm text-main">Last Activity</span>
+    <p class="text-smm text-main pb-2.5">Last Activity</p>
 
     <LastActivityItem
       v-for="(item, index) in lastActivity"
       :key="index"
       :item="item"
       :index="index"
+      class="active-item"
     />
   </div>
 </template>
@@ -46,3 +47,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.active-item:not(:first-of-type) {
+  border-top: 1px solid #ebf0fa;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 20px;
+}
+</style>

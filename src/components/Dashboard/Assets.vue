@@ -1,5 +1,7 @@
 <template>
-  <IncomeChart />
+  <div class="row-span-3 col-span-2 border border-color-grey p-5 rounded-xl">
+    <IncomeChart />
+  </div>
 </template>
 
 <script>
