@@ -18,6 +18,8 @@ module.exports = {
         'color-border': '#EBF0FA',
         'input-border': '#D4DDEB',
         'color-grey': '#EBF0FA',
+        'widget-border': '#E7EDFB',
+        'color-green': '#7BD7BD',
       },
       fontFamily: {
         sans: [
@@ -30,8 +32,14 @@ module.exports = {
         ],
       },
       fontSize: {
+        smallx: '9px',
+        small: '10px',
         xss: '13px',
         smm: '15px',
+        xll: '22px',
+      },
+      borderRadius: {
+        large: '10px',
       },
     },
     // fontFamily: {

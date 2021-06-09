@@ -4,6 +4,8 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
+import InlineSvg from 'vue-inline-svg'
+
 // Global Component
 import Input from '@/components/Input/Input.vue'
 import Button from '@/components/Button/Button.vue'
@@ -44,6 +46,7 @@ app.use(store)
 // Global Component
 app.component('Input', Input)
 app.component('Button', Button)
+app.component('InlineSvg', InlineSvg)
 
 components.forEach((component) => {
   app.component(component.name, component)
