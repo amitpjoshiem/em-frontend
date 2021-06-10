@@ -21,7 +21,7 @@
           type="button"
           class="p-1 focus:outline-none focus:shadow-outline"
         >
-          <img class="pr-2" src="../../assets/img/showpassword.png" />
+          <InlineSvg :src="IconShowPass" />
         </button>
       </span>
       <span
@@ -32,7 +32,7 @@
           type="button"
           class="pl-[11px] focus:outline-none focus:shadow-outline"
         >
-          <img class="h-[13px]" src="../../assets/img/search-icon.png" />
+          <InlineSvg :src="IconSearch" />
         </button>
       </span>
     </div>
@@ -40,6 +40,9 @@
 </template>
 
 <script>
+import IconShowPass from '@/assets/svg/icon-show-pass.svg'
+import IconSearch from '@/assets/svg/icon-search.svg'
+
 export default {
   name: 'Input',
   props: {
@@ -56,7 +59,12 @@ export default {
       required: true,
     },
   },
-  setup() {},
+  setup() {
+    return {
+      IconShowPass,
+      IconSearch,
+    }
+  },
 }
 </script>
 

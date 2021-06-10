@@ -7,11 +7,7 @@
   </div>
 </template>
 <script>
-import ShareBtn from '@/components/Button/ShareBtn.vue'
 export default {
   name: 'PipeLine',
-  components: {
-    ShareBtn,
-  },
 }
 </script>

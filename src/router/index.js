@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import Home from '@/layouts/Home.vue'
 import Login from '@/layouts/Login.vue'
-import Flex from '@/views/Flex.vue'
 
 const routes = [
   {
@@ -50,11 +49,6 @@ const routes = [
           ),
       },
     ],
-  },
-  {
-    path: '/flex',
-    name: 'Flex',
-    component: Flex,
   },
 ]
 

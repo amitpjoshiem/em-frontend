@@ -55,6 +55,7 @@ import IconAction from '@/assets/svg/icon-action.svg'
 import IconDownload from '@/assets/svg/icon-download.svg'
 import IconShareGrey from '@/assets/svg/icon-share-grey.svg'
 export default {
+  name: 'ActionBtn',
   setup() {
     return {
       IconAction,

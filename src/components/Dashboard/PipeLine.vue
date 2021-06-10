@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import ActionBtn from '@/components/Button/ActionBtn.vue'
 import Select from '@/components/Global/Form/Select.vue'
 import IconTotal from '@/assets/svg/total.svg'
 import IconMembers from '@/assets/svg/members.svg'
@@ -72,7 +71,6 @@ import IconUpArrow from '@/assets/svg/up-arrow.svg'
 export default {
   name: 'PipeLine',
   components: {
-    ActionBtn,
     Select,
   },
   setup() {
