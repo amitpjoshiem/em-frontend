@@ -12,7 +12,6 @@ module.exports = {
         lightgray03: '#E2E9F4',
         'widget-bg': '#F2F5FA',
         primary: '#042D52',
-        link: '#66B6FF',
         activity: '#66B6FF',
         'activity-item': '#A9B1CC',
         'color-border': '#EBF0FA',
