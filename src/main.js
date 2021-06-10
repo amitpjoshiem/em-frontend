@@ -23,6 +23,7 @@ import {
   ElRow,
   ElCol,
   ElInput,
+  ElProgress,
 } from 'element-plus'
 
 const components = [
@@ -36,6 +37,7 @@ const components = [
   ElRow,
   ElCol,
   ElInput,
+  ElProgress,
 ]
 
 const app = createApp(App)
