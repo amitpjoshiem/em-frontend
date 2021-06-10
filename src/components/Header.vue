@@ -50,13 +50,11 @@
 </template>
 
 <script>
-import Search from '@/components/Input/Search.vue'
-import Avatar from '@/components/Avatar.vue'
+import Search from '@/components/Global/Input/Search.vue'
 export default {
   name: 'Header',
   components: {
     Search,
-    Avatar,
   },
 }
 </script>

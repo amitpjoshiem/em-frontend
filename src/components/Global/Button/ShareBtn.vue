@@ -7,6 +7,7 @@
 <script>
 import IconShare from '@/assets/svg/icon-share.svg'
 export default {
+  name: 'ShareBtn',
   setup() {
     return {
       IconShare,
