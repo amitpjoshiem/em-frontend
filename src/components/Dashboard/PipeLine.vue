@@ -4,7 +4,7 @@
       <span class="text-smm font-semibold">Pipe Line</span>
       <div class="flex">
         <Select :options="options" />
-        <ActionBtn class="ml-2.5" />
+        <ActionBtn border class="ml-2.5" />
       </div>
     </div>
 

@@ -4,17 +4,18 @@
       relative
       inline-block
       text-left
-      border border-color-grey
       rounded
       py-2
       px-3
       cursor-pointer
       bg-white
     "
+    :class="{ 'border border-color-grey': border }"
     @click="showBlock"
   >
     <div>
-      <InlineSvg :src="IconAction" />
+      <InlineSvg v-if="grey" :src="IconActionGray" />
+      <InlineSvg v-else :src="IconAction" />
     </div>
 
     <div
@@ -52,14 +53,28 @@
 
 <script>
 import IconAction from '@/assets/svg/icon-action.svg'
+import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import IconDownload from '@/assets/svg/icon-download.svg'
 import IconShareGrey from '@/assets/svg/icon-share-grey.svg'
 export default {
+  props: {
+    border: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    grey: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+  },
   setup() {
     return {
       IconAction,
       IconDownload,
       IconShareGrey,
+      IconActionGray,
     }
   },
 
