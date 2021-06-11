@@ -4,7 +4,7 @@
     :percentage="percentage"
     :width="15"
     :stroke-width="2"
-    :show-text="false"
+    :show-text="showText"
     color="#76E1BB"
   />
 </template>
@@ -14,9 +14,14 @@ export default {
   name: 'CircularProgress',
   props: {
     percentage: {
-      type: String,
+      type: Number,
       require: true,
-      default: '0',
+      default: 0,
+    },
+    showText: {
+      type: Boolean,
+      require: false,
+      default: false,
     },
   },
 }

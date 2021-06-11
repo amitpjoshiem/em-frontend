@@ -48,6 +48,7 @@ export default {
         ],
       },
       options: {
+        maintainAspectRatio: false,
         scales: {
           y: {
             type: 'linear',

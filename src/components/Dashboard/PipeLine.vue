@@ -4,7 +4,7 @@
       <span class="text-smm font-semibold">Pipe Line</span>
       <div class="flex">
         <Select :options="options" />
-        <ActionBtn class="ml-2.5" />
+        <ActionBtn border class="ml-2.5" />
       </div>
     </div>
 
@@ -63,16 +63,12 @@
 </template>
 
 <script>
-import Select from '@/components/Global/Form/Select.vue'
 import IconTotal from '@/assets/svg/total.svg'
 import IconMembers from '@/assets/svg/members.svg'
 import IconUpArrow from '@/assets/svg/up-arrow.svg'
 
 export default {
   name: 'PipeLine',
-  components: {
-    Select,
-  },
   setup() {
     return {
       IconTotal,

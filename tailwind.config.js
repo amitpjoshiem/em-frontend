@@ -19,6 +19,8 @@ module.exports = {
         'color-grey': '#EBF0FA',
         'widget-border': '#E7EDFB',
         'color-green': '#7BD7BD',
+        'color-light-blue': '#E9F8FF',
+        'color-blue-border': '#66B9FF',
       },
       fontFamily: {
         sans: [
@@ -33,6 +35,7 @@ module.exports = {
       fontSize: {
         smallx: '9px',
         small: '10px',
+        xxs: '11px',
         xss: '13px',
         smm: '15px',
         xll: '22px',
