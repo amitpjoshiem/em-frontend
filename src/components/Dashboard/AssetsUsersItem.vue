@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-8">
     <div class="col-span-1">
-      <!-- <Avatar :link="user.avatar" /> -->
+      <Avatar />
     </div>
     <div class="col-span-2 text-xs text-main font-semibold">
       {{ user.name }}

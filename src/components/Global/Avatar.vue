@@ -11,6 +11,7 @@
 <script>
 import DefaultAvatar from '@/assets/img/avatar.png'
 export default {
+  name: 'Avatar',
   props: {
     link: {
       type: String,
