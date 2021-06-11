@@ -37,12 +37,13 @@
 
 <script>
 import IconProfitUp from '@/assets/svg/profit-up.svg'
+import { User } from './AssetsUsers.vue'
 
 export default {
   name: 'AssetsUsersItem',
   props: {
     user: {
-      type: Object,
+      type: User,
       require: true,
       default: () => {},
     },
