@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-8">
     <div class="col-span-1">
-      <Avatar :src="user.avatar" />
+      <!-- <Avatar :link="user.avatar" /> -->
     </div>
     <div class="col-span-2 text-xs text-main font-semibold">
       {{ user.name }}
@@ -25,15 +25,8 @@
 </template>
 
 <script>
-import Avatar from '@/components/Avatar.vue'
-import ActionBtn from '@/components/Button/ActionBtn.vue'
-
 export default {
   name: 'AssetsUsersItem',
-  components: {
-    Avatar,
-    ActionBtn,
-  },
   props: {
     user: {
       type: Object,

@@ -6,37 +6,17 @@ import store from './store'
 
 import InlineSvg from 'vue-inline-svg'
 
-// Global Component
-import Input from '@/components/Input/Input.vue'
-import Button from '@/components/Button/Button.vue'
+// Global Component Import
+import Input from '@/components/Global/Input/Input.vue'
+import Button from '@/components/Global/Button/Button.vue'
+import CircularProgress from '@/components/Global/CircularProgress.vue'
+import LinearProgress from '@/components/Global/LinearProgress.vue'
+import ActionBtn from '@/components/Global/Button/ActionBtn.vue'
+import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
+import Avatar from '@/components/Global/Avatar.vue'
+import { ElProgress } from 'element-plus'
 
 import './styles/index.css'
-
-import {
-  ElButton,
-  ElSelect,
-  ElContainer,
-  ElHeader,
-  ElAside,
-  ElMain,
-  ElFooter,
-  ElRow,
-  ElCol,
-  ElInput,
-} from 'element-plus'
-
-const components = [
-  ElAside,
-  ElButton,
-  ElSelect,
-  ElHeader,
-  ElMain,
-  ElContainer,
-  ElFooter,
-  ElRow,
-  ElCol,
-  ElInput,
-]
 
 const app = createApp(App)
 
@@ -44,9 +24,17 @@ app.use(router)
 app.use(store)
 
 // Global Component
-app.component('Input', Input)
-app.component('Button', Button)
-app.component('InlineSvg', InlineSvg)
+const components = [
+  ElProgress,
+  Input,
+  Button,
+  InlineSvg,
+  CircularProgress,
+  LinearProgress,
+  ActionBtn,
+  ShareBtn,
+  Avatar,
+]
 
 components.forEach((component) => {
   app.component(component.name, component)

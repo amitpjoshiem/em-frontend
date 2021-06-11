@@ -57,6 +57,7 @@ import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import IconDownload from '@/assets/svg/icon-download.svg'
 import IconShareGrey from '@/assets/svg/icon-share-grey.svg'
 export default {
+  name: 'ActionBtn',
   props: {
     border: {
       type: Boolean,
