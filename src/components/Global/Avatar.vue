@@ -2,7 +2,7 @@
   <div
     :class="{
       'h-8 w-8': size === 'large',
-      'h-5 w-5': size === ' small',
+      'h-5 w-5': size === 'small',
     }"
   >
     <img :src="link" />
