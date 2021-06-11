@@ -1,26 +1,35 @@
 <template>
-  <div class="grid grid-cols-12">
-    <div class="col-span-1">
+  <div class="grid grid-cols-12 pt-4">
+    <div class="col-span-1 flex justify-center items-center">
       <Avatar :size="'small'" />
     </div>
-    <div class="col-span-4 text-xs text-main font-semibold">
+    <div class="col-span-3 text-xs text-main font-semibold flex items-center">
       {{ user.name }}
     </div>
-    <div class="col-span-2">
+    <div class="col-span-2 flex justify-center items-center">
       <TypeUserLabel />
     </div>
-    <div class="col-span-2 text-main text-xs flex">
+    <div class="col-span-2 text-main text-xs flex items-center">
       <InlineSvg :src="IconProfitUp" />
-      {{ user.profit }}
+      <span class="pl-2">{{ user.profit }}</span>
     </div>
-    <div class="col-span-1 flex text-xs text-main">
+    <div class="col-span-1 text-xs text-main flex justify-center items-center">
       <CircularProgress :percentage="user.progress" />
-      <span>{{ user.progress }}%</span>
+      <span class="pl-2">{{ user.progress }}%</span>
     </div>
-    <div class="col-span-1 text-main text-xs font-semibold">
+    <div
+      class="
+        col-span-2
+        text-main text-xs
+        font-semibold
+        flex
+        justify-center
+        items-center
+      "
+    >
       ${{ user.balance }}
     </div>
-    <div class="col-span-1">
+    <div class="col-span-1 flex justify-center items-center">
       <ActionBtn grey />
     </div>
   </div>

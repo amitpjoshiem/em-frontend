@@ -21,7 +21,7 @@ export default {
           avatar: '',
           name: 'Jerome & Mary Nelson',
           type: 'prospect',
-          profit: '18,654',
+          profit: '999,999.99',
           progress: 80,
           balance: '963,21',
         },
@@ -35,7 +35,7 @@ export default {
         },
         {
           avatar: '',
-          name: 'Kelli & Joseph HigginsMoore',
+          name: 'Kelli & Joseph Higgins',
           type: 'prospect',
           profit: '8,654',
           progress: 27,

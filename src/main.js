@@ -15,6 +15,8 @@ import ActionBtn from '@/components/Global/Button/ActionBtn.vue'
 import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
 import Avatar from '@/components/Global/Avatar.vue'
 import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
+import Select from '@/components/Global/Form/Select.vue'
+
 import { ElProgress } from 'element-plus'
 
 import './styles/index.css'
@@ -36,6 +38,7 @@ const components = [
   ShareBtn,
   Avatar,
   TypeUserLabel,
+  Select,
 ]
 
 components.forEach((component) => {

@@ -63,16 +63,12 @@
 </template>
 
 <script>
-import Select from '@/components/Global/Form/Select.vue'
 import IconTotal from '@/assets/svg/total.svg'
 import IconMembers from '@/assets/svg/members.svg'
 import IconUpArrow from '@/assets/svg/up-arrow.svg'
 
 export default {
   name: 'PipeLine',
-  components: {
-    Select,
-  },
   setup() {
     return {
       IconTotal,
