@@ -22,6 +22,9 @@ module.exports = {
         'color-light-blue': '#E9F8FF',
         'color-blue-border': '#66B9FF',
         'text-gray': '#2E2F38',
+        'orange-badge': '#FF9979',
+        'orange-bg': '#FFEFEA',
+        'orange-border': '#FF9979',
       },
       fontFamily: {
         sans: [
