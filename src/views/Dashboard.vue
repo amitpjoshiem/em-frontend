@@ -1,10 +1,12 @@
 <template>
   <div class="container px-5">
     <HeaderDashboard />
-    <div class="grid grid-cols-3 grid-flow-col gap-4">
-      <Assets />
-      <PipeLine />
-      <LastActivity />
+    <div class="flex">
+      <Assets class="w-2/3" />
+      <div class="w-1/3 flex flex-col justify-between">
+        <PipeLine />
+        <LastActivity />
+      </div>
     </div>
     <ListOfHouseholds />
   </div>

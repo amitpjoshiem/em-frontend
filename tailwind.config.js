@@ -14,7 +14,6 @@ module.exports = {
         primary: '#042D52',
         activity: '#66B6FF',
         'activity-item': '#A9B1CC',
-        'color-border': '#EBF0FA',
         'input-border': '#D4DDEB',
         'color-grey': '#EBF0FA',
         'widget-border': '#E7EDFB',
@@ -25,6 +24,7 @@ module.exports = {
         'orange-badge': '#FF9979',
         'orange-bg': '#FFEFEA',
         'orange-border': '#FF9979',
+        'color-green-bg': '#76E1BB',
       },
       fontFamily: {
         sans: [
