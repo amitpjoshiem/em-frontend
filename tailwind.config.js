@@ -21,6 +21,7 @@ module.exports = {
         'color-green': '#7BD7BD',
         'color-light-blue': '#E9F8FF',
         'color-blue-border': '#66B9FF',
+        'text-gray': '#2E2F38',
       },
       fontFamily: {
         sans: [

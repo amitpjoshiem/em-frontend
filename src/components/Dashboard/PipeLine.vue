@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <span class="text-smm font-semibold">Pipe Line</span>
       <div class="flex">
-        <Select :options="options" />
+        <Select :options="options" large />
         <ActionBtn border class="ml-2.5" />
       </div>
     </div>
