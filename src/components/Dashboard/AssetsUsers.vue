@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="border-t border-color-grey pb-5">
     <AssetsUsersItem
       v-for="(user, index) in usersList"
       :key="index"

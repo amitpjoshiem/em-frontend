@@ -1,7 +1,10 @@
 <template>
-  <div class="row-span-3 col-span-2 border border-color-grey p-5 rounded-xl">
-    <AssetsHeader />
-    <IncomeChart />
+  <div class="border border-color-grey rounded-xl mr-5">
+    <AssetsHeader class="pt-5 pr-5 pl-5" />
+    <div class="flex p-5 justify-between">
+      <IncomeChart class="w-9/12" />
+      <IncomeTotal class="w-[115px]" />
+    </div>
     <AssetsUsers />
   </div>
 </template>
@@ -10,12 +13,14 @@
 import AssetsHeader from '@/components/Dashboard/AssetsHeader.vue'
 import IncomeChart from '@/components/Dashboard/IncomeChart.vue'
 import AssetsUsers from '@/components/Dashboard/AssetsUsers.vue'
+import IncomeTotal from '@/components/Dashboard/IncomeTotal.vue'
 
 export default {
   components: {
     IncomeChart,
     AssetsUsers,
     AssetsHeader,
+    IncomeTotal,
   },
 }
 </script>
