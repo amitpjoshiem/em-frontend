@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center">
     <span class="text-smm font-semibold">Assets</span>
     <div class="flex items-center">
-      <Select :options="options" />
+      <Select :options="options" large />
       <ActionBtn border class="ml-2" />
     </div>
   </div>

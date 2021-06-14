@@ -1,14 +1,13 @@
 <template>
   <div>
     <span
-      class="
-        text-activity text-xss
-        py-0.5
-        px-2
-        bg-color-light-blue
-        border border-color-blue-border border-opacity-50
-        rounded
-      "
+      class="text-xss py-0.5 px-2 border border-opacity-50 rounded capitalize"
+      :class="{
+        'text-activity border-color-blue-border bg-color-light-blue':
+          userType === 'prospect',
+        'text-orange-badge border-orange-border bg-orange-bg':
+          userType === 'client',
+      }"
     >
       {{ userType }}
     </span>
@@ -22,7 +21,7 @@ export default {
     userType: {
       type: String,
       require: true,
-      default: 'Prospect',
+      default: 'prospect',
     },
   },
 }

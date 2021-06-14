@@ -37,7 +37,7 @@
 
 <script>
 import IconProfitUp from '@/assets/svg/profit-up.svg'
-import { User } from './AssetsUsers.vue'
+import { User } from '@/components/Dashboard/DTO/usersList.js'
 
 export default {
   name: 'AssetsUsersItem',
