@@ -8,14 +8,20 @@
         <LastActivity />
       </div>
     </div>
+    <span>
+      {{ response.message }}
+    </span>
   </div>
 </template>
 
 <script>
+import { onMounted } from 'vue'
 import PipeLine from '@/components/Dashboard/PipeLine.vue'
 import HeaderDashboard from '@/components/Dashboard/HeaderDashboard.vue'
 import LastActivity from '@/components/Dashboard/LastActivity.vue'
 import Assets from '@/components/Dashboard/Assets.vue'
+
+import { useFetch } from '@/api/use-fetch'
 
 export default {
   name: 'Dashboard',
@@ -24,6 +30,13 @@ export default {
     LastActivity,
     Assets,
     HeaderDashboard,
+  },
+  setup() {
+    const { response, error, fetching, fetchData } = useFetch('/ping')
+    onMounted(() => {
+      fetchData()
+    })
+    return { response, error, fetching }
   },
 }
 </script>
