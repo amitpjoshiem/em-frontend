@@ -3,20 +3,13 @@
     <table class="table-fixed">
       <thead class="bg-widget-bg uppercase text-gray03 h-6">
         <tr class="text-small">
-          <th class="w-[240px] text-left pl-5">householder Name</th>
-          <th class="w-[110px] text-left">Created on</th>
-          <th class="w-[110px] text-left">type</th>
-          <th class="w-[130px] text-left">Onboarding</th>
-          <th class="w-[170px] text-left">location</th>
-          <th class="w-[110px] text-left">net worth</th>
-          <th class="w-[47px] text-left"></th>
-          <!-- <th class="w-3/12">householder Name</th>
-          <th class="w-2/12">Created on</th>
-          <th class="w-1/12">type</th>
-          <th class="w-2/12">Onboarding</th>
-          <th class="w-3/12">location</th>
-          <th class="w-1/12">net worth</th>
-          <th class="w-1/12"></th> -->
+          <th class="w-7/24">householder Name</th>
+          <th class="w-3/24">Created on</th>
+          <th class="w-3/24">type</th>
+          <th class="w-3/24">Onboarding</th>
+          <th class="w-4/24">location</th>
+          <th class="w-2/24">net worth</th>
+          <th class="w-1/24"></th>
         </tr>
       </thead>
       <tbody>
