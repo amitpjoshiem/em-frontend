@@ -16,6 +16,7 @@ import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
 import Avatar from '@/components/Global/Avatar.vue'
 import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
+import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
 
 import { ElProgress } from 'element-plus'
 
@@ -39,6 +40,7 @@ const components = [
   Avatar,
   TypeUserLabel,
   Select,
+  ItemsPerPage,
 ]
 
 components.forEach((component) => {

@@ -13,6 +13,7 @@
         w-[105px]
         h-[30px]
       "
+      :class="{ 'w-[105px]': large, 'w-[55px]': small }"
     >
       <option
         v-for="(item, index) in options"
@@ -53,6 +54,16 @@ export default {
       type: Array,
       require: true,
       default: () => [],
+    },
+    small: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    large: {
+      type: Boolean,
+      require: false,
+      default: false,
     },
   },
 }

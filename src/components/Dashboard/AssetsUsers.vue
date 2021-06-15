@@ -9,7 +9,7 @@
 </template>
 <script>
 import AssetsUsersItem from '@/components/Dashboard/AssetsUsersItem.vue'
-import { useUserList } from './usersList'
+import { useUserList } from '@/components/Dashboard/DTO/usersList'
 
 export default {
   name: 'AssetsUsers',
