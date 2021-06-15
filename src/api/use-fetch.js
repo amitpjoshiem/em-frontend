@@ -3,6 +3,26 @@ import { toRefs, reactive } from 'vue'
 
 const baseUrl = process.env.VUE_APP_API_URL
 
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}
+
+function readFromStorage(storage, key) {
+  const item = storage.getItem(key)
+  if (item) return JSON.parse(item)
+  return null
+}
+
+export function saveToStorage(storage, key, value) {
+  try {
+    storage.setItem(key, JSON.stringify(value))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export const useFetch = (url, options) => {
   const state = reactive({
     response: [],
@@ -12,6 +32,9 @@ export const useFetch = (url, options) => {
   const fetchData = async (params) => {
     state.fetching = true
     try {
+      options = { ...options, ...config }
+      const token = readFromStorage(localStorage, 'access_token')
+      if (token) options.headers['Authorization'] = `Bearer ${token}`
       const res = await fetch(baseUrl + url, { ...options, ...params })
       const json = await res.json()
       state.response = json
