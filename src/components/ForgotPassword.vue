@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full items-center justify-center">
-    <div class="form max-w-sm p-6 bg-widget-bg rounded-md">
+    <div class="max-w-sm p-6 bg-widget-bg rounded-md w-[370px]">
       <div class="flex items-center justify-center p-2">
         <div
           class="
@@ -25,6 +25,7 @@
       <form class="mt-6">
         <div>
           <Input
+            v-model:value="email"
             :placeholder="'Enter your e-mail'"
             :type="'email'"
             :label="'E-mail'"
@@ -41,11 +42,11 @@
 <script>
 export default {
   name: 'ForgotPassword',
+  data() {
+    return {
+      email: '',
+      pass: '',
+    }
+  },
 }
 </script>
-
-<style lang="scss" scoped>
-.form {
-  width: 370px;
-}
-</style>

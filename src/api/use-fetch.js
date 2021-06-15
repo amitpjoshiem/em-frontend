@@ -9,10 +9,10 @@ export const useFetch = (url, options) => {
     error: null,
     fetching: false,
   })
-  const fetchData = async () => {
+  const fetchData = async (params) => {
     state.fetching = true
     try {
-      const res = await fetch(baseUrl + url, options)
+      const res = await fetch(baseUrl + url, { ...options, ...params })
       const json = await res.json()
       state.response = json
     } catch (errors) {

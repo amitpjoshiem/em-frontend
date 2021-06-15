@@ -1,6 +1,7 @@
 // initial state
 const state = () => ({
   isAuth: true,
+  isShowOtpForm: false,
 })
 
 // getters

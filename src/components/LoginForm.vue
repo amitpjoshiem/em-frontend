@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full items-center justify-center">
-    <div class="form max-w-sm p-6 bg-widget-bg rounded-md">
+    <div class="form max-w-sm p-6 bg-widget-bg rounded-md w-[370px]">
       <div class="flex items-center justify-center p-2">
         <div
           class="
@@ -22,9 +22,10 @@
         Please enter you email and password
       </h1>
 
-      <form class="mt-6">
+      <div class="mt-6">
         <div>
           <Input
+            v-model:value="data.email"
             :placeholder="'Enter your e-mail'"
             :type="'email'"
             :label="'E-mail'"
@@ -33,50 +34,71 @@
 
         <div class="mt-4">
           <Input
+            v-model:value="data.password"
             :placeholder="'Enter your password'"
             :type="'password'"
             :label="'Password'"
           />
         </div>
 
-        <h1 class="text-center text-gray03 pt-2.5 text-sm">
-          We just sent you a temporary login code. Please check your inbox.
-        </h1>
+        <template v-if="isShowOtpForm">
+          <h1 class="text-center text-gray03 pt-2.5 text-sm">
+            We just sent you a temporary login code. Please check your inbox.
+          </h1>
 
-        <div class="mt-4">
-          <Input
-            :placeholder="'Paste login code'"
-            :type="'text'"
-            :label="'Login code'"
-          />
-        </div>
+          <div class="mt-4">
+            <Input
+              v-model:value="otp"
+              :placeholder="'Paste login code'"
+              :type="'text'"
+              :label="'Login code'"
+            />
+          </div>
+        </template>
         <div class="text-center pt-5">
-          <Button default-primary full :text-btn="'Continue'" />
+          <Button default-primary full :text-btn="'Continue'" @click="login" />
         </div>
-      </form>
+      </div>
     </div>
-    <div class="flex justify-between w-full pt-3 max-w-sm rounded-md">
+    <div class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
       <span class="text-xss text-gray03 cursor-pointer">
         <router-link :to="{ name: 'forgotpassword' }">
           Forgot your password?
         </router-link>
       </span>
-      <div class="flex items-center">
-        <span class="text-link text-xss cursor-pointer">Reset password </span>
-        <img class="w-2.5 h2.5 m-1 ml-1" src="../assets/img/resetpass.png" />
-      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { reactive } from 'vue'
+import { mapState } from 'vuex'
+import { useFetch } from '@/api/use-fetch'
+
 export default {
   name: 'LoginForm',
+  setup() {
+    const data = reactive({
+      email: 'dmytri.yarmachok@uinno.io',
+      password: 'h2r1mdima',
+      otp: '',
+    })
+
+    const { response, error, fetching, fetchData } = useFetch('/login', {
+      method: 'POST',
+    })
+    const login = () => {
+      const { email, password } = data
+      const body = {
+        email: email,
+        password: password,
+      }
+      fetchData({ body: JSON.stringify(body) })
+    }
+    return { response, error, fetching, login, data }
+  },
+  computed: mapState({
+    isShowOtpForm: (state) => state.auth.isShowOtpForm,
+  }),
 }
 </script>
-
-<style lang="scss" scoped>
-.form {
-  width: 370px;
-}
-</style>

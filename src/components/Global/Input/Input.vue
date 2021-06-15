@@ -6,12 +6,14 @@
     <div class="relative">
       <input
         :type="type"
+        :value="value"
         :placeholder="placeholder"
         class="input w-full pb-[5px] pt-[5px] rounded-md justify-center"
         :class="{
           'pl-[20px]': type !== 'search',
           'pl-[32px]': type === 'search',
         }"
+        @input="emitValue"
       />
       <span
         v-if="type === 'password'"
@@ -58,13 +60,24 @@ export default {
       type: String,
       required: true,
     },
+    value: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
-  setup() {
+  emits: ['update:value'],
+  setup(props, { emit }) {
+    const emitValue = (event) => {
+      emit('update:value', event.target.value)
+    }
     return {
+      emitValue,
       IconShowPass,
       IconSearch,
     }
   },
+  methods: {},
 }
 </script>
 
