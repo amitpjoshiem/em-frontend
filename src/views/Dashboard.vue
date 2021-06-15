@@ -8,9 +8,6 @@
         <LastActivity />
       </div>
     </div>
-    <span>
-      {{ response.message }}
-    </span>
   </div>
 </template>
 

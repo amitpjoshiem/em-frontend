@@ -75,11 +75,14 @@ import { reactive } from 'vue'
 import { mapState } from 'vuex'
 import { useFetch, saveToStorage } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default {
   name: 'LoginForm',
   setup() {
     const router = useRouter()
+    const store = useStore()
+
     const data = reactive({
       email: 'dmytri.yarmachok@uinno.io',
       password: 'h2r1mdima',
@@ -89,6 +92,7 @@ export default {
     const { response, error, fetching, fetchData } = useFetch('/login', {
       method: 'POST',
     })
+
     const login = async () => {
       const { email, password } = data
       const body = {
@@ -98,6 +102,7 @@ export default {
       await fetchData({ body: JSON.stringify(body) })
       if (error.value !== null) return
       saveToStorage(localStorage, 'access_token', response.value.access_token)
+      store.commit('auth/setAuthUser', true)
       router.push({ name: 'dashboard' })
     }
     return { response, error, fetching, login, data }
