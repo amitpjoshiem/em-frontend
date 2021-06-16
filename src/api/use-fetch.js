@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 import { toRefs, reactive } from 'vue'
 
+import { useStore } from 'vuex'
+
 const baseUrl = process.env.VUE_APP_API_URL
 
 const config = {
@@ -30,6 +32,7 @@ export const useFetch = (url, options) => {
     fetching: false,
   })
   const fetchData = async (params) => {
+    const store = useStore()
     state.fetching = true
     try {
       options = { ...options, ...config }
@@ -38,6 +41,9 @@ export const useFetch = (url, options) => {
       if (token) options.headers['Authorization'] = `Bearer ${token}`
       const res = await fetch(baseUrl + url, { ...options, ...params, body })
       const json = await res.json()
+      if (res.status === 403) {
+        store.commit('auth/setAuthUser', false)
+      }
       state.response = json
     } catch (errors) {
       state.error = errors
