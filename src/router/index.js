@@ -15,6 +15,14 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
       },
+      {
+        path: '/new-prospect',
+        name: 'newprospect',
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ '../views/NewProspect.vue'
+          ),
+      },
     ],
   },
 

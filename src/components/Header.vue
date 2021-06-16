@@ -30,7 +30,10 @@
         "
       >
         <img class="h-[13px] pr-3 pl-[10px]" src="../assets/img/plus.png" />
-        <div class="pr-2">Add new</div>
+
+        <div class="pr-2">
+          <router-link :to="{ name: 'newprospect' }"> Add new </router-link>
+        </div>
       </div>
       <div class="border-l border-color-grey h-16" />
       <div>

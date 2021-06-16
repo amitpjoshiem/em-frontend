@@ -18,7 +18,7 @@ import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
 
-import { ElProgress } from 'element-plus'
+import { ElProgress, ElSteps, ElStep } from 'element-plus'
 
 import './styles/index.css'
 
@@ -41,6 +41,8 @@ const components = [
   TypeUserLabel,
   Select,
   ItemsPerPage,
+  ElSteps,
+  ElStep,
 ]
 
 components.forEach((component) => {
