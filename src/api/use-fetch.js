@@ -33,9 +33,10 @@ export const useFetch = (url, options) => {
     state.fetching = true
     try {
       options = { ...options, ...config }
+      const body = JSON.stringify(params.body)
       const token = readFromStorage(localStorage, 'access_token')
       if (token) options.headers['Authorization'] = `Bearer ${token}`
-      const res = await fetch(baseUrl + url, { ...options, ...params })
+      const res = await fetch(baseUrl + url, { ...options, ...params, body })
       const json = await res.json()
       state.response = json
     } catch (errors) {

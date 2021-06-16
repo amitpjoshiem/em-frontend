@@ -66,7 +66,7 @@ export default {
       const body = {
         email: email,
       }
-      await fetchData({ body: JSON.stringify(body) })
+      await fetchData({ body })
       if (error.value !== null) return
       data.sendFormForgotPass = true
     }

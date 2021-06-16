@@ -99,7 +99,7 @@ export default {
         email: email,
         password: password,
       }
-      await fetchData({ body: JSON.stringify(body) })
+      await fetchData({ body })
       if (error.value !== null) return
       saveToStorage(localStorage, 'access_token', response.value.access_token)
       store.commit('auth/setAuthUser', true)
