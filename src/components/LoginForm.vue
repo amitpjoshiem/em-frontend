@@ -22,25 +22,23 @@
         Please enter you email and password
       </h1>
 
-      <div class="mt-6">
+      <form class="mt-6" @submit="loginHandler">
         <div>
           <Input
-            v-model:value="email"
             :placeholder="'Enter your e-mail'"
             :type="'email'"
+            name="email"
             :label="'E-mail'"
           />
-          <span>{{ emailError }}</span>
         </div>
 
         <div class="mt-4">
           <Input
-            v-model:value="password"
             :placeholder="'Enter your password'"
             :type="'password'"
+            name="password"
             :label="'Password'"
           />
-          <span>{{ passwordError }}</span>
         </div>
 
         <template v-if="isShowOtpForm">
@@ -58,9 +56,9 @@
           </div>
         </template>
         <div class="text-center pt-5">
-          <Button default-primary full :text-btn="'Continue'" @click="login" />
+          <Button default-primary full :text-btn="'Continue'" type="submit" />
         </div>
-      </div>
+      </form>
     </div>
     <div class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
       <span class="text-xss text-gray03 cursor-pointer">
@@ -74,61 +72,35 @@
 
 <script>
 import { mapState } from 'vuex'
-import { useFetch, saveToStorage } from '@/api/use-fetch'
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
-import { useForm, useField } from 'vee-validate'
+import { useLogin } from '@/api/use-login'
+import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 
 export default {
   name: 'LoginForm',
   setup() {
-    const router = useRouter()
-    const store = useStore()
-
-    const { response, error, fetching, fetchData } = useFetch('/login', {
-      method: 'POST',
-    })
+    const { response, error, fetching, login } = useLogin()
 
     const schema = yup.object({
       email: yup.string().required().email(),
-      password: yup.string().required().min(8),
+      password: yup.string().required().min(8).defined(),
     })
 
-    const { validate } = useForm({
+    const { handleSubmit } = useForm({
       validationSchema: schema,
+      initialValues: {
+        email: '',
+        password: '',
+      },
     })
 
-    const { value: email, errorMessage: emailError } = useField('email')
-    const { value: password, errorMessage: passwordError } =
-      useField('password')
-
-    const login = async () => {
-      const body = {
-        email,
-        password,
-      }
-      const resultValidation = await validate()
-      if (!resultValidation.valid) {
-        return
-      }
-
-      await fetchData({ body })
-      if (error.value !== null) return
-      saveToStorage(localStorage, 'access_token', response.value.access_token)
-      store.commit('auth/setAuthUser', true)
-      router.push({ name: 'dashboard' })
-    }
+    const loginHandler = handleSubmit(login)
 
     return {
       response,
       error,
       fetching,
-      login,
-      email,
-      emailError,
-      password,
-      passwordError,
+      loginHandler,
     }
   },
   computed: mapState({

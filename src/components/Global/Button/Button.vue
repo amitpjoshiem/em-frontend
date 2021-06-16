@@ -1,6 +1,7 @@
 <template>
   <button
     class="btn"
+    :type="type"
     :class="{
       'bg-primary text-white rounded-md h-10': defaultPrimary,
       'w-full': full,
@@ -53,6 +54,10 @@ export default {
     textBtn: {
       type: String,
       default: 'Buttton',
+    },
+    type: {
+      type: String,
+      default: 'buttton',
     },
     full: {
       type: Boolean,

@@ -3,17 +3,21 @@
     <div class="flex items-center justify-between">
       <label class="label block text-sm text-main text-xss">{{ label }}</label>
     </div>
+    <span v-show="showError">{{ errorMessage }}</span>
     <div class="relative">
       <input
+        novalidate
+        :name="name"
         :type="type"
-        :value="value"
+        :value="formValue"
         :placeholder="placeholder"
         class="input w-full pb-[5px] pt-[5px] rounded-md justify-center"
         :class="{
           'pl-[20px]': type !== 'search',
           'pl-[32px]': type === 'search',
         }"
-        @input="emitValue"
+        @blur="handleBlur"
+        @input="handleChange"
       />
       <span
         v-if="type === 'password'"
@@ -44,6 +48,8 @@
 <script>
 import IconShowPass from '@/assets/svg/icon-show-pass.svg'
 import IconSearch from '@/assets/svg/icon-search.svg'
+import { useField } from 'vee-validate'
+import { computed } from 'vue'
 
 export default {
   name: 'Input',
@@ -60,21 +66,52 @@ export default {
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
     value: {
       type: String,
       required: false,
-      default: '',
+      default: undefined,
     },
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const emitValue = (event) => {
-      emit('update:value', event.target.value)
+    const emitValue = (e) => {
+      emit('update:value', e.target.value)
     }
+
+    const {
+      value: formValue,
+      errorMessage,
+      handleChange,
+      handleBlur,
+      meta,
+    } = useField(props.name, undefined, {
+      validateOnValueUpdate: false,
+      bails: true,
+      initialValue: props.value,
+    })
+
+    const showError = computed(() => {
+      return meta.touched && Boolean(errorMessage)
+    })
+
+    const handleChangeExtended = (e) => {
+      emitValue(e)
+      handleChange(e)
+    }
+
     return {
-      emitValue,
       IconShowPass,
       IconSearch,
+      formValue,
+      errorMessage,
+      handleChange: handleChangeExtended,
+      handleBlur,
+      showError,
+      meta,
     }
   },
   methods: {},
