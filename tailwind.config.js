@@ -25,6 +25,7 @@ module.exports = {
         'orange-bg': '#FFEFEA',
         'orange-border': '#FF9979',
         'color-green-bg': '#76E1BB',
+        'color-error': '#FF92A5',
       },
       fontFamily: {
         sans: [

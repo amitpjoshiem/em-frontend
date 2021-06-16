@@ -3,7 +3,6 @@
     <div class="flex items-center justify-between">
       <label class="label block text-sm text-main text-xss">{{ label }}</label>
     </div>
-    <span v-show="showError">{{ errorMessage }}</span>
     <div class="relative">
       <input
         novalidate
@@ -11,23 +10,29 @@
         :type="type"
         :value="formValue"
         :placeholder="placeholder"
-        class="input w-full pb-[5px] pt-[5px] rounded-md justify-center"
+        class="input w-full pb-[5px] pt-[5px] border rounded-md justify-center"
         :class="{
           'pl-[20px]': type !== 'search',
           'pl-[32px]': type === 'search',
+          'border-color-error': showError,
+          'border-input-border': !showError,
         }"
         @blur="handleBlur"
         @input="handleChange"
       />
       <span
-        v-if="type === 'password'"
+        v-if="showIconInput"
         class="absolute inset-y-0 right-0 flex items-center"
       >
         <button
           type="button"
           class="p-1 focus:outline-none focus:shadow-outline"
         >
-          <InlineSvg :src="IconShowPass" />
+          <InlineSvg v-if="showError" :src="IconInputError" />
+          <InlineSvg
+            v-if="!showError && type === 'password'"
+            :src="IconShowPass"
+          />
         </button>
       </span>
       <span
@@ -42,12 +47,16 @@
         </button>
       </span>
     </div>
+    <div class="text-color-error text-xss h-3.5 pt-1">
+      {{ showError ? errorMessage : '' }}
+    </div>
   </div>
 </template>
 
 <script>
 import IconShowPass from '@/assets/svg/icon-show-pass.svg'
 import IconSearch from '@/assets/svg/icon-search.svg'
+import IconInputError from '@/assets/svg/icon-input-error.svg'
 import { useField } from 'vee-validate'
 import { computed } from 'vue'
 
@@ -95,7 +104,7 @@ export default {
     })
 
     const showError = computed(() => {
-      return meta.touched && Boolean(errorMessage)
+      return meta.touched && Boolean(errorMessage) && !meta.valid
     })
 
     const handleChangeExtended = (e) => {
@@ -103,15 +112,28 @@ export default {
       handleChange(e)
     }
 
+    const showIconInput = computed(() => {
+      if (props.type === 'password' || showError) return true
+      return false
+    })
+
+    const typeShowIconIput = computed(() => {
+      if (!errorMessage && props.type == 'password') return 'IconShowPass'
+      return 'IconInputError'
+    })
+
     return {
       IconShowPass,
       IconSearch,
       formValue,
+      IconInputError,
       errorMessage,
       handleChange: handleChangeExtended,
       handleBlur,
       showError,
       meta,
+      showIconInput,
+      typeShowIconIput,
     }
   },
   methods: {},
@@ -120,7 +142,6 @@ export default {
 
 <style lang="scss" scoped>
 .input {
-  border: 1px solid #d4ddeb;
   box-shadow: 0px 0px 1.5px rgba(102, 182, 255, 0.6);
   &::placeholder {
     color: #b2bccd;
