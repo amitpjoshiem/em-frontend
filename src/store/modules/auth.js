@@ -2,6 +2,7 @@
 const state = () => ({
   isAuth: false,
   isShowOtpForm: false,
+  sendFormForgotPass: false,
 })
 
 // getters
@@ -11,6 +12,9 @@ const state = () => ({
 const mutations = {
   setAuthUser(state, value) {
     state.isAuth = value
+  },
+  setFormForgotStatus(state, value) {
+    state.sendFormForgotPass = value
   },
 }
 

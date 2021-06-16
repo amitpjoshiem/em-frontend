@@ -22,12 +22,12 @@
       </h1>
       <h1 class="text-center text-gray03 text-xss">Please enter you email</h1>
 
-      <div v-if="!data.sendFormForgotPass" class="mt-6">
+      <form v-if="!sendFormForgotPass" class="mt-6" @submit="forgotHandler">
         <div>
           <Input
-            v-model:value="data.email"
             :placeholder="'Enter your e-mail'"
             :type="'email'"
+            name="email"
             :label="'E-mail'"
           />
         </div>
@@ -39,38 +39,38 @@
             @click="forgot"
           />
         </div>
-      </div>
-      <div v-else>check your mail</div>
+      </form>
+      <div v-else>{{ response.message }}</div>
     </div>
   </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
-import { useFetch } from '@/api/use-fetch'
+import { useForgot } from '@/api/use-forgot'
+import { useForm } from 'vee-validate'
+import * as yup from 'yup'
+import { mapState } from 'vuex'
 
 export default {
   name: 'ForgotPassword',
   setup() {
-    const data = reactive({
-      email: 'dmytri.yarmachok@uinno.io',
-      sendFormForgotPass: false,
+    const { response, error, fetching, forgot } = useForgot()
+    const schema = yup.object({
+      email: yup.string().required().email(),
     })
-    const { response, error, fetching, fetchData } = useFetch(
-      '/password/forgot',
-      { method: 'POST' }
-    )
+    const { handleSubmit } = useForm({
+      validationSchema: schema,
+      initialValues: {
+        email: '',
+      },
+    })
 
-    const forgot = async () => {
-      const { email } = data
-      const body = {
-        email: email,
-      }
-      await fetchData({ body })
-      if (error.value !== null) return
-      data.sendFormForgotPass = true
-    }
-    return { response, error, fetching, forgot, data }
+    const forgotHandler = handleSubmit(forgot)
+
+    return { response, error, fetching, forgotHandler }
   },
+  computed: mapState({
+    sendFormForgotPass: (state) => state.auth.sendFormForgotPass,
+  }),
 }
 </script>

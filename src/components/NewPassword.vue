@@ -21,11 +21,11 @@
         Create a new password
       </h1>
 
-      <form class="mt-6">
+      <form class="mt-6" @submit="handleNewPass">
         <div class="mt-4">
           <Input
-            v-model:value="data.password"
             :placeholder="'Enter your password'"
+            name="password"
             :type="'password'"
             :label="'New password'"
           />
@@ -33,8 +33,8 @@
 
         <div class="mt-4">
           <Input
-            v-model:value="data.password_confirmation"
             :placeholder="'Enter your password'"
+            name="password"
             :type="'password'"
             :label="'Confirm new password'"
           />
@@ -50,44 +50,44 @@
 
 <script>
 import { reactive, onMounted } from 'vue'
-import { useFetch } from '@/api/use-fetch'
 import { useRoute } from 'vue-router'
+import { useNewPass } from '@/api/use-newpass'
+import { useForm } from 'vee-validate'
+import * as yup from 'yup'
 
 export default {
   name: 'NewPassword',
   setup() {
+    const { response, error, fetching, newPass } = useNewPass()
+
     const route = useRoute()
 
     const data = reactive({
-      password: '',
-      password_confirmation: '',
       email: '',
       token: '',
     })
-    const { response, error, fetching, fetchData } = useFetch(
-      '/password/reset',
-      {
-        method: 'POST',
-      }
-    )
+
     onMounted(() => {
       data.email = route.query.email
       data.token = route.query.token
     })
 
-    const forgot = async () => {
-      const { password, password_confirmation, email, token } = data
-      const body = {
-        password: password,
-        password_confirmation: password_confirmation,
-        email: email,
-        token: token,
-      }
-      await fetchData({ body })
-      if (error.value !== null) return
-      data.sendFormForgotPass = true
-    }
-    return { response, error, fetching, forgot, data, route }
+    const schema = yup.object({
+      password: yup.string().required().min(8).defined(),
+      password_confirmation: yup.string().required().min(8).defined(),
+    })
+
+    const { handleSubmit } = useForm({
+      validationSchema: schema,
+      initialValues: {
+        email: '',
+        password: '',
+      },
+    })
+
+    const handleNewPass = handleSubmit(newPass)
+
+    return { response, error, fetching, handleNewPass, data, route }
   },
 }
 </script>
