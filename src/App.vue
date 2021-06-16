@@ -10,8 +10,12 @@ export default {
   setup() {
     const store = useStore()
     onMounted(() => {
-      const isAuth = localStorage.getItem('auth').isAuth
-      if (localStorage.getItem('access_token') !== null && isAuth !== null) {
+      const auth = localStorage.getItem('auth')
+      if (
+        localStorage.getItem('access_token') !== null &&
+        auth &&
+        auth.isAuth !== null
+      ) {
         store.commit('auth/setAuthUser', true)
       } else {
         store.commit('auth/setAuthUser', false)

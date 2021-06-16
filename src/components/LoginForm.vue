@@ -25,20 +25,22 @@
       <div class="mt-6">
         <div>
           <Input
-            v-model:value="data.email"
+            v-model:value="email"
             :placeholder="'Enter your e-mail'"
             :type="'email'"
             :label="'E-mail'"
           />
+          <span>{{ emailError }}</span>
         </div>
 
         <div class="mt-4">
           <Input
-            v-model:value="data.password"
+            v-model:value="password"
             :placeholder="'Enter your password'"
             :type="'password'"
             :label="'Password'"
           />
+          <span>{{ passwordError }}</span>
         </div>
 
         <template v-if="isShowOtpForm">
@@ -71,11 +73,12 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
 import { mapState } from 'vuex'
 import { useFetch, saveToStorage } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { useForm, useField } from 'vee-validate'
+import * as yup from 'yup'
 
 export default {
   name: 'LoginForm',
@@ -83,29 +86,50 @@ export default {
     const router = useRouter()
     const store = useStore()
 
-    const data = reactive({
-      email: 'dmytri.yarmachok@uinno.io',
-      password: 'h2r1mdima',
-      otp: '',
-    })
-
     const { response, error, fetching, fetchData } = useFetch('/login', {
       method: 'POST',
     })
 
+    const schema = yup.object({
+      email: yup.string().required().email(),
+      password: yup.string().required().min(8),
+    })
+
+    const { validate } = useForm({
+      validationSchema: schema,
+    })
+
+    const { value: email, errorMessage: emailError } = useField('email')
+    const { value: password, errorMessage: passwordError } =
+      useField('password')
+
     const login = async () => {
-      const { email, password } = data
       const body = {
-        email: email,
-        password: password,
+        email,
+        password,
       }
+      const resultValidation = await validate()
+      if (!resultValidation.valid) {
+        return
+      }
+
       await fetchData({ body })
       if (error.value !== null) return
       saveToStorage(localStorage, 'access_token', response.value.access_token)
       store.commit('auth/setAuthUser', true)
       router.push({ name: 'dashboard' })
     }
-    return { response, error, fetching, login, data }
+
+    return {
+      response,
+      error,
+      fetching,
+      login,
+      email,
+      emailError,
+      password,
+      passwordError,
+    }
   },
   computed: mapState({
     isShowOtpForm: (state) => state.auth.isShowOtpForm,
