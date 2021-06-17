@@ -1,6 +1,6 @@
 import { useFetch } from '@/api/use-fetch'
 
-const useNewPass = () => {
+const useResetPassword = () => {
   const { response, error, fetching, fetchData } = useFetch('/password/reset', {
     method: 'POST',
   })
@@ -18,4 +18,4 @@ const useNewPass = () => {
   }
 }
 
-export { useNewPass }
+export { useResetPassword }

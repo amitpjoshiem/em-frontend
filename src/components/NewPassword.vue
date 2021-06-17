@@ -51,14 +51,14 @@
 <script>
 import { reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useNewPass } from '@/api/use-newpass'
+import { useResetPassword } from '@/api/use-reset-password'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 
 export default {
   name: 'NewPassword',
   setup() {
-    const { response, error, fetching, newPass } = useNewPass()
+    const { response, error, fetching, newPass } = useResetPassword()
 
     const route = useRoute()
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { toRefs, reactive } from 'vue'
-
 import { useStore } from 'vuex'
+import { readFromStorage } from '@/utils/utilsLocalStorage'
 
 const baseUrl = process.env.VUE_APP_API_URL
 
@@ -9,20 +9,6 @@ const config = {
   headers: {
     'Content-Type': 'application/json',
   },
-}
-
-function readFromStorage(storage, key) {
-  const item = storage.getItem(key)
-  if (item) return JSON.parse(item)
-  return null
-}
-
-export function saveToStorage(storage, key, value) {
-  try {
-    storage.setItem(key, JSON.stringify(value))
-  } catch (error) {
-    console.error(error)
-  }
 }
 
 export const useFetch = (url, options) => {

@@ -1,6 +1,8 @@
-import { useFetch, saveToStorage } from '@/api/use-fetch'
+import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+
+import { saveToStorage } from '@/utils/utilsLocalStorage'
 
 const useLogin = () => {
   const router = useRouter()
