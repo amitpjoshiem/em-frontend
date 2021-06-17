@@ -41,7 +41,7 @@ const routes = [
           ),
       },
       {
-        path: 'newpassword',
+        path: 'password-reset',
         name: 'newpassword',
         component: () =>
           import(
