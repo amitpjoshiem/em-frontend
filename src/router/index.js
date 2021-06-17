@@ -15,9 +15,14 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
       },
+      {
+        path: '',
+        redirect: () => {
+          return { name: 'dashboard' }
+        },
+      },
     ],
   },
-
   {
     path: '/login',
     name: 'login',
