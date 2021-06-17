@@ -3,7 +3,7 @@
     <span class="text-smm font-semibold">Assets</span>
     <div class="flex items-center">
       <Select :options="options" large />
-      <ActionBtn border class="ml-2" />
+      <DropDown border class="ml-2" />
     </div>
   </div>
 </template>

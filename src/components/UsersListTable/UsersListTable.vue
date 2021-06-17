@@ -36,7 +36,7 @@
           </td>
           <td class="font-semibold">${{ user.netWorth }}</td>
           <td class="pr-5">
-            <ActionBtn grey class="ml-2.5" />
+            <DropDown grey class="ml-2.5" />
           </td>
         </tr>
       </tbody>
