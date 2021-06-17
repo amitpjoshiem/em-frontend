@@ -56,7 +56,13 @@
           </div>
         </template>
         <div class="text-center pt-5">
-          <Button default-primary full :text-btn="'Continue'" type="submit" />
+          <Button
+            :default-primary="!fetching"
+            full
+            :text-btn="'Continue'"
+            type="submit"
+            :disabled="fetching"
+          />
         </div>
       </form>
     </div>

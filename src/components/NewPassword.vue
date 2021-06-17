@@ -41,7 +41,12 @@
         </div>
 
         <div class="text-center pt-5">
-          <Button default-primary full :text-btn="'Save & Continue'" />
+          <Button
+            :default-primary="!fetching"
+            full
+            :text-btn="'Save & Continue'"
+            :disabled="fetching"
+          />
         </div>
       </form>
     </div>
