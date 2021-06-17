@@ -17,8 +17,14 @@ import Avatar from '@/components/Global/Avatar.vue'
 import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
+import DropDown from '@/components/Global/DropDown.vue'
 
-import { ElProgress } from 'element-plus'
+import {
+  ElProgress,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+} from 'element-plus'
 
 import './styles/index.css'
 
@@ -41,6 +47,10 @@ const components = [
   TypeUserLabel,
   Select,
   ItemsPerPage,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+  DropDown,
 ]
 
 components.forEach((component) => {
