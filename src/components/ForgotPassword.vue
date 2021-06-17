@@ -33,9 +33,10 @@
         </div>
         <div class="text-center pt-5">
           <Button
-            default-primary
+            :default-primary="!fetching"
             full
             :text-btn="'Save & Continue'"
+            :disabled="fetching"
             @click="forgot"
           />
         </div>
