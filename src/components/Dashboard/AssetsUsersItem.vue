@@ -30,7 +30,7 @@
       ${{ user.balance }}
     </div>
     <div class="col-span-1 flex justify-center items-center">
-      <ActionBtn grey />
+      <DropDown grey />
     </div>
   </div>
 </template>

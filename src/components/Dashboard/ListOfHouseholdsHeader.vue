@@ -4,7 +4,7 @@
     <div class="flex items-center">
       <ItemsPerPage />
       <Select large />
-      <ActionBtn border class="ml-2" />
+      <DropDown border class="ml-2" />
     </div>
   </div>
 </template>

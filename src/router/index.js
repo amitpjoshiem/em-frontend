@@ -23,9 +23,14 @@ const routes = [
             /* webpackChunkName: "dashboard" */ '../views/NewProspect.vue'
           ),
       },
+      {
+        path: '',
+        redirect: () => {
+          return { name: 'dashboard' }
+        },
+      },
     ],
   },
-
   {
     path: '/login',
     name: 'login',
@@ -49,7 +54,7 @@ const routes = [
           ),
       },
       {
-        path: 'newpassword',
+        path: 'password-reset',
         name: 'newpassword',
         component: () =>
           import(

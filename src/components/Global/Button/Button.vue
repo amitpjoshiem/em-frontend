@@ -1,9 +1,12 @@
 <template>
   <button
-    class="btn"
+    :type="type"
+    :disabled="disabled"
     :class="{
-      'bg-primary text-white rounded-md h-10': defaultPrimary,
+      'bg-primary rounded-md h-10 text-white': defaultPrimary,
       'w-full': full,
+      'bg-input-border rounded-md h-10 text-color-grey cursor-not-allowed ':
+        disabled,
     }"
   >
     {{ textBtn }}
@@ -26,7 +29,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    dissabled: {
+    disabled: {
       type: Boolean,
       default: false,
     },
@@ -53,6 +56,10 @@ export default {
     textBtn: {
       type: String,
       default: 'Buttton',
+    },
+    type: {
+      type: String,
+      default: 'buttton',
     },
     full: {
       type: Boolean,

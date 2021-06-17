@@ -1,21 +1,30 @@
 // initial state
 const state = () => ({
-  isAuth: true,
+  isAuth: false,
+  isShowOtpForm: false,
+  sendFormForgotPass: false,
 })
 
 // getters
-const getters = {}
-
-// actions
-const actions = {}
+// const getters = {}
 
 // mutations
-const mutations = {}
+const mutations = {
+  setAuthUser(state, value) {
+    state.isAuth = value
+  },
+  setFormForgotStatus(state, value) {
+    state.sendFormForgotPass = value
+  },
+}
+
+// actions
+// const actions = {}
 
 export default {
   namespaced: true,
   state,
-  getters,
-  actions,
+  // getters,
+  // actions,
   mutations,
 }
