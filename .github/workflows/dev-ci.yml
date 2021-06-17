@@ -32,8 +32,9 @@ jobs:
       - name: build
         run: yarn build
         env:
-          VUE_APP_API_URL: ${{ secrets.DEV_API_URL }}
+          VUE_APP_API_URL: ${{ secrets.VUE_APP_API_URL_DEV }}
           VUE_APP_ENV: development
+          VUE_APP_BASE_URL: ${{ secrets.VUE_APP_BASE_URL_DEV }}
       - name: set AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
