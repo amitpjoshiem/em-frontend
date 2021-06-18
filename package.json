@@ -10,6 +10,8 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
+    "@formvuelate/plugin-lookup": "^2.1.0",
+    "@formvuelate/plugin-vee-validate": "^2.2.1",
     "@j-t-mcc/vue3-chartjs": "^1.1.2",
     "@tailwindcss/postcss7-compat": "^2.1.2",
     "autoprefixer": "^9",

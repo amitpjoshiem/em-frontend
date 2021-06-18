@@ -27,6 +27,7 @@ import DropDown from '@/components/Global/DropDown.vue'
 import Checkbox from '@/components/Global/Сheckbox.vue'
 import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
+import Radio from '@/components/Global/Radio.vue'
 
 import {
   ElProgress,
@@ -37,6 +38,7 @@ import {
   ElStep,
   ElCheckbox,
   ElRadio,
+  ElInput,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -75,6 +77,8 @@ const components = [
   ElRadio,
   Label,
   TextArea,
+  ElInput,
+  Radio,
 ]
 
 components.forEach((component) => {

@@ -146,15 +146,27 @@ export default {
 
 <style lang="scss" scoped>
 .input {
-  box-shadow: 0px 0px 1.5px rgba(102, 182, 255, 0.6);
   &::placeholder {
     color: #b2bccd;
     font-size: 13px;
     font-family: 'Eina04';
   }
   &:focus {
+    outline: none;
     border: 1px solid #66b6ff;
     box-shadow: 0px 0px 1.5px rgba(102, 182, 255, 0.6);
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  &[type='number'] {
+    -moz-appearance: textfield;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <span class="text-xs text-gray03 pt-6">{{ label }}</span>
+  <span class="text-xs text-gray03">{{ label }}</span>
 </template>
 <script>
 export default {
