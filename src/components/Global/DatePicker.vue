@@ -6,8 +6,6 @@
       type="date"
       placeholder="2021-06-18"
       format="YYYY-MM-DD"
-      :prefix-icon="none"
-      value-format="YYYY-MM-DD"
     >
     </el-date-picker>
   </div>
