@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span class="text-xss font-semibold">{{ label }}</span>
+    <span class="text-xss font-semibold text text-main">{{ label }}</span>
     <div>
       <el-radio v-model="radio" label="1">{{ optionOne }}</el-radio>
       <el-radio v-model="radio" label="2">{{ optionTwo }}</el-radio>

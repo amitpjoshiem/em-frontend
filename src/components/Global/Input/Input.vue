@@ -1,10 +1,9 @@
 <template>
   <div>
     <div class="flex items-center justify-between">
-      <label
-        class="label block text-sm text-main text-xss font-semibold pb-2"
-        >{{ label }}</label
-      >
+      <label class="label block text-main text-xss font-semibold pb-2">{{
+        label
+      }}</label>
     </div>
     <div class="relative">
       <input
@@ -144,7 +143,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scope="this api replaced by slot-scope in 2.5.0+">
 .input {
   &::placeholder {
     color: #b2bccd;

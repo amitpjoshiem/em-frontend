@@ -28,6 +28,7 @@ import Checkbox from '@/components/Global/Сheckbox.vue'
 import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
 import Radio from '@/components/Global/Radio.vue'
+import DatePicker from '@/components/Global/DatePicker.vue'
 
 import {
   ElProgress,
@@ -39,6 +40,8 @@ import {
   ElCheckbox,
   ElRadio,
   ElInput,
+  ElDatePicker,
+  ElPopover,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -79,6 +82,9 @@ const components = [
   TextArea,
   ElInput,
   Radio,
+  ElDatePicker,
+  DatePicker,
+  ElPopover,
 ]
 
 components.forEach((component) => {
