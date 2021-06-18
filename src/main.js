@@ -5,6 +5,12 @@ import router from './router'
 import store from './store'
 
 import InlineSvg from 'vue-inline-svg'
+import {
+  SchemaForm,
+  SchemaWizard,
+  SchemaFormFactory,
+  useSchemaForm,
+} from 'formvuelate'
 
 // Global Component Import
 import Input from '@/components/Global/Input/Input.vue'
@@ -18,6 +24,9 @@ import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
 import DropDown from '@/components/Global/DropDown.vue'
+import Checkbox from '@/components/Global/Сheckbox.vue'
+import Label from '@/components/Global/Label.vue'
+import TextArea from '@/components/Global/TextArea.vue'
 
 import {
   ElProgress,
@@ -26,6 +35,8 @@ import {
   ElDropdownItem,
   ElSteps,
   ElStep,
+  ElCheckbox,
+  ElRadio,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -55,6 +66,15 @@ const components = [
   ElDropdownMenu,
   ElDropdownItem,
   DropDown,
+  SchemaForm,
+  SchemaWizard,
+  SchemaFormFactory,
+  useSchemaForm,
+  Checkbox,
+  ElCheckbox,
+  ElRadio,
+  Label,
+  TextArea,
 ]
 
 components.forEach((component) => {

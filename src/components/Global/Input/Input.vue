@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="flex items-center justify-between">
-      <label class="label block text-sm text-main text-xss">{{ label }}</label>
+      <label
+        class="label block text-sm text-main text-xss font-semibold pb-2"
+        >{{ label }}</label
+      >
     </div>
     <div class="relative">
       <input
@@ -73,7 +76,8 @@ export default {
     },
     label: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     name: {
       type: String,

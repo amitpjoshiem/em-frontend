@@ -1,0 +1,11 @@
+.schema-row {
+  display: flex;
+}
+
+.el-radio__label{
+  font-size: 13px;
+}
+
+.el-radio__input.is-checked+.el-radio__label{
+  color: #424450;
+}
