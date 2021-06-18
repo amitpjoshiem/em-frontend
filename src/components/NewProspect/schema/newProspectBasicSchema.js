@@ -59,11 +59,12 @@ const prospectBasicSchemaGeneral = [
     {
       component: 'Input',
       label: 'Phone',
-      type: 'text',
+      type: 'tel',
       placeholder: 'Enter prospect’s phone number',
       name: 'phone',
       model: 'phone',
       class: 'w-5/12  pr-5',
+      isMask: true,
     },
 
     {
@@ -155,11 +156,12 @@ const prospectBasicSchemaSpouse = [
     {
       component: 'Input',
       label: 'Phone',
-      type: 'text',
+      type: 'tel',
       placeholder: 'Enter prospect’s phone number',
       name: 'phoneSpouse',
       model: 'phoneSpouse',
       class: 'w-5/12  pr-5',
+      isMask: true,
     },
     {
       component: 'DatePicker',

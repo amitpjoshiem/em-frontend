@@ -7,6 +7,7 @@
     </div>
     <div class="relative">
       <input
+        v-maska="getMask"
         novalidate
         :name="name"
         :type="type"
@@ -61,9 +62,11 @@ import IconSearch from '@/assets/svg/icon-search.svg'
 import IconInputError from '@/assets/svg/icon-input-error.svg'
 import { useField } from 'vee-validate'
 import { computed } from 'vue'
+import { maska } from 'maska'
 
 export default {
   name: 'Input',
+  directives: { maska },
   props: {
     placeholder: {
       type: String,
@@ -87,6 +90,11 @@ export default {
       required: false,
       default: undefined,
     },
+    isMask: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   emits: ['update:value'],
   setup(props, { emit }) {
@@ -108,6 +116,11 @@ export default {
 
     const showError = computed(() => {
       return meta.touched && Boolean(errorMessage) && !meta.valid
+    })
+
+    const getMask = computed(() => {
+      if (props.isMask) return '(###) ###-####'
+      return ''
     })
 
     const handleChangeExtended = (e) => {
@@ -137,6 +150,7 @@ export default {
       meta,
       showIconInput,
       typeShowIconIput,
+      getMask,
     }
   },
   methods: {},
