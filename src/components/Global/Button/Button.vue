@@ -2,11 +2,13 @@
   <button
     :type="type"
     :disabled="disabled"
+    class="rounded-md h-10"
     :class="{
-      'bg-primary rounded-md h-10 text-white': defaultPrimary,
+      'bg-primary  text-white': defaultPrimary,
       'w-full': full,
       'bg-input-border rounded-md h-10 text-color-grey cursor-not-allowed ':
         disabled,
+      'bg-activity px-7 text-white text-xss': defaultBlueBtn,
     }"
   >
     {{ textBtn }}
@@ -22,6 +24,10 @@ export default {
       default: false,
     },
     defaultBtn: {
+      type: Boolean,
+      default: false,
+    },
+    defaultBlueBtn: {
       type: Boolean,
       default: false,
     },

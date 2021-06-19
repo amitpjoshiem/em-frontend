@@ -190,6 +190,7 @@ const prospectBasicSchemaHousing = [
       name: 'marketHousing',
       placeholder: '$123000',
       class: 'w-5/12 pr-5',
+      model: 'marketHousing',
     },
   ],
   [
@@ -240,6 +241,7 @@ const prospectBasicSchemaEmployment = [
       component: 'Label',
       label: 'Contact prospect',
       class: 'w-5/12 pr-5',
+      model: 'contactModel',
     },
   ],
   [
@@ -276,6 +278,7 @@ const prospectBasicSchemaEmployment = [
       component: 'Label',
       label: 'Spouse',
       class: 'w-5/12 pr-5',
+      model: 'sposeLabel',
     },
   ],
   [
@@ -351,13 +354,24 @@ const prospectBasicSchemaOther = [
   [
     {
       component: 'TextArea',
-      label: 'Goal for retiretment money',
+      label: 'Does the prospect currently work with the advisor?',
       type: 'textarea',
       placeholder: '',
-      name: 'companyretiretmentmoney',
-      model: 'companyretiretmentmoney',
+      name: 'doesTheProspect',
+      model: 'doesTheProspect',
       class: 'w-full',
       rows: 4,
+    },
+  ],
+  [
+    {
+      component: 'Radio',
+      optionOne: 'Yes',
+      optionTwo: 'No',
+      class: 'w-5/24',
+      name: 'retired',
+      model: 'retired',
+      label: 'Retired?',
     },
   ],
 ]

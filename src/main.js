@@ -29,6 +29,8 @@ import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
 import Radio from '@/components/Global/Radio.vue'
 import DatePicker from '@/components/Global/DatePicker.vue'
+import NextButton from '@/components/Global/Button/NextButton.vue'
+import BackButton from '@/components/Global/Button/BackButton.vue'
 
 import {
   ElProgress,
@@ -85,6 +87,8 @@ const components = [
   ElDatePicker,
   DatePicker,
   ElPopover,
+  NextButton,
+  BackButton,
 ]
 
 components.forEach((component) => {

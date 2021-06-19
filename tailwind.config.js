@@ -43,6 +43,7 @@ module.exports = {
         xxs: '11px',
         xss: '13px',
         smm: '15px',
+        title: '18px',
         xll: '22px',
       },
       borderRadius: {

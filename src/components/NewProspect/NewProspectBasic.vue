@@ -16,19 +16,34 @@
     </div>
     <div class="border-b border-color-grey px-20 pt-7">
       <span class="text-xl font-semibold">Housing Information</span>
-      <SchemaForm :schema="schemaHousing" schema-row-classes="pb-6" />
+      <SchemaFormWithValidation
+        :schema="schemaHousing"
+        schema-row-classes="pb-6"
+      />
     </div>
     <div class="border-b border-color-grey px-20 pt-7">
       <span class="text-xl font-semibold">Housing Information</span>
-      <SchemaForm :schema="schemaEmployment" schema-row-classes="pb-6" />
+      <SchemaFormWithValidation
+        :schema="schemaEmployment"
+        schema-row-classes="pb-6"
+      />
     </div>
     <div class="border-b border-color-grey px-20 pt-7">
       <span class="text-xl font-semibold">Housing Information</span>
-      <SchemaForm :schema="schemaEmployment" schema-row-classes="pb-6" />
+      <SchemaFormWithValidation
+        :schema="schemaEmployment"
+        schema-row-classes="pb-6"
+      />
     </div>
     <div class="px-20 pt-7">
       <span class="text-xl font-semibold">Other</span>
-      <SchemaForm :schema="schemaOther" schema-row-classes="pb-6" />
+      <SchemaFormWithValidation
+        :schema="schemaOther"
+        schema-row-classes="pb-6"
+      />
+    </div>
+    <div class="my-6 flex justify-end">
+      <Button default-blue-btn text-btn="Go to the assets & income" />
     </div>
   </div>
 </template>
@@ -68,7 +83,7 @@ export default {
     const schemaHousing = ref(prospectBasicSchemaHousing)
     const schemaEmployment = ref(prospectBasicSchemaEmployment)
     const schemaOther = ref(prospectBasicSchemaOther)
-    const formData = ref({ firstName: '' })
+    const formData = ref({})
     useSchemaForm(formData)
 
     return {
