@@ -9,6 +9,7 @@
       'bg-input-border rounded-md h-10 text-color-grey cursor-not-allowed ':
         disabled,
       'bg-activity px-7 text-white text-xss': defaultBlueBtn,
+      'bg-color-grey text-xss px-7 text-activity': defaultGrayBtn,
     }"
   >
     {{ textBtn }}
@@ -28,6 +29,10 @@ export default {
       default: false,
     },
     defaultBlueBtn: {
+      type: Boolean,
+      default: false,
+    },
+    defaultGrayBtn: {
       type: Boolean,
       default: false,
     },

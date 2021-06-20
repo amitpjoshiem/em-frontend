@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="flex items-center justify-between">
-      <label class="label block text-main text-xss font-semibold pb-2">{{
-        label
-      }}</label>
+      <label
+        class="label block text-main text-xss font-semibold pb-2"
+        :class="labelGray ? 'text-gray03' : 'text-main'"
+        >{{ label }}</label
+      >
     </div>
     <div class="relative">
       <input
@@ -70,7 +72,8 @@ export default {
   props: {
     placeholder: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     type: {
       type: String,
@@ -94,6 +97,10 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    labelGray: {
+      type: Boolean,
+      required: false,
     },
   },
   emits: ['update:value'],

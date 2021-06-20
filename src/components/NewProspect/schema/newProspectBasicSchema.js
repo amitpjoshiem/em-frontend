@@ -240,7 +240,7 @@ const prospectBasicSchemaEmployment = [
     {
       component: 'Label',
       label: 'Contact prospect',
-      class: 'w-5/12 pr-5',
+      class: 'w-5/12 pr-5 text-gray03',
       model: 'contactModel',
     },
   ],
@@ -277,7 +277,7 @@ const prospectBasicSchemaEmployment = [
     {
       component: 'Label',
       label: 'Spouse',
-      class: 'w-5/12 pr-5',
+      class: 'w-5/12 pr-5  text-gray03',
       model: 'sposeLabel',
     },
   ],
