@@ -10,13 +10,30 @@
         disabled,
       'bg-activity px-7 text-white text-xss': defaultBlueBtn,
       'bg-color-grey text-xss px-7 text-activity': defaultGrayBtn,
+      'bg-color-link-btn w-full flex justify-center items-center text-xss font-semibold':
+        defaultLinkBtn,
+      'border border-dashed border-input-border w-full flex justify-center items-center text-xss font-semibold':
+        transparentBtn,
     }"
   >
+    <InlineSvg
+      v-if="witchIcon && iconType === 'lock'"
+      :src="IconLock"
+      class="mr-2"
+    />
+    <InlineSvg
+      v-if="witchIcon && iconType === 'upload'"
+      :src="IconUpload"
+      class="mr-2"
+    />
     {{ textBtn }}
   </button>
 </template>
 
 <script>
+import IconLock from '@/assets/svg/icon-lock.svg'
+import IconUpload from '@/assets/svg/icon-upload.svg'
+
 export default {
   name: 'Button',
   props: {
@@ -33,6 +50,10 @@ export default {
       default: false,
     },
     defaultGrayBtn: {
+      type: Boolean,
+      default: false,
+    },
+    defaultLinkBtn: {
       type: Boolean,
       default: false,
     },
@@ -76,7 +97,24 @@ export default {
       type: Boolean,
       default: false,
     },
+    witchIcon: {
+      type: Boolean,
+      default: false,
+    },
+    iconType: {
+      type: String,
+      default: '',
+    },
+    transparentBtn: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup() {},
+  setup() {
+    return {
+      IconLock,
+      IconUpload,
+    }
+  },
 }
 </script>

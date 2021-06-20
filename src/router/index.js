@@ -32,6 +32,14 @@ const routes = [
           ),
       },
       {
+        path: '/new-prospect-assets-acounts',
+        name: 'newprospectassetsacounts',
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ '../components/NewProspect/NewProspectAssetsAcounts.vue'
+          ),
+      },
+      {
         path: '',
         redirect: () => {
           return { name: 'dashboard' }
