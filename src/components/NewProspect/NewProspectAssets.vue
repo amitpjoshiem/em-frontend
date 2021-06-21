@@ -21,7 +21,7 @@
       </div>
 
       <div>
-        <Button default-blue-btn text-btn="Go to the assets & income" />
+        <Button default-blue-btn text-btn="Go to the assets &amp; income" />
       </div>
     </div>
   </div>

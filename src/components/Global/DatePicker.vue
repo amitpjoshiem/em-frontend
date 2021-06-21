@@ -29,7 +29,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="css" scoped>
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 100%;

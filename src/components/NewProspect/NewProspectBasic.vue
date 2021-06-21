@@ -45,7 +45,7 @@
     <div class="my-6 flex justify-end">
       <Button
         default-blue-btn
-        text-btn="Go to the assets & income"
+        text-btn="Go to the assets &amp; income"
         @click="saveStep"
       />
     </div>
