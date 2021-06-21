@@ -42,8 +42,7 @@
       <div class="border-l border-color-grey h-16" />
       <div class="flex items-center justify-center pl-5 cursor-pointer">
         <Avatar />
-        <span class="text-main pl-2">Adam K.</span>
-        <img class="w-[8px] ml-[11px]" src="../assets/img/icon-up.png" />
+        <UserAction />
       </div>
     </div>
   </div>
@@ -51,10 +50,12 @@
 
 <script>
 import Search from '@/components/Global/Input/Search.vue'
+import UserAction from '@/components/UserAction.vue'
 export default {
   name: 'Header',
   components: {
     Search,
+    UserAction,
   },
 }
 </script>
