@@ -24,7 +24,7 @@
 
       <form class="mt-6" @submit="loginHandler">
         <div>
-          <Input
+          <InputTextForm
             :placeholder="'Enter your e-mail'"
             :type="'email'"
             name="email"
@@ -46,7 +46,7 @@
           </h1>
 
           <div class="mt-4">
-            <Input
+            <InputTextForm
               v-model:value="otp"
               :placeholder="'Paste login code'"
               :type="'text'"

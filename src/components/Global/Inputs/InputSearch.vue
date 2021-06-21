@@ -1,14 +1,14 @@
 <template>
-  <InputBasic v-bind="{ ...$attrs, ...$props }" type="search">
+  <InputText v-bind="{ ...$attrs, ...$props }" type="search">
     <template #icon="iconProps">
       <Icon v-bind="iconProps" />
     </template>
-  </InputBasic>
+  </InputText>
 </template>
 
 <script>
 import InputVue from '../Input/Input.vue'
-import SearchInputIcon from '../Inputs/SearchIcon.vue'
+import SearchInputIcon from './Icons/SearchIcon.vue'
 
 export default {
   name: 'InputSearch',

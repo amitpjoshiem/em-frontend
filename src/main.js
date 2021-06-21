@@ -24,7 +24,8 @@ import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
 import DropDown from '@/components/Global/DropDown.vue'
-import InputBasic from '@/components/Global/Inputs/InputBasic.vue'
+import InputText from '@/components/Global/Inputs/InputText.vue'
+import InputTextForm from '@/components/Global/Inputs/InputTextForm.js'
 import InputPassword from '@/components/Global/Inputs/InputPassword.vue'
 import InputSearch from '@/components/Global/Inputs/InputSearch.vue'
 import Checkbox from '@/components/Global/Сheckbox.vue'
@@ -76,7 +77,8 @@ const components = [
   ElDropdownMenu,
   ElDropdownItem,
   DropDown,
-  InputBasic,
+  InputText,
+  InputTextForm,
   InputPassword,
   InputSearch,
   SchemaForm,

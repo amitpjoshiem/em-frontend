@@ -1,19 +1,21 @@
 <template>
-  <InputBasic v-bind="{ ...$attrs, ...$props }" type="password">
+  <Input v-bind="{ ...$attrs, ...$props }" type="password">
     <template #icon="iconProps">
       <Icon v-bind="iconProps" />
     </template>
-  </InputBasic>
+  </Input>
 </template>
 
 <script>
 import InputVue from '../Input/Input.vue'
-import PasswordInputIcon from '../Inputs/PasswordIcon.vue'
+import PasswordInputIcon from './Icons/PasswordIcon.vue'
+import InputTextForm from './InputTextForm.js'
 
 export default {
   name: 'InputPassword',
   components: {
     Icon: PasswordInputIcon,
+    Input: InputTextForm,
   },
   inheritAttrs: false,
   props: {
