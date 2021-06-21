@@ -10,11 +10,44 @@ const routes = [
     component: Home,
     children: [
       {
-        path: '/dashboard',
+        path: 'dashboard',
         name: 'dashboard',
         component: () =>
           import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
       },
+      {
+        path: 'new-prospect',
+        name: 'newprospect',
+        component: () =>
+          import(
+            /* webpackChunkName: "newprospect" */ '../views/NewProspect.vue'
+          ),
+        children: [
+          {
+            path: 'basic',
+            name: 'basic-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectBasic.vue'
+              ),
+          },
+          {
+            path: 'assets',
+            name: 'assets-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectAssets.vue'
+              ),
+          },
+          {
+            path: '',
+            redirect: () => {
+              return { name: 'basic-information' }
+            },
+          },
+        ],
+      },
+
       {
         path: '',
         redirect: () => {

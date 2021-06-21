@@ -5,6 +5,12 @@ import router from './router'
 import store from './store'
 
 import InlineSvg from 'vue-inline-svg'
+import {
+  SchemaForm,
+  SchemaWizard,
+  SchemaFormFactory,
+  useSchemaForm,
+} from 'formvuelate'
 
 // Global Component Import
 import Input from '@/components/Global/Input/Input.vue'
@@ -18,12 +24,26 @@ import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
 import DropDown from '@/components/Global/DropDown.vue'
+import Checkbox from '@/components/Global/Сheckbox.vue'
+import Label from '@/components/Global/Label.vue'
+import TextArea from '@/components/Global/TextArea.vue'
+import Radio from '@/components/Global/Radio.vue'
+import DatePicker from '@/components/Global/DatePicker.vue'
+import NextButton from '@/components/Global/Button/NextButton.vue'
+import BackButton from '@/components/Global/Button/BackButton.vue'
 
 import {
   ElProgress,
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
+  ElSteps,
+  ElStep,
+  ElCheckbox,
+  ElRadio,
+  ElInput,
+  ElDatePicker,
+  ElPopover,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -47,10 +67,28 @@ const components = [
   TypeUserLabel,
   Select,
   ItemsPerPage,
+  ElSteps,
+  ElStep,
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
   DropDown,
+  SchemaForm,
+  SchemaWizard,
+  SchemaFormFactory,
+  useSchemaForm,
+  Checkbox,
+  ElCheckbox,
+  ElRadio,
+  Label,
+  TextArea,
+  ElInput,
+  Radio,
+  ElDatePicker,
+  DatePicker,
+  ElPopover,
+  NextButton,
+  BackButton,
 ]
 
 components.forEach((component) => {

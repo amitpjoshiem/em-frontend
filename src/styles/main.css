@@ -1,0 +1,22 @@
+.schema-row {
+  display: flex;
+}
+
+.el-radio__label{
+  font-size: 13px;
+}
+
+.el-radio__input.is-checked+.el-radio__label{
+  color: #424450;
+}
+
+.el-textarea__inner{
+  background: #FFF;
+  border: 1px solid #D4DDEB;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.el-textarea__inner:focus{
+  box-shadow: 0px 0px 1.5px rgba(102, 182, 255, 0.6);
+  border: 1px solid #66B6FF;
+}
