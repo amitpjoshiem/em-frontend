@@ -22,8 +22,6 @@
           rounded-[10px]
           pt-3
           bg-white
-          w-[118px]
-          h-[126px]
         "
       >
         <div class="flex text-small items-center justify-between px-2.5">
@@ -47,8 +45,6 @@
           rounded-[10px]
           pt-3
           bg-white
-          w-[118px]
-          h-[126px]
         "
       >
         <div class="flex text-small items-center justify-between px-2.5">

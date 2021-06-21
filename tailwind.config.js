@@ -26,6 +26,7 @@ module.exports = {
         'orange-border': '#FF9979',
         'color-green-bg': '#76E1BB',
         'color-error': '#FF92A5',
+        'color-link-btn': '#E2E9F9',
       },
       fontFamily: {
         sans: [
@@ -43,6 +44,7 @@ module.exports = {
         xxs: '11px',
         xss: '13px',
         smm: '15px',
+        title: '18px',
         xll: '22px',
       },
       borderRadius: {

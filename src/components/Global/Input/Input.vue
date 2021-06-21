@@ -1,10 +1,15 @@
 <template>
   <div>
     <div class="flex items-center justify-between">
-      <label class="label block text-sm text-main text-xss">{{ label }}</label>
+      <label
+        class="label block text-main text-xss font-semibold pb-2"
+        :class="labelGray ? 'text-gray03' : 'text-main'"
+        >{{ label }}</label
+      >
     </div>
     <div class="relative">
       <input
+        v-maska="getMask"
         novalidate
         :name="name"
         :type="type"
@@ -59,13 +64,16 @@ import IconSearch from '@/assets/svg/icon-search.svg'
 import IconInputError from '@/assets/svg/icon-input-error.svg'
 import { useField } from 'vee-validate'
 import { computed } from 'vue'
+import { maska } from 'maska'
 
 export default {
   name: 'Input',
+  directives: { maska },
   props: {
     placeholder: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     type: {
       type: String,
@@ -73,7 +81,8 @@ export default {
     },
     label: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     name: {
       type: String,
@@ -83,6 +92,15 @@ export default {
       type: String,
       required: false,
       default: undefined,
+    },
+    isMask: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    labelGray: {
+      type: Boolean,
+      required: false,
     },
   },
   emits: ['update:value'],
@@ -105,6 +123,11 @@ export default {
 
     const showError = computed(() => {
       return meta.touched && Boolean(errorMessage) && !meta.valid
+    })
+
+    const getMask = computed(() => {
+      if (props.isMask) return '(###) ###-####'
+      return ''
     })
 
     const handleChangeExtended = (e) => {
@@ -134,22 +157,35 @@ export default {
       meta,
       showIconInput,
       typeShowIconIput,
+      getMask,
     }
   },
   methods: {},
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scope="this api replaced by slot-scope in 2.5.0+">
 .input {
-  box-shadow: 0px 0px 1.5px rgba(102, 182, 255, 0.6);
   &::placeholder {
     color: #b2bccd;
     font-size: 13px;
   }
   &:focus {
+    outline: none;
     border: 1px solid #66b6ff;
     box-shadow: 0px 0px 1.5px rgba(102, 182, 255, 0.6);
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  &[type='number'] {
+    -moz-appearance: textfield;
   }
 }
 </style>
