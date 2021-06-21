@@ -28,20 +28,3 @@ export default {
   },
 }
 </script>
-
-<style lang="css" scoped>
-.el-date-editor.el-input,
-.el-date-editor.el-input__inner {
-  width: 100%;
-}
-.el-input--prefix .el-input__inner {
-  padding-left: 20px;
-  padding-right: 0;
-}
-.el-input__prefix {
-  display: none;
-}
-.el-input__inner {
-  height: 36px;
-}
-</style>
