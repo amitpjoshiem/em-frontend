@@ -18,6 +18,9 @@ import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
 import DropDown from '@/components/Global/DropDown.vue'
+import InputBasic from '@/components/Global/Inputs/InputBasic.vue'
+import InputPassword from '@/components/Global/Inputs/InputPassword.vue'
+import InputSearch from '@/components/Global/Inputs/InputSearch.vue'
 
 import {
   ElProgress,
@@ -51,6 +54,9 @@ const components = [
   ElDropdownMenu,
   ElDropdownItem,
   DropDown,
+  InputBasic,
+  InputPassword,
+  InputSearch,
 ]
 
 components.forEach((component) => {

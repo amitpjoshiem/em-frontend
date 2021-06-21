@@ -33,11 +33,10 @@
         </div>
 
         <div class="mt-4">
-          <Input
-            :placeholder="'Enter your password'"
-            :type="'password'"
+          <InputPassword
+            placeholder="Enter your password"
             name="password"
-            :label="'Password'"
+            label="Password"
           />
         </div>
 
