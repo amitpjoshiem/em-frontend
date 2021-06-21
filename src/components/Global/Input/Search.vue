@@ -1,8 +1,7 @@
 <template>
   <div class="absolute top-[15px]">
-    <Input
+    <InputSearch
       :placeholder="'Search members'"
-      :type="'search'"
       class="w-[320px]"
       name="search"
     />
