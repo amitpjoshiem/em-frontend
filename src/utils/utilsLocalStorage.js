@@ -11,3 +11,11 @@ export function saveToStorage(storage, key, value) {
     console.error(error)
   }
 }
+
+export function removeToStorage(storage, key, value) {
+  try {
+    storage.removeItem(key, JSON.stringify(value))
+  } catch (error) {
+    console.error(error)
+  }
+}

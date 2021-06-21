@@ -30,7 +30,7 @@
       ${{ user.balance }}
     </div>
     <div class="col-span-1 flex justify-center items-center">
-      <DropDown grey />
+      <DropDown element-action icon-gray :options="actionsOptions" />
     </div>
   </div>
 </template>
@@ -49,8 +49,19 @@ export default {
     },
   },
   setup() {
+    const actionsOptions = [
+      {
+        title: 'Basic Information',
+        command: 'basic-information',
+      },
+      {
+        title: 'Blueprint Report',
+        command: 'blueprint-report',
+      },
+    ]
     return {
       IconProfitUp,
+      actionsOptions,
     }
   },
 }

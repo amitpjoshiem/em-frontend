@@ -36,7 +36,12 @@
           </td>
           <td class="font-semibold">${{ user.netWorth }}</td>
           <td class="pr-5">
-            <DropDown grey class="ml-2.5" />
+            <DropDown
+              element-action
+              with-border
+              class="ml-2.5"
+              :options="actionsOptions"
+            />
           </td>
         </tr>
       </tbody>
@@ -51,7 +56,17 @@ export default {
   name: 'UsersListTable',
   setup() {
     const { data: usersList } = useUserList()
-    return { usersList }
+    const actionsOptions = [
+      {
+        title: 'Basic Information',
+        command: 'basic-information',
+      },
+      {
+        title: 'Blueprint Report',
+        command: 'blueprint-report',
+      },
+    ]
+    return { usersList, actionsOptions }
   },
 
   computed: {

@@ -4,7 +4,12 @@
       <span class="text-smm font-semibold">Pipe Line</span>
       <div class="flex">
         <Select :options="options" large />
-        <DropDown border class="ml-2.5" />
+        <DropDown
+          with-border
+          element-action
+          class="ml-2.5"
+          :options="actionsOptions"
+        />
       </div>
     </div>
 
@@ -70,10 +75,21 @@ import IconUpArrow from '@/assets/svg/up-arrow.svg'
 export default {
   name: 'PipeLine',
   setup() {
+    const actionsOptions = [
+      {
+        title: 'Item 1',
+        command: 'item-1',
+      },
+      {
+        title: 'Item 2',
+        command: 'item2',
+      },
+    ]
     return {
       IconTotal,
       IconMembers,
       IconUpArrow,
+      actionsOptions,
     }
   },
   data() {

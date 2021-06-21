@@ -1,0 +1,9 @@
+.el-dropdown-menu__item {
+  display: flex;
+  align-items: center;
+  color: #424450;
+}
+
+.el-dropdown-menu__item:not(:last-child) {
+  border-bottom: 1px solid #ebf0fa;
+}

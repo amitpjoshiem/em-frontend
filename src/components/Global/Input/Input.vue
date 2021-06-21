@@ -146,7 +146,6 @@ export default {
   &::placeholder {
     color: #b2bccd;
     font-size: 13px;
-    font-family: 'Eina04';
   }
   &:focus {
     border: 1px solid #66b6ff;
