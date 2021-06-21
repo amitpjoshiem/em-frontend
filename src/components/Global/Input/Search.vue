@@ -1,6 +1,10 @@
 <template>
   <div class="absolute top-[15px]">
-    <InputSearch :placeholder="'Search members'" class="w-[320px]" />
+    <InputSearch
+      :placeholder="'Search members'"
+      class="w-[320px]"
+      name="search"
+    />
     <ul
       v-if="false"
       class="bg-white border rounded-md border-input-border w-[320px] mt-[2px]"

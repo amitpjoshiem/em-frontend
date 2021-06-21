@@ -10,12 +10,16 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
+    "@formvuelate/plugin-lookup": "^2.1.0",
+    "@formvuelate/plugin-vee-validate": "^2.2.1",
     "@j-t-mcc/vue3-chartjs": "^1.1.2",
     "@tailwindcss/postcss7-compat": "^2.1.2",
     "autoprefixer": "^9",
     "chart.js": "^3.3.2",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.44",
+    "formvuelate": "^3.1.1",
+    "maska": "^1.4.2",
     "postcss": "^7",
     "register-service-worker": "^1.7.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
