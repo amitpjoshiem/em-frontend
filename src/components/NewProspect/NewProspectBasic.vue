@@ -43,7 +43,11 @@
       />
     </div>
     <div class="my-6 flex justify-end">
-      <Button default-blue-btn text-btn="Go to the assets & income" />
+      <Button
+        default-blue-btn
+        text-btn="Go to the assets & income"
+        @click="saveStep"
+      />
     </div>
   </div>
 </template>
@@ -66,6 +70,7 @@ import {
 } from '@/components/NewProspect/schema/newProspectBasicSchema'
 
 import { ref, markRaw } from 'vue'
+import { useRouter } from 'vue-router'
 
 markRaw(Input)
 markRaw(Radio)
@@ -78,6 +83,8 @@ export default {
   name: 'NewProspectBasic',
   components: { SchemaFormWithValidation },
   setup() {
+    const router = useRouter()
+
     const schemaGeneral = ref(prospectBasicSchemaGeneral)
     const schemaSpouse = ref(prospectBasicSchemaSpouse)
     const schemaHousing = ref(prospectBasicSchemaHousing)
@@ -86,12 +93,17 @@ export default {
     const formData = ref({})
     useSchemaForm(formData)
 
+    const saveStep = () => {
+      router.push({ name: 'assets-information' })
+    }
+
     return {
       schemaGeneral,
       schemaSpouse,
       schemaHousing,
       schemaEmployment,
       schemaOther,
+      saveStep,
     }
   },
 }
