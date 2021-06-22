@@ -78,9 +78,6 @@ module.exports = {
         '24/24': '100%',
       },
     },
-    // fontFamily: {
-    //   body: ['Eina01', 'Comic Sans', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-    // },
   },
   variants: {
     extend: {},

@@ -169,7 +169,6 @@ export default {
   &::placeholder {
     color: #b2bccd;
     font-size: 13px;
-    font-family: 'Eina04';
   }
   &:focus {
     outline: none;

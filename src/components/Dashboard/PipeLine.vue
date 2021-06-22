@@ -4,7 +4,25 @@
       <span class="text-smm font-semibold">Pipe Line</span>
       <div class="flex">
         <Select :options="options" large />
-        <DropDown border class="ml-2.5" />
+        <DropDown class="ml-2.5" :options="actionsOptions">
+          <template #titleDropDown>
+            <span
+              class="
+                cursor-pointer
+                bg-white
+                rounded
+                flex
+                justify-center
+                items-center
+                py-2
+                px-3
+                border border-color-grey
+              "
+            >
+              <InlineSvg :src="IconAction" />
+            </span>
+          </template>
+        </DropDown>
       </div>
     </div>
 
@@ -62,14 +80,27 @@
 import IconTotal from '@/assets/svg/total.svg'
 import IconMembers from '@/assets/svg/members.svg'
 import IconUpArrow from '@/assets/svg/up-arrow.svg'
+import IconAction from '@/assets/svg/icon-action.svg'
 
 export default {
   name: 'PipeLine',
   setup() {
+    const actionsOptions = [
+      {
+        title: 'Item 1',
+        command: 'item-1',
+      },
+      {
+        title: 'Item 2',
+        command: 'item2',
+      },
+    ]
     return {
       IconTotal,
       IconMembers,
       IconUpArrow,
+      actionsOptions,
+      IconAction,
     }
   },
   data() {

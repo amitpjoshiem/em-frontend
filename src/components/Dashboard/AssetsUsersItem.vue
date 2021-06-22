@@ -30,13 +30,32 @@
       ${{ user.balance }}
     </div>
     <div class="col-span-1 flex justify-center items-center">
-      <DropDown grey />
+      <DropDown :options="actionsOptions">
+        <template #titleDropDown>
+          <span
+            class="
+              cursor-pointer
+              bg-white
+              rounded
+              flex
+              justify-center
+              items-center
+              py-2
+              px-3
+            "
+          >
+            <InlineSvg :src="IconActionGray" />
+          </span>
+        </template>
+      </DropDown>
     </div>
   </div>
 </template>
 
 <script>
 import IconProfitUp from '@/assets/svg/profit-up.svg'
+import IconActionGray from '@/assets/svg/icon-action-gray.svg'
+
 import { User } from '@/components/Dashboard/DTO/usersList.js'
 
 export default {
@@ -49,8 +68,20 @@ export default {
     },
   },
   setup() {
+    const actionsOptions = [
+      {
+        title: 'Basic Information',
+        command: 'basic-information',
+      },
+      {
+        title: 'Blueprint Report',
+        command: 'blueprint-report',
+      },
+    ]
     return {
       IconProfitUp,
+      actionsOptions,
+      IconActionGray,
     }
   },
 }
