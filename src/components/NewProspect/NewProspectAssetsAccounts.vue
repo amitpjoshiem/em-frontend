@@ -116,7 +116,7 @@ export default {
     }
 
     const backStep = () => {
-      router.push({ name: 'basic-information' })
+      router.push({ name: 'assets-information' })
     }
 
     return {
