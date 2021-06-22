@@ -27,6 +27,7 @@ module.exports = {
         'color-green-bg': '#76E1BB',
         'color-error': '#FF92A5',
         'color-link-btn': '#E2E9F9',
+        'title-gray': '#C7CFE3',
       },
       fontFamily: {
         sans: [
