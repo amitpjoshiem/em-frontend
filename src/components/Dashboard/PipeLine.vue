@@ -4,12 +4,25 @@
       <span class="text-smm font-semibold">Pipe Line</span>
       <div class="flex">
         <Select :options="options" large />
-        <DropDown
-          with-border
-          element-action
-          class="ml-2.5"
-          :options="actionsOptions"
-        />
+        <DropDown class="ml-2.5" :options="actionsOptions">
+          <template #titleDropDown>
+            <span
+              class="
+                cursor-pointer
+                bg-white
+                rounded
+                flex
+                justify-center
+                items-center
+                py-2
+                px-3
+                border border-color-grey
+              "
+            >
+              <InlineSvg :src="IconAction" />
+            </span>
+          </template>
+        </DropDown>
       </div>
     </div>
 
@@ -67,6 +80,7 @@
 import IconTotal from '@/assets/svg/total.svg'
 import IconMembers from '@/assets/svg/members.svg'
 import IconUpArrow from '@/assets/svg/up-arrow.svg'
+import IconAction from '@/assets/svg/icon-action.svg'
 
 export default {
   name: 'PipeLine',
@@ -86,6 +100,7 @@ export default {
       IconMembers,
       IconUpArrow,
       actionsOptions,
+      IconAction,
     }
   },
   data() {

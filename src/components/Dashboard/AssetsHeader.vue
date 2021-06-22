@@ -3,16 +3,32 @@
     <span class="text-smm font-semibold">Assets</span>
     <div class="flex items-center">
       <Select :options="options" large />
-      <DropDown
-        with-border
-        element-action
-        class="ml-2"
-        :options="actionsOptions"
-      />
+      <DropDown class="ml-2" :options="actionsOptions">
+        <template #titleDropDown>
+          <span
+            class="
+              cursor-pointer
+              bg-white
+              rounded
+              flex
+              justify-center
+              items-center
+              py-2
+              px-3
+              border border-color-grey
+            "
+          >
+            <InlineSvg :src="IconAction" />
+          </span>
+        </template>
+      </DropDown>
     </div>
   </div>
 </template>
+
 <script>
+import IconAction from '@/assets/svg/icon-action.svg'
+
 export default {
   name: 'AssetsHeader',
   setup() {
@@ -25,8 +41,15 @@ export default {
         title: 'Item 2',
         command: 'item2',
       },
+      {
+        title: 'Item 3',
+        command: 'item3',
+      },
     ]
-    return { actionsOptions }
+    return {
+      actionsOptions,
+      IconAction,
+    }
   },
   data() {
     return {

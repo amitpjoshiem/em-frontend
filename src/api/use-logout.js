@@ -2,7 +2,7 @@ import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
-import { removeToStorage } from '@/utils/utilsLocalStorage'
+import { removeFromStorage } from '@/utils/utilsLocalStorage'
 
 const useLogout = () => {
   const router = useRouter()
@@ -13,7 +13,7 @@ const useLogout = () => {
   })
 
   const removeStoreAccessTokenAndRedirect = () => {
-    removeToStorage(localStorage, 'access_token', response.value.access_token)
+    removeFromStorage(localStorage, 'access_token', response.value.access_token)
     store.commit('auth/setAuthUser', false)
     router.push({ name: 'home' })
   }

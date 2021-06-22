@@ -36,12 +36,24 @@
           </td>
           <td class="font-semibold">${{ user.netWorth }}</td>
           <td class="pr-5">
-            <DropDown
-              element-action
-              with-border
-              class="ml-2.5"
-              :options="actionsOptions"
-            />
+            <DropDown class="ml-2.5" :options="actionsOptions">
+              <template #titleDropDown>
+                <span
+                  class="
+                    cursor-pointer
+                    bg-white
+                    rounded
+                    flex
+                    justify-center
+                    items-center
+                    py-2
+                    px-3
+                  "
+                >
+                  <InlineSvg :src="IconActionGray" />
+                </span>
+              </template>
+            </DropDown>
           </td>
         </tr>
       </tbody>
@@ -51,6 +63,7 @@
 
 <script>
 import { useUserList } from '@/components/UsersListTable/DTO/usersList'
+import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 
 export default {
   name: 'UsersListTable',
@@ -66,7 +79,11 @@ export default {
         command: 'blueprint-report',
       },
     ]
-    return { usersList, actionsOptions }
+    return {
+      usersList,
+      actionsOptions,
+      IconActionGray,
+    }
   },
 
   computed: {
