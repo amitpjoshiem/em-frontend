@@ -1,6 +1,9 @@
 <template>
   <aside class="bg-primary min-h-screen flex flex-col w-[68px]">
-    <img src="../assets/img/logo.png" />
+    <router-link :to="{ name: 'dashboard' }">
+      <img src="../assets/img/logo.png" />
+    </router-link>
+
     <div v-if="isAuth" class="flex flex-col pt-32 items-center flex-grow">
       <div
         class="

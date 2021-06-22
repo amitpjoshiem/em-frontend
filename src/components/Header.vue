@@ -15,28 +15,27 @@
       <Search />
     </div>
     <div class="flex items-center col-span-2 justify-end">
-      <div
-        class="
-          h-[36px]
-          bg-color-grey
-          rounded-md
-          border-input-border border
-          flex
-          items-center
-          justify-center
-          text-primary text-xss
-          cursor-pointer
-          mr-5
-        "
-      >
-        <img class="h-[13px] pr-3 pl-[10px]" src="../assets/img/plus.png" />
+      <router-link :to="{ name: 'basic-information' }">
+        <div
+          class="
+            h-[36px]
+            bg-color-grey
+            rounded-md
+            border-input-border border
+            flex
+            items-center
+            justify-center
+            text-primary text-xss
+            cursor-pointer
+            mr-5
+          "
+        >
+          <img class="h-[13px] pr-3 pl-[10px]" src="../assets/img/plus.png" />
 
-        <div class="pr-2">
-          <router-link :to="{ name: 'basic-information' }">
-            Add new
-          </router-link>
+          <div class="pr-2">Add new</div>
         </div>
-      </div>
+      </router-link>
+
       <div class="border-l border-color-grey h-16" />
       <div>
         <img
