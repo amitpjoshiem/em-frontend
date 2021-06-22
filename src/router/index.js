@@ -40,6 +40,14 @@ const routes = [
               ),
           },
           {
+            path: 'assets-acount',
+            name: 'assetsacount',
+            component: () =>
+              import(
+                /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectAssetsAccounts.vue'
+              ),
+          },
+          {
             path: '',
             redirect: () => {
               return { name: 'basic-information' }

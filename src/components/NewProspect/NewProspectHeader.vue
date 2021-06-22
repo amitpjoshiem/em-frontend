@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between">
+  <div class="flex justify-between pb-5">
     <BackButton @click="back" />
     <span class="text-title text-main font-semibold">Basic information</span>
     <NextButton @click="back" />
