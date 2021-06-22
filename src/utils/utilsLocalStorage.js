@@ -1,6 +1,5 @@
 export function readFromStorage(storage, key) {
   const item = storage.getItem(key)
-  console.log('REad from', item, key)
   if (item) return JSON.parse(item)
   return null
 }
