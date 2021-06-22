@@ -17,11 +17,15 @@
 
     <div class="flex justify-end my-6">
       <div class="pr-3">
-        <Button default-gray-btn text-btn="Back" />
+        <Button default-gray-btn text-btn="Back" @click="backStep" />
       </div>
 
       <div>
-        <Button default-blue-btn text-btn="Go to the assets &amp; income" />
+        <Button
+          default-blue-btn
+          text-btn="Go to the assets &amp; income"
+          @click="saveStep"
+        />
       </div>
     </div>
   </div>
@@ -30,6 +34,7 @@
 <script>
 import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
 import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
+import { useRouter } from 'vue-router'
 
 import Input from '@/components/Global/Input/Input.vue'
 import Radio from '@/components/Global/Radio.vue'
@@ -55,16 +60,27 @@ export default {
   name: 'NewProspectAssets',
   components: { SchemaFormWithValidation },
   setup() {
+    const router = useRouter()
     const schemaCurrent = ref(prospectAssetsSchemaCurrent)
     const schemaLiquid = ref(prospectAssetsSchemaLiquid)
     const schemaNoLiquid = ref(prospectAssetsSchemaNoLiquid)
     const formData = ref({})
     useSchemaForm(formData)
 
+    const saveStep = () => {
+      router.push({ name: 'assetsacount' })
+    }
+
+    const backStep = () => {
+      router.push({ name: 'basic-information' })
+    }
+
     return {
       schemaCurrent,
       schemaLiquid,
       schemaNoLiquid,
+      saveStep,
+      backStep,
     }
   },
 }
