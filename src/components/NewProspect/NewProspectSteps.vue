@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-widget-bg rounded-lg px-5">
+  <div class="bg-widget-bg rounded-lg px-5 mb-5">
     <div class="flex w-full pt-7">
       <div class="w-1/5 text-center text-xs font-semibold text-main">
         1. Basic
