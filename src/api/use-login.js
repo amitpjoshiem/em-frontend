@@ -1,6 +1,7 @@
 import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { ElNotification } from 'element-plus'
 
 import { saveToStorage } from '@/utils/utilsLocalStorage'
 
@@ -20,7 +21,14 @@ const useLogin = () => {
 
   const login = async (body) => {
     await fetchData({ body })
-    if (error.value !== null) return
+    if (error.value !== null) {
+      ElNotification.error({
+        title: 'Error',
+        message: error.value,
+        offset: 100,
+      })
+      return
+    }
     storeAccessTokenAndRedirectToDashboard()
   }
 
