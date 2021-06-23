@@ -2,6 +2,7 @@
   <div>
     <div class="flex items-center justify-between">
       <label
+        v-if="label"
         class="label block text-main text-xss font-semibold pb-2"
         :class="labelClass"
         >{{ label }}</label
@@ -17,14 +18,16 @@
         :placeholder="placeholder"
         class="
           input
+          shadow-input
           w-full
-          pb-[5px]
-          pt-[5px]
+          py-[5px]
           border
           rounded-md
           justify-center
           border-input-border
           px-[20px]
+          focus:border-activity
+          focus:shadow-shadow-input-activ
         "
         :class="inputClass"
         @blur="handleBlur"
@@ -50,6 +53,8 @@ const labelVariants = {
 const inputVariants = {
   search: 'pl-[32px]',
   error: 'border-color-error',
+  inputTable:
+    'border-0 outline-none focus:border-0 focus:shadow-none px-0 py-0',
 }
 
 export default {
@@ -128,15 +133,10 @@ export default {
 
 <style lang="scss" scoped>
 .input {
-  box-shadow: 0px 0px 1.5px rgba(102, 182, 255, 0.6);
   &::placeholder {
     color: #b2bccd;
     font-size: 13px;
     font-family: 'Eina04';
-  }
-  &:focus {
-    border: 1px solid #66b6ff;
-    box-shadow: 0px 0px 1.5px rgba(102, 182, 255, 0.6);
   }
 }
 </style>

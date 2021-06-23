@@ -48,6 +48,8 @@ import {
   ElInput,
   ElDatePicker,
   ElPopover,
+  ElTable,
+  ElTableColumn,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -97,6 +99,8 @@ const components = [
   ElPopover,
   NextButton,
   BackButton,
+  ElTable,
+  ElTableColumn,
 ]
 
 components.forEach((component) => {

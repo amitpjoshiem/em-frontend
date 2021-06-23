@@ -112,7 +112,7 @@ export default {
     const { data: linkAccount } = useLinkAccount()
 
     const saveStep = () => {
-      router.push({ name: 'assetsacount' })
+      router.push({ name: 'assetsconsolidations' })
     }
 
     const backStep = () => {
