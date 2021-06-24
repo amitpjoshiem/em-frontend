@@ -48,6 +48,14 @@ const routes = [
               ),
           },
           {
+            path: 'assets-consolidations',
+            name: 'assetsconsolidations',
+            component: () =>
+              import(
+                /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectAssetsConsolidations.vue'
+              ),
+          },
+          {
             path: '',
             redirect: () => {
               return { name: 'basic-information' }
