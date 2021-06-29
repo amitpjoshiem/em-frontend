@@ -1,10 +1,10 @@
 const state = () => ({
-  isEmptyDashboard: false,
+  step: 1,
 })
 
 const mutations = {
-  setEmptyDashboard(state, value) {
-    state.isEmptyDashboard = value
+  setStep(state, value) {
+    state.step = value
   },
 }
 

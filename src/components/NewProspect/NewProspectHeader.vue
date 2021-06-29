@@ -1,66 +1,82 @@
 <template>
   <div class="flex justify-between pb-5">
     <BackButton @click="back" />
-    <span class="text-title text-main font-semibold">Basic information</span>
-    <NextButton @click="back" />
+    <span class="text-title text-main font-semibold">{{ headerTitle }}</span>
+    <NextButton @click="next" />
   </div>
 </template>
 <script>
-import { ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
 export default {
   name: 'NewProspectHeader',
   setup() {
     const router = useRouter()
+    const store = useStore()
 
-    function pushBack() {
-      router.push({
-        name: 'dashboard',
-      })
+    const step = computed(() => store.state.newProspect.step)
+
+    const next = () => {
+      store.commit('newProspect/setStep', step.value + 1)
+      goPage()
+    }
+
+    const back = () => {
+      if (step.value === 1) {
+        router.push({ name: 'dashboard' })
+      } else {
+        store.commit('newProspect/setStep', step.value - 1)
+        goPage()
+      }
+    }
+
+    const headerTitle = computed(() => {
+      switch (step.value) {
+        case 1:
+          return 'Basic information'
+        case 2:
+          return 'Assets & Income'
+        case 3:
+          return 'Assets Acounts'
+        case 4:
+          return 'Assets Consolidations'
+        case 5:
+          return 'Stress Test Results'
+        default:
+          return 'Header title'
+      }
+    })
+
+    const goPage = () => {
+      switch (step.value) {
+        case 1:
+          router.push({ name: 'basic-information' })
+          break
+        case 2:
+          router.push({ name: 'assets-information' })
+          break
+        case 3:
+          router.push({ name: 'assetsacount' })
+          break
+        case 4:
+          router.push({ name: 'assetsconsolidations' })
+          break
+        case 5:
+          router.push({ name: 'assetsconsolidations' })
+          break
+        default:
+          router.push({ name: 'dashboard' })
+      }
     }
 
     return {
-      pushBack,
+      next,
+      back,
+      headerTitle,
+      goPage,
     }
-  },
-  methods: {
-    back() {
-      ElMessageBox.confirm(
-        'This will permanently delete the file. Continue?',
-        'Warning',
-        {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Cancel',
-          type: 'warning',
-        }
-      )
-        .then(() => {
-          console.log('ok')
-          this.pushBack()
-        })
-        .catch(() => {
-          console.log('cancel')
-        })
-    },
-    next() {
-      ElMessageBox.confirm(
-        'This will permanently delete the file. Continue?',
-        'Warning',
-        {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Cancel',
-          type: 'warning',
-        }
-      )
-        .then(() => {
-          console.log('ok')
-          this.pushBack()
-        })
-        .catch(() => {
-          console.log('cancel')
-        })
-    },
   },
 }
 </script>
