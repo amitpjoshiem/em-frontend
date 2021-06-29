@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="table-fixed">
+    <table v-if="!isEmptyDashboard" class="table-fixed">
       <thead class="bg-widget-bg uppercase text-gray03 h-6">
         <tr class="text-small">
           <th class="w-7/24">householder Name</th>
@@ -58,17 +58,25 @@
         </tr>
       </tbody>
     </table>
+    <UsersListTableEmpty v-if="isEmptyDashboard" />
   </div>
 </template>
 
 <script>
 import { useUserList } from '@/components/UsersListTable/DTO/usersList'
 import IconActionGray from '@/assets/svg/icon-action-gray.svg'
+import UsersListTableEmpty from '@/components/UsersListTable/UsersListTableEmpty.vue'
+import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   name: 'UsersListTable',
+  components: {
+    UsersListTableEmpty,
+  },
   setup() {
     const { data: usersList } = useUserList()
+    const isEmptyDashboard = useEmptyDashboard()
+
     const actionsOptions = [
       {
         title: 'Basic Information',
@@ -79,10 +87,12 @@ export default {
         command: 'blueprint-report',
       },
     ]
+
     return {
       usersList,
       actionsOptions,
       IconActionGray,
+      isEmptyDashboard,
     }
   },
 
@@ -100,9 +110,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.el-progress__text span {
-  font-size: 13px;
-}
-</style>

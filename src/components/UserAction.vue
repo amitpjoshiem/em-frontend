@@ -11,12 +11,19 @@
 <script>
 import IconUserAction from '@/assets/svg/icon-user-action.svg'
 import { useLogout } from '@/api/use-logout'
+import { useStore } from 'vuex'
+import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   setup() {
+    const store = useStore()
     const { error, fetching, logout } = useLogout()
-
+    const isEmptyDashboard = useEmptyDashboard()
     const actionsOptions = [
+      {
+        title: 'Demo empty dashboard',
+        command: 'demo-empty',
+      },
       {
         title: 'Profile settings',
         command: 'profile-settings',
@@ -48,6 +55,8 @@ export default {
       'notifications-settings': () => console.log('notifications-settings'),
       integrations: () => console.log('integrations'),
       information: () => console.log('information'),
+      'demo-empty': () =>
+        store.commit('dashboard/setEmptyDashboard', !isEmptyDashboard.value),
     }
 
     const handleSelect = (command) => {
@@ -62,6 +71,7 @@ export default {
       title,
       fetching,
       error,
+      isEmptyDashboard,
     }
   },
 }

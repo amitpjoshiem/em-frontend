@@ -45,3 +45,7 @@
 .el-dropdown-menu__item:not(:last-child) {
   border-bottom: 1px solid #ebf0fa;
 }
+
+.el-progress__text span {
+  font-size: 13px;
+}
