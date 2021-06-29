@@ -37,8 +37,7 @@
 import AssetsUsersItem from '@/components/Dashboard/AssetsUsersItem.vue'
 import { useUserList } from '@/components/Dashboard/DTO/usersList'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   name: 'AssetsUsers',
@@ -46,12 +45,8 @@ export default {
     AssetsUsersItem,
   },
   setup() {
-    const store = useStore()
     const { data: usersList } = useUserList()
-
-    const isEmptyDashboard = computed(
-      () => store.state.dashboard.isEmptyDashboard
-    )
+    const isEmptyDashboard = useEmptyDashboard()
 
     return {
       usersList,

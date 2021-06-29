@@ -13,9 +13,7 @@
 <script>
 import { ref, watch } from 'vue'
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
-
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   name: 'App',
@@ -24,7 +22,7 @@ export default {
   },
   setup() {
     const chartRef = ref(null)
-    const store = useStore()
+    const isEmptyDashboard = useEmptyDashboard()
 
     const doughnutChart = {
       id: 'doughnut',
@@ -113,10 +111,6 @@ export default {
 
       chartRef.value.update(250)
     }
-
-    const isEmptyDashboard = computed(
-      () => store.state.dashboard.isEmptyDashboard
-    )
 
     watch(isEmptyDashboard, (newValue, oldValue) => {
       if (newValue !== oldValue) updateChart()

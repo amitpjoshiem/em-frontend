@@ -96,18 +96,13 @@ import IconMembers from '@/assets/svg/members.svg'
 import IconUpArrow from '@/assets/svg/up-arrow.svg'
 import IconAction from '@/assets/svg/icon-action.svg'
 import IconPipeLineEmpty from '@/assets/svg/icon-pipe-line-empty.svg'
-
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   name: 'PipeLine',
   setup() {
-    const store = useStore()
+    const isEmptyDashboard = useEmptyDashboard()
 
-    const isEmptyDashboard = computed(
-      () => store.state.dashboard.isEmptyDashboard
-    )
     const actionsOptions = [
       {
         title: 'Item 1',

@@ -66,8 +66,7 @@
 import { useUserList } from '@/components/UsersListTable/DTO/usersList'
 import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import UsersListTableEmpty from '@/components/UsersListTable/UsersListTableEmpty.vue'
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   name: 'UsersListTable',
@@ -75,8 +74,9 @@ export default {
     UsersListTableEmpty,
   },
   setup() {
-    const store = useStore()
     const { data: usersList } = useUserList()
+    const isEmptyDashboard = useEmptyDashboard()
+
     const actionsOptions = [
       {
         title: 'Basic Information',
@@ -87,10 +87,6 @@ export default {
         command: 'blueprint-report',
       },
     ]
-
-    const isEmptyDashboard = computed(
-      () => store.state.dashboard.isEmptyDashboard
-    )
 
     return {
       usersList,
@@ -114,9 +110,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.el-progress__text span {
-  font-size: 13px;
-}
-</style>

@@ -1,6 +1,5 @@
 // initial state
 const state = () => ({
-  // isEmptyDashboard: true,
   isEmptyDashboard: false,
 })
 

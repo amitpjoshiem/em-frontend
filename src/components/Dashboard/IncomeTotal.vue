@@ -33,17 +33,12 @@
 <script>
 import IconIncomeTop from '@/assets/svg/icon-income-top.svg'
 import IconLightning from '@/assets/svg/icon-lightning.svg'
-
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   setup() {
-    const store = useStore()
+    const isEmptyDashboard = useEmptyDashboard()
 
-    const isEmptyDashboard = computed(
-      () => store.state.dashboard.isEmptyDashboard
-    )
     return {
       IconIncomeTop,
       IconLightning,

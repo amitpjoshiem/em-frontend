@@ -12,14 +12,13 @@
 import IconUserAction from '@/assets/svg/icon-user-action.svg'
 import { useLogout } from '@/api/use-logout'
 import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   setup() {
     const store = useStore()
-
     const { error, fetching, logout } = useLogout()
-
+    const isEmptyDashboard = useEmptyDashboard()
     const actionsOptions = [
       {
         title: 'Demo empty dashboard',
@@ -49,10 +48,6 @@ export default {
     ]
 
     const title = 'Adam K.'
-
-    const isEmptyDashboard = computed(
-      () => store.state.dashboard.isEmptyDashboard
-    )
 
     const actionsMap = {
       logout: () => logout(),

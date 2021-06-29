@@ -46,9 +46,7 @@
 <script>
 import LastActivityItem from '@/components/Dashboard/LastActivityItem.vue'
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
-
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   name: 'LastActivity',
@@ -57,11 +55,8 @@ export default {
     LastActivityItem,
   },
   setup() {
-    const store = useStore()
+    const isEmptyDashboard = useEmptyDashboard()
 
-    const isEmptyDashboard = computed(
-      () => store.state.dashboard.isEmptyDashboard
-    )
     return {
       IconLastActivityEmpty,
       isEmptyDashboard,
