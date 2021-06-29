@@ -109,11 +109,17 @@
   </div>
 </template>
 <script>
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
 export default {
   name: 'NewProspectSteps',
-  data() {
+  setup() {
+    const store = useStore()
+    const step = computed(() => store.state.newProspect.step)
+
     return {
-      step: 1,
+      step,
     }
   },
 }

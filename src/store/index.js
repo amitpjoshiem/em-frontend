@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import auth from './modules/auth'
 import dashboard from './modules/dashboard'
+import newProspect from './modules/newProspect'
 
 import createPersistedState from 'vuex-persistedstate'
 
@@ -13,6 +14,7 @@ export default createStore({
   modules: {
     auth,
     dashboard,
+    newProspect,
   },
   plugins: [dataState],
 })
