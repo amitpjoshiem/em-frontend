@@ -2,8 +2,8 @@
   <div class="border border-color-grey rounded-xl mr-5">
     <AssetsHeader class="pt-5 pr-5 pl-5" />
     <div class="flex p-5 justify-between">
-      <IncomeChart class="w-9/12" />
-      <IncomeTotal class="w-[115px]" />
+      <IncomeChart class="w-18/24" />
+      <IncomeTotal class="w-5/24" />
     </div>
     <AssetsUsers />
   </div>
