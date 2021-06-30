@@ -53,11 +53,21 @@
           "
         >
           <HoldingsChart />
-          <div class="flex">
+          <div class="flex flex-col text-xs text-main">
             <div>
-              <span></span>
+              <div class="bg-red w-2 h-2 rounded-full" />
               <span>Equities</span>
               <span>50%</span>
+            </div>
+            <div>
+              <span></span>
+              <span>Fixed Income</span>
+              <span>40%</span>
+            </div>
+            <div>
+              <span></span>
+              <span>Cash</span>
+              <span>10%</span>
             </div>
           </div>
         </div>

@@ -32,6 +32,7 @@ module.exports = {
         'text-light-gray': '#383838',
         'lighy-green': '#EEFFF9',
         'border-green': '#76E1BB',
+        'dark-blue-charts': '#53576A',
       },
       fontFamily: {
         sans: [

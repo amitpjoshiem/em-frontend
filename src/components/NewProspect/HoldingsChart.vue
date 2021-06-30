@@ -1,11 +1,21 @@
 <template>
   <div style="max-width: 137px">
-    <vue3-chart-js v-bind="{ ...doughnutChart }" />
+    <!-- <vue3-chart-js v-bind="{ ...doughnutChart }" /> -->
+    <vue3-chart-js
+      :id="doughnutChart.id"
+      ref="chartRef"
+      :type="doughnutChart.type"
+      :data="doughnutChart.data"
+      :options="doughnutChart.options"
+      :plugins="doughnutChart.plugins"
+    />
   </div>
 </template>
 
 <script>
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
+
+import chartWithText from './chartWithText'
 
 export default {
   name: 'HoldingsChart',
@@ -23,6 +33,7 @@ export default {
           },
         ],
       },
+      plugins: [{ chartWithText }],
     }
 
     return {
