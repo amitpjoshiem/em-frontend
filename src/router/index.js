@@ -65,6 +65,15 @@ const routes = [
       },
 
       {
+        path: 'blue-report',
+        name: 'bluereport',
+        component: () =>
+          import(
+            /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectBlueReport.vue'
+          ),
+      },
+
+      {
         path: '',
         redirect: () => {
           return { name: 'dashboard' }
