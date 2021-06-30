@@ -13,7 +13,7 @@
 
 <script>
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
-import chartWithText from './chartWithText'
+import { chartWithTextCenter } from '@/utils/chartWithText'
 
 export default {
   name: 'HoldingsChart',
@@ -39,7 +39,7 @@ export default {
           },
         },
       },
-      plugins: [{ id: 'chart-with-text', beforeDraw: chartWithText }],
+      plugins: [chartWithTextCenter],
     }
 
     return {

@@ -1,3 +1,5 @@
+const id = 'chart-with-text-center'
+
 function beforeDraw(chart) {
   if (chart.config.options.elements?.center) {
     // Get ctx from string
@@ -83,4 +85,4 @@ function beforeDraw(chart) {
   }
 }
 
-export default beforeDraw
+export const chartWithTextCenter = { beforeDraw, id }
