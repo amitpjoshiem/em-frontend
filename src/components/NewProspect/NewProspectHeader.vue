@@ -64,7 +64,7 @@ export default {
           router.push({ name: 'assetsconsolidations' })
           break
         case 5:
-          router.push({ name: 'assetsconsolidations' })
+          router.push({ name: 'stresstest' })
           break
         default:
           router.push({ name: 'dashboard' })
