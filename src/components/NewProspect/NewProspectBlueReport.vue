@@ -46,29 +46,29 @@
           <span>Concerns</span>
           <div class="flex justify-between pt-5">
             <div>
-              <div class="flex items-center text-xs text-main">
+              <div class="flex text-xs text-main">
                 <InlineSvg :src="IconCheckGreen" />
                 <span class="ml-1.5"> High Fees</span>
               </div>
-              <div class="flex items-center text-xs text-main">
+              <div class="flex pt-2 text-xs text-main">
                 <InlineSvg :src="IconCheckGreen" />
                 <span class="ml-1.5"> Extremely high market exposure</span>
               </div>
-              <div class="flex items-center text-xs text-main">
+              <div class="flex pt-2 text-xs text-main">
                 <InlineSvg :src="IconCheckGreen" />
                 <span class="ml-1.5"> Simple</span>
               </div>
             </div>
             <div>
-              <div class="flex items-center text-xs text-main">
+              <div class="flex text-xs text-main">
                 <InlineSvg :src="IconCheckGreen" />
                 <span class="ml-1.5"> Keep the money safe</span>
               </div>
-              <div class="flex items-center text-xs text-main">
+              <div class="flex pt-2 text-xs text-main">
                 <InlineSvg :src="IconCheckGreen" />
                 <span class="ml-1.5"> Massive Overlap</span>
               </div>
-              <div class="flex items-center text-xs text-main">
+              <div class="flex pt-2 text-xs text-main">
                 <InlineSvg :src="IconCheckGreen" />
                 <span class="ml-1.5">
                   Design, implement and monitoring income strategy</span
