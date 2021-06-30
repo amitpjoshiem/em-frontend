@@ -208,8 +208,8 @@ import IconOpenSafety from '@/assets/svg/icon-open-safety.svg'
 import IconBlueCash from '@/assets/svg/icon-blue-cash.svg'
 import IconCheckGreen from '@/assets/svg/icon-check-green.svg'
 
-import TotalChart from '@/components/NewProspect/TotalChart.vue'
-import NetWorthChart from '@/components/NewProspect/NetWorthChart.vue'
+import TotalChart from '@/components/NewProspect/Chart/TotalChart.vue'
+import NetWorthChart from '@/components/NewProspect/Chart/NetWorthChart.vue'
 
 import {
   useMonthlyIncome,
