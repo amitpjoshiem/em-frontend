@@ -14,7 +14,6 @@
 
 <script>
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
-
 import chartWithText from './chartWithText'
 
 export default {
@@ -28,12 +27,20 @@ export default {
       data: {
         datasets: [
           {
-            backgroundColor: ['#B0B0B0', '#66B6FF', '#53576A'],
+            backgroundColor: ['#FF92A5', '#66B6FF', '#53576A'],
             data: [10, 40, 50],
           },
         ],
       },
-      plugins: [{ chartWithText }],
+      options: {
+        elements: {
+          center: {
+            text: '50% Equities',
+            size: 12,
+          },
+        },
+      },
+      plugins: [{ id: 'chart-with-text', beforeDraw: chartWithText }],
     }
 
     return {

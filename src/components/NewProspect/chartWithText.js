@@ -1,36 +1,38 @@
 function beforeDraw(chart) {
-  if (chart.config.options.elements.center) {
+  // console.log('CHART', chart)
+  if (chart.config.options.elements?.center) {
     // Get ctx from string
-    var ctx = chart.chart.ctx
+    let ctx = chart.ctx
 
     // Get options from the center object in options
-    var centerConfig = chart.config.options.elements.center
-    var fontStyle = centerConfig.fontStyle || 'Arial'
-    var txt = centerConfig.text
-    var color = centerConfig.color || '#000'
-    var maxFontSize = centerConfig.maxFontSize || 75
-    var sidePadding = centerConfig.sidePadding || 20
-    var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+    let centerConfig = chart.config.options.elements.center
+    let fontStyle = centerConfig.fontStyle || 'Arial'
+    let txt = centerConfig.text
+    let color = centerConfig.color || '#000'
+    let maxFontSize = centerConfig.maxFontSize || 75
+    let sidePadding = centerConfig.sidePadding || 20
+    let sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
     // Start with a base font of 30px
-    ctx.font = '30px ' + fontStyle
+    ctx.font = '10px ' + fontStyle
 
     // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
-    var stringWidth = ctx.measureText(txt).width
-    var elementWidth = chart.innerRadius * 2 - sidePaddingCalculated
+    let stringWidth = ctx.measureText(txt).width
+    let elementWidth = chart.innerRadius * 2 - sidePaddingCalculated
 
     // Find out how much the font can grow in width.
-    var widthRatio = elementWidth / stringWidth
-    var newFontSize = Math.floor(30 * widthRatio)
-    var elementHeight = chart.innerRadius * 2
+    let widthRatio = elementWidth / stringWidth
+    let newFontSize = Math.floor(30 * widthRatio)
+    let elementHeight = chart.innerRadius * 2
 
     // Pick a new font size so it will not be larger than the height of label.
-    var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize)
-    var minFontSize = centerConfig.minFontSize
-    var lineHeight = centerConfig.lineHeight || 25
-    var wrapText = false
+    let fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize)
+    let minFontSize = centerConfig.minFontSize
+    let lineHeight = 12
+    // let lineHeight = centerConfig.lineHeight || 25
+    let wrapText = true
 
     if (minFontSize === undefined) {
-      minFontSize = 20
+      minFontSize = 10
     }
 
     if (minFontSize && fontSizeToUse < minFontSize) {
@@ -41,8 +43,8 @@ function beforeDraw(chart) {
     // Set font settings to draw it correctly.
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    var centerX = (chart.chartArea.left + chart.chartArea.right) / 2
-    var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2
+    let centerX = (chart.chartArea.left + chart.chartArea.right) / 2
+    let centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2
     ctx.font = fontSizeToUse + 'px ' + fontStyle
     ctx.fillStyle = color
 
@@ -51,16 +53,18 @@ function beforeDraw(chart) {
       return
     }
 
-    var words = txt.split(' ')
-    var line = ''
-    var lines = []
+    let words = txt.split(' ')
+    let line = ''
+    let lines = []
 
     // Break words up into multiple lines if necessary
-    for (var n = 0; n < words.length; n++) {
-      var testLine = line + words[n] + ' '
-      var metrics = ctx.measureText(testLine)
-      var testWidth = metrics.width
-      if (testWidth > elementWidth && n > 0) {
+    for (let n = 0; n < words.length; n++) {
+      let testLine = line + words[n] + ' '
+      // let metrics = ctx.measureText(testLine)
+      // let testWidth = metrics.width
+
+      if (n > 0) {
+        // if (testWidth > elementWidth && n > 0) {
         lines.push(line)
         line = words[n] + ' '
       } else {

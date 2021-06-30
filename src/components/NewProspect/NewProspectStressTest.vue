@@ -47,32 +47,67 @@
         <div
           class="
             w-5/12
+            pl-2
             border-l border-r border-b border-color-grey
             box-border
             flex
+            py-5
           "
         >
           <HoldingsChart />
-          <div class="flex flex-col text-xs text-main">
-            <div>
-              <div class="bg-red w-2 h-2 rounded-full" />
-              <span>Equities</span>
-              <span>50%</span>
+          <div class="flex ml-4">
+            <div class="flex flex-col justify-center mr-3">
+              <div class="bg-dark-blue-charts w-2 h-2 rounded-full" />
+              <div class="bg-activity w-2 h-2 rounded-full my-6" />
+              <div class="bg-color-error w-2 h-2 rounded-full" />
             </div>
-            <div>
-              <span></span>
-              <span>Fixed Income</span>
-              <span>40%</span>
+            <div class="flex flex-col justify-center text-main text-xs mr-3">
+              <div>Equities</div>
+              <div class="py-4">Fixed Income</div>
+              <div>Cash</div>
             </div>
-            <div>
-              <span></span>
-              <span>Cash</span>
-              <span>10%</span>
+            <div
+              class="
+                flex flex-col
+                justify-center
+                text-main text-xs
+                font-semibold
+              "
+            >
+              <div>50%</div>
+              <div class="py-4">40%</div>
+              <div>10%</div>
             </div>
           </div>
         </div>
-        <div class="w-5/12 border-b border-color-grey box-border">
+        <div
+          class="w-5/12 border-b border-color-grey box-border flex py-5 pl-2"
+        >
           <RecommendationChart />
+          <div class="flex ml-4">
+            <div class="flex flex-col justify-center mr-3">
+              <div class="bg-dark-blue-charts w-2 h-2 rounded-full" />
+              <div class="bg-activity w-2 h-2 rounded-full my-6" />
+              <div class="bg-color-error w-2 h-2 rounded-full" />
+            </div>
+            <div class="flex flex-col justify-center text-main text-xs mr-3">
+              <div>Equities</div>
+              <div class="py-4">Fixed Income</div>
+              <div>Cash</div>
+            </div>
+            <div
+              class="
+                flex flex-col
+                justify-center
+                text-main text-xs
+                font-semibold
+              "
+            >
+              <div>50%</div>
+              <div class="py-4">40%</div>
+              <div>10%</div>
+            </div>
+          </div>
         </div>
       </div>
 
