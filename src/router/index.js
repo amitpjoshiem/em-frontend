@@ -56,6 +56,14 @@ const routes = [
               ),
           },
           {
+            path: 'stress-test',
+            name: 'stresstest',
+            component: () =>
+              import(
+                /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectStressTest.vue'
+              ),
+          },
+          {
             path: '',
             redirect: () => {
               return { name: 'basic-information' }

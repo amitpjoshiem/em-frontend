@@ -30,6 +30,9 @@ module.exports = {
         'title-gray': '#C7CFE3',
         'color-light-gray': '#EBF1F9',
         'text-light-gray': '#383838',
+        'lighy-green': '#EEFFF9',
+        'border-green': '#76E1BB',
+        'dark-blue-charts': '#53576A',
       },
       fontFamily: {
         sans: [
