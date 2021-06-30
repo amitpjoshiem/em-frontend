@@ -1,5 +1,4 @@
 function beforeDraw(chart) {
-  // console.log('CHART', chart)
   if (chart.config.options.elements?.center) {
     // Get ctx from string
     let ctx = chart.ctx

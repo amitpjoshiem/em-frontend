@@ -1,6 +1,5 @@
 <template>
   <div style="max-width: 137px">
-    <!-- <vue3-chart-js v-bind="{ ...doughnutChart }" /> -->
     <vue3-chart-js
       :id="doughnutChart.id"
       ref="chartRef"
