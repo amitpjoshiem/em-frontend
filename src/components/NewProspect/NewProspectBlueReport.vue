@@ -211,6 +211,10 @@ import IconCheckGreen from '@/assets/svg/icon-check-green.svg'
 import TotalChart from '@/components/NewProspect/Chart/TotalChart.vue'
 import NetWorthChart from '@/components/NewProspect/Chart/NetWorthChart.vue'
 
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
 import {
   useMonthlyIncome,
   useMonthlyExpenses,
@@ -226,6 +230,16 @@ export default {
     const { data: monthlyIncome } = useMonthlyIncome()
     const { data: monthlyExpenses } = useMonthlyExpenses()
 
+    const router = useRouter()
+    const store = useStore()
+
+    const step = computed(() => store.state.newProspect.step)
+
+    const back = () => {
+      store.commit('newProspect/setStep', step.value - 1)
+      router.push({ name: 'stresstest' })
+    }
+
     return {
       IconRedRisk,
       IconOpenSafety,
@@ -233,6 +247,7 @@ export default {
       monthlyIncome,
       monthlyExpenses,
       IconCheckGreen,
+      back,
     }
   },
 }
