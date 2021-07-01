@@ -103,11 +103,19 @@ const routes = [
           ),
       },
       {
-        path: 'password-reset',
+        path: 'reset-password',
+        name: 'resetpassword',
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ '../components/Login/ResetPassword.vue'
+          ),
+      },
+      {
+        path: 'new-password',
         name: 'newpassword',
         component: () =>
           import(
-            /* webpackChunkName: "dashboard" */ '../components/Login/NewPassword.vue'
+            /* webpackChunkName: "dashboard" */ '../components/Login/CreateNewPassword.vue'
           ),
       },
     ],

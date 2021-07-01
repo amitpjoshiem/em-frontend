@@ -63,7 +63,7 @@ import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 
 export default {
-  name: 'NewPassword',
+  name: 'CreateNewPassword',
   setup() {
     const { response, error, fetching, newPass } = useResetPassword()
 
