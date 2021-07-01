@@ -14,7 +14,7 @@
                 <Avatar />
                 <div class="flex flex-col ml-2">
                   <span class="text-sm text-main font-semibold"
-                    >John & Sarah Travis</span
+                    >John &amp; Sarah Travis</span
                   >
                   <span
                     class="
