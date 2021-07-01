@@ -66,6 +66,9 @@ export default {
         case 5:
           router.push({ name: 'stresstest' })
           break
+        case 6:
+          router.push({ name: 'bluereport' })
+          break
         default:
           router.push({ name: 'dashboard' })
       }
