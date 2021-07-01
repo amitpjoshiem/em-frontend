@@ -517,8 +517,8 @@ import { useStore } from 'vuex'
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
 
-import HoldingsChart from '@/components/NewProspect/HoldingsChart.vue'
-import RecommendationChart from '@/components/NewProspect/RecommendationChart.vue'
+import HoldingsChart from '@/components/NewProspect/Chart/HoldingsChart.vue'
+import RecommendationChart from '@/components/NewProspect/Chart/RecommendationChart.vue'
 
 export default {
   components: {

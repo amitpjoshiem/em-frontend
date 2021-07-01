@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 137px">
+  <div class="w-36">
     <vue3-chart-js
       :id="doughnutChart.id"
       ref="chartRef"
@@ -16,7 +16,7 @@ import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import { chartWithTextCenter } from '@/utils/chartWithText'
 
 export default {
-  name: 'HoldingsChart',
+  name: 'TotalChart',
   components: {
     Vue3ChartJs,
   },
@@ -26,15 +26,15 @@ export default {
       data: {
         datasets: [
           {
-            backgroundColor: ['#FF92A5', '#66B6FF', '#53576A'],
-            data: [10, 40, 50],
+            backgroundColor: ['#FF92A5', '#53576A'],
+            data: [45, 10],
           },
         ],
       },
       options: {
         elements: {
           center: {
-            text: '50% Equities',
+            text: 'Income Goal $5000',
             size: 12,
           },
         },
