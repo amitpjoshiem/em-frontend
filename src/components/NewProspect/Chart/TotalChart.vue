@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 137px">
+  <div class="w-36">
     <vue3-chart-js
       :id="doughnutChart.id"
       ref="chartRef"
