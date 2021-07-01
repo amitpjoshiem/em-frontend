@@ -23,20 +23,18 @@
 
       <form class="mt-6" @submit="handleNewPass">
         <div class="mt-4">
-          <Input
-            :placeholder="'Enter your password'"
+          <InputPassword
+            placeholder="Enter your password"
             name="password"
-            :type="'password'"
-            :label="'New password'"
+            label="New password"
           />
         </div>
 
         <div class="mt-4">
-          <Input
-            :placeholder="'Enter your password'"
-            name="password"
-            :type="'password'"
-            :label="'Confirm new password'"
+          <InputPassword
+            placeholder="Enter your password"
+            name="password_confirmation"
+            label="Confirm new password"
           />
         </div>
 
@@ -66,7 +64,6 @@ export default {
   name: 'ResetPassword',
   setup() {
     const { response, error, fetching, newPass } = useResetPassword()
-
     const route = useRoute()
 
     const data = reactive({
@@ -81,18 +78,20 @@ export default {
 
     const schema = yup.object({
       password: yup.string().required().min(8).defined(),
-      password_confirmation: yup.string().required().min(8).defined(),
+      password_confirmation: yup
+        .string()
+        .oneOf([yup.ref('password'), null], 'Passwords must match'),
     })
 
     const { handleSubmit } = useForm({
       validationSchema: schema,
       initialValues: {
-        email: '',
         password: '',
+        password_confirmation: '',
       },
     })
 
-    const handleNewPass = handleSubmit(newPass)
+    const handleNewPass = handleSubmit((form) => newPass({ ...form, ...data }))
 
     return {
       response,

@@ -47,7 +47,6 @@
 
           <div class="mt-4">
             <InputTextForm
-              v-model:value="otp"
               :placeholder="'Paste login code'"
               :type="'text'"
               :label="'Login code'"
