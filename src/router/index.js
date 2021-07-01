@@ -91,7 +91,7 @@ const routes = [
         name: 'loginform',
         component: () =>
           import(
-            /* webpackChunkName: "dashboard" */ '../components/LoginForm.vue'
+            /* webpackChunkName: "dashboard" */ '../components/Login/LoginForm.vue'
           ),
       },
       {
@@ -99,7 +99,7 @@ const routes = [
         name: 'forgotpassword',
         component: () =>
           import(
-            /* webpackChunkName: "dashboard" */ '../components/ForgotPassword.vue'
+            /* webpackChunkName: "dashboard" */ '../components/Login/ForgotPassword.vue'
           ),
       },
       {
@@ -107,7 +107,7 @@ const routes = [
         name: 'newpassword',
         component: () =>
           import(
-            /* webpackChunkName: "dashboard" */ '../components/NewPassword.vue'
+            /* webpackChunkName: "dashboard" */ '../components/Login/NewPassword.vue'
           ),
       },
     ],

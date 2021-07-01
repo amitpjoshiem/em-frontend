@@ -13,7 +13,7 @@
             bg-lightgray03
           "
         >
-          <img class="h-3 w-5" src="../assets/img/vector.png" />
+          <InlineSvg :src="IconForgotPassword" />
         </div>
       </div>
 
@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import IconForgotPassword from '@/assets/svg/icon-forgot-password.svg'
+
 import { reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useResetPassword } from '@/api/use-reset-password'
@@ -92,7 +94,15 @@ export default {
 
     const handleNewPass = handleSubmit(newPass)
 
-    return { response, error, fetching, handleNewPass, data, route }
+    return {
+      response,
+      error,
+      fetching,
+      handleNewPass,
+      data,
+      route,
+      IconForgotPassword,
+    }
   },
 }
 </script>
