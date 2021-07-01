@@ -73,12 +73,10 @@ const routes = [
       },
 
       {
-        path: 'blue-report',
-        name: 'bluereport',
+        path: 'settings',
+        name: 'settings',
         component: () =>
-          import(
-            /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectBlueReport.vue'
-          ),
+          import(/* webpackChunkName: "settings" */ '../views/Settings.vue'),
       },
 
       {
