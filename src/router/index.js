@@ -79,32 +79,32 @@ const routes = [
           import(
             /* webpackChunkName: "settings" */ '../components/Settings/Settings.vue'
           ),
-        // children: [
-        //   {
-        //     path: 'profile',
-        //     name: 'profile',
-        //     component: () =>
-        //       import(
-        //         /* webpackChunkName: "dashboard" */ '../components/Settings/ProfileSettings.vue'
-        //       ),
-        //   },
-        //   {
-        //     path: 'notifications',
-        //     name: 'notifications',
-        //     component: () =>
-        //       import(
-        //         /* webpackChunkName: "dashboard" */ '../components/Settings/NotificationsSettings.vue'
-        //       ),
-        //   },
-        //   {
-        //     path: 'information',
-        //     name: 'information',
-        //     component: () =>
-        //       import(
-        //         /* webpackChunkName: "dashboard" */ '../components/Settings/InformationSettings.vue'
-        //       ),
-        //   },
-        // ],
+        children: [
+          {
+            path: 'profile',
+            name: 'profile',
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard" */ '../components/Settings/ProfileSettings.vue'
+              ),
+          },
+          {
+            path: 'notifications',
+            name: 'notifications',
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard" */ '../components/Settings/NotificationsSettings.vue'
+              ),
+          },
+          {
+            path: 'information',
+            name: 'information',
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard" */ '../components/Settings/InformationSettings.vue'
+              ),
+          },
+        ],
       },
 
       {
