@@ -89,7 +89,7 @@ export default {
 
     const schema = yup.object({
       email: yup.string().required().email(),
-      password: yup.string().required().min(8).defined(),
+      password: yup.string().required().min(6).defined(),
     })
 
     const { handleSubmit } = useForm({
