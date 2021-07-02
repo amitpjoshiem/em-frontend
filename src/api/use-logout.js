@@ -1,7 +1,7 @@
 import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-
+import { ElNotification } from 'element-plus'
 import { removeFromStorage } from '@/utils/utilsLocalStorage'
 
 const useLogout = () => {
@@ -20,8 +20,16 @@ const useLogout = () => {
 
   const logout = async (body) => {
     await fetchData({ body })
-    if (error.value !== null) return
-    removeStoreAccessTokenAndRedirect()
+
+    if (response.value.status === 202) {
+      removeStoreAccessTokenAndRedirect()
+    } else {
+      ElNotification.error({
+        title: 'Error',
+        message: error.value,
+        offset: 100,
+      })
+    }
   }
 
   return {
