@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import store from '@/store'
+import store from '@/store'
 import Home from '@/layouts/Home.vue'
 import Login from '@/layouts/Login.vue'
 
@@ -162,17 +162,14 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach(async () => {
+router.beforeEach(async (to) => {
+  if (to.meta.publicRoute) {
+    return true
+  }
+  if (!store.state.auth.isAuth) {
+    return '/login'
+  }
   return true
 })
-// router.beforeEach(async (to) => {
-//   if (to.meta.publicRoute) {
-//     return true
-//   }
-//   if (!store.state.auth.isAuth) {
-//     return '/login'
-//   }
-//   return true
-// })
 
 export default router
