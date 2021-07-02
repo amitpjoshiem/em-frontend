@@ -20,7 +20,6 @@ const useLogout = () => {
 
   const logout = async (body) => {
     await fetchData({ body })
-    console.log(error.value)
     if (error.value !== null) return
     removeStoreAccessTokenAndRedirect()
   }
