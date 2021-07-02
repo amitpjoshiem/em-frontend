@@ -31,6 +31,11 @@ export const useFetch = (url, options) => {
         return
       }
 
+      if (res.status === 202) {
+        state.response.status = 202
+        return
+      }
+
       const json = await res.json()
       if (res.status === 200) {
         state.response = json
