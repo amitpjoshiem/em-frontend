@@ -15,10 +15,3 @@ export default {
   setup() {},
 }
 </script>
-
-<style scoped>
-.active {
-  border-bottom: 3px solid #66b6ff;
-  height: 57px;
-}
-</style>

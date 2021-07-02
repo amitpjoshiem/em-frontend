@@ -53,13 +53,10 @@ export default {
 
     const actionsMap = {
       logout: () => logout(),
-      'profile-settings': () =>
-        router.push({ name: 'settings', params: { tab: 'profile' } }),
-      'notifications-settings': () =>
-        router.push({ name: 'settings', params: { tab: 'notifications' } }),
+      'profile-settings': () => router.push({ name: 'profile' }),
+      'notifications-settings': () => router.push({ name: 'notifications' }),
       integrations: () => console.log('integrations'),
-      information: () =>
-        router.push({ name: 'settings', params: { tab: 'information' } }),
+      information: () => router.push({ name: 'information' }),
       'demo-empty': () =>
         store.commit('dashboard/setEmptyDashboard', !isEmptyDashboard.value),
     }
