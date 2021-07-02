@@ -52,6 +52,7 @@ import {
   ElTableColumn,
   ElTabPane,
   ElTabs,
+  ElSwitch,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -105,6 +106,7 @@ const components = [
   ElTableColumn,
   ElTabPane,
   ElTabs,
+  ElSwitch,
 ]
 
 components.forEach((component) => {
