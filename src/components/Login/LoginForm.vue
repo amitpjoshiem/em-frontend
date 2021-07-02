@@ -13,7 +13,7 @@
             bg-lightgray03
           "
         >
-          <img class="h-5 w-5" src="../assets/img/login.png" />
+          <InlineSvg :src="IconLoginForm" />
         </div>
       </div>
 
@@ -47,7 +47,6 @@
 
           <div class="mt-4">
             <InputTextForm
-              v-model:value="otp"
               :placeholder="'Paste login code'"
               :type="'text'"
               :label="'Login code'"
@@ -76,6 +75,8 @@
 </template>
 
 <script>
+import IconLoginForm from '@/assets/svg/icon-login-form.svg'
+
 import { mapState } from 'vuex'
 import { useLogin } from '@/api/use-login'
 import { useForm } from 'vee-validate'
@@ -106,6 +107,7 @@ export default {
       error,
       fetching,
       loginHandler,
+      IconLoginForm,
     }
   },
   computed: mapState({

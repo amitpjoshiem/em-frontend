@@ -33,7 +33,7 @@
         @blur="handleBlur"
         @input="handleChange"
       />
-      <slot name="icon" :showError="showError"></slot>
+      <slot name="icon" :showError="showError" />
     </div>
     <div class="text-color-error text-xss h-3.5 pt-1">
       {{ showError ? errorMessage : '' }}
@@ -131,12 +131,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.input {
-  &::placeholder {
-    color: #b2bccd;
-    font-size: 13px;
-    font-family: 'Eina04';
-  }
+<style>
+.input::placeholder {
+  color: #b2bccd;
+  font-size: 13px;
+  font-family: 'Eina04';
 }
 </style>

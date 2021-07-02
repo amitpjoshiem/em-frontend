@@ -13,7 +13,7 @@
             bg-lightgray03
           "
         >
-          <img class="h-3 w-5" src="../assets/img/vector.png" />
+          <InlineSvg :src="IconForgotPassword" />
         </div>
       </div>
 
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import IconForgotPassword from '@/assets/svg/icon-forgot-password.svg'
+
 import { useForgot } from '@/api/use-forgot'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
@@ -68,7 +70,13 @@ export default {
 
     const forgotHandler = handleSubmit(forgot)
 
-    return { response, error, fetching, forgotHandler }
+    return {
+      response,
+      error,
+      fetching,
+      forgotHandler,
+      IconForgotPassword,
+    }
   },
   computed: mapState({
     sendFormForgotPass: (state) => state.auth.sendFormForgotPass,

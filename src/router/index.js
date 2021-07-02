@@ -100,7 +100,7 @@ const routes = [
         name: 'loginform',
         component: () =>
           import(
-            /* webpackChunkName: "dashboard" */ '../components/LoginForm.vue'
+            /* webpackChunkName: "login" */ '../components/Login/LoginForm.vue'
           ),
       },
       {
@@ -108,15 +108,23 @@ const routes = [
         name: 'forgotpassword',
         component: () =>
           import(
-            /* webpackChunkName: "dashboard" */ '../components/ForgotPassword.vue'
+            /* webpackChunkName: "login" */ '../components/Login/ForgotPassword.vue'
           ),
       },
       {
-        path: 'password-reset',
-        name: 'newpassword',
+        path: 'reset-password',
+        name: 'resetpassword',
         component: () =>
           import(
-            /* webpackChunkName: "dashboard" */ '../components/NewPassword.vue'
+            /* webpackChunkName: "login" */ '../components/Login/ResetPassword.vue'
+          ),
+      },
+      {
+        path: 'create-password',
+        name: 'createpassword',
+        component: () =>
+          import(
+            /* webpackChunkName: "login" */ '../components/Login/ResetPassword.vue'
           ),
       },
     ],

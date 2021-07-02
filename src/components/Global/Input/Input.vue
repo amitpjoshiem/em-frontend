@@ -65,7 +65,6 @@ import IconInputError from '@/assets/svg/icon-input-error.svg'
 import { useField } from 'vee-validate'
 import { computed } from 'vue'
 import { maska } from 'maska'
-
 export default {
   name: 'Input',
   directives: { maska },
@@ -108,7 +107,6 @@ export default {
     const emitValue = (e) => {
       emit('update:value', e.target.value)
     }
-
     const {
       value: formValue,
       errorMessage,
@@ -120,31 +118,25 @@ export default {
       bails: true,
       initialValue: props.value,
     })
-
     const showError = computed(() => {
       return meta.touched && Boolean(errorMessage) && !meta.valid
     })
-
     const getMask = computed(() => {
       if (props.isMask) return '(###) ###-####'
       return ''
     })
-
     const handleChangeExtended = (e) => {
       emitValue(e)
       handleChange(e)
     }
-
     const showIconInput = computed(() => {
       if (props.type === 'password' || showError) return true
       return false
     })
-
     const typeShowIconIput = computed(() => {
       if (!errorMessage && props.type == 'password') return 'IconShowPass'
       return 'IconInputError'
     })
-
     return {
       IconShowPass,
       IconSearch,
@@ -175,14 +167,12 @@ export default {
     border: 1px solid #66b6ff;
     box-shadow: 0px 0px 1.5px rgba(102, 182, 255, 0.6);
   }
-
   /* Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
-
   /* Firefox */
   &[type='number'] {
     -moz-appearance: textfield;
