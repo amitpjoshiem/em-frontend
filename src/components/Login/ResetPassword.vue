@@ -78,9 +78,11 @@ export default {
 
     const schema = yup.object({
       password: yup.string().required().min(8).defined(),
-      password_confirmation: yup
+      passwordConfirmation: yup
         .string()
-        .oneOf([yup.ref('password'), null], 'Passwords must match'),
+        .test('passwords-match', 'Passwords must match', function (value) {
+          return this.parent.password === value
+        }),
     })
 
     const { handleSubmit } = useForm({
