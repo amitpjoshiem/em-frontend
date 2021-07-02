@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '@/store'
+// import store from '@/store'
 import Home from '@/layouts/Home.vue'
 import Login from '@/layouts/Login.vue'
 
@@ -76,7 +76,35 @@ const routes = [
         path: 'settings',
         name: 'settings',
         component: () =>
-          import(/* webpackChunkName: "settings" */ '../views/Settings.vue'),
+          import(
+            /* webpackChunkName: "settings" */ '../components/Settings/Settings.vue'
+          ),
+        // children: [
+        //   {
+        //     path: 'profile',
+        //     name: 'profile',
+        //     component: () =>
+        //       import(
+        //         /* webpackChunkName: "dashboard" */ '../components/Settings/ProfileSettings.vue'
+        //       ),
+        //   },
+        //   {
+        //     path: 'notifications',
+        //     name: 'notifications',
+        //     component: () =>
+        //       import(
+        //         /* webpackChunkName: "dashboard" */ '../components/Settings/NotificationsSettings.vue'
+        //       ),
+        //   },
+        //   {
+        //     path: 'information',
+        //     name: 'information',
+        //     component: () =>
+        //       import(
+        //         /* webpackChunkName: "dashboard" */ '../components/Settings/InformationSettings.vue'
+        //       ),
+        //   },
+        // ],
       },
 
       {
@@ -126,14 +154,17 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach(async (to) => {
-  if (to.meta.publicRoute) {
-    return true
-  }
-  if (!store.state.auth.isAuth) {
-    return '/login'
-  }
+router.beforeEach(async () => {
   return true
 })
+// router.beforeEach(async (to) => {
+//   if (to.meta.publicRoute) {
+//     return true
+//   }
+//   if (!store.state.auth.isAuth) {
+//     return '/login'
+//   }
+//   return true
+// })
 
 export default router

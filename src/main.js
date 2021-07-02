@@ -50,6 +50,8 @@ import {
   ElPopover,
   ElTable,
   ElTableColumn,
+  ElTabPane,
+  ElTabs,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -101,6 +103,8 @@ const components = [
   BackButton,
   ElTable,
   ElTableColumn,
+  ElTabPane,
+  ElTabs,
 ]
 
 components.forEach((component) => {
