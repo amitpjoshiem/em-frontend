@@ -21,7 +21,7 @@
         Create a new password
       </h1>
 
-      <form class="mt-6" @submit="handleNewPass">
+      <form class="mt-6" @submit="handleCreatePass">
         <div class="mt-4">
           <InputPassword
             placeholder="Enter your password"
