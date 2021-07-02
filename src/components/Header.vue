@@ -12,7 +12,7 @@
     "
   >
     <div class="col-span-2">
-      <Search />
+      <InputSearch placeholder="Search householders" name="inputSearch" />
     </div>
     <div class="flex items-center col-span-2 justify-end">
       <router-link :to="{ name: 'basic-information' }">
@@ -53,12 +53,10 @@
 </template>
 
 <script>
-import Search from '@/components/Global/Input/Search.vue'
 import UserAction from '@/components/UserAction.vue'
 export default {
   name: 'Header',
   components: {
-    Search,
     UserAction,
   },
 }
