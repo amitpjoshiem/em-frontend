@@ -77,8 +77,8 @@ export default {
     })
 
     const schema = yup.object({
-      password: yup.string().required().min(8).defined(),
-      passwordConfirmation: yup
+      password: yup.string().required().min(4).defined(),
+      password_confirmation: yup
         .string()
         .test('passwords-match', 'Passwords must match', function (value) {
           return this.parent.password === value
