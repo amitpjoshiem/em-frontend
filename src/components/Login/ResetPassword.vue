@@ -56,14 +56,14 @@ import IconForgotPassword from '@/assets/svg/icon-forgot-password.svg'
 
 import { reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useResetPassword } from '@/api/use-reset-password'
+import { useCreatePassword } from '@/api/use-create-password'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 
 export default {
   name: 'ResetPassword',
   setup() {
-    const { response, error, fetching, newPass } = useResetPassword()
+    const { response, error, fetching, createPassword } = useCreatePassword()
     const route = useRoute()
 
     const data = reactive({
@@ -93,13 +93,15 @@ export default {
       },
     })
 
-    const handleNewPass = handleSubmit((form) => newPass({ ...form, ...data }))
+    const handleCreatePass = handleSubmit((form) =>
+      createPassword({ ...form, ...data })
+    )
 
     return {
       response,
       error,
       fetching,
-      handleNewPass,
+      handleCreatePass,
       data,
       route,
       IconForgotPassword,
