@@ -35,6 +35,7 @@ import Radio from '@/components/Global/Radio.vue'
 import DatePicker from '@/components/Global/DatePicker.vue'
 import NextButton from '@/components/Global/Button/NextButton.vue'
 import BackButton from '@/components/Global/Button/BackButton.vue'
+import Dialog from '@/components/Global/Dialog.vue'
 
 import {
   ElProgress,
@@ -53,6 +54,8 @@ import {
   ElTabPane,
   ElTabs,
   ElSwitch,
+  ElDialog,
+  ElButton,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -107,6 +110,9 @@ const components = [
   ElTabPane,
   ElTabs,
   ElSwitch,
+  ElDialog,
+  Dialog,
+  ElButton,
 ]
 
 components.forEach((component) => {
