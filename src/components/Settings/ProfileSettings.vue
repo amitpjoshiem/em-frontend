@@ -10,7 +10,7 @@
         <div class="text-main text-base mr-3">{{ user.fullName }}</div>
         <Dialog
           title="Change the name"
-          options="changeName"
+          confirm-action="changeName"
           @confirmDialog="handleConfirm"
         >
           <template #buttonDialog>
@@ -35,11 +35,11 @@
         </Dialog>
       </div>
       <div class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">{{ user.phone }}</div>
-        <div class="text-main text-base mr-3">+12223334455</div>
+        <div class="text-xss text-title-gray w-2/12">Phone</div>
+        <div class="text-main text-base mr-3">{{ user.phone }}</div>
         <Dialog
           title="New phone number"
-          options="changePhoneNumber"
+          confirm-action="changePhoneNumber"
           @confirmDialog="handleConfirm"
         >
           <template #buttonDialog>
@@ -62,7 +62,7 @@
         <div class="text-main text-base mr-3">{{ user.email }}</div>
         <Dialog
           title="Change the email"
-          options="changeEmail"
+          confirm-action="changeEmail"
           @confirmDialog="handleConfirm"
         >
           <template #buttonDialog>
@@ -91,7 +91,7 @@
         <div class="text-main text-base mr-3">...............</div>
         <Dialog
           title="Change the name"
-          options="changePassword"
+          confirm-action="changePassword"
           @confirmDialog="handleConfirm"
         >
           <template #buttonDialog>
@@ -147,3 +147,13 @@ export default {
   },
 }
 </script>
+
+<style>
+.el-dialog {
+  border-radius: 10px;
+}
+
+.el-dialog__header {
+  border-bottom: 1px solid #d4ddeb;
+}
+</style>
