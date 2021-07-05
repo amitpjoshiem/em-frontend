@@ -71,7 +71,14 @@ const routes = [
           },
         ],
       },
-
+      {
+        path: 'blue-report',
+        name: 'bluereport',
+        component: () =>
+          import(
+            /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectBlueReport.vue'
+          ),
+      },
       {
         path: 'list-of-households',
         name: 'list-of-households',

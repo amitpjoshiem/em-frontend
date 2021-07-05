@@ -1,8 +1,8 @@
 <template>
   <div class="p-5">
-    <div class="flex justify-between py-5">
+    <div class="flex justify-between pb-5">
       <BackButton text="Back" @click="back" />
-      <span>Blueprint report</span>
+      <span class="text-title text-main font-semibold">Blueprint report</span>
       <ShareBtn />
     </div>
     <div class="flex">

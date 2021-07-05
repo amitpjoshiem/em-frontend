@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div>Risk Profile Comparison</div>
+    <div class="text-base text-main font-semibold py-5">
+      Risk Profile Comparison
+    </div>
     <div class="border border-color-grey box-border rounded-lg">
       <div class="flex">
         <div class="w-2/12 border-b border-color-grey" />
