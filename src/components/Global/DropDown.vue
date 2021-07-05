@@ -1,7 +1,7 @@
 <template>
   <el-dropdown trigger="click" @command="handleCommand">
     <div class="flex items-center">
-      <slot name="titleDropDown"></slot>
+      <slot name="titleDropDown" />
     </div>
     <template #dropdown>
       <el-dropdown-menu>

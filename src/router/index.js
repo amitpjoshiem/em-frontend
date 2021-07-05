@@ -73,12 +73,38 @@ const routes = [
       },
 
       {
-        path: 'blue-report',
-        name: 'bluereport',
+        path: 'settings',
+        name: 'settings',
         component: () =>
           import(
-            /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectBlueReport.vue'
+            /* webpackChunkName: "settings" */ '../components/Settings/Settings.vue'
           ),
+        children: [
+          {
+            path: 'profile',
+            name: 'profile',
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard" */ '../components/Settings/ProfileSettings.vue'
+              ),
+          },
+          {
+            path: 'notifications',
+            name: 'notifications',
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard" */ '../components/Settings/NotificationsSettings.vue'
+              ),
+          },
+          {
+            path: 'information',
+            name: 'information',
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard" */ '../components/Settings/InformationSettings.vue'
+              ),
+          },
+        ],
       },
 
       {
