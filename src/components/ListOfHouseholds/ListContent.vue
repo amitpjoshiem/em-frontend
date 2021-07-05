@@ -1,0 +1,108 @@
+<template>
+  <div class="border border-color-grey rounded-t-lg">
+    <div class="flex p-5 justify-between">
+      <div class="flex">
+        <router-link
+          :to="{ name: 'all' }"
+          class="mr-5 text-gray03 text-smm cursor-pointer"
+          :class="{ active: getActiveTab === 'all' }"
+        >
+          All Households
+        </router-link>
+        <router-link
+          :to="{ name: 'prospects' }"
+          class="mr-5 text-gray03 text-smm cursor-pointer"
+          :class="{ active: getActiveTab === 'prospects' }"
+        >
+          Prospects
+        </router-link>
+        <router-link
+          :to="{ name: 'clients' }"
+          class="text-gray03 text-smm cursor-pointer"
+          :class="{ active: getActiveTab === 'clients' }"
+        >
+          Clients
+        </router-link>
+      </div>
+      <div class="flex">
+        <ItemsPerPage />
+        <DropDown class="ml-2.5" :options="actionsOptions">
+          <template #titleDropDown>
+            <span
+              class="
+                cursor-pointer
+                bg-white
+                rounded
+                flex
+                justify-center
+                items-center
+                py-2
+                px-3
+                border border-color-grey
+              "
+            >
+              <InlineSvg :src="IconAction" />
+            </span>
+          </template>
+        </DropDown>
+      </div>
+    </div>
+    <UsersListTable :options-header="optionsHeader" :users-list="usersList" />
+    <div
+      class="flex items-center justify-center border-t border-color-grey py-6"
+    >
+      <Pagination />
+    </div>
+  </div>
+</template>
+
+<script>
+import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
+import { optionsHeader } from '@/components/ListOfHouseholds/listOptionsHeader'
+import { useUserList } from '@/components/ListOfHouseholds/DTO/usersList'
+import IconAction from '@/assets/svg/icon-action.svg'
+
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+export default {
+  name: 'ListContent',
+  components: {
+    UsersListTable,
+  },
+  setup() {
+    const route = useRoute()
+    const { data: usersList } = useUserList()
+
+    const getActiveTab = computed(() => {
+      return route.name
+    })
+
+    const actionsOptions = [
+      {
+        title: 'Item 1',
+        command: 'item-1',
+      },
+      {
+        title: 'Item 2',
+        command: 'item2',
+      },
+    ]
+
+    return {
+      getActiveTab,
+      optionsHeader,
+      usersList,
+      actionsOptions,
+      IconAction,
+    }
+  },
+}
+</script>
+
+<style scoped>
+.active {
+  color: #66b6ff;
+  border-bottom: 2px solid #66b6ff;
+}
+</style>

@@ -88,24 +88,24 @@ const routes = [
           ),
         children: [
           {
-            path: 'list-all',
-            name: 'list-all',
+            path: 'all',
+            name: 'all',
             component: () =>
               import(
                 /* webpackChunkName: "newprospect" */ '../components/ListOfHouseholds/ListAll.vue'
               ),
           },
           {
-            path: 'list-prospects',
-            name: 'list-prospects',
+            path: 'prospects',
+            name: 'prospects',
             component: () =>
               import(
                 /* webpackChunkName: "newprospect" */ '../components/ListOfHouseholds/ListProspects.vue'
               ),
           },
           {
-            path: 'list-clients',
-            name: 'list-clients',
+            path: 'clients',
+            name: 'clients',
             component: () =>
               import(
                 /* webpackChunkName: "newprospect" */ '../components/ListOfHouseholds/ListClients.vue'

@@ -19,13 +19,13 @@
         <img src="../assets/img/dashboard.png" />
       </div>
       <router-link
-        :to="{ name: 'list-of-households' }"
+        :to="{ name: 'all' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
       >
         <InlineSvg :src="IconList" />
       </router-link>
       <router-link
-        :to="{ name: 'list-of-households' }"
+        :to="{ name: 'all' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
       >
         <InlineSvg :src="IconAssets" />
