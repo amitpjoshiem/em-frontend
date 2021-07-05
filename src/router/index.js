@@ -73,6 +73,41 @@ const routes = [
       },
 
       {
+        path: 'list-of-households',
+        name: 'list-of-households',
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ '../views/ListOfHouseholds.vue'
+          ),
+        children: [
+          {
+            path: 'list-all',
+            name: 'list-all',
+            component: () =>
+              import(
+                /* webpackChunkName: "newprospect" */ '../components/ListOfHouseholds/ListAll.vue'
+              ),
+          },
+          {
+            path: 'list-prospects',
+            name: 'list-prospects',
+            component: () =>
+              import(
+                /* webpackChunkName: "newprospect" */ '../components/ListOfHouseholds/ListProspects.vue'
+              ),
+          },
+          {
+            path: 'list-clients',
+            name: 'list-clients',
+            component: () =>
+              import(
+                /* webpackChunkName: "newprospect" */ '../components/ListOfHouseholds/ListClients.vue'
+              ),
+          },
+        ],
+      },
+
+      {
         path: 'settings',
         name: 'settings',
         component: () =>

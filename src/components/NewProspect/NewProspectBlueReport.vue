@@ -1,7 +1,7 @@
 <template>
   <div class="p-5">
     <div class="flex justify-between py-5">
-      <BackButton @click="back" />
+      <BackButton text="Back" @click="back" />
       <span>Blueprint report</span>
       <ShareBtn />
     </div>
@@ -22,8 +22,9 @@
                       font-semibold
                       uppercase
                     "
-                    >Prospect</span
                   >
+                    Prospect
+                  </span>
                 </div>
               </div>
             </div>
