@@ -364,6 +364,48 @@ const prospectAssetsSchemaLiquid = [
   [
     {
       component: 'Label',
+      label: '401k/IRA',
+      class: 'w-4/24 text-main pt-2 font-semibold',
+      model: '401kLiquidSecond',
+      positionLeft: true,
+    },
+    {
+      component: 'Input',
+      type: 'text',
+      name: '401kOwnerSecon',
+      model: '401kOwnerSecon',
+      labelVariant: 'gray',
+      class: 'w-5/24 pr-5',
+    },
+    {
+      component: 'Input',
+      type: 'text',
+      name: '401kSpouseSecon',
+      labelVariant: 'gray',
+      model: '401kSpouseSecon',
+      class: 'w-5/24 pr-5',
+    },
+    {
+      component: 'Input',
+      type: 'text',
+      name: '401kOnqSecon',
+      model: '401kOnqSecon',
+      labelVariant: 'gray',
+      class: 'w-5/24 pr-5',
+    },
+    {
+      component: 'Input',
+      type: 'text',
+      name: '401kBalanceSecon',
+      labelVariant: 'gray',
+      model: '401kBalanceSecon',
+      class: 'w-5/24 pr-5',
+    },
+  ],
+  // ************************************************
+  [
+    {
+      component: 'Label',
       label: 'Stocks/Bonds/MF',
       class: 'w-4/24 text-main pt-2 font-semibold',
       model: 'StocksLiquid',
@@ -774,6 +816,44 @@ const prospectAssetsSchemaNoLiquid = [
       component: 'Input',
       type: 'text',
       name: 'balance401NoLiquidOwner',
+      model: 'balance401NoLiquidOwner',
+      class: 'w-5/24 pr-5',
+    },
+  ],
+  // ************************************************
+  [
+    {
+      component: 'Label',
+      label: '401k/IRA',
+      class: 'w-4/24 text-main pt-2 font-semibold',
+      model: '401NoLiquidSecond',
+      positionLeft: true,
+    },
+    {
+      component: 'Input',
+      type: 'text',
+      name: '401NoLiquidOwnerSecond',
+      model: '401NoLiquidOwnerSecond',
+      class: 'w-5/24 pr-5',
+    },
+    {
+      component: 'Input',
+      type: 'text',
+      name: 'Spouse401NoLiquidSecond',
+      model: 'Spouse401NoLiquidOwnerSecond',
+      class: 'w-5/24 pr-5',
+    },
+    {
+      component: 'Input',
+      type: 'text',
+      name: 'Onq401NoLiquidOwnerSecond',
+      model: 'Onq401NoLiquidOwnerSecond',
+      class: 'w-5/24 pr-5',
+    },
+    {
+      component: 'Input',
+      type: 'text',
+      name: 'balance401NoLiquidOwnerSecond',
       model: 'balance401NoLiquidOwner',
       class: 'w-5/24 pr-5',
     },
