@@ -318,7 +318,7 @@ const prospectBasicSchemaOther = [
       component: 'Radio',
       optionOne: 'Conservative',
       optionTwo: 'Moderately Conservative',
-      optionThre: 'Moderate',
+      optionThree: 'Moderate',
       optionFour: 'Moderately Aggressive',
       optionFive: 'Aggressive',
       class: 'w-24/24',
