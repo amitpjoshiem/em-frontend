@@ -90,7 +90,7 @@
         <div class="text-xss text-title-gray w-2/12">Password</div>
         <div class="text-main text-base mr-3">...............</div>
         <Dialog
-          title="Change the name"
+          title="Change password"
           confirm-action="changePassword"
           @confirmDialog="handleConfirm"
         >
