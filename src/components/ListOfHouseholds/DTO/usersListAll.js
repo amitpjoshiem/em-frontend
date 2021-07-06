@@ -16,7 +16,7 @@ export function User({
   this.netWorth = netWorth
 }
 
-export function useUserList() {
+export function useUsersListAll() {
   return {
     isLoading: false,
     data: [

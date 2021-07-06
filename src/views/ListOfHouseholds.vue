@@ -2,7 +2,6 @@
   <div class="p-5">
     <ListHeader />
     <ListContent />
-    <router-view />
   </div>
 </template>
 
