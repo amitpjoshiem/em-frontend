@@ -1,11 +1,11 @@
 <template>
   <div>
-    <UsersListTable :options-header="optionsHeader" :users-list="usersList" />
+    <UsersListTable :items-header="itemsHeader" :users-list="usersList" />
   </div>
 </template>
 
 <script>
-import { optionsHeader } from '@/components/ListOfHouseholds/listOptionsHeader'
+import { itemsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable'
 import { useUsersListClients } from '@/components/ListOfHouseholds/DTO/usersListClients'
 
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
@@ -19,7 +19,7 @@ export default {
     const { data: usersList } = useUsersListClients()
 
     return {
-      optionsHeader,
+      itemsHeader,
       usersList,
     }
   },

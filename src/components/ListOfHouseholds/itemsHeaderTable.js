@@ -1,4 +1,4 @@
-const optionsHeader = [
+const itemsHeader = [
   {
     title: 'householder Name',
     class: 'w-7/24',
@@ -29,4 +29,4 @@ const optionsHeader = [
   },
 ]
 
-export { optionsHeader }
+export { itemsHeader }

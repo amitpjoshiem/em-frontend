@@ -4,7 +4,7 @@
       <thead class="bg-widget-bg uppercase text-gray03 h-6">
         <tr class="text-small">
           <th
-            v-for="(item, index) in optionsHeader"
+            v-for="(item, index) in itemsHeader"
             :key="index"
             :class="item.class"
           >
@@ -73,7 +73,7 @@ export default {
     UsersListTableEmpty,
   },
   props: {
-    optionsHeader: {
+    itemsHeader: {
       type: Array,
       require: true,
       default: () => [],

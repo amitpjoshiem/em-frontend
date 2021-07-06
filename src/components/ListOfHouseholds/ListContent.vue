@@ -48,7 +48,6 @@
       </div>
     </div>
     <router-view />
-    <!-- <UsersListTable :options-header="optionsHeader" :users-list="usersList" /> -->
     <div
       class="flex items-center justify-center border-t border-color-grey py-6"
     >
@@ -58,9 +57,6 @@
 </template>
 
 <script>
-// import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
-// import { optionsHeader } from '@/components/ListOfHouseholds/listOptionsHeader'
-// import { useUserList } from '@/components/ListOfHouseholds/DTO/usersList'
 import IconAction from '@/assets/svg/icon-action.svg'
 
 import { computed } from 'vue'
@@ -68,12 +64,8 @@ import { useRoute } from 'vue-router'
 
 export default {
   name: 'ListContent',
-  components: {
-    // UsersListTable,
-  },
   setup() {
     const route = useRoute()
-    // const { data: usersList } = useUserList()
 
     const getActiveTab = computed(() => {
       return route.name
@@ -92,8 +84,6 @@ export default {
 
     return {
       getActiveTab,
-      // optionsHeader,
-      // usersList,
       actionsOptions,
       IconAction,
     }

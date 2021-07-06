@@ -9,7 +9,7 @@ import ListOfHouseholdsHeader from '@/components/Dashboard/ListOfHouseholdsHeade
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
 
 import { useUserList } from '@/components/UsersListTable/DTO/usersList'
-import { optionsHeader } from '@/components/ListOfHouseholds/listOptionsHeader'
+import { optionsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable'
 
 export default {
   components: {
