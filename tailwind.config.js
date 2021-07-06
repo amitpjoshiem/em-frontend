@@ -35,14 +35,7 @@ module.exports = {
         'dark-blue-charts': '#53576A',
       },
       fontFamily: {
-        sans: [
-          'Eina01',
-          'Comic Sans',
-          'Roboto',
-          'Helvetica',
-          'Arial',
-          'sans-serif',
-        ],
+        sans: ['Work Sans', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
       },
       fontSize: {
         smallx: '9px',

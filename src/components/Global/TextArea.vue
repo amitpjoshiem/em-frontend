@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span class="text-xss font-semibold">{{ label }}</span>
+    <span class="text-xss font-medium">{{ label }}</span>
     <el-input
       v-model="textarea"
       type="textarea"

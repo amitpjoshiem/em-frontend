@@ -2,7 +2,7 @@
   <div class="p-5">
     <div class="flex justify-between pb-5">
       <BackButton @click="back" />
-      <span class="text-title text-main font-semibold">Blueprint report</span>
+      <span class="text-title text-main font-medium">Blueprint report</span>
       <ShareBtn />
     </div>
     <div class="flex">
@@ -13,15 +13,11 @@
               <div class="flex p-5">
                 <Avatar />
                 <div class="flex flex-col ml-2">
-                  <span class="text-sm text-main font-semibold"
+                  <span class="text-sm text-main font-medium"
                     >John &amp; Sarah Travis</span
                   >
                   <span
-                    class="
-                      text-small text-activity-item
-                      font-semibold
-                      uppercase
-                    "
+                    class="text-small text-activity-item font-medium uppercase"
                     >Prospect</span
                   >
                 </div>
@@ -60,12 +56,12 @@
                 <div>Liquid:</div>
                 <div>Income safe:</div>
               </div>
-              <div class="flex flex-col text-main text-sm font-semibold">
+              <div class="flex flex-col text-main text-sm font-medium">
                 <div>$50000</div>
                 <div>$90000</div>
                 <div>$10000</div>
               </div>
-              <div class="flex flex-col text-main text-sm font-semibold">
+              <div class="flex flex-col text-main text-sm font-medium">
                 <div>33%</div>
                 <div>60%</div>
                 <div>7%</div>
@@ -123,7 +119,7 @@
             pb-2
             rounded-tr-lg rounded-tl-lg
             text-smm text-main
-            font-semibold
+            font-medium
           "
         >
           Monthly Income analysis
@@ -156,7 +152,7 @@
             pl-5
             pb-2
             text-xss text-main
-            font-semibold
+            font-medium
             flex
             justify-between
           "
@@ -185,7 +181,7 @@
             bg-color-light-blue
             rounded-br-lg rounded-bl-lg
             text-xss text-main
-            font-semibold
+            font-medium
           "
         >
           <div class="pl-5 pr-5 py-3 flex justify-between">

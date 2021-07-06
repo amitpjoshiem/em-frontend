@@ -10,10 +10,10 @@
         rounded
         appearance-none
         focus:shadow-outline
-        w-[105px]
+        w-[110px]
         h-[30px]
       "
-      :class="{ 'w-[105px]': large, 'w-[55px]': small }"
+      :class="{ 'w-[110px]': large, 'w-[55px]': small }"
     >
       <option
         v-for="(item, index) in options"

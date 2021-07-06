@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
-      <div class="w-10/12 text-xss text-main font-semibold">
+      <div class="w-10/12 text-xss text-main font-medium">
         I have been given access to the member
       </div>
       <div class="w-2/12 flex justify-between">
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
-      <div class="w-10/12 text-xss text-main font-semibold">
+      <div class="w-10/12 text-xss text-main font-medium">
         I have been given access to the member
       </div>
       <div class="w-2/12 flex justify-between">
@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
-      <div class="w-10/12 text-xss text-main font-semibold">
+      <div class="w-10/12 text-xss text-main font-medium">
         Member information was updated by another user
       </div>
       <div class="w-2/12 flex justify-between">
@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
-      <div class="w-10/12 text-xss text-main font-semibold">
+      <div class="w-10/12 text-xss text-main font-medium">
         Member has reached retirement age
       </div>
       <div class="w-2/12 flex justify-between">

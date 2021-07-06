@@ -3,7 +3,7 @@
     <div class="col-span-1 flex justify-center items-center">
       <Avatar :size="'small'" />
     </div>
-    <div class="col-span-3 text-xs text-main font-semibold flex items-center">
+    <div class="col-span-3 text-xs text-main font-medium flex items-center">
       {{ user.name }}
     </div>
     <div class="col-span-2 flex justify-center items-center">
@@ -21,7 +21,7 @@
       class="
         col-span-2
         text-main text-xs
-        font-semibold
+        font-medium
         flex
         justify-center
         items-center

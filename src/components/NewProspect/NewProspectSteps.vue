@@ -1,14 +1,14 @@
 <template>
   <div class="bg-widget-bg rounded-lg px-5 mb-5">
     <div class="flex w-full pt-7">
-      <div class="w-1/5 text-center text-xs font-semibold text-main">
+      <div class="w-1/5 text-center text-xs font-medium text-main">
         1. Basic
       </div>
       <div
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 2,
-          'font-semibold text-main': step > 1,
+          'font-medium text-main': step > 1,
         }"
       >
         2. Assets &amp; Income
@@ -17,7 +17,7 @@
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 3,
-          'font-semibold text-main': step > 2,
+          'font-medium text-main': step > 2,
         }"
       >
         3. Assets Accounts
@@ -26,7 +26,7 @@
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 4,
-          'font-semibold text-main': step > 3,
+          'font-medium text-main': step > 3,
         }"
       >
         4. Assets Consolidations
@@ -35,7 +35,7 @@
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 5,
-          'font-semibold text-main': step > 4,
+          'font-medium text-main': step > 4,
         }"
       >
         5. Stress Test

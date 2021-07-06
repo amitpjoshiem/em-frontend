@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between pb-5">
     <BackButton @click="back" />
-    <span class="text-title text-main font-semibold">{{ headerTitle }}</span>
+    <span class="text-title text-main font-medium">{{ headerTitle }}</span>
     <NextButton @click="next" />
   </div>
 </template>

@@ -66,12 +66,12 @@
           :key="index"
           class="flex py-4 border-b border-color-grey"
         >
-          <span class="w-5/12 text-sm text-main font-semibold">{{
+          <span class="w-5/12 text-sm text-main font-medium">{{
             item.name
           }}</span>
           <span class="w-2/12 text-sm text-main">{{ item.accountType }}</span>
           <span class="w-2/12 text-sm text-main">{{ item.accountType }}</span>
-          <span class="w-2/12 text-sm text-main font-semibold">{{
+          <span class="w-2/12 text-sm text-main font-medium">{{
             item.netWorth
           }}</span>
           <span class="w-1/12 flex justify-end">

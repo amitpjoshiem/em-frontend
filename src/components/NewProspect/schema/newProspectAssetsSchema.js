@@ -14,7 +14,7 @@ const prospectAssetsSchemaCurrent = [
     {
       component: 'Label',
       label: 'Salary',
-      class: 'w-2/12 text-main pt-2 font-semibold',
+      class: 'w-2/12 text-main pt-2 font-medium',
       model: 'Salary',
       positionLeft: true,
     },
@@ -41,7 +41,7 @@ const prospectAssetsSchemaCurrent = [
     {
       component: 'Label',
       label: 'Social Security',
-      class: 'w-2/12 text-main font-semibold',
+      class: 'w-2/12 text-main font-medium',
       model: 'socialSecurity',
       positionLeft: true,
     },
@@ -66,7 +66,7 @@ const prospectAssetsSchemaCurrent = [
     {
       component: 'Label',
       label: 'Pension',
-      class: 'w-2/12 text-main font-semibold',
+      class: 'w-2/12 text-main font-medium',
       model: 'Pension',
       positionLeft: true,
     },
@@ -91,7 +91,7 @@ const prospectAssetsSchemaCurrent = [
     {
       component: 'Label',
       label: 'Rental income',
-      class: 'w-2/12 text-main font-semibold',
+      class: 'w-2/12 text-main font-medium',
       model: 'Rental',
       positionLeft: true,
     },
@@ -116,7 +116,7 @@ const prospectAssetsSchemaCurrent = [
     {
       component: 'Label',
       label: 'RMD’s',
-      class: 'w-2/12 text-main font-semibold',
+      class: 'w-2/12 text-main font-medium',
       model: 'rmd',
       positionLeft: true,
     },
@@ -141,7 +141,7 @@ const prospectAssetsSchemaCurrent = [
     {
       component: 'Label',
       label: 'Interest/Dividents',
-      class: 'w-2/12 text-main font-semibold',
+      class: 'w-2/12 text-main font-medium',
       model: 'Interest',
       positionLeft: true,
     },
@@ -166,7 +166,7 @@ const prospectAssetsSchemaCurrent = [
     {
       component: 'Label',
       label: 'Other',
-      class: 'w-2/12 text-main font-semibold',
+      class: 'w-2/12 text-main font-medium',
       model: 'Other',
       positionLeft: true,
     },
@@ -194,7 +194,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: 'Cash/Checking/ Savings/MM',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'SalaryLiquid',
       positionLeft: true,
     },
@@ -240,7 +240,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: 'CD’s',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'SalaryLiquid',
       positionLeft: true,
     },
@@ -281,7 +281,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: '401k/IRA (if over 59)',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'IRALiquid',
       positionLeft: true,
     },
@@ -323,7 +323,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: '401k/IRA',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: '401kLiquid',
       positionLeft: true,
     },
@@ -365,7 +365,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: '401k/IRA',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: '401kLiquidSecond',
       positionLeft: true,
     },
@@ -407,7 +407,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: 'Stocks/Bonds/MF',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'StocksLiquid',
       positionLeft: true,
     },
@@ -449,7 +449,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: 'Cash value life insurance',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'insuranceLiquid',
       positionLeft: true,
     },
@@ -491,7 +491,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: 'FA/VA not suject to penalty',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'penaltyLiquid',
       positionLeft: true,
     },
@@ -533,7 +533,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: 'Gift/Inheritance',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'GiftLiquid',
       positionLeft: true,
     },
@@ -575,7 +575,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: 'Lump sum pension',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'LumpLiquid',
       positionLeft: true,
     },
@@ -617,7 +617,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: 'Other liquid assets',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'OtherLiquidAssets',
       positionLeft: true,
     },
@@ -659,7 +659,7 @@ const prospectAssetsSchemaLiquid = [
     {
       component: 'Label',
       label: 'Total',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'LiquidTotal',
       positionLeft: true,
     },
@@ -703,7 +703,7 @@ const prospectAssetsSchemaNoLiquid = [
     {
       component: 'Label',
       label: 'Value of home',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'ValueOfHome',
       positionLeft: true,
     },
@@ -749,7 +749,7 @@ const prospectAssetsSchemaNoLiquid = [
     {
       component: 'Label',
       label: '401k/IRA (if over 59)',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'IRANoLiquid',
       positionLeft: true,
     },
@@ -787,7 +787,7 @@ const prospectAssetsSchemaNoLiquid = [
     {
       component: 'Label',
       label: '401k/IRA',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: '401NoLiquid',
       positionLeft: true,
     },
@@ -825,7 +825,7 @@ const prospectAssetsSchemaNoLiquid = [
     {
       component: 'Label',
       label: '401k/IRA',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: '401NoLiquidSecond',
       positionLeft: true,
     },
@@ -863,7 +863,7 @@ const prospectAssetsSchemaNoLiquid = [
     {
       component: 'Label',
       label: 'FA/VA suject to penalty',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'penaltyNoLiquid',
       positionLeft: true,
     },
@@ -901,7 +901,7 @@ const prospectAssetsSchemaNoLiquid = [
     {
       component: 'Label',
       label: 'Other',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'OtherNoLiquid',
       positionLeft: true,
     },
@@ -939,7 +939,7 @@ const prospectAssetsSchemaNoLiquid = [
     {
       component: 'Total',
       label: 'Other',
-      class: 'w-4/24 text-main pt-2 font-semibold',
+      class: 'w-4/24 text-main pt-2 font-medium',
       model: 'TotalNoLiquid',
       positionLeft: true,
     },
