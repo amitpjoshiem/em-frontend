@@ -137,4 +137,10 @@ export default {
   font-size: 13px;
   font-family: 'Eina04';
 }
+
+.input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 </style>
