@@ -1,15 +1,15 @@
 <template>
   <div>
     <table v-if="!isEmptyDashboard" class="table-fixed">
-      <thead class="bg-widget-bg uppercase text-gray03 h-6">
-        <tr class="text-small text-left">
-          <th class="w-7/24 pl-5">householder Name</th>
-          <th class="w-3/24">Created on</th>
-          <th class="w-3/24">type</th>
-          <th class="w-3/24">Onboarding</th>
-          <th class="w-4/24">location</th>
-          <th class="w-2/24">net worth</th>
-          <th class="w-1/24"></th>
+      <thead class="bg-widget-bg uppercase text-gray03">
+        <tr class="text-small text-left h-6">
+          <th class="w-7/24 pl-5 pr-0 pb-0 pt-0">householder Name</th>
+          <th class="w-3/24 p-0">Created on</th>
+          <th class="w-3/24 p-0">type</th>
+          <th class="w-3/24 p-0">Onboarding</th>
+          <th class="w-4/24 p-0">location</th>
+          <th class="w-2/24 p-0">net worth</th>
+          <th class="w-1/24 p-0"></th>
         </tr>
       </thead>
       <tbody>
