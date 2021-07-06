@@ -50,7 +50,8 @@
   font-size: 13px;
 }
 
-.no-shadow-ios{
+.no-shadow-ios,
+.el-textarea__inner{
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
   appearance: none !important;
