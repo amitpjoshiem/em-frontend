@@ -35,7 +35,7 @@
       />
       <slot name="icon" :showError="showError" />
     </div>
-    <div class="text-color-error text-xss h-3.5 pt-1">
+    <div v-if="type !== 'search'" class="text-color-error text-xss h-3.5 pt-1">
       {{ showError ? errorMessage : '' }}
     </div>
   </div>
