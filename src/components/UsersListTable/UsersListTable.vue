@@ -2,8 +2,8 @@
   <div>
     <table v-if="!isEmptyDashboard" class="table-fixed">
       <thead class="bg-widget-bg uppercase text-gray03 h-6">
-        <tr class="text-small">
-          <th class="w-7/24">householder Name</th>
+        <tr class="text-small text-left">
+          <th class="w-7/24 pl-5">householder Name</th>
           <th class="w-3/24">Created on</th>
           <th class="w-3/24">type</th>
           <th class="w-3/24">Onboarding</th>
