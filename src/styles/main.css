@@ -49,3 +49,9 @@
 .el-progress__text span {
   font-size: 13px;
 }
+
+.no-shadow-ios{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

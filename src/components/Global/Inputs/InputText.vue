@@ -17,12 +17,12 @@
         :value="formValue"
         :placeholder="placeholder"
         class="
+          no-shadow-ios
           input
-          shadow-input
           w-full
           py-[5px]
           border
-          rounded-md
+          rounded-[6px]
           justify-center
           border-input-border
           px-[20px]
@@ -135,11 +135,5 @@ export default {
 .input::placeholder {
   color: #b2bccd;
   font-size: 13px;
-}
-
-.input {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
 }
 </style>

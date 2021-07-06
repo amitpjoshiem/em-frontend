@@ -15,7 +15,16 @@
         :type="type"
         :value="formValue"
         :placeholder="placeholder"
-        class="input w-full pb-[5px] pt-[5px] border rounded-md justify-center"
+        class="
+          input
+          no-shadow-ios
+          w-full
+          pb-[5px]
+          pt-[5px]
+          border
+          rounded-md
+          justify-center
+        "
         :class="{
           'pl-[20px]': type !== 'search',
           'pl-[32px]': type === 'search',
