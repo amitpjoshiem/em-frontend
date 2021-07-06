@@ -2,7 +2,7 @@
   <div class="p-5">
     <div class="flex justify-between pb-5">
       <BackButton text="Back" @click="back" />
-      <span class="text-title text-main font-semibold">Blueprint report</span>
+      <span class="text-title text-main font-medium">Blueprint report</span>
       <ShareBtn />
     </div>
     <div class="flex">
@@ -13,15 +13,11 @@
               <div class="flex p-5">
                 <Avatar />
                 <div class="flex flex-col ml-2">
-                  <span class="text-sm text-main font-semibold"
+                  <span class="text-sm text-main font-medium"
                     >John &amp; Sarah Travis</span
                   >
                   <span
-                    class="
-                      text-small text-activity-item
-                      font-semibold
-                      uppercase
-                    "
+                    class="text-small text-activity-item font-medium uppercase"
                   >
                     Prospect
                   </span>
@@ -61,12 +57,12 @@
                 <div>Liquid:</div>
                 <div>Income safe:</div>
               </div>
-              <div class="flex flex-col text-main text-sm font-semibold">
+              <div class="flex flex-col text-main text-sm font-medium">
                 <div>$50000</div>
                 <div>$90000</div>
                 <div>$10000</div>
               </div>
-              <div class="flex flex-col text-main text-sm font-semibold">
+              <div class="flex flex-col text-main text-sm font-medium">
                 <div>33%</div>
                 <div>60%</div>
                 <div>7%</div>
@@ -84,29 +80,29 @@
           <div class="flex justify-between pt-5">
             <div>
               <div class="flex text-xs text-main">
-                <InlineSvg :src="IconCheckGreen" />
+                <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
                 <span class="ml-1.5"> High Fees</span>
               </div>
               <div class="flex pt-2 text-xs text-main">
-                <InlineSvg :src="IconCheckGreen" />
+                <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
                 <span class="ml-1.5"> Extremely high market exposure</span>
               </div>
               <div class="flex pt-2 text-xs text-main">
-                <InlineSvg :src="IconCheckGreen" />
+                <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
                 <span class="ml-1.5"> Simple</span>
               </div>
             </div>
             <div>
               <div class="flex text-xs text-main">
-                <InlineSvg :src="IconCheckGreen" />
+                <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
                 <span class="ml-1.5"> Keep the money safe</span>
               </div>
               <div class="flex pt-2 text-xs text-main">
-                <InlineSvg :src="IconCheckGreen" />
+                <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
                 <span class="ml-1.5"> Massive Overlap</span>
               </div>
               <div class="flex pt-2 text-xs text-main">
-                <InlineSvg :src="IconCheckGreen" />
+                <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
                 <span class="ml-1.5">
                   Design, implement and monitoring income strategy</span
                 >
@@ -124,7 +120,7 @@
             pb-2
             rounded-tr-lg rounded-tl-lg
             text-smm text-main
-            font-semibold
+            font-medium
           "
         >
           Monthly Income analysis
@@ -157,7 +153,7 @@
             pl-5
             pb-2
             text-xss text-main
-            font-semibold
+            font-medium
             flex
             justify-between
           "
@@ -186,7 +182,7 @@
             bg-color-light-blue
             rounded-br-lg rounded-bl-lg
             text-xss text-main
-            font-semibold
+            font-medium
           "
         >
           <div class="pl-5 pr-5 py-3 flex justify-between">

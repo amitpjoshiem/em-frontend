@@ -2,7 +2,7 @@
   <div>
     <div class="flex items-center justify-between">
       <label
-        class="label block text-main text-xss font-semibold pb-2"
+        class="label block text-main text-xss font-medium pb-2"
         :class="labelGray ? 'text-gray03' : 'text-main'"
         >{{ label }}</label
       >
@@ -15,7 +15,16 @@
         :type="type"
         :value="formValue"
         :placeholder="placeholder"
-        class="input w-full pb-[5px] pt-[5px] border rounded-md justify-center"
+        class="
+          input
+          no-shadow-ios
+          w-full
+          pb-[5px]
+          pt-[5px]
+          border
+          rounded-md
+          justify-center
+        "
         :class="{
           'pl-[20px]': type !== 'search',
           'pl-[32px]': type === 'search',

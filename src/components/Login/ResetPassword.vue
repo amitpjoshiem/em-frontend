@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <h1 class="text-center text-main font-semibold text-2xl">
+      <h1 class="text-center text-main font-medium text-2xl">
         Create a new password
       </h1>
 

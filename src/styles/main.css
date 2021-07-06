@@ -49,3 +49,11 @@
 .el-progress__text span {
   font-size: 13px;
 }
+
+.no-shadow-ios,
+.el-textarea__inner,
+.el-radio__inner{
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+} 

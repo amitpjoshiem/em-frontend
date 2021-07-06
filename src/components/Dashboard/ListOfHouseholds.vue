@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-color-grey rounded-large mt-5">
+  <div class="border border-color-grey rounded-large mt-5 mb-10">
     <ListOfHouseholdsHeader />
     <UsersListTable :items-header="itemsHeader" :users-list="usersList" />
   </div>

@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between">
       <label
         v-if="label"
-        class="label block text-main text-xss font-semibold pb-2"
+        class="label block text-main text-xss font-medium pb-2"
         :class="labelClass"
         >{{ label }}</label
       >
@@ -17,12 +17,12 @@
         :value="formValue"
         :placeholder="placeholder"
         class="
+          no-shadow-ios
           input
-          shadow-input
           w-full
           py-[5px]
           border
-          rounded-md
+          rounded-[6px]
           justify-center
           border-input-border
           px-[20px]
@@ -35,7 +35,7 @@
       />
       <slot name="icon" :showError="showError" />
     </div>
-    <div class="text-color-error text-xss h-3.5 pt-1">
+    <div v-if="type !== 'search'" class="text-color-error text-xss h-3.5 pt-1">
       {{ showError ? errorMessage : '' }}
     </div>
   </div>
@@ -135,6 +135,5 @@ export default {
 .input::placeholder {
   color: #b2bccd;
   font-size: 13px;
-  font-family: 'Eina04';
 }
 </style>

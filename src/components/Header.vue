@@ -1,24 +1,11 @@
 <template>
-  <div
-    class="
-      grid grid-cols-4
-      gap-4
-      header
-      bg-widget-bg
-      items-center
-      pl-[30px]
-      h-16
-      pr-5
-    "
-  >
-    <div class="col-span-2">
-      <InputSearch placeholder="Search householders" name="inputSearch" />
-    </div>
-    <div class="flex items-center col-span-2 justify-end">
+  <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
+    <InputSearch placeholder="Search householders" name="inputSearch" />
+    <div class="flex items-center justify-end">
       <router-link :to="{ name: 'basic-information' }">
         <div
           class="
-            h-[36px]
+            h-9
             bg-color-grey
             rounded-md
             border-input-border border

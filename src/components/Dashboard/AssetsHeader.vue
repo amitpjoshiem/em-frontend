@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between items-center">
-    <span class="text-smm font-semibold">Assets</span>
+    <span class="text-smm font-medium">Assets</span>
     <div class="flex items-center">
       <Select :options="options" large />
       <DropDown class="ml-2" :options="actionsOptions">

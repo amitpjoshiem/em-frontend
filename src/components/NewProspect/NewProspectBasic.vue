@@ -1,42 +1,42 @@
 <template>
   <div class="pt-6">
     <div class="border-b border-color-grey px-20 pb-7">
-      <span class="text-xl font-semibold">General</span>
+      <span class="text-xl font-medium">General</span>
       <SchemaFormWithValidation
         :schema="schemaGeneral"
         schema-row-classes="pt-6"
       />
     </div>
     <div class="border-b border-color-grey px-20 py-7">
-      <span class="text-xl font-semibold">Spouse</span>
+      <span class="text-xl font-medium">Spouse</span>
       <SchemaFormWithValidation
         :schema="schemaSpouse"
         schema-row-classes="pt-6"
       />
     </div>
     <div class="border-b border-color-grey px-20 pt-7">
-      <span class="text-xl font-semibold">Housing Information</span>
+      <span class="text-xl font-medium">Housing Information</span>
       <SchemaFormWithValidation
         :schema="schemaHousing"
         schema-row-classes="pb-6"
       />
     </div>
     <div class="border-b border-color-grey px-20 pt-7">
-      <span class="text-xl font-semibold">Housing Information</span>
+      <span class="text-xl font-medium">Housing Information</span>
       <SchemaFormWithValidation
         :schema="schemaEmployment"
         schema-row-classes="pb-6"
       />
     </div>
     <div class="border-b border-color-grey px-20 pt-7">
-      <span class="text-xl font-semibold">Housing Information</span>
+      <span class="text-xl font-medium">Housing Information</span>
       <SchemaFormWithValidation
         :schema="schemaEmployment"
         schema-row-classes="pb-6"
       />
     </div>
     <div class="px-20 pt-7">
-      <span class="text-xl font-semibold">Other</span>
+      <span class="text-xl font-medium">Other</span>
       <SchemaFormWithValidation
         :schema="schemaOther"
         schema-row-classes="pb-6"

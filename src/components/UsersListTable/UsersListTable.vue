@@ -2,7 +2,7 @@
   <div>
     <table v-if="!isEmptyDashboard" class="table-fixed">
       <thead class="bg-widget-bg uppercase text-gray03 h-6">
-        <tr class="text-small">
+        <tr class="text-small text-left h-6">
           <th
             v-for="(item, index) in itemsHeader"
             :key="index"
@@ -20,7 +20,7 @@
         >
           <td class="flex items-center h-12 ml-5">
             <Avatar />
-            <p class="pl-2.5 font-semibold">{{ user.name }}</p>
+            <p class="pl-2.5 font-medium">{{ user.name }}</p>
           </td>
           <td class="text-main">
             {{ user.createdOn }}
@@ -34,7 +34,7 @@
           <td class="text-main">
             {{ user.location }}
           </td>
-          <td class="font-semibold">${{ user.netWorth }}</td>
+          <td class="font-medium">${{ user.netWorth }}</td>
           <td class="pr-5">
             <DropDown class="ml-2.5" :options="actionsOptions">
               <template #titleDropDown>

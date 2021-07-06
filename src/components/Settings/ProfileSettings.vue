@@ -2,7 +2,7 @@
   <div class="pl-24 pt-11">
     <div class="flex items-center">
       <Avatar size="big" />
-      <div class="text-main text-xl ml-12 font-semibold">My profile</div>
+      <div class="text-main text-xl ml-12 font-medium">My profile</div>
     </div>
     <div class="pt-12">
       <div class="flex items-center">
@@ -90,7 +90,7 @@
         <div class="text-xss text-title-gray w-2/12">Password</div>
         <div class="text-main text-base mr-3">...............</div>
         <Dialog
-          title="Change the name"
+          title="Change password"
           confirm-action="changePassword"
           @confirmDialog="handleConfirm"
         >
@@ -101,13 +101,13 @@
           </template>
           <template #contentDialog>
             <InputPassword
-              label="password"
+              label="Password"
               name="password"
               placeholder="Enter your new password"
               type="password"
             />
             <InputPassword
-              label="confirmPassword"
+              label="Confirm Password"
               name="confirmPassword"
               placeholder="Confirm your new password"
               type="password"
