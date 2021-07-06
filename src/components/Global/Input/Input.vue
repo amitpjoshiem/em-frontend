@@ -2,7 +2,7 @@
   <div>
     <div class="flex items-center justify-between">
       <label
-        class="label block text-main text-xss font-semibold pb-2"
+        class="label block text-main text-xss font-medium pb-2"
         :class="labelGray ? 'text-gray03' : 'text-main'"
         >{{ label }}</label
       >

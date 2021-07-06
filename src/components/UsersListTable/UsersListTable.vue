@@ -20,7 +20,7 @@
         >
           <td class="flex items-center h-12 ml-5">
             <Avatar />
-            <p class="pl-2.5 font-semibold">{{ user.name }}</p>
+            <p class="pl-2.5 font-medium">{{ user.name }}</p>
           </td>
           <td class="text-main">
             {{ user.createdOn }}
@@ -34,7 +34,7 @@
           <td class="text-main">
             {{ user.location }}
           </td>
-          <td class="font-semibold">${{ user.netWorth }}</td>
+          <td class="font-medium">${{ user.netWorth }}</td>
           <td class="pr-5">
             <DropDown class="ml-2.5" :options="actionsOptions">
               <template #titleDropDown>

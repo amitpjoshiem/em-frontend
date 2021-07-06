@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <h1 class="text-center text-main font-semibold text-2xl">
+      <h1 class="text-center text-main font-medium text-2xl">
         Forgot password?
       </h1>
       <h1 class="text-center text-gray03 text-xss">Please enter you email</h1>

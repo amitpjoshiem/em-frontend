@@ -10,9 +10,9 @@
         disabled,
       'bg-activity px-7 text-white text-xss': defaultBlueBtn,
       'bg-color-grey text-xss px-7 text-activity': defaultGrayBtn,
-      'bg-color-link-btn w-full flex justify-center items-center text-xss font-semibold':
+      'bg-color-link-btn w-full flex justify-center items-center text-xss font-medium':
         defaultLinkBtn,
-      'border border-dashed border-input-border w-full flex justify-center items-center text-xss font-semibold':
+      'border border-dashed border-input-border w-full flex justify-center items-center text-xss font-medium':
         transparentBtn,
     }"
   >

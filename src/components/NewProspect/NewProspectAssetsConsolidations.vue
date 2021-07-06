@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="border box-border color-light-gray rounded-lg">
-      <div class="text-smm font-semibold text-main py-5 pl-5">
+      <div class="text-smm font-medium text-main py-5 pl-5">
         Prospect Asset Consolidations
       </div>
       <div class="flex h-12 bg-widget-bg">
@@ -116,6 +116,6 @@ export default {
 }
 
 .total {
-  @apply border-r border-title-gray bg-color-grey text-xs font-semibold text-main flex items-center justify-center text-center last:border-r-0;
+  @apply border-r border-title-gray bg-color-grey text-xs font-medium text-main flex items-center justify-center text-center last:border-r-0;
 }
 </style>

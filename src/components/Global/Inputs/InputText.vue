@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between">
       <label
         v-if="label"
-        class="label block text-main text-xss font-semibold pb-2"
+        class="label block text-main text-xss font-medium pb-2"
         :class="labelClass"
         >{{ label }}</label
       >

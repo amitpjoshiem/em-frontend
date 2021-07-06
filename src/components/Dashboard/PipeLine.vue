@@ -1,7 +1,7 @@
 <template>
   <div class="col-span-1 p-5 bg-widget-bg rounded-[10px]">
     <div class="flex justify-between items-center">
-      <span class="text-smm font-semibold">Pipe Line</span>
+      <span class="text-smm font-medium">Pipe Line</span>
       <div class="flex">
         <Select :options="options" large />
         <DropDown class="ml-2.5" :options="actionsOptions">
@@ -50,7 +50,7 @@
             <span class="text-white"> 123k </span>
           </div>
         </div>
-        <span class="flex items-center justify-center text-xll font-semibold">
+        <span class="flex items-center justify-center text-xll font-medium">
           $102M
         </span>
         <InlineSvg v-if="!isEmptyDashboard" :src="IconTotal" />
@@ -80,7 +80,7 @@
             <span class="text-white"> 13 </span>
           </div>
         </div>
-        <span class="flex items-center justify-center text-xll font-semibold">
+        <span class="flex items-center justify-center text-xll font-medium">
           138
         </span>
         <InlineSvg v-if="!isEmptyDashboard" :src="IconMembers" />

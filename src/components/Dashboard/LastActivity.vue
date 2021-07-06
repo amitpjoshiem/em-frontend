@@ -5,7 +5,7 @@
       col-span-1
       bg-widget-bg
       rounded-[10px]
-      font-semibold
+      font-medium
       pl-5
       pt-5
       pr-5

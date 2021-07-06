@@ -2,7 +2,7 @@
   <div class="pl-24 pt-11">
     <div class="flex items-center">
       <Avatar size="big" />
-      <div class="text-main text-xl ml-12 font-semibold">My profile</div>
+      <div class="text-main text-xl ml-12 font-medium">My profile</div>
     </div>
     <div class="pt-12">
       <div class="flex items-center">

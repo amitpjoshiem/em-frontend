@@ -69,7 +69,7 @@ export default {
               font: {
                 size: 9,
               },
-              fontFamily: 'Eina01',
+              fontFamily: 'Work Sans',
               color: '#424450',
             },
             grid: {

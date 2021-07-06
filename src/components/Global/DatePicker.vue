@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <span class="text-xss font-semibold pb-1.5 text-main">{{ label }}</span>
+    <span class="text-xss font-medium pb-1.5 text-main">{{ label }}</span>
     <el-date-picker
       v-model="value2"
       type="date"

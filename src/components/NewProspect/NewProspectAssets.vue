@@ -1,17 +1,17 @@
 <template>
   <div class="pt-6">
     <div class="border-b border-color-grey px-20 pb-7">
-      <span class="text-xl font-semibold">Current income</span>
+      <span class="text-xl font-medium">Current income</span>
       <SchemaFormWithValidation :schema="schemaCurrent" />
     </div>
 
     <div class="border-b border-color-grey px-20 pt-7">
-      <span class="text-xl font-semibold">Liquid assets</span>
+      <span class="text-xl font-medium">Liquid assets</span>
       <SchemaFormWithValidation :schema="schemaLiquid" class="mt-7" />
     </div>
 
     <div class="border-b border-color-grey px-20 pt-7">
-      <span class="text-xl font-semibold">Non-liquid assets</span>
+      <span class="text-xl font-medium">Non-liquid assets</span>
       <SchemaFormWithValidation :schema="schemaNoLiquid" class="mt-7" />
     </div>
 

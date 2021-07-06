@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-base text-main font-semibold py-5">
+    <div class="text-base text-main font-medium py-5">
       Risk Profile Comparison
     </div>
     <div class="border border-color-grey box-border rounded-lg">
@@ -12,7 +12,7 @@
             border-l border-r border-b border-color-grey
             p-5
             text-activity
-            font-semibold
+            font-medium
             text-center
           "
         >
@@ -24,7 +24,7 @@
             border-b border-color-grey
             p-5
             text-activity
-            font-semibold
+            font-medium
             text-center
           "
         >
@@ -39,7 +39,7 @@
             border-b border-color-grey
             box-border
             text-main text-xs
-            font-semibold
+            font-medium
             text-center
             p-5
           "
@@ -69,12 +69,7 @@
               <div>Cash</div>
             </div>
             <div
-              class="
-                flex flex-col
-                justify-center
-                text-main text-xs
-                font-semibold
-              "
+              class="flex flex-col justify-center text-main text-xs font-medium"
             >
               <div>50%</div>
               <div class="py-4">40%</div>
@@ -98,12 +93,7 @@
               <div>Cash</div>
             </div>
             <div
-              class="
-                flex flex-col
-                justify-center
-                text-main text-xs
-                font-semibold
-              "
+              class="flex flex-col justify-center text-main text-xs font-medium"
             >
               <div>50%</div>
               <div class="py-4">40%</div>
@@ -120,7 +110,7 @@
             border-color-grey
             box-border
             text-main text-xs
-            font-semibold
+            font-medium
             text-center
             p-5
           "
@@ -141,11 +131,11 @@
             </div>
           </div>
           <div class="flex flex-col justify-center">
-            <div class="text-xs text-main font-semibold pb-3">
-              Potential Downside: <span class="font-semibold"> -$219K</span>
+            <div class="text-xs text-main font-medium pb-3">
+              Potential Downside: <span class="font-medium"> -$219K</span>
             </div>
-            <div class="text-xs text-main font-semibold">
-              Expected Return (5yr): <span class="font-semibold"> +$219K</span>
+            <div class="text-xs text-main font-medium">
+              Expected Return (5yr): <span class="font-medium"> +$219K</span>
             </div>
           </div>
         </div>
@@ -161,11 +151,11 @@
             </div>
           </div>
           <div class="flex flex-col justify-center">
-            <div class="text-xs text-main font-semibold pb-3">
-              Potential Downside: <span class="font-semibold"> -$219K</span>
+            <div class="text-xs text-main font-medium pb-3">
+              Potential Downside: <span class="font-medium"> -$219K</span>
             </div>
-            <div class="text-xs text-main font-semibold">
-              Expected Return (5yr): <span class="font-semibold"> +$219K</span>
+            <div class="text-xs text-main font-medium">
+              Expected Return (5yr): <span class="font-medium"> +$219K</span>
             </div>
           </div>
         </div>
@@ -178,7 +168,7 @@
           text-xs
           pl-5
           py-2
-          font-semibold
+          font-medium
         "
       >
         Risk Stats
@@ -237,7 +227,7 @@
           text-xs
           pl-5
           py-2
-          font-semibold
+          font-medium
         "
       >
         Performance Stats
@@ -351,7 +341,7 @@
           text-xs
           pl-5
           py-2
-          font-semibold
+          font-medium
         "
       >
         Portfolio Stats
@@ -439,7 +429,7 @@
           text-xs
           pl-5
           py-2
-          font-semibold
+          font-medium
         "
       >
         Expences

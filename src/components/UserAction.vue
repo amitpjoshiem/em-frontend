@@ -45,7 +45,7 @@ export default {
       {
         title: 'Logout',
         command: 'logout',
-        class: 'font-semibold',
+        class: 'font-medium',
       },
     ]
 
