@@ -1,5 +1,5 @@
 <template>
-  <div class="relative inline-block">
+  <div class="relative inline-block bg-white">
     <select
       class="
         pl-2.5
