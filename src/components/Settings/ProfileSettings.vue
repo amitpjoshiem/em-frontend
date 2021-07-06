@@ -101,13 +101,13 @@
           </template>
           <template #contentDialog>
             <InputPassword
-              label="password"
+              label="Password"
               name="password"
               placeholder="Enter your new password"
               type="password"
             />
             <InputPassword
-              label="confirmPassword"
+              label="Confirm Password"
               name="confirmPassword"
               placeholder="Confirm your new password"
               type="password"
