@@ -1,20 +1,4 @@
-export function User({
-  avatar,
-  name,
-  createdOn,
-  type,
-  onboarding,
-  location,
-  netWorth,
-}) {
-  this.avatar = avatar
-  this.name = name
-  this.createdOn = createdOn
-  this.type = type
-  this.onboarding = onboarding
-  this.location = location
-  this.netWorth = netWorth
-}
+import User from '@/dto/usersListFull.js'
 
 export function useUsersListAll() {
   return {
