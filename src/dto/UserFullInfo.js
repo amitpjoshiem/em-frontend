@@ -1,4 +1,4 @@
-function User({
+function UserFullInfo({
   avatar,
   name,
   createdOn,
@@ -16,4 +16,4 @@ function User({
   this.netWorth = netWorth
 }
 
-export default User
+export { UserFullInfo }

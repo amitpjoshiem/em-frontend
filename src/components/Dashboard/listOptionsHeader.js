@@ -1,7 +1,7 @@
 const itemsHeader = [
   {
     title: 'householder Name',
-    class: 'w-7/24',
+    class: 'w-7/24 pl-5',
   },
   {
     title: 'Created on',

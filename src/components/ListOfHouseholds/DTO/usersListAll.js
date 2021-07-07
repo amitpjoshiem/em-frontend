@@ -1,4 +1,4 @@
-import User from '@/dto/usersListFull.js'
+import { UserFullInfo } from '@/dto/UserFullInfo.js'
 
 export function useUsersListAll() {
   return {
@@ -94,7 +94,7 @@ export function useUsersListAll() {
         location: 'Glendale Heights, IL',
         netWorth: '370,44',
       },
-    ].map((user) => new User(user)),
+    ].map((user) => new UserFullInfo(user)),
     error: false,
   }
 }

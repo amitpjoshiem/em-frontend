@@ -1,4 +1,4 @@
-import User from '@/dto/usersListShort.js'
+import { UserShortInfo } from '@/dto/UserShortInfo.js'
 
 export function useUserList() {
   return {
@@ -36,7 +36,7 @@ export function useUserList() {
         progress: 28,
         balance: '370,44',
       },
-    ].map((user) => new User(user)),
+    ].map((user) => new UserShortInfo(user)),
     error: false,
   }
 }

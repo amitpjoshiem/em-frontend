@@ -10,7 +10,7 @@
       items-center
     "
   >
-    <span class="w-7/24 text-small pl-7">householder Name</span>
+    <span class="w-7/24 text-small">householder Name</span>
     <span class="w-3/24 text-small">Created on</span>
     <span class="w-3/24 text-small">type</span>
     <span class="w-3/24 text-small">Onboarding</span>
