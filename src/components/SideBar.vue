@@ -18,11 +18,18 @@
       >
         <img src="../assets/img/dashboard.png" />
       </div>
-      <div
+      <router-link
+        :to="{ name: 'all' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
       >
-        <img src="../assets/img/list.png" />
-      </div>
+        <InlineSvg :src="IconList" />
+      </router-link>
+      <router-link
+        :to="{ name: 'all' }"
+        class="item flex justify-center items-center cursor-pointer w-full h-14"
+      >
+        <InlineSvg :src="IconAssets" />
+      </router-link>
       <div
         class="item flex justify-center items-center cursor-pointer w-full h-14"
       >
@@ -38,11 +45,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+import IconList from '@/assets/svg/icon-list.svg'
+import IconAssets from '@/assets/svg/icon-assets.svg'
+
 export default {
-  computed: mapState({
-    isAuth: (state) => state.auth.isAuth,
-  }),
+  setup() {
+    const store = useStore()
+
+    const isAuth = computed(() => {
+      return store.state.auth.isAuth
+    })
+    return {
+      IconList,
+      IconAssets,
+      isAuth,
+    }
+  },
 }
 </script>
 

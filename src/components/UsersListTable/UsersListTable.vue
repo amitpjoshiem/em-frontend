@@ -1,15 +1,15 @@
 <template>
   <div>
     <table v-if="!isEmptyDashboard" class="table-fixed">
-      <thead class="bg-widget-bg uppercase text-gray03">
+      <thead class="bg-widget-bg uppercase text-gray03 h-6">
         <tr class="text-small text-left h-6">
-          <th class="w-7/24 pl-5 pr-0 pb-0 pt-0">householder Name</th>
-          <th class="w-3/24 p-0">Created on</th>
-          <th class="w-3/24 p-0">type</th>
-          <th class="w-3/24 p-0">Onboarding</th>
-          <th class="w-4/24 p-0">location</th>
-          <th class="w-2/24 p-0">net worth</th>
-          <th class="w-1/24 p-0"></th>
+          <th
+            v-for="(item, index) in itemsHeader"
+            :key="index"
+            :class="item.class"
+          >
+            {{ item.title }}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import { useUserList } from '@/components/UsersListTable/DTO/usersList'
 import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import UsersListTableEmpty from '@/components/UsersListTable/UsersListTableEmpty.vue'
 import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
@@ -73,8 +72,19 @@ export default {
   components: {
     UsersListTableEmpty,
   },
+  props: {
+    itemsHeader: {
+      type: Array,
+      require: true,
+      default: () => [],
+    },
+    usersList: {
+      type: Array,
+      require: true,
+      default: () => [],
+    },
+  },
   setup() {
-    const { data: usersList } = useUserList()
     const isEmptyDashboard = useEmptyDashboard()
 
     const actionsOptions = [
@@ -89,7 +99,6 @@ export default {
     ]
 
     return {
-      usersList,
       actionsOptions,
       IconActionGray,
       isEmptyDashboard,

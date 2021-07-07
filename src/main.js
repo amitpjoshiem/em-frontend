@@ -36,6 +36,7 @@ import DatePicker from '@/components/Global/DatePicker.vue'
 import NextButton from '@/components/Global/Button/NextButton.vue'
 import BackButton from '@/components/Global/Button/BackButton.vue'
 import Dialog from '@/components/Global/Dialog.vue'
+import Pagination from '@/components/Global/Pagination.vue'
 
 import {
   ElProgress,
@@ -52,6 +53,7 @@ import {
   ElSwitch,
   ElDialog,
   ElButton,
+  ElPagination,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -105,6 +107,8 @@ const components = [
   ElDialog,
   Dialog,
   ElButton,
+  ElPagination,
+  Pagination,
 ]
 
 components.forEach((component) => {

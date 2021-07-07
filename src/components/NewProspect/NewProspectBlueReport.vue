@@ -1,7 +1,7 @@
 <template>
   <div class="p-5">
     <div class="flex justify-between pb-5">
-      <BackButton @click="back" />
+      <BackButton text="Back" @click="back" />
       <span class="text-title text-main font-medium">Blueprint report</span>
       <ShareBtn />
     </div>
