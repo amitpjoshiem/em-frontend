@@ -13,7 +13,8 @@ const useLogout = () => {
   })
 
   const removeStoreAccessTokenAndRedirect = () => {
-    removeFromStorage(localStorage, 'access_token', response.value.access_token)
+    removeFromStorage(localStorage, 'access_token')
+    removeFromStorage(localStorage, 'otp-type')
     store.commit('auth/setAuthUser', false)
     router.push({ name: 'home' })
   }

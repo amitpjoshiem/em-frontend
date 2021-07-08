@@ -14,7 +14,7 @@
     </div>
 
     <div v-if="response && response.data" class="mt-5">
-      <div v-show="!loading && otpType !== 'google'" class="w-5/12">
+      <div v-show="showForm" class="w-5/12">
         <img ref="qrCode" :src="response.data.url" class="pb-5" />
         <form @submit="verifyHandler">
           <InputTextForm name="code" type="number" placeholder="code" />
@@ -54,19 +54,27 @@ export default {
     })
 
     onMounted(() => {
-      status.value = store.state.auth.otpType
+      status.value = !!(store.state.auth.otpType === 'google')
     })
 
     const beforeChange = () => {
       status.loading = true
-      return new Promise((resolve) => {
-        return getGoogleQr().then(() => {
-          qrCode.value.addEventListener('load', () => {
-            status.loading = false
+      if (!status.value) {
+        return new Promise((resolve) => {
+          return getGoogleQr().then(() => {
+            qrCode.value.addEventListener('load', () => {
+              status.loading = false
+            })
+            return resolve(true)
           })
+        })
+      } else {
+        return new Promise((resolve) => {
+          verifyGoogle({ service: 'email' })
+          status.loading = false
           return resolve(true)
         })
-      })
+      }
     }
 
     const schema = yup.object({
@@ -77,6 +85,7 @@ export default {
       validationSchema: schema,
       initialValues: {
         code: '',
+        service: 'google',
       },
     })
 
@@ -84,6 +93,10 @@ export default {
 
     const otpType = computed(() => {
       return store.state.auth.otpType
+    })
+
+    const showForm = computed(() => {
+      return !status.loading && otpType.value !== 'google' && status.value
     })
 
     return {
@@ -96,6 +109,7 @@ export default {
       qrCode,
       verifyHandler,
       otpType,
+      showForm,
     }
   },
 }
