@@ -20,8 +20,17 @@
       <h1 class="text-center text-main font-medium text-2xl">Login</h1>
 
       <form class="mt-6" @submit="otpHandler">
-        <h1 class="text-center text-gray03 pt-2.5 text-sm">
+        <h1
+          v-if="otpType === 'email'"
+          class="text-center text-gray03 pt-2.5 text-sm"
+        >
           We just sent you a temporary login code. Please check your inbox.
+        </h1>
+        <h1
+          v-if="otpType === 'google'"
+          class="text-center text-gray03 pt-2.5 text-sm"
+        >
+          Please check your Google Authenticator.
         </h1>
 
         <div class="mt-4">
@@ -48,7 +57,8 @@
 
 <script>
 import IconLoginForm from '@/assets/svg/icon-login-form.svg'
-
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 import { useOtp } from '@/api/use-otp'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
@@ -56,6 +66,7 @@ import * as yup from 'yup'
 export default {
   name: 'OtpForm',
   setup() {
+    const store = useStore()
     const { response, error, fetching, otpAuth } = useOtp()
 
     const schema = yup.object({
@@ -69,6 +80,10 @@ export default {
       },
     })
 
+    const otpType = computed(() => {
+      return store.state.auth.otpType
+    })
+
     const otpHandler = handleSubmit(otpAuth)
 
     return {
@@ -77,6 +92,7 @@ export default {
       fetching,
       otpHandler,
       IconLoginForm,
+      otpType,
     }
   },
 }
