@@ -1,22 +1,19 @@
 import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
 import { ElNotification } from 'element-plus'
-
 import { saveToStorage } from '@/utils/utilsLocalStorage'
 
 const useLogin = () => {
   const router = useRouter()
-  const store = useStore()
 
-  const { response, error, fetching, fetchData } = useFetch('/login', {
+  const { response, headers, error, fetching, fetchData } = useFetch('/login', {
     method: 'POST',
   })
 
   const storeAccessTokenAndRedirectToDashboard = () => {
     saveToStorage(localStorage, 'access_token', response.value.access_token)
-    store.commit('auth/setAuthUser', true)
-    router.push({ name: 'dashboard' })
+    saveToStorage(localStorage, 'otp-type', headers.value['x-otp-type'])
+    router.push({ name: 'otp' })
   }
 
   const login = async (body) => {

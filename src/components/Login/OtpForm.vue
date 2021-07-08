@@ -18,28 +18,29 @@
       </div>
 
       <h1 class="text-center text-main font-medium text-2xl">Login</h1>
-      <h1 class="text-center text-gray03 text-xss">
-        Please enter you email and password
-      </h1>
 
-      <form class="mt-6" @submit="loginHandler">
-        <div>
-          <InputTextForm
-            :placeholder="'Enter your e-mail'"
-            :type="'email'"
-            name="email"
-            :label="'E-mail'"
-          />
-        </div>
+      <form class="mt-6" @submit="otpHandler">
+        <h1
+          v-if="otpType === 'email'"
+          class="text-center text-gray03 pt-2.5 text-sm"
+        >
+          We just sent you a temporary login code. Please check your inbox.
+        </h1>
+        <h1
+          v-if="otpType === 'google'"
+          class="text-center text-gray03 pt-2.5 text-sm"
+        >
+          Please check your Google Authenticator.
+        </h1>
 
         <div class="mt-4">
-          <InputPassword
-            placeholder="Enter your password"
-            name="password"
-            label="Password"
+          <InputTextForm
+            placeholder="Paste login code"
+            type="text"
+            name="code"
+            label="Login code"
           />
         </div>
-
         <div class="text-center pt-5">
           <Button
             :default-primary="!fetching"
@@ -51,49 +52,47 @@
         </div>
       </form>
     </div>
-    <div class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
-      <span class="text-xss text-gray03 cursor-pointer">
-        <router-link :to="{ name: 'forgotpassword' }">
-          Forgot your password?
-        </router-link>
-      </span>
-    </div>
   </div>
 </template>
 
 <script>
 import IconLoginForm from '@/assets/svg/icon-login-form.svg'
-
-import { useLogin } from '@/api/use-login'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+import { useOtp } from '@/api/use-otp'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 
 export default {
-  name: 'LoginForm',
+  name: 'OtpForm',
   setup() {
-    const { response, error, fetching, login } = useLogin()
+    const store = useStore()
+    const { response, error, fetching, otpAuth } = useOtp()
 
     const schema = yup.object({
-      email: yup.string().required().email(),
-      password: yup.string().required().min(6).defined(),
+      code: yup.number().required().defined(),
     })
 
     const { handleSubmit } = useForm({
       validationSchema: schema,
       initialValues: {
-        email: '',
-        password: '',
+        code: '',
       },
     })
 
-    const loginHandler = handleSubmit(login)
+    const otpType = computed(() => {
+      return store.state.auth.otpType
+    })
+
+    const otpHandler = handleSubmit(otpAuth)
 
     return {
       response,
       error,
       fetching,
-      loginHandler,
+      otpHandler,
       IconLoginForm,
+      otpType,
     }
   },
 }

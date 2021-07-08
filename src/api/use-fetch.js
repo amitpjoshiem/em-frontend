@@ -14,6 +14,7 @@ const config = {
 export const useFetch = (url, options) => {
   const state = reactive({
     response: [],
+    headers: {},
     error: null,
     fetching: false,
   })
@@ -25,6 +26,7 @@ export const useFetch = (url, options) => {
       const token = readFromStorage(localStorage, 'access_token')
       if (token) options.headers['Authorization'] = `Bearer ${token}`
       const res = await fetch(baseUrl + url, { ...options, ...params, body })
+      state.headers = Object.fromEntries(res.headers.entries())
 
       if (res.status === 204) {
         state.response.status = 204

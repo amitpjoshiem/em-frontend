@@ -18,6 +18,9 @@ export default {
       } else {
         store.commit('auth/setAuthUser', false)
       }
+
+      const otpType = readFromStorage(localStorage, 'otp-type')
+      store.commit('auth/setOtpType', otpType)
     })
   },
 }

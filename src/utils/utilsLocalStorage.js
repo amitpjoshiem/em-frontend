@@ -12,9 +12,9 @@ export function saveToStorage(storage, key, value) {
   }
 }
 
-export function removeFromStorage(storage, key, value) {
+export function removeFromStorage(storage, key) {
   try {
-    storage.removeItem(key, JSON.stringify(value))
+    storage.removeItem(key)
   } catch (error) {
     console.error(error)
   }

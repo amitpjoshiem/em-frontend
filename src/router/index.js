@@ -146,6 +146,14 @@ const routes = [
                 /* webpackChunkName: "dashboard" */ '../components/Settings/InformationSettings.vue'
               ),
           },
+          {
+            path: '2fa',
+            name: '2fa',
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard" */ '../components/Settings/TwoFA.vue'
+              ),
+          },
         ],
       },
 
@@ -193,6 +201,14 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "login" */ '../components/Login/ResetPassword.vue'
+          ),
+      },
+      {
+        path: 'otp',
+        name: 'otp',
+        component: () =>
+          import(
+            /* webpackChunkName: "login" */ '../components/Login/OtpForm.vue'
           ),
       },
     ],

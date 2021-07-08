@@ -26,6 +26,14 @@
         Information
       </div>
     </router-link>
+    <router-link :to="{ name: '2fa' }">
+      <div
+        class="p-5 text-sm text-gray03 cursor-pointer"
+        :class="{ active: getActiveTab === '2fa' }"
+      >
+        Two step authentication
+      </div>
+    </router-link>
   </div>
 </template>
 
