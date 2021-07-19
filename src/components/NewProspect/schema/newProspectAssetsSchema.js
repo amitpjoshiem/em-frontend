@@ -4,7 +4,7 @@ const prospectAssetsSchemaCurrent = [
       component: 'Radio',
       optionOne: 'Yes',
       optionTwo: 'No',
-      class: 'w-7/24 pt-6',
+      class: 'w-8/24 pt-6',
       name: 'incomePlan',
       model: 'incomePlan',
       label: 'Do you have a written income plan?',
