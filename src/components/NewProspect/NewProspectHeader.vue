@@ -23,10 +23,6 @@ export default {
       goPage()
     }
 
-    const hello = () => {
-      console.log('hello')
-    }
-
     const back = () => {
       if (step.value === 1) {
         router.push({ name: 'dashboard' })

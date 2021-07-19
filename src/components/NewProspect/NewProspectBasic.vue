@@ -91,6 +91,7 @@ export default {
 
     onMounted(() => {
       store.commit('newProspect/setStep', 1)
+      window.scrollTo(0, 0)
     })
 
     const schemaGeneral = ref(prospectBasicSchemaGeneral)

@@ -115,6 +115,7 @@ export default {
 
     onMounted(() => {
       store.commit('newProspect/setStep', 3)
+      window.scrollTo(0, 0)
     })
 
     const step = computed(() => store.state.newProspect.step)
