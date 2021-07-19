@@ -1,10 +1,14 @@
 <template>
   <div class="bg-widget-bg rounded-lg px-5 mb-5">
     <div class="flex w-full pt-7">
-      <div class="w-1/5 text-center text-xs font-medium text-main">
+      <router-link
+        :to="{ name: 'basic-information' }"
+        class="w-1/5 text-center text-xs font-medium text-main"
+      >
         1. Basic
-      </div>
-      <div
+      </router-link>
+      <router-link
+        :to="{ name: 'assets-information' }"
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 2,
@@ -12,8 +16,9 @@
         }"
       >
         2. Assets &amp; Income
-      </div>
-      <div
+      </router-link>
+      <router-link
+        :to="{ name: 'assetsacount' }"
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 3,
@@ -21,8 +26,9 @@
         }"
       >
         3. Assets Accounts
-      </div>
-      <div
+      </router-link>
+      <router-link
+        :to="{ name: 'assetsconsolidations' }"
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 4,
@@ -30,8 +36,9 @@
         }"
       >
         4. Assets Consolidations
-      </div>
-      <div
+      </router-link>
+      <router-link
+        :to="{ name: 'stresstest' }"
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 5,
@@ -39,7 +46,7 @@
         }"
       >
         5. Stress Test
-      </div>
+      </router-link>
     </div>
     <div class="flex items-center pb-7">
       <!-- STEP 1 -->
