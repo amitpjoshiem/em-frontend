@@ -22,14 +22,7 @@
       />
     </div>
     <div class="border-b border-color-grey px-20 pt-7">
-      <span class="text-xl font-medium">Housing Information</span>
-      <SchemaFormWithValidation
-        :schema="schemaEmployment"
-        schema-row-classes="pb-6"
-      />
-    </div>
-    <div class="border-b border-color-grey px-20 pt-7">
-      <span class="text-xl font-medium">Housing Information</span>
+      <span class="text-xl font-medium">Employment history</span>
       <SchemaFormWithValidation
         :schema="schemaEmployment"
         schema-row-classes="pb-6"
