@@ -23,7 +23,7 @@
       <div>
         <Button
           default-blue-btn
-          text-btn="Go to the assets &amp; income"
+          text-btn="Go to the assets accounts"
           @click="saveStep"
         />
       </div>
@@ -35,6 +35,8 @@
 import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
 import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { computed, ref, markRaw, onMounted } from 'vue'
 
 import Input from '@/components/Global/Input/Input.vue'
 import Radio from '@/components/Global/Radio.vue'
@@ -47,8 +49,6 @@ import {
   prospectAssetsSchemaNoLiquid,
 } from '@/components/NewProspect/schema/newProspectAssetsSchema'
 
-import { ref, markRaw } from 'vue'
-
 markRaw(Input)
 markRaw(Radio)
 markRaw(Label)
@@ -60,6 +60,7 @@ export default {
   name: 'NewProspectAssets',
   components: { SchemaFormWithValidation },
   setup() {
+    const store = useStore()
     const router = useRouter()
     const schemaCurrent = ref(prospectAssetsSchemaCurrent)
     const schemaLiquid = ref(prospectAssetsSchemaLiquid)
@@ -67,11 +68,19 @@ export default {
     const formData = ref({})
     useSchemaForm(formData)
 
+    onMounted(() => {
+      store.commit('newProspect/setStep', 2)
+    })
+
+    const step = computed(() => store.state.newProspect.step)
+
     const saveStep = () => {
+      store.commit('newProspect/setStep', step.value + 1)
       router.push({ name: 'assetsacount' })
     }
 
     const backStep = () => {
+      store.commit('newProspect/setStep', step.value - 1)
       router.push({ name: 'basic-information' })
     }
 

@@ -71,6 +71,8 @@ import {
 
 import { ref, markRaw } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { computed, onMounted } from 'vue'
 
 markRaw(Input)
 markRaw(Radio)
@@ -82,8 +84,14 @@ const SchemaFormWithValidation = SchemaFormFactory([VeeValidatePlugin()])
 export default {
   name: 'NewProspectBasic',
   components: { SchemaFormWithValidation },
+  emits: ['hello'],
   setup() {
     const router = useRouter()
+    const store = useStore()
+
+    onMounted(() => {
+      store.commit('newProspect/setStep', 1)
+    })
 
     const schemaGeneral = ref(prospectBasicSchemaGeneral)
     const schemaSpouse = ref(prospectBasicSchemaSpouse)
@@ -93,7 +101,10 @@ export default {
     const formData = ref({})
     useSchemaForm(formData)
 
+    const step = computed(() => store.state.newProspect.step)
+
     const saveStep = () => {
+      store.commit('newProspect/setStep', step.value + 1)
       router.push({ name: 'assets-information' })
     }
 

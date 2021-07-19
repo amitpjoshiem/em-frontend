@@ -70,7 +70,7 @@
       <div>
         <Button
           default-blue-btn
-          text-btn="Go to the assets &amp; income"
+          text-btn="Go to the stress test results"
           @click="saveStep"
         />
       </div>
@@ -79,17 +79,28 @@
 </template>
 <script>
 import { useRouter } from 'vue-router'
+import { computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'AssetsConsolidations',
   setup() {
     const router = useRouter()
+    const store = useStore()
+
+    onMounted(() => {
+      store.commit('newProspect/setStep', 4)
+    })
+
+    const step = computed(() => store.state.newProspect.step)
 
     const saveStep = () => {
-      router.push({ name: 'assetsconsolidations' })
+      store.commit('newProspect/setStep', step.value + 1)
+      router.push({ name: 'stresstest' })
     }
 
     const backStep = () => {
+      store.commit('newProspect/setStep', step.value - 1)
       router.push({ name: 'assetsacount' })
     }
 

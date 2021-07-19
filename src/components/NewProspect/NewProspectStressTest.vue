@@ -493,11 +493,7 @@
       </div>
 
       <div>
-        <Button
-          default-blue-btn
-          text-btn="Go to the assets &amp; income"
-          @click="saveStep"
-        />
+        <Button default-blue-btn text-btn="Show Report" @click="saveStep" />
       </div>
     </div>
   </div>
@@ -508,9 +504,10 @@ import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
-
+import { useRouter } from 'vue-router'
 import HoldingsChart from '@/components/NewProspect/Chart/HoldingsChart.vue'
 import RecommendationChart from '@/components/NewProspect/Chart/RecommendationChart.vue'
+import { computed } from 'vue'
 
 export default {
   components: {
@@ -520,14 +517,28 @@ export default {
 
   setup() {
     const store = useStore()
+    const router = useRouter()
 
     onMounted(() => {
       store.commit('newProspect/setStep', 5)
     })
 
+    const step = computed(() => store.state.newProspect.step)
+
+    const saveStep = () => {
+      router.push({ name: 'bluereport' })
+    }
+
+    const backStep = () => {
+      store.commit('newProspect/setStep', step.value - 1)
+      router.push({ name: 'assetsconsolidations' })
+    }
+
     return {
       IconDownRisk,
       IconUpRisk,
+      saveStep,
+      backStep,
     }
   },
 }
