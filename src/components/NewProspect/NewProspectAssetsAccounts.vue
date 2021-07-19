@@ -89,7 +89,7 @@
       <div>
         <Button
           default-blue-btn
-          text-btn="Go to the assets &amp; income"
+          text-btn="Go to the Assets Consolidations"
           @click="saveStep"
         />
       </div>
@@ -101,21 +101,32 @@
 import IconFilePorfolio from '@/assets/svg/icon-file-portfolio.svg'
 import { useLinkAccount } from '@/components/NewProspect/DTO/linkAccount'
 import IconDeleteLink from '@/assets/svg/icon-delete-link.svg'
-
+import { computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
 export default {
   name: 'AssetsAccounts',
   setup() {
     const router = useRouter()
+    const store = useStore()
 
     const { data: linkAccount } = useLinkAccount()
 
+    onMounted(() => {
+      store.commit('newProspect/setStep', 3)
+      window.scrollTo(0, 0)
+    })
+
+    const step = computed(() => store.state.newProspect.step)
+
     const saveStep = () => {
+      store.commit('newProspect/setStep', step.value + 1)
       router.push({ name: 'assetsconsolidations' })
     }
 
     const backStep = () => {
+      store.commit('newProspect/setStep', step.value - 1)
       router.push({ name: 'assets-information' })
     }
 

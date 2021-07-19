@@ -10,7 +10,7 @@
       <el-radio v-if="optionFour" v-model="radio" label="4">{{
         optionFour
       }}</el-radio>
-      <el-radio v-if="optionFive" v-model="radio" label="4">{{
+      <el-radio v-if="optionFive" v-model="radio" label="5">{{
         optionFive
       }}</el-radio>
     </div>

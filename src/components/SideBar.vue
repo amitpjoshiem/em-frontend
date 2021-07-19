@@ -5,24 +5,24 @@
     </router-link>
 
     <div v-if="isAuth" class="flex flex-col pt-32 items-center flex-grow">
-      <div
-        class="
-          flex
-          justify-center
-          items-center
-          cursor-pointer
-          w-full
-          h-14
-          active
-        "
+      <router-link
+        :to="{ name: 'dashboard' }"
+        class="item flex justify-center items-center cursor-pointer w-full h-14"
+        :class="{ active: getRouteName === 'dashboard' }"
       >
-        <img src="../assets/img/dashboard.png" />
-      </div>
+        <InlineSvg
+          v-if="getRouteName === 'dashboard'"
+          :src="IconDashboardActive"
+        />
+        <InlineSvg v-else :src="IconDashboard" />
+      </router-link>
       <router-link
         :to="{ name: 'all' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
+        :class="{ active: getRouteName === 'all' }"
       >
-        <InlineSvg :src="IconList" />
+        <InlineSvg v-if="getRouteName === 'all'" :src="IconListActive" />
+        <InlineSvg v-else :src="IconList" />
       </router-link>
       <router-link
         :to="{ name: 'all' }"
@@ -47,20 +47,34 @@
 <script>
 import { useStore } from 'vuex'
 import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
 import IconList from '@/assets/svg/icon-list.svg'
+import IconListActive from '@/assets/svg/list-sidebar-active.svg'
 import IconAssets from '@/assets/svg/icon-assets.svg'
+import IconDashboard from '@/assets/svg/dashboard-sidebar.svg'
+import IconDashboardActive from '@/assets/svg/dashboard-sidebar-active.svg'
 
 export default {
   setup() {
     const store = useStore()
+    const route = useRoute()
 
     const isAuth = computed(() => {
       return store.state.auth.isAuth
     })
+
+    const getRouteName = computed(() => {
+      return route.name
+    })
     return {
       IconList,
       IconAssets,
+      IconDashboard,
+      IconDashboardActive,
+      IconListActive,
       isAuth,
+      getRouteName,
     }
   },
 }
