@@ -84,7 +84,6 @@ const SchemaFormWithValidation = SchemaFormFactory([VeeValidatePlugin()])
 export default {
   name: 'NewProspectBasic',
   components: { SchemaFormWithValidation },
-  emits: ['hello'],
   setup() {
     const router = useRouter()
     const store = useStore()

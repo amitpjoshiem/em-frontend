@@ -79,7 +79,6 @@ export default {
       back,
       headerTitle,
       goPage,
-      hello,
     }
   },
 }
