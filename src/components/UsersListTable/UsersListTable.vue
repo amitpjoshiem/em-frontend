@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table v-if="!isEmptyDashboard" class="table-fixed">
+    <table v-if="usersList.length" class="table-fixed">
       <thead class="bg-widget-bg uppercase text-gray03 h-6">
         <tr class="text-small text-left h-6">
           <th
@@ -58,7 +58,7 @@
         </tr>
       </tbody>
     </table>
-    <UsersListTableEmpty v-if="isEmptyDashboard" />
+    <UsersListTableEmpty v-else />
   </div>
 </template>
 
