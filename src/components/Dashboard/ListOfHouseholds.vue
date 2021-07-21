@@ -24,7 +24,7 @@ export default {
     UsersListTable,
   },
   setup() {
-    const queryKey = reactive(['members', { type: 'client' }])
+    const queryKey = reactive(['members', { type: 'all' }])
 
     const { isLoading, isError, isFetching, data, error, refetch } = useQuery(
       queryKey,

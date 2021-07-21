@@ -24,6 +24,7 @@
 <script>
 import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
 import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
+import { useMutation } from 'vue-query'
 
 import Input from '@/components/Global/Input/Input.vue'
 import Radio from '@/components/Global/Radio.vue'
@@ -39,6 +40,8 @@ import { ref, markRaw } from 'vue'
 import { useStore } from 'vuex'
 import { onMounted } from 'vue'
 // import { computed, onMounted } from 'vue'
+
+import { createMembers } from '@/api/vueQuery/create-members'
 
 markRaw(Input)
 markRaw(Radio)
@@ -56,6 +59,16 @@ export default {
     // const router = useRouter()
     const store = useStore()
 
+    const {
+      mutate: createMember,
+      isLoading,
+      isError,
+      isFetching,
+      data,
+      error,
+      refetch,
+    } = useMutation(createMembers)
+
     onMounted(() => {
       store.commit('newProspect/setStep', 1)
       window.scrollTo(0, 0)
@@ -68,7 +81,7 @@ export default {
     // const step = computed(() => store.state.newProspect.step)
 
     const saveStep = () => {
-      console.log('formDataformData - ', formData.value)
+      createMember(formData.value)
       // store.commit('newProspect/setStep', step.value + 1)
       // router.push({ name: 'assets-information' })
     }
@@ -81,6 +94,12 @@ export default {
       schemaGeneral,
       saveStep,
       onSubmit,
+      isLoading,
+      isError,
+      isFetching,
+      data,
+      error,
+      refetch,
     }
   },
 }
