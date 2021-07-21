@@ -1,3 +1,6 @@
+import SchemaSeparator from '@/components/NewProspect/SchemaSeparator.vue'
+import SchemaLabel from '@/components/NewProspect/SchemaLabel.vue'
+
 const prospectBasicSchemaGeneral = [
   [
     {
@@ -354,7 +357,7 @@ const prospectBasicSchemaOther = [
   [
     {
       component: 'TextArea',
-      label: 'Does the prospect currently work with the advisor?',
+      label: 'Goal for retiretment money',
       type: 'textarea',
       placeholder: '',
       name: 'doesTheProspect',
@@ -368,18 +371,80 @@ const prospectBasicSchemaOther = [
       component: 'Radio',
       optionOne: 'Yes',
       optionTwo: 'No',
-      class: 'w-5/24',
-      name: 'retired',
-      model: 'retired',
-      label: 'Retired?',
+      class: 'w-15/24',
+      name: 'prospectCurrently',
+      model: 'prospectCurrently',
+      label: 'Does the prospect currently work with the advisor??',
     },
   ],
 ]
 
-export {
-  prospectBasicSchemaGeneral,
-  prospectBasicSchemaSpouse,
-  prospectBasicSchemaHousing,
-  prospectBasicSchemaEmployment,
-  prospectBasicSchemaOther,
-}
+// export {
+//   prospectBasicSchemaGeneral,
+//   prospectBasicSchemaSpouse,
+//   prospectBasicSchemaHousing,
+//   prospectBasicSchemaEmployment,
+//   prospectBasicSchemaOther,
+// }
+
+const shemaBasic = [
+  ...prospectBasicSchemaGeneral,
+  [
+    {
+      component: SchemaSeparator,
+      model: 'separatorSpouse',
+    },
+  ],
+  [
+    {
+      component: SchemaLabel,
+      model: 'labelSpouse',
+      label: 'Spouse',
+    },
+  ],
+  ...prospectBasicSchemaSpouse,
+  [
+    {
+      component: SchemaSeparator,
+      model: 'separatorHousing',
+    },
+  ],
+  [
+    {
+      component: SchemaLabel,
+      model: 'labelHousing',
+      label: 'Housing',
+    },
+  ],
+  ...prospectBasicSchemaHousing,
+  [
+    {
+      component: SchemaSeparator,
+      model: 'separatorEmploymentHistory',
+    },
+  ],
+  [
+    {
+      component: SchemaLabel,
+      model: 'labelEmploymentHistory',
+      label: 'Employment history',
+    },
+  ],
+  ...prospectBasicSchemaEmployment,
+  [
+    {
+      component: SchemaSeparator,
+      model: 'separatorOther',
+    },
+  ],
+  [
+    {
+      component: SchemaLabel,
+      model: 'labelOther',
+      label: 'Other',
+    },
+  ],
+  ...prospectBasicSchemaOther,
+]
+
+export { shemaBasic }
