@@ -1,19 +1,13 @@
 <template>
   <div>
-    <span class="text-xss font-medium text text-main">{{ label }}</span>
-    <div>
-      <el-radio v-model="radio" label="1">{{ optionOne }}</el-radio>
-      <el-radio v-model="radio" label="2">{{ optionTwo }}</el-radio>
-      <el-radio v-if="optionThree" v-model="radio" label="3">{{
-        optionThree
-      }}</el-radio>
-      <el-radio v-if="optionFour" v-model="radio" label="4">{{
-        optionFour
-      }}</el-radio>
-      <el-radio v-if="optionFive" v-model="radio" label="5">{{
-        optionFive
-      }}</el-radio>
-    </div>
+    <span class="text-xss font-medium text text-main">{{ labelGroup }}</span>
+    <el-radio-group v-model="radio" @change="changeHandler">
+      <el-radio :label="optionOne">{{ optionOne }}</el-radio>
+      <el-radio :label="optionTwo">{{ optionTwo }}</el-radio>
+      <el-radio v-if="optionThree" :label="9">{{ optionThree }}</el-radio>
+      <el-radio v-if="optionFour" :label="12">{{ optionFour }}</el-radio>
+      <el-radio v-if="optionFive" :label="15">{{ optionFive }}</el-radio>
+    </el-radio-group>
   </div>
 </template>
 
@@ -46,15 +40,30 @@ export default {
       required: false,
       default: '',
     },
-    label: {
+    labelGroup: {
       type: String,
       required: false,
       default: '',
     },
+    modelValue: {
+      type: String,
+      required: false,
+      default: undefined,
+    },
   },
-  setup() {
+  emits: ['update:value', 'update:modelValue'],
+  setup(props, { emit }) {
     const radio = ref('1')
-    return { radio }
+
+    const emitValue = (e) => {
+      emit('update:value', e)
+      emit('update:modelValue', e)
+    }
+
+    const changeHandler = (e) => {
+      emitValue(e)
+    }
+    return { radio, changeHandler }
   },
 }
 </script>

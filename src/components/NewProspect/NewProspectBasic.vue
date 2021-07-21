@@ -28,6 +28,7 @@ import { useMutation } from 'vue-query'
 
 import Input from '@/components/Global/Input/Input.vue'
 import Radio from '@/components/Global/Radio.vue'
+import RadioBoolean from '@/components/Global/RadioBoolean.vue'
 import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
 import SchemaLabel from '@/components/NewProspect/SchemaLabel.vue'
@@ -45,6 +46,7 @@ import { createMembers } from '@/api/vueQuery/create-members'
 
 markRaw(Input)
 markRaw(Radio)
+markRaw(RadioBoolean)
 markRaw(Label)
 markRaw(TextArea)
 markRaw(SchemaSeparator)

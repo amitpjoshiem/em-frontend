@@ -4,22 +4,20 @@ import SchemaLabel from '@/components/NewProspect/SchemaLabel.vue'
 const prospectBasicSchemaGeneral = [
   [
     {
-      component: 'Radio',
-      optionOne: 'Yes',
-      optionTwo: 'No',
+      component: 'RadioBoolean',
       class: 'w-5/24',
-      label: 'Retired?',
+      labelGroup: 'Retired?',
       name: 'retired',
       model: 'retired',
+      type: 'Boolean',
     },
     {
-      component: 'Radio',
-      optionOne: 'Yes',
-      optionTwo: 'No',
+      component: 'RadioBoolean',
       class: 'w-5/24',
-      label: 'Married?',
+      labelGroup: 'Married?',
       name: 'married',
       model: 'married',
+      type: 'Boolean',
     },
   ],
   [
@@ -118,7 +116,7 @@ const prospectBasicSchemaSpouse = [
       class: 'w-5/24',
       name: 'retired',
       model: 'retired',
-      label: 'Retired?',
+      labelGroup: 'Retired?',
     },
   ],
   [
@@ -326,7 +324,7 @@ const prospectBasicSchemaOther = [
       optionFour: 'Moderately Aggressive',
       optionFive: 'Aggressive',
       class: 'w-24/24',
-      label: 'Risk tolerance?',
+      labelGroup: 'Risk tolerance?',
       model: 'risk',
     },
   ],
@@ -375,7 +373,7 @@ const prospectBasicSchemaOther = [
       class: 'w-15/24',
       name: 'prospectCurrently',
       model: 'prospectCurrently',
-      label: 'Does the prospect currently work with the advisor??',
+      labelGroup: 'Does the prospect currently work with the advisor??',
     },
   ],
 ]

@@ -32,6 +32,7 @@ import Checkbox from '@/components/Global/Сheckbox.vue'
 import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
 import Radio from '@/components/Global/Radio.vue'
+import RadioBoolean from '@/components/Global/RadioBoolean.vue'
 import DatePicker from '@/components/Global/DatePicker.vue'
 import NextButton from '@/components/Global/Button/NextButton.vue'
 import BackButton from '@/components/Global/Button/BackButton.vue'
@@ -54,6 +55,8 @@ import {
   ElDialog,
   ElButton,
   ElPagination,
+  ElRadioGroup,
+  ElPopper,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -109,6 +112,9 @@ const components = [
   ElButton,
   ElPagination,
   Pagination,
+  ElRadioGroup,
+  ElPopper,
+  RadioBoolean,
 ]
 
 components.forEach((component) => {

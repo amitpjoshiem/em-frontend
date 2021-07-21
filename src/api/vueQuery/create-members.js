@@ -5,7 +5,7 @@ function createMembers(data) {
     url: `/members`,
     data,
     options: { method: 'POST' },
-  })()
+  })
 }
 
 export { createMembers }

@@ -2,17 +2,20 @@
   <div class="flex flex-col">
     <span class="text-xss font-medium pb-1.5 text-main">{{ label }}</span>
     <el-date-picker
-      v-model="value2"
+      v-model="value"
       type="date"
-      placeholder="2021-06-18"
-      format="YYYY-MM-DD"
+      placeholder="Pick a Date"
+      format="YYYY/MM/DD"
+      @change="changeHandler"
     >
     </el-date-picker>
   </div>
 </template>
 
 <script>
-export default {
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
   name: 'DatePicker',
   props: {
     label: {
@@ -20,11 +23,31 @@ export default {
       required: false,
       default: '',
     },
+    modelValue: {
+      type: Date,
+      default: function () {
+        return new Date()
+      },
+    },
   },
-  data() {
+  emits: ['update:value', 'update:modelValue'],
+
+  setup(props, { emit }) {
+    const value = ref('')
+    const emitValue = (e) => {
+      emit('update:value', e)
+      emit('update:modelValue', e)
+    }
+
+    const changeHandler = (e) => {
+      const date = e.toISOString().split('T')[0]
+      emitValue(date)
+    }
+
     return {
-      value2: '',
+      value,
+      changeHandler,
     }
   },
-}
+})
 </script>
