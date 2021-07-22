@@ -378,14 +378,6 @@ const prospectBasicSchemaOther = [
   ],
 ]
 
-// export {
-//   prospectBasicSchemaGeneral,
-//   prospectBasicSchemaSpouse,
-//   prospectBasicSchemaHousing,
-//   prospectBasicSchemaEmployment,
-//   prospectBasicSchemaOther,
-// }
-
 const shemaBasic = [
   ...prospectBasicSchemaGeneral,
   [
