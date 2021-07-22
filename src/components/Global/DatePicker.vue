@@ -14,6 +14,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
+import dayjs from 'dayjs'
 
 export default defineComponent({
   name: 'DatePicker',
@@ -40,7 +41,7 @@ export default defineComponent({
     }
 
     const changeHandler = (e) => {
-      const date = e.toISOString().split('T')[0]
+      const date = dayjs(e).format('YYYY-MM-DD')
       emitValue(date)
     }
 
