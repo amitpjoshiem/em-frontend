@@ -3,7 +3,7 @@
     <div v-if="isLoading">Loading...</div>
     <div v-else-if="isError">An error has occurred: {{ error }}</div>
     <div v-else-if="data">
-      <ListOfHouseholdsHeader @changeHouseholderType="houseHolderTypeHandler" />
+      <ListOfHouseholdsHeader />
       <UsersListTable :items-header="itemsHeader" :users-list="data" />
     </div>
   </div>
@@ -22,7 +22,7 @@ export default {
   setup() {
     const { isLoading, isError, data, houseHolderTypeHandler } =
       useHouseholders()
-    console.log('data', data)
+
     return {
       itemsHeader,
       isLoading,

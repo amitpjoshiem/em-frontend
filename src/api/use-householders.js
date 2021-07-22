@@ -1,14 +1,20 @@
-import { ref } from 'vue'
 import { useQuery } from 'vue-query'
 import { UserFullInfo } from '../dto/UserFullInfo'
 import { fetchMembersList } from './vueQuery/fetch-members'
+import { computed, watch } from 'vue'
+import { useStore } from 'vuex'
 
 export const useHouseholders = () => {
-  let householdersType = ref('all')
+  const store = useStore()
+
+  const houseHolderType = computed(() => {
+    return store.state.dashboard.houseHolderType
+  })
+
   const { isLoading, isError, data, refetch } = useQuery(
     ['householders'],
     () => {
-      return fetchMembersList({ queryKey: householdersType.value })
+      return fetchMembersList({ queryKey: houseHolderType.value })
     },
     {
       select: (data) => {
@@ -17,15 +23,13 @@ export const useHouseholders = () => {
     }
   )
 
-  const changeHandler = (e) => {
-    householdersType.value = e
-    refetch.value()
-  }
+  watch(houseHolderType, (newValue, oldValue) => {
+    if (newValue !== oldValue) refetch.value()
+  })
 
   return {
     isLoading,
     isError,
     data,
-    houseHolderTypeHandler: changeHandler,
   }
 }

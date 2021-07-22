@@ -1,6 +1,6 @@
 const state = () => ({
   isEmptyDashboard: false,
-  listType: 'all',
+  houseHolderType: 'all',
 })
 
 const mutations = {
@@ -8,8 +8,8 @@ const mutations = {
     state.isEmptyDashboard = value
   },
 
-  setListType(state, value) {
-    state.listType = value
+  setHouseHolderType(state, value) {
+    state.houseHolderType = value
   },
 }
 

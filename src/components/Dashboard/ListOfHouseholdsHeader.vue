@@ -3,10 +3,7 @@
     <span>List of Households</span>
     <div class="flex items-center">
       <ItemsPerPage />
-      <!-- <Select :options="options" large /> -->
-
       <MySelect :options="actionsOptions" @select="handleSelect" />
-
       <DropDown class="ml-2" :options="actionsOptions">
         <template #titleDropDown>
           <span
@@ -31,11 +28,13 @@
 </template>
 <script>
 import IconAction from '@/assets/svg/icon-action.svg'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ListOfHouseholdsHeader',
-  emits: ['changeHouseholderType'],
-  setup(props, { emit }) {
+  setup() {
+    const store = useStore()
+
     const actionsOptions = [
       {
         title: 'All',
@@ -67,9 +66,9 @@ export default {
     ]
 
     const actionsMap = {
-      All: () => console.log('all'),
-      Clients: () => emit('changeHouseholderType', 'client'),
-      Prospect: () => console.log('prospect'),
+      All: () => store.commit('dashboard/setHouseHolderType', 'all'),
+      Clients: () => store.commit('dashboard/setHouseHolderType', 'client'),
+      Prospect: () => store.commit('dashboard/setHouseHolderType', 'prospect'),
     }
 
     const handleSelect = (command) => {
