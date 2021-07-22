@@ -1,6 +1,8 @@
 import SchemaSeparator from '@/components/NewProspect/SchemaSeparator.vue'
 import SchemaLabel from '@/components/NewProspect/SchemaLabel.vue'
 
+import * as yup from 'yup'
+
 const prospectBasicSchemaGeneral = [
   [
     {
@@ -29,7 +31,7 @@ const prospectBasicSchemaGeneral = [
       name: 'first_name',
       model: 'first_name',
       class: 'w-5/12 pr-5',
-      validations: (value) => value && value.length > 3,
+      validations: yup.string().required(),
     },
     {
       component: 'Input',
@@ -39,6 +41,7 @@ const prospectBasicSchemaGeneral = [
       name: 'last_name',
       model: 'last_name',
       class: 'w-5/12  pr-5',
+      validations: yup.string().required(),
     },
     {
       component: 'DatePicker',
@@ -46,6 +49,7 @@ const prospectBasicSchemaGeneral = [
       name: 'birthday',
       label: 'Date of birth',
       class: 'w-2/12',
+      validations: yup.string().required(),
     },
   ],
   [
@@ -57,6 +61,7 @@ const prospectBasicSchemaGeneral = [
       name: 'email',
       model: 'email',
       class: 'w-5/12 pr-5',
+      validations: yup.string().required().email(),
     },
     {
       component: 'Input',
@@ -67,6 +72,7 @@ const prospectBasicSchemaGeneral = [
       model: 'phone',
       class: 'w-5/12  pr-5',
       isMask: true,
+      validations: yup.string().required(),
     },
 
     {
@@ -85,6 +91,7 @@ const prospectBasicSchemaGeneral = [
       name: 'address',
       model: 'address',
       class: 'w-5/12 pr-5',
+      validations: yup.string().required(),
     },
     {
       component: 'Input',
@@ -94,6 +101,7 @@ const prospectBasicSchemaGeneral = [
       name: 'city',
       model: 'city',
       class: 'w-5/12  pr-5',
+      validations: yup.string().required(),
     },
     {
       component: 'Input',
