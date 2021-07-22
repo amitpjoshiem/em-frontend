@@ -7,7 +7,7 @@ const prospectAssetsSchemaCurrent = [
       class: 'w-8/24 pt-6',
       name: 'incomePlan',
       model: 'incomePlan',
-      label: 'Do you have a written income plan?',
+      labelGroup: 'Do you have a written income plan?',
     },
   ],
   [

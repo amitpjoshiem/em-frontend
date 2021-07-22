@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table v-if="!isEmptyDashboard" class="table-fixed">
+    <table v-if="usersList.length" class="table-fixed">
       <thead class="bg-widget-bg uppercase text-gray03 h-6">
         <tr class="text-small text-left h-6">
           <th
@@ -20,21 +20,21 @@
         >
           <td class="flex items-center h-12 ml-5">
             <Avatar />
-            <p class="pl-2.5 font-medium">{{ user.name }}</p>
+            <p class="pl-2.5 font-medium">
+              {{ user.firstName }} {{ user.lastName }}
+            </p>
           </td>
           <td class="text-main">
-            {{ user.createdOn }}
+            {{ user.createdAtFormatted }}
           </td>
           <td>
             <TypeUserLabel :user-type="user.type" />
           </td>
           <td>
-            <LinearProgress :percentage="user.onboarding" :show-text="true" />
+            <LinearProgress :percentage="20" :show-text="true" />
           </td>
-          <td class="text-main">
-            {{ user.location }}
-          </td>
-          <td class="font-medium">${{ user.netWorth }}</td>
+          <td class="text-main">{{ user.address }} {{ user.city }}</td>
+          <td class="font-medium">${{ Math.floor(Math.random() * 1000) }}</td>
           <td class="pr-5">
             <DropDown class="ml-2.5" :options="actionsOptions">
               <template #titleDropDown>
@@ -58,7 +58,7 @@
         </tr>
       </tbody>
     </table>
-    <UsersListTableEmpty v-if="isEmptyDashboard" />
+    <UsersListTableEmpty v-else />
   </div>
 </template>
 

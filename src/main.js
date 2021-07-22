@@ -3,6 +3,7 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import dayjs from 'dayjs'
 
 import InlineSvg from 'vue-inline-svg'
 import {
@@ -22,6 +23,7 @@ import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
 import Avatar from '@/components/Global/Avatar.vue'
 import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
+import MySelect from '@/components/Global/Form/MySelect.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
 import DropDown from '@/components/Global/DropDown.vue'
 import InputText from '@/components/Global/Inputs/InputText.vue'
@@ -32,6 +34,7 @@ import Checkbox from '@/components/Global/Сheckbox.vue'
 import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
 import Radio from '@/components/Global/Radio.vue'
+import RadioBoolean from '@/components/Global/RadioBoolean.vue'
 import DatePicker from '@/components/Global/DatePicker.vue'
 import NextButton from '@/components/Global/Button/NextButton.vue'
 import BackButton from '@/components/Global/Button/BackButton.vue'
@@ -54,6 +57,10 @@ import {
   ElDialog,
   ElButton,
   ElPagination,
+  ElRadioGroup,
+  ElPopper,
+  ElSelect,
+  ElOption,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -109,10 +116,18 @@ const components = [
   ElButton,
   ElPagination,
   Pagination,
+  ElRadioGroup,
+  ElPopper,
+  RadioBoolean,
+  ElSelect,
+  MySelect,
+  ElOption,
 ]
 
 components.forEach((component) => {
   app.component(component.name, component)
 })
+
+app.config.globalProperties.$dayjs = dayjs
 
 app.mount('#app')

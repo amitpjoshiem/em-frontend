@@ -101,6 +101,11 @@ export default {
       required: false,
       default: undefined,
     },
+    modelValue: {
+      type: String,
+      required: false,
+      default: undefined,
+    },
     isMask: {
       type: Boolean,
       required: false,
@@ -111,10 +116,11 @@ export default {
       required: false,
     },
   },
-  emits: ['update:value'],
+  emits: ['update:value', 'update:modelValue'],
   setup(props, { emit }) {
     const emitValue = (e) => {
       emit('update:value', e.target.value)
+      emit('update:modelValue', e.target.value)
     }
     const {
       value: formValue,
@@ -125,7 +131,7 @@ export default {
     } = useField(props.name, undefined, {
       validateOnValueUpdate: false,
       bails: true,
-      initialValue: props.value,
+      initialValue: props.value ?? props.modelValue,
     })
     const showError = computed(() => {
       return meta.touched && Boolean(errorMessage) && !meta.valid
@@ -146,6 +152,7 @@ export default {
       if (!errorMessage && props.type == 'password') return 'IconShowPass'
       return 'IconInputError'
     })
+
     return {
       IconShowPass,
       IconSearch,

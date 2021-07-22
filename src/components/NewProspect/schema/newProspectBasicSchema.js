@@ -1,22 +1,23 @@
+import SchemaSeparator from '@/components/NewProspect/SchemaSeparator.vue'
+import SchemaLabel from '@/components/NewProspect/SchemaLabel.vue'
+
 const prospectBasicSchemaGeneral = [
   [
     {
-      component: 'Radio',
-      optionOne: 'Yes',
-      optionTwo: 'No',
+      component: 'RadioBoolean',
       class: 'w-5/24',
-      label: 'Retired?',
+      labelGroup: 'Retired?',
       name: 'retired',
       model: 'retired',
+      type: 'Boolean',
     },
     {
-      component: 'Radio',
-      optionOne: 'Yes',
-      optionTwo: 'No',
+      component: 'RadioBoolean',
       class: 'w-5/24',
-      label: 'Married?',
+      labelGroup: 'Married?',
       name: 'married',
       model: 'married',
+      type: 'Boolean',
     },
   ],
   [
@@ -25,23 +26,24 @@ const prospectBasicSchemaGeneral = [
       label: 'First Name',
       type: 'text',
       placeholder: 'Enter prospect’s first name',
-      name: 'firstName',
-      model: 'firstName',
+      name: 'first_name',
+      model: 'first_name',
       class: 'w-5/12 pr-5',
-      validations: (value) => value && value.length > 6,
+      validations: (value) => value && value.length > 3,
     },
     {
       component: 'Input',
       label: 'Last Name',
       type: 'text',
       placeholder: 'Enter prospect’s last name',
-      name: 'lastName',
-      model: 'lastName',
+      name: 'last_name',
+      model: 'last_name',
       class: 'w-5/12  pr-5',
     },
     {
       component: 'DatePicker',
-      model: 'dateofbirth',
+      model: 'birthday',
+      name: 'birthday',
       label: 'Date of birth',
       class: 'w-2/12',
     },
@@ -114,7 +116,7 @@ const prospectBasicSchemaSpouse = [
       class: 'w-5/24',
       name: 'retired',
       model: 'retired',
-      label: 'Retired?',
+      labelGroup: 'Retired?',
     },
   ],
   [
@@ -322,7 +324,7 @@ const prospectBasicSchemaOther = [
       optionFour: 'Moderately Aggressive',
       optionFive: 'Aggressive',
       class: 'w-24/24',
-      label: 'Risk tolerance?',
+      labelGroup: 'Risk tolerance?',
       model: 'risk',
     },
   ],
@@ -354,7 +356,7 @@ const prospectBasicSchemaOther = [
   [
     {
       component: 'TextArea',
-      label: 'Does the prospect currently work with the advisor?',
+      label: 'Goal for retiretment money',
       type: 'textarea',
       placeholder: '',
       name: 'doesTheProspect',
@@ -368,18 +370,72 @@ const prospectBasicSchemaOther = [
       component: 'Radio',
       optionOne: 'Yes',
       optionTwo: 'No',
-      class: 'w-5/24',
-      name: 'retired',
-      model: 'retired',
-      label: 'Retired?',
+      class: 'w-15/24',
+      name: 'prospectCurrently',
+      model: 'prospectCurrently',
+      labelGroup: 'Does the prospect currently work with the advisor??',
     },
   ],
 ]
 
-export {
-  prospectBasicSchemaGeneral,
-  prospectBasicSchemaSpouse,
-  prospectBasicSchemaHousing,
-  prospectBasicSchemaEmployment,
-  prospectBasicSchemaOther,
-}
+const shemaBasic = [
+  ...prospectBasicSchemaGeneral,
+  [
+    {
+      component: SchemaSeparator,
+      model: 'separatorSpouse',
+    },
+  ],
+  [
+    {
+      component: SchemaLabel,
+      model: 'labelSpouse',
+      label: 'Spouse',
+    },
+  ],
+  ...prospectBasicSchemaSpouse,
+  [
+    {
+      component: SchemaSeparator,
+      model: 'separatorHousing',
+    },
+  ],
+  [
+    {
+      component: SchemaLabel,
+      model: 'labelHousing',
+      label: 'Housing',
+    },
+  ],
+  ...prospectBasicSchemaHousing,
+  [
+    {
+      component: SchemaSeparator,
+      model: 'separatorEmploymentHistory',
+    },
+  ],
+  [
+    {
+      component: SchemaLabel,
+      model: 'labelEmploymentHistory',
+      label: 'Employment history',
+    },
+  ],
+  ...prospectBasicSchemaEmployment,
+  [
+    {
+      component: SchemaSeparator,
+      model: 'separatorOther',
+    },
+  ],
+  [
+    {
+      component: SchemaLabel,
+      model: 'labelOther',
+      label: 'Other',
+    },
+  ],
+  ...prospectBasicSchemaOther,
+]
+
+export { shemaBasic }

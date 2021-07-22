@@ -1,46 +1,22 @@
 <template>
   <div class="pt-6">
-    <div class="border-b border-color-grey px-20 pb-7">
+    <div class="border-color-grey px-20 pb-7">
       <span class="text-xl font-medium">General</span>
       <SchemaFormWithValidation
         :schema="schemaGeneral"
         schema-row-classes="pt-6"
-      />
-    </div>
-    <div class="border-b border-color-grey px-20 py-7">
-      <span class="text-xl font-medium">Spouse</span>
-      <SchemaFormWithValidation
-        :schema="schemaSpouse"
-        schema-row-classes="pt-6"
-      />
-    </div>
-    <div class="border-b border-color-grey px-20 pt-7">
-      <span class="text-xl font-medium">Housing Information</span>
-      <SchemaFormWithValidation
-        :schema="schemaHousing"
-        schema-row-classes="pb-6"
-      />
-    </div>
-    <div class="border-b border-color-grey px-20 pt-7">
-      <span class="text-xl font-medium">Employment history</span>
-      <SchemaFormWithValidation
-        :schema="schemaEmployment"
-        schema-row-classes="pb-6"
-      />
-    </div>
-    <div class="px-20 pt-7">
-      <span class="text-xl font-medium">Other</span>
-      <SchemaFormWithValidation
-        :schema="schemaOther"
-        schema-row-classes="pb-6"
-      />
-    </div>
-    <div class="my-6 flex justify-end">
-      <Button
-        default-blue-btn
-        text-btn="Go to the assets &amp; income"
-        @click="saveStep"
-      />
+        @submit="onSubmit"
+      >
+        <template #afterForm>
+          <div class="pt-12 text-right">
+            <Button
+              default-blue-btn
+              text-btn="Go to the assets &amp; income"
+              @click="saveStep"
+            />
+          </div>
+        </template>
+      </SchemaFormWithValidation>
     </div>
   </div>
 </template>
@@ -48,29 +24,32 @@
 <script>
 import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
 import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
+import { useMutation } from 'vue-query'
+import { ElNotification } from 'element-plus'
 
 import Input from '@/components/Global/Input/Input.vue'
 import Radio from '@/components/Global/Radio.vue'
+import RadioBoolean from '@/components/Global/RadioBoolean.vue'
 import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
+import SchemaLabel from '@/components/NewProspect/SchemaLabel.vue'
+import SchemaSeparator from '@/components/NewProspect/SchemaSeparator.vue'
 
-import {
-  prospectBasicSchemaGeneral,
-  prospectBasicSchemaSpouse,
-  prospectBasicSchemaHousing,
-  prospectBasicSchemaEmployment,
-  prospectBasicSchemaOther,
-} from '@/components/NewProspect/schema/newProspectBasicSchema'
+import { shemaBasic } from '@/components/NewProspect/schema/newProspectBasicSchema'
 
-import { ref, markRaw } from 'vue'
+import { ref, markRaw, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { computed, onMounted } from 'vue'
+
+import { createMembers } from '@/api/vueQuery/create-members'
 
 markRaw(Input)
 markRaw(Radio)
+markRaw(RadioBoolean)
 markRaw(Label)
 markRaw(TextArea)
+markRaw(SchemaSeparator)
+markRaw(SchemaLabel)
 
 const SchemaFormWithValidation = SchemaFormFactory([VeeValidatePlugin()])
 
@@ -81,33 +60,61 @@ export default {
     const router = useRouter()
     const store = useStore()
 
+    const {
+      mutateAsync: createMember,
+      isLoading,
+      isError,
+      isFetching,
+      data,
+      error,
+      refetch,
+    } = useMutation(createMembers)
+
     onMounted(() => {
       store.commit('newProspect/setStep', 1)
       window.scrollTo(0, 0)
     })
 
-    const schemaGeneral = ref(prospectBasicSchemaGeneral)
-    const schemaSpouse = ref(prospectBasicSchemaSpouse)
-    const schemaHousing = ref(prospectBasicSchemaHousing)
-    const schemaEmployment = ref(prospectBasicSchemaEmployment)
-    const schemaOther = ref(prospectBasicSchemaOther)
+    const schemaGeneral = ref(shemaBasic)
     const formData = ref({})
     useSchemaForm(formData)
 
     const step = computed(() => store.state.newProspect.step)
 
-    const saveStep = () => {
-      store.commit('newProspect/setStep', step.value + 1)
-      router.push({ name: 'assets-information' })
+    const saveStep = async () => {
+      createMember(formData.value)
+        .then(() => {
+          ElNotification.success({
+            title: 'Success',
+            message: 'Prospect created successfully',
+            type: 'success',
+          })
+          store.commit('newProspect/setStep', step.value + 1)
+          router.push({ name: 'assets-information' })
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: 'Error',
+            message: error.value,
+            offset: 100,
+          })
+        })
+    }
+
+    const onSubmit = () => {
+      console.log('onSubmit')
     }
 
     return {
       schemaGeneral,
-      schemaSpouse,
-      schemaHousing,
-      schemaEmployment,
-      schemaOther,
       saveStep,
+      onSubmit,
+      isLoading,
+      isError,
+      isFetching,
+      data,
+      error,
+      refetch,
     }
   },
 }
