@@ -92,10 +92,10 @@ export default {
           store.commit('newProspect/setStep', step.value + 1)
           router.push({ name: 'assets-information' })
         })
-        .catch(() => {
+        .catch((error) => {
           ElNotification.error({
             title: 'Error',
-            message: error.value,
+            message: error.message,
             offset: 100,
           })
         })

@@ -27,7 +27,7 @@ export default {
   },
   emits: ['update:value', 'update:modelValue'],
   setup(props, { emit }) {
-    const radio = ref('1')
+    const radio = ref(false)
 
     const emitValue = () => {
       // TODO: false - temporary solutions for demo
