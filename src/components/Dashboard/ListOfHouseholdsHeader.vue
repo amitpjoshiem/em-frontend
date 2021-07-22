@@ -3,7 +3,10 @@
     <span>List of Households</span>
     <div class="flex items-center">
       <ItemsPerPage />
-      <Select large />
+      <!-- <Select :options="options" large /> -->
+
+      <MySelect :options="actionsOptions" @select="handleSelect" />
+
       <DropDown class="ml-2" :options="actionsOptions">
         <template #titleDropDown>
           <span
@@ -31,20 +34,54 @@ import IconAction from '@/assets/svg/icon-action.svg'
 
 export default {
   name: 'ListOfHouseholdsHeader',
-  setup() {
+  emits: ['changeHouseholderType'],
+  setup(props, { emit }) {
     const actionsOptions = [
       {
-        title: 'Item 1',
-        command: 'item-1',
+        title: 'All',
+        command: 'all',
       },
       {
-        title: 'Item 2',
-        command: 'item2',
+        title: 'Clients',
+        command: 'clients',
+      },
+      {
+        title: 'Prospect',
+        command: 'prospect',
       },
     ]
+
+    const options = [
+      {
+        value: 'Option1',
+        label: 'All',
+      },
+      {
+        value: 'Option2',
+        label: 'Prospect',
+      },
+      {
+        value: 'Option3',
+        label: 'Clients',
+      },
+    ]
+
+    const actionsMap = {
+      All: () => console.log('all'),
+      Clients: () => emit('changeHouseholderType', 'client'),
+      Prospect: () => console.log('prospect'),
+    }
+
+    const handleSelect = (command) => {
+      const actionHandler = actionsMap[command]
+      actionHandler()
+    }
+
     return {
       actionsOptions,
       IconAction,
+      options,
+      handleSelect,
     }
   },
 }

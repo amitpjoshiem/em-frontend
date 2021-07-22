@@ -3,20 +3,16 @@
     <div v-if="isLoading">Loading...</div>
     <div v-else-if="isError">An error has occurred: {{ error }}</div>
     <div v-else-if="data">
-      <ListOfHouseholdsHeader />
-      <UsersListTable :items-header="itemsHeader" :users-list="data.data" />
+      <ListOfHouseholdsHeader @changeHouseholderType="houseHolderTypeHandler" />
+      <UsersListTable :items-header="itemsHeader" :users-list="data" />
     </div>
   </div>
 </template>
 <script>
 import ListOfHouseholdsHeader from '@/components/Dashboard/ListOfHouseholdsHeader.vue'
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
-
+import { useHouseholders } from '@/api/use-householders.js'
 import { itemsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable.js'
-import { fetchMembersList } from '@/api/vueQuery/fetch-members.js'
-// import { fetchMembers } from '@/api/vueQuery/fetch-members.js'
-import { useQuery } from 'vue-query'
-import { reactive } from 'vue'
 
 export default {
   components: {
@@ -24,21 +20,15 @@ export default {
     UsersListTable,
   },
   setup() {
-    const queryKey = reactive(['members', { type: 'all' }])
-
-    const { isLoading, isError, isFetching, data, error, refetch } = useQuery(
-      queryKey,
-      fetchMembersList
-    )
-
+    const { isLoading, isError, data, houseHolderTypeHandler } =
+      useHouseholders()
+    console.log('data', data)
     return {
       itemsHeader,
       isLoading,
       isError,
-      isFetching,
       data,
-      error,
-      refetch,
+      houseHolderTypeHandler,
     }
   },
 }

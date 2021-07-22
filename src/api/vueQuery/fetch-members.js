@@ -1,7 +1,8 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function fetchMembersList({ queryKey }) {
-  const type = queryKey[1].type
+function fetchMembersList({ queryKey, ...rest }) {
+  console.log('PROPS', { queryKey, rest })
+  const type = queryKey
   return fetcher({
     url: `/members`,
     options: { method: 'GET', searchParams: { type } },
