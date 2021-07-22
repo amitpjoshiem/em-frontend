@@ -1,7 +1,6 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function fetchMembersList({ queryKey, ...rest }) {
-  console.log('PROPS', { queryKey, rest })
+function fetchMembersList({ queryKey }) {
   const type = queryKey
   return fetcher({
     url: `/members`,

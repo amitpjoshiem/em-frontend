@@ -29,9 +29,10 @@ export default {
   setup(props, { emit }) {
     const radio = ref('1')
 
-    const emitValue = (e) => {
-      emit('update:value', e)
-      emit('update:modelValue', e)
+    const emitValue = () => {
+      // TODO: false - temporary solutions for demo
+      emit('update:value', false)
+      emit('update:modelValue', false)
     }
 
     const changeHandler = (e) => {

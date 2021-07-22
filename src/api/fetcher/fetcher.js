@@ -12,7 +12,16 @@ export const fetcher = async ({ url, data, options }) => {
       newUrl.searchParams.append(key, options.searchParams[key])
     )
   }
-  const token = readFromStorage(localStorage, 'access_token')
-  if (token) options.headers['Authorization'] = `Bearer ${token}`
-  return fetch(newUrl, { ...options, body }).then((response) => response.json())
+
+  try {
+    const token = readFromStorage(localStorage, 'access_token')
+    if (token) options.headers['Authorization'] = `Bearer ${token}`
+    const res = await fetch(newUrl, { ...options, body }).then((response) =>
+      response.json()
+    )
+    return res
+  } catch (error) {
+    console.log('ERROR', error)
+    throw error
+  }
 }

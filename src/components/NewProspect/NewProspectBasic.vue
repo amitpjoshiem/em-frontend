@@ -25,6 +25,7 @@
 import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
 import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
 import { useMutation } from 'vue-query'
+import { ElNotification } from 'element-plus'
 
 import Input from '@/components/Global/Input/Input.vue'
 import Radio from '@/components/Global/Radio.vue'
@@ -36,11 +37,9 @@ import SchemaSeparator from '@/components/NewProspect/SchemaSeparator.vue'
 
 import { shemaBasic } from '@/components/NewProspect/schema/newProspectBasicSchema'
 
-import { ref, markRaw } from 'vue'
-// import { useRouter } from 'vue-router'
+import { ref, markRaw, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { onMounted } from 'vue'
-// import { computed, onMounted } from 'vue'
 
 import { createMembers } from '@/api/vueQuery/create-members'
 
@@ -58,11 +57,11 @@ export default {
   name: 'NewProspectBasic',
   components: { SchemaFormWithValidation },
   setup() {
-    // const router = useRouter()
+    const router = useRouter()
     const store = useStore()
 
     const {
-      mutate: createMember,
+      mutateAsync: createMember,
       isLoading,
       isError,
       isFetching,
@@ -80,12 +79,26 @@ export default {
     const formData = ref({})
     useSchemaForm(formData)
 
-    // const step = computed(() => store.state.newProspect.step)
+    const step = computed(() => store.state.newProspect.step)
 
-    const saveStep = () => {
+    const saveStep = async () => {
       createMember(formData.value)
-      // store.commit('newProspect/setStep', step.value + 1)
-      // router.push({ name: 'assets-information' })
+        .then(() => {
+          ElNotification.success({
+            title: 'Success',
+            message: 'Prospect created successfully',
+            type: 'success',
+          })
+          store.commit('newProspect/setStep', step.value + 1)
+          router.push({ name: 'assets-information' })
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: 'Error',
+            message: error.value,
+            offset: 100,
+          })
+        })
     }
 
     const onSubmit = () => {
