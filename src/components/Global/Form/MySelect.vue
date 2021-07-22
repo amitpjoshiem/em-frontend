@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="data.value" @change="handleCommand">
+  <el-select v-model="data.value" size="small" @change="handleCommand">
     <el-option
       v-for="item in options"
       :key="item.title"
