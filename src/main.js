@@ -40,6 +40,7 @@ import NextButton from '@/components/Global/Button/NextButton.vue'
 import BackButton from '@/components/Global/Button/BackButton.vue'
 import Dialog from '@/components/Global/Dialog.vue'
 import Pagination from '@/components/Global/Pagination.vue'
+import SubHeader from '@/components/SubHeader.vue'
 
 import {
   ElProgress,
@@ -122,6 +123,7 @@ const components = [
   ElSelect,
   MySelect,
   ElOption,
+  SubHeader,
 ]
 
 components.forEach((component) => {

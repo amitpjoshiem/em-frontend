@@ -115,6 +115,24 @@ const routes = [
       },
 
       {
+        path: 'prospect-details',
+        name: 'prospect-details',
+        component: () =>
+          import(
+            /* webpackChunkName: "newprospect" */ '../components/ProspectDetails/ProspectDetails.vue'
+          ),
+      },
+
+      {
+        path: 'add-opportunity',
+        name: 'add-opportunity',
+        component: () =>
+          import(
+            /* webpackChunkName: "newprospect" */ '../components/Opportunity/AddOpportunity.vue'
+          ),
+      },
+
+      {
         path: 'settings',
         name: 'settings',
         component: () =>
