@@ -19,6 +19,9 @@ export const fetcher = async ({ url, data, options }) => {
     const res = await fetch(newUrl, { ...options, body }).then((response) =>
       response.json()
     )
+
+    if (!res.ok) throw res
+
     return res
   } catch (error) {
     console.log('ERROR', error)
