@@ -16,11 +16,12 @@ export const fetcher = async ({ url, data, options }) => {
   try {
     const token = readFromStorage(localStorage, 'access_token')
     if (token) options.headers['Authorization'] = `Bearer ${token}`
-    const res = await fetch(newUrl, { ...options, body }).then((response) =>
-      response.json()
-    )
-
-    if (!res.ok) throw res
+    const res = await fetch(newUrl, { ...options, body }).then((response) => {
+      if (!response.ok) {
+        throw response
+      }
+      return response.json()
+    })
 
     return res
   } catch (error) {
