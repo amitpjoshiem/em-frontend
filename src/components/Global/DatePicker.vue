@@ -4,7 +4,7 @@
     <el-date-picker
       v-model="value"
       type="date"
-      placeholder="Pick a Date"
+      :placeholder="getPlaceholder"
       format="YYYY/MM/DD"
       @change="changeHandler"
     >
@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+
 import dayjs from 'dayjs'
 
 export default defineComponent({
@@ -40,6 +41,10 @@ export default defineComponent({
       emit('update:modelValue', e)
     }
 
+    const getPlaceholder = computed(() => {
+      return dayjs(new Date()).format('YYYY/MM/DD')
+    })
+
     const changeHandler = (e) => {
       const date = dayjs(e).format('YYYY-MM-DD')
       emitValue(date)
@@ -48,6 +53,7 @@ export default defineComponent({
     return {
       value,
       changeHandler,
+      getPlaceholder,
     }
   },
 })
