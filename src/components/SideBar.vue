@@ -24,12 +24,12 @@
         <InlineSvg v-if="getRouteName === 'all'" :src="IconListActive" />
         <InlineSvg v-else :src="IconList" />
       </router-link>
-      <router-link
+      <!-- <router-link
         :to="{ name: 'all' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
       >
         <InlineSvg :src="IconAssets" />
-      </router-link>
+      </router-link> -->
       <div
         class="item flex justify-center items-center cursor-pointer w-full h-14"
       >
