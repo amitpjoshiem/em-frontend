@@ -1,6 +1,11 @@
 <template>
   <div class="p-5 flex justify-between">
-    <span>List of Households</span>
+    <router-link
+      :to="{ name: 'all' }"
+      class="cursor-pointer hover:text-activity"
+    >
+      List of Households
+    </router-link>
     <div class="flex items-center">
       <ItemsPerPage />
       <MySelect :options="actionsOptions" @select="handleSelect" />
