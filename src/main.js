@@ -23,7 +23,7 @@ import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
 import Avatar from '@/components/Global/Avatar.vue'
 import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
-import MySelect from '@/components/Global/Form/MySelect.vue'
+import SwdSelect from '@/components/Global/Form/SwdSelect.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
 import DropDown from '@/components/Global/DropDown.vue'
 import InputText from '@/components/Global/Inputs/InputText.vue'
@@ -121,7 +121,7 @@ const components = [
   ElPopper,
   RadioBoolean,
   ElSelect,
-  MySelect,
+  SwdSelect,
   ElOption,
   SubHeader,
 ]

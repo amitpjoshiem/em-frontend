@@ -3,16 +3,29 @@
 
 // import * as yup from 'yup'
 
-const newOpportinitySchema = [
+const newOpportunitySchema = [
   [
     {
-      component: 'Input',
-      label: 'First Name',
+      component: 'SwdSelect',
+      label: 'Smart Team',
       type: 'text',
-      placeholder: 'Enter prospect’s first name',
-      name: 'first_name',
-      model: 'first_name',
+      name: 'smart_team',
+      model: 'smart_team',
       class: 'w-5/12 pr-5',
+      options: [
+        {
+          title: 'All',
+          command: 'all',
+        },
+        {
+          title: 'Clients',
+          command: 'clients',
+        },
+        {
+          title: 'Prospect',
+          command: 'prospect',
+        },
+      ],
     },
     {
       component: 'Input',
@@ -90,6 +103,6 @@ const newOpportinitySchema = [
   ],
 ]
 
-const schemaOpportunity = [...newOpportinitySchema]
+const schemaOpportunity = [...newOpportunitySchema]
 
 export { schemaOpportunity }

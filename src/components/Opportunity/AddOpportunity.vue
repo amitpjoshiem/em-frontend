@@ -23,12 +23,14 @@ import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
 import Input from '@/components/Global/Input/Input.vue'
 import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
+import SwdSelect from '@/components/Global/Form/SwdSelect.vue'
 import { schemaOpportunity } from '@/components/Opportunity/schema/newOpportunity'
 import { ref, markRaw } from 'vue'
 
 markRaw(Input)
 markRaw(Label)
 markRaw(TextArea)
+markRaw(SwdSelect)
 
 const SchemaFormWithValidation = SchemaFormFactory([VeeValidatePlugin()])
 
