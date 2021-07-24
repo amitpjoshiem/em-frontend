@@ -115,7 +115,7 @@ const routes = [
       },
 
       {
-        path: 'prospect-details',
+        path: 'prospect-details/:id',
         name: 'prospect-details',
         component: () =>
           import(
