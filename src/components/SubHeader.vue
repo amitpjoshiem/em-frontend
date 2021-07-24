@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between pb-5">
-    <BackButton text="Dashboard" @click="back" />
+    <BackButton :text="backPageTitle" @click="back" />
     <span class="text-title text-main font-semibold">{{ title }}</span>
     <ShareBtn />
   </div>
@@ -18,6 +18,11 @@ export default {
       default: 'header',
     },
     backPage: {
+      type: String,
+      require: true,
+      default: 'dashboard',
+    },
+    backPageTitle: {
       type: String,
       require: true,
       default: 'dashboard',

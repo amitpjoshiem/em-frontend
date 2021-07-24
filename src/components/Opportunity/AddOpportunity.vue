@@ -1,10 +1,14 @@
 <template>
-  <div class="pt-6">
-    <div class="border-color-grey px-20 pb-7">
-      <span class="text-xl font-medium">New opportunity</span>
+  <div class="p-5">
+    <SubHeader
+      title="New opportunity"
+      back-page="prospect-details"
+      back-page-title="Prospect details"
+    />
+    <div class="border-color-grey px-10 pb-7">
       <SchemaFormWithValidation
         :schema="schema"
-        schema-row-classes="pt-6"
+        schema-row-classes="pt-3"
         @submit="onSubmit"
       >
         <template #afterForm>

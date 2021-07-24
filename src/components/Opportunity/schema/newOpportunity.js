@@ -7,7 +7,7 @@ const newOpportunitySchema = [
   [
     {
       component: 'RadioBoolean',
-      class: 'w-5/24',
+      class: 'w-4/24 pb-3',
       labelGroup: 'Married?',
       name: 'opportunity_married',
       model: 'opportunity_married',
