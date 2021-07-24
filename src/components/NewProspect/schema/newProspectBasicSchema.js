@@ -8,7 +8,7 @@ const prospectBasicSchemaGeneral = [
     {
       component: 'RadioBoolean',
       class: 'w-5/24',
-      labelGroup: 'Retired?',
+      labelGroup: 'Retired?*',
       name: 'retired',
       model: 'retired',
       type: 'Boolean',
@@ -16,7 +16,7 @@ const prospectBasicSchemaGeneral = [
     {
       component: 'RadioBoolean',
       class: 'w-5/24',
-      labelGroup: 'Married?',
+      labelGroup: 'Married?*',
       name: 'married',
       model: 'married',
       type: 'Boolean',
@@ -25,7 +25,7 @@ const prospectBasicSchemaGeneral = [
   [
     {
       component: 'Input',
-      label: 'First Name',
+      label: 'First Name*',
       type: 'text',
       placeholder: 'Enter prospect’s first name',
       name: 'first_name',
@@ -35,7 +35,7 @@ const prospectBasicSchemaGeneral = [
     },
     {
       component: 'Input',
-      label: 'Last Name',
+      label: 'Last Name*',
       type: 'text',
       placeholder: 'Enter prospect’s last name',
       name: 'last_name',
@@ -47,7 +47,7 @@ const prospectBasicSchemaGeneral = [
       component: 'DatePicker',
       model: 'birthday',
       name: 'birthday',
-      label: 'Date of birth',
+      label: 'Date of birth*',
       class: 'w-2/12',
       validations: yup.string().required(),
     },
@@ -55,7 +55,7 @@ const prospectBasicSchemaGeneral = [
   [
     {
       component: 'Input',
-      label: 'Email',
+      label: 'Email*',
       type: 'email',
       placeholder: 'Enter prospect’s e-mail',
       name: 'email',
@@ -65,7 +65,7 @@ const prospectBasicSchemaGeneral = [
     },
     {
       component: 'Input',
-      label: 'Phone',
+      label: 'Phone*',
       type: 'tel',
       placeholder: 'Enter prospect’s phone number',
       name: 'phone',

@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col">
-    <span v-if="label" class="label block text-main text-xss font-medium pb-2"
-      >Label</span
-    >
+    <span v-if="label" class="label block text-main text-xss font-medium pb-2">
+      {{ label }}
+    </span>
     <el-select v-model="data.value" :size="size" @change="handleCommand">
       <el-option
         v-for="item in options"
