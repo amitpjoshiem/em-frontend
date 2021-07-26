@@ -8,7 +8,12 @@
     </router-link>
     <div class="flex items-center">
       <ItemsPerPage />
-      <MySelect :options="actionsOptions" @select="handleSelect" />
+      <SwdSelect
+        :options="actionsOptions"
+        size="small"
+        init-value="All"
+        @select="handleSelect"
+      />
       <DropDown class="ml-2" :options="actionsOptions">
         <template #titleDropDown>
           <span

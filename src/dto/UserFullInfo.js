@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 class UserFullInfo {
-  constructor({ first_name, last_name, type, address, city, created_at }) {
+  constructor({ id, first_name, last_name, type, address, city, created_at }) {
+    this.id = id
     this.firstName = first_name
     this.lastName = last_name
     this.type = type

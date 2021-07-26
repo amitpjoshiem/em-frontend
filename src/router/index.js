@@ -84,7 +84,7 @@ const routes = [
         name: 'list-of-households',
         component: () =>
           import(
-            /* webpackChunkName: "dashboard" */ '../views/ListOfHouseholds.vue'
+            /* webpackChunkName: "ListOfHouseholds" */ '../views/ListOfHouseholds.vue'
           ),
         children: [
           {
@@ -92,7 +92,7 @@ const routes = [
             name: 'all',
             component: () =>
               import(
-                /* webpackChunkName: "newprospect" */ '../components/ListOfHouseholds/ListAll.vue'
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'
               ),
           },
           {
@@ -100,7 +100,7 @@ const routes = [
             name: 'prospects',
             component: () =>
               import(
-                /* webpackChunkName: "newprospect" */ '../components/ListOfHouseholds/ListProspects.vue'
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListProspects.vue'
               ),
           },
           {
@@ -108,10 +108,28 @@ const routes = [
             name: 'clients',
             component: () =>
               import(
-                /* webpackChunkName: "newprospect" */ '../components/ListOfHouseholds/ListClients.vue'
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListClients.vue'
               ),
           },
         ],
+      },
+
+      {
+        path: 'prospect-details/:id',
+        name: 'prospect-details',
+        component: () =>
+          import(
+            /* webpackChunkName: "ProspectDetails" */ '../components/ProspectDetails/ProspectDetails.vue'
+          ),
+      },
+
+      {
+        path: 'add-opportunity',
+        name: 'add-opportunity',
+        component: () =>
+          import(
+            /* webpackChunkName: "Opportunity" */ '../components/Opportunity/AddOpportunity.vue'
+          ),
       },
 
       {

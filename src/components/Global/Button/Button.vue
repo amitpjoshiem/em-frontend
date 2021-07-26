@@ -14,6 +14,9 @@
         defaultLinkBtn,
       'border border-dashed border-input-border w-full flex justify-center items-center text-xss font-medium':
         transparentBtn,
+      'bg-activity text-xss text-white px-1.5': smallBtnActivity,
+      'text-xss border border-activity px-1.5': smallBtnGray,
+      'font-semibold': textSemiBold,
     }"
   >
     <InlineSvg
@@ -81,7 +84,15 @@ export default {
       type: Boolean,
       default: false,
     },
-    smalBtn: {
+    smallBtnActivity: {
+      type: Boolean,
+      default: false,
+    },
+    smallBtnGray: {
+      type: Boolean,
+      default: false,
+    },
+    textSemiBold: {
       type: Boolean,
       default: false,
     },

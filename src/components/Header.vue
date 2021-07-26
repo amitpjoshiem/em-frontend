@@ -17,8 +17,9 @@
             mr-5
           "
         >
-          <img class="h-[13px] pr-3 pl-[10px]" src="../assets/img/plus.png" />
-
+          <span class="px-2">
+            <InlineSvg :src="IconPlus" />
+          </span>
           <div class="pr-2">Add new</div>
         </div>
       </router-link>
@@ -41,10 +42,17 @@
 
 <script>
 import UserAction from '@/components/UserAction.vue'
+import IconPlus from '@/assets/svg/icon-plus.svg'
+
 export default {
   name: 'Header',
   components: {
     UserAction,
+  },
+  setup() {
+    return {
+      IconPlus,
+    }
   },
 }
 </script>

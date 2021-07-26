@@ -25,12 +25,6 @@
 .el-date-editor.el-input__inner {
   width: 100%;
 }
-.el-input--prefix .el-input__inner {
-  padding-right: 0;
-}
-.el-input__inner {
-  height: 36px;
-}
 
 .el-input{
   line-height: 36px;
@@ -38,6 +32,25 @@
 
 .el-input__icon{
   line-height: 36px;
+}
+
+.el-input__inner {
+  height: 36px;
+  border-radius: 6px;
+  border-color: #D4DDEB;
+}
+
+.el-input__inner::placeholder{
+  color: #AAB5CF;
+}
+
+.el-input--prefix .el-input__inner {
+  padding-right: 0;
+}
+
+.el-input--small .el-input__inner{
+  height: 30px;
+  line-height: 30px;
 }
 
 .el-dropdown-menu__item {
@@ -65,9 +78,4 @@
 
 .el-popper__arrow{
   display: none;
-}
-
-.el-input--small .el-input__inner{
-  height: 30px;
-  line-height: 30px;
 }

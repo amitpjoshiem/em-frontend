@@ -23,7 +23,7 @@ import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
 import Avatar from '@/components/Global/Avatar.vue'
 import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
-import MySelect from '@/components/Global/Form/MySelect.vue'
+import SwdSelect from '@/components/Global/Form/SwdSelect.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
 import DropDown from '@/components/Global/DropDown.vue'
 import InputText from '@/components/Global/Inputs/InputText.vue'
@@ -40,6 +40,7 @@ import NextButton from '@/components/Global/Button/NextButton.vue'
 import BackButton from '@/components/Global/Button/BackButton.vue'
 import Dialog from '@/components/Global/Dialog.vue'
 import Pagination from '@/components/Global/Pagination.vue'
+import SubHeader from '@/components/SubHeader.vue'
 
 import {
   ElProgress,
@@ -120,8 +121,9 @@ const components = [
   ElPopper,
   RadioBoolean,
   ElSelect,
-  MySelect,
+  SwdSelect,
   ElOption,
+  SubHeader,
 ]
 
 components.forEach((component) => {
