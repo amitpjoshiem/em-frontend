@@ -5,6 +5,8 @@ import router from './router'
 import store from './store'
 import dayjs from 'dayjs'
 
+import relativeTime from 'dayjs/plugin/relativeTime'
+
 import InlineSvg from 'vue-inline-svg'
 import {
   SchemaForm,
@@ -62,6 +64,7 @@ import {
   ElPopper,
   ElSelect,
   ElOption,
+  ElSkeleton,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -124,6 +127,7 @@ const components = [
   SwdSelect,
   ElOption,
   SubHeader,
+  ElSkeleton,
 ]
 
 components.forEach((component) => {
@@ -131,5 +135,6 @@ components.forEach((component) => {
 })
 
 app.config.globalProperties.$dayjs = dayjs
+dayjs.extend(relativeTime)
 
 app.mount('#app')
