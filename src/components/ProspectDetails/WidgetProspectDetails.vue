@@ -34,7 +34,7 @@
         </div>
         <div class="text-sm">
           <span class="text-gray03 pr-px">{{ user.firstName.charAt(0) }}</span>
-          <span class="text-main pr-2">{{ user.getAge }}</span>
+          <span class="text-main pr-2">{{ user.age }}</span>
         </div>
       </div>
 

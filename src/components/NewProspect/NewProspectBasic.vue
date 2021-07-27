@@ -5,7 +5,6 @@
       <SchemaFormWithValidation
         :schema="schemaGeneral"
         schema-row-classes="pt-6"
-        @submit="onSubmit"
       >
         <template #afterForm>
           <div class="pt-12 text-right">
@@ -101,14 +100,9 @@ export default {
         })
     }
 
-    const onSubmit = () => {
-      console.log('onSubmit')
-    }
-
     return {
       schemaGeneral,
       saveStep,
-      onSubmit,
       isLoading,
       isError,
       isFetching,

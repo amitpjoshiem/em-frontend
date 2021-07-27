@@ -7,7 +7,7 @@
     />
     <div class="flex my-8">
       <WidgetProspectDetails
-        v-if="!isLaodingWidgetProspectDetails"
+        v-if="!isLoadingWidgetProspectDetails"
         :user="data"
       />
       <el-skeleton v-else :rows="6" animated class="w-8/24 pr-5 h-[264px]" />
@@ -19,11 +19,9 @@
 </template>
 <script>
 import { useRoute } from 'vue-router'
-
 import OpportunityTable from '@/components/ProspectDetails/OpportunityTable.vue'
 import TableAssetsConsolidations from '@/components/Table/TableAssetsConsolidations.vue'
 import WidgetProspectDetails from '@/components/ProspectDetails/WidgetProspectDetails.vue'
-
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 
 export default {
@@ -38,13 +36,13 @@ export default {
     const id = route.params.id
 
     const {
-      isLoading: isLaodingWidgetProspectDetails,
+      isLoading: isLoadingWidgetProspectDetails,
       isError,
       data,
     } = useProspectDetails(id)
 
     return {
-      isLaodingWidgetProspectDetails,
+      isLoadingWidgetProspectDetails,
       isError,
       data,
     }

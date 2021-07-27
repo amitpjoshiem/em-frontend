@@ -14,7 +14,9 @@
         "
       >
         <span>Opportunity details</span>
-        <router-link :to="{ name: 'add-opportunity' }">
+        <router-link
+          :to="{ name: 'add-opportunity', params: { id: prospectId } }"
+        >
           <div
             class="
               h-9
@@ -74,12 +76,17 @@
 
 <script>
 import IconPlus from '@/assets/svg/icon-plus.svg'
+import { useRoute } from 'vue-router'
 
 export default {
   nsme: 'OpportunityTable',
   setup() {
+    const route = useRoute()
+    const prospectId = route.params.id
+
     return {
       IconPlus,
+      prospectId,
     }
   },
 }

@@ -6,6 +6,7 @@ const withValidation = (component) => {
     setup: (props, { emit }) => {
       const emitValue = (e) => {
         emit('update:value', e.target.value)
+        emit('update:modelValue', e.target.modelValue)
       }
 
       const {
@@ -17,7 +18,7 @@ const withValidation = (component) => {
       } = useField(props.name, undefined, {
         validateOnValueUpdate: false,
         bails: true,
-        initialValue: props.value,
+        initialValue: props.value ?? props.modelValue,
       })
 
       const showError = computed(() => {

@@ -124,7 +124,7 @@ const routes = [
       },
 
       {
-        path: 'add-opportunity',
+        path: 'add-opportunity/:id',
         name: 'add-opportunity',
         component: () =>
           import(
