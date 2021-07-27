@@ -7,9 +7,7 @@
     />
     <div
       v-if="
-        !isLoadingStage &&
-        !isLoadingWidgetProspectDetails &&
-        !isLoadingUserProfile
+        !isLoadingStage && !isLoadingProspectDetails && !isLoadingUserProfile
       "
       class="border-color-grey px-10 pb-7"
     >
@@ -95,8 +93,8 @@ export default {
     } = useMutation(createOpportunity)
 
     const {
-      isLoading: isLoadingWidgetProspectDetails,
-      isError: isErrorWidgetProspectDetails,
+      isLoading: isLoadingProspectDetails,
+      isError: isErrorProspectDetails,
       data: prospectDetails,
     } = useProspectDetails(id)
 
@@ -151,10 +149,10 @@ export default {
       saveStep,
       isLoadingStage,
       isError,
-      isErrorWidgetProspectDetails,
+      isErrorProspectDetails,
       stageSelect,
       prospectDetails,
-      isLoadingWidgetProspectDetails,
+      isLoadingProspectDetails,
       isLoadingUserProfile,
       isErrorUserProfile,
       userProfile,

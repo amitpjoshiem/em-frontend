@@ -6,10 +6,7 @@
       back-page-title="Dashboard"
     />
     <div class="flex my-8">
-      <WidgetProspectDetails
-        v-if="!isLoadingWidgetProspectDetails"
-        :user="data"
-      />
+      <WidgetProspectDetails v-if="!isLoadingProspectDetails" :user="data" />
       <el-skeleton v-else :rows="6" animated class="w-8/24 pr-5 h-[264px]" />
       <div class="w-8/12">Asset Allocation</div>
     </div>
@@ -36,13 +33,13 @@ export default {
     const id = route.params.id
 
     const {
-      isLoading: isLoadingWidgetProspectDetails,
+      isLoading: isLoadingProspectDetails,
       isError,
       data,
     } = useProspectDetails(id)
 
     return {
-      isLoadingWidgetProspectDetails,
+      isLoadingProspectDetails,
       isError,
       data,
     }

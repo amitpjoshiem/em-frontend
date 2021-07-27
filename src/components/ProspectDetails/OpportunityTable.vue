@@ -51,6 +51,8 @@
         :key="index"
         :user="user"
         :prospect="prospect"
+        :user-profile="userProfile"
+        class="oportunity-item"
       >
         {{ user }}
       </OpportunityItem>
@@ -63,6 +65,7 @@ import IconPlus from '@/assets/svg/icon-plus.svg'
 import { useRoute } from 'vue-router'
 import OpportunityItem from '@/components/ProspectDetails/OpportunityItem.vue'
 import { useOpportunityList } from '@/api/use-opportunity-list.js'
+import { useUserProfile } from '@/api/use-user-profile.js'
 
 export default {
   name: 'OpportunityTable',
@@ -81,12 +84,21 @@ export default {
 
     const { isLoading, isError, data } = useOpportunityList(prospectId)
 
+    const {
+      isLoading: isLoadingUserProfile,
+      isError: isErrorUserProfile,
+      data: userProfile,
+    } = useUserProfile()
+
     return {
       IconPlus,
       prospectId,
       isLoading,
       isError,
       data,
+      isLoadingUserProfile,
+      isErrorUserProfile,
+      userProfile,
     }
   },
 }
@@ -95,10 +107,6 @@ export default {
 <style scoped>
 .title {
   @apply border-r border-b border-title-gray text-small text-gray03 flex items-center justify-center uppercase text-center last:border-r-0;
-}
-
-.item {
-  @apply border-r  text-xs text-text-light-gray flex items-center justify-center uppercase text-center last:border-r-0;
 }
 
 .oportunity-item {
