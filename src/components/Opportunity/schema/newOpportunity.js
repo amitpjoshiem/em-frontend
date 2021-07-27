@@ -1,3 +1,5 @@
+import * as yup from 'yup'
+
 const newOpportunitySchema = [
   [
     {
@@ -33,9 +35,10 @@ const newOpportunitySchema = [
       label: 'Opportunity name*',
       type: 'text',
       placeholder: 'Enter Opportunity name',
-      name: 'opportunity_name',
-      model: 'opportunity_name',
+      name: 'name',
+      model: 'name',
       class: 'w-6/12 pr-2',
+      validations: yup.string().min(2).max(100).required(),
     },
     {
       component: 'InputText',
@@ -57,6 +60,7 @@ const newOpportunitySchema = [
       name: 'probability_percentage',
       model: 'probability_percentage',
       class: 'w-3/12 pr-2',
+      validations: yup.number().required(),
     },
     {
       component: 'InputText',
@@ -66,6 +70,7 @@ const newOpportunitySchema = [
       name: 'amount',
       model: 'amount',
       class: 'w-3/12',
+      validations: yup.number().required(),
     },
   ],
   [
@@ -77,6 +82,7 @@ const newOpportunitySchema = [
       name: 'description',
       model: 'description',
       class: 'w-full',
+      validations: yup.string().min(2).max(100).required(),
     },
   ],
 ]

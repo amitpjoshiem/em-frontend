@@ -13,10 +13,14 @@
       "
       class="border-color-grey px-10 pb-7"
     >
-      <SchemaFormWithValidation :schema="schema" schema-row-classes="pt-3">
+      <SchemaFormWithValidation
+        :schema="schema"
+        schema-row-classes="pt-3"
+        @submit="saveStep"
+      >
         <template #afterForm>
           <div class="pt-12 text-right">
-            <Button default-blue-btn text-btn="Save" @click="saveStep" />
+            <Button default-blue-btn text-btn="Save" type="submit" />
           </div>
         </template>
       </SchemaFormWithValidation>
@@ -34,10 +38,13 @@ import TextArea from '@/components/Global/TextArea.vue'
 import SwdSelect from '@/components/Global/Form/SwdSelect.vue'
 import { schemaOpportunity } from '@/components/Opportunity/schema/newOpportunity'
 import { ref, markRaw, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStageOpportunity } from '@/api/use-stage-opportunity.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
+import { createOpportunity } from '@/api/vueQuery/create-opportunity'
+import { useMutation } from 'vue-query'
+import { ElNotification } from 'element-plus'
 
 markRaw(Input)
 markRaw(Label)
@@ -51,16 +58,41 @@ export default {
   components: { SchemaFormWithValidation },
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const schema = ref(schemaOpportunity)
-    const formData = ref({})
+    const formData = ref({ opportunity_owner: '' })
     const id = route.params.id
 
     useSchemaForm(formData)
 
     const saveStep = async () => {
-      console.log('save step')
-      console.log('formData - ', formData)
+      addOpportunity({
+        ...formData.value,
+        member_id: id,
+        stage_name: 'Prospecting',
+      })
+        .then(() => {
+          ElNotification.success({
+            title: 'Success',
+            message: 'Prospect created successfully',
+            type: 'success',
+          })
+          router.push({ name: 'prospect-details', params: { id } })
+        })
+        .catch((error) => {
+          ElNotification.error({
+            title: 'Error',
+            message: error.message,
+            offset: 100,
+          })
+        })
     }
+
+    const {
+      mutateAsync: addOpportunity,
+      isError,
+      error,
+    } = useMutation(createOpportunity)
 
     const {
       isLoading: isLoadingWidgetProspectDetails,
@@ -70,7 +102,7 @@ export default {
 
     const {
       isLoading: isLoadingStage,
-      isError,
+      isErrorLoadingStage,
       data: stageSelect,
     } = useStageOpportunity()
 
@@ -97,6 +129,8 @@ export default {
       (newV) => {
         if (newV) {
           schema.value[1][1].value = newV.firstName + ' ' + newV.lastName
+          formData.value.opportunity_owner =
+            newV.firstName + ' ' + newV.lastName
         }
       },
       { immediate: true }
@@ -124,6 +158,8 @@ export default {
       isLoadingUserProfile,
       isErrorUserProfile,
       userProfile,
+      isErrorLoadingStage,
+      error,
     }
   },
 }

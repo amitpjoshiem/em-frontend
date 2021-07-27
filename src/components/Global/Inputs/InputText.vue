@@ -82,12 +82,12 @@ export default {
     value: {
       type: String,
       required: false,
-      default: undefined,
+      default: '',
     },
     modelValue: {
       type: String,
       required: false,
-      default: undefined,
+      default: '',
     },
     labelVariant: {
       type: String,
@@ -119,7 +119,7 @@ export default {
     const handleChangeExtended = (e) => {
       formValue.value = e.target.value
       emit('update:value', e.target.value)
-      emit('update:modelValue', e.target.modelValue)
+      emit('update:modelValue', e.target.value)
     }
     const showError = computed(() => {
       return (

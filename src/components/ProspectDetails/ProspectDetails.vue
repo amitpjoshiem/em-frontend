@@ -13,7 +13,7 @@
       <el-skeleton v-else :rows="6" animated class="w-8/24 pr-5 h-[264px]" />
       <div class="w-8/12">Asset Allocation</div>
     </div>
-    <OpportunityTable class="mb-10" />
+    <OpportunityTable class="mb-10" :prospect="data" />
     <!-- <TableAssetsConsolidations class="mb-10" /> -->
   </div>
 </template>
