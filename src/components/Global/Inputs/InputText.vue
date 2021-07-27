@@ -16,6 +16,7 @@
         :type="type"
         :value="formValue"
         :placeholder="placeholder"
+        :disabled="disabled"
         class="
           no-shadow-ios
           input
@@ -33,17 +34,17 @@
         @blur="handleBlur"
         @input="handleChange"
       />
-      <slot name="icon" :showError="showError" />
+      <slot name="icon" :showError="Boolean(errorMessage)" />
     </div>
     <div v-if="type !== 'search'" class="text-color-error text-xss h-3.5 pt-1">
-      {{ showError ? errorMessage : '' }}
+      {{ errorMessage }}
     </div>
   </div>
 </template>
 
 <script>
 import { maska } from 'maska'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const labelVariants = {
   gray: 'text-gray03',
@@ -60,7 +61,6 @@ const inputVariants = {
 export default {
   name: 'InputText',
   directives: { maska },
-  inheritAttrs: false,
   props: {
     placeholder: {
       type: String,
@@ -82,7 +82,12 @@ export default {
     value: {
       type: String,
       required: false,
-      default: undefined,
+      default: '',
+    },
+    modelValue: {
+      type: String,
+      required: false,
+      default: '',
     },
     labelVariant: {
       type: String,
@@ -97,21 +102,39 @@ export default {
       required: false,
       default: '',
     },
+    validation: {
+      type: Object,
+      required: false,
+      default: () => ({}),
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
-  emits: ['update:value'],
+  emits: ['update:value', 'update:modelValue'],
   setup(props, { emit }) {
     const formValue = ref(props.value)
     const handleChangeExtended = (e) => {
       formValue.value = e.target.value
       emit('update:value', e.target.value)
+      emit('update:modelValue', e.target.value)
     }
+    const showError = computed(() => {
+      return (
+        props.validation.meta?.touched &&
+        Boolean(props.validation.errorMessage) &&
+        !props.validation.meta?.valid
+      )
+    })
 
     return {
       formValue,
-      errorMessage: undefined,
+      errorMessage: props.validation.errorMessage,
       handleChange: handleChangeExtended,
       handleBlur: () => null,
-      showError: false,
+      showError,
     }
   },
   computed: {

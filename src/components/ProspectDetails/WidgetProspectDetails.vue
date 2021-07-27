@@ -5,11 +5,11 @@
         <div class="flex">
           <Avatar />
           <div class="flex flex-col ml-2">
-            <span class="text-sm text-main font-medium"
-              >John &amp; Sarah Travis</span
-            >
+            <span class="text-sm text-main font-medium">
+              {{ user.firstName }} {{ user.lastName }}
+            </span>
             <span class="text-small text-activity-item font-medium uppercase">
-              Prospect
+              {{ user.type }}
             </span>
           </div>
         </div>
@@ -33,10 +33,8 @@
           <span class="ml-2 text-xs text-gray03">Age</span>
         </div>
         <div class="text-sm">
-          <span class="text-gray03 pr-px">J</span>
-          <span class="text-main pr-2">63</span>
-          <span class="text-gray03 pr-px">S</span>
-          <span class="text-main">58</span>
+          <span class="text-gray03 pr-px">{{ user.firstName.charAt(0) }}</span>
+          <span class="text-main pr-2">{{ user.age }}</span>
         </div>
       </div>
 
@@ -108,6 +106,13 @@ import IconTotal from '@/assets/svg/icon-total.svg'
 import IconGoal from '@/assets/svg/icon-goal.svg'
 export default {
   name: 'WidgetProspectDetails',
+  props: {
+    user: {
+      type: Object,
+      require: true,
+      default: () => {},
+    },
+  },
   setup() {
     const convertToClient = () => {
       console.log('convertToClient')

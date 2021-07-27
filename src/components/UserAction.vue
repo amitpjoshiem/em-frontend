@@ -1,8 +1,8 @@
 <template>
   <DropDown :options="actionsOptions" @select="handleSelect">
     <template #titleDropDown>
-      <div class="flex items-center">
-        <span class="px-2 py-2">{{ title }}</span>
+      <div v-if="!isLoadingUserProfile" class="flex items-center">
+        <span class="px-2 py-2">{{ getNameTitle }}</span>
         <InlineSvg :src="IconUserAction" />
       </div>
     </template>
@@ -14,6 +14,8 @@ import { useLogout } from '@/api/use-logout'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
+import { useUserProfile } from '@/api/use-user-profile.js'
+import { computed } from 'vue'
 
 export default {
   setup() {
@@ -49,7 +51,9 @@ export default {
       },
     ]
 
-    const title = 'Adam K.'
+    const getNameTitle = computed(() => {
+      return user.value.firstName + ' ' + user.value.lastName.charAt(0) + '.'
+    })
 
     const actionsMap = {
       logout: () => logout(),
@@ -61,6 +65,12 @@ export default {
         store.commit('dashboard/setEmptyDashboard', !isEmptyDashboard.value),
     }
 
+    const {
+      isLoading: isLoadingUserProfile,
+      isError: isErrorUserProfile,
+      data: user,
+    } = useUserProfile()
+
     const handleSelect = (command) => {
       const actionHandler = actionsMap[command]
       actionHandler()
@@ -70,10 +80,13 @@ export default {
       actionsOptions,
       handleSelect,
       IconUserAction,
-      title,
       fetching,
       error,
       isEmptyDashboard,
+      isLoadingUserProfile,
+      isErrorUserProfile,
+      user,
+      getNameTitle,
     }
   },
 }
