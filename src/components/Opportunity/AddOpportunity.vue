@@ -72,7 +72,7 @@ export default {
         .then(() => {
           ElNotification.success({
             title: 'Success',
-            message: 'Prospect created successfully',
+            message: 'Opportunity created successfully',
             type: 'success',
           })
           router.push({ name: 'prospect-details', params: { id } })

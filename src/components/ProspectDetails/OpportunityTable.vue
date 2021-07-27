@@ -46,16 +46,19 @@
         <div class="w-2/12 title">Close date</div>
       </div>
 
-      <OpportunityItem
-        v-for="(user, index) in data"
-        :key="index"
-        :user="user"
-        :prospect="prospect"
-        :user-profile="userProfile"
-        class="oportunity-item"
-      >
-        {{ user }}
-      </OpportunityItem>
+      <div v-if="!isLoading">
+        <OpportunityItem
+          v-for="(user, index) in data"
+          :key="index"
+          :user="user"
+          :prospect="prospect"
+          :user-profile="userProfile"
+          class="oportunity-item"
+        >
+          {{ user }}
+        </OpportunityItem>
+      </div>
+      <el-skeleton v-else :rows="6" animated class="w-full p-3" />
     </div>
   </div>
 </template>
