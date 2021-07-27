@@ -5,13 +5,14 @@
       <SchemaFormWithValidation
         :schema="schemaGeneral"
         schema-row-classes="pt-6"
+        @submit="saveStep"
       >
         <template #afterForm>
           <div class="pt-12 text-right">
             <Button
               default-blue-btn
               text-btn="Go to the assets &amp; income"
-              @click="saveStep"
+              type="submit"
             />
           </div>
         </template>

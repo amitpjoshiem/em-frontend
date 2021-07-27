@@ -1,5 +1,4 @@
 import { useQuery } from 'vue-query'
-// import { OpportunityList } from '../dto/OpportunityList'
 import { fetchOpportunityList } from './vueQuery/fetch-opportunity-list'
 
 export const useOpportunityList = (id) => {
