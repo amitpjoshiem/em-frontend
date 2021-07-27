@@ -1,5 +1,3 @@
-import * as yup from 'yup'
-
 const newOpportunitySchema = [
   [
     {
@@ -11,7 +9,6 @@ const newOpportunitySchema = [
       model: 'opportunity_owner',
       class: 'w-5/12 pr-5',
       disabled: true,
-      validations: yup.string().required(),
     },
     {
       component: 'SwdSelect',
@@ -39,7 +36,6 @@ const newOpportunitySchema = [
       name: 'opportunity_name',
       model: 'opportunity_name',
       class: 'w-6/12 pr-2',
-      validations: yup.string().required(),
     },
     {
       component: 'InputText',
@@ -50,7 +46,6 @@ const newOpportunitySchema = [
       model: 'account_name',
       class: 'w-6/12 pl-2',
       disabled: true,
-      validations: yup.string().required(),
     },
   ],
   [
@@ -62,7 +57,6 @@ const newOpportunitySchema = [
       name: 'probability_percentage',
       model: 'probability_percentage',
       class: 'w-3/12 pr-2',
-      validations: yup.number().required(),
     },
     {
       component: 'InputText',
@@ -72,7 +66,6 @@ const newOpportunitySchema = [
       name: 'amount',
       model: 'amount',
       class: 'w-3/12',
-      validations: yup.number().required(),
     },
   ],
   [
@@ -84,7 +77,6 @@ const newOpportunitySchema = [
       name: 'description',
       model: 'description',
       class: 'w-full',
-      validations: yup.string().required(),
     },
   ],
 ]

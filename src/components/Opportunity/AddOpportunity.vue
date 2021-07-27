@@ -6,7 +6,11 @@
       back-page-title="Prospect details"
     />
     <div
-      v-if="!isLoadingStage && !isLoadingWidgetProspectDetails"
+      v-if="
+        !isLoadingStage &&
+        !isLoadingWidgetProspectDetails &&
+        !isLoadingUserProfile
+      "
       class="border-color-grey px-10 pb-7"
     >
       <SchemaFormWithValidation :schema="schema" schema-row-classes="pt-3">
@@ -33,6 +37,7 @@ import { ref, markRaw, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStageOpportunity } from '@/api/use-stage-opportunity.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
+import { useUserProfile } from '@/api/use-user-profile.js'
 
 markRaw(Input)
 markRaw(Label)
@@ -69,6 +74,12 @@ export default {
       data: stageSelect,
     } = useStageOpportunity()
 
+    const {
+      isLoading: isLoadingUserProfile,
+      isError: isErrorUserProfile,
+      data: userProfile,
+    } = useUserProfile()
+
     watch(isLoadingStage, (newV, oldV) => {
       if (newV === false && oldV === true) {
         const stageList = stageSelect.value.data.stage_list.map((item) => {
@@ -81,12 +92,25 @@ export default {
       }
     })
 
-    watch(isLoadingWidgetProspectDetails, (newV, oldV) => {
-      if (newV === false && oldV === true) {
-        schema.value[1][1].value =
-          prospectDetails.value.firstName + ' ' + prospectDetails.value.lastName
-      }
-    })
+    watch(
+      prospectDetails,
+      (newV) => {
+        if (newV) {
+          schema.value[1][1].value = newV.firstName + ' ' + newV.lastName
+        }
+      },
+      { immediate: true }
+    )
+
+    watch(
+      userProfile,
+      (newV) => {
+        if (newV) {
+          schema.value[0][0].value = newV.firstName + ' ' + newV.lastName
+        }
+      },
+      { immediate: true }
+    )
 
     return {
       schema,
@@ -97,6 +121,9 @@ export default {
       stageSelect,
       prospectDetails,
       isLoadingWidgetProspectDetails,
+      isLoadingUserProfile,
+      isErrorUserProfile,
+      userProfile,
     }
   },
 }

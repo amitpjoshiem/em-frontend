@@ -14,13 +14,13 @@
       <div class="w-8/12">Asset Allocation</div>
     </div>
     <OpportunityTable class="mb-10" />
-    <TableAssetsConsolidations class="mb-10" />
+    <!-- <TableAssetsConsolidations class="mb-10" /> -->
   </div>
 </template>
 <script>
 import { useRoute } from 'vue-router'
 import OpportunityTable from '@/components/ProspectDetails/OpportunityTable.vue'
-import TableAssetsConsolidations from '@/components/Table/TableAssetsConsolidations.vue'
+// import TableAssetsConsolidations from '@/components/Table/TableAssetsConsolidations.vue'
 import WidgetProspectDetails from '@/components/ProspectDetails/WidgetProspectDetails.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 
@@ -28,7 +28,7 @@ export default {
   name: 'ProspectDetails',
   components: {
     OpportunityTable,
-    TableAssetsConsolidations,
+    // TableAssetsConsolidations,
     WidgetProspectDetails,
   },
   setup() {
