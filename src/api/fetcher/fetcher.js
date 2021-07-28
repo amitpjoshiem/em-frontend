@@ -2,6 +2,7 @@
 const baseUrl = process.env.VUE_APP_API_URL
 import { readFromStorage } from '@/utils/utilsLocalStorage'
 import { config } from '@/api/config'
+import useRefreshToken from './use-refresh-token'
 
 export const fetcher = async ({ url, data, options }) => {
   options = { ...options, ...config }
@@ -16,14 +17,19 @@ export const fetcher = async ({ url, data, options }) => {
   try {
     const token = readFromStorage(localStorage, 'access_token')
     if (token) options.headers['Authorization'] = `Bearer ${token}`
-    const res = await fetch(newUrl, { ...options, body }).then((response) => {
-      if (!response.ok) {
-        throw response
+    const res = await fetch(newUrl, { ...options, body })
+    if (res.status === 401 && !options.retry) {
+      const refreshToken = await useRefreshToken()
+      if (refreshToken) {
+        fetcher({ url, data, options, retry: true })
       }
-      return response.json()
-    })
+    }
 
-    return res
+    if (!res.ok) {
+      throw res
+    }
+
+    return res.json()
   } catch (error) {
     console.log('ERROR', error)
     throw error
