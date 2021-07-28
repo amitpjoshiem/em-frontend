@@ -34,17 +34,27 @@
         @blur="handleBlur"
         @input="handleChange"
       />
-      <slot name="icon" :showError="Boolean(errorMessage)" />
+      <slot name="icon" :showError="Boolean(validation.meta?.touched)">
+        <span class="absolute inset-y-0 right-0 flex items-center">
+          <button
+            type="button"
+            class="p-1 focus:outline-none focus:shadow-outline"
+          >
+            <InlineSvg v-if="showError" :src="IconInputError" />
+          </button>
+        </span>
+      </slot>
     </div>
     <div v-if="type !== 'search'" class="text-color-error text-xss h-3.5 pt-1">
-      {{ errorMessage }}
+      {{ validation.errorMessage }}
     </div>
   </div>
 </template>
 
 <script>
 import { maska } from 'maska'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import IconInputError from '@/assets/svg/icon-input-error.svg'
 
 const labelVariants = {
   gray: 'text-gray03',
@@ -121,20 +131,11 @@ export default {
       emit('update:value', e.target.value)
       emit('update:modelValue', e.target.value)
     }
-    const showError = computed(() => {
-      return (
-        props.validation.meta?.touched &&
-        Boolean(props.validation.errorMessage) &&
-        !props.validation.meta?.valid
-      )
-    })
 
     return {
       formValue,
-      errorMessage: props.validation.errorMessage,
       handleChange: handleChangeExtended,
-      handleBlur: () => null,
-      showError,
+      IconInputError,
     }
   },
   computed: {
@@ -150,7 +151,11 @@ export default {
         .join(' ')
     },
   },
-  methods: {},
+  methods: {
+    handleBlur() {
+      this.validation.setTouched(true)
+    },
+  },
 }
 </script>
 
