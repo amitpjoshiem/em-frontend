@@ -12,7 +12,11 @@ const useLogin = () => {
 
   const storeAccessTokenAndRedirectToDashboard = () => {
     saveToStorage(localStorage, 'access_token', response.value.access_token)
-    saveToStorage(localStorage, 'otp-type', headers.value['x-otp-type'])
+    saveToStorage(
+      localStorage,
+      'otp-type',
+      headers.value['x-otp-type'] ? headers.value['x-otp-type'] : ''
+    )
     router.push({ name: 'otp' })
   }
 
