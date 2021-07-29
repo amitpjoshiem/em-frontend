@@ -25,7 +25,12 @@ export const useFetch = (url, options) => {
       const body = JSON.stringify(params.body)
       const token = readFromStorage(localStorage, 'access_token')
       if (token) options.headers['Authorization'] = `Bearer ${token}`
-      const res = await fetch(baseUrl + url, { ...options, ...params, body })
+      const res = await fetch(baseUrl + url, {
+        ...options,
+        ...params,
+        body,
+        credentials: 'include',
+      })
       state.headers = Object.fromEntries(res.headers.entries())
 
       if (res.status === 204) {

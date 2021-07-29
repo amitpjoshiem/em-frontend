@@ -16,7 +16,11 @@ export const fetcher = async ({ url, data, options }) => {
   try {
     const token = readFromStorage(localStorage, 'access_token')
     if (token) options.headers['Authorization'] = `Bearer ${token}`
-    const res = await fetch(newUrl, { ...options, body }).then((response) => {
+    const res = await fetch(newUrl, {
+      ...options,
+      body,
+      credentials: 'include',
+    }).then((response) => {
       if (!response.ok) {
         throw response
       }

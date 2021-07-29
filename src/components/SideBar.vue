@@ -19,17 +19,23 @@
       <router-link
         :to="{ name: 'all' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
-        :class="{ active: getRouteName === 'all' }"
+        :class="{
+          active:
+            getRouteName === 'all' ||
+            getRouteName === 'clients' ||
+            getRouteName === 'prospects',
+        }"
       >
-        <InlineSvg v-if="getRouteName === 'all'" :src="IconListActive" />
+        <InlineSvg
+          v-if="
+            getRouteName === 'all' ||
+            getRouteName === 'clients' ||
+            getRouteName === 'prospects'
+          "
+          :src="IconListActive"
+        />
         <InlineSvg v-else :src="IconList" />
       </router-link>
-      <!-- <router-link
-        :to="{ name: 'all' }"
-        class="item flex justify-center items-center cursor-pointer w-full h-14"
-      >
-        <InlineSvg :src="IconAssets" />
-      </router-link> -->
       <div
         class="item flex justify-center items-center cursor-pointer w-full h-14"
       >

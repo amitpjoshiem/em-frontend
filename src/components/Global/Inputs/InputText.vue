@@ -153,7 +153,7 @@ export default {
   },
   methods: {
     handleBlur() {
-      this.validation.setTouched(true)
+      // this.validation.setTouched(true)
     },
   },
 }

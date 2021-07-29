@@ -1,13 +1,18 @@
 <template>
   <div>
-    <UsersListTable :items-header="itemsHeader" :users-list="usersList" />
+    <UsersListTable
+      v-if="!isLoading"
+      :items-header="itemsHeader"
+      :users-list="data"
+      class="h-[377px]"
+    />
+    <el-skeleton v-else :rows="8" animated class="p-5" />
   </div>
 </template>
 
 <script>
 import { itemsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable'
-import { useUsersListAll } from '@/components/ListOfHouseholds/DTO/usersListAll'
-
+import { useListHouseholders } from '@/api/use-list-householders.js'
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
 
 export default {
@@ -16,11 +21,13 @@ export default {
     UsersListTable,
   },
   setup() {
-    const { data: usersList } = useUsersListAll()
+    const { isLoading, isError, data } = useListHouseholders('all')
 
     return {
       itemsHeader,
-      usersList,
+      isLoading,
+      isError,
+      data,
     }
   },
 }
