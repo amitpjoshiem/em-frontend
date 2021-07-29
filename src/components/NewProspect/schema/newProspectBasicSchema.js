@@ -85,7 +85,7 @@ const prospectBasicSchemaGeneral = [
   [
     {
       component: 'Input',
-      label: 'Address',
+      label: 'Address*',
       type: 'text',
       placeholder: 'Enter prospect’s adress',
       name: 'address',
@@ -95,7 +95,7 @@ const prospectBasicSchemaGeneral = [
     },
     {
       component: 'Input',
-      label: 'City/State',
+      label: 'City/State*',
       type: 'text',
       placeholder: 'Choose option',
       name: 'city',
@@ -105,7 +105,7 @@ const prospectBasicSchemaGeneral = [
     },
     {
       component: 'Input',
-      label: 'ZIP',
+      label: 'ZIP*',
       type: 'number',
       placeholder: '00000',
       name: 'zip',
