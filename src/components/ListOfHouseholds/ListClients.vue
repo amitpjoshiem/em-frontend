@@ -1,6 +1,12 @@
 <template>
   <div>
-    <UsersListTable :items-header="itemsHeader" :users-list="data" />
+    <UsersListTable
+      v-if="!isFetching"
+      :items-header="itemsHeader"
+      :users-list="data"
+      class="h-[377px]"
+    />
+    <el-skeleton v-else :rows="8" animated class="p-5" />
   </div>
 </template>
 
@@ -17,7 +23,8 @@ export default {
   },
   setup() {
     // const { data: usersList } = useUsersListClients()
-    const { isLoading, isError, data } = useListHouseholders('client')
+    const { isLoading, isError, data, isFetching } =
+      useListHouseholders('client')
 
     return {
       itemsHeader,
@@ -25,6 +32,7 @@ export default {
       isLoading,
       isError,
       data,
+      isFetching,
     }
   },
 }

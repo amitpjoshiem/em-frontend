@@ -1,7 +1,7 @@
 <template>
   <div>
     <UsersListTable
-      v-if="!isLoading"
+      v-if="!isFetching"
       :items-header="itemsHeader"
       :users-list="data"
       class="h-[377px]"
@@ -21,13 +21,14 @@ export default {
     UsersListTable,
   },
   setup() {
-    const { isLoading, isError, data } = useListHouseholders('all')
+    const { isFetching, isLoading, isError, data } = useListHouseholders('all')
 
     return {
       itemsHeader,
       isLoading,
       isError,
       data,
+      isFetching,
     }
   },
 }

@@ -3,7 +3,7 @@ import { UserFullInfo } from '../dto/UserFullInfo'
 import { fetchMembersList } from './vueQuery/fetch-members'
 
 export const useListHouseholders = (type) => {
-  const { isLoading, isError, data } = useQuery(
+  const { isFetching, isLoading, isError, data } = useQuery(
     ['householders'],
     () => {
       return fetchMembersList({ queryKey: type })
@@ -19,5 +19,6 @@ export const useListHouseholders = (type) => {
     isLoading,
     isError,
     data,
+    isFetching,
   }
 }
