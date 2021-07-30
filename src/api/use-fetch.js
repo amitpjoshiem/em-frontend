@@ -21,7 +21,7 @@ export const useFetch = (url, options) => {
   const fetchData = async (params) => {
     state.fetching = true
     try {
-      options = { ...options, ...config }
+      options = { ...options, ...config, credentials: 'include' }
       const body = JSON.stringify(params.body)
       const token = readFromStorage(localStorage, 'access_token')
       if (token) options.headers['Authorization'] = `Bearer ${token}`
