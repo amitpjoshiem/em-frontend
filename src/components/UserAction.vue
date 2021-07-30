@@ -52,6 +52,7 @@ export default {
     ]
 
     const getNameTitle = computed(() => {
+      if (!user.value.firstName && !user.value.lastName) return 'User'
       return user.value.firstName + ' ' + user.value.lastName.charAt(0) + '.'
     })
 
