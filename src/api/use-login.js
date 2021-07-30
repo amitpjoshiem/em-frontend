@@ -17,7 +17,11 @@ const useLogin = () => {
       'otp-type',
       headers.value['x-otp-type'] ? headers.value['x-otp-type'] : ''
     )
-    router.push({ name: 'otp' })
+    if (headers.value['x-otp-type']) {
+      router.push({ name: 'otp' })
+    } else {
+      router.push({ name: 'dashboard' })
+    }
   }
 
   const login = async (body) => {

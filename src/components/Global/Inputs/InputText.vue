@@ -40,7 +40,10 @@
             type="button"
             class="p-1 focus:outline-none focus:shadow-outline"
           >
-            <InlineSvg v-if="showError" :src="IconInputError" />
+            <InlineSvg
+              v-if="Boolean(validation.meta?.touched)"
+              :src="IconInputError"
+            />
           </button>
         </span>
       </slot>
@@ -115,7 +118,9 @@ export default {
     validation: {
       type: Object,
       required: false,
-      default: () => ({}),
+      default: () => ({
+        setTouched() {},
+      }),
     },
     disabled: {
       type: Boolean,
