@@ -1,10 +1,10 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function fetchMembersList({ queryKey }) {
-  const type = queryKey
+function fetchMembersList(queryKey) {
+  const { type, limit } = queryKey
   return fetcher({
     url: `/members`,
-    options: { method: 'GET', searchParams: { type } },
+    options: { method: 'GET', searchParams: { type, limit } },
   })
 }
 

@@ -11,10 +11,17 @@ export const useHouseholders = () => {
     return store.state.dashboard.houseHolderType
   })
 
-  const { isLoading, isError, data, refetch } = useQuery(
+  const limit = computed(
+    () => store.state.globalComponents.itemsPerPage.values.dashboard
+  )
+
+  const { isFetching, isLoading, isError, data, refetch } = useQuery(
     ['householders'],
     () => {
-      return fetchMembersList({ queryKey: houseHolderType.value })
+      return fetchMembersList({
+        type: houseHolderType.value,
+        limit: limit.value,
+      })
     },
     {
       select: (data) => {
@@ -27,7 +34,12 @@ export const useHouseholders = () => {
     if (newValue !== oldValue) refetch.value()
   })
 
+  watch(limit, (newValue, oldValue) => {
+    if (newValue !== oldValue) refetch.value()
+  })
+
   return {
+    isFetching,
     isLoading,
     isError,
     data,

@@ -25,7 +25,7 @@
         </router-link>
       </div>
       <div class="flex">
-        <ItemsPerPage />
+        <ItemsPerPage :destination="'listOfHouseholds'" />
         <DropDown class="ml-2.5" :options="actionsOptions">
           <template #titleDropDown>
             <span

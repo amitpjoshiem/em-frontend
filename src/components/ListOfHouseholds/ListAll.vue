@@ -4,7 +4,6 @@
       v-if="!isFetching"
       :items-header="itemsHeader"
       :users-list="data"
-      class="h-[377px]"
     />
     <el-skeleton v-else :rows="8" animated class="p-5" />
   </div>

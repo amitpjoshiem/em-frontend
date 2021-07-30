@@ -1,10 +1,14 @@
 <template>
   <div class="border border-color-grey rounded-large mt-5 mb-10">
-    <div v-if="isLoading">Loading...</div>
-    <div v-else-if="isError">An error has occurred: {{ error }}</div>
-    <div v-else-if="data">
+    <div v-if="isError">An error has occurred: {{ error }}</div>
+    <div>
       <ListOfHouseholdsHeader />
-      <UsersListTable :items-header="itemsHeader" :users-list="data" />
+      <UsersListTable
+        v-if="!isFetching"
+        :items-header="itemsHeader"
+        :users-list="data"
+      />
+      <el-skeleton v-else :rows="4" animated class="p-5" />
     </div>
   </div>
 </template>
@@ -20,10 +24,11 @@ export default {
     UsersListTable,
   },
   setup() {
-    const { isLoading, isError, data, houseHolderTypeHandler } =
+    const { isFetching, isLoading, isError, data, houseHolderTypeHandler } =
       useHouseholders()
 
     return {
+      isFetching,
       itemsHeader,
       isLoading,
       isError,
