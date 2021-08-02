@@ -8,6 +8,7 @@ async function useRefreshToken() {
 
   return fetch(newUrl + '/refresh', {
     method: 'POST',
+    credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',

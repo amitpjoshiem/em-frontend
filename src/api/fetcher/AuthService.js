@@ -5,7 +5,6 @@ class AuthServise {
   constructor() {
     this.isRefreshing = false
     this.token = Promise.resolve(readFromStorage(localStorage, 'access_token'))
-    console.log('THIS>TOKEN', this.token)
   }
   async getToken() {
     return await this.token
