@@ -16,7 +16,11 @@ export const fetcher = async ({ url, data, options }) => {
   try {
     const accessToken = await authSerice.getToken()
     if (accessToken) options.headers['Authorization'] = `Bearer ${accessToken}`
-    const res = await fetch(newUrl, { ...options, body })
+    const res = await fetch(newUrl, {
+      ...options,
+      body,
+      credentials: 'include',
+    })
     if (res.status === 401) {
       authSerice.refreshToken()
       return fetcher({ url, data, options })
