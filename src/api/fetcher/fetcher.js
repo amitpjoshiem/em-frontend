@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-undef
 const baseUrl = process.env.VUE_APP_API_URL
-import { readFromStorage } from '@/utils/utilsLocalStorage'
 import { config } from '@/api/config'
+import { authSerice } from './AuthService'
 
 export const fetcher = async ({ url, data, options }) => {
   options = { ...options, ...config }
@@ -14,20 +14,23 @@ export const fetcher = async ({ url, data, options }) => {
   }
 
   try {
-    const token = readFromStorage(localStorage, 'access_token')
-    if (token) options.headers['Authorization'] = `Bearer ${token}`
+    const accessToken = await authSerice.getToken()
+    if (accessToken) options.headers['Authorization'] = `Bearer ${accessToken}`
     const res = await fetch(newUrl, {
       ...options,
       body,
       credentials: 'include',
-    }).then((response) => {
-      if (!response.ok) {
-        throw response
-      }
-      return response.json()
     })
+    if (res.status === 401) {
+      authSerice.refreshToken()
+      return fetcher({ url, data, options })
+    }
 
-    return res
+    if (!res.ok) {
+      throw res
+    }
+
+    return res.json()
   } catch (error) {
     console.log('ERROR', error)
     throw error
