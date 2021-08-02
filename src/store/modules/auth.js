@@ -1,6 +1,5 @@
 const state = () => ({
   isAuth: false,
-  isShowOtpForm: false,
   sendFormForgotPass: false,
   otpType: '',
 })

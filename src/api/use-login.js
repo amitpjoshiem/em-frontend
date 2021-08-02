@@ -14,9 +14,16 @@ const useLogin = () => {
   const storeAccessTokenAndRedirectToDashboard = () => {
     authSerice.setToken(response.value.access_token)
     saveToStorage(localStorage, 'access_token', response.value.access_token)
-    saveToStorage(localStorage, 'refresh_token', response.value.refresh_token)
-    saveToStorage(localStorage, 'otp-type', headers.value['x-otp-type'])
-    router.push({ name: 'otp' })
+    saveToStorage(
+      localStorage,
+      'otp-type',
+      headers.value['x-otp-type'] ? headers.value['x-otp-type'] : ''
+    )
+    if (headers.value['x-otp-type']) {
+      router.push({ name: 'otp' })
+    } else {
+      router.push({ name: 'dashboard' })
+    }
   }
 
   const login = async (body) => {
