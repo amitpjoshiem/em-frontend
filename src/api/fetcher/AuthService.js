@@ -13,11 +13,8 @@ class AuthServise {
 
   async test() {
     this.isRefreshing = true
-    const refreshToken = readFromStorage(localStorage, 'refresh_token')
 
-    await useRefreshToken({
-      refresh_token: refreshToken,
-    })
+    await useRefreshToken()
 
     this.isRefreshing = false
     return readFromStorage(localStorage, 'access_token')

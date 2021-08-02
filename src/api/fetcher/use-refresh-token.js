@@ -3,13 +3,11 @@ import { authSerice } from './AuthService'
 // eslint-disable-next-line no-undef
 const baseUrl = process.env.VUE_APP_API_URL
 
-async function useRefreshToken(token) {
+async function useRefreshToken() {
   const newUrl = new URL(baseUrl)
-  const body = JSON.stringify(token)
 
   return fetch(newUrl + '/refresh', {
     method: 'POST',
-    body,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
