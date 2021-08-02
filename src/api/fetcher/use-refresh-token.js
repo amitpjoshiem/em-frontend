@@ -1,4 +1,4 @@
-import { authSerice } from './AuthService'
+import { authService } from './AuthService'
 
 // eslint-disable-next-line no-undef
 const baseUrl = process.env.VUE_APP_API_URL
@@ -16,7 +16,7 @@ async function useRefreshToken() {
   }).then(async (res) => {
     if (res.status === 200) {
       const token = await res.json()
-      authSerice.setToken(token.access_token)
+      authService.setToken(token.access_token)
       return Promise.resolve()
     }
     return Promise.reject()
