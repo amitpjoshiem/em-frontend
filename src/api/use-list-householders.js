@@ -1,5 +1,6 @@
 import { useQuery } from 'vue-query'
-import { UserFullInfo } from '../dto/UserFullInfo'
+import { UserFullInfo } from '@/dto/UserFullInfo'
+import { MembersListPagination } from '@/dto/MembersListPagination'
 import { fetchMembersList } from './vueQuery/fetch-members'
 import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
@@ -30,7 +31,7 @@ export const useListHouseholders = ({ type, page }) => {
     cacheTime: 0,
     queryFn: fetchMembersList,
     select: ({ data, meta }) => {
-      pagination.value = meta.pagination
+      pagination.value = new MembersListPagination(meta.pagination)
       return data.map((houseHolder) => new UserFullInfo(houseHolder))
     },
   })

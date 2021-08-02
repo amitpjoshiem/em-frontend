@@ -1,8 +1,12 @@
 class OpportunityList {
-  constructor(
-    { close_date, name, amount, stage_name, probability },
-    description
-  ) {
+  constructor({
+    close_date,
+    name,
+    amount,
+    stage_name,
+    probability,
+    description,
+  }) {
     this.closeDate = close_date
     this.name = name
     this.amount = amount

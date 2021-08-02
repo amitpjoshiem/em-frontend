@@ -1,6 +1,6 @@
 <template>
   <el-pagination
-    :current-page="options.current_page"
+    :current-page="options.currentPage"
     :page-size="options.count"
     :pager-count="5"
     layout="prev, pager, next"
