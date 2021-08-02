@@ -1,10 +1,10 @@
 import { useQuery } from 'vue-query'
 import { UserFullInfo } from '../dto/UserFullInfo'
 import { fetchMembersList } from './vueQuery/fetch-members'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 
-export const useListHouseholders = (type) => {
+export const useListHouseholders = ({ type, page }) => {
   const store = useStore()
 
   const limit = computed(
@@ -13,12 +13,14 @@ export const useListHouseholders = (type) => {
 
   const reactiveType = ref(type)
   const reactiveLimit = ref(limit)
+  const reactivePage = ref(page)
 
   const queryKey = reactive([
     'householders',
     {
       reactiveType,
       reactiveLimit,
+      reactivePage,
     },
   ])
 
@@ -33,7 +35,6 @@ export const useListHouseholders = (type) => {
     },
   })
 
-  watch(pagination, (n, o) => console.log('NNN', { n, o }))
   return {
     ...query,
     pagination,

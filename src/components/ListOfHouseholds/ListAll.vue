@@ -5,7 +5,7 @@
       <div
         class="flex items-center justify-center border-t border-color-grey py-6"
       >
-        <Pagination :options="pagination.value" />
+        <Pagination :options="pagination.value" @selectPage="handleSelect" />
       </div>
     </template>
     <el-skeleton v-else :rows="8" animated class="p-5" />
@@ -16,6 +16,7 @@
 import { itemsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable'
 import { useListHouseholders } from '@/api/use-list-householders.js'
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
+import { reactive } from 'vue-demi'
 
 export default {
   name: 'ListAll',
@@ -23,7 +24,18 @@ export default {
     UsersListTable,
   },
   setup() {
-    const { isLoading, isError, data, pagination } = useListHouseholders('all')
+    const dataListAll = reactive({
+      page: 1,
+    })
+
+    const { isLoading, isError, data, pagination } = useListHouseholders({
+      type: 'all',
+      page: dataListAll,
+    })
+
+    const handleSelect = (page) => {
+      dataListAll.page = page
+    }
 
     return {
       itemsHeader,
@@ -31,6 +43,7 @@ export default {
       isError,
       data: data,
       pagination: pagination,
+      handleSelect,
     }
   },
 }
