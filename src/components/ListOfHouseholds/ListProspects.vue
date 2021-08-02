@@ -1,19 +1,27 @@
 <template>
   <div>
-    <UsersListTable
-      v-if="!isLoading"
-      :items-header="itemsHeader"
-      :users-list="data"
-    />
+    <template v-if="!isLoading">
+      <UsersListTable
+        v-if="!isLoading"
+        :items-header="itemsHeader"
+        :users-list="data"
+      />
+      <div
+        class="flex items-center justify-center border-t border-color-grey py-6"
+      >
+        <Pagination :options="pagination.value" @selectPage="handleSelect" />
+      </div>
+    </template>
+
     <el-skeleton v-else :rows="8" animated class="p-5" />
   </div>
 </template>
 
 <script>
 import { itemsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable'
-// import { useUsersListProspects } from '@/components/ListOfHouseholds/DTO/usersListProspects'
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
 import { useListHouseholders } from '@/api/use-list-householders.js'
+import { reactive } from 'vue'
 
 export default {
   name: 'ListProspects',
@@ -21,18 +29,26 @@ export default {
     UsersListTable,
   },
   setup() {
-    // const { data: usersList } = useUsersListProspects()
+    const dataListProspect = reactive({
+      page: 1,
+    })
 
-    const { isLoading, isError, data, isFetching } =
-      useListHouseholders('prospect')
+    const { isLoading, isError, data, pagination } = useListHouseholders({
+      type: 'prospect',
+      page: dataListProspect,
+    })
+
+    const handleSelect = (page) => {
+      dataListProspect.page = page
+    }
 
     return {
       itemsHeader,
-      // usersList,
       isLoading,
       isError,
-      data,
-      isFetching,
+      data: data,
+      pagination: pagination,
+      handleSelect,
     }
   },
 }

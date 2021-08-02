@@ -16,7 +16,7 @@
 import { itemsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable'
 import { useListHouseholders } from '@/api/use-list-householders.js'
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
-import { reactive } from 'vue-demi'
+import { reactive } from 'vue'
 
 export default {
   name: 'ListAll',
