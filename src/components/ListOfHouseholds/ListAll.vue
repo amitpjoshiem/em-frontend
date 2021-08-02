@@ -1,10 +1,13 @@
 <template>
   <div>
-    <UsersListTable
-      v-if="!isFetching"
-      :items-header="itemsHeader"
-      :users-list="data"
-    />
+    <template v-if="!isLoading">
+      <UsersListTable :items-header="itemsHeader" :users-list="data" />
+      <div
+        class="flex items-center justify-center border-t border-color-grey py-6"
+      >
+        <Pagination :options="pagination.value" />
+      </div>
+    </template>
     <el-skeleton v-else :rows="8" animated class="p-5" />
   </div>
 </template>
@@ -20,14 +23,14 @@ export default {
     UsersListTable,
   },
   setup() {
-    const { isFetching, isLoading, isError, data } = useListHouseholders('all')
+    const { isLoading, isError, data, pagination } = useListHouseholders('all')
 
     return {
       itemsHeader,
       isLoading,
       isError,
-      data,
-      isFetching,
+      data: data,
+      pagination: pagination,
     }
   },
 }

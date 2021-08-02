@@ -10,5 +10,12 @@
 <script>
 export default {
   name: 'Pagination',
+  props: {
+    options: {
+      type: Object,
+      require: true,
+      default: () => {},
+    },
+  },
 }
 </script>

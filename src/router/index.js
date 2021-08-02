@@ -92,7 +92,7 @@ const routes = [
             name: 'all',
             component: () =>
               import(
-                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'
+                /* webpackChunkName: "ListOfHouseholds-1" */ '../components/ListOfHouseholds/ListAll.vue'
               ),
           },
           {
@@ -100,7 +100,7 @@ const routes = [
             name: 'prospects',
             component: () =>
               import(
-                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListProspects.vue'
+                /* webpackChunkName: "ListOfHouseholds-2" */ '../components/ListOfHouseholds/ListProspects.vue'
               ),
           },
           {
@@ -108,7 +108,7 @@ const routes = [
             name: 'clients',
             component: () =>
               import(
-                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListClients.vue'
+                /* webpackChunkName: "ListOfHousehold-3" */ '../components/ListOfHouseholds/ListClients.vue'
               ),
           },
         ],

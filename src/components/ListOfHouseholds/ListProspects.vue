@@ -1,7 +1,7 @@
 <template>
   <div>
     <UsersListTable
-      v-if="!isFetching"
+      v-if="!isLoading"
       :items-header="itemsHeader"
       :users-list="data"
     />

@@ -1,7 +1,7 @@
 import { useQuery } from 'vue-query'
 import { UserFullInfo } from '../dto/UserFullInfo'
 import { fetchMembersList } from './vueQuery/fetch-members'
-import { computed, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 
 export const useListHouseholders = (type) => {
@@ -11,26 +11,31 @@ export const useListHouseholders = (type) => {
     () => store.state.globalComponents.itemsPerPage.values.listOfHouseholds
   )
 
-  const { isFetching, isLoading, isError, data, refetch } = useQuery(
-    ['householders'],
-    () => {
-      return fetchMembersList({ type, limit: limit.value })
-    },
-    {
-      select: (data) => {
-        return data.data.map((houseHolder) => new UserFullInfo(houseHolder))
-      },
-    }
-  )
+  const reactiveType = ref(type)
+  const reactiveLimit = ref(limit)
 
-  watch(limit, (newValue, oldValue) => {
-    if (newValue !== oldValue) refetch.value()
+  const queryKey = reactive([
+    'householders',
+    {
+      reactiveType,
+      reactiveLimit,
+    },
+  ])
+
+  let pagination = reactive({})
+
+  const query = useQuery(queryKey, {
+    cacheTime: 0,
+    queryFn: fetchMembersList,
+    select: ({ data, meta }) => {
+      pagination.value = meta.pagination
+      return data.map((houseHolder) => new UserFullInfo(houseHolder))
+    },
   })
 
+  watch(pagination, (n, o) => console.log('NNN', { n, o }))
   return {
-    isLoading,
-    isError,
-    data,
-    isFetching,
+    ...query,
+    pagination,
   }
 }

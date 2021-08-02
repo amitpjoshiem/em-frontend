@@ -48,11 +48,11 @@
       </div>
     </div>
     <router-view />
-    <div
+    <!-- <div
       class="flex items-center justify-center border-t border-color-grey py-6"
     >
       <Pagination />
-    </div>
+    </div> -->
   </div>
 </template>
 
