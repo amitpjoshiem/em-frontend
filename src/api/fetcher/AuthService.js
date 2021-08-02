@@ -1,7 +1,7 @@
 import { readFromStorage, saveToStorage } from '../../utils/utilsLocalStorage'
 import useRefreshToken from './use-refresh-token'
 
-class AuthServise {
+class AuthService {
   constructor() {
     this.isRefreshing = false
     this.token = Promise.resolve(readFromStorage(localStorage, 'access_token'))
@@ -10,7 +10,7 @@ class AuthServise {
     return await this.token
   }
 
-  async test() {
+  async getRefreshToken() {
     this.isRefreshing = true
 
     await useRefreshToken()
@@ -20,7 +20,7 @@ class AuthServise {
   }
 
   refreshToken() {
-    this.token = this.isRefreshing ? this.token : this.test()
+    this.token = this.isRefreshing ? this.token : this.getRefreshToken()
   }
 
   setToken(token) {
@@ -29,4 +29,4 @@ class AuthServise {
   }
 }
 
-export const authSerice = new AuthServise()
+export const authService = new AuthService()
