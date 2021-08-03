@@ -21,3 +21,9 @@
     <span class="text-gray03 text-xss">No recently added prospects</span>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'UsersListTableEmpty',
+}
+</script>

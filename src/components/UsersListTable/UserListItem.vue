@@ -17,7 +17,7 @@
   <td>
     <LinearProgress :percentage="20" :show-text="true" />
   </td>
-  <td class="text-main">{{ user.address }} {{ user.city }}</td>
+  <td class="text-main">{{ user.city }}</td>
   <td class="font-medium">${{ Math.floor(Math.random() * 1000) }}</td>
   <td class="pr-5">
     <DropDown class="ml-2.5" :options="actionsOptions">

@@ -2,6 +2,7 @@ import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import { saveToStorage } from '@/utils/utilsLocalStorage'
+import { authService } from './fetcher/AuthService'
 
 const useLogin = () => {
   const router = useRouter()
@@ -11,6 +12,7 @@ const useLogin = () => {
   })
 
   const storeAccessTokenAndRedirectToDashboard = () => {
+    authService.setToken(response.value.access_token)
     saveToStorage(localStorage, 'access_token', response.value.access_token)
     saveToStorage(
       localStorage,
