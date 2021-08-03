@@ -13,7 +13,7 @@
       </div>
     </template>
 
-    <el-skeleton v-else :rows="8" animated class="p-5" />
+    <el-skeleton v-else :rows="rows" animated class="p-5" />
   </div>
 </template>
 
@@ -21,7 +21,8 @@
 import { itemsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable'
 import { useListHouseholders } from '@/api/use-list-householders.js'
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ListClients',
@@ -29,6 +30,8 @@ export default {
     UsersListTable,
   },
   setup() {
+    const store = useStore()
+
     const dataListClient = reactive({
       page: 1,
     })
@@ -37,6 +40,10 @@ export default {
       type: 'client',
       page: dataListClient,
     })
+
+    const rows = computed(
+      () => store.state.globalComponents.itemsPerPage.values.dashboard
+    )
 
     const handleSelect = (page) => {
       dataListClient.page = page
@@ -49,6 +56,7 @@ export default {
       data: data,
       pagination: pagination,
       handleSelect,
+      rows,
     }
   },
 }

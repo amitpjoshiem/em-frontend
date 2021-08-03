@@ -8,7 +8,7 @@
         <Pagination :options="pagination.value" @selectPage="handleSelect" />
       </div>
     </template>
-    <el-skeleton v-else :rows="8" animated class="p-5" />
+    <el-skeleton v-else :rows="rows" animated class="p-5" />
   </div>
 </template>
 
@@ -16,7 +16,8 @@
 import { itemsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable'
 import { useListHouseholders } from '@/api/use-list-householders.js'
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ListAll',
@@ -24,9 +25,15 @@ export default {
     UsersListTable,
   },
   setup() {
+    const store = useStore()
+
     const dataListAll = reactive({
       page: 1,
     })
+
+    const rows = computed(
+      () => store.state.globalComponents.itemsPerPage.values.dashboard
+    )
 
     const { isLoading, isError, data, pagination } = useListHouseholders({
       type: 'all',
@@ -44,6 +51,7 @@ export default {
       data: data,
       pagination: pagination,
       handleSelect,
+      rows,
     }
   },
 }

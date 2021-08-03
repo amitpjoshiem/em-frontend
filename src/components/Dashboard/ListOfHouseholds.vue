@@ -8,7 +8,7 @@
         :items-header="itemsHeader"
         :users-list="data"
       />
-      <el-skeleton v-else :rows="4" animated class="p-5" />
+      <el-skeleton v-else :rows="rows" animated class="p-5" />
     </div>
   </div>
 </template>
@@ -17,6 +17,8 @@ import ListOfHouseholdsHeader from '@/components/Dashboard/ListOfHouseholdsHeade
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
 import { useHouseholders } from '@/api/use-householders.js'
 import { itemsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable.js'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   components: {
@@ -24,8 +26,14 @@ export default {
     UsersListTable,
   },
   setup() {
+    const store = useStore()
+
     const { isFetching, isLoading, isError, data, houseHolderTypeHandler } =
       useHouseholders()
+
+    const rows = computed(
+      () => store.state.globalComponents.itemsPerPage.values.dashboard
+    )
 
     return {
       isFetching,
@@ -34,6 +42,7 @@ export default {
       isError,
       data,
       houseHolderTypeHandler,
+      rows,
     }
   },
 }
