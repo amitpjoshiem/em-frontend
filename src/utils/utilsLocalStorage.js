@@ -6,7 +6,7 @@ export function readFromStorage(storage, key) {
 
 export function saveToStorage(storage, key, value) {
   try {
-    storage.setItem(key, JSON.stringify(value))
+    storage.setItem(key, value)
   } catch (error) {
     console.error(error)
   }

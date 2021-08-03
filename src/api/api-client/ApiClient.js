@@ -37,10 +37,7 @@ class ApiClient {
 
   async refreshTokenCall() {
     this.status = API_CLIENT_STATUSES['pending']
-    const refresh_token = this.storage.getByKey('refresh_token')
-    const response = await this.transport.fetch('/refresh', {
-      body: { refresh_token },
-    })
+    const response = await this.transport.fetch('/refresh')
 
     if (response.status === 200) {
       this.authenticate(response.data.access_token)
@@ -59,10 +56,13 @@ class ApiClient {
 
   async fetch(url, options) {
     try {
+      options.headers = {
+        ...config.headers,
+        ...options.headers,
+      }
       const token = await this.getToken()
       if (token) {
         options.headers = {
-          ...config.headers,
           ...options.headers,
           Authorization: `Bearer ${token}`,
         }

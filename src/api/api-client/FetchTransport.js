@@ -5,7 +5,7 @@ class FetchTransport {
 
   async fetch(url, options) {
     const absoluteUrl = new URL(this.baseUrl + url)
-    if (options.searchParams) {
+    if (options?.searchParams) {
       Object.keys(options.searchParams).forEach((key) =>
         absoluteUrl.searchParams.append(key, options.searchParams[key])
       )
