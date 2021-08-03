@@ -25,7 +25,7 @@
         </router-link>
       </div>
       <div class="flex">
-        <ItemsPerPage />
+        <ItemsPerPage :destination="'listOfHouseholds'" />
         <DropDown class="ml-2.5" :options="actionsOptions">
           <template #titleDropDown>
             <span
@@ -48,11 +48,6 @@
       </div>
     </div>
     <router-view />
-    <div
-      class="flex items-center justify-center border-t border-color-grey py-6"
-    >
-      <Pagination />
-    </div>
   </div>
 </template>
 

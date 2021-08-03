@@ -8,8 +8,8 @@
       {{ userProfile.firstName + ' ' + userProfile.lastName }}
     </div>
     <div class="w-2/12 item">{{ user.amount }}</div>
-    <div class="w-2/12 item">{{ user.stage_name }}</div>
-    <div class="w-2/12 item">{{ user.close_date }}</div>
+    <div class="w-2/12 item">{{ user.stageName }}</div>
+    <div class="w-2/12 item">{{ user.closeDate }}</div>
   </div>
 </template>
 <script>

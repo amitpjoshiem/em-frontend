@@ -1,14 +1,33 @@
 <template>
   <el-pagination
-    :page-size="20"
-    :pager-count="11"
+    :current-page="options.currentPage"
+    :page-size="options.count"
+    :pager-count="5"
     layout="prev, pager, next"
-    :total="100"
+    :total="options.total"
+    @current-change="handleCurrentChange"
   >
   </el-pagination>
 </template>
 <script>
 export default {
   name: 'Pagination',
+  props: {
+    options: {
+      type: Object,
+      require: true,
+      default: () => {},
+    },
+  },
+  emits: ['selectPage'],
+  setup(_, { emit }) {
+    const handleCurrentChange = (val) => {
+      emit('selectPage', val)
+    }
+
+    return {
+      handleCurrentChange,
+    }
+  },
 }
 </script>

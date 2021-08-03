@@ -19,17 +19,13 @@
       <router-link
         :to="{ name: 'all' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
-        :class="{ active: getRouteName === 'all' }"
+        :class="{
+          active: getActiveListOfHouseholds,
+        }"
       >
-        <InlineSvg v-if="getRouteName === 'all'" :src="IconListActive" />
+        <InlineSvg v-if="getActiveListOfHouseholds" :src="IconListActive" />
         <InlineSvg v-else :src="IconList" />
       </router-link>
-      <!-- <router-link
-        :to="{ name: 'all' }"
-        class="item flex justify-center items-center cursor-pointer w-full h-14"
-      >
-        <InlineSvg :src="IconAssets" />
-      </router-link> -->
       <div
         class="item flex justify-center items-center cursor-pointer w-full h-14"
       >
@@ -67,6 +63,15 @@ export default {
     const getRouteName = computed(() => {
       return route.name
     })
+
+    const getActiveListOfHouseholds = computed(() => {
+      return (
+        getRouteName.value === 'all' ||
+        getRouteName.value === 'clients' ||
+        getRouteName.value === 'prospects'
+      )
+    })
+
     return {
       IconList,
       IconAssets,
@@ -75,6 +80,7 @@ export default {
       IconListActive,
       isAuth,
       getRouteName,
+      getActiveListOfHouseholds,
     }
   },
 }

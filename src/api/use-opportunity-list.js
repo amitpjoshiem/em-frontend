@@ -1,5 +1,6 @@
 import { useQuery } from 'vue-query'
-import { fetchOpportunityList } from './vueQuery/fetch-opportunity-list'
+import { fetchOpportunityList } from '@/api/vueQuery/fetch-opportunity-list'
+import { OpportunityList } from '@/dto/OpportunityList'
 
 export const useOpportunityList = (id) => {
   const { isLoading, isError, data } = useQuery(
@@ -9,7 +10,7 @@ export const useOpportunityList = (id) => {
     },
     {
       select: (data) => {
-        return data.data
+        return data.data.map((opportunity) => new OpportunityList(opportunity))
       },
     }
   )

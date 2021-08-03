@@ -1,41 +1,43 @@
 import { useQuery } from 'vue-query'
-import { UserFullInfo } from '../dto/UserFullInfo'
+import { UserFullInfo } from '@/dto/UserFullInfo'
+import { MembersListPagination } from '@/dto/MembersListPagination'
 import { fetchMembersList } from './vueQuery/fetch-members'
 import { computed, reactive, ref } from 'vue'
-
 import { useStore } from 'vuex'
 
-export const useHouseholders = () => {
+export const useListHouseholders = ({ type, page }) => {
   const store = useStore()
 
-  const houseHolderType = computed(() => {
-    return store.state.dashboard.houseHolderType
-  })
-
   const limit = computed(
-    () => store.state.globalComponents.itemsPerPage.values.dashboard
+    () => store.state.globalComponents.itemsPerPage.values.listOfHouseholds
   )
 
-  const reactiveType = ref(houseHolderType)
+  const reactiveType = ref(type)
   const reactiveLimit = ref(limit)
+  const reactivePage = ref(page)
 
   const queryKey = reactive([
     'householders',
     {
       reactiveType,
       reactiveLimit,
+      reactivePage,
     },
   ])
+
+  let pagination = reactive({})
 
   const query = useQuery(queryKey, {
     cacheTime: 0,
     queryFn: fetchMembersList,
-    select: ({ data }) => {
+    select: ({ data, meta }) => {
+      pagination.value = new MembersListPagination(meta.pagination)
       return data.map((houseHolder) => new UserFullInfo(houseHolder))
     },
   })
 
   return {
     ...query,
+    pagination,
   }
 }

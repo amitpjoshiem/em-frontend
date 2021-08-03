@@ -7,7 +7,7 @@
       List of Households
     </router-link>
     <div class="flex items-center">
-      <ItemsPerPage />
+      <ItemsPerPage :destination="'dashboard'" />
       <SwdSelect
         :options="actionsOptions"
         size="small"
