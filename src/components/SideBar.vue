@@ -20,20 +20,10 @@
         :to="{ name: 'all' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{
-          active:
-            getRouteName === 'all' ||
-            getRouteName === 'clients' ||
-            getRouteName === 'prospects',
+          active: getActiveListOfHouseholds,
         }"
       >
-        <InlineSvg
-          v-if="
-            getRouteName === 'all' ||
-            getRouteName === 'clients' ||
-            getRouteName === 'prospects'
-          "
-          :src="IconListActive"
-        />
+        <InlineSvg v-if="getActiveListOfHouseholds" :src="IconListActive" />
         <InlineSvg v-else :src="IconList" />
       </router-link>
       <div
@@ -73,6 +63,15 @@ export default {
     const getRouteName = computed(() => {
       return route.name
     })
+
+    const getActiveListOfHouseholds = computed(() => {
+      return (
+        getRouteName.value === 'all' ||
+        getRouteName.value === 'clients' ||
+        getRouteName.value === 'prospects'
+      )
+    })
+
     return {
       IconList,
       IconAssets,
@@ -81,6 +80,7 @@ export default {
       IconListActive,
       isAuth,
       getRouteName,
+      getActiveListOfHouseholds,
     }
   },
 }
