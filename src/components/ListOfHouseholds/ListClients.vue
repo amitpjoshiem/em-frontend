@@ -1,19 +1,21 @@
 <template>
   <div>
-    <template v-if="!isLoading">
-      <UsersListTable
-        v-if="!isLoading"
-        :items-header="itemsHeader"
-        :users-list="data"
-      />
-      <div
-        class="flex items-center justify-center border-t border-color-grey py-6"
-      >
-        <Pagination :options="pagination.value" @selectPage="handleSelect" />
-      </div>
-    </template>
+    <UsersListTable
+      v-if="!isLoading"
+      :items-header="itemsHeader"
+      :users-list="data"
+    />
 
     <el-skeleton v-else :rows="rows" animated class="p-5" />
+    <div
+      class="flex items-center justify-center border-t border-color-grey py-6"
+    >
+      <Pagination
+        v-if="pagination.value"
+        :options="pagination.value"
+        @selectPage="handlePaginationChange"
+      />
+    </div>
   </div>
 </template>
 
@@ -21,8 +23,9 @@
 import { itemsHeader } from '@/components/ListOfHouseholds/itemsHeaderTable'
 import { useListHouseholders } from '@/api/use-list-householders.js'
 import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
-import { reactive, computed } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { usePaginationData } from '@/utils/use-pagination-data.js'
 
 export default {
   name: 'ListClients',
@@ -32,22 +35,16 @@ export default {
   setup() {
     const store = useStore()
 
-    const dataListClient = reactive({
-      page: 1,
-    })
+    const { paginationData, handlePaginationChange } = usePaginationData()
 
     const { isLoading, isError, data, pagination } = useListHouseholders({
       type: 'client',
-      page: dataListClient,
+      page: paginationData,
     })
 
     const rows = computed(
-      () => store.state.globalComponents.itemsPerPage.values.dashboard
+      () => store.state.globalComponents.itemsPerPage.values.listOfHouseholds
     )
-
-    const handleSelect = (page) => {
-      dataListClient.page = page
-    }
 
     return {
       itemsHeader,
@@ -55,7 +52,7 @@ export default {
       isError,
       data: data,
       pagination: pagination,
-      handleSelect,
+      handlePaginationChange,
       rows,
     }
   },
