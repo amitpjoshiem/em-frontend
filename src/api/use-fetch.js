@@ -1,15 +1,6 @@
 /* eslint-disable no-undef */
 import { toRefs, reactive } from 'vue'
-import { readFromStorage } from '@/utils/utilsLocalStorage'
-
-const baseUrl = process.env.VUE_APP_API_URL
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
-}
+import { apiClient } from './api-client/ApiClient'
 
 export const useFetch = (url, options) => {
   const state = reactive({
@@ -21,15 +12,11 @@ export const useFetch = (url, options) => {
   const fetchData = async (params) => {
     state.fetching = true
     try {
-      options = { ...options, ...config, credentials: 'include' }
       const body = JSON.stringify(params.body)
-      const token = readFromStorage(localStorage, 'access_token')
-      if (token) options.headers['Authorization'] = `Bearer ${token}`
-      const res = await fetch(baseUrl + url, {
+      const res = await apiClient.fetch(url, {
         ...options,
         ...params,
         body,
-        credentials: 'include',
       })
       state.headers = Object.fromEntries(res.headers.entries())
 

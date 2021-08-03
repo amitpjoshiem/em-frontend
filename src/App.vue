@@ -6,10 +6,10 @@
 <script>
 import { onMounted } from 'vue'
 import { useStore } from 'vuex'
-import { readFromStorage } from '@/utils/utilsLocalStorage'
 
 import { useQueryProvider } from 'vue-query'
 import { VueQueryDevTools } from 'vue-query/devtools'
+import { tokenStorage } from './api/api-client/TokenStorage'
 
 export default {
   components: {
@@ -20,15 +20,15 @@ export default {
 
     const store = useStore()
     onMounted(() => {
-      const auth = readFromStorage(localStorage, 'auth')
-      const access_token = readFromStorage(localStorage, 'access_token')
+      const auth = JSON.parse(tokenStorage.getByKey('auth'))
+      const access_token = tokenStorage.getByKey('access_token')
       if (access_token !== null && auth && auth.isAuth !== null) {
         store.commit('auth/setAuthUser', true)
       } else {
         store.commit('auth/setAuthUser', false)
       }
 
-      const otpType = readFromStorage(localStorage, 'otp-type')
+      const otpType = tokenStorage.getByKey('otp-type')
       store.commit('auth/setOtpType', otpType)
     })
   },

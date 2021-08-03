@@ -6,6 +6,12 @@ const API_CLIENT_STATUSES = {
   pending: 'pending',
   unauth: 'unauthorized',
 }
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
+}
 
 class ApiClient {
   /**
@@ -54,15 +60,28 @@ class ApiClient {
   async fetch(url, options) {
     try {
       const token = await this.getToken()
-      if (token) options.headers['Authorization'] = `Bearer ${token}`
-      const response = await this.transport.fetch(url, options)
+      if (token) {
+        options.headers = {
+          ...config.headers,
+          ...options.headers,
+          Authorization: `Bearer ${token}`,
+        }
+      }
+
+      options['credentials'] = 'include'
+      const response = await this.transport.fetch(url, {
+        ...options,
+      })
 
       if (response.status === 401) {
         this.refreshToken()
         return this.fetch(url, options)
       }
+
+      return response
     } catch (e) {
       console.error(e)
+      throw e
     }
   }
 }

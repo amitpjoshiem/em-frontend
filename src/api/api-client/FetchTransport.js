@@ -1,19 +1,20 @@
 class FetchTransport {
   constructor(baseUrl) {
     this.baseUrl = baseUrl
-    this.client = window.fetch
   }
 
   async fetch(url, options) {
-    const absoluteUrl = new URL(url, this.baseUrl)
-    const response = this.client.fetch(absoluteUrl, options)
-    const data = response.status !== 204 ? await response.json() : {}
-
-    return {
-      data,
-      status: response.status,
+    const absoluteUrl = new URL(this.baseUrl + url)
+    if (options.searchParams) {
+      Object.keys(options.searchParams).forEach((key) =>
+        absoluteUrl.searchParams.append(key, options.searchParams[key])
+      )
     }
+    const response = await fetch(absoluteUrl, options)
+
+    return response
   }
 }
 
-export const fetchTransport = new FetchTransport()
+// eslint-disable-next-line no-undef
+export const fetchTransport = new FetchTransport(process.env.VUE_APP_API_URL)

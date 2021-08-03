@@ -3,7 +3,7 @@ class TokenStorage {
     this.storage = localStorage
   }
   getByKey(key) {
-    this.storage.getItem(key)
+    return this.storage.getItem(key)
   }
 
   setByKey(key, value) {
