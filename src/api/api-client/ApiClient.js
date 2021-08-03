@@ -23,15 +23,18 @@ class ApiClient {
     this.status = API_CLIENT_STATUSES['unauth']
     this.transport = transport
     this.storage = tokenStorage
+    this.token = Promise.resolve(this.storage.getByKey('access_token'))
   }
 
   authenticate(token) {
     this.storage.setByKey('access_token', token)
     this.status = API_CLIENT_STATUSES['auth']
+    this.token = Promise.resolve(this.storage.getByKey('access_token'))
   }
 
   async getToken() {
-    return Promise.resolve(this.storage.getByKey('access_token'))
+    return this.token
+    // return Promise.resolve(this.storage.getByKey('access_token'))
   }
 
   async refreshTokenCall() {
@@ -60,6 +63,8 @@ class ApiClient {
         ...options.headers,
       }
       const token = await this.getToken()
+      console.log('TOKEN', token)
+      console.log('THIS', this)
       if (token) {
         options.headers = {
           ...options.headers,
