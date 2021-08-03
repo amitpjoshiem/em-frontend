@@ -60,7 +60,6 @@ class ApiClient {
         ...options.headers,
       }
       const token = await this.getToken()
-      console.log('token - ', token)
       if (token) {
         options.headers = {
           ...options.headers,
