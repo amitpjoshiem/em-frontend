@@ -1,6 +1,7 @@
 import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
+import { tokenStorage } from '@/api/api-client/TokenStorage'
 import { saveToStorage } from '@/utils/utilsLocalStorage'
 
 const useLogin = () => {
@@ -11,7 +12,7 @@ const useLogin = () => {
   })
 
   const storeAccessTokenAndRedirectToDashboard = () => {
-    saveToStorage(localStorage, 'access_token', response.value.access_token)
+    tokenStorage.setByKey('access_token', response.value.access_token)
     saveToStorage(
       localStorage,
       'otp-type',

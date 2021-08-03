@@ -23,7 +23,6 @@ class ApiClient {
     this.status = API_CLIENT_STATUSES['unauth']
     this.transport = transport
     this.storage = tokenStorage
-    this.token = Promise.resolve(this.storage.getByKey('access_token'))
   }
 
   authenticate(token) {
@@ -32,7 +31,7 @@ class ApiClient {
   }
 
   async getToken() {
-    return this.token
+    return Promise.resolve(this.storage.getByKey('access_token'))
   }
 
   async refreshTokenCall() {
@@ -61,6 +60,7 @@ class ApiClient {
         ...options.headers,
       }
       const token = await this.getToken()
+      console.log('token - ', token)
       if (token) {
         options.headers = {
           ...options.headers,
