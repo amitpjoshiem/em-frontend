@@ -1,28 +1,18 @@
 import { useFetch } from '@/api/use-fetch'
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import { useRemoveStoreAccessToken } from '@/utils/useRemoveStoreAccessToken.js'
 import { useAlert } from '@/utils/use-alert'
-import { removeFromStorage } from '@/utils/utilsLocalStorage'
 
 const useLogout = () => {
-  const router = useRouter()
-  const store = useStore()
-
   const { response, error, fetching, fetchData } = useFetch('/logout', {
     method: 'DELETE',
   })
 
-  const removeStoreAccessTokenAndRedirect = () => {
-    removeFromStorage(localStorage, 'access_token')
-    removeFromStorage(localStorage, 'otp-type')
-    store.commit('auth/setAuthUser', false)
-    router.push({ name: 'home' })
-  }
-
+  const removeAccessToken = useRemoveStoreAccessToken()
   const logout = async (body) => {
     await fetchData({ body })
+
     if (response.value.status === 202) {
-      removeStoreAccessTokenAndRedirect()
+      removeAccessToken()
     } else {
       useAlert({ title: 'error', type: 'error', message: error.value })
     }
