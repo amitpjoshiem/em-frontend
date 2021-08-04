@@ -1,6 +1,6 @@
 import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
-import { ElNotification } from 'element-plus'
+import { useAlert } from '@/utils/use-alert'
 
 const useCreatePassword = () => {
   const router = useRouter()
@@ -17,7 +17,8 @@ const useCreatePassword = () => {
     if (response.value.status === 204) {
       router.push({ name: 'home' })
     } else {
-      ElNotification.error({
+      useAlert({
+        type: 'error',
         title: 'Error',
         message: error.value,
         offset: 100,

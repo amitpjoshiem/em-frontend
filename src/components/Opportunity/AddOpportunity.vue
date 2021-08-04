@@ -42,7 +42,7 @@ import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { createOpportunity } from '@/api/vueQuery/create-opportunity'
 import { useMutation } from 'vue-query'
-import { ElNotification } from 'element-plus'
+import { useAlert } from '@/utils/use-alert'
 
 markRaw(Input)
 markRaw(Label)
@@ -70,7 +70,7 @@ export default {
         stage_name: 'Prospecting',
       })
         .then(() => {
-          ElNotification.success({
+          useAlert({
             title: 'Success',
             message: 'Opportunity created successfully',
             type: 'success',
@@ -78,10 +78,11 @@ export default {
           router.push({ name: 'prospect-details', params: { id } })
         })
         .catch((error) => {
-          ElNotification.error({
+          useAlert({
             title: 'Error',
             message: error.message,
             offset: 100,
+            type: 'error',
           })
         })
     }

@@ -1,7 +1,7 @@
 import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-// import { ElNotification } from 'element-plus'
+import { useAlert } from '@/utils/use-alert'
 import { removeFromStorage } from '@/utils/utilsLocalStorage'
 
 const useLogout = () => {
@@ -21,19 +21,11 @@ const useLogout = () => {
 
   const logout = async (body) => {
     await fetchData({ body })
-
-    removeStoreAccessTokenAndRedirect()
-
-    // TODO: temporary solution
-    // if (response.value.status === 202) {
-    //   removeStoreAccessTokenAndRedirect()
-    // } else {
-    //   ElNotification.error({
-    //     title: 'Error',
-    //     message: error.value,
-    //     offset: 100,
-    //   })
-    // }
+    if (response.value.status === 202) {
+      removeStoreAccessTokenAndRedirect()
+    } else {
+      useAlert({ title: 'error', type: 'error', message: error.value })
+    }
   }
 
   return {

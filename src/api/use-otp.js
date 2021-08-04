@@ -1,7 +1,7 @@
 import { useFetch } from '@/api/use-fetch'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { ElNotification } from 'element-plus'
+import { useAlert } from '@/utils/use-alert'
 
 const useOtp = () => {
   const store = useStore()
@@ -14,7 +14,8 @@ const useOtp = () => {
   const otpAuth = async (body) => {
     await fetchData({ body })
     if (error.value !== null) {
-      ElNotification.error({
+      useAlert({
+        type: 'error',
         title: 'Error',
         message: error.value,
         offset: 100,
