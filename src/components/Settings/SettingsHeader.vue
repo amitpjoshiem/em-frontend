@@ -34,6 +34,14 @@
         Two step authentication
       </div>
     </router-link>
+    <router-link :to="{ name: 'sales-force' }">
+      <div
+        class="p-5 text-sm text-gray03 cursor-pointer"
+        :class="{ active: getActiveTab === 'sales-force' }"
+      >
+        Salesforce
+      </div>
+    </router-link>
   </div>
 </template>
 
