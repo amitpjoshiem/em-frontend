@@ -1,6 +1,6 @@
 import { useFetch } from '@/api/use-fetch'
 import { useRemoveStoreAccessToken } from '@/utils/useRemoveStoreAccessToken.js'
-import { ElNotification } from 'element-plus'
+import { useAlert } from '@/utils/use-alert'
 
 const useLogout = () => {
   const { response, error, fetching, fetchData } = useFetch('/logout', {
@@ -14,11 +14,7 @@ const useLogout = () => {
     if (response.value.status === 202) {
       removeAccessToken()
     } else {
-      ElNotification.error({
-        title: 'Error',
-        message: error.value,
-        offset: 100,
-      })
+      useAlert({ title: 'error', type: 'error', message: error.value })
     }
   }
 

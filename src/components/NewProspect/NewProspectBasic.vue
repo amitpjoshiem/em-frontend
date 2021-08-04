@@ -25,7 +25,7 @@
 import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
 import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
 import { useMutation } from 'vue-query'
-import { ElNotification } from 'element-plus'
+import { useAlert } from '@/utils/use-alert'
 import Input from '@/components/Global/Input/Input.vue'
 import Radio from '@/components/Global/Radio.vue'
 import RadioBoolean from '@/components/Global/RadioBoolean.vue'
@@ -80,19 +80,19 @@ export default {
     const saveStep = async () => {
       createMember(formData.value)
         .then(() => {
-          ElNotification.success({
+          useAlert({
             title: 'Success',
-            message: 'Prospect created successfully',
             type: 'success',
+            message: 'Prospect created successfully',
           })
           store.commit('newProspect/setStep', step.value + 1)
           router.push({ name: 'assets-information' })
         })
         .catch((error) => {
-          ElNotification.error({
+          useAlert({
             title: 'Error',
             message: error.message,
-            offset: 100,
+            type: 'error',
           })
         })
     }
