@@ -2,7 +2,7 @@ import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import { tokenStorage } from '@/api/api-client/TokenStorage'
-import { apiClient } from './api-client/ApiClient'
+import { apiClient } from '@/api/api-client/ApiClient'
 
 const useLogin = () => {
   const router = useRouter()

@@ -49,7 +49,7 @@
 <script>
 import IconForgotPassword from '@/assets/svg/icon-forgot-password.svg'
 
-import { useForgot } from '@/api/use-forgot'
+import { useForgot } from '@/api/authentication/use-forgot'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 import { mapState } from 'vuex'

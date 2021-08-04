@@ -10,7 +10,7 @@
 </template>
 <script>
 import IconUserAction from '@/assets/svg/icon-user-action.svg'
-import { useLogout } from '@/api/use-logout'
+import { useLogout } from '@/api/authentication/use-logout'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { useEmptyDashboard } from '@/utils/useEmptyDashboard'

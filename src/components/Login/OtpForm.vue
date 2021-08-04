@@ -59,7 +59,7 @@
 import IconLoginForm from '@/assets/svg/icon-login-form.svg'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import { useOtp } from '@/api/use-otp'
+import { useOtp } from '@/api/authentication/use-otp'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 

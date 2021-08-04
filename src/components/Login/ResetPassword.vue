@@ -56,7 +56,7 @@ import IconForgotPassword from '@/assets/svg/icon-forgot-password.svg'
 
 import { reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useCreatePassword } from '@/api/use-create-password'
+import { useCreatePassword } from '@/api/authentication/use-create-password'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 

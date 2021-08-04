@@ -89,7 +89,8 @@
       <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Password</div>
         <div class="text-main text-base mr-3">...............</div>
-        <Dialog
+        <ChangePassword />
+        <!-- <Dialog
           title="Change password"
           confirm-action="changePassword"
           @confirmDialog="handleConfirm"
@@ -100,20 +101,28 @@
             </div>
           </template>
           <template #contentDialog>
-            <InputPassword
-              label="Password"
-              name="password"
-              placeholder="Enter your new password"
-              type="password"
-            />
-            <InputPassword
-              label="Confirm Password"
-              name="confirmPassword"
-              placeholder="Confirm your new password"
-              type="password"
-            />
+            <form @submit="handleCreatePass">
+              <InputPassword
+                label="Сurrent password"
+                name="current_password"
+                placeholder="Enter your current password"
+                type="password"
+              />
+              <InputPassword
+                label="Password"
+                name="password"
+                placeholder="Enter your new password"
+                type="password"
+              />
+              <InputPassword
+                label="Confirm Password"
+                name="password_confirmation"
+                placeholder="Confirm your new password"
+                type="password"
+              />
+            </form>
           </template>
-        </Dialog>
+        </Dialog> -->
       </div>
     </div>
   </div>
@@ -123,7 +132,12 @@
 import IconPencil from '@/assets/svg/icon-pencil.svg'
 import { useUser } from '@/components/Settings/DTO/user'
 
+import ChangePassword from '@/components/Settings/ChangePassword.vue'
+
 export default {
+  components: {
+    ChangePassword,
+  },
   setup() {
     const { data: user } = useUser()
 
@@ -139,21 +153,16 @@ export default {
       actionHandler()
     }
 
+    const handleCreatePass = () => {
+      console.log('handleCreatePass')
+    }
+
     return {
       IconPencil,
       handleConfirm,
       user,
+      handleCreatePass,
     }
   },
 }
 </script>
-
-<style>
-.el-dialog {
-  border-radius: 10px;
-}
-
-.el-dialog__header {
-  border-bottom: 1px solid #d4ddeb;
-}
-</style>

@@ -63,8 +63,7 @@
 
 <script>
 import IconLoginForm from '@/assets/svg/icon-login-form.svg'
-
-import { useLogin } from '@/api/use-login'
+import { useLogin } from '@/api/authentication/use-login'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 
