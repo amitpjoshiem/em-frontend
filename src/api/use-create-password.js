@@ -21,7 +21,6 @@ const useCreatePassword = () => {
         type: 'error',
         title: 'Error',
         message: error.value,
-        offset: 100,
       })
     }
   }

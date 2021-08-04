@@ -81,7 +81,6 @@ export default {
           useAlert({
             title: 'Error',
             message: error.message,
-            offset: 100,
             type: 'error',
           })
         })

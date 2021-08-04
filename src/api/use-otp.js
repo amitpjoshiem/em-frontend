@@ -18,7 +18,6 @@ const useOtp = () => {
         type: 'error',
         title: 'Error',
         message: error.value,
-        offset: 100,
       })
       return
     }
