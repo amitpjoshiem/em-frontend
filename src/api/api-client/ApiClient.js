@@ -1,5 +1,6 @@
 import { fetchTransport } from './FetchTransport'
 import { tokenStorage } from './TokenStorage'
+import { useRouter } from 'vue-router'
 
 const API_CLIENT_STATUSES = {
   auth: 'authenticated',
@@ -37,11 +38,15 @@ class ApiClient {
   }
 
   async refreshTokenCall() {
+    const router = useRouter()
+
     this.status = API_CLIENT_STATUSES['pending']
     const response = await this.transport.fetch('/refresh')
 
     if (response.status === 200) {
       this.authenticate(response.data.access_token)
+    } else {
+      router.push({ name: 'login' })
     }
 
     return this.storage.getByKey('access_token')
