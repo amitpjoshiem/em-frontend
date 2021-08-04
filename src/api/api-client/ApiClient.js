@@ -1,6 +1,5 @@
 import { fetchTransport } from './FetchTransport'
 import { tokenStorage } from './TokenStorage'
-import { useRouter } from 'vue-router'
 import { useRemoveStoreAccessToken } from '@/utils/useRemoveStoreAccessToken.js'
 
 const API_CLIENT_STATUSES = {
