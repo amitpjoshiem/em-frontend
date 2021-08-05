@@ -1,9 +1,5 @@
 <template>
-  <Dialog
-    title="Change password"
-    confirm-action="changePassword"
-    destroy-on-close
-  >
+  <Dialog title="Change password" confirm-action="changeName" destroy-on-close>
     <template #buttonDialog>
       <div class="flex items-center">
         <InlineSvg :src="IconPencil" class="mb-1" />
@@ -13,7 +9,7 @@
       <SchemaFormWithValidation
         :schema="schema"
         schema-row-classes="pt-3"
-        @submit="savePass"
+        @submit="saveName"
       >
         <template #afterForm>
           <div class="pt-12 text-right">
@@ -26,14 +22,16 @@
 </template>
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
-import { useChangePassword } from '@/api/authentication/use-change-password'
 import Label from '@/components/Global/Label.vue'
 import Input from '@/components/Global/Input/Input.vue'
 import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
-import { schemaChangePassword } from '@/components/Settings/schema/changePassword'
+import { schemaChangeName } from '@/components/Settings/schema/changeName'
 import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
-import { ref, markRaw, reactive } from 'vue'
+import { ref, markRaw } from 'vue'
+import { useUserProfile } from '@/api/use-user-profile.js'
+import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
+import { changeUserName } from '@/api/vueQuery/change-user-name'
 
 const SchemaFormWithValidation = SchemaFormFactory([VeeValidatePlugin()])
 
@@ -46,35 +44,53 @@ export default {
 
   setup() {
     const store = useStore()
-    const { response, error, fetching, changePassword } = useChangePassword()
+    const queryClient = useQueryClient()
 
-    const data = reactive({
-      hideDialog: false,
-    })
+    const {
+      mutateAsync: changeUserNameProfile,
+      isLoading,
+      isError,
+      isFetching,
+      data,
+      error,
+    } = useMutation(changeUserName)
 
-    const schema = ref(schemaChangePassword)
+    const {
+      isLoading: isLoadingUserProfile,
+      isError: isErrorUserProfile,
+      data: user,
+      refetch,
+    } = useUserProfile()
+
+    const schema = ref(schemaChangeName)
     const formData = ref({})
     useSchemaForm(formData)
 
-    const savePass = async () => {
-      changePassword(formData.value)
+    const saveName = async () => {
+      changeUserNameProfile({ form: formData.value, id: user.value.id })
         .then(() => {
+          queryClient.invalidateQueries(['users'])
           store.commit('applicationState/setHideModal', true)
         })
         .catch((error) => {
-          console.log('false', error)
+          console.error(error)
         })
     }
 
     return {
-      response,
-      error,
-      fetching,
-      changePassword,
-      IconPencil,
-      savePass,
-      schema,
+      changeUserNameProfile,
+      isLoading,
+      isError,
+      isFetching,
       data,
+      error,
+      saveName,
+      schema,
+      IconPencil,
+      isLoadingUserProfile,
+      isErrorUserProfile,
+      user,
+      refetch,
     }
   },
 }
