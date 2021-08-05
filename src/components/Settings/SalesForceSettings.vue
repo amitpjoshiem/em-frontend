@@ -13,9 +13,13 @@
       </div>
     </div>
   </div>
+  <pre>
+    {{ data }}
+  </pre>
 </template>
 <script>
 import { reactive, toRefs } from 'vue'
+import { useSalesForceAuth } from '@/api/use-salesforce-auth.js'
 
 export default {
   name: 'SalesForceSettings',
@@ -25,19 +29,28 @@ export default {
       loading: false,
     })
 
+    const { response, error, fetching, getSalesForceAuth } = useSalesForceAuth()
+
     const beforeChange = () => {
       status.loading = true
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          status.loading = false
-          return resolve(true)
-        }, 1000)
-      })
+      if (!status.value) {
+        return new Promise((resolve) => {
+          return getSalesForceAuth().then(() => {
+            window.open(response.value.link, '_blank')
+            status.loading = false
+            return resolve(true)
+          })
+        })
+      }
     }
 
     return {
       ...toRefs(status),
       beforeChange,
+      response,
+      error,
+      fetching,
+      getSalesForceAuth,
     }
   },
 }
