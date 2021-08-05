@@ -148,8 +148,7 @@ export default {
       return labelVariants[this.labelVariant] ?? labelVariants['default']
     },
     inputClass() {
-      const error = this.showError ? this.showError : '' && 'error'
-      console.log('error - ', error)
+      const error = this.showError && 'error'
 
       return [error, this.type]
         .map((field) => inputVariants[field])

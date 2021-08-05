@@ -3,18 +3,20 @@
     <slot name="buttonDialog" />
   </div>
 
-  <el-dialog v-model="dialogVisible" :title="title" width="47%">
+  <el-dialog
+    v-model="dialogVisible"
+    :title="title"
+    width="47%"
+    destroy-on-close
+    :before-close="handleClose"
+  >
     <slot name="contentDialog" />
-    <template #footer>
-      <span class="dialog-footer">
-        <Button default-blue-btn text-btn="Save" @click="confirm" />
-      </span>
-    </template>
   </el-dialog>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
+import { ElMessageBox } from 'element-plus'
 
 export default defineComponent({
   name: 'Dialog',
@@ -29,6 +31,11 @@ export default defineComponent({
       require: true,
       default: 'Dialog',
     },
+    hideDialog: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
   },
   emits: ['confirmDialog'],
 
@@ -39,8 +46,17 @@ export default defineComponent({
       dialogVisible.value = false
       emit('confirmDialog', props.confirmAction)
     }
+
+    const handleClose = (done) => {
+      ElMessageBox.confirm('Are you sure to close this dialog?')
+        .then(() => {
+          done()
+        })
+        .catch(() => {})
+    }
     return {
       dialogVisible,
+      handleClose,
       confirm,
     }
   },
