@@ -17,6 +17,8 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
+import { computed, watch } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'Dialog',
@@ -31,15 +33,11 @@ export default defineComponent({
       require: true,
       default: 'Dialog',
     },
-    hideDialog: {
-      type: Boolean,
-      require: false,
-      default: false,
-    },
   },
   emits: ['confirmDialog'],
 
   setup(props, { emit }) {
+    const store = useStore()
     const dialogVisible = ref(false)
 
     const confirm = () => {
@@ -52,8 +50,17 @@ export default defineComponent({
         .then(() => {
           done()
         })
-        .catch(() => {})
+        .catch((error) => {
+          console.error(error)
+        })
     }
+
+    const hideModal = computed(() => store.state.applicationState.hideModal)
+
+    watch(hideModal, (newValue, oldValue) => {
+      if (newValue !== oldValue) dialogVisible.value = false
+    })
+
     return {
       dialogVisible,
       handleClose,

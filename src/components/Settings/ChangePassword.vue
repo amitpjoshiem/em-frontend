@@ -6,69 +6,71 @@
       </div>
     </template>
     <template #contentDialog>
-      <form @submit="changePasswordHandler">
-        <InputPassword
-          label="Сurrent password"
-          name="current_password"
-          placeholder="Enter your current password"
-        />
-        <InputPassword
-          label="Password"
-          name="password"
-          placeholder="Enter your new password"
-        />
-        <InputPassword
-          label="Confirm Password"
-          name="password_confirmation"
-          placeholder="Confirm your new password"
-        />
-        <div class="flex justify-end">
-          <Button default-blue-btn text-btn="Save" type="submit" />
-        </div>
-      </form>
+      <SchemaFormWithValidation
+        :schema="schema"
+        schema-row-classes="pt-3"
+        @submit="savePass"
+      >
+        <template #afterForm>
+          <div class="pt-12 text-right">
+            <Button default-blue-btn text-btn="Save" type="submit" />
+          </div>
+        </template>
+      </SchemaFormWithValidation>
     </template>
   </Dialog>
 </template>
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
-import { useForm } from 'vee-validate'
 import { useChangePassword } from '@/api/authentication/use-change-password'
+import Label from '@/components/Global/Label.vue'
+import Input from '@/components/Global/Input/Input.vue'
+import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
+import { schemaChangePassword } from '@/components/Settings/schema/changePassword'
+import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
+import { ref, markRaw, reactive } from 'vue'
+import { useStore } from 'vuex'
 
-import * as yup from 'yup'
+const SchemaFormWithValidation = SchemaFormFactory([VeeValidatePlugin()])
+
+markRaw(Input)
+markRaw(Label)
 
 export default {
   name: 'ChangePassword',
+  components: { SchemaFormWithValidation },
+
   setup() {
+    const store = useStore()
     const { response, error, fetching, changePassword } = useChangePassword()
 
-    const schema = yup.object({
-      current_password: yup.string().required().min(6).defined(),
-      password: yup.string().required().min(6).defined(),
-      password_confirmation: yup.string().required().min(6).defined(),
+    const data = reactive({
+      hideDialog: false,
     })
 
-    const { handleSubmit } = useForm({
-      validationSchema: schema,
-      initialValues: {
-        current_password: '',
-        password: '',
-        password_confirmation: '',
-      },
-    })
+    const schema = ref(schemaChangePassword)
+    const formData = ref({})
+    useSchemaForm(formData)
 
-    const changePasswordHandler = (e) => {
-      console.log('HERE')
-      e.preventDefault()
-      return handleSubmit(changePassword)
+    const savePass = async () => {
+      changePassword(formData.value)
+        .then(() => {
+          store.commit('applicationState/setHideModal', true)
+        })
+        .catch((error) => {
+          console.log('false', error)
+        })
     }
+
     return {
       response,
       error,
       fetching,
       changePassword,
       IconPencil,
-      handleSubmit,
-      changePasswordHandler,
+      savePass,
+      schema,
+      data,
     }
   },
 }
