@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { toRefs, reactive } from 'vue'
-import { apiClient } from './api-client/ApiClient'
+import { apiClient } from '@/api/api-client/ApiClient'
 
 export const useFetch = (url, options) => {
   const state = reactive({
