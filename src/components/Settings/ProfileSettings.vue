@@ -65,7 +65,6 @@
 
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
-// import { useUser } from '@/components/Settings/DTO/user'
 import { useUserProfile } from '@/api/use-user-profile.js'
 
 import ChangePassword from '@/components/Settings/ChangePassword.vue'
@@ -77,22 +76,15 @@ export default {
     ChangeName,
   },
   setup() {
-    // const { data: user } = useUser()
-
     const {
       isLoading: isLoadingUserProfile,
       isError: isErrorUserProfile,
       data: user,
     } = useUserProfile()
 
-    const handleCreatePass = () => {
-      console.log('handleCreatePass')
-    }
-
     return {
       IconPencil,
       user,
-      handleCreatePass,
       isLoadingUserProfile,
       isErrorUserProfile,
     }

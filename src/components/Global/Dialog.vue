@@ -6,7 +6,7 @@
   <el-dialog
     v-model="dialogVisible"
     :title="title"
-    width="47%"
+    class="w-6/12"
     destroy-on-close
     :before-close="handleClose"
   >
