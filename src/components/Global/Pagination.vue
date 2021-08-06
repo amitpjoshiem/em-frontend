@@ -1,7 +1,7 @@
 <template>
   <el-pagination
     :current-page="options.currentPage"
-    :page-size="options.count"
+    :page-size="options.perPage"
     :pager-count="5"
     layout="prev, pager, next"
     :total="options.total"
