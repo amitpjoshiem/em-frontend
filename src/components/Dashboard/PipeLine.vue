@@ -39,13 +39,7 @@
       >
         <div class="flex text-small items-center justify-between px-2.5">
           <span class="text-gray03">Total AUM</span>
-          <div
-            class="flex rounded-md p-1"
-            :class="{
-              'bg-color-green': !isEmptyDashboard,
-              'bg-input-border': isEmptyDashboard,
-            }"
-          >
+          <div class="flex rounded-md p-1 bg-input-border bg-color-green">
             <InlineSvg :src="IconUpArrow" class="mt-px" />
             <span class="text-white"> 123k </span>
           </div>
@@ -53,8 +47,7 @@
         <span class="flex items-center justify-center text-xll font-medium">
           $102M
         </span>
-        <InlineSvg v-if="!isEmptyDashboard" :src="IconTotal" />
-        <InlineSvg v-if="isEmptyDashboard" :src="IconPipeLineEmpty" />
+        <InlineSvg :src="IconTotal" />
       </div>
 
       <div
@@ -69,13 +62,7 @@
       >
         <div class="flex text-small items-center justify-between px-2.5">
           <span class="text-gray03">Members</span>
-          <div
-            class="flex rounded-md p-1"
-            :class="{
-              'bg-color-green': !isEmptyDashboard,
-              'bg-input-border': isEmptyDashboard,
-            }"
-          >
+          <div class="flex rounded-md p-1 bg-color-green">
             <InlineSvg :src="IconUpArrow" class="mt-px" />
             <span class="text-white"> 13 </span>
           </div>
@@ -83,8 +70,7 @@
         <span class="flex items-center justify-center text-xll font-medium">
           138
         </span>
-        <InlineSvg v-if="!isEmptyDashboard" :src="IconMembers" />
-        <InlineSvg v-if="isEmptyDashboard" :src="IconPipeLineEmpty" />
+        <InlineSvg :src="IconMembers" />
       </div>
     </div>
   </div>
@@ -96,13 +82,10 @@ import IconMembers from '@/assets/svg/members.svg'
 import IconUpArrow from '@/assets/svg/up-arrow.svg'
 import IconAction from '@/assets/svg/icon-action.svg'
 import IconPipeLineEmpty from '@/assets/svg/icon-pipe-line-empty.svg'
-import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   name: 'PipeLine',
   setup() {
-    const isEmptyDashboard = useEmptyDashboard()
-
     const actionsOptions = [
       {
         title: 'Item 1',
@@ -120,7 +103,6 @@ export default {
       IconPipeLineEmpty,
       actionsOptions,
       IconAction,
-      isEmptyDashboard,
     }
   },
   data() {
