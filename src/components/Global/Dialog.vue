@@ -33,6 +33,11 @@ export default defineComponent({
       require: true,
       default: 'Dialog',
     },
+    destinationDialog: {
+      type: String,
+      require: true,
+      default: 'default',
+    },
   },
   emits: ['confirmDialog'],
 
@@ -55,10 +60,14 @@ export default defineComponent({
         })
     }
 
-    const hideModal = computed(() => store.state.applicationState.hideModal)
+    const hideModal = computed(
+      () =>
+        store.state.globalComponents.dialog.showDialog[props.destinationDialog]
+    )
 
     watch(hideModal, (newValue, oldValue) => {
-      if (newValue !== oldValue) dialogVisible.value = false
+      if (newValue !== oldValue && newValue === true)
+        dialogVisible.value = false
     })
 
     return {

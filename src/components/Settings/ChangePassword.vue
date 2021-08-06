@@ -3,6 +3,7 @@
     title="Change password"
     confirm-action="changePassword"
     destroy-on-close
+    destination="changePassword"
   >
     <template #buttonDialog>
       <div class="flex items-center">
@@ -59,10 +60,13 @@ export default {
     const savePass = async () => {
       changePassword(formData.value)
         .then(() => {
-          store.commit('applicationState/setHideModal', true)
+          store.commit('globalComponents/setShowModal', {
+            destination: 'changePassword',
+            value: true,
+          })
         })
         .catch((error) => {
-          console.log('false', error)
+          console.log(error)
         })
     }
 

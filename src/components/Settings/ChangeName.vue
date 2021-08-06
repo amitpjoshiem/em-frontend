@@ -1,5 +1,10 @@
 <template>
-  <Dialog title="Change password" confirm-action="changeName" destroy-on-close>
+  <Dialog
+    title="Change password"
+    confirm-action="changeName"
+    destroy-on-close
+    destination-dialog="changeName"
+  >
     <template #buttonDialog>
       <div class="flex items-center">
         <InlineSvg :src="IconPencil" class="mb-1" />
@@ -70,7 +75,10 @@ export default {
       changeUserNameProfile({ form: formData.value, id: user.value.id })
         .then(() => {
           queryClient.invalidateQueries(['users'])
-          store.commit('applicationState/setHideModal', true)
+          store.commit('globalComponents/setShowModal', {
+            destination: 'changeName',
+            value: true,
+          })
         })
         .catch((error) => {
           console.error(error)
