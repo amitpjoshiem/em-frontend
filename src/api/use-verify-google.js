@@ -1,7 +1,7 @@
 import { useFetch } from '@/api/use-fetch'
-import { ElNotification } from 'element-plus'
 import { useStore } from 'vuex'
 import { saveToStorage } from '@/utils/utilsLocalStorage'
+import { useAlert } from '@/utils/use-alert'
 
 const useVerifyGoogle = () => {
   const store = useStore()
@@ -15,10 +15,11 @@ const useVerifyGoogle = () => {
     if (error.value !== null) return
     store.commit('auth/setOtpType', body.service)
     saveToStorage(localStorage, 'otp-type', body.service)
-    ElNotification.success({
+
+    useAlert({
+      type: 'Success',
       title: 'Success',
       message: 'This is a success message',
-      type: 'success',
     })
   }
 

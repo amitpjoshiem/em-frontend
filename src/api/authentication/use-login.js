@@ -1,8 +1,8 @@
 import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
-import { ElNotification } from 'element-plus'
 import { tokenStorage } from '@/api/api-client/TokenStorage'
-import { apiClient } from '@/api/api-client/ApiClient'
+import { apiClient } from './api-client/ApiClient'
+import { useAlert } from '@/utils/use-alert'
 
 const useLogin = () => {
   const router = useRouter()
@@ -29,11 +29,7 @@ const useLogin = () => {
   const login = async (body) => {
     await fetchData({ body })
     if (error.value !== null) {
-      ElNotification.error({
-        title: 'Error',
-        message: error.value,
-        offset: 100,
-      })
+      useAlert({ type: 'error', title: 'Error', message: error.value })
       return
     }
     storeAccessTokenAndRedirectToDashboard()
