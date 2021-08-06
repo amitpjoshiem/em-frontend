@@ -20,12 +20,23 @@ const state = () => ({
       listOfHouseholds: 6,
     },
   },
+  dialog: {
+    showDialog: {
+      changeName: false,
+      changePassword: false,
+    },
+  },
 })
 
 const mutations = {
   setDestinationItemsPerPage(state, data) {
     const { destination, value } = data
     state.itemsPerPage.values[destination] = value
+  },
+
+  setShowModal(state, data) {
+    const { destination, value } = data
+    state.dialog.showDialog[destination] = value
   },
 }
 

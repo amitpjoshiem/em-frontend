@@ -92,7 +92,7 @@ const routes = [
             name: 'all',
             component: () =>
               import(
-                /* webpackChunkName: "ListOfHouseholdsAll" */ '../components/ListOfHouseholds/ListAll.vue'
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'
               ),
           },
           {
@@ -100,7 +100,7 @@ const routes = [
             name: 'prospects',
             component: () =>
               import(
-                /* webpackChunkName: "ListOfHouseholdsProspect */ '../components/ListOfHouseholds/ListProspects.vue'
+                /* webpackChunkName: "ListOfHouseholds */ '../components/ListOfHouseholds/ListProspects.vue'
               ),
           },
           {
@@ -108,7 +108,7 @@ const routes = [
             name: 'clients',
             component: () =>
               import(
-                /* webpackChunkName: "ListOfHouseholdClient" */ '../components/ListOfHouseholds/ListClients.vue'
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListClients.vue'
               ),
           },
         ],
@@ -145,7 +145,7 @@ const routes = [
             name: 'profile',
             component: () =>
               import(
-                /* webpackChunkName: "dashboard" */ '../components/Settings/ProfileSettings.vue'
+                /* webpackChunkName: "settings" */ '../components/Settings/ProfileSettings.vue'
               ),
           },
           {
@@ -153,7 +153,7 @@ const routes = [
             name: 'notifications',
             component: () =>
               import(
-                /* webpackChunkName: "dashboard" */ '../components/Settings/NotificationsSettings.vue'
+                /* webpackChunkName: "settings" */ '../components/Settings/NotificationsSettings.vue'
               ),
           },
           {
@@ -161,7 +161,7 @@ const routes = [
             name: 'information',
             component: () =>
               import(
-                /* webpackChunkName: "dashboard" */ '../components/Settings/InformationSettings.vue'
+                /* webpackChunkName: "settings" */ '../components/Settings/InformationSettings.vue'
               ),
           },
           {
@@ -169,7 +169,15 @@ const routes = [
             name: '2fa',
             component: () =>
               import(
-                /* webpackChunkName: "dashboard" */ '../components/Settings/TwoFA.vue'
+                /* webpackChunkName: "settings" */ '../components/Settings/TwoFA.vue'
+              ),
+          },
+          {
+            path: 'sales-force',
+            name: 'sales-force',
+            component: () =>
+              import(
+                /* webpackChunkName: "settings" */ '../components/Settings/SalesForceSettings.vue'
               ),
           },
         ],

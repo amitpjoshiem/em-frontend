@@ -79,3 +79,11 @@
 .el-popper__arrow{
   display: none;
 }
+
+.el-dialog {
+  border-radius: 10px;
+}
+
+.el-dialog__header {
+  border-bottom: 1px solid #d4ddeb;
+}

@@ -1,5 +1,5 @@
 import { config } from '@/api/config'
-import { apiClient } from '../api-client/ApiClient'
+import { apiClient } from '@/api/api-client/ApiClient'
 
 export const fetcher = async ({ url, data, options }) => {
   options = { ...options, ...config }

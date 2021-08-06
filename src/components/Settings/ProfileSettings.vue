@@ -1,5 +1,5 @@
 <template>
-  <div class="pl-24 pt-11">
+  <div v-if="isFetched" class="pl-24 pt-11">
     <div class="flex items-center">
       <Avatar size="big" />
       <div class="text-main text-xl ml-12 font-medium">My profile</div>
@@ -7,41 +7,13 @@
     <div class="pt-12">
       <div class="flex items-center">
         <div class="text-xss text-title-gray w-2/12">Full name</div>
-        <div class="text-main text-base mr-3">{{ user.fullName }}</div>
-        <Dialog
-          title="Change the name"
-          confirm-action="changeName"
-          @confirmDialog="handleConfirm"
-        >
-          <template #buttonDialog>
-            <div class="flex items-center">
-              <InlineSvg :src="IconPencil" class="mb-1" />
-            </div>
-          </template>
-          <template #contentDialog>
-            <InputText
-              label="First Name"
-              name="firstName"
-              placeholder="Enter your first name"
-              type="text"
-            />
-            <InputText
-              label="Last Name"
-              name="lastName"
-              placeholder="Enter your last name"
-              type="text"
-            />
-          </template>
-        </Dialog>
+        <div class="text-main text-base mr-3">{{ user.userFullName }}</div>
+        <ChangeName />
       </div>
       <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Phone</div>
-        <div class="text-main text-base mr-3">{{ user.phone }}</div>
-        <Dialog
-          title="New phone number"
-          confirm-action="changePhoneNumber"
-          @confirmDialog="handleConfirm"
-        >
+        <div class="text-main text-base mr-3">+12223334455</div>
+        <Dialog title="New phone number" confirm-action="changePhoneNumber">
           <template #buttonDialog>
             <div class="flex items-center">
               <InlineSvg :src="IconPencil" class="mb-1" />
@@ -60,11 +32,7 @@
       <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">E-mail</div>
         <div class="text-main text-base mr-3">{{ user.email }}</div>
-        <Dialog
-          title="Change the email"
-          confirm-action="changeEmail"
-          @confirmDialog="handleConfirm"
-        >
+        <Dialog title="Change the email" confirm-action="changeEmail">
           <template #buttonDialog>
             <div class="flex items-center">
               <InlineSvg :src="IconPencil" class="mb-1" />
@@ -89,31 +57,7 @@
       <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Password</div>
         <div class="text-main text-base mr-3">...............</div>
-        <Dialog
-          title="Change password"
-          confirm-action="changePassword"
-          @confirmDialog="handleConfirm"
-        >
-          <template #buttonDialog>
-            <div class="flex items-center">
-              <InlineSvg :src="IconPencil" class="mb-1" />
-            </div>
-          </template>
-          <template #contentDialog>
-            <InputPassword
-              label="Password"
-              name="password"
-              placeholder="Enter your new password"
-              type="password"
-            />
-            <InputPassword
-              label="Confirm Password"
-              name="confirmPassword"
-              placeholder="Confirm your new password"
-              type="password"
-            />
-          </template>
-        </Dialog>
+        <ChangePassword />
       </div>
     </div>
   </div>
@@ -121,39 +65,31 @@
 
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
-import { useUser } from '@/components/Settings/DTO/user'
+import { useUserProfile } from '@/api/use-user-profile.js'
+
+import ChangePassword from '@/components/Settings/ChangePassword.vue'
+import ChangeName from '@/components/Settings/ChangeName.vue'
 
 export default {
+  components: {
+    ChangePassword,
+    ChangeName,
+  },
   setup() {
-    const { data: user } = useUser()
-
-    const actionsMap = {
-      changeName: () => console.log('changeName'),
-      changePhoneNumber: () => console.log('changePhoneNumber'),
-      changePassword: () => console.log('changePassword'),
-      changeEmail: () => console.log('changeEmail'),
-    }
-
-    const handleConfirm = (command) => {
-      const actionHandler = actionsMap[command]
-      actionHandler()
-    }
+    const {
+      isLoading: isLoadingUserProfile,
+      isError: isErrorUserProfile,
+      data: user,
+      isFetched,
+    } = useUserProfile()
 
     return {
       IconPencil,
-      handleConfirm,
       user,
+      isLoadingUserProfile,
+      isErrorUserProfile,
+      isFetched,
     }
   },
 }
 </script>
-
-<style>
-.el-dialog {
-  border-radius: 10px;
-}
-
-.el-dialog__header {
-  border-bottom: 1px solid #d4ddeb;
-}
-</style>

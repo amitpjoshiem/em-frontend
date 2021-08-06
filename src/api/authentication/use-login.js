@@ -1,7 +1,7 @@
 import { useFetch } from '@/api/use-fetch'
 import { useRouter } from 'vue-router'
 import { tokenStorage } from '@/api/api-client/TokenStorage'
-import { apiClient } from './api-client/ApiClient'
+import { apiClient } from '@/api/api-client/ApiClient'
 import { useAlert } from '@/utils/use-alert'
 
 const useLogin = () => {
