@@ -6,9 +6,8 @@
   <el-dialog
     v-model="dialogVisible"
     :title="title"
-    class="w-6/12"
-    destroy-on-close
     :before-close="handleClose"
+    width="47%"
   >
     <slot name="contentDialog" />
   </el-dialog>

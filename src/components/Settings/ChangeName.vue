@@ -2,7 +2,6 @@
   <Dialog
     title="Change password"
     confirm-action="changeName"
-    destroy-on-close
     destination-dialog="changeName"
   >
     <template #buttonDialog>

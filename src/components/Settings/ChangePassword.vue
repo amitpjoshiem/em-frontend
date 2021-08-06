@@ -2,8 +2,7 @@
   <Dialog
     title="Change password"
     confirm-action="changePassword"
-    destroy-on-close
-    destination="changePassword"
+    destination-dialog="changePassword"
   >
     <template #buttonDialog>
       <div class="flex items-center">
