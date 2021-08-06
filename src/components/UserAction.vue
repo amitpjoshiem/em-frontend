@@ -21,10 +21,6 @@ export default {
     const { error, fetching, logout } = useLogout()
     const actionsOptions = [
       {
-        title: 'Demo empty dashboard',
-        command: 'demo-empty',
-      },
-      {
         title: 'Profile settings',
         command: 'profile-settings',
       },
