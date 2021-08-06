@@ -173,8 +173,8 @@ const routes = [
               ),
           },
           {
-            path: 'sales-force',
-            name: 'sales-force',
+            path: 'salesforce',
+            name: 'salesforce',
             component: () =>
               import(
                 /* webpackChunkName: "settings" */ '../components/Settings/SalesForceSettings.vue'

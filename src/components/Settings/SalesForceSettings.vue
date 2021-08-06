@@ -1,5 +1,5 @@
 <template>
-  <div class="pl-24 pt-14 text-main w-10/12">
+  <div v-if="!fetching" class="pl-24 pt-14 text-main w-10/12">
     <div class="flex py-5">
       <div class="w-10/12 text-xss text-main font-medium">
         Connect salesforce account
@@ -13,13 +13,12 @@
       </div>
     </div>
   </div>
-  <pre>
-    {{ data }}
-  </pre>
 </template>
 <script>
 import { reactive, toRefs } from 'vue'
 import { useSalesForceAuth } from '@/api/use-salesforce-auth.js'
+import { useLogoutSalesForce } from '@/api/use-logout-salesforce.js'
+import { onMounted, watch } from 'vue'
 
 export default {
   name: 'SalesForceSettings',
@@ -30,19 +29,36 @@ export default {
     })
 
     const { response, error, fetching, getSalesForceAuth } = useSalesForceAuth()
+    const { logoutSalesForceAuth } = useLogoutSalesForce()
+
+    onMounted(() => {
+      getSalesForceAuth()
+    })
 
     const beforeChange = () => {
       status.loading = true
       if (!status.value) {
         return new Promise((resolve) => {
+          window.open(response.value.link, '_blank')
+          status.loading = false
+          return resolve(true)
+        })
+      } else {
+        return new Promise((resolve) => {
           return getSalesForceAuth().then(() => {
-            window.open(response.value.link, '_blank')
+            logoutSalesForceAuth()
             status.loading = false
             return resolve(true)
           })
         })
       }
     }
+
+    watch(response, (newValue) => {
+      if (newValue) {
+        status.value = newValue.auth
+      }
+    })
 
     return {
       ...toRefs(status),
