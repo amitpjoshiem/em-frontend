@@ -11,18 +11,14 @@
 <script>
 import IconUserAction from '@/assets/svg/icon-user-action.svg'
 import { useLogout } from '@/api/authentication/use-logout'
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { computed } from 'vue'
 
 export default {
   setup() {
-    const store = useStore()
     const router = useRouter()
     const { error, fetching, logout } = useLogout()
-    const isEmptyDashboard = useEmptyDashboard()
     const actionsOptions = [
       {
         title: 'Demo empty dashboard',
@@ -62,8 +58,6 @@ export default {
       'notifications-settings': () => router.push({ name: 'notifications' }),
       integrations: () => console.log('integrations'),
       information: () => router.push({ name: 'information' }),
-      'demo-empty': () =>
-        store.commit('dashboard/setEmptyDashboard', !isEmptyDashboard.value),
     }
 
     const {
@@ -83,7 +77,6 @@ export default {
       IconUserAction,
       fetching,
       error,
-      isEmptyDashboard,
       isLoadingUserProfile,
       isErrorUserProfile,
       user,
