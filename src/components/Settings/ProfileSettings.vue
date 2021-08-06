@@ -1,5 +1,6 @@
 <template>
-  <div v-if="!isLoadingUserProfile" class="pl-24 pt-11">
+  <div v-if="isFetched" class="pl-24 pt-11">
+    <!-- <div v-if="!isLoadingUserProfile" class="pl-24 pt-11"> -->
     <div class="flex items-center">
       <Avatar size="big" />
       <div class="text-main text-xl ml-12 font-medium">My profile</div>
@@ -80,6 +81,7 @@ export default {
       isLoading: isLoadingUserProfile,
       isError: isErrorUserProfile,
       data: user,
+      isFetched,
     } = useUserProfile()
 
     return {
@@ -87,6 +89,7 @@ export default {
       user,
       isLoadingUserProfile,
       isErrorUserProfile,
+      isFetched,
     }
   },
 }
