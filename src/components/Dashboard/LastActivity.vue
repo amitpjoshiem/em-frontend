@@ -13,40 +13,18 @@
   >
     <p class="text-smm text-main pb-2.5">Last Activity</p>
 
-    <div v-if="!isEmptyDashboard">
-      <LastActivityItem
-        v-for="(item, index) in lastActivity"
-        :key="index"
-        :item="item"
-        :index="index"
-        class="active-item"
-      />
-    </div>
-    <div
-      v-if="isEmptyDashboard"
-      class="flex flex-col justify-center items-center pb-8 pt-4"
-    >
-      <div
-        class="
-          w-14
-          h-14
-          rounded-full
-          bg-color-grey
-          items-center
-          justify-center
-          flex
-        "
-      >
-        <InlineSvg :src="IconLastActivityEmpty" class="w-5" />
-      </div>
-      <span class="text-gray03 text-xss pt-3">No recently activity</span>
-    </div>
+    <LastActivityItem
+      v-for="(item, index) in lastActivity"
+      :key="index"
+      :item="item"
+      :index="index"
+      class="active-item"
+    />
   </div>
 </template>
 <script>
 import LastActivityItem from '@/components/Dashboard/LastActivityItem.vue'
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
-import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 
 export default {
   name: 'LastActivity',
@@ -55,11 +33,8 @@ export default {
     LastActivityItem,
   },
   setup() {
-    const isEmptyDashboard = useEmptyDashboard()
-
     return {
       IconLastActivityEmpty,
-      isEmptyDashboard,
     }
   },
   data() {

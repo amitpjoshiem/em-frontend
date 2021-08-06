@@ -28,7 +28,6 @@
 
 <script>
 import UsersListTableEmpty from '@/components/UsersListTable/UsersListTableEmpty.vue'
-import { useEmptyDashboard } from '@/utils/useEmptyDashboard'
 import UserListItem from '@/components/UsersListTable/UserListItem.vue'
 
 export default {
@@ -49,13 +48,7 @@ export default {
       default: () => [],
     },
   },
-  setup() {
-    const isEmptyDashboard = useEmptyDashboard()
-
-    return {
-      isEmptyDashboard,
-    }
-  },
+  setup() {},
 
   computed: {
     getHeadlines() {
