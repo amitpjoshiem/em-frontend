@@ -13,46 +13,10 @@
       <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Phone</div>
         <div class="text-main text-base mr-3">+12223334455</div>
-        <Dialog title="New phone number" confirm-action="changePhoneNumber">
-          <template #buttonDialog>
-            <div class="flex items-center">
-              <InlineSvg :src="IconPencil" class="mb-1" />
-            </div>
-          </template>
-          <template #contentDialog>
-            <InputText
-              label="Phone number"
-              name="phoneNumber"
-              placeholder="Enter your new phone number"
-              type="text"
-            />
-          </template>
-        </Dialog>
       </div>
       <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">E-mail</div>
         <div class="text-main text-base mr-3">{{ user.email }}</div>
-        <Dialog title="Change the email" confirm-action="changeEmail">
-          <template #buttonDialog>
-            <div class="flex items-center">
-              <InlineSvg :src="IconPencil" class="mb-1" />
-            </div>
-          </template>
-          <template #contentDialog>
-            <InputText
-              label="Email"
-              name="email"
-              placeholder="Enter your email"
-              type="text"
-            />
-            <InputText
-              label="Confirm Email"
-              name="confirmEmail"
-              placeholder="Confirm email"
-              type="text"
-            />
-          </template>
-        </Dialog>
       </div>
       <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Password</div>
