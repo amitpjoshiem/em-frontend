@@ -7,9 +7,7 @@
     </div>
     <div class="flex flex-col">
       <span class="text-small text-gray03">Total Income</span>
-      <span class="text-sm font-medium">{{
-        isEmptyDashboard ? '$0' : '$102,200,000'
-      }}</span>
+      <span class="text-sm font-medium">$102,200,000</span>
       <div
         class="
           flex
