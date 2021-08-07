@@ -184,6 +184,13 @@ const routes = [
       },
 
       {
+        path: 'logout',
+        name: 'logout',
+        component: () =>
+          import(/* webpackChunkName: "logout" */ '../views/Logout.vue'),
+      },
+
+      {
         path: '',
         redirect: () => {
           return { name: 'dashboard' }

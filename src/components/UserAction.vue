@@ -10,7 +10,6 @@
 </template>
 <script>
 import IconUserAction from '@/assets/svg/icon-user-action.svg'
-import { useLogout } from '@/api/authentication/use-logout'
 import { useRouter } from 'vue-router'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { computed } from 'vue'
@@ -18,7 +17,6 @@ import { computed } from 'vue'
 export default {
   setup() {
     const router = useRouter()
-    const { error, fetching, logout } = useLogout()
     const actionsOptions = [
       {
         title: 'Profile settings',
@@ -49,7 +47,7 @@ export default {
     })
 
     const actionsMap = {
-      logout: () => logout(),
+      logout: () => router.push({ name: 'logout' }),
       'profile-settings': () => router.push({ name: 'profile' }),
       'notifications-settings': () => router.push({ name: 'notifications' }),
       integrations: () => console.log('integrations'),
@@ -71,8 +69,6 @@ export default {
       actionsOptions,
       handleSelect,
       IconUserAction,
-      fetching,
-      error,
       isLoadingUserProfile,
       isErrorUserProfile,
       user,
