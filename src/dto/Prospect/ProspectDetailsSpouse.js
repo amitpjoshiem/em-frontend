@@ -38,6 +38,10 @@ class ProspectDetailsSpouse {
     this.realId = real_id
     this.deletedAt = deleted_at
   }
+
+  get spouseFullName() {
+    return this.lastName + ' ' + this.firstName
+  }
 }
 
 export { ProspectDetailsSpouse }

@@ -24,7 +24,6 @@ module.exports = {
         'orange-badge': '#FF9979',
         'orange-bg': '#FFEFEA',
         'orange-border': '#FF9979',
-        'color-green-bg': '#76E1BB',
         'color-error': '#FF92A5',
         'color-link-btn': '#E2E9F9',
         'title-gray': '#C7CFE3',
@@ -33,6 +32,7 @@ module.exports = {
         'lighy-green': '#EEFFF9',
         'border-green': '#76E1BB',
         'dark-blue-charts': '#53576A',
+        'light-green': '#DBF4EE',
       },
       fontFamily: {
         sans: ['Work Sans', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
