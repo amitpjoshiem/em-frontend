@@ -5,9 +5,15 @@
         <div class="flex">
           <Avatar />
           <div class="flex flex-col ml-2">
-            <span class="text-sm text-main font-medium">
+            <router-link
+              :to="{
+                name: 'prospect-basic-information',
+                params: { id: prospectId },
+              }"
+              class="text-sm text-main font-medium"
+            >
               {{ user.firstName }} {{ user.lastName }}
-            </span>
+            </router-link>
             <span class="text-small text-activity-item font-medium uppercase">
               {{ user.type }}
             </span>
@@ -104,6 +110,8 @@
 import IconProspectAge from '@/assets/svg/prospect-age.svg'
 import IconTotal from '@/assets/svg/icon-total.svg'
 import IconGoal from '@/assets/svg/icon-goal.svg'
+import { useRoute } from 'vue-router'
+
 export default {
   name: 'WidgetProspectDetails',
   props: {
@@ -114,6 +122,9 @@ export default {
     },
   },
   setup() {
+    const route = useRoute()
+    const prospectId = route.params.id
+
     const convertToClient = () => {
       console.log('convertToClient')
     }
@@ -127,6 +138,7 @@ export default {
       IconGoal,
       convertToClient,
       blueprintReport,
+      prospectId,
     }
   },
 }
