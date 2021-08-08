@@ -1,16 +1,21 @@
 <template>
-  <div v-if="!isLoading" class="p-5">
-    <SubHeader
-      title="New opportunity"
-      back-page="prospect-details"
-      back-page-title="Prospect details"
-    />
+  <SubHeader
+    class="p-5"
+    title="Prospect Details"
+    back-page="prospect-details"
+    back-page-title="Prospect details"
+  />
+  <el-skeleton v-if="isLoading" :rows="11" animated class="p-5" />
+
+  <div v-else class="p-5">
     <div>
-      <div class="flex mb-12">
-        <Avatar />
-        <span>{{ prospect.userFullName }}</span>
+      <div class="flex items-center">
+        <Avatar :size="'big'" :link="prospect.avatar" />
+        <span class="text-main text-xl font-semibold ml-7">
+          {{ prospect.userFullName }}
+        </span>
       </div>
-      <div class="border border-color-grey rounded p-10">
+      <div class="border border-color-grey rounded p-10 mt-12">
         <!-- GENERAL -->
         <div class="flex mb-7">
           <div class="w-6/24">
@@ -224,6 +229,7 @@
       </div>
     </div>
 
+    <!-- Housing Information -->
     <div class="flex mt-10">
       <div class="w-6/12 border border-color-grey rounded p-10 mr-2">
         <span class="text-base text-main font-semibold">
