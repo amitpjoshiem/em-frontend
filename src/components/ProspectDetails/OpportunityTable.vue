@@ -13,7 +13,7 @@
           px-5
         "
       >
-        <span>Opportunity details</span>
+        <span>Child Opportunities</span>
         <router-link
           :to="{ name: 'add-opportunity', params: { id: prospectId } }"
         >
