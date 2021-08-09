@@ -53,14 +53,13 @@ const newOpportunitySchema = [
   ],
   [
     {
-      component: 'InputText',
-      label: 'Probability percentage*',
-      type: 'number',
-      placeholder: 'Probability percentage',
-      name: 'probability_percentage',
-      model: 'probability_percentage',
-      class: 'w-3/12 pr-2',
-      validations: yup.number().required(),
+      component: 'SwdSelect',
+      label: 'Type*',
+      type: 'text',
+      name: 'type',
+      model: 'type',
+      class: 'w-6/12 pr-5',
+      options: [],
     },
     {
       component: 'InputText',
@@ -69,20 +68,8 @@ const newOpportunitySchema = [
       placeholder: 'Amount',
       name: 'amount',
       model: 'amount',
-      class: 'w-3/12',
+      class: 'w-6/12',
       validations: yup.number().required(),
-    },
-  ],
-  [
-    {
-      component: 'InputText',
-      label: 'Description*',
-      type: 'text',
-      placeholder: 'Description',
-      name: 'description',
-      model: 'description',
-      class: 'w-full',
-      validations: yup.string().min(2).max(100).required(),
     },
   ],
 ]

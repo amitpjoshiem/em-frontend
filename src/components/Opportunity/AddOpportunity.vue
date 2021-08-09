@@ -7,7 +7,9 @@
     />
     <div
       v-if="
-        !isLoadingStage && !isLoadingProspectDetails && !isLoadingUserProfile
+        !isLoadingInitOpportunity &&
+        !isLoadingProspectDetails &&
+        !isLoadingUserProfile
       "
       class="border-color-grey px-10 pb-7"
     >
@@ -37,7 +39,7 @@ import SwdSelect from '@/components/Global/Form/SwdSelect.vue'
 import { schemaOpportunity } from '@/components/Opportunity/schema/newOpportunity'
 import { ref, markRaw, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useStageOpportunity } from '@/api/use-stage-opportunity.js'
+import { useOpportunityInit } from '@/api/use-opportunity-init.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { createOpportunity } from '@/api/vueQuery/create-opportunity'
@@ -99,10 +101,10 @@ export default {
     } = useProspectDetails(id)
 
     const {
-      isLoading: isLoadingStage,
-      isErrorLoadingStage,
-      data: stageSelect,
-    } = useStageOpportunity()
+      isLoading: isLoadingInitOpportunity,
+      isErrorLoadingInit,
+      data: initOpportunity,
+    } = useOpportunityInit()
 
     const {
       isLoading: isLoadingUserProfile,
@@ -110,17 +112,32 @@ export default {
       data: userProfile,
     } = useUserProfile()
 
-    watch(isLoadingStage, (newV, oldV) => {
-      if (newV === false && oldV === true) {
-        const stageList = stageSelect.value.data.stage_list.map((item) => {
-          return {
-            title: item,
-            command: item,
-          }
-        })
-        schema.value[0][1].options = stageList
-      }
-    })
+    watch(
+      initOpportunity,
+      (newV) => {
+        if (newV) {
+          const stageList = initOpportunity.value.data.init.stage_list.map(
+            (item) => {
+              return {
+                title: item,
+                command: item,
+              }
+            }
+          )
+          const typeList = initOpportunity.value.data.init.type_list.map(
+            (item) => {
+              return {
+                title: item,
+                command: item,
+              }
+            }
+          )
+          schema.value[0][1].options = stageList
+          schema.value[2][0].options = typeList
+        }
+      },
+      { immediate: true }
+    )
 
     watch(
       prospectDetails,
@@ -147,17 +164,17 @@ export default {
     return {
       schema,
       saveStep,
-      isLoadingStage,
       isError,
       isErrorProspectDetails,
-      stageSelect,
       prospectDetails,
       isLoadingProspectDetails,
       isLoadingUserProfile,
       isErrorUserProfile,
       userProfile,
-      isErrorLoadingStage,
       error,
+      isLoadingInitOpportunity,
+      isErrorLoadingInit,
+      initOpportunity,
     }
   },
 }
