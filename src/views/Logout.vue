@@ -13,7 +13,7 @@ export default defineComponent({
     onMounted(() => {
       loadingInstance = ElLoading.service({
         lock: true,
-        text: 'Loading',
+        text: 'Logout',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)',
       })
