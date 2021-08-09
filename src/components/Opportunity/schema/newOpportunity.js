@@ -3,7 +3,7 @@ import * as yup from 'yup'
 const newOpportunitySchema = [
   [
     {
-      component: 'InputText',
+      component: 'Input',
       label: 'Opportunity owner*',
       type: 'text',
       placeholder: 'Enter Opportunity owner',
@@ -13,11 +13,11 @@ const newOpportunitySchema = [
       disabled: true,
     },
     {
-      component: 'SwdSelect',
+      component: 'SwdSelectForm',
       label: 'Stage*',
       type: 'text',
-      name: 'stage_name',
-      model: 'stage_name',
+      name: 'stage',
+      model: 'stage',
       class: 'w-5/12 pr-5',
       options: [],
     },
@@ -31,7 +31,7 @@ const newOpportunitySchema = [
   ],
   [
     {
-      component: 'InputText',
+      component: 'Input',
       label: 'Opportunity name*',
       type: 'text',
       placeholder: 'Enter Opportunity name',
@@ -41,7 +41,7 @@ const newOpportunitySchema = [
       validations: yup.string().min(2).max(100).required(),
     },
     {
-      component: 'InputText',
+      component: 'Input',
       label: 'Account name*',
       type: 'text',
       placeholder: 'Enter Account name',
@@ -53,16 +53,16 @@ const newOpportunitySchema = [
   ],
   [
     {
-      component: 'SwdSelect',
+      component: 'SwdSelectForm',
       label: 'Type*',
-      type: 'text',
+      type: 'select',
       name: 'type',
       model: 'type',
       class: 'w-6/12 pr-5',
       options: [],
     },
     {
-      component: 'InputText',
+      component: 'Input',
       label: 'Amount*',
       type: 'number',
       placeholder: 'Amount',

@@ -15,6 +15,7 @@
         :type="type"
         :value="formValue"
         :placeholder="placeholder"
+        :disabled="disabled"
         class="
           input
           no-shadow-ios
@@ -114,6 +115,11 @@ export default {
     labelGray: {
       type: Boolean,
       required: false,
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   emits: ['update:value', 'update:modelValue'],
