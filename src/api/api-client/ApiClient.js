@@ -38,13 +38,15 @@ class ApiClient {
 
   async refreshTokenCall() {
     this.status = API_CLIENT_STATUSES['pending']
-    let options = { credentials: 'include' }
+    let options = { credentials: 'include', method: 'POST' }
 
     const response = await this.transport.fetch('/refresh', options)
 
     if (response.status === 200) {
-      this.authenticate(response.data.access_token)
+      const res = await response.json()
+      this.authenticate(res.access_token)
     } else {
+      this.storage.setByKey('refresh_token_expired', true)
       document.location.href = '/logout'
     }
 
