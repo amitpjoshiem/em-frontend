@@ -45,7 +45,7 @@ class ApiClient {
     } else {
       this.storage.removeByKey('access_token')
       this.storage.removeByKey('auth')
-      document.location.href = '/'
+      // document.location.href = '/'
     }
 
     return this.storage.getByKey('access_token')
