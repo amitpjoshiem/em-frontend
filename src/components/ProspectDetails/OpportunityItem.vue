@@ -1,6 +1,8 @@
 <template>
   <div class="flex text-xs items-center text-center">
-    <div class="w-2/12 item">{{ user.name }}</div>
+    <div class="w-2/12 item px-2">
+      {{ user.name }}
+    </div>
     <div class="w-2/12 item">
       {{ prospect.firstName }} {{ prospect.lastName }}
     </div>
@@ -8,7 +10,7 @@
       {{ userProfile.firstName + ' ' + userProfile.lastName }}
     </div>
     <div class="w-2/12 item">{{ user.amount }}</div>
-    <div class="w-2/12 item">{{ user.stageName }}</div>
+    <div class="w-2/12 item">{{ user.stage }}</div>
     <div class="w-2/12 item">{{ user.closeDate }}</div>
   </div>
 </template>
