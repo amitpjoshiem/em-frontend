@@ -43,7 +43,9 @@ class ApiClient {
     if (response.status === 200) {
       this.authenticate(response.data.access_token)
     } else {
-      document.location.href = '/logout'
+      this.storage.removeByKey('access_token')
+      this.storage.removeByKey('auth')
+      document.location.href = '/'
     }
 
     return this.storage.getByKey('access_token')
