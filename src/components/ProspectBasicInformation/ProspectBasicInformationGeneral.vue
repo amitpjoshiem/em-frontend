@@ -219,27 +219,31 @@
 
 <script>
 import { computed } from 'vue'
+import { SpouseLastEmployment } from '@/dto/Prospect/SpouseLastEmployment'
+import { ProspectLastEmployment } from '@/dto/Prospect/ProspectLastEmployment'
+import { ProspectDetailsSpouse } from '@/dto/Prospect/ProspectDetailsSpouse'
+import { ProspectDetailsUser } from '@/dto/Prospect/ProspectDetailsUser'
 
 export default {
   name: 'ProspectBasicInformationGeneral',
   props: {
     prospect: {
-      type: Object,
+      type: ProspectDetailsUser,
       require: true,
       default: () => {},
     },
     spouse: {
-      type: Object,
+      type: ProspectDetailsSpouse,
       require: true,
       default: () => {},
     },
     employmentProspect: {
-      type: Object,
+      type: ProspectLastEmployment,
       require: true,
       default: () => {},
     },
     employmentSpouse: {
-      type: Object,
+      type: SpouseLastEmployment,
       require: true,
       default: () => {},
     },

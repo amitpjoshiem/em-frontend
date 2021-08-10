@@ -27,7 +27,7 @@
     >
       <span class="text-gray03 text-xss font-semibold">Market Value</span>
       <span class="text-main text-sm font-semibold">
-        ${{ house.marketValue }}
+        {{ currencyFormat(house.marketValue) }}
       </span>
     </div>
 
@@ -37,7 +37,9 @@
       class="flex justify-between mb-7"
     >
       <span class="text-gray03 text-xss font-semibold">Total Debt</span>
-      <span class="text-main text-sm"> ${{ house.totalDebt }} </span>
+      <span class="text-main text-sm">
+        {{ currencyFormat(house.totalDebt) }}
+      </span>
     </div>
 
     <!-- Remaining -->
@@ -49,14 +51,16 @@
         Remaining mortgage amount
       </span>
       <span class="text-main text-sm">
-        ${{ house.remainingMortgageAmount }}
+        {{ currencyFormat(house.remainingMortgageAmount) }}
       </span>
     </div>
 
     <!-- Monthly payment -->
     <div v-if="house.type === 'rent'" class="flex justify-between mb-7">
       <span class="text-gray03 text-xss font-semibold">Monthly payment</span>
-      <span class="text-main text-sm"> ${{ house.monthlyPayment }} </span>
+      <span class="text-main text-sm">
+        {{ currencyFormat(house.monthlyPayment) }}
+      </span>
     </div>
 
     <!-- Total monthly -->
@@ -64,20 +68,30 @@
       <span class="text-gray03 text-xss font-semibold">
         Total monthly expenses
       </span>
-      <span class="text-main text-sm"> ${{ house.totalMonthlyExpenses }} </span>
+      <span class="text-main text-sm">
+        {{ currencyFormat(house.totalMonthlyExpenses) }}
+      </span>
     </div>
   </div>
 </template>
 
 <script>
+import { currencyFormat } from '@/utils/currencyFormat'
+import { ProspectDetailsHouse } from '@/dto/Prospect/ProspectDetailsHouse'
+
 export default {
   name: 'ProspectHousingInformation',
   props: {
     house: {
-      type: Object,
+      type: ProspectDetailsHouse,
       require: true,
       default: () => {},
     },
+  },
+  setup() {
+    return {
+      currencyFormat,
+    }
   },
 }
 </script>

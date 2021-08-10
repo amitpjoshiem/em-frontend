@@ -41,7 +41,7 @@ export const useProspectDetails = (id) => {
     isLoading,
     isError,
     data,
-    spouse: spouse,
+    spouse,
     house,
     employmentProspect,
     employmentSpouse,

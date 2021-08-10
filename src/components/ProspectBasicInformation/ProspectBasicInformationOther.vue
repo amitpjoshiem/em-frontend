@@ -49,11 +49,13 @@
   </div>
 </template>
 <script>
+import { ProspectDetailsOther } from '@/dto/Prospect/ProspectDetailsOther'
+
 export default {
   name: 'ProspectBasicInformationOther',
   props: {
     other: {
-      type: Object,
+      type: ProspectDetailsOther,
       require: true,
       default: () => {},
     },
