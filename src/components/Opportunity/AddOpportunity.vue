@@ -35,7 +35,7 @@ import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
 import Input from '@/components/Global/Input/Input.vue'
 import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
-import SwdSelect from '@/components/Global/Form/SwdSelect.vue'
+import SwdSelectForm from '@/components/Global/Form/SwdSelectForm.vue'
 import { schemaOpportunity } from '@/components/Opportunity/schema/newOpportunity'
 import { ref, markRaw, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -44,12 +44,11 @@ import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { createOpportunity } from '@/api/vueQuery/create-opportunity'
 import { useMutation } from 'vue-query'
-import { useAlert } from '@/utils/use-alert'
 
 markRaw(Input)
 markRaw(Label)
 markRaw(TextArea)
-markRaw(SwdSelect)
+markRaw(SwdSelectForm)
 
 const SchemaFormWithValidation = SchemaFormFactory([VeeValidatePlugin()])
 
@@ -66,26 +65,12 @@ export default {
     useSchemaForm(formData)
 
     const saveStep = async () => {
-      addOpportunity({
+      const res = await addOpportunity({
         ...formData.value,
         member_id: id,
-        stage_name: 'Prospecting',
       })
-        .then(() => {
-          useAlert({
-            title: 'Success',
-            message: 'Opportunity created successfully',
-            type: 'success',
-          })
-          router.push({ name: 'prospect-details', params: { id } })
-        })
-        .catch((error) => {
-          useAlert({
-            title: 'Error',
-            message: error.message,
-            type: 'error',
-          })
-        })
+
+      if (!res.error) router.push({ name: 'prospect-details', params: { id } })
     }
 
     const {
@@ -156,6 +141,7 @@ export default {
       (newV) => {
         if (newV) {
           schema.value[0][0].value = newV.firstName + ' ' + newV.lastName
+          formData.value.account_name = newV.firstName + ' ' + newV.lastName
         }
       },
       { immediate: true }
