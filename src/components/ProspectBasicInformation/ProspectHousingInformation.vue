@@ -1,32 +1,50 @@
 <template>
   <div class="border border-color-grey rounded p-10 mt-10">
-    <span class="text-base text-main font-semibold"> Housing Information </span>
-    <span
-      class="
-        text-border-green text-xxs
-        font-semibold
-        bg-light-green
-        rounded
-        pr-2
-        pl-1
-        py-1
-        capitalize
-      "
-    >
-      {{ house.type }}
-    </span>
+    <div class="mb-5">
+      <span class="text-base text-main font-semibold">
+        Housing Information
+      </span>
+      <span
+        class="
+          text-border-green text-xxs
+          font-semibold
+          bg-light-green
+          rounded
+          pr-2
+          pl-1
+          py-1
+          capitalize
+        "
+      >
+        {{ house.type }}
+      </span>
+    </div>
 
-    <div class="flex justify-between my-7">
+    <!-- Market Value -->
+    <div
+      v-if="house.type === 'own' || house.type === 'family'"
+      class="flex justify-between my-7"
+    >
       <span class="text-gray03 text-xss font-semibold">Market Value</span>
       <span class="text-main text-sm font-semibold">
         ${{ house.marketValue }}
       </span>
     </div>
-    <div class="flex justify-between mb-7">
+
+    <!-- Total Debt -->
+    <div
+      v-if="house.type === 'own' || house.type === 'family'"
+      class="flex justify-between mb-7"
+    >
       <span class="text-gray03 text-xss font-semibold">Total Debt</span>
       <span class="text-main text-sm"> ${{ house.totalDebt }} </span>
     </div>
-    <div class="flex justify-between mb-7">
+
+    <!-- Remaining -->
+    <div
+      v-if="house.type === 'own' || house.type === 'family'"
+      class="flex justify-between mb-7"
+    >
       <span class="text-gray03 text-xss font-semibold">
         Remaining mortgage amount
       </span>
@@ -34,11 +52,15 @@
         ${{ house.remainingMortgageAmount }}
       </span>
     </div>
+
+    <!-- Monthly payment -->
     <div v-if="house.type === 'rent'" class="flex justify-between mb-7">
-      <span class="text-gray03 text-xss font-semibold"> Monthly payment </span>
+      <span class="text-gray03 text-xss font-semibold">Monthly payment</span>
       <span class="text-main text-sm"> ${{ house.monthlyPayment }} </span>
     </div>
-    <div class="flex justify-between mb-7">
+
+    <!-- Total monthly -->
+    <div v-if="house.type === 'rent'" class="flex justify-between mb-7">
       <span class="text-gray03 text-xss font-semibold">
         Total monthly expenses
       </span>
