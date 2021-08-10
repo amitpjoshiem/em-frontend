@@ -124,6 +124,15 @@ const routes = [
       },
 
       {
+        path: 'prospect-basic-information/:id',
+        name: 'prospect-basic-information',
+        component: () =>
+          import(
+            /* webpackChunkName: "ProspectDetails" */ '../components/ProspectBasicInformation/ProspectBasicInformation.vue'
+          ),
+      },
+
+      {
         path: 'add-opportunity/:id',
         name: 'add-opportunity',
         component: () =>
