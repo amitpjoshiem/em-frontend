@@ -7,7 +7,7 @@ export const fetcher = async ({ url, data, options }) => {
   const body = JSON.stringify(data)
   try {
     const response = await apiClient.fetch(url, { ...options, body })
-    if (response.status !== 200) {
+    if (!response.ok) {
       const body = await response.json()
       throw new Error(body.message)
     }
@@ -18,7 +18,6 @@ export const fetcher = async ({ url, data, options }) => {
       title: 'Error',
       message: error.message,
     })
-
     return { error }
   }
 }
