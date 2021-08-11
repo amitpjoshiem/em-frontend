@@ -89,11 +89,7 @@ export default {
           router.push({ name: 'assets-information' })
         })
         .catch((error) => {
-          useAlert({
-            title: 'Error',
-            message: error.message,
-            type: 'error',
-          })
+          console.error('error - ', error)
         })
     }
 
