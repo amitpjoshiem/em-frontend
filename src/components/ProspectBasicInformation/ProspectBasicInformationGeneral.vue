@@ -36,10 +36,10 @@
           Retired
         </span>
       </div>
-      <div v-if="isProspectMarried" class="w-9/24">
+      <div class="w-9/24">
         <span class="text-xs text-gray03 font-semibold mr-1">SPOUSE</span>
         <span
-          v-if="!spouse.retired"
+          v-if="isHasSpouse && !spouse.retired"
           class="
             text-border-green text-xxs
             font-semibold
@@ -53,7 +53,7 @@
           Not Retired
         </span>
         <span
-          v-else
+          v-if="isHasSpouse && spouse.retired"
           class="
             text-xxs text-orange-badge
             font-semibold
@@ -78,10 +78,11 @@
           {{ prospect.userFullName }}
         </span>
       </div>
-      <div v-if="isProspectMarried" class="w-9/24">
-        <span class="text-sm text-main font-semibold">
+      <div class="w-9/24">
+        <span v-if="isHasSpouse" class="text-sm text-main font-semibold">
           {{ spouse.spouseFullName }}
         </span>
+        <span v-else>&mdash;</span>
       </div>
     </div>
 
@@ -94,10 +95,11 @@
           {{ prospect.phone }}
         </span>
       </div>
-      <div v-if="isProspectMarried" class="w-9/24">
-        <span class="text-sm text-main">
+      <div class="w-9/24">
+        <span v-if="isHasSpouse" class="text-sm text-main">
           {{ spouse.phone }}
         </span>
+        <span v-else>&mdash;</span>
       </div>
     </div>
 
@@ -110,10 +112,11 @@
           {{ prospect.email }}
         </span>
       </div>
-      <div v-if="isProspectMarried" class="w-9/24">
-        <span class="text-sm text-main">
+      <div class="w-9/24">
+        <span v-if="isHasSpouse" class="text-sm text-main">
           {{ spouse.email }}
         </span>
+        <span v-else>&mdash;</span>
       </div>
     </div>
 
@@ -126,10 +129,11 @@
           {{ prospect.birthday }}
         </span>
       </div>
-      <div v-if="isProspectMarried" class="w-9/24">
-        <span class="text-sm text-main">
+      <div class="w-9/24">
+        <span v-if="isHasSpouse" class="text-sm text-main">
           {{ spouse.birthday }}
         </span>
+        <span v-else>&mdash;</span>
       </div>
     </div>
 
@@ -144,18 +148,17 @@
           {{ prospect.retirementDate }}
         </span>
       </div>
-      <div v-if="isProspectMarried" class="w-9/24">
-        <span class="text-sm text-main">
+      <div class="w-9/24">
+        <span v-if="isHasSpouse" class="text-sm text-main">
           {{ spouse.retirementDate }}
         </span>
+        <span v-else>&mdash;</span>
       </div>
     </div>
 
     <div class="flex mb-10">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold">
-          Retiretment Date
-        </span>
+        <span class="text-xss text-gray03 font-semibold">Address</span>
       </div>
       <div class="w-18">
         <span class="text-sm text-main">
@@ -178,14 +181,16 @@
         <span class="text-xss text-gray03 font-semibold">Company Name</span>
       </div>
       <div class="w-9/24">
-        <span class="text-sm text-main font-semibold">
+        <span v-if="employmentProspect" class="text-sm text-main font-semibold">
           {{ employmentProspect.companyName }}</span
         >
+        <span v-else>&mdash;</span>
       </div>
       <div class="w-9/24">
-        <span class="text-sm text-main font-semibold">{{
+        <span v-if="employmentSpouse" class="text-sm text-main font-semibold">{{
           employmentSpouse.companyName
         }}</span>
+        <span v-else>&mdash;</span>
       </div>
     </div>
 
@@ -194,12 +199,16 @@
         <span class="text-xss text-gray03 font-semibold">Occupation</span>
       </div>
       <div class="w-9/24">
-        <span class="text-sm text-main">{{
+        <span v-if="employmentProspect" class="text-sm text-main">{{
           employmentProspect.occupation
         }}</span>
+        <span v-else>&mdash;</span>
       </div>
       <div class="w-9/24">
-        <span class="text-sm text-main">{{ employmentSpouse.occupation }}</span>
+        <span v-if="employmentSpouse" class="text-sm text-main">{{
+          employmentSpouse.occupation
+        }}</span>
+        <span v-else>&mdash;</span>
       </div>
     </div>
 
@@ -208,10 +217,16 @@
         <span class="text-xss text-gray03 font-semibold">Years</span>
       </div>
       <div class="w-9/24">
-        <span class="text-sm text-main">{{ employmentProspect.years }}</span>
+        <span v-if="employmentProspect" class="text-sm text-main">{{
+          employmentProspect.years
+        }}</span>
+        <span v-else>&mdash;</span>
       </div>
       <div class="w-9/24">
-        <span class="text-sm text-main">{{ employmentSpouse.years }}</span>
+        <span v-if="employmentSpouse" class="text-sm text-main">{{
+          employmentSpouse.years
+        }}</span>
+        <span v-else>&mdash;</span>
       </div>
     </div>
   </div>
@@ -249,12 +264,12 @@ export default {
     },
   },
   setup(props) {
-    const isProspectMarried = computed(() => {
+    const isHasSpouse = computed(() => {
       return props.prospect.married
     })
 
     return {
-      isProspectMarried,
+      isHasSpouse,
     }
   },
 }
