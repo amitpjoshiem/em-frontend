@@ -167,9 +167,16 @@
     <!-- Employment History -->
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-base text-main font-semibold">
+        <router-link
+          :to="{ name: 'prospect-employment', params: { id: prospect.id } }"
+          class="text-base text-main font-semibold"
+        >
           Employment History
-        </span>
+          <!-- Forgot your password? -->
+        </router-link>
+        <!-- <span class="text-base text-main font-semibold">
+          Employment History
+        </span> -->
       </div>
     </div>
 
