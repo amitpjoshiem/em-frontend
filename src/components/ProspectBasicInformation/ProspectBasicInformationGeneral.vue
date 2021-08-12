@@ -169,12 +169,7 @@
         <PlugForField :text="employmentProspect.companyName" plug="&mdash;" />
       </div>
       <div class="w-9/24">
-        <span
-          v-if="employmentSpouse.companyName"
-          class="text-sm text-main font-semibold"
-          >{{ employmentSpouse.companyName }}</span
-        >
-        <span v-else>&mdash;</span>
+        <PlugForField :text="employmentSpouse.companyName" plug="&mdash;" />
       </div>
     </div>
 
