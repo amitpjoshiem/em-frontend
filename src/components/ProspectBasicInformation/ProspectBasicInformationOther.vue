@@ -2,7 +2,7 @@
   <div class="border border-color-grey rounded p-10 mt-10">
     <span class="text-base text-main font-semibold">Other</span>
 
-    <div v-if="other.length">
+    <div v-if="other.id">
       <div class="flex my-7">
         <div class="w-2/12">
           <span class="text-gray03 text-xss font-semibold">Risk Tolerance</span>

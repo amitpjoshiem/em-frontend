@@ -44,6 +44,7 @@ import BackButton from '@/components/Global/Button/BackButton.vue'
 import Dialog from '@/components/Global/Dialog.vue'
 import Pagination from '@/components/Global/Pagination.vue'
 import SubHeader from '@/components/SubHeader.vue'
+import PlugForField from '@/components/Global/PlugForField.vue'
 
 import {
   ElProgress,
@@ -130,6 +131,7 @@ const components = [
   ElOption,
   SubHeader,
   ElSkeleton,
+  PlugForField,
 ]
 
 components.forEach((component) => {

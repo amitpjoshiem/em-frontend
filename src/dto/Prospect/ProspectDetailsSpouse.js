@@ -40,7 +40,9 @@ class ProspectDetailsSpouse {
   }
 
   get spouseFullName() {
-    return this.lastName + ' ' + this.firstName
+    return this.lastName && this.firstName
+      ? this.lastName + ' ' + this.firstName
+      : ''
   }
 }
 
