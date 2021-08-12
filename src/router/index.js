@@ -136,7 +136,7 @@ const routes = [
         name: 'prospect-employment',
         component: () =>
           import(
-            /* webpackChunkName: "ProspectDetails" */ '../components/ProspectBasicInformation/EmploymentHistory.vue'
+            /* webpackChunkName: "ProspectDetails" */ '../components/EmploymentHistory/EmploymentHistory.vue'
           ),
       },
 

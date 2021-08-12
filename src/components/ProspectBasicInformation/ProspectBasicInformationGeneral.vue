@@ -175,11 +175,7 @@
           class="text-base text-main font-semibold"
         >
           Employment History
-          <!-- Forgot your password? -->
         </router-link>
-        <!-- <span class="text-base text-main font-semibold">
-          Employment History
-        </span> -->
       </div>
     </div>
 
