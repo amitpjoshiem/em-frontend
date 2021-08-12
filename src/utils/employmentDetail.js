@@ -6,7 +6,7 @@ function getProperty(property, object) {
   return object[property] ?? ''
 }
 
-class EmploymentHistoryMerged {
+export class EmploymentHistoryMerged {
   constructor(member, spouse) {
     this.companyName = [member, spouse].map((object) =>
       getProperty('companyName', object)

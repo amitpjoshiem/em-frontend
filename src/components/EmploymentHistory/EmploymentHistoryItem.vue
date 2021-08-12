@@ -30,11 +30,12 @@
   </div>
 </template>
 <script>
+import EmploymentHistoryMerged from '@/utils/employmentDetail'
 export default {
   name: 'EmploymentHistoryItem',
   props: {
     elem: {
-      type: Object,
+      type: EmploymentHistoryMerged,
       require: true,
       default: () => {},
     },
