@@ -21,9 +21,7 @@
       </span>
     </div>
 
-    <!-- HOUSING INFORMATION -->
-    <div v-if="house.length">
-      <!-- Market Value -->
+    <div v-if="house.id">
       <div
         v-if="house.type === 'own' || house.type === 'family'"
         class="flex justify-between my-7"
@@ -34,19 +32,14 @@
         </span>
       </div>
 
-      <!-- Total Debt -->
       <div
         v-if="house.type === 'own' || house.type === 'family'"
         class="flex justify-between mb-7"
       >
         <span class="text-gray03 text-xss font-semibold">Total Debt</span>
-        <span v-if="house" class="text-main text-sm">
-          {{ currencyFormat(house.totalDebt) }}
-        </span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="currencyFormat(house.totalDebt)" plug="&mdash;" />
       </div>
 
-      <!-- Remaining -->
       <div
         v-if="house.type === 'own' || house.type === 'family'"
         class="flex justify-between mb-7"
@@ -59,7 +52,6 @@
         </span>
       </div>
 
-      <!-- Monthly payment -->
       <div v-if="house.type === 'rent'" class="flex justify-between mb-7">
         <span class="text-gray03 text-xss font-semibold">Monthly payment</span>
         <span class="text-main text-sm">
@@ -67,7 +59,6 @@
         </span>
       </div>
 
-      <!-- Total monthly -->
       <div v-if="house.type === 'rent'" class="flex justify-between mb-7">
         <span class="text-gray03 text-xss font-semibold">
           Total monthly expenses

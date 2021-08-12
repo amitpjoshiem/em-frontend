@@ -39,7 +39,7 @@
       <div class="w-9/24">
         <span class="text-xs text-gray03 font-semibold mr-1">SPOUSE</span>
         <span
-          v-if="isHasSpouse && !spouse.retired"
+          v-if="prospect.married && !spouse.retired"
           class="
             text-border-green text-xxs
             font-semibold
@@ -53,7 +53,7 @@
           Not Retired
         </span>
         <span
-          v-if="isHasSpouse && spouse.retired"
+          v-if="prospect.married && spouse.retired"
           class="
             text-xxs text-orange-badge
             font-semibold
@@ -79,10 +79,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <span v-if="isHasSpouse" class="text-sm text-main font-semibold">
-          {{ spouse.spouseFullName }}
-        </span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="spouse.spouseFullName" plug="&mdash;" />
       </div>
     </div>
 
@@ -96,10 +93,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <span v-if="isHasSpouse" class="text-sm text-main">
-          {{ spouse.phone }}
-        </span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="spouse.phone" plug="&mdash;" />
       </div>
     </div>
 
@@ -113,10 +107,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <span v-if="isHasSpouse" class="text-sm text-main">
-          {{ spouse.email }}
-        </span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="spouse.email" plug="&mdash;" />
       </div>
     </div>
 
@@ -130,10 +121,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <span v-if="isHasSpouse" class="text-sm text-main">
-          {{ spouse.birthday }}
-        </span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="spouse.birthday" plug="&mdash;" />
       </div>
     </div>
 
@@ -149,10 +137,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <span v-if="isHasSpouse" class="text-sm text-main">
-          {{ spouse.retirementDate }}
-        </span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="spouse.retirementDate" plug="&mdash;" />
       </div>
     </div>
 
@@ -184,16 +169,10 @@
         <span class="text-xss text-gray03 font-semibold">Company Name</span>
       </div>
       <div class="w-9/24">
-        <span v-if="employmentProspect" class="text-sm text-main font-semibold">
-          {{ employmentProspect.companyName }}</span
-        >
-        <span v-else>&mdash;</span>
+        <PlugForField :text="employmentProspect.companyName" plug="&mdash;" />
       </div>
       <div class="w-9/24">
-        <span v-if="employmentSpouse" class="text-sm text-main font-semibold">{{
-          employmentSpouse.companyName
-        }}</span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="employmentSpouse.companyName" plug="&mdash;" />
       </div>
     </div>
 
@@ -202,16 +181,10 @@
         <span class="text-xss text-gray03 font-semibold">Occupation</span>
       </div>
       <div class="w-9/24">
-        <span v-if="employmentProspect" class="text-sm text-main">{{
-          employmentProspect.occupation
-        }}</span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="employmentProspect.occupation" plug="&mdash;" />
       </div>
       <div class="w-9/24">
-        <span v-if="employmentSpouse" class="text-sm text-main">{{
-          employmentSpouse.occupation
-        }}</span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="employmentSpouse.occupation" plug="&mdash;" />
       </div>
     </div>
 
@@ -220,23 +193,16 @@
         <span class="text-xss text-gray03 font-semibold">Years</span>
       </div>
       <div class="w-9/24">
-        <span v-if="employmentProspect" class="text-sm text-main">{{
-          employmentProspect.years
-        }}</span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="employmentProspect.years" plug="&mdash;" />
       </div>
       <div class="w-9/24">
-        <span v-if="employmentSpouse" class="text-sm text-main">{{
-          employmentSpouse.years
-        }}</span>
-        <span v-else>&mdash;</span>
+        <PlugForField :text="employmentSpouse.years" plug="&mdash;" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue'
 import { SpouseLastEmployment } from '@/dto/Prospect/SpouseLastEmployment'
 import { ProspectLastEmployment } from '@/dto/Prospect/ProspectLastEmployment'
 import { ProspectDetailsSpouse } from '@/dto/Prospect/ProspectDetailsSpouse'
@@ -265,15 +231,6 @@ export default {
       require: true,
       default: () => {},
     },
-  },
-  setup(props) {
-    const isHasSpouse = computed(() => {
-      return props.prospect.married
-    })
-
-    return {
-      isHasSpouse,
-    }
   },
 }
 </script>
