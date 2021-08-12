@@ -6,6 +6,8 @@ import { ProspectDetailsOther } from '@/dto/Prospect/ProspectDetailsOther'
 import { ProspectLastEmployment } from '@/dto/Prospect/ProspectLastEmployment'
 import { SpouseLastEmployment } from '@/dto/Prospect/SpouseLastEmployment'
 import { fetchProspect } from '@/api/vueQuery/fetch-prospect'
+import { dataFactory } from '@/utils/dataFactory'
+import { dataFactoryWithGet } from '@/utils/dataFactoryWithGet'
 import { reactive } from 'vue'
 
 export const useProspectDetails = (id) => {
@@ -22,19 +24,20 @@ export const useProspectDetails = (id) => {
     },
     {
       select: (data) => {
-        if (data.data.married) {
-          spouse.value = new ProspectDetailsSpouse(data.data.spouse.data)
-        }
-        house.value = new ProspectDetailsHouse(data.data.house.data)
-        other.value = new ProspectDetailsOther(data.data.other.data)
-        if (data.data.employmentHistory.data.length)
-          employmentProspect.value = new ProspectLastEmployment(
-            data.data.employmentHistory.data
-          )
-        if (data.data.spouse.data.length)
-          employmentSpouse.value = new SpouseLastEmployment(
-            data.data.spouse.data.employmentHistory.data
-          )
+        spouse.value = dataFactory(ProspectDetailsSpouse, data.data.spouse.data)
+        house.value = dataFactory(ProspectDetailsHouse, data.data.house.data)
+        other.value = dataFactory(ProspectDetailsOther, data.data.other.data)
+
+        employmentProspect.value = dataFactory(
+          ProspectLastEmployment,
+          data.data.employmentHistory.data
+        )
+
+        employmentSpouse.value = dataFactoryWithGet(
+          SpouseLastEmployment,
+          data,
+          'data.data.spouse.data.employmentHistory.data'
+        )
 
         return new ProspectDetailsUser(data.data)
       },
