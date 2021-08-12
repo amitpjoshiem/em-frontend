@@ -7,7 +7,7 @@ import { ProspectLastEmployment } from '@/dto/Prospect/ProspectLastEmployment'
 import { SpouseLastEmployment } from '@/dto/Prospect/SpouseLastEmployment'
 import { fetchProspect } from '@/api/vueQuery/fetch-prospect'
 import { dataFactory } from '@/utils/dataFactory'
-import { dataFactoryWithGet } from '@/utils/dataFactoryWithGet'
+// import { dataFactoryWithGet } from '@/utils/dataFactoryWithGet'
 import { reactive } from 'vue'
 
 export const useProspectDetails = (id) => {
@@ -33,10 +33,16 @@ export const useProspectDetails = (id) => {
           data.data.employmentHistory.data
         )
 
-        employmentSpouse.value = dataFactoryWithGet(
+        // employmentSpouse.value = dataFactoryWithGet(
+        //   SpouseLastEmployment,
+        //   data,
+        //   'data.data.spouse.data.employmentHistory.data'
+        // )
+
+        // TODO: temporary solutions
+        employmentSpouse.value = dataFactory(
           SpouseLastEmployment,
-          data,
-          'data.data.spouse.data.employmentHistory.data'
+          data.data.spouse?.data?.employmentHistory?.data
         )
 
         return new ProspectDetailsUser(data.data)
