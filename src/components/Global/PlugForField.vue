@@ -10,7 +10,7 @@ export default {
   name: 'PlugForField',
   props: {
     text: {
-      type: String,
+      type: [String, Number],
       require: true,
       default: '',
     },
