@@ -1,9 +1,9 @@
 function getProperty(property, object) {
   if (!object && typeof object !== 'object') {
-    return '---'
+    return ''
   }
 
-  return object[property] ?? '---'
+  return object[property] ?? ''
 }
 
 class EmploymentHistoryMerged {
