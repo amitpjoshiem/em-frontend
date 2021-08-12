@@ -6,7 +6,7 @@
       back-page-title="Prospect details"
     />
     <div v-if="!isLoading">
-      <div class="flex">
+      <div class="flex mt-4">
         <div class="w-4/12"></div>
         <div class="w-4/12 text-sm text-gray03 font-semibold">OWNER</div>
         <div class="w-4/12 text-sm text-gray03 font-semibold">SPOUSE</div>
@@ -15,6 +15,7 @@
         <EmploymentHistoryItem :elem="item" />
       </div>
     </div>
+    <el-skeleton v-else :rows="5" animated class="p-5" />
   </div>
 </template>
 <script>
