@@ -79,7 +79,11 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="spouse.spouseFullName" plug="&mdash;" />
+        <PlugForField
+          :text="spouse.spouseFullName"
+          plug="&mdash;"
+          class="text-sm text-main font-semibold"
+        />
       </div>
     </div>
 
@@ -93,7 +97,11 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="spouse.phone" plug="&mdash;" />
+        <PlugForField
+          :text="spouse.phone"
+          plug="&mdash;"
+          class="text-sm text-main"
+        />
       </div>
     </div>
 
@@ -107,7 +115,11 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="spouse.email" plug="&mdash;" />
+        <PlugForField
+          :text="spouse.email"
+          plug="&mdash;"
+          class="text-sm text-main"
+        />
       </div>
     </div>
 
@@ -121,7 +133,11 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="spouse.birthday" plug="&mdash;" />
+        <PlugForField
+          :text="spouse.birthday"
+          plug="&mdash;"
+          class="text-sm text-main"
+        />
       </div>
     </div>
 
@@ -137,7 +153,11 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="spouse.retirementDate" plug="&mdash;" />
+        <PlugForField
+          :text="spouse.retirementDate"
+          plug="&mdash;"
+          class="text-sm text-main"
+        />
       </div>
     </div>
 
@@ -169,10 +189,18 @@
         <span class="text-xss text-gray03 font-semibold">Company Name</span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentProspect.companyName" plug="&mdash;" />
+        <PlugForField
+          :text="employmentProspect.companyName"
+          plug="&mdash;"
+          class="text-sm text-main"
+        />
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentSpouse.companyName" plug="&mdash;" />
+        <PlugForField
+          :text="employmentSpouse.companyName"
+          plug="&mdash;"
+          class="text-sm text-main"
+        />
       </div>
     </div>
 
@@ -181,10 +209,18 @@
         <span class="text-xss text-gray03 font-semibold">Occupation</span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentProspect.occupation" plug="&mdash;" />
+        <PlugForField
+          :text="employmentProspect.occupation"
+          plug="&mdash;"
+          class="text-sm text-main"
+        />
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentSpouse.occupation" plug="&mdash;" />
+        <PlugForField
+          :text="employmentSpouse.occupation"
+          plug="&mdash;"
+          class="text-sm text-main"
+        />
       </div>
     </div>
 
@@ -193,10 +229,18 @@
         <span class="text-xss text-gray03 font-semibold">Years</span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentProspect.years" plug="&mdash;" />
+        <PlugForField
+          :text="employmentProspect.years"
+          plug="&mdash;"
+          class="text-sm text-main"
+        />
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentSpouse.years" plug="&mdash;" />
+        <PlugForField
+          :text="employmentSpouse.years"
+          plug="&mdash;"
+          class="text-sm text-main"
+        />
       </div>
     </div>
   </div>
