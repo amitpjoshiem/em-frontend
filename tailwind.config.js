@@ -33,6 +33,7 @@ module.exports = {
         'border-green': '#76E1BB',
         'dark-blue-charts': '#53576A',
         'light-green': '#DBF4EE',
+        'color-link': '#6EBAFF',
       },
       fontFamily: {
         sans: ['Work Sans', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
