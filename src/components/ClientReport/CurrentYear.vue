@@ -61,7 +61,7 @@
       <span class="text-main text-sm font-semibold">$1,500</span>
     </div>
 
-    <div class="bg-color-light-blue flex justify-between px-4 py-2 rounded-b">
+    <div class="bg-color-light-blue flex justify-between px-4 py-3 rounded-b">
       <span class="text-main text-sm">Total Fees:</span>
       <span class="text-main text-sm font-semibold">$1,500</span>
     </div>
