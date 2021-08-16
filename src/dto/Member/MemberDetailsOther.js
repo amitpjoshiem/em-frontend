@@ -1,4 +1,4 @@
-class ProspectDetailsOther {
+class MemberDetailsOther {
   constructor({
     id,
     risk,
@@ -18,4 +18,4 @@ class ProspectDetailsOther {
   }
 }
 
-export { ProspectDetailsOther }
+export { MemberDetailsOther }

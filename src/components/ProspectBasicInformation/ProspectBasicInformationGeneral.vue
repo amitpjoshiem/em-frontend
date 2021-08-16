@@ -247,26 +247,26 @@
 </template>
 
 <script>
-import { SpouseLastEmployment } from '@/dto/Prospect/SpouseLastEmployment'
-import { ProspectLastEmployment } from '@/dto/Prospect/ProspectLastEmployment'
-import { ProspectDetailsSpouse } from '@/dto/Prospect/ProspectDetailsSpouse'
-import { ProspectDetailsUser } from '@/dto/Prospect/ProspectDetailsUser'
+import { SpouseLastEmployment } from '@/dto/Member/SpouseLastEmployment'
+import { MemberLastEmployment } from '@/dto/Member/MemberLastEmployment'
+import { MemberDetailsSpouse } from '@/dto/Member/MemberDetailsSpouse'
+import { MemberDetailsUser } from '@/dto/Member/MemberDetailsUser'
 
 export default {
   name: 'ProspectBasicInformationGeneral',
   props: {
     prospect: {
-      type: ProspectDetailsUser,
+      type: MemberDetailsUser,
       require: true,
       default: () => {},
     },
     spouse: {
-      type: ProspectDetailsSpouse,
+      type: MemberDetailsSpouse,
       require: true,
       default: () => {},
     },
     employmentProspect: {
-      type: ProspectLastEmployment,
+      type: MemberLastEmployment,
       require: true,
       default: () => {},
     },
