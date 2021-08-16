@@ -67,6 +67,8 @@ import {
   ElSelect,
   ElOption,
   ElSkeleton,
+  ElForm,
+  ElFormItem,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -132,6 +134,8 @@ const components = [
   SubHeader,
   ElSkeleton,
   PlugForField,
+  ElForm,
+  ElFormItem,
 ]
 
 components.forEach((component) => {
