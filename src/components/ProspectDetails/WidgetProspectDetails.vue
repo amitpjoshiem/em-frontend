@@ -88,19 +88,28 @@
         </div>
       </div>
 
-      <div class="flex justify-between pt-5">
+      <div v-if="user.type === 'prospect'" class="flex justify-between pt-5">
         <Button
           small-btn-activity
           text-semi-bold
           text-btn="Convert to client"
           @click="convertToClient"
         />
-        <Button
-          small-btn-gray
-          text-semi-bold
-          text-btn="Blueprint report"
-          @click="blueprintReport"
-        />
+
+        <router-link
+          :to="{ name: 'bluereport', params: { id: user.id } }"
+          class="pl-2.5 font-medium"
+        >
+          <Button small-btn-gray text-semi-bold text-btn="Blueprint report" />
+        </router-link>
+      </div>
+      <div v-else class="flex justify-end pt-5">
+        <router-link
+          :to="{ name: 'clientreport', params: { id: user.id } }"
+          class="pl-2.5 font-medium"
+        >
+          <Button small-btn-gray text-semi-bold text-btn="Client report" />
+        </router-link>
       </div>
     </div>
   </div>
@@ -129,15 +138,11 @@ export default {
       console.log('convertToClient')
     }
 
-    const blueprintReport = () => {
-      console.log('blueprintReport')
-    }
     return {
       IconProspectAge,
       IconTotal,
       IconGoal,
       convertToClient,
-      blueprintReport,
       prospectId,
     }
   },

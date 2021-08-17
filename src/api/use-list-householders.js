@@ -1,7 +1,7 @@
 import { useQuery } from 'vue-query'
 import { UserFullInfo } from '@/dto/UserFullInfo'
 import { MembersListPagination } from '@/dto/MembersListPagination'
-import { fetchMembersList } from './vueQuery/fetch-members'
+import { fetchMembersList } from './vueQuery/fetch-members-list'
 import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 
