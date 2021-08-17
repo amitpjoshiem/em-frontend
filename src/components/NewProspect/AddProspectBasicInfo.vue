@@ -1,58 +1,53 @@
 <template>
-  <el-form
-    ref="form"
-    :model="ruleForm"
-    status-icon
-    :rules="rules"
-    label-width="120px"
-    class="demo-ruleForm"
-  >
-    <el-form-item label="Password" prop="pass">
-      <el-input
-        v-model="ruleForm.pass"
-        type="password"
-        autocomplete="off"
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="Confirm" prop="checkPass">
-      <el-input
-        v-model="ruleForm.checkPass"
-        type="password"
-        autocomplete="off"
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="Age" prop="age">
-      <el-input v-model.number="ruleForm.age"></el-input>
-    </el-form-item>
-    <el-form-item
-      v-for="(domain, index) in ruleForm.domains"
-      :key="domain.key"
-      :label="'Domain' + index"
-      :prop="'domains.' + index + '.value'"
+  <div class="px-16">
+    <el-form
+      ref="form"
+      :model="ruleForm"
+      status-icon
+      :rules="rules"
+      class="demo-ruleForm"
+      label-position="top"
     >
-      <el-input v-model="domain.value"></el-input
-      ><el-button @click.prevent="removeDomain(domain)">Delete</el-button>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')"
-        >Submit</el-button
+      <div class="pb-5">General</div>
+      <el-form-item label="Resources">
+        <el-radio-group v-model="ruleForm.retired">
+          <el-radio :label="true">Yes</el-radio>
+          <el-radio :label="false">No</el-radio>
+        </el-radio-group>
+      </el-form-item>
+
+      <el-form-item label="Age" prop="age">
+        <el-input v-model.number="ruleForm.age"></el-input>
+      </el-form-item>
+      <el-form-item
+        v-for="(domain, index) in ruleForm.domains"
+        :key="domain.key"
+        :label="'Domain' + index"
+        :prop="'domains.' + index + '.value'"
       >
-      <el-button @click="resetForm('ruleForm')">Reset</el-button>
-      <el-button @click="addDomain">New domain</el-button>
-    </el-form-item>
-  </el-form>
+        <el-input v-model="domain.value" />
+        <el-button @click.prevent="removeDomain(domain)">Delete</el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('ruleForm')">
+          Submit
+        </el-button>
+        <el-button @click="resetForm('ruleForm')">Reset</el-button>
+        <el-button @click="addDomain">New domain</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
 import { reactive, ref } from 'vue-demi'
 export default {
-  name: 'TestProspect',
+  name: 'AddProspectBasicInfo',
   setup() {
     const form = ref(null)
     const ruleForm = reactive({
-      pass: '',
-      checkPass: '',
       age: '',
+      retired: false,
       domains: [
         {
           key: 1,
@@ -60,15 +55,6 @@ export default {
         },
       ],
     })
-    const validatePass2 = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Please input the password again'))
-      } else if (value !== ruleForm.pass) {
-        callback(new Error("Two inputs don't match!"))
-      } else {
-        callback()
-      }
-    }
     const submitForm = () => {
       form.value.validate((valid) => {
         if (valid) {
@@ -117,7 +103,6 @@ export default {
           trigger: 'blur',
         },
       ],
-      checkPass: [{ validator: validatePass2, trigger: 'blur' }],
       age: [
         {
           type: 'number',
@@ -147,3 +132,13 @@ export default {
   },
 }
 </script>
+
+<style>
+.el-form-item__label {
+  line-height: normal;
+  padding-bottom: 8px;
+  color: #424450;
+  font-size: 13px;
+  font-weight: 500;
+}
+</style>
