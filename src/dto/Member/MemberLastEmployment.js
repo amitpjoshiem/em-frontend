@@ -1,4 +1,4 @@
-class ProspectLastEmployment {
+class MemberLastEmployment {
   constructor({ company_name, id, occupation, years }) {
     this.companyName = company_name
     this.id = id
@@ -7,4 +7,4 @@ class ProspectLastEmployment {
   }
 }
 
-export { ProspectLastEmployment }
+export { MemberLastEmployment }

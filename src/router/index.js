@@ -28,9 +28,17 @@ const routes = [
             name: 'basic-information',
             component: () =>
               import(
-                /* webpackChunkName: "newprospect" */ '../components/NewProspect/TestProspect.vue'
+                /* webpackChunkName: "newprospect" */ '../components/NewProspect/AddProspectBasicInfo.vue'
               ),
           },
+          // {
+          //   path: 'basic',
+          //   name: 'basic-information',
+          //   component: () =>
+          //     import(
+          //       /* webpackChunkName: "newprospect" */ '../components/NewProspect/TestProspect.vue'
+          //     ),
+          // },
           {
             path: 'assets',
             name: 'assets-information',
@@ -72,11 +80,19 @@ const routes = [
         ],
       },
       {
-        path: 'blue-report',
+        path: 'blue-report/:id',
         name: 'bluereport',
         component: () =>
           import(
             /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectBlueReport.vue'
+          ),
+      },
+      {
+        path: 'client-report/:id',
+        name: 'clientreport',
+        component: () =>
+          import(
+            /* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'
           ),
       },
       {

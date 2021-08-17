@@ -1,23 +1,23 @@
 <template>
   <el-form
+    ref="form"
     :model="ruleForm"
     status-icon
     :rules="rules"
-    ref="form"
     label-width="120px"
     class="demo-ruleForm"
   >
     <el-form-item label="Password" prop="pass">
       <el-input
-        type="password"
         v-model="ruleForm.pass"
+        type="password"
         autocomplete="off"
       ></el-input>
     </el-form-item>
     <el-form-item label="Confirm" prop="checkPass">
       <el-input
-        type="password"
         v-model="ruleForm.checkPass"
+        type="password"
         autocomplete="off"
       ></el-input>
     </el-form-item>
@@ -26,8 +26,8 @@
     </el-form-item>
     <el-form-item
       v-for="(domain, index) in ruleForm.domains"
-      :label="'Domain' + index"
       :key="domain.key"
+      :label="'Domain' + index"
       :prop="'domains.' + index + '.value'"
     >
       <el-input v-model="domain.value"></el-input

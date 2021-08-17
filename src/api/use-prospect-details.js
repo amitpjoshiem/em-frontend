@@ -1,11 +1,11 @@
 import { useQuery } from 'vue-query'
-import { ProspectDetailsUser } from '@/dto/Prospect/ProspectDetailsUser'
-import { ProspectDetailsHouse } from '@/dto/Prospect/ProspectDetailsHouse'
-import { ProspectDetailsSpouse } from '@/dto/Prospect/ProspectDetailsSpouse'
-import { ProspectDetailsOther } from '@/dto/Prospect/ProspectDetailsOther'
-import { ProspectLastEmployment } from '@/dto/Prospect/ProspectLastEmployment'
-import { SpouseLastEmployment } from '@/dto/Prospect/SpouseLastEmployment'
-import { fetchProspect } from '@/api/vueQuery/fetch-prospect'
+import { MemberDetailsUser } from '@/dto/Member/MemberDetailsUser'
+import { MemberDetailsHouse } from '@/dto/Member/MemberDetailsHouse'
+import { MemberDetailsSpouse } from '@/dto/Member/MemberDetailsSpouse'
+import { MemberDetailsOther } from '@/dto/Member/MemberDetailsOther'
+import { MemberLastEmployment } from '@/dto/Member/MemberLastEmployment'
+import { SpouseLastEmployment } from '@/dto/Member/SpouseLastEmployment'
+import { fetchMember } from '@/api/vueQuery/fetch-member'
 import { dataFactory } from '@/utils/dataFactory'
 // import { dataFactoryWithGet } from '@/utils/dataFactoryWithGet'
 import { reactive } from 'vue'
@@ -18,18 +18,18 @@ export const useProspectDetails = (id) => {
   let employmentSpouse = reactive({})
 
   const { isLoading, isError, data } = useQuery(
-    ['members', id],
+    ['member', id],
     () => {
-      return fetchProspect(id)
+      return fetchMember(id)
     },
     {
       select: (data) => {
-        spouse.value = dataFactory(ProspectDetailsSpouse, data.data.spouse.data)
-        house.value = dataFactory(ProspectDetailsHouse, data.data.house.data)
-        other.value = dataFactory(ProspectDetailsOther, data.data.other.data)
+        spouse.value = dataFactory(MemberDetailsSpouse, data.data.spouse.data)
+        house.value = dataFactory(MemberDetailsHouse, data.data.house.data)
+        other.value = dataFactory(MemberDetailsOther, data.data.other.data)
 
         employmentProspect.value = dataFactory(
-          ProspectLastEmployment,
+          MemberLastEmployment,
           data.data.employmentHistory.data
         )
 
@@ -45,7 +45,7 @@ export const useProspectDetails = (id) => {
           data.data.spouse?.data?.employmentHistory?.data
         )
 
-        return new ProspectDetailsUser(data.data)
+        return new MemberDetailsUser(data.data)
       },
     }
   )
