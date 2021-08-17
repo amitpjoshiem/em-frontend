@@ -264,29 +264,65 @@
 
       <div class="px-16 mt-7">
         <span class="text-main text-xl font-semibold">Employment history</span>
+        <div class="mt-5">
+          <span class="text-gray03 text-xs">Contact prospect</span>
+        </div>
+
+        <el-form-item
+          v-for="(eh, index) in ruleForm.employmentHistory"
+          :key="index"
+        >
+          <el-form-item
+            :prop="'employmentHistory.' + index + '.company_name'"
+            label="Company name"
+            class="w-full"
+          >
+            <el-input v-model="eh.company_name" />
+          </el-form-item>
+          <el-form-item
+            :prop="'employmentHistory.' + index + '.occupation'"
+            label="Occupation"
+            class="w-full px-5"
+          >
+            <el-input v-model="eh.occupation" />
+          </el-form-item>
+          <el-form-item
+            :prop="'employmentHistory.' + index + '.years'"
+            label="Years"
+            class="w-full"
+          >
+            <el-input v-model="eh.years" />
+          </el-form-item>
+          <div>
+            <div
+              v-if="index === ruleForm.employmentHistory.length - 1"
+              class="add-employment cursor-pointer"
+              @click="addEmployment"
+            >
+              +
+            </div>
+            <div
+              v-else
+              class="add-employment cursor-pointer"
+              @click="removeEmployment(index)"
+            >
+              -
+            </div>
+          </div>
+        </el-form-item>
       </div>
 
-      <!-- <el-form-item
-        v-for="(domain, index) in ruleForm.domains"
-        :key="domain.key"
-        :label="'Domain' + index"
-        :prop="'domains.' + index + '.value'"
-      >
-        <el-input v-model="domain.value" />
-        <el-button @click.prevent="removeDomain(domain)">Delete</el-button>
-      </el-form-item> -->
-      <el-form-item>
+      <el-form-item class="mt-20">
         <el-button type="primary" @click="submitForm('ruleForm')">
           Submit
         </el-button>
-        <!-- <el-button @click="addDomain">New domain</el-button> -->
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import { reactive, ref } from 'vue-demi'
+import { reactive, ref } from 'vue'
 export default {
   name: 'AddProspectBasicInfo',
   setup() {
@@ -320,13 +356,15 @@ export default {
         monthly_payment: '',
         total_monthly_expenses: '',
       },
-      // domains: [
-      //   {
-      //     key: 1,
-      //     value: '',
-      //   },
-      // ],
+      employmentHistory: [
+        {
+          company_name: '',
+          occupation: '',
+          years: '',
+        },
+      ],
     })
+
     const submitForm = () => {
       form.value.validate((valid) => {
         if (valid) {
@@ -340,24 +378,42 @@ export default {
       })
     }
 
-    // const removeDomain = (item) => {
-    //   var index = ruleForm.domains.indexOf(item)
-    //   if (index !== -1) {
-    //     ruleForm.domains.splice(index, 1)
-    //   }
-    // }
+    const removeEmployment = (index) => {
+      ruleForm.employmentHistory.splice(index, 1)
+    }
 
-    // const domainRule = [
-    //   { required: true, message: 'domain can not be null', trigger: 'blur' },
-    // ]
-    // const addDomain = () => {
-    //   const length = ruleForm.domains.length
-    //   ruleForm.domains.push({
-    //     key: Date.now(),
-    //     value: '',
-    //   })
-    //   rules['domains.' + length + '.value'] = domainRule
-    // }
+    const employmentHistoryRule = {
+      company_name: {
+        required: true,
+        message: 'Company name can not be null',
+        trigger: 'blur',
+      },
+      occupation: {
+        required: true,
+        message: 'Occupation can not be null',
+        trigger: 'blur',
+      },
+      years: {
+        required: true,
+        message: 'Years can not be null',
+        trigger: 'blur',
+      },
+    }
+
+    const addEmployment = () => {
+      const length = ruleForm.employmentHistory.length
+      ruleForm.employmentHistory.push({
+        company_name: '',
+        occupation: '',
+        years: '',
+      })
+      rules['employmentHistory.' + length + '.company_name'] =
+        employmentHistoryRule.company_name
+      rules['employmentHistory.' + length + '.occupation'] =
+        employmentHistoryRule.occupation
+      rules['employmentHistory.' + length + '.years'] =
+        employmentHistoryRule.years
+    }
 
     const rules = {
       firstName: [
@@ -500,7 +556,9 @@ export default {
           trigger: 'blur',
         },
       ],
-      // 'domains.0.value': domainRule,
+      'employmentHistory.0.company_name': employmentHistoryRule.company_name,
+      'employmentHistory.0.occupation': employmentHistoryRule.occupation,
+      'employmentHistory.0.years': employmentHistoryRule.years,
     }
 
     return {
@@ -508,8 +566,8 @@ export default {
       rules,
       form,
       submitForm,
-      // removeDomain,
-      // addDomain,
+      removeEmployment,
+      addEmployment,
     }
   },
 }
@@ -539,5 +597,15 @@ export default {
 /* Firefox */
 .el-input__inner[type='number'] {
   -moz-appearance: textfield;
+}
+
+.el-form-item__content {
+  display: flex;
+}
+
+.add-employment {
+  position: absolute;
+  top: 36px;
+  margin-left: 10px;
 }
 </style>
