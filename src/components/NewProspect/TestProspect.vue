@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue-demi'
+import { reactive, ref } from 'vue'
 export default {
   name: 'TestProspect',
   setup() {
