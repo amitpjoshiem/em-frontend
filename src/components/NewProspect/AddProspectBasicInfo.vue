@@ -310,6 +310,53 @@
             </div>
           </div>
         </el-form-item>
+
+        <div class="mt-5">
+          <span class="text-gray03 text-xs">Spouse</span>
+        </div>
+
+        <el-form-item
+          v-for="(eh, index) in ruleForm.spouse.employmentHistory"
+          :key="index"
+        >
+          <el-form-item
+            :prop="'employmentHistory.' + index + '.company_name'"
+            label="Company name"
+            class="w-full"
+          >
+            <el-input v-model="eh.company_name" />
+          </el-form-item>
+          <el-form-item
+            :prop="'employmentHistory.' + index + '.occupation'"
+            label="Occupation"
+            class="w-full px-5"
+          >
+            <el-input v-model="eh.occupation" />
+          </el-form-item>
+          <el-form-item
+            :prop="'employmentHistory.' + index + '.years'"
+            label="Years"
+            class="w-full"
+          >
+            <el-input v-model="eh.years" />
+          </el-form-item>
+          <div>
+            <div
+              v-if="index === ruleForm.spouse.employmentHistory.length - 1"
+              class="add-employment cursor-pointer"
+              @click="addEmploymentSpouse"
+            >
+              +
+            </div>
+            <div
+              v-else
+              class="add-employment cursor-pointer"
+              @click="removeEmploymentSpouse(index)"
+            >
+              -
+            </div>
+          </div>
+        </el-form-item>
       </div>
 
       <el-form-item class="mt-20">
@@ -347,6 +394,13 @@ export default {
         retired: false,
         retirement_date: '',
         phone: '',
+        employmentHistory: [
+          {
+            company_name: '',
+            occupation: '',
+            years: '',
+          },
+        ],
       },
       house: {
         type: 'own',
@@ -382,6 +436,10 @@ export default {
       ruleForm.employmentHistory.splice(index, 1)
     }
 
+    const removeEmploymentSpouse = (index) => {
+      ruleForm.spouse.employmentHistory.splice(index, 1)
+    }
+
     const employmentHistoryRule = {
       company_name: {
         required: true,
@@ -403,6 +461,21 @@ export default {
     const addEmployment = () => {
       const length = ruleForm.employmentHistory.length
       ruleForm.employmentHistory.push({
+        company_name: '',
+        occupation: '',
+        years: '',
+      })
+      rules['employmentHistory.' + length + '.company_name'] =
+        employmentHistoryRule.company_name
+      rules['employmentHistory.' + length + '.occupation'] =
+        employmentHistoryRule.occupation
+      rules['employmentHistory.' + length + '.years'] =
+        employmentHistoryRule.years
+    }
+
+    const addEmploymentSpouse = () => {
+      const length = ruleForm.spouse.employmentHistory.length
+      ruleForm.spouse.employmentHistory.push({
         company_name: '',
         occupation: '',
         years: '',
@@ -568,6 +641,8 @@ export default {
       submitForm,
       removeEmployment,
       addEmployment,
+      addEmploymentSpouse,
+      removeEmploymentSpouse,
     }
   },
 }
