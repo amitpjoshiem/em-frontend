@@ -262,7 +262,7 @@
       </div>
       <!-- Housing Information -->
 
-      <div class="px-16 mt-7">
+      <div class="px-16 mt-7 border-b">
         <span class="text-main text-xl font-semibold">Employment history</span>
         <div class="mt-5">
           <span class="text-gray03 text-xs">Contact prospect</span>
@@ -318,6 +318,7 @@
         <el-form-item
           v-for="(eh, index) in ruleForm.spouse.employmentHistory"
           :key="index"
+          class="mb-10"
         >
           <el-form-item
             :prop="'spouse.employmentHistory.' + index + '.company_name'"
@@ -356,6 +357,47 @@
               -
             </div>
           </div>
+        </el-form-item>
+      </div>
+
+      <div class="px-16 mt-7">
+        <span class="text-main text-xl font-semibold">Other</span>
+        <el-form-item label="Risk tolerance?" class="mt-6">
+          <el-radio-group v-model="ruleForm.other.risk">
+            <el-radio label="conservative">Conservative</el-radio>
+            <el-radio label="moderately_conservative">
+              Moderately Conservative
+            </el-radio>
+            <el-radio label="moderate">Moderate</el-radio>
+            <el-radio label="moderately_aggressive">
+              Moderately Aggressive
+            </el-radio>
+            <el-radio label="aggressive">Aggressive</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item
+          label="Does the prospect have any specific questions to discuss?"
+          prop="questions"
+        >
+          <el-input v-model="ruleForm.other.questions" type="textarea" />
+        </el-form-item>
+        <el-form-item label="Goal for retiretment" prop="retirement">
+          <el-input v-model="ruleForm.other.retirement" type="textarea" />
+        </el-form-item>
+        <el-form-item
+          label="Goal for retiretment money"
+          prop="retirement_money"
+        >
+          <el-input v-model="ruleForm.other.retirement_money" type="textarea" />
+        </el-form-item>
+
+        <el-form-item
+          label="Does the prospect currently work with the advisor?"
+        >
+          <el-radio-group v-model="ruleForm.other.work_with_advisor">
+            <el-radio :label="true">Yes</el-radio>
+            <el-radio :label="false">No</el-radio>
+          </el-radio-group>
         </el-form-item>
       </div>
 
@@ -417,6 +459,13 @@ export default {
           years: '',
         },
       ],
+      other: {
+        risk: 'conservative',
+        questions: '',
+        retirement: '',
+        retirement_money: '',
+        work_with_advisor: true,
+      },
     })
 
     const submitForm = () => {
@@ -686,5 +735,11 @@ export default {
   position: absolute;
   top: 36px;
   margin-left: 10px;
+}
+
+.el-radio__label {
+  color: #424450;
+  font-size: 13px;
+  font-weight: normal;
 }
 </style>
