@@ -121,7 +121,7 @@
         <div class="flex">
           <el-form-item
             label="First name"
-            prop="spouseFirstName"
+            prop="spouse.firstName"
             class="w-5/12"
           >
             <el-input
@@ -132,7 +132,7 @@
 
           <el-form-item
             label="Last name"
-            prop="spouseLastName"
+            prop="spouse.lastName"
             class="w-5/12 px-5"
           >
             <el-input
@@ -141,7 +141,7 @@
             />
           </el-form-item>
           <el-form-item
-            prop="spouseBirthdate"
+            prop="spouse.birthdate"
             label="Date of birth"
             class="w-2/12"
           >
@@ -154,14 +154,14 @@
           </el-form-item>
         </div>
         <div class="flex my-5">
-          <el-form-item label="E-mail" prop="spouseEmail" class="w-5/12">
+          <el-form-item label="E-mail" prop="spouse.email" class="w-5/12">
             <el-input
               v-model.email="ruleForm.spouse.email"
               placeholder="Enter spouse’s e-mail"
             />
           </el-form-item>
 
-          <el-form-item label="Phone" prop="spousePhone" class="w-5/12 px-5">
+          <el-form-item label="Phone" prop="spouse.phone" class="w-5/12 px-5">
             <el-input
               v-model="ruleForm.spouse.phone"
               placeholder="Enter spouse’s phone number"
@@ -169,7 +169,7 @@
           </el-form-item>
           <el-form-item
             v-if="ruleForm.spouse.retired"
-            prop="spouseRetiretment"
+            prop="spouse.retiretment"
             label="Retiretment date"
             class="w-2/12"
           >
@@ -197,12 +197,11 @@
           <el-form-item
             v-if="ruleForm.house.type !== 'rent'"
             label="Market value"
-            prop="marketValue"
+            prop="house.market_value"
             class="w-5/12 pr-5"
           >
             <el-input
               v-model="ruleForm.house.market_value"
-              type="number"
               placeholder="$123000"
             />
           </el-form-item>
@@ -211,7 +210,7 @@
           <el-form-item
             v-if="ruleForm.house.type !== 'rent'"
             label="Total debt"
-            prop="totalDebt"
+            prop="house.totalDebt"
             class="w-5/12 pr-5"
           >
             <el-input
@@ -223,7 +222,7 @@
           <el-form-item
             v-if="ruleForm.house.type !== 'rent'"
             label="Remaining mortgage amount"
-            prop="remaining"
+            prop="house.remaining"
             class="w-5/12 pr-5"
           >
             <el-input
@@ -237,7 +236,7 @@
           <el-form-item
             v-if="ruleForm.house.type === 'rent'"
             label="Monthly payment"
-            prop="monthlyPayment"
+            prop="house.monthlyPayment"
             class="w-5/12 pr-5"
           >
             <el-input
@@ -249,7 +248,7 @@
           <el-form-item
             v-if="ruleForm.house.type === 'rent'"
             label="Total monthly expences"
-            prop="totalMonthly"
+            prop="house.totalMonthly"
             class="w-5/12 pr-5"
           >
             <el-input
@@ -412,6 +411,7 @@
 
 <script>
 import { reactive, ref } from 'vue'
+
 export default {
   name: 'AddProspectBasicInfo',
   setup() {
@@ -514,12 +514,11 @@ export default {
         occupation: '',
         years: '',
       })
-      rules['employmentHistory.' + length + '.company_name'] =
-        employmentHistoryRule.company_name
-      rules['employmentHistory.' + length + '.occupation'] =
-        employmentHistoryRule.occupation
-      rules['employmentHistory.' + length + '.years'] =
-        employmentHistoryRule.years
+      rules.employmentHistory[length] = {
+        company_name: employmentHistoryRule.company_name,
+        occupation: employmentHistoryRule.occupation,
+        years: employmentHistoryRule.years,
+      }
     }
 
     const addEmploymentSpouse = () => {
@@ -529,12 +528,22 @@ export default {
         occupation: '',
         years: '',
       })
-      rules['employmentSpouse.' + length + '.company_name'] =
-        employmentHistoryRule.company_name
-      rules['employmentSpouse.' + length + '.occupation'] =
-        employmentHistoryRule.occupation
-      rules['employmentSpouse.' + length + '.years'] =
-        employmentHistoryRule.years
+      rules.spouse.employmentHistory[length] = {
+        company_name: employmentHistoryRule.company_name,
+        occupation: employmentHistoryRule.occupation,
+        years: employmentHistoryRule.years,
+      }
+    }
+
+    const validateNumber = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('The field cannot be empty'))
+      }
+      if (isNaN(value)) {
+        callback(new Error('Data is not a number'))
+      } else {
+        callback()
+      }
     }
 
     const rules = {
@@ -608,83 +617,126 @@ export default {
         },
         { trigger: 'blur' },
       ],
-      spouseFirstName: [
+      spouse: {
+        firstName: [
+          {
+            required: true,
+            message: 'Please input spouse first name',
+            trigger: 'blur',
+          },
+          { min: 2, message: 'Length should be min 2', trigger: 'blur' },
+        ],
+        lastName: [
+          {
+            required: true,
+            message: 'Please input spouse last name',
+            trigger: 'blur',
+          },
+          { min: 2, message: 'Length should be 2', trigger: 'blur' },
+        ],
+        birthdate: [
+          {
+            type: 'date',
+            required: true,
+            message: 'Please pick a date',
+            trigger: 'change',
+          },
+        ],
+        email: [
+          { type: 'string', required: true, message: 'Please spouse email' },
+        ],
+        phone: [
+          { type: 'string', required: true, message: 'Please spouse phone' },
+        ],
+        employmentHistory: [
+          {
+            company_name: [
+              {
+                type: 'string',
+                required: true,
+                message: 'Please spouse email',
+              },
+            ],
+            occupation: [
+              {
+                type: 'string',
+                required: true,
+                message: 'Please spouse email',
+              },
+            ],
+            years: [
+              {
+                type: 'string',
+                required: true,
+                message: 'Please spouse email',
+              },
+            ],
+          },
+        ],
+      },
+      house: {
+        market_value: [
+          {
+            validator: validateNumber,
+            trigger: 'blur',
+            required: true,
+          },
+        ],
+        totalDebt: [
+          {
+            validator: validateNumber,
+            trigger: 'blur',
+            required: true,
+          },
+        ],
+        remaining: [
+          {
+            validator: validateNumber,
+            trigger: 'blur',
+            required: true,
+          },
+        ],
+        monthlyPayment: [
+          {
+            validator: validateNumber,
+            trigger: 'blur',
+            required: true,
+          },
+        ],
+        totalMonthly: [
+          {
+            validator: validateNumber,
+            trigger: 'blur',
+            required: true,
+          },
+        ],
+      },
+
+      employmentHistory: [
         {
-          required: true,
-          message: 'Please input spouse first name',
-          trigger: 'blur',
-        },
-        { min: 2, message: 'Length should be min 2', trigger: 'blur' },
-      ],
-      spouseLastName: [
-        {
-          required: true,
-          message: 'Please input spouse last name',
-          trigger: 'blur',
-        },
-        { min: 2, message: 'Length should be 2', trigger: 'blur' },
-      ],
-      spouseBirthdate: [
-        {
-          type: 'date',
-          required: true,
-          message: 'Please pick a date',
-          trigger: 'change',
-        },
-      ],
-      spouseEmail: [
-        { type: 'string', required: true, message: 'Please spouse email' },
-      ],
-      spousePhone: [
-        { type: 'string', required: true, message: 'Please spouse phone' },
-      ],
-      marketValue: [
-        {
-          type: 'number',
-          required: true,
-          message: 'Please input market value',
-          trigger: 'blur',
+          company_name: [
+            {
+              type: 'string',
+              required: true,
+              message: 'Please spouse email',
+            },
+          ],
+          occupation: [
+            {
+              type: 'string',
+              required: true,
+              message: 'Please spouse email',
+            },
+          ],
+          years: [
+            {
+              type: 'string',
+              required: true,
+              message: 'Please spouse email',
+            },
+          ],
         },
       ],
-      totalDebt: [
-        {
-          type: 'number',
-          required: true,
-          message: 'Please input total debt',
-          trigger: 'blur',
-        },
-      ],
-      remaining: [
-        {
-          type: 'number',
-          required: true,
-          message: 'Please input remaining mortgage amount',
-          trigger: 'blur',
-        },
-      ],
-      monthlyPayment: [
-        {
-          type: 'number',
-          required: true,
-          message: 'Please input remaining monthly payment',
-          trigger: 'blur',
-        },
-      ],
-      totalMonthly: [
-        {
-          type: 'number',
-          required: true,
-          message: 'Please input total monthly expenses',
-          trigger: 'blur',
-        },
-      ],
-      'employmentHistory.0.company_name': employmentHistoryRule.company_name,
-      'employmentHistory.0.occupation': employmentHistoryRule.occupation,
-      'employmentHistory.0.years': employmentHistoryRule.years,
-      'spouse.employmentHistory.0.company_name':
-        employmentHistoryRule.company_name,
-      'spouse.employmentHistory.0.occupation': employmentHistoryRule.occupation,
-      'spouse.employmentHistory.0.years': employmentHistoryRule.years,
     }
 
     return {
@@ -700,46 +752,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.el-form-item__label {
-  line-height: normal;
-  padding-bottom: 8px;
-  color: #424450;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.el-input__inner::placeholder {
-  font-size: 13px;
-  color: #aab5cf;
-}
-
-/* Chrome, Safari, Edge, Opera */
-.el-input__inner::-webkit-outer-spin-button,
-.el-input__inner::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-.el-input__inner[type='number'] {
-  -moz-appearance: textfield;
-}
-
-.el-form-item__content {
-  display: flex;
-}
-
-.add-employment {
-  position: absolute;
-  top: 36px;
-  margin-left: 10px;
-}
-
-.el-radio__label {
-  color: #424450;
-  font-size: 13px;
-  font-weight: normal;
-}
-</style>
