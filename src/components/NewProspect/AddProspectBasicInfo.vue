@@ -320,21 +320,21 @@
           :key="index"
         >
           <el-form-item
-            :prop="'employmentHistory.' + index + '.company_name'"
+            :prop="'spouse.employmentHistory.' + index + '.company_name'"
             label="Company name"
             class="w-full"
           >
             <el-input v-model="eh.company_name" />
           </el-form-item>
           <el-form-item
-            :prop="'employmentHistory.' + index + '.occupation'"
+            :prop="'spouse.employmentHistory.' + index + '.occupation'"
             label="Occupation"
             class="w-full px-5"
           >
             <el-input v-model="eh.occupation" />
           </el-form-item>
           <el-form-item
-            :prop="'employmentHistory.' + index + '.years'"
+            :prop="'spouse.employmentHistory.' + index + '.years'"
             label="Years"
             class="w-full"
           >
@@ -480,11 +480,11 @@ export default {
         occupation: '',
         years: '',
       })
-      rules['employmentHistory.' + length + '.company_name'] =
+      rules['employmentSpouse.' + length + '.company_name'] =
         employmentHistoryRule.company_name
-      rules['employmentHistory.' + length + '.occupation'] =
+      rules['employmentSpouse.' + length + '.occupation'] =
         employmentHistoryRule.occupation
-      rules['employmentHistory.' + length + '.years'] =
+      rules['employmentSpouse.' + length + '.years'] =
         employmentHistoryRule.years
     }
 
@@ -632,6 +632,10 @@ export default {
       'employmentHistory.0.company_name': employmentHistoryRule.company_name,
       'employmentHistory.0.occupation': employmentHistoryRule.occupation,
       'employmentHistory.0.years': employmentHistoryRule.years,
+      'spouse.employmentHistory.0.company_name':
+        employmentHistoryRule.company_name,
+      'spouse.employmentHistory.0.occupation': employmentHistoryRule.occupation,
+      'spouse.employmentHistory.0.years': employmentHistoryRule.years,
     }
 
     return {
