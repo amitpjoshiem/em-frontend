@@ -1,9 +1,9 @@
 <template>
   <div class="flex pt-5 pb-5 justify-between">
     <div class="text-2xl font-medium">
-      <span v-if="!isLoadingUserProfile"
-        >Welcome, {{ userProfile.firstName }} {{ userProfile.lastName }}</span
-      >
+      <span v-if="!isLoadingUserProfile">
+        Welcome, {{ userProfile.firstName }} {{ userProfile.lastName }}
+      </span>
     </div>
     <ShareBtn />
   </div>

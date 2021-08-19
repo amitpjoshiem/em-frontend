@@ -65,9 +65,9 @@ export default {
 
     const getNameTitle = computed(() => {
       if (member.value.married) {
-        return member.value.firstName + ' &amp; ' + spouse.value.spouseFullName
+        return member.value.name + ' &amp; ' + spouse.value.name
       }
-      return member.value.userFullName
+      return member.value.name
     })
 
     return {

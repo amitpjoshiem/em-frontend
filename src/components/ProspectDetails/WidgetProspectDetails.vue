@@ -12,7 +12,7 @@
               }"
               class="text-sm text-main font-medium"
             >
-              {{ user.firstName }} {{ user.lastName }}
+              {{ user.name }}
             </router-link>
             <span class="text-small text-activity-item font-medium uppercase">
               {{ user.type }}
@@ -39,7 +39,7 @@
           <span class="ml-2 text-xs text-gray03">Age</span>
         </div>
         <div class="text-sm">
-          <span class="text-gray03 pr-px">{{ user.firstName.charAt(0) }}</span>
+          <span class="text-gray03 pr-px">{{ user.name.charAt(0) }}</span>
           <span class="text-main pr-2">{{ user.age }}</span>
         </div>
       </div>

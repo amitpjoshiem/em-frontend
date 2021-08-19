@@ -4,10 +4,11 @@
       {{ user.name }}
     </div>
     <div class="w-2/12 item">
-      {{ prospect.firstName }} {{ prospect.lastName }}
+      {{ prospect.name }}
     </div>
     <div class="w-2/12 item">
-      {{ userProfile.firstName + ' ' + userProfile.lastName }}
+      {{ userProfile.name }}
+      <!-- {{ userProfile.firstName + ' ' + userProfile.lastName }} -->
     </div>
     <div class="w-2/12 item">{{ user.amount }}</div>
     <div class="w-2/12 item">{{ user.stage }}</div>

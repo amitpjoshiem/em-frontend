@@ -2,8 +2,7 @@ class MemberDetailsSpouse {
   constructor({
     id,
     type,
-    first_name,
-    last_name,
+    name,
     email,
     birthday,
     age,
@@ -21,8 +20,7 @@ class MemberDetailsSpouse {
   }) {
     this.id = id
     this.type = type
-    this.firstName = first_name
-    this.lastName = last_name
+    this.name = name
     this.email = email
     this.birthday = birthday
     this.age = age
@@ -37,12 +35,6 @@ class MemberDetailsSpouse {
     this.updatedAt = updated_at
     this.realId = real_id
     this.deletedAt = deleted_at
-  }
-
-  get spouseFullName() {
-    return this.lastName && this.firstName
-      ? this.lastName + ' ' + this.firstName
-      : ''
   }
 }
 
