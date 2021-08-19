@@ -1,0 +1,203 @@
+const rules = {
+  name: [
+    {
+      required: true,
+      message: 'Please input prospect name',
+      trigger: 'blur',
+    },
+    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
+  ],
+  email: [{ type: 'string', required: true, message: 'Please email' }],
+  phone: [{ type: 'string', required: true, message: 'Please phone' }],
+  birthday: [
+    {
+      type: 'date',
+      required: true,
+      message: 'Please pick a date',
+      trigger: 'change',
+    },
+  ],
+  retiretment: [
+    {
+      type: 'date',
+      required: true,
+      message: 'Please pick a date',
+      trigger: 'change',
+    },
+  ],
+
+  address: [
+    {
+      required: true,
+      message: 'Please input address',
+      trigger: 'blur',
+    },
+    { trigger: 'blur' },
+  ],
+
+  city: [
+    {
+      required: true,
+      message: 'Please input city',
+      trigger: 'blur',
+    },
+    { trigger: 'blur' },
+  ],
+
+  state: [
+    {
+      required: true,
+      message: 'Please input state',
+      trigger: 'blur',
+    },
+    { trigger: 'blur' },
+  ],
+
+  zip: [
+    {
+      required: true,
+      message: 'Please ZIP',
+      trigger: 'blur',
+    },
+    { trigger: 'blur' },
+  ],
+  spouse: {
+    name: [
+      {
+        required: true,
+        message: 'Please input spouse name',
+        trigger: 'blur',
+      },
+      { min: 1, message: 'Length should be min 1', trigger: 'blur' },
+    ],
+    birthday: [
+      {
+        type: 'date',
+        required: true,
+        message: 'Please pick a date',
+        trigger: 'change',
+      },
+    ],
+    email: [{ type: 'string', required: true, message: 'Please spouse email' }],
+    phone: [{ type: 'string', required: true, message: 'Please spouse phone' }],
+    employmentHistory: [
+      {
+        company_name: [
+          {
+            type: 'string',
+            required: true,
+            message: 'Please spouse email',
+          },
+        ],
+        occupation: [
+          {
+            type: 'string',
+            required: true,
+            message: 'Please spouse email',
+          },
+        ],
+        years: [
+          {
+            type: 'string',
+            required: true,
+            message: 'Please spouse email',
+          },
+        ],
+      },
+    ],
+  },
+  house: {
+    market_value: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+        required: true,
+      },
+    ],
+    total_debt: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+        required: true,
+      },
+    ],
+    remaining_mortgage_amount: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+        required: true,
+      },
+    ],
+    monthly_payment: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+        required: true,
+      },
+    ],
+    total_monthly_expenses: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+        required: true,
+      },
+    ],
+  },
+
+  employmentHistory: [
+    {
+      company_name: [
+        {
+          type: 'string',
+          required: true,
+          message: 'Please spouse email',
+        },
+      ],
+      occupation: [
+        {
+          type: 'string',
+          required: true,
+          message: 'Please spouse email',
+        },
+      ],
+      years: [
+        {
+          type: 'string',
+          required: true,
+          message: 'Please spouse email',
+        },
+      ],
+    },
+  ],
+}
+
+const employmentHistoryRule = {
+  company_name: {
+    required: true,
+    message: 'Company name can not be null',
+    trigger: 'blur',
+  },
+  occupation: {
+    required: true,
+    message: 'Occupation can not be null',
+    trigger: 'blur',
+  },
+  years: {
+    required: true,
+    message: 'Years can not be null',
+    trigger: 'blur',
+  },
+}
+
+function validateNumber(rule, value, callback) {
+  if (!value) {
+    callback(new Error('The field cannot be empty'))
+  }
+  if (isNaN(value)) {
+    callback(new Error('Data is not a number'))
+  } else {
+    callback()
+  }
+}
+
+export { rules, employmentHistoryRule }

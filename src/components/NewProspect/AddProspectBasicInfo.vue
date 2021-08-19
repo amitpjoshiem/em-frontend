@@ -27,22 +27,15 @@
         </div>
 
         <div class="flex">
-          <el-form-item label="First name" prop="firstName" class="w-5/12">
+          <el-form-item label="Name" prop="name" class="w-10/12 pr-5">
             <el-input
-              v-model="ruleForm.firstName"
-              placeholder="Enter prospect’s first name"
+              v-model="ruleForm.name"
+              placeholder="Enter prospect’s name"
             />
           </el-form-item>
-
-          <el-form-item label="Last name" prop="lastName" class="w-5/12 px-5">
-            <el-input
-              v-model="ruleForm.lastName"
-              placeholder="Enter prospect’s last name"
-            />
-          </el-form-item>
-          <el-form-item prop="birthdate" label="Date of birth" class="w-2/12">
+          <el-form-item prop="birthday" label="Date of birth" class="w-2/12">
             <el-date-picker
-              v-model="ruleForm.birthdate"
+              v-model="ruleForm.birthday"
               type="date"
               placeholder="Pick a date"
               style="width: 100%"
@@ -61,6 +54,7 @@
           <el-form-item label="Phone" prop="phone" class="w-5/12 px-5">
             <el-input
               v-model="ruleForm.phone"
+              v-maska="'(###) ###-####'"
               placeholder="Enter prospect’s phone number"
             />
           </el-form-item>
@@ -119,34 +113,19 @@
           </el-form-item>
         </div>
         <div class="flex">
-          <el-form-item
-            label="First name"
-            prop="spouse.firstName"
-            class="w-5/12"
-          >
+          <el-form-item label="Name" prop="spouse.name" class="w-10/12 pr-5">
             <el-input
-              v-model="ruleForm.spouse.firstName"
-              placeholder="Enter spouse’s first name"
-            />
-          </el-form-item>
-
-          <el-form-item
-            label="Last name"
-            prop="spouse.lastName"
-            class="w-5/12 px-5"
-          >
-            <el-input
-              v-model="ruleForm.spouse.lastName"
-              placeholder="Enter spouse’s last name"
+              v-model="ruleForm.spouse.name"
+              placeholder="Enter spouse’s name"
             />
           </el-form-item>
           <el-form-item
-            prop="spouse.birthdate"
+            prop="spouse.birthday"
             label="Date of birth"
             class="w-2/12"
           >
             <el-date-picker
-              v-model="ruleForm.spouse.birthdate"
+              v-model="ruleForm.spouse.birthday"
               type="date"
               placeholder="Pick a date"
               style="width: 100%"
@@ -164,6 +143,7 @@
           <el-form-item label="Phone" prop="spouse.phone" class="w-5/12 px-5">
             <el-input
               v-model="ruleForm.spouse.phone"
+              v-maska="'(###) ###-####'"
               placeholder="Enter spouse’s phone number"
             />
           </el-form-item>
@@ -210,24 +190,22 @@
           <el-form-item
             v-if="ruleForm.house.type !== 'rent'"
             label="Total debt"
-            prop="house.totalDebt"
+            prop="house.total_debt"
             class="w-5/12 pr-5"
           >
             <el-input
               v-model="ruleForm.house.total_debt"
-              type="number"
               placeholder="$123000"
             />
           </el-form-item>
           <el-form-item
             v-if="ruleForm.house.type !== 'rent'"
             label="Remaining mortgage amount"
-            prop="house.remaining"
+            prop="house.remaining_mortgage_amount"
             class="w-5/12 pr-5"
           >
             <el-input
               v-model="ruleForm.house.remaining_mortgage_amount"
-              type="number"
               placeholder="$123000"
             />
           </el-form-item>
@@ -236,24 +214,22 @@
           <el-form-item
             v-if="ruleForm.house.type === 'rent'"
             label="Monthly payment"
-            prop="house.monthlyPayment"
+            prop="house.monthly_payment"
             class="w-5/12 pr-5"
           >
             <el-input
               v-model="ruleForm.house.monthly_payment"
-              type="number"
               placeholder="$123000"
             />
           </el-form-item>
           <el-form-item
             v-if="ruleForm.house.type === 'rent'"
             label="Total monthly expences"
-            prop="house.totalMonthly"
+            prop="house.total_monthly"
             class="w-5/12 pr-5"
           >
             <el-input
               v-model="ruleForm.house.total_monthly_expenses"
-              type="number"
               placeholder="$123000"
             />
           </el-form-item>
@@ -276,21 +252,27 @@
             label="Company name"
             class="w-full"
           >
-            <el-input v-model="eh.company_name" />
+            <el-input
+              v-model="eh.company_name"
+              placeholder="Enter company name"
+            />
           </el-form-item>
           <el-form-item
             :prop="'employmentHistory.' + index + '.occupation'"
             label="Occupation"
             class="w-full px-5"
           >
-            <el-input v-model="eh.occupation" />
+            <el-input
+              v-model="eh.occupation"
+              placeholder="Company occupation"
+            />
           </el-form-item>
           <el-form-item
             :prop="'employmentHistory.' + index + '.years'"
             label="Years"
             class="w-full"
           >
-            <el-input v-model="eh.years" />
+            <el-input v-model="eh.years" placeholder="00" />
           </el-form-item>
           <div>
             <div
@@ -310,53 +292,59 @@
           </div>
         </el-form-item>
 
-        <div class="mt-5">
+        <div v-if="ruleForm.married" class="mt-5">
           <span class="text-gray03 text-xs">Spouse</span>
-        </div>
 
-        <el-form-item
-          v-for="(eh, index) in ruleForm.spouse.employmentHistory"
-          :key="index"
-          class="mb-10"
-        >
           <el-form-item
-            :prop="'spouse.employmentHistory.' + index + '.company_name'"
-            label="Company name"
-            class="w-full"
+            v-for="(eh, index) in ruleForm.spouse.employmentHistory"
+            :key="index"
+            class="mb-10"
           >
-            <el-input v-model="eh.company_name" />
-          </el-form-item>
-          <el-form-item
-            :prop="'spouse.employmentHistory.' + index + '.occupation'"
-            label="Occupation"
-            class="w-full px-5"
-          >
-            <el-input v-model="eh.occupation" />
-          </el-form-item>
-          <el-form-item
-            :prop="'spouse.employmentHistory.' + index + '.years'"
-            label="Years"
-            class="w-full"
-          >
-            <el-input v-model="eh.years" />
-          </el-form-item>
-          <div>
-            <div
-              v-if="index === ruleForm.spouse.employmentHistory.length - 1"
-              class="add-employment cursor-pointer"
-              @click="addEmploymentSpouse"
+            <el-form-item
+              :prop="'spouse.employmentHistory.' + index + '.company_name'"
+              label="Company name"
+              class="w-full"
             >
-              +
-            </div>
-            <div
-              v-else
-              class="add-employment cursor-pointer"
-              @click="removeEmploymentSpouse(index)"
+              <el-input
+                v-model="eh.company_name"
+                placeholder="Enter company name"
+              />
+            </el-form-item>
+            <el-form-item
+              :prop="'spouse.employmentHistory.' + index + '.occupation'"
+              label="Occupation"
+              class="w-full px-5"
             >
-              -
+              <el-input
+                v-model="eh.occupation"
+                placeholder="Company occupation"
+              />
+            </el-form-item>
+            <el-form-item
+              :prop="'spouse.employmentHistory.' + index + '.years'"
+              label="Years"
+              class="w-full"
+            >
+              <el-input v-model="eh.years" placeholder="00" />
+            </el-form-item>
+            <div>
+              <div
+                v-if="index === ruleForm.spouse.employmentHistory.length - 1"
+                class="add-employment cursor-pointer"
+                @click="addEmploymentSpouse"
+              >
+                +
+              </div>
+              <div
+                v-else
+                class="add-employment cursor-pointer"
+                @click="removeEmploymentSpouse(index)"
+              >
+                -
+              </div>
             </div>
-          </div>
-        </el-form-item>
+          </el-form-item>
+        </div>
       </div>
 
       <div class="px-16 mt-7">
@@ -400,28 +388,42 @@
         </el-form-item>
       </div>
 
-      <el-form-item class="mt-20">
+      <div class="flex justify-end my-10">
         <el-button type="primary" @click="submitForm('ruleForm')">
-          Submit
+          Go to the assets &amp; income
         </el-button>
-      </el-form-item>
+      </div>
     </el-form>
   </div>
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
+// import { reactive, ref, onMounted, computed } from 'vue'
+import { createMembers } from '@/api/vueQuery/create-members'
+import { useMutation } from 'vue-query'
+// import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+// import { useAlert } from '@/utils/use-alert'
+
+import {
+  rules,
+  employmentHistoryRule,
+} from '@/components/NewProspect/Rules/basicRules.js'
+import { maska } from 'maska'
 
 export default {
   name: 'AddProspectBasicInfo',
+  directives: { maska },
   setup() {
+    // const router = useRouter()
+    const store = useStore()
     const form = ref(null)
     const ruleForm = reactive({
       retired: false,
       married: true,
-      firstName: '',
-      lastName: '',
-      birthdate: '',
+      name: '',
+      birthday: '',
       retirement_date: '',
       email: '',
       address: '',
@@ -429,8 +431,7 @@ export default {
       state: '',
       zip: '',
       spouse: {
-        first_name: '',
-        last_name: '',
+        name: '',
         email: '',
         birthday: '',
         retired: false,
@@ -468,14 +469,36 @@ export default {
       },
     })
 
+    const {
+      mutateAsync: createMember,
+      isLoading,
+      isError,
+      isFetching,
+      data,
+      error,
+      refetch,
+    } = useMutation(createMembers)
+
+    onMounted(() => {
+      store.commit('newProspect/setStep', 1)
+      window.scrollTo(0, 0)
+    })
+
+    // const step = computed(() => store.state.newProspect.step)
+
     const submitForm = () => {
       form.value.validate((valid) => {
         if (valid) {
-          console.log('RILE FORM', ruleForm)
-
-          alert('submit!')
+          const res = createMember(ruleForm)
+          console.log('res - ', res)
+          // if (res) {
+          //   useAlert({
+          //     title: 'Success',
+          //     type: 'success',
+          //     message: 'Prospect created successfully',
+          //   })
+          // }
         } else {
-          console.log('error submit!!')
           return false
         }
       })
@@ -487,24 +510,6 @@ export default {
 
     const removeEmploymentSpouse = (index) => {
       ruleForm.spouse.employmentHistory.splice(index, 1)
-    }
-
-    const employmentHistoryRule = {
-      company_name: {
-        required: true,
-        message: 'Company name can not be null',
-        trigger: 'blur',
-      },
-      occupation: {
-        required: true,
-        message: 'Occupation can not be null',
-        trigger: 'blur',
-      },
-      years: {
-        required: true,
-        message: 'Years can not be null',
-        trigger: 'blur',
-      },
     }
 
     const addEmployment = () => {
@@ -535,210 +540,6 @@ export default {
       }
     }
 
-    const validateNumber = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('The field cannot be empty'))
-      }
-      if (isNaN(value)) {
-        callback(new Error('Data is not a number'))
-      } else {
-        callback()
-      }
-    }
-
-    const rules = {
-      firstName: [
-        {
-          required: true,
-          message: 'Please input Activity name',
-          trigger: 'blur',
-        },
-        { min: 2, message: 'Length should be min 2', trigger: 'blur' },
-      ],
-      lastName: [
-        {
-          required: true,
-          message: 'Please input Activity name',
-          trigger: 'blur',
-        },
-        { min: 2, message: 'Length should be 2', trigger: 'blur' },
-      ],
-      email: [{ type: 'string', required: true, message: 'Please email' }],
-      phone: [{ type: 'string', required: true, message: 'Please phone' }],
-      birthdate: [
-        {
-          type: 'date',
-          required: true,
-          message: 'Please pick a date',
-          trigger: 'change',
-        },
-      ],
-      retiretment: [
-        {
-          type: 'date',
-          required: true,
-          message: 'Please pick a date',
-          trigger: 'change',
-        },
-      ],
-
-      address: [
-        {
-          required: true,
-          message: 'Please input address',
-          trigger: 'blur',
-        },
-        { trigger: 'blur' },
-      ],
-
-      city: [
-        {
-          required: true,
-          message: 'Please input city',
-          trigger: 'blur',
-        },
-        { trigger: 'blur' },
-      ],
-
-      state: [
-        {
-          required: true,
-          message: 'Please input state',
-          trigger: 'blur',
-        },
-        { trigger: 'blur' },
-      ],
-
-      zip: [
-        {
-          required: true,
-          message: 'Please ZIP',
-          trigger: 'blur',
-        },
-        { trigger: 'blur' },
-      ],
-      spouse: {
-        firstName: [
-          {
-            required: true,
-            message: 'Please input spouse first name',
-            trigger: 'blur',
-          },
-          { min: 2, message: 'Length should be min 2', trigger: 'blur' },
-        ],
-        lastName: [
-          {
-            required: true,
-            message: 'Please input spouse last name',
-            trigger: 'blur',
-          },
-          { min: 2, message: 'Length should be 2', trigger: 'blur' },
-        ],
-        birthdate: [
-          {
-            type: 'date',
-            required: true,
-            message: 'Please pick a date',
-            trigger: 'change',
-          },
-        ],
-        email: [
-          { type: 'string', required: true, message: 'Please spouse email' },
-        ],
-        phone: [
-          { type: 'string', required: true, message: 'Please spouse phone' },
-        ],
-        employmentHistory: [
-          {
-            company_name: [
-              {
-                type: 'string',
-                required: true,
-                message: 'Please spouse email',
-              },
-            ],
-            occupation: [
-              {
-                type: 'string',
-                required: true,
-                message: 'Please spouse email',
-              },
-            ],
-            years: [
-              {
-                type: 'string',
-                required: true,
-                message: 'Please spouse email',
-              },
-            ],
-          },
-        ],
-      },
-      house: {
-        market_value: [
-          {
-            validator: validateNumber,
-            trigger: 'blur',
-            required: true,
-          },
-        ],
-        totalDebt: [
-          {
-            validator: validateNumber,
-            trigger: 'blur',
-            required: true,
-          },
-        ],
-        remaining: [
-          {
-            validator: validateNumber,
-            trigger: 'blur',
-            required: true,
-          },
-        ],
-        monthlyPayment: [
-          {
-            validator: validateNumber,
-            trigger: 'blur',
-            required: true,
-          },
-        ],
-        totalMonthly: [
-          {
-            validator: validateNumber,
-            trigger: 'blur',
-            required: true,
-          },
-        ],
-      },
-
-      employmentHistory: [
-        {
-          company_name: [
-            {
-              type: 'string',
-              required: true,
-              message: 'Please spouse email',
-            },
-          ],
-          occupation: [
-            {
-              type: 'string',
-              required: true,
-              message: 'Please spouse email',
-            },
-          ],
-          years: [
-            {
-              type: 'string',
-              required: true,
-              message: 'Please spouse email',
-            },
-          ],
-        },
-      ],
-    }
-
     return {
       ruleForm,
       rules,
@@ -748,6 +549,12 @@ export default {
       addEmployment,
       addEmploymentSpouse,
       removeEmploymentSpouse,
+      isLoading,
+      isError,
+      isFetching,
+      data,
+      error,
+      refetch,
     }
   },
 }
