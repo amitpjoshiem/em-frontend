@@ -388,13 +388,12 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted } from 'vue'
-// import { reactive, ref, onMounted, computed } from 'vue'
+import { reactive, ref, onMounted, computed } from 'vue'
 import { createMembers } from '@/api/vueQuery/create-members'
 import { useMutation } from 'vue-query'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-// import { useAlert } from '@/utils/use-alert'
+import { useAlert } from '@/utils/use-alert'
 
 import {
   rules,
@@ -406,7 +405,7 @@ export default {
   name: 'AddProspectBasicInfo',
   directives: { maska },
   setup() {
-    // const router = useRouter()
+    const router = useRouter()
     const store = useStore()
     const form = ref(null)
     const ruleForm = reactive({
@@ -474,20 +473,21 @@ export default {
       window.scrollTo(0, 0)
     })
 
-    // const step = computed(() => store.state.newProspect.step)
+    const step = computed(() => store.state.newProspect.step)
 
-    const submitForm = () => {
-      form.value.validate((valid) => {
+    const submitForm = async () => {
+      form.value.validate(async (valid) => {
         if (valid) {
-          const res = createMember(ruleForm)
-          console.log('res - ', res)
-          // if (res) {
-          //   useAlert({
-          //     title: 'Success',
-          //     type: 'success',
-          //     message: 'Prospect created successfully',
-          //   })
-          // }
+          const res = await createMember(ruleForm)
+          if (!('error' in res)) {
+            useAlert({
+              title: 'Success',
+              type: 'success',
+              message: 'Prospect created successfully',
+            })
+            store.commit('newProspect/setStep', step.value + 1)
+            router.push({ name: 'assets-information' })
+          }
         } else {
           return false
         }
