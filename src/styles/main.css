@@ -96,3 +96,44 @@
 .el-icon-loading:before{
   font-size: 30px;
 }
+
+.el-form-item__label {
+  line-height: normal;
+  padding-bottom: 8px;
+  color: #424450;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.el-input__inner::placeholder {
+  font-size: 13px;
+  color: #aab5cf;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.el-input__inner::-webkit-outer-spin-button,
+.el-input__inner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.el-input__inner[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.el-form-item__content {
+  display: flex;
+}
+
+.add-employment {
+  position: absolute;
+  top: 36px;
+  margin-left: 10px;
+}
+
+.el-radio__label {
+  color: #424450;
+  font-size: 13px;
+  font-weight: normal;
+}

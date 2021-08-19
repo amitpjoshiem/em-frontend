@@ -28,7 +28,7 @@ const routes = [
             name: 'basic-information',
             component: () =>
               import(
-                /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectBasic.vue'
+                /* webpackChunkName: "newprospect" */ '../components/NewProspect/AddProspectBasicInfo.vue'
               ),
           },
           {
