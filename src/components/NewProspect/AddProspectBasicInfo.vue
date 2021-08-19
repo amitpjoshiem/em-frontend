@@ -34,12 +34,7 @@
             />
           </el-form-item>
           <el-form-item prop="birthday" label="Date of birth" class="w-2/12">
-            <el-date-picker
-              v-model="ruleForm.birthday"
-              type="date"
-              placeholder="Pick a date"
-              style="width: 100%"
-            />
+            <DatePicker v-model="ruleForm.birthday" />
           </el-form-item>
         </div>
 
@@ -124,12 +119,7 @@
             label="Date of birth"
             class="w-2/12"
           >
-            <el-date-picker
-              v-model="ruleForm.spouse.birthday"
-              type="date"
-              placeholder="Pick a date"
-              style="width: 100%"
-            />
+            <DatePicker v-model="ruleForm.spouse.birthday" />
           </el-form-item>
         </div>
         <div class="flex my-5">

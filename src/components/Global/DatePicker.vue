@@ -1,15 +1,11 @@
 <template>
-  <div class="flex flex-col">
-    <span class="text-xss font-medium pb-1.5 text-main">{{ label }}</span>
-    <el-date-picker
-      v-model="value"
-      type="date"
-      :placeholder="getPlaceholder"
-      format="YYYY/MM/DD"
-      @change="changeHandler"
-    >
-    </el-date-picker>
-  </div>
+  <el-date-picker
+    v-model="value"
+    type="date"
+    :placeholder="getPlaceholder"
+    format="YYYY-MM-DD"
+    @change="changeHandler"
+  />
 </template>
 
 <script>
@@ -20,18 +16,12 @@ import dayjs from 'dayjs'
 export default defineComponent({
   name: 'DatePicker',
   props: {
-    label: {
+    modelValue: {
       type: String,
-      required: false,
       default: '',
     },
-    modelValue: {
-      type: Date,
-      default: function () {
-        return new Date()
-      },
-    },
   },
+
   emits: ['update:value', 'update:modelValue'],
 
   setup(props, { emit }) {
@@ -42,7 +32,7 @@ export default defineComponent({
     }
 
     const getPlaceholder = computed(() => {
-      return dayjs(new Date()).format('YYYY/MM/DD')
+      return dayjs(new Date()).format('YYYY-MM-DD')
     })
 
     const changeHandler = (e) => {
