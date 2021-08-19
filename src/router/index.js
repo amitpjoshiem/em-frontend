@@ -31,14 +31,6 @@ const routes = [
                 /* webpackChunkName: "newprospect" */ '../components/NewProspect/AddProspectBasicInfo.vue'
               ),
           },
-          // {
-          //   path: 'basic',
-          //   name: 'basic-information',
-          //   component: () =>
-          //     import(
-          //       /* webpackChunkName: "newprospect" */ '../components/NewProspect/TestProspect.vue'
-          //     ),
-          // },
           {
             path: 'assets',
             name: 'assets-information',
