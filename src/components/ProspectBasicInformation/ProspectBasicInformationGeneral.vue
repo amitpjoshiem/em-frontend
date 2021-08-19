@@ -71,16 +71,16 @@
 
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold">Full Name</span>
+        <span class="text-xss text-gray03 font-semibold">Name</span>
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main font-semibold">
-          {{ prospect.userFullName }}
+          {{ prospect.name }}
         </span>
       </div>
       <div class="w-9/24">
         <PlugForField
-          :text="spouse.spouseFullName"
+          :text="spouse.name"
           plug="&mdash;"
           class="text-sm text-main font-semibold"
         />

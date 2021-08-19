@@ -12,7 +12,7 @@
       <div class="flex items-center">
         <Avatar :size="'big'" :link="prospect.avatar" />
         <span class="text-main text-xl font-semibold ml-7">
-          {{ prospect.userFullName }}
+          {{ prospect.name }}
         </span>
       </div>
     </div>

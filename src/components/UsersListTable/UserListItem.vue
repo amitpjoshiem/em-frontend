@@ -5,7 +5,7 @@
       :to="{ name: 'prospect-details', params: { id: user.id } }"
       class="pl-2.5 font-medium"
     >
-      {{ user.firstName }} {{ user.lastName }}
+      {{ user.name }}
     </router-link>
   </td>
   <td class="text-main">

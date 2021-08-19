@@ -128,9 +128,8 @@ export default {
       prospectDetails,
       (newV) => {
         if (newV) {
-          schema.value[1][1].value = newV.firstName + ' ' + newV.lastName
-          formData.value.opportunity_owner =
-            newV.firstName + ' ' + newV.lastName
+          schema.value[1][1].value = newV.namelastName
+          formData.value.opportunity_owner = newV.name
         }
       },
       { immediate: true }
