@@ -13,7 +13,7 @@
           v-html="getNameTitle"
         >
         </span>
-        <span class="text-title text-main font-semibold"> Progress report</span>
+        <span class="text-title text-main font-semibold"> Client report</span>
       </div>
 
       <div class="flex items-center w-3/12">

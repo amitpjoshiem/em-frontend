@@ -132,11 +132,11 @@ const routes = [
       },
 
       {
-        path: 'prospect-basic-information/:id',
-        name: 'prospect-basic-information',
+        path: 'member-basic-information/:id',
+        name: 'member-basic-information',
         component: () =>
           import(
-            /* webpackChunkName: "ProspectDetails" */ '../components/ProspectBasicInformation/ProspectBasicInformation.vue'
+            /* webpackChunkName: "ProspectDetails" */ '../components/MemberBasicInformation/MemberBasicInformation.vue'
           ),
       },
       {

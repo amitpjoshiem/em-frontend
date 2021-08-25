@@ -71,16 +71,30 @@ export default {
       return 20
     })
 
-    const actionsOptions = [
-      {
-        title: 'Basic Information',
-        command: 'basic-information',
-      },
-      {
-        title: 'Blueprint Report',
-        command: 'blueprint-report',
-      },
-    ]
+    const actionsOptions = computed(() => {
+      if (props.user.type === 'prospect') {
+        return [
+          {
+            title: 'Basic Information',
+            command: 'basic-information',
+          },
+          {
+            title: 'Blueprint Report',
+            command: 'blueprint-report',
+          },
+        ]
+      }
+      return [
+        {
+          title: 'Basic Information',
+          command: 'basic-information',
+        },
+        {
+          title: 'Client Report',
+          command: 'client-report',
+        },
+      ]
+    })
 
     const handleSelect = (command) => {
       const actionHandler = actionsMap[command]
@@ -90,10 +104,16 @@ export default {
     const actionsMap = {
       'basic-information': () =>
         router.push({
-          name: 'basic-information',
+          name: 'member-basic-information',
           params: { id: props.user.id },
         }),
-      'blueprint-report': () => router.push({ name: 'blueprint-report' }),
+      'blueprint-report': () =>
+        router.push({
+          name: 'bluereport',
+          params: { id: props.user.id },
+        }),
+      'client-report': () =>
+        router.push({ name: 'clientreport', params: { id: props.user.id } }),
     }
 
     return {

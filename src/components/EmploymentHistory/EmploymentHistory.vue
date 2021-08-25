@@ -2,7 +2,7 @@
   <div class="p-5">
     <SubHeader
       title="Employment history"
-      back-page="prospect-basic-information"
+      back-page="member-basic-information"
       back-page-title="Prospect details"
     />
     <div v-if="!isLoading">

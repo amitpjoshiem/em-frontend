@@ -58,7 +58,7 @@
 import { MemberDetailsOther } from '@/dto/Member/MemberDetailsOther'
 
 export default {
-  name: 'ProspectBasicInformationOther',
+  name: 'MemberBasicInformationOther',
   props: {
     other: {
       type: MemberDetailsOther,

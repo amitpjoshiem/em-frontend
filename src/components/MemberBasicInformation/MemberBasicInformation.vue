@@ -17,29 +17,29 @@
       </div>
     </div>
 
-    <ProspectBasicInformationGeneral
+    <MemberBasicInformationGeneral
       :prospect="prospect"
       :spouse="spouse.value"
       :employment-prospect="employmentProspect.value"
       :employment-spouse="employmentSpouse.value"
     />
-    <ProspectHousingInformation :house="house.value" />
-    <ProspectBasicInformationOther :other="other.value" />
+    <MemberHousingInformation :house="house.value" />
+    <MemberBasicInformationOther :other="other.value" />
   </div>
 </template>
 <script>
-import ProspectBasicInformationGeneral from '@/components/ProspectBasicInformation/ProspectBasicInformationGeneral.vue'
-import ProspectHousingInformation from '@/components/ProspectBasicInformation/ProspectHousingInformation.vue'
-import ProspectBasicInformationOther from '@/components/ProspectBasicInformation/ProspectBasicInformationOther.vue'
+import MemberBasicInformationGeneral from '@/components/MemberBasicInformation/MemberBasicInformationGeneral.vue'
+import MemberHousingInformation from '@/components/MemberBasicInformation/MemberHousingInformation.vue'
+import MemberBasicInformationOther from '@/components/MemberBasicInformation/MemberBasicInformationOther.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useRoute } from 'vue-router'
 
 export default {
-  name: 'ProspectBasicInformation',
+  name: 'MemberBasicInformation',
   components: {
-    ProspectBasicInformationGeneral,
-    ProspectHousingInformation,
-    ProspectBasicInformationOther,
+    MemberBasicInformationGeneral,
+    MemberHousingInformation,
+    MemberBasicInformationOther,
   },
   setup() {
     const route = useRoute()

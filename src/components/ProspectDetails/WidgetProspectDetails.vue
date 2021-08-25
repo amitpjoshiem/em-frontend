@@ -7,7 +7,7 @@
           <div class="flex flex-col ml-2">
             <router-link
               :to="{
-                name: 'prospect-basic-information',
+                name: 'member-basic-information',
                 params: { id: prospectId },
               }"
               class="text-sm text-main font-medium"

@@ -253,7 +253,7 @@ import { MemberDetailsSpouse } from '@/dto/Member/MemberDetailsSpouse'
 import { MemberDetailsUser } from '@/dto/Member/MemberDetailsUser'
 
 export default {
-  name: 'ProspectBasicInformationGeneral',
+  name: 'MemberBasicInformationGeneral',
   props: {
     prospect: {
       type: MemberDetailsUser,
