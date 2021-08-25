@@ -15,12 +15,18 @@
     <TypeUserLabel :user-type="user.type" />
   </td>
   <td>
-    <LinearProgress :percentage="20" :show-text="true" />
+    <LinearProgress :percentage="getPercentage" :show-text="true" />
   </td>
   <td class="text-main">{{ user.city }}</td>
-  <td class="font-medium">${{ Math.floor(Math.random() * 1000) }}</td>
+  <td class="font-medium">
+    <PlugForField
+      :text="user.netWorth"
+      plug="&mdash;"
+      class="text-sm text-main font-semibold"
+    />
+  </td>
   <td class="pr-5">
-    <DropDown class="ml-2.5" :options="actionsOptions">
+    <DropDown class="ml-2.5" :options="actionsOptions" @select="handleSelect">
       <template #titleDropDown>
         <span
           class="
@@ -43,6 +49,8 @@
 
 <script>
 import IconActionGray from '@/assets/svg/icon-action-gray.svg'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'UserListItem',
@@ -53,7 +61,16 @@ export default {
       default: () => {},
     },
   },
-  setup() {
+  setup(props) {
+    const router = useRouter()
+
+    const getPercentage = computed(() => {
+      if (props.user && props.user.step) {
+        return Number(props.user.step) * 20
+      }
+      return 20
+    })
+
     const actionsOptions = [
       {
         title: 'Basic Information',
@@ -65,9 +82,25 @@ export default {
       },
     ]
 
+    const handleSelect = (command) => {
+      const actionHandler = actionsMap[command]
+      actionHandler()
+    }
+
+    const actionsMap = {
+      'basic-information': () =>
+        router.push({
+          name: 'basic-information',
+          params: { id: props.user.id },
+        }),
+      'blueprint-report': () => router.push({ name: 'blueprint-report' }),
+    }
+
     return {
       actionsOptions,
       IconActionGray,
+      getPercentage,
+      handleSelect,
     }
   },
 }
