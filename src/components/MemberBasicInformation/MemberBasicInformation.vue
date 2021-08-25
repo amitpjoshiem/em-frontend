@@ -1,8 +1,8 @@
 <template>
   <SubHeader
     class="p-5"
-    title="Prospect Details"
-    back-page="prospect-details"
+    :title="getTitle"
+    back-page="member-details"
     back-page-title="Prospect details"
   />
   <el-skeleton v-if="isLoading" :rows="11" animated class="p-5" />
@@ -33,6 +33,7 @@ import MemberHousingInformation from '@/components/MemberBasicInformation/Member
 import MemberBasicInformationOther from '@/components/MemberBasicInformation/MemberBasicInformationOther.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
 export default {
   name: 'MemberBasicInformation',
@@ -57,6 +58,12 @@ export default {
       employmentSpouse,
     } = useProspectDetails(id)
 
+    const getTitle = computed(() => {
+      if (data.value && data.value.type === 'prospect')
+        return 'Prospect details'
+      return 'Client details'
+    })
+
     return {
       isLoading,
       isError,
@@ -67,6 +74,7 @@ export default {
       prospect: data,
       employmentProspect,
       employmentSpouse,
+      getTitle,
     }
   },
 }

@@ -1,12 +1,12 @@
 <template>
   <div class="p-5">
     <SubHeader
-      title="Prospect details"
+      :title="getTitle"
       back-page="dashboard"
       back-page-title="Dashboard"
     />
     <div class="flex my-8">
-      <WidgetProspectDetails v-if="!isLoadingProspectDetails" :user="data" />
+      <WidgetMemberDetails v-if="!isLoadingProspectDetails" :user="data" />
       <el-skeleton v-else :rows="6" animated class="w-8/24 pr-5 h-[264px]" />
       <div class="w-8/12">Asset Allocation</div>
     </div>
@@ -16,17 +16,18 @@
 </template>
 <script>
 import { useRoute } from 'vue-router'
-import OpportunityTable from '@/components/ProspectDetails/OpportunityTable.vue'
+import OpportunityTable from '@/components/MemberDetails/OpportunityTable.vue'
 import TableAssetsConsolidations from '@/components/Table/TableAssetsConsolidations.vue'
-import WidgetProspectDetails from '@/components/ProspectDetails/WidgetProspectDetails.vue'
+import WidgetMemberDetails from '@/components/MemberDetails/WidgetMemberDetails.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
+import { computed } from 'vue'
 
 export default {
-  name: 'ProspectDetails',
+  name: 'MemberDetails',
   components: {
     OpportunityTable,
     TableAssetsConsolidations,
-    WidgetProspectDetails,
+    WidgetMemberDetails,
   },
   setup() {
     const route = useRoute()
@@ -38,10 +39,17 @@ export default {
       data,
     } = useProspectDetails(id)
 
+    const getTitle = computed(() => {
+      if (data.value && data.value.type === 'prospect')
+        return 'Prospect details'
+      return 'Client details'
+    })
+
     return {
       isLoadingProspectDetails,
       isError,
       data,
+      getTitle,
     }
   },
 }

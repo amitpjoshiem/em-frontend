@@ -123,11 +123,11 @@ const routes = [
       },
 
       {
-        path: 'prospect-details/:id',
-        name: 'prospect-details',
+        path: 'member-details/:id',
+        name: 'member-details',
         component: () =>
           import(
-            /* webpackChunkName: "ProspectDetails" */ '../components/ProspectDetails/ProspectDetails.vue'
+            /* webpackChunkName: "MemberDetails" */ '../components/MemberDetails/MemberDetails.vue'
           ),
       },
 
@@ -136,7 +136,7 @@ const routes = [
         name: 'member-basic-information',
         component: () =>
           import(
-            /* webpackChunkName: "ProspectDetails" */ '../components/MemberBasicInformation/MemberBasicInformation.vue'
+            /* webpackChunkName: "MemberDetails" */ '../components/MemberBasicInformation/MemberBasicInformation.vue'
           ),
       },
       {
@@ -144,7 +144,7 @@ const routes = [
         name: 'prospect-employment',
         component: () =>
           import(
-            /* webpackChunkName: "ProspectDetails" */ '../components/EmploymentHistory/EmploymentHistory.vue'
+            /* webpackChunkName: "MemberDetails" */ '../components/EmploymentHistory/EmploymentHistory.vue'
           ),
       },
 

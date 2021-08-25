@@ -122,7 +122,7 @@ import IconGoal from '@/assets/svg/icon-goal.svg'
 import { useRoute } from 'vue-router'
 
 export default {
-  name: 'WidgetProspectDetails',
+  name: 'WidgetMemberDetails',
   props: {
     user: {
       type: Object,

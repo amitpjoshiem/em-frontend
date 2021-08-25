@@ -2,7 +2,7 @@
   <div class="p-5">
     <SubHeader
       title="New opportunity"
-      back-page="prospect-details"
+      back-page="member-details"
       back-page-title="Prospect details"
     />
     <div
@@ -70,7 +70,7 @@ export default {
         member_id: id,
       })
 
-      if (!res.error) router.push({ name: 'prospect-details', params: { id } })
+      if (!res.error) router.push({ name: 'member-details', params: { id } })
     }
 
     const {
