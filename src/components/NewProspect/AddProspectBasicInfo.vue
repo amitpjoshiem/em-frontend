@@ -90,7 +90,11 @@
           </el-form-item>
 
           <el-form-item label="ZIP" prop="zip" class="w-2/12">
-            <el-input v-model="ruleForm.zip" placeholder="000000" />
+            <el-input
+              v-model="ruleForm.zip"
+              placeholder="000000"
+              type="number"
+            />
           </el-form-item>
         </div>
       </div>
@@ -486,7 +490,10 @@ export default {
               message: 'Prospect created successfully',
             })
             store.commit('newProspect/setStep', step.value + 1)
-            router.push({ name: 'assets-information' })
+            router.push({
+              name: 'assets-information',
+              params: { id: res.data.id },
+            })
           }
         } else {
           return false

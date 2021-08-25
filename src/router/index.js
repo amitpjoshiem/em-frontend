@@ -36,7 +36,7 @@ const routes = [
             name: 'assets-information',
             component: () =>
               import(
-                /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectAssets.vue'
+                /* webpackChunkName: "newprospect" */ '../components/NewProspect/AddProspectAssets.vue'
               ),
           },
           {
