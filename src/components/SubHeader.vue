@@ -1,8 +1,14 @@
 <template>
-  <div class="flex justify-between pb-5">
-    <BackButton :text="backPageTitle" @click="back" />
-    <span class="text-title text-main font-semibold">{{ title }}</span>
-    <ShareBtn />
+  <div class="flex pb-5">
+    <div class="w-3/12">
+      <BackButton :text="backPageTitle" @click="back" />
+    </div>
+    <div class="w-6/12 text-center">
+      <span class="text-title text-main font-semibold">{{ title }}</span>
+    </div>
+    <div class="w-3/12 flex justify-end">
+      <ShareBtn class="w-8" />
+    </div>
   </div>
 </template>
 
