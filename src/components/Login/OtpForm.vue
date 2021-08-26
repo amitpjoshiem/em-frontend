@@ -19,7 +19,7 @@
 
       <h1 class="text-center text-main font-medium text-2xl">Login</h1>
 
-      <form class="mt-6" @submit="otpHandler">
+      <div>
         <h1
           v-if="otpType === 'email'"
           class="text-center text-gray03 pt-2.5 text-sm"
@@ -32,25 +32,27 @@
         >
           Please check your Google Authenticator.
         </h1>
-
-        <div class="mt-4">
-          <InputTextForm
-            placeholder="Paste login code"
-            type="text"
-            name="code"
-            label="Login code"
-          />
-        </div>
+        <el-form
+          ref="form"
+          :model="ruleForm"
+          :rules="rules"
+          class="demo-ruleForm"
+          label-position="top"
+        >
+          <el-form-item label="OTP" prop="code" class="py-3">
+            <el-input v-model="ruleForm.code" placeholder="Enter otp code" />
+          </el-form-item>
+        </el-form>
         <div class="text-center pt-5">
           <Button
             :default-primary="!fetching"
             full
             :text-btn="'Continue'"
-            type="submit"
             :disabled="fetching"
+            @click="submitForm('ruleForm')"
           />
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -58,10 +60,9 @@
 <script>
 import IconLoginForm from '@/assets/svg/icon-login-form.svg'
 import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useOtp } from '@/api/authentication/use-otp'
-import { useForm } from 'vee-validate'
-import * as yup from 'yup'
+import { rules } from '@/validationRules/login.js'
 
 export default {
   name: 'OtpForm',
@@ -69,30 +70,35 @@ export default {
     const store = useStore()
     const { response, error, fetching, otpAuth } = useOtp()
 
-    const schema = yup.object({
-      code: yup.number().required().defined(),
+    const ruleForm = reactive({
+      code: '',
     })
-
-    const { handleSubmit } = useForm({
-      validationSchema: schema,
-      initialValues: {
-        code: '',
-      },
-    })
+    const form = ref(null)
 
     const otpType = computed(() => {
       return store.state.auth.otpType
     })
 
-    const otpHandler = handleSubmit(otpAuth)
+    const submitForm = async () => {
+      form.value.validate((valid) => {
+        if (valid) {
+          otpAuth(ruleForm)
+        } else {
+          return false
+        }
+      })
+    }
 
     return {
       response,
       error,
       fetching,
-      otpHandler,
       IconLoginForm,
       otpType,
+      ruleForm,
+      form,
+      submitForm,
+      rules,
     }
   },
 }
