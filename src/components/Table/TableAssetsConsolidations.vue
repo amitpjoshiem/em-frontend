@@ -27,38 +27,22 @@
       </div>
     </div>
     <div class="flex h-10">
-      <div class="w-2/10 item pt-4">
-        <InputText type="inputTable" />
-      </div>
+      <div class="w-2/10 item pt-4"></div>
       <div class="w-1/10 item">#DIV/0!</div>
-      <div class="w-1/10 item pt-4 pl-2">
-        <InputText type="inputTable" />
-      </div>
-      <div class="w-1/10 item pt-4 pl-2">
-        <InputText type="inputTable" />
-      </div>
-      <div class="w-1/10 item pt-4 pl-2">
-        <InputText type="inputTable" />
-      </div>
+      <div class="w-1/10 item pt-4 pl-2"></div>
+      <div class="w-1/10 item pt-4 pl-2"></div>
+      <div class="w-1/10 item pt-4 pl-2"></div>
       <div class="w-1/10 item">1.00%</div>
       <div class="w-1/10 item">0.00%</div>
       <div class="w-1/10 item">#DIV/0!</div>
       <div class="w-1/10 item">$0.00</div>
     </div>
     <div class="flex h-10">
-      <div class="w-2/10 item pt-4">
-        <InputText type="inputTable" />
-      </div>
+      <div class="w-2/10 item pt-4"></div>
       <div class="w-1/10 item">#DIV/0!</div>
-      <div class="w-1/10 item pt-4 pl-2">
-        <InputText type="inputTable" />
-      </div>
-      <div class="w-1/10 item pt-4 pl-2">
-        <InputText type="inputTable" />
-      </div>
-      <div class="w-1/10 item pt-4 pl-2">
-        <InputText type="inputTable" />
-      </div>
+      <div class="w-1/10 item pt-4 pl-2"></div>
+      <div class="w-1/10 item pt-4 pl-2"></div>
+      <div class="w-1/10 item pt-4 pl-2"></div>
       <div class="w-1/10 item">1.00%</div>
       <div class="w-1/10 item">0.00%</div>
       <div class="w-1/10 item">#DIV/0!</div>
