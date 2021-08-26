@@ -1,10 +1,6 @@
 <template>
   <div class="p-5">
-    <SubHeader
-      title="New opportunity"
-      back-page="member-details"
-      back-page-title="Prospect details"
-    />
+    <SubHeader title="New opportunity" back-page="member-details" />
     <div
       v-if="
         !isLoadingInitOpportunity &&

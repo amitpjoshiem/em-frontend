@@ -3,7 +3,6 @@
     <SubHeader
       title="Employment history"
       back-page="member-basic-information"
-      back-page-title="Prospect details"
     />
     <div v-if="!isLoading">
       <div class="flex mt-4">

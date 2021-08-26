@@ -1,10 +1,6 @@
 <template>
   <div class="p-5">
-    <SubHeader
-      title="List of Households"
-      back-page="dashboard"
-      back-page-title="Dashboard"
-    />
+    <SubHeader title="List of Households" back-page="dashboard" />
     <ListContent />
   </div>
 </template>

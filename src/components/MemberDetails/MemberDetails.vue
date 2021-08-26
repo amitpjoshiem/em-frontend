@@ -1,10 +1,6 @@
 <template>
   <div class="p-5">
-    <SubHeader
-      :title="getTitle"
-      back-page="dashboard"
-      back-page-title="Dashboard"
-    />
+    <SubHeader :title="getTitle" back-page="dashboard" />
     <div class="flex my-8">
       <WidgetMemberDetails v-if="!isLoadingProspectDetails" :user="data" />
       <el-skeleton v-else :rows="6" animated class="w-8/24 pr-5 h-[264px]" />

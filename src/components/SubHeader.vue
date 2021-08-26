@@ -1,7 +1,7 @@
 <template>
   <div class="flex pb-5">
     <div class="w-3/12">
-      <BackButton :text="backPageTitle" @click="back" />
+      <BackButton text="Back" @click="$router.go(-1)" />
     </div>
     <div class="w-6/12 text-center">
       <span class="text-title text-main font-semibold">{{ title }}</span>
@@ -24,11 +24,6 @@ export default {
       default: 'header',
     },
     backPage: {
-      type: String,
-      require: true,
-      default: 'dashboard',
-    },
-    backPageTitle: {
       type: String,
       require: true,
       default: 'dashboard',
