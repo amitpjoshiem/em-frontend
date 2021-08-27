@@ -98,6 +98,14 @@ const rules = {
       },
     ],
     phone: [{ type: 'string', required: true, message: 'Please spouse phone' }],
+    retirement_date: [
+      {
+        type: 'date',
+        required: true,
+        message: 'Please pick a date',
+        trigger: 'change',
+      },
+    ],
     employmentHistory: [
       {
         company_name: [
