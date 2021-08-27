@@ -796,7 +796,7 @@ import { computed, reactive, onMounted } from 'vue'
 import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
-import { rules } from '@/components/NewProspect/Rules/assetsRules.js'
+import { rules } from '@/validationRules/assetsRules.js'
 
 export default {
   name: 'AddProspectAssets',

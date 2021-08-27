@@ -398,11 +398,8 @@ import { useMutation } from 'vue-query'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useAlert } from '@/utils/use-alert'
+import { rules, employmentHistoryRule } from '@/validationRules/basicRules.js'
 
-import {
-  rules,
-  employmentHistoryRule,
-} from '@/components/NewProspect/Rules/basicRules.js'
 import { maska } from 'maska'
 
 export default {
