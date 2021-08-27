@@ -59,11 +59,7 @@
             label="Retiretment date"
             class="w-2/12"
           >
-            <el-date-picker
-              v-model="ruleForm.retirement_date"
-              type="date"
-              placeholder="Pick a date"
-            />
+            <DatePicker v-model="ruleForm.retirement_date" />
           </el-form-item>
         </div>
 
@@ -143,15 +139,11 @@
           </el-form-item>
           <el-form-item
             v-if="ruleForm.spouse.retired"
-            prop="spouse.retiretment"
+            prop="spouse.retirement_date"
             label="Retiretment date"
             class="w-2/12"
           >
-            <el-date-picker
-              v-model="ruleForm.retirement_date"
-              type="date"
-              placeholder="Pick a date"
-            />
+            <DatePicker v-model="ruleForm.spouse.retirement_date" />
           </el-form-item>
         </div>
       </div>
