@@ -66,7 +66,7 @@
 <script>
 import IconPlus from '@/assets/svg/icon-plus.svg'
 import { useRoute } from 'vue-router'
-import OpportunityItem from '@/components/ProspectDetails/OpportunityItem.vue'
+import OpportunityItem from '@/components/MemberDetails/OpportunityItem.vue'
 import { useOpportunityList } from '@/api/use-opportunity-list.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
 

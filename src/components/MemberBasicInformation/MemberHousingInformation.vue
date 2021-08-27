@@ -80,7 +80,7 @@ import { currencyFormat } from '@/utils/currencyFormat'
 import { MemberDetailsHouse } from '@/dto/Member/MemberDetailsHouse'
 
 export default {
-  name: 'ProspectHousingInformation',
+  name: 'MemberHousingInformation',
   props: {
     house: {
       type: MemberDetailsHouse,

@@ -27,13 +27,13 @@
         </div>
 
         <div class="flex">
-          <el-form-item label="Name" prop="name" class="w-10/12 pr-5">
+          <el-form-item label="Name" prop="name" class="w-9/12 pr-5">
             <el-input
               v-model="ruleForm.name"
               placeholder="Enter prospect’s name"
             />
           </el-form-item>
-          <el-form-item prop="birthday" label="Date of birth" class="w-2/12">
+          <el-form-item prop="birthday" label="Date of birth" class="w-3/12">
             <DatePicker v-model="ruleForm.birthday" />
           </el-form-item>
         </div>
@@ -108,7 +108,7 @@
           </el-form-item>
         </div>
         <div class="flex">
-          <el-form-item label="Name" prop="spouse.name" class="w-10/12 pr-5">
+          <el-form-item label="Name" prop="spouse.name" class="w-9/12 pr-5">
             <el-input
               v-model="ruleForm.spouse.name"
               placeholder="Enter spouse’s name"
@@ -117,7 +117,7 @@
           <el-form-item
             prop="spouse.birthday"
             label="Date of birth"
-            class="w-2/12"
+            class="w-3/12"
           >
             <DatePicker v-model="ruleForm.spouse.birthday" />
           </el-form-item>
@@ -390,11 +390,8 @@ import { useMutation } from 'vue-query'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useAlert } from '@/utils/use-alert'
+import { rules, employmentHistoryRule } from '@/validationRules/basicRules.js'
 
-import {
-  rules,
-  employmentHistoryRule,
-} from '@/components/NewProspect/Rules/basicRules.js'
 import { maska } from 'maska'
 
 export default {

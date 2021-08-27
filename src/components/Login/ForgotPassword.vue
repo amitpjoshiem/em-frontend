@@ -21,26 +21,32 @@
         Forgot password?
       </h1>
       <h1 class="text-center text-gray03 text-xss">Please enter you email</h1>
-
-      <form v-if="!sendFormForgotPass" class="mt-6" @submit="forgotHandler">
-        <div>
-          <Input
-            :placeholder="'Enter your e-mail'"
-            :type="'email'"
-            name="email"
-            :label="'E-mail'"
-          />
-        </div>
+      <div v-if="!sendFormForgotPass">
+        <el-form
+          ref="form"
+          :model="ruleForm"
+          status-icon
+          :rules="rules"
+          class="demo-ruleForm"
+          label-position="top"
+        >
+          <el-form-item label="E-mail" prop="email" class="py-3">
+            <el-input
+              v-model="ruleForm.email"
+              placeholder="Enter your e-mail"
+            />
+          </el-form-item>
+        </el-form>
         <div class="text-center pt-5">
           <Button
             :default-primary="!fetching"
             full
-            :text-btn="'Save & Continue'"
+            :text-btn="'Continue'"
             :disabled="fetching"
-            @click="forgot"
+            @click="submitForm('ruleForm')"
           />
         </div>
-      </form>
+      </div>
       <div v-else>{{ response.message }}</div>
     </div>
   </div>
@@ -48,34 +54,40 @@
 
 <script>
 import IconForgotPassword from '@/assets/svg/icon-forgot-password.svg'
-
+import { rules } from '@/validationRules/login.js'
 import { useForgot } from '@/api/authentication/use-forgot'
-import { useForm } from 'vee-validate'
-import * as yup from 'yup'
 import { mapState } from 'vuex'
+import { reactive, ref } from 'vue'
 
 export default {
   name: 'ForgotPassword',
   setup() {
-    const { response, error, fetching, forgot } = useForgot()
-    const schema = yup.object({
-      email: yup.string().required().email(),
+    const ruleForm = reactive({
+      email: '',
     })
-    const { handleSubmit } = useForm({
-      validationSchema: schema,
-      initialValues: {
-        email: '',
-      },
-    })
+    const form = ref(null)
 
-    const forgotHandler = handleSubmit(forgot)
+    const { response, error, fetching, forgot } = useForgot()
+
+    const submitForm = async () => {
+      form.value.validate((valid) => {
+        if (valid) {
+          forgot(ruleForm)
+        } else {
+          return false
+        }
+      })
+    }
 
     return {
       response,
       error,
       fetching,
-      forgotHandler,
       IconForgotPassword,
+      submitForm,
+      ruleForm,
+      form,
+      rules,
     }
   },
   computed: mapState({

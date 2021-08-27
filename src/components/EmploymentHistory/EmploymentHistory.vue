@@ -2,8 +2,7 @@
   <div class="p-5">
     <SubHeader
       title="Employment history"
-      back-page="prospect-basic-information"
-      back-page-title="Prospect details"
+      back-page="member-basic-information"
     />
     <div v-if="!isLoading">
       <div class="flex mt-4">

@@ -21,35 +21,37 @@
       <h1 class="text-center text-gray03 text-xss">
         Please enter you email and password
       </h1>
+      <el-form
+        ref="form"
+        :model="ruleForm"
+        status-icon
+        :rules="rules"
+        class="demo-ruleForm"
+        label-position="top"
+      >
+        <el-form-item label="E-mail" prop="email" class="py-3">
+          <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" />
+        </el-form-item>
 
-      <form class="mt-6" @submit="loginHandler">
-        <div>
-          <InputTextForm
-            :placeholder="'Enter your e-mail'"
-            :type="'email'"
-            name="email"
-            :label="'E-mail'"
-          />
-        </div>
-
-        <div class="mt-4">
-          <InputPassword
+        <el-form-item label="Password" prop="password">
+          <el-input
+            v-model="ruleForm.password"
+            show-password
             placeholder="Enter your password"
-            name="password"
-            label="Password"
+            type="password"
+            autocomplete="off"
           />
-        </div>
-
-        <div class="text-center pt-5">
-          <Button
-            :default-primary="!fetching"
-            full
-            :text-btn="'Continue'"
-            type="submit"
-            :disabled="fetching"
-          />
-        </div>
-      </form>
+        </el-form-item>
+      </el-form>
+      <div class="text-center pt-5">
+        <Button
+          :default-primary="!fetching"
+          full
+          :text-btn="'Continue'"
+          :disabled="fetching"
+          @click="submitForm('ruleForm')"
+        />
+      </div>
     </div>
     <div class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
       <span class="text-xss text-gray03 cursor-pointer">
@@ -64,35 +66,39 @@
 <script>
 import IconLoginForm from '@/assets/svg/icon-login-form.svg'
 import { useLogin } from '@/api/authentication/use-login'
-import { useForm } from 'vee-validate'
-import * as yup from 'yup'
+import { reactive, ref } from 'vue'
+import { rules } from '@/validationRules/login.js'
 
 export default {
   name: 'LoginForm',
   setup() {
+    const ruleForm = reactive({
+      email: '',
+      pass: '',
+    })
+    const form = ref(null)
+
     const { response, error, fetching, login } = useLogin()
 
-    const schema = yup.object({
-      email: yup.string().required().email(),
-      password: yup.string().required().min(6).defined(),
-    })
-
-    const { handleSubmit } = useForm({
-      validationSchema: schema,
-      initialValues: {
-        email: '',
-        password: '',
-      },
-    })
-
-    const loginHandler = handleSubmit(login)
+    const submitForm = () => {
+      form.value.validate((valid) => {
+        if (valid) {
+          login(ruleForm)
+        } else {
+          return false
+        }
+      })
+    }
 
     return {
       response,
       error,
       fetching,
-      loginHandler,
       IconLoginForm,
+      ruleForm,
+      submitForm,
+      rules,
+      form,
     }
   },
 }

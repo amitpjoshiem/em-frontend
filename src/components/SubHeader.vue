@@ -1,8 +1,14 @@
 <template>
-  <div class="flex justify-between pb-5">
-    <BackButton :text="backPageTitle" @click="back" />
-    <span class="text-title text-main font-semibold">{{ title }}</span>
-    <ShareBtn />
+  <div class="flex pb-5">
+    <div class="w-3/12">
+      <BackButton text="Back" @click="$router.go(-1)" />
+    </div>
+    <div class="w-6/12 text-center">
+      <span class="text-title text-main font-semibold">{{ title }}</span>
+    </div>
+    <div class="w-3/12 flex justify-end">
+      <ShareBtn class="w-8" />
+    </div>
   </div>
 </template>
 
@@ -18,11 +24,6 @@ export default {
       default: 'header',
     },
     backPage: {
-      type: String,
-      require: true,
-      default: 'dashboard',
-    },
-    backPageTitle: {
       type: String,
       require: true,
       default: 'dashboard',

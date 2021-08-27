@@ -7,7 +7,14 @@ const rules = {
     },
     { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
-  email: [{ type: 'string', required: true, message: 'Please email' }],
+  email: [
+    { required: true, message: 'Please input email address', trigger: 'blur' },
+    {
+      type: 'email',
+      message: 'Please input correct email address',
+      trigger: ['blur'],
+    },
+  ],
   phone: [{ type: 'string', required: true, message: 'Please phone' }],
   birthday: [
     {
@@ -78,7 +85,18 @@ const rules = {
         trigger: 'change',
       },
     ],
-    email: [{ type: 'string', required: true, message: 'Please spouse email' }],
+    email: [
+      {
+        required: true,
+        message: 'Please input email address',
+        trigger: 'blur',
+      },
+      {
+        type: 'email',
+        message: 'Please input correct email address',
+        trigger: ['blur'],
+      },
+    ],
     phone: [{ type: 'string', required: true, message: 'Please spouse phone' }],
     retirement_date: [
       {
@@ -94,21 +112,21 @@ const rules = {
           {
             type: 'string',
             required: true,
-            message: 'Please spouse email',
+            message: 'Please spouse company name',
           },
         ],
         occupation: [
           {
             type: 'string',
             required: true,
-            message: 'Please spouse email',
+            message: 'Please spouse occupation',
           },
         ],
         years: [
           {
             type: 'string',
             required: true,
-            message: 'Please spouse email',
+            message: 'Please spouse years',
           },
         ],
       },
@@ -158,21 +176,21 @@ const rules = {
         {
           type: 'string',
           required: true,
-          message: 'Please spouse email',
+          message: 'Please company name',
         },
       ],
       occupation: [
         {
           type: 'string',
           required: true,
-          message: 'Please spouse email',
+          message: 'Please occupation',
         },
       ],
       years: [
         {
           type: 'string',
           required: true,
-          message: 'Please spouse email',
+          message: 'Please years',
         },
       ],
     },

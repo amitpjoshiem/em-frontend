@@ -13,6 +13,7 @@
       </div>
     </div>
   </div>
+  <el-skeleton v-else :rows="3" animated class="p-5" />
 </template>
 <script>
 import { reactive, toRefs } from 'vue'
