@@ -17,7 +17,7 @@ const rules = {
       trigger: 'change',
     },
   ],
-  retiretment: [
+  retirement_date: [
     {
       type: 'date',
       required: true,
