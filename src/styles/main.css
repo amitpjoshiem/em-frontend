@@ -26,18 +26,12 @@
   width: 100%;
 }
 
-.el-input{
-  line-height: 36px;
-}
-
-.el-input__icon{
-  line-height: 36px;
-}
 
 .el-input__inner {
   height: 36px;
   border-radius: 6px;
   border-color: #D4DDEB;
+  line-height: 1;
 }
 
 .el-input__inner::placeholder{
@@ -112,7 +106,7 @@
 
 /* Chrome, Safari, Edge, Opera */
 .el-input__inner::-webkit-outer-spin-button,
-.el-input__inner::-webkit-inner-spin-button {
+.el-input__inner::-webkit-inner-spin-button{
   -webkit-appearance: none;
   margin: 0;
 }
