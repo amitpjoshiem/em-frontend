@@ -12,7 +12,7 @@ const rules = {
     {
       type: 'email',
       message: 'Please input correct email address',
-      trigger: ['blur', 'change'],
+      trigger: ['blur'],
     },
   ],
   phone: [{ type: 'string', required: true, message: 'Please phone' }],
@@ -94,7 +94,7 @@ const rules = {
       {
         type: 'email',
         message: 'Please input correct email address',
-        trigger: ['blur', 'change'],
+        trigger: ['blur'],
       },
     ],
     phone: [{ type: 'string', required: true, message: 'Please spouse phone' }],

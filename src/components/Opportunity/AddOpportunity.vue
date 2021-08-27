@@ -9,65 +9,131 @@
       "
       class="border-color-grey px-10 pb-7"
     >
-      <SchemaFormWithValidation
-        :schema="schema"
-        schema-row-classes="pt-3"
-        @submit="saveStep"
+      <el-form
+        ref="form"
+        :model="ruleForm"
+        status-icon
+        :rules="rules"
+        class="demo-ruleForm"
+        label-position="top"
       >
-        <template #afterForm>
-          <div class="pt-12 text-right">
-            <Button default-blue-btn text-btn="Save" type="submit" />
-          </div>
-        </template>
-      </SchemaFormWithValidation>
+        <div class="flex">
+          <el-form-item
+            label="Opportunity owner"
+            prop="opportunity_owner"
+            class="w-6/12 pr-5"
+          >
+            <el-input
+              v-model="ruleForm.opportunity_owner"
+              placeholder="Enter prospect’s name"
+              :disabled="true"
+            />
+          </el-form-item>
+          <el-form-item label="Stage" prop="stage" class="w-6/12 pr-3">
+            <el-select
+              v-model="ruleForm.stage"
+              placeholder="Stage"
+              class="w-full"
+            >
+              <el-option
+                v-for="item in initOpportunity.data.init.stage_list"
+                :key="item"
+                :label="item"
+                :value="item"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="close_date" label="Close date" class="w-3/12">
+            <el-date-picker
+              v-model="ruleForm.close_date"
+              type="date"
+              placeholder="Pick a date"
+            />
+          </el-form-item>
+        </div>
+        <div class="flex">
+          <el-form-item
+            label="Opportunity name"
+            prop="opportunity_name"
+            class="w-6/12 pr-5"
+          >
+            <el-input
+              v-model="ruleForm.opportunity_name"
+              placeholder="Enter opportunity name"
+            />
+          </el-form-item>
+          <el-form-item
+            label="Account name"
+            prop="account_name"
+            class="w-6/12 pr-5"
+          >
+            <el-input
+              v-model="ruleForm.account_name"
+              placeholder="Enter account name"
+              :disabled="true"
+            />
+          </el-form-item>
+        </div>
+
+        <div class="flex">
+          <el-form-item label="Type" prop="type" class="w-6/12 pr-3">
+            <el-select
+              v-model="ruleForm.type"
+              placeholder="Type"
+              class="w-full"
+            >
+              <el-option
+                v-for="item in initOpportunity.data.init.type_list"
+                :key="item"
+                :label="item"
+                :value="item"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="Amount" prop="amount" class="w-6/12 pr-5">
+            <el-input v-model="ruleForm.amount" placeholder="Enter amount" />
+          </el-form-item>
+        </div>
+      </el-form>
+
+      <div class="flex justify-end my-10">
+        <el-button type="primary" @click="submitForm('ruleForm')">
+          Save
+        </el-button>
+      </div>
     </div>
     <el-skeleton v-else :rows="11" animated class="p-5" />
   </div>
 </template>
 
 <script>
-import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
-import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
-import Input from '@/components/Global/Input/Input.vue'
-import Label from '@/components/Global/Label.vue'
-import TextArea from '@/components/Global/TextArea.vue'
-import SwdSelectForm from '@/components/Global/Form/SwdSelectForm.vue'
-import { schemaOpportunity } from '@/components/Opportunity/schema/newOpportunity'
-import { ref, markRaw, watch } from 'vue'
+import { reactive, watch, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useOpportunityInit } from '@/api/use-opportunity-init.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { createOpportunity } from '@/api/vueQuery/create-opportunity'
 import { useMutation } from 'vue-query'
-
-markRaw(Input)
-markRaw(Label)
-markRaw(TextArea)
-markRaw(SwdSelectForm)
-
-const SchemaFormWithValidation = SchemaFormFactory([VeeValidatePlugin()])
+import { useAlert } from '@/utils/use-alert'
+import { rules } from '@/validationRules/opportunity.js'
 
 export default {
   name: 'AddOpportunity',
-  components: { SchemaFormWithValidation },
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const schema = ref(schemaOpportunity)
-    const formData = ref({ opportunity_owner: '' })
+    const form = ref(null)
     const id = route.params.id
 
-    useSchemaForm(formData)
-
-    const saveStep = async () => {
-      const res = await addOpportunity({
-        ...formData.value,
-        member_id: id,
-      })
-
-      if (!res.error) router.push({ name: 'member-details', params: { id } })
-    }
+    const ruleForm = reactive({
+      member_id: '',
+      stage: '',
+      close_date: '',
+      type: '',
+      amount: '',
+    })
 
     const {
       mutateAsync: addOpportunity,
@@ -94,38 +160,10 @@ export default {
     } = useUserProfile()
 
     watch(
-      initOpportunity,
-      (newV) => {
-        if (newV) {
-          const stageList = initOpportunity.value.data.init.stage_list.map(
-            (item) => {
-              return {
-                title: item,
-                command: item,
-              }
-            }
-          )
-          const typeList = initOpportunity.value.data.init.type_list.map(
-            (item) => {
-              return {
-                title: item,
-                command: item,
-              }
-            }
-          )
-          schema.value[0][1].options = stageList
-          schema.value[2][0].options = typeList
-        }
-      },
-      { immediate: true }
-    )
-
-    watch(
       prospectDetails,
       (newV) => {
         if (newV) {
-          schema.value[1][1].value = newV.namelastName
-          formData.value.opportunity_owner = newV.name
+          ruleForm.opportunity_owner = newV.name
         }
       },
       { immediate: true }
@@ -135,16 +173,31 @@ export default {
       userProfile,
       (newV) => {
         if (newV) {
-          schema.value[0][0].value = newV.firstName + ' ' + newV.lastName
-          formData.value.account_name = newV.firstName + ' ' + newV.lastName
+          ruleForm.account_name = newV.firstName + ' ' + newV.lastName
         }
       },
       { immediate: true }
     )
 
+    const submitForm = async () => {
+      form.value.validate(async (valid) => {
+        if (valid) {
+          const res = await addOpportunity({ ...ruleForm, member_id: id })
+          if (!('error' in res)) {
+            useAlert({
+              title: 'Success',
+              type: 'success',
+              message: 'Prospect created successfully',
+            })
+            router.push({ name: 'member-details', params: { id } })
+          }
+        } else {
+          return false
+        }
+      })
+    }
+
     return {
-      schema,
-      saveStep,
       isError,
       isErrorProspectDetails,
       prospectDetails,
@@ -156,6 +209,10 @@ export default {
       isLoadingInitOpportunity,
       isErrorLoadingInit,
       initOpportunity,
+      ruleForm,
+      submitForm,
+      form,
+      rules,
     }
   },
 }

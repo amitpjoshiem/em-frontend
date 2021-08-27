@@ -4,7 +4,7 @@ const rules = {
     {
       type: 'email',
       message: 'Please input correct email address',
-      trigger: ['blur', 'change'],
+      trigger: ['blur'],
     },
   ],
   password: [
