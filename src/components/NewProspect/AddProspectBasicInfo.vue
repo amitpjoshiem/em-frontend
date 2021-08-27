@@ -55,7 +55,7 @@
           </el-form-item>
           <el-form-item
             v-if="ruleForm.retired"
-            prop="retiretment"
+            prop="retirement_date"
             label="Retiretment date"
             class="w-2/12"
           >
