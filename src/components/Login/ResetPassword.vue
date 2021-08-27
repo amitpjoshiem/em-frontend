@@ -109,11 +109,11 @@ export default {
 
     const rules = {
       pass: [
-        { type: 'string', required: true, message: 'Please password' },
+        { type: 'string', required: true, message: 'Please input password' },
         { min: 6, message: 'Length should be min 6', trigger: 'blur' },
       ],
       checkPass: [
-        { type: 'string', required: true, message: 'Please password' },
+        { type: 'string', required: true, message: 'Please input password' },
         { validator: validateCheckPass, trigger: 'blur' },
       ],
     }

@@ -8,7 +8,7 @@ const rules = {
     },
   ],
   password: [
-    { type: 'string', required: true, message: 'Please password' },
+    { type: 'string', required: true, message: 'Please input password' },
     { min: 6, message: 'Length should be min 6', trigger: 'blur' },
   ],
   code: [

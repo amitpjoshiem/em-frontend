@@ -52,6 +52,33 @@ import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
+function useActionOptions(user) {
+  return computed(() => {
+    if (user.type === 'prospect') {
+      return [
+        {
+          title: 'Basic Information',
+          command: 'basic-information',
+        },
+        {
+          title: 'Blueprint Report',
+          command: 'blueprint-report',
+        },
+      ]
+    }
+    return [
+      {
+        title: 'Basic Information',
+        command: 'basic-information',
+      },
+      {
+        title: 'Client Report',
+        command: 'client-report',
+      },
+    ]
+  })
+}
+
 export default {
   name: 'UserListItem',
   props: {
@@ -71,30 +98,7 @@ export default {
       return 20
     })
 
-    const actionsOptions = computed(() => {
-      if (props.user.type === 'prospect') {
-        return [
-          {
-            title: 'Basic Information',
-            command: 'basic-information',
-          },
-          {
-            title: 'Blueprint Report',
-            command: 'blueprint-report',
-          },
-        ]
-      }
-      return [
-        {
-          title: 'Basic Information',
-          command: 'basic-information',
-        },
-        {
-          title: 'Client Report',
-          command: 'client-report',
-        },
-      ]
-    })
+    const actionsOptions = useActionOptions(props.user)
 
     const handleSelect = (command) => {
       const actionHandler = actionsMap[command]
