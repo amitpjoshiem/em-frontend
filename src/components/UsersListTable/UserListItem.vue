@@ -52,6 +52,35 @@ import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
+const allAvailibleOptions = {
+  1: {
+    title: 'Basic Information',
+    command: 'basic-information',
+  },
+  2: { title: 'Blueprint Report', command: 'blueprint-report' },
+  3: { title: 'Client Report', command: 'client-report' },
+}
+
+const optionsPerStepAndType = {
+  'client@step-5': [1, 3],
+  'prospect@step-1': [1],
+  'prospect@step-4': [1, 2],
+}
+
+function getClientStepHash(user) {
+  switch (true) {
+    case user.type === 'prospect' && user.step === 4:
+      return 'prospect@step-4'
+  }
+}
+
+function buildOptions(user) {
+  const hash = getClientStepHash(user)
+  const optionsIds = optionsPerStepAndType[hash]
+
+  return optionsIds.map((id) => allAvailibleOptions[id])
+}
+
 function useActionOptions(user) {
   return computed(() => {
     if (user.type === 'prospect') {
