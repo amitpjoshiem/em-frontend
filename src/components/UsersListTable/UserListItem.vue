@@ -129,10 +129,10 @@ export default {
     const router = useRouter()
 
     const getPercentage = computed(() => {
-      if (props.user && props.user.step) {
+      if (props.user) {
         return Number(props.user.step) * 20
       }
-      return 20
+      return 0
     })
 
     const actionsOptions = buildOptions(props.user)

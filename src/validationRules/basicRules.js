@@ -106,7 +106,7 @@ const rules = {
         trigger: 'change',
       },
     ],
-    employmentHistory: [
+    employment_history: [
       {
         company_name: [
           {
@@ -170,7 +170,7 @@ const rules = {
     ],
   },
 
-  employmentHistory: [
+  employment_history: [
     {
       company_name: [
         {
