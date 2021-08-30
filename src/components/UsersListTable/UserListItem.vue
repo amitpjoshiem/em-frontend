@@ -2,7 +2,10 @@
   <td class="flex items-center h-12 ml-5">
     <Avatar />
     <router-link
-      :to="{ name: 'member-details', params: { id: user.id } }"
+      :to="{
+        name: user.step ? 'member-details' : 'basic-information',
+        params: { id: user.id },
+      }"
       class="pl-2.5 font-medium"
     >
       {{ user.name }}
