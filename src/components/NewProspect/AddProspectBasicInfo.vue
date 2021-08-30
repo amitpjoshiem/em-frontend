@@ -230,11 +230,11 @@
         </div>
 
         <el-form-item
-          v-for="(eh, index) in ruleForm.employmentHistory"
+          v-for="(eh, index) in ruleForm.employment_history"
           :key="index"
         >
           <el-form-item
-            :prop="'employmentHistory.' + index + '.company_name'"
+            :prop="'employment_history.' + index + '.company_name'"
             label="Company name"
             class="w-full"
           >
@@ -244,7 +244,7 @@
             />
           </el-form-item>
           <el-form-item
-            :prop="'employmentHistory.' + index + '.occupation'"
+            :prop="'employment_history.' + index + '.occupation'"
             label="Occupation"
             class="w-full px-5"
           >
@@ -254,7 +254,7 @@
             />
           </el-form-item>
           <el-form-item
-            :prop="'employmentHistory.' + index + '.years'"
+            :prop="'employment_history.' + index + '.years'"
             label="Years"
             class="w-full"
           >
@@ -262,7 +262,7 @@
           </el-form-item>
           <div>
             <div
-              v-if="index === ruleForm.employmentHistory.length - 1"
+              v-if="index === ruleForm.employment_history.length - 1"
               class="add-employment cursor-pointer"
               @click="addEmployment"
             >
@@ -282,12 +282,12 @@
           <span class="text-gray03 text-xs">Spouse</span>
 
           <el-form-item
-            v-for="(eh, index) in ruleForm.spouse.employmentHistory"
+            v-for="(eh, index) in ruleForm.spouse.employment_history"
             :key="index"
             class="mb-10"
           >
             <el-form-item
-              :prop="'spouse.employmentHistory.' + index + '.company_name'"
+              :prop="'spouse.employment_history.' + index + '.company_name'"
               label="Company name"
               class="w-full"
             >
@@ -297,7 +297,7 @@
               />
             </el-form-item>
             <el-form-item
-              :prop="'spouse.employmentHistory.' + index + '.occupation'"
+              :prop="'spouse.employment_history.' + index + '.occupation'"
               label="Occupation"
               class="w-full px-5"
             >
@@ -307,7 +307,7 @@
               />
             </el-form-item>
             <el-form-item
-              :prop="'spouse.employmentHistory.' + index + '.years'"
+              :prop="'spouse.employment_history.' + index + '.years'"
               label="Years"
               class="w-full"
             >
@@ -315,7 +315,7 @@
             </el-form-item>
             <div>
               <div
-                v-if="index === ruleForm.spouse.employmentHistory.length - 1"
+                v-if="index === ruleForm.spouse.employment_history.length - 1"
                 class="add-employment cursor-pointer"
                 @click="addEmploymentSpouse"
               >
@@ -419,7 +419,7 @@ export default {
         retired: false,
         retirement_date: '',
         phone: '',
-        employmentHistory: [
+        employment_history: [
           {
             company_name: '',
             occupation: '',
@@ -435,7 +435,7 @@ export default {
         monthly_payment: '',
         total_monthly_expenses: '',
       },
-      employmentHistory: [
+      employment_history: [
         {
           company_name: '',
           occupation: '',
@@ -491,21 +491,21 @@ export default {
     }
 
     const removeEmployment = (index) => {
-      ruleForm.employmentHistory.splice(index, 1)
+      ruleForm.employment_history.splice(index, 1)
     }
 
     const removeEmploymentSpouse = (index) => {
-      ruleForm.spouse.employmentHistory.splice(index, 1)
+      ruleForm.spouse.employment_history.splice(index, 1)
     }
 
     const addEmployment = () => {
-      const length = ruleForm.employmentHistory.length
-      ruleForm.employmentHistory.push({
+      const length = ruleForm.employment_history.length
+      ruleForm.employment_history.push({
         company_name: '',
         occupation: '',
         years: '',
       })
-      rules.employmentHistory[length] = {
+      rules.employment_history[length] = {
         company_name: employmentHistoryRule.company_name,
         occupation: employmentHistoryRule.occupation,
         years: employmentHistoryRule.years,
@@ -513,13 +513,13 @@ export default {
     }
 
     const addEmploymentSpouse = () => {
-      const length = ruleForm.spouse.employmentHistory.length
-      ruleForm.spouse.employmentHistory.push({
+      const length = ruleForm.spouse.employment_history.length
+      ruleForm.spouse.employment_history.push({
         company_name: '',
         occupation: '',
         years: '',
       })
-      rules.spouse.employmentHistory[length] = {
+      rules.spouse.employment_history[length] = {
         company_name: employmentHistoryRule.company_name,
         occupation: employmentHistoryRule.occupation,
         years: employmentHistoryRule.years,
