@@ -386,13 +386,15 @@
 <script>
 import { reactive, ref, onMounted, computed } from 'vue'
 import { createMembers } from '@/api/vueQuery/create-members'
+import { updateMembers } from '@/api/vueQuery/update-members'
 import { useMutation } from 'vue-query'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useAlert } from '@/utils/use-alert'
 import { rules, employmentHistoryRule } from '@/validationRules/basicRules.js'
-
+import { useRoute } from 'vue-router'
 import { maska } from 'maska'
+import { useFetchMember } from '@/api/use-fetch-member'
 
 export default {
   name: 'AddProspectBasicInfo',
@@ -401,6 +403,8 @@ export default {
     const router = useRouter()
     const store = useStore()
     const form = ref(null)
+    const route = useRoute()
+
     const ruleForm = reactive({
       retired: false,
       married: true,
@@ -412,6 +416,7 @@ export default {
       city: '',
       state: '',
       zip: '',
+      phone: '',
       spouse: {
         name: '',
         email: '',
@@ -461,17 +466,90 @@ export default {
       refetch,
     } = useMutation(createMembers)
 
+    const { mutateAsync: updateMember } = useMutation(updateMembers)
+
+    const {
+      response: member,
+      error: errorMember,
+      fetching: fetchingMember,
+      getMember,
+    } = useFetchMember(route.params.id)
+
     onMounted(() => {
       store.commit('newProspect/setStep', 1)
       window.scrollTo(0, 0)
+      if (route.params.id) {
+        setInitValue()
+      }
     })
+
+    const setInitValue = async () => {
+      await getMember()
+      if (member?.value?.data) {
+        ruleForm.name = member.value.data.name
+        ruleForm.retired = member.value.data.retired
+        ruleForm.married = member.value.data.married
+        ruleForm.birthday = member.value.data.birthday
+        ruleForm.retirement_date = member.value.data.retirement_date
+        ruleForm.email = member.value.data.email
+        ruleForm.address = member.value.data.address
+        ruleForm.city = member.value.data.city
+        ruleForm.state = member.value.data.state
+        ruleForm.zip = member.value.data.zip
+        ruleForm.phone = member.value.data.phone
+
+        Object.assign(
+          ruleForm.employment_history,
+          member.value.data.employment_history.data
+        )
+
+        if (member.value.data.married) {
+          ruleForm.spouse.name = member.value.data.spouse.data.name
+          ruleForm.spouse.email = member.value.data.spouse.data.email
+          ruleForm.spouse.birthday = member.value.data.spouse.data.birthday
+          ruleForm.spouse.retired = member.value.data.spouse.data.retired
+          ruleForm.spouse.retirement_date =
+            member.value.data.spouse.data.retirement_date
+          ruleForm.spouse.phone = member.value.data.spouse.data.phone
+
+          Object.assign(
+            ruleForm.spouse.employment_history,
+            member.value.data.spouse.data.employment_history.data
+          )
+        }
+
+        ruleForm.house.type = member.value.data.house.data.type
+        ruleForm.house.market_value = member.value.data.house.data.market_value
+        ruleForm.house.total_debt = member.value.data.house.data.total_debt
+        ruleForm.house.remaining_mortgage_amount =
+          member.value.data.house.data.remaining_mortgage_amount
+        ruleForm.house.monthly_payment =
+          member.value.data.house.data.monthly_payment
+        ruleForm.house.total_monthly_expenses =
+          member.value.data.house.data.total_monthly_expenses
+
+        ruleForm.other.risk =
+          member.value.data.house.data.risk || 'conservative'
+        ruleForm.other.questions = member.value.data.house.data.questions
+        ruleForm.other.retirement = member.value.data.house.data.retirement
+        ruleForm.other.retirement_money =
+          member.value.data.house.data.retirement_money
+        ruleForm.other.work_with_advisor =
+          member.value.data.house.data.work_with_advisor
+      }
+    }
 
     const step = computed(() => store.state.newProspect.step)
 
     const submitForm = async () => {
       form.value.validate(async (valid) => {
         if (valid) {
-          const res = await createMember(ruleForm)
+          let res
+          if (route.params.id) {
+            res = await updateMember({ form: ruleForm, id: route.params.id })
+          } else {
+            res = await createMember(ruleForm)
+          }
           if (!('error' in res)) {
             useAlert({
               title: 'Success',
@@ -541,6 +619,9 @@ export default {
       data,
       error,
       refetch,
+      member,
+      errorMember,
+      fetchingMember,
     }
   },
 }

@@ -24,7 +24,7 @@ const routes = [
           ),
         children: [
           {
-            path: 'basic',
+            path: 'basic/:id?',
             name: 'basic-information',
             component: () =>
               import(
@@ -32,7 +32,7 @@ const routes = [
               ),
           },
           {
-            path: 'assets',
+            path: 'assets/:id?',
             name: 'assets-information',
             component: () =>
               import(
@@ -40,7 +40,7 @@ const routes = [
               ),
           },
           {
-            path: 'assets-acount',
+            path: 'assets-acount/:id?',
             name: 'assetsacount',
             component: () =>
               import(

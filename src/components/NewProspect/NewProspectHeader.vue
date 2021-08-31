@@ -1,20 +1,33 @@
 <template>
-  <div class="flex justify-between pb-5">
-    <BackButton text="Back" @click="back" />
-    <span class="text-title text-main font-medium">{{ headerTitle }}</span>
-    <NextButton @click="next" />
+  <div class="flex pb-5">
+    <div class="w-3/12">
+      <BackButton text="Back" @click="back" />
+    </div>
+    <div class="w-6/12 text-center">
+      <span class="text-title text-main font-medium">{{ headerTitle }}</span>
+    </div>
+    <div class="w-3/12" />
   </div>
 </template>
 <script>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useFetchMember } from '@/api/use-fetch-member'
 
 export default {
   name: 'NewProspectHeader',
   setup() {
     const router = useRouter()
     const store = useStore()
+    const route = useRoute()
+
+    const {
+      response: member,
+      error: errorMember,
+      fetching: fetchingMember,
+      getMember,
+    } = useFetchMember(route.params.id)
 
     const step = computed(() => store.state.newProspect.step)
 
@@ -22,6 +35,10 @@ export default {
       store.commit('newProspect/setStep', step.value + 1)
       goPage()
     }
+
+    onMounted(async () => {
+      if (route.params.id) await getMember()
+    })
 
     const back = () => {
       if (step.value === 1) {
@@ -52,7 +69,10 @@ export default {
     const goPage = () => {
       switch (step.value) {
         case 1:
-          router.push({ name: 'basic-information' })
+          router.push({
+            name: 'basic-information',
+            params: { id: route.params.id ? route.params.id : '' },
+          })
           break
         case 2:
           router.push({ name: 'assets-information' })
@@ -79,6 +99,11 @@ export default {
       back,
       headerTitle,
       goPage,
+      isShowNextBtn,
+      member,
+      errorMember,
+      fetchingMember,
+      getMember,
     }
   },
 }

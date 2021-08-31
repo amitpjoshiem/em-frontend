@@ -15,7 +15,10 @@ const rules = {
       trigger: ['blur'],
     },
   ],
-  phone: [{ type: 'string', required: true, message: 'Please phone' }],
+  phone: [
+    { type: 'string', required: true, message: 'Please phone' },
+    { trigger: 'blur' },
+  ],
   birthday: [
     {
       type: 'date',
@@ -122,11 +125,18 @@ const rules = {
             message: 'Please spouse occupation',
           },
         ],
+        // years: [
+        //   {
+        //     type: 'string',
+        //     required: true,
+        //     message: 'Please spouse years',
+        //   },
+        // ],
         years: [
           {
-            type: 'string',
+            validator: validateNumber,
+            trigger: 'blur',
             required: true,
-            message: 'Please spouse years',
           },
         ],
       },
@@ -188,11 +198,18 @@ const rules = {
       ],
       years: [
         {
-          type: 'string',
+          validator: validateNumber,
+          trigger: 'blur',
           required: true,
-          message: 'Please years',
         },
       ],
+      // years: [
+      //   {
+      //     type: 'string',
+      //     required: true,
+      //     message: 'Please years',
+      //   },
+      // ],
     },
   ],
 }
