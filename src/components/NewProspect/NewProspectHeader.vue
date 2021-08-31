@@ -99,7 +99,6 @@ export default {
       back,
       headerTitle,
       goPage,
-      isShowNextBtn,
       member,
       errorMember,
       fetchingMember,

@@ -405,6 +405,8 @@ export default {
     const form = ref(null)
     const route = useRoute()
 
+    let memberId
+
     const ruleForm = reactive({
       retired: false,
       married: true,
@@ -456,6 +458,15 @@ export default {
       },
     })
 
+    onMounted(() => {
+      store.commit('newProspect/setStep', 1)
+      window.scrollTo(0, 0)
+      if (route.params.id) {
+        memberId = route.params.id
+        setInitValue()
+      }
+    })
+
     const {
       mutateAsync: createMember,
       isLoading,
@@ -474,14 +485,6 @@ export default {
       fetching: fetchingMember,
       getMember,
     } = useFetchMember(route.params.id)
-
-    onMounted(() => {
-      store.commit('newProspect/setStep', 1)
-      window.scrollTo(0, 0)
-      if (route.params.id) {
-        setInitValue()
-      }
-    })
 
     const setInitValue = async () => {
       await getMember()
@@ -545,8 +548,8 @@ export default {
       form.value.validate(async (valid) => {
         if (valid) {
           let res
-          if (route.params.id) {
-            res = await updateMember({ form: ruleForm, id: route.params.id })
+          if (memberId) {
+            res = await updateMember({ form: ruleForm, id: memberId })
           } else {
             res = await createMember(ruleForm)
           }
