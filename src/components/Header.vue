@@ -56,11 +56,13 @@ export default {
 
     const newProspect = () => {
       if (
-        route.name === 'basic-information' ||
-        route.name === 'assets-information' ||
-        route.name === 'assetsacount' ||
-        route.name === 'assetsconsolidations' ||
-        route.name === 'stresstest'
+        [
+          'basic-information',
+          'assets-information',
+          'assetsacount',
+          'assetsconsolidations',
+          'stresstest',
+        ].includes(route.name)
       ) {
         ElMessageBox.confirm(
           'Are you sure you want to exit? All the unsaved changes will be lost',
