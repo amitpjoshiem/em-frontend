@@ -108,7 +108,7 @@ const routes = [
             name: 'prospects',
             component: () =>
               import(
-                /* webpackChunkName: "ListOfHouseholds */ '../components/ListOfHouseholds/ListProspects.vue'
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListProspects.vue'
               ),
           },
           {
