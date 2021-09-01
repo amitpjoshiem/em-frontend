@@ -125,13 +125,6 @@ const rules = {
             message: 'Please spouse occupation',
           },
         ],
-        // years: [
-        //   {
-        //     type: 'string',
-        //     required: true,
-        //     message: 'Please spouse years',
-        //   },
-        // ],
         years: [
           {
             validator: validateNumber,
@@ -203,13 +196,6 @@ const rules = {
           required: true,
         },
       ],
-      // years: [
-      //   {
-      //     type: 'string',
-      //     required: true,
-      //     message: 'Please years',
-      //   },
-      // ],
     },
   ],
 }
