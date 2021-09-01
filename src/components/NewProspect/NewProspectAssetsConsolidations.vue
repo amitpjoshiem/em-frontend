@@ -21,6 +21,7 @@
 import { useRouter } from 'vue-router'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import { scrollTop } from '@/utils/scrollTop'
 
 import TableAssetsConsolidations from '@/components/Table/TableAssetsConsolidations.vue'
 
@@ -35,7 +36,7 @@ export default {
 
     onMounted(() => {
       store.commit('newProspect/setStep', 4)
-      window.scrollTo(0, 0)
+      scrollTop()
     })
 
     const step = computed(() => store.state.newProspect.step)

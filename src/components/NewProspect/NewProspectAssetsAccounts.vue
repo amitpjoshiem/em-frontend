@@ -104,6 +104,7 @@ import IconDeleteLink from '@/assets/svg/icon-delete-link.svg'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { scrollTop } from '@/utils/scrollTop'
 
 export default {
   name: 'AssetsAccounts',
@@ -115,7 +116,7 @@ export default {
 
     onMounted(() => {
       store.commit('newProspect/setStep', 3)
-      window.scrollTo(0, 0)
+      scrollTop()
     })
 
     const step = computed(() => store.state.newProspect.step)

@@ -797,6 +797,7 @@ import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/assetsRules.js'
+import { scrollTop } from '@/utils/scrollTop'
 
 export default {
   name: 'AddProspectAssets',
@@ -928,7 +929,7 @@ export default {
 
     onMounted(() => {
       store.commit('newProspect/setStep', 2)
-      window.scrollTo(0, 0)
+      scrollTop()
       ruleForm.member_id = route.params.id
     })
 
