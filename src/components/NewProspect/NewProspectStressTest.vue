@@ -508,6 +508,7 @@ import { useRouter } from 'vue-router'
 import HoldingsChart from '@/components/NewProspect/Chart/HoldingsChart.vue'
 import RecommendationChart from '@/components/NewProspect/Chart/RecommendationChart.vue'
 import { computed } from 'vue'
+import { scrollTop } from '@/utils/scrollTop'
 
 export default {
   components: {
@@ -521,7 +522,7 @@ export default {
 
     onMounted(() => {
       store.commit('newProspect/setStep', 5)
-      window.scrollTo(0, 0)
+      scrollTop()
     })
 
     const step = computed(() => store.state.newProspect.step)

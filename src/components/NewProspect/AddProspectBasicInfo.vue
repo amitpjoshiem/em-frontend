@@ -395,6 +395,7 @@ import { rules, employmentHistoryRule } from '@/validationRules/basicRules.js'
 import { useRoute } from 'vue-router'
 import { maska } from 'maska'
 import { useFetchMember } from '@/api/use-fetch-member'
+import { scrollTop } from '@/utils/scrollTop'
 
 function setInitValue(ruleForm, member) {
   if (member?.value?.data) {
@@ -530,7 +531,7 @@ export default {
 
     onMounted(async () => {
       store.commit('newProspect/setStep', 1)
-      window.scrollTo(0, 0)
+      scrollTop()
       if (route.params.id) {
         memberId = route.params.id
         await getMember()

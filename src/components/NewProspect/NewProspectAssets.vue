@@ -37,11 +37,11 @@ import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { computed, ref, markRaw, onMounted } from 'vue'
-
 import Input from '@/components/Global/Input/Input.vue'
 import Radio from '@/components/Global/Radio.vue'
 import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
+import { scrollTop } from '@/utils/scrollTop'
 
 import {
   prospectAssetsSchemaCurrent,
@@ -70,7 +70,7 @@ export default {
 
     onMounted(() => {
       store.commit('newProspect/setStep', 2)
-      window.scrollTo(0, 0)
+      scrollTop()
     })
 
     const step = computed(() => store.state.newProspect.step)
