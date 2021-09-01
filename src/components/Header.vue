@@ -15,7 +15,7 @@
           cursor-pointer
           mr-5
         "
-        @click="open"
+        @click="newProspect"
       >
         <span class="px-2">
           <InlineSvg :src="IconPlus" />
@@ -54,7 +54,7 @@ export default {
     const route = useRoute()
     const router = useRouter()
 
-    const open = () => {
+    const newProspect = () => {
       if (
         route.name === 'basic-information' ||
         route.name === 'assets-information' ||
@@ -82,7 +82,7 @@ export default {
 
     return {
       IconPlus,
-      open,
+      newProspect,
     }
   },
 }
