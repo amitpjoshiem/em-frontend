@@ -12,12 +12,16 @@ const rules = {
     {
       type: 'email',
       message: 'Please input correct email address',
-      trigger: ['blur'],
+      trigger: 'blur',
     },
   ],
   phone: [
-    { type: 'string', required: true, message: 'Please phone' },
-    { trigger: 'blur' },
+    {
+      type: 'string',
+      required: true,
+      message: 'Please phone',
+      trigger: 'blur',
+    },
   ],
   birthday: [
     {
@@ -116,6 +120,7 @@ const rules = {
             type: 'string',
             required: true,
             message: 'Please spouse company name',
+            trigger: 'blur',
           },
         ],
         occupation: [
@@ -123,6 +128,7 @@ const rules = {
             type: 'string',
             required: true,
             message: 'Please spouse occupation',
+            trigger: 'blur',
           },
         ],
         years: [
@@ -180,6 +186,7 @@ const rules = {
           type: 'string',
           required: true,
           message: 'Please company name',
+          trigger: 'blur',
         },
       ],
       occupation: [
@@ -187,6 +194,7 @@ const rules = {
           type: 'string',
           required: true,
           message: 'Please occupation',
+          trigger: 'blur',
         },
       ],
       years: [

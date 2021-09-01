@@ -2,27 +2,26 @@
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
     <InputSearch placeholder="Search householders" name="inputSearch" />
     <div class="flex items-center justify-end">
-      <router-link :to="{ name: 'basic-information' }">
-        <div
-          class="
-            h-9
-            bg-color-grey
-            rounded-md
-            border-input-border border
-            flex
-            items-center
-            justify-center
-            text-primary text-xss
-            cursor-pointer
-            mr-5
-          "
-        >
-          <span class="px-2">
-            <InlineSvg :src="IconPlus" />
-          </span>
-          <div class="pr-2">Add new</div>
-        </div>
-      </router-link>
+      <div
+        class="
+          h-9
+          bg-color-grey
+          rounded-md
+          border-input-border border
+          flex
+          items-center
+          justify-center
+          text-primary text-xss
+          cursor-pointer
+          mr-5
+        "
+        @click="newProspect"
+      >
+        <span class="px-2">
+          <InlineSvg :src="IconPlus" />
+        </span>
+        <div class="pr-2">Add new</div>
+      </div>
 
       <div class="border-l border-color-grey h-16" />
       <div>
@@ -43,6 +42,8 @@
 <script>
 import UserAction from '@/components/UserAction.vue'
 import IconPlus from '@/assets/svg/icon-plus.svg'
+import { ElMessageBox } from 'element-plus'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
   name: 'Header',
@@ -50,8 +51,40 @@ export default {
     UserAction,
   },
   setup() {
+    const route = useRoute()
+    const router = useRouter()
+
+    const newProspect = () => {
+      if (
+        [
+          'basic-information',
+          'assets-information',
+          'assetsacount',
+          'assetsconsolidations',
+          'stresstest',
+        ].includes(route.name)
+      ) {
+        ElMessageBox.confirm(
+          'Are you sure you want to exit? All the unsaved changes will be lost',
+          'Info',
+          {
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel',
+            type: 'info',
+          }
+        )
+          .then(() => {
+            router.push({ name: 'basic-information' })
+          })
+          .catch(() => {})
+      } else {
+        router.push({ name: 'basic-information' })
+      }
+    }
+
     return {
       IconPlus,
+      newProspect,
     }
   },
 }

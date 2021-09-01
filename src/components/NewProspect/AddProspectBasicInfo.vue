@@ -384,7 +384,7 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted, computed } from 'vue'
+import { reactive, ref, onMounted, computed, watch } from 'vue'
 import { createMembers } from '@/api/vueQuery/create-members'
 import { updateMembers } from '@/api/vueQuery/update-members'
 import { useMutation } from 'vue-query'
@@ -396,6 +396,7 @@ import { useRoute } from 'vue-router'
 import { maska } from 'maska'
 import { useFetchMember } from '@/api/use-fetch-member'
 import { scrollTop } from '@/utils/scrollTop'
+import { initialBasicInformation } from '@/components/NewProspect/initialState/basicInformation'
 
 function setInitValue(ruleForm, member) {
   if (member?.value?.data) {
@@ -536,6 +537,16 @@ export default {
         memberId = route.params.id
         await getMember()
         setInitValue(ruleForm, member)
+      }
+    })
+
+    const resetState = () => {
+      Object.assign(ruleForm, initialBasicInformation)
+    }
+
+    watch(isUpdateMember, (newValue, oldValue) => {
+      if (newValue !== oldValue && newValue === false) {
+        resetState()
       }
     })
 
