@@ -1,0 +1,50 @@
+export const initialBasicInformation = {
+  retired: false,
+  married: true,
+  name: '',
+  birthday: '',
+  retirement_date: '',
+  email: '',
+  address: '',
+  city: '',
+  state: '',
+  zip: '',
+  phone: '',
+  spouse: {
+    name: '',
+    email: '',
+    birthday: '',
+    retired: false,
+    retirement_date: '',
+    phone: '',
+    employment_history: [
+      {
+        company_name: '',
+        occupation: '',
+        years: '',
+      },
+    ],
+  },
+  house: {
+    type: 'own',
+    market_value: '',
+    total_debt: '',
+    remaining_mortgage_amount: '',
+    monthly_payment: '',
+    total_monthly_expenses: '',
+  },
+  employment_history: [
+    {
+      company_name: '',
+      occupation: '',
+      years: '',
+    },
+  ],
+  other: {
+    risk: 'conservative',
+    questions: '',
+    retirement: '',
+    retirement_money: '',
+    work_with_advisor: true,
+  },
+}
