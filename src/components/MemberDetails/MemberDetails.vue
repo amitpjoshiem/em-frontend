@@ -40,7 +40,6 @@ export default {
       isLoading: isLoadingProspectDetails,
       isError,
       data,
-      refetch,
     } = useProspectDetails(id)
 
     const getTitle = computed(() => {
@@ -58,7 +57,6 @@ export default {
       isError,
       data,
       getTitle,
-      refetch,
       updateMemberInfo,
     }
   },
