@@ -792,12 +792,21 @@
 <script>
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { computed, reactive, onMounted } from 'vue'
+import { computed, reactive, onMounted, watch } from 'vue'
 import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/assetsRules.js'
 import { scrollTop } from '@/utils/scrollTop'
+import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
+import { initialAssetsInformation } from '@/components/NewProspect/initialState/assetsInformation'
+import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
+
+function setInitValue(ruleForm, member) {
+  if (member?.value?.data) {
+    Object.assign(ruleForm, member.value.data)
+  }
+}
 
 export default {
   name: 'AddProspectAssets',
@@ -805,6 +814,26 @@ export default {
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
+
+    const step = computed(() => store.state.newProspect.step)
+    const isUpdateMember = computed(() => !!route.params.id)
+
+    let memberId
+
+    const { response: memberAssets, getMemberAssets } = useFetchMemberAssets(
+      route.params.id
+    )
+
+    const {
+      mutateAsync: create,
+      isLoading,
+      isError,
+      isFetching,
+      data,
+      error,
+    } = useMutation(createAssetsIncome)
+
+    const { mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
 
     const ruleForm = reactive({
       income: {
@@ -927,40 +956,50 @@ export default {
       member_id: '',
     })
 
-    onMounted(() => {
+    onMounted(async () => {
       store.commit('newProspect/setStep', 2)
       scrollTop()
-      ruleForm.member_id = route.params.id
+      if (route.params.id) {
+        memberId = route.params.id
+        ruleForm.member_id = memberId
+        await getMemberAssets()
+        setInitValue(ruleForm, memberAssets)
+      }
     })
 
-    const {
-      mutateAsync: create,
-      isLoading,
-      isError,
-      isFetching,
-      data,
-      error,
-    } = useMutation(createAssetsIncome)
+    const resetState = () => {
+      Object.assign(ruleForm, initialAssetsInformation)
+    }
 
-    const step = computed(() => store.state.newProspect.step)
+    watch(isUpdateMember, (newValue, oldValue) => {
+      if (newValue !== oldValue && newValue === false) {
+        resetState()
+      }
+    })
 
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - 1)
-      router.push({ name: 'basic-information' })
+      router.push({ name: 'basic-information', params: { id: memberId } })
     }
 
     const submitForm = async () => {
-      const res = await create(ruleForm)
+      let res
+      if (isUpdateMember.value) {
+        res = await updateMemberAssets(ruleForm)
+      } else {
+        res = await create(ruleForm)
+      }
       if (!('error' in res)) {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Prospect created successfully',
+          message: 'Prospect update successfully',
         })
         store.commit('newProspect/setStep', step.value + 1)
+        console.log(res.data.id)
         router.push({
           name: 'assetsacount',
-          params: { id: res.data.id },
+          params: { id: memberId },
         })
       }
     }
@@ -976,6 +1015,10 @@ export default {
       error,
       submitForm,
       rules,
+      isUpdateMember,
+      memberAssets,
+      getMemberAssets,
+      memberId,
     }
   },
 }
