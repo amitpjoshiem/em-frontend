@@ -996,10 +996,15 @@ export default {
           message: 'Prospect update successfully',
         })
         store.commit('newProspect/setStep', step.value + 1)
-        console.log(res.data.id)
         router.push({
           name: 'assetsacount',
           params: { id: memberId },
+        })
+      } else {
+        useAlert({
+          title: 'Error',
+          type: 'error',
+          message: res.error.message,
         })
       }
     }
