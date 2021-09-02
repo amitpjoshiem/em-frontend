@@ -8,7 +8,7 @@
             <router-link
               :to="{
                 name: 'member-basic-information',
-                params: { id: prospectId },
+                params: { id: memberId },
               }"
               class="text-sm text-main font-medium"
             >
@@ -93,7 +93,7 @@
           small-btn-activity
           text-semi-bold
           text-btn="Convert to client"
-          @click="convertToClient"
+          @click="convert"
         />
 
         <router-link
@@ -120,6 +120,9 @@ import IconProspectAge from '@/assets/svg/prospect-age.svg'
 import IconTotal from '@/assets/svg/icon-total.svg'
 import IconGoal from '@/assets/svg/icon-goal.svg'
 import { useRoute } from 'vue-router'
+import { convertToClient } from '@/api/vueQuery/convert-to-client'
+import { useMutation } from 'vue-query'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'WidgetMemberDetails',
@@ -130,20 +133,48 @@ export default {
       default: () => {},
     },
   },
-  setup() {
+  emits: ['updateMemberInfo'],
+  setup(_, { emit }) {
     const route = useRoute()
-    const prospectId = route.params.id
+    const memberId = route.params.id
 
-    const convertToClient = () => {
-      console.log('convertToClient')
+    const {
+      isLoading,
+      isFetching,
+      data,
+      error,
+      mutateAsync: convertClient,
+    } = useMutation(convertToClient)
+
+    const convert = async () => {
+      const res = await convertToClient(memberId)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Convert successfully',
+        })
+        emit('updateMemberInfo')
+      } else {
+        useAlert({
+          title: 'Error',
+          type: 'error',
+          message: res.error.message,
+        })
+      }
     }
 
     return {
       IconProspectAge,
       IconTotal,
       IconGoal,
-      convertToClient,
-      prospectId,
+      convert,
+      memberId,
+      convertClient,
+      isLoading,
+      isFetching,
+      data,
+      error,
     }
   },
 }

@@ -3,7 +3,7 @@ import { UserProfile } from '../dto/UserProfile'
 import { fetchUserProfile } from './vueQuery/fetch-user-profile'
 
 export const useUserProfile = () => {
-  const { isLoading, isError, data, isFetched } = useQuery(
+  const { isLoading, isError, data, isFetched, refetch } = useQuery(
     ['users'],
     () => {
       return fetchUserProfile()
@@ -20,5 +20,6 @@ export const useUserProfile = () => {
     isError,
     data,
     isFetched,
+    refetch,
   }
 }
