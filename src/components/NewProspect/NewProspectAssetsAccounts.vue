@@ -103,7 +103,7 @@ import { useLinkAccount } from '@/components/NewProspect/DTO/linkAccount'
 import IconDeleteLink from '@/assets/svg/icon-delete-link.svg'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { scrollTop } from '@/utils/scrollTop'
 
 export default {
@@ -111,6 +111,7 @@ export default {
   setup() {
     const router = useRouter()
     const store = useStore()
+    const route = useRoute()
 
     const { data: linkAccount } = useLinkAccount()
 
@@ -128,7 +129,10 @@ export default {
 
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - 1)
-      router.push({ name: 'assets-information' })
+      router.push({
+        name: 'assets-information',
+        params: { id: route.params.id },
+      })
     }
 
     return {

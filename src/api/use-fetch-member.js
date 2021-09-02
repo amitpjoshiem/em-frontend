@@ -2,7 +2,7 @@ import { useFetch } from '@/api/use-fetch'
 
 const useFetchMember = (id) => {
   const { response, error, fetching, fetchData } = useFetch(`/members/${id}`, {
-    method: 'get',
+    method: 'GET',
   })
 
   const getMember = async (body) => {

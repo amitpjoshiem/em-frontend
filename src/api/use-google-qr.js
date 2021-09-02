@@ -2,7 +2,7 @@ import { useFetch } from '@/api/use-fetch'
 
 const useGoogleQr = () => {
   const { response, error, fetching, fetchData } = useFetch('/otps/google/qr', {
-    method: 'get',
+    method: 'GET',
   })
 
   const getGoogleQr = async (body) => {
