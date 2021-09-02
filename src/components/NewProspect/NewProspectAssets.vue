@@ -34,7 +34,7 @@
 <script>
 import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
 import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { computed, ref, markRaw, onMounted } from 'vue'
 import Input from '@/components/Global/Input/Input.vue'
@@ -62,6 +62,7 @@ export default {
   setup() {
     const store = useStore()
     const router = useRouter()
+    const route = useRoute()
     const schemaCurrent = ref(prospectAssetsSchemaCurrent)
     const schemaLiquid = ref(prospectAssetsSchemaLiquid)
     const schemaNoLiquid = ref(prospectAssetsSchemaNoLiquid)
@@ -82,7 +83,10 @@ export default {
 
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - 1)
-      router.push({ name: 'basic-information' })
+      router.push({
+        name: 'basic-information',
+        params: { id: route.params.id },
+      })
     }
 
     return {

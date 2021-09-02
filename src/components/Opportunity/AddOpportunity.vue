@@ -187,7 +187,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Prospect created successfully',
+              message: 'Opportunity created successfully',
             })
             router.push({ name: 'member-details', params: { id } })
           }

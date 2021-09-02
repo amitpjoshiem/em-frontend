@@ -75,13 +75,22 @@ export default {
           })
           break
         case 2:
-          router.push({ name: 'assets-information' })
+          router.push({
+            name: 'assets-information',
+            params: { id: route.params.id ? route.params.id : '' },
+          })
           break
         case 3:
-          router.push({ name: 'assetsacount' })
+          router.push({
+            name: 'assetsacount',
+            params: { id: route.params.id ? route.params.id : '' },
+          })
           break
         case 4:
-          router.push({ name: 'assetsconsolidations' })
+          router.push({
+            name: 'assetsconsolidations',
+            params: { id: route.params.id ? route.params.id : '' },
+          })
           break
         case 5:
           router.push({ name: 'stresstest' })
