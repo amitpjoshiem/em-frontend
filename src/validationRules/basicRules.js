@@ -20,8 +20,8 @@ const rules = {
       type: 'string',
       required: true,
       message: 'Please phone',
-      trigger: 'blur',
     },
+    { len: 14, trigger: 'blur', message: 'Incorrect phone number' },
   ],
   birthday: [
     {
@@ -104,7 +104,10 @@ const rules = {
         trigger: ['blur'],
       },
     ],
-    phone: [{ type: 'string', required: true, message: 'Please spouse phone' }],
+    phone: [
+      { type: 'string', required: true, message: 'Please spouse phone' },
+      { len: 14, trigger: 'blur', message: 'Incorrect phone number' },
+    ],
     retirement_date: [
       {
         type: 'date',
