@@ -51,7 +51,6 @@ export default {
 
     const updateMemberInfo = () => {
       queryClient.invalidateQueries(['member'])
-      refetch
     }
 
     return {
