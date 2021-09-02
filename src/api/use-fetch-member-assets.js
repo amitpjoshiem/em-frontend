@@ -4,7 +4,7 @@ const useFetchMemberAssets = (id) => {
   const { response, error, fetching, fetchData } = useFetch(
     `/assets_income/${id}`,
     {
-      method: 'get',
+      method: 'GET',
     }
   )
 
