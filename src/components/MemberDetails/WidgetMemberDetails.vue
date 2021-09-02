@@ -122,6 +122,7 @@ import IconGoal from '@/assets/svg/icon-goal.svg'
 import { useRoute } from 'vue-router'
 import { convertToClient } from '@/api/vueQuery/convert-to-client'
 import { useMutation } from 'vue-query'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'WidgetMemberDetails',
@@ -132,22 +133,35 @@ export default {
       default: () => {},
     },
   },
-  setup() {
+  emits: ['updateMemberInfo'],
+  setup(_, { emit }) {
     const route = useRoute()
     const memberId = route.params.id
 
     const {
       isLoading,
-      isError,
       isFetching,
       data,
       error,
       mutateAsync: convertClient,
     } = useMutation(convertToClient)
 
-    const convert = () => {
-      convertToClient(memberId)
-      console.log('convertToClient')
+    const convert = async () => {
+      const res = await convertToClient(memberId)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Convert successfully',
+        })
+        emit('updateMemberInfo')
+      } else {
+        useAlert({
+          title: 'Error',
+          type: 'error',
+          message: res.error.message,
+        })
+      }
     }
 
     return {
@@ -157,9 +171,7 @@ export default {
       convert,
       memberId,
       convertClient,
-
       isLoading,
-      isError,
       isFetching,
       data,
       error,
