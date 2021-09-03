@@ -36,8 +36,8 @@ export default {
 
     const { paginationData, handlePaginationChange } = usePaginationData()
 
-    const rows = computed(
-      () => store.state.globalComponents.itemsPerPage.values.listOfHouseholds
+    const rows = computed(() =>
+      Number(store.state.globalComponents.itemsPerPage.values.listOfHouseholds)
     )
 
     const { isLoading, isError, data, pagination } = useListHouseholders({

@@ -42,8 +42,8 @@ export default {
       page: paginationData,
     })
 
-    const rows = computed(
-      () => store.state.globalComponents.itemsPerPage.values.listOfHouseholds
+    const rows = computed(() =>
+      Number(store.state.globalComponents.itemsPerPage.values.listOfHouseholds)
     )
 
     return {
