@@ -48,7 +48,7 @@ const routes = [
               ),
           },
           {
-            path: 'assets-consolidations',
+            path: 'assets-consolidations/:id?',
             name: 'assetsconsolidations',
             component: () =>
               import(
@@ -56,7 +56,7 @@ const routes = [
               ),
           },
           {
-            path: 'stress-test',
+            path: 'stress-test/:id?',
             name: 'stresstest',
             component: () =>
               import(
