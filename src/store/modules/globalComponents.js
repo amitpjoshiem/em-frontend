@@ -2,22 +2,22 @@ const state = () => ({
   itemsPerPage: {
     options: [
       {
-        title: 6,
+        title: '6',
         command: '6',
       },
       {
-        title: 12,
+        title: '12',
         command: '12',
       },
       {
-        title: 18,
+        title: '18',
         command: '18',
       },
     ],
     values: {
-      default: 6,
-      dashboard: 6,
-      listOfHouseholds: 6,
+      default: '6',
+      dashboard: '6',
+      listOfHouseholds: '6',
     },
   },
   dialog: {
