@@ -16,7 +16,7 @@ import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import { chartWithTextCenter } from '@/utils/chartWithText'
 
 export default {
-  name: 'AssetsChart',
+  name: 'RiskLevelChart',
   components: {
     Vue3ChartJs,
   },
@@ -26,15 +26,15 @@ export default {
       data: {
         datasets: [
           {
-            backgroundColor: ['#FF92A5', '#66B6FF', '#53576A'],
-            data: [27, 59, 14],
+            backgroundColor: ['#FF92A5', '#D4DDEB'],
+            data: [58, 42],
           },
         ],
       },
       options: {
         elements: {
           center: {
-            text: 'Monthly $12.000',
+            text: '58',
             size: 12,
           },
         },
