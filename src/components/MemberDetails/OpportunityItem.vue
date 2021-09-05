@@ -8,7 +8,6 @@
     </div>
     <div class="w-2/12 item">
       {{ userProfile.name }}
-      <!-- {{ userProfile.firstName + ' ' + userProfile.lastName }} -->
     </div>
     <div class="w-2/12 item">{{ user.amount }}</div>
     <div class="w-2/12 item">{{ user.stage }}</div>

@@ -47,16 +47,23 @@
       </div>
 
       <div v-if="!isLoading">
-        <OpportunityItem
-          v-for="(user, index) in data"
-          :key="index"
-          :user="user"
-          :prospect="prospect"
-          :user-profile="userProfile"
-          class="oportunity-item"
-        >
-          {{ user }}
-        </OpportunityItem>
+        <template v-if="data.lenght">
+          <OpportunityItem
+            v-for="(user, index) in data"
+            :key="index"
+            :user="user"
+            :prospect="prospect"
+            :user-profile="userProfile"
+            class="oportunity-item"
+          >
+            {{ user }}
+          </OpportunityItem>
+        </template>
+        <div v-else class="text-center">
+          <span class="text-main text-sm"
+            >You have not added yet Opportunity</span
+          >
+        </div>
       </div>
       <el-skeleton v-else :rows="6" animated class="w-full p-3" />
     </div>
