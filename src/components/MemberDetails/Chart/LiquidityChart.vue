@@ -1,5 +1,5 @@
 <template>
-  <div class="w-36">
+  <div class="w-32">
     <vue3-chart-js
       :id="doughnutChart.id"
       ref="chartRef"
@@ -10,13 +10,11 @@
     />
   </div>
 </template>
-
 <script>
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import { chartWithTextCenter } from '@/utils/chartWithText'
-
 export default {
-  name: 'RiskLevelChart',
+  name: 'LiquidityChart',
   components: {
     Vue3ChartJs,
   },
@@ -27,7 +25,7 @@ export default {
         datasets: [
           {
             backgroundColor: ['#FF92A5', '#D4DDEB'],
-            data: [58, 42],
+            data: [43, 57],
             borderWidth: 2,
           },
         ],
@@ -35,7 +33,7 @@ export default {
       options: {
         elements: {
           center: {
-            text: '58',
+            text: '43%',
             size: 12,
           },
         },
