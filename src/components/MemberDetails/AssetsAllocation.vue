@@ -1,7 +1,7 @@
 <template>
   <div class="border border-color-grey box-border flex w-16/24 rounded-md">
     <div class="border-r border-color-grey p-5 w-8/12">
-      <span>Asset Allocation</span>
+      <span class="text-main text-smm font-semibold">Asset Allocation</span>
       <div class="flex pt-3">
         <AssetsChart />
         <div class="flex ml-4">
