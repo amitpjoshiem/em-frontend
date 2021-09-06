@@ -98,12 +98,29 @@
         <div class="flex pb-2 mt-8">
           <div class="w-4/24" />
           <div class="w-5/24 text-gray03 text-xs">OWNER</div>
-          <div class="w-5/24 text-gray03 text-xs">SPOUSE</div>
+          <div v-if="isMarried" class="w-5/24 text-gray03 text-xs">SPOUSE</div>
           <div class="w-5/24 text-gray03 text-xs pl-2.5">O/NQ</div>
           <div class="w-5/24 text-gray03 text-xs pl-2.5">BALANCE</div>
         </div>
 
-        <div class="flex items-center pb-2">
+        <ItemFormAssetsFour
+          v-model:member="
+            ruleForm.liquid_assets.member.cash_checking_savings_mm
+          "
+          v-model:spouse="
+            ruleForm.liquid_assets.spouse.cash_checking_savings_mm
+          "
+          v-model:o_nq="ruleForm.liquid_assets.o_nq.cash_checking_savings_mm"
+          v-model:balance="
+            ruleForm.liquid_assets.balance.cash_checking_savings_mm
+          "
+          prop-member="income.member.other"
+          prop-spouse="income.spouse.other"
+          title=" Cash/Checking/ Savings/MM"
+          :is-married="isMarried"
+        />
+
+        <!-- <div class="flex items-center pb-2">
           <div class="w-4/24 text-main font-semibold text-xss">
             Cash/Checking/ Savings/MM
           </div>
@@ -139,7 +156,7 @@
               v-model="ruleForm.liquid_assets.balance.cash_checking_savings_mm"
             />
           </el-form-item>
-        </div>
+        </div> -->
 
         <div class="flex items-center pb-2">
           <div class="w-4/24 text-main font-semibold text-xss">CD’s</div>
@@ -773,6 +790,7 @@ import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { initialAssetsInformation } from '@/components/NewProspect/initialState/assetsInformation'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import ItemFormAssetsTwo from '@/components/NewProspect/ItemFormAssetsTwo.vue'
+import ItemFormAssetsFour from '@/components/NewProspect/ItemFormAssetsFour.vue'
 
 function setInitValue(ruleForm, member) {
   if (member?.value?.data) {
@@ -784,6 +802,7 @@ export default {
   name: 'AddProspectAssets',
   components: {
     ItemFormAssetsTwo,
+    ItemFormAssetsFour,
   },
   setup() {
     const store = useStore()
