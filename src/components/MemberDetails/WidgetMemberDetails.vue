@@ -1,5 +1,5 @@
 <template>
-  <div class="w-8/24 pr-5">
+  <div class="w-8/24 mr-5">
     <div class="bg-widget-bg rounded-lg p-5">
       <div class="border-b pb-5">
         <div class="flex">

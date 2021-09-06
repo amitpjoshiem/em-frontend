@@ -1,14 +1,18 @@
 <template>
   <div class="p-5">
     <SubHeader :title="getTitle" back-page="dashboard" />
-    <div class="flex my-8">
+    <div class="flex my-5">
       <WidgetMemberDetails
         v-if="!isLoadingProspectDetails"
         :user="data"
         @updateMemberInfo="updateMemberInfo"
       />
       <el-skeleton v-else :rows="6" animated class="w-8/24 pr-5 h-[264px]" />
-      <div class="w-8/12">Asset Allocation</div>
+      <AssetsAllocation />
+    </div>
+    <div class="flex mb-5">
+      <PastStressTestResults />
+      <RetirementIncomePlan />
     </div>
     <OpportunityTable class="mb-10" :prospect="data" />
     <TableAssetsConsolidations class="mb-10" />
@@ -19,6 +23,9 @@ import { useRoute } from 'vue-router'
 import OpportunityTable from '@/components/MemberDetails/OpportunityTable.vue'
 import TableAssetsConsolidations from '@/components/Table/TableAssetsConsolidations.vue'
 import WidgetMemberDetails from '@/components/MemberDetails/WidgetMemberDetails.vue'
+import AssetsAllocation from '@/components/MemberDetails/AssetsAllocation.vue'
+import PastStressTestResults from '@/components/MemberDetails/PastStressTestResults.vue'
+import RetirementIncomePlan from '@/components/MemberDetails/RetirementIncomePlan.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
 import { useQueryClient } from 'vue-query'
@@ -29,6 +36,9 @@ export default {
     OpportunityTable,
     TableAssetsConsolidations,
     WidgetMemberDetails,
+    AssetsAllocation,
+    PastStressTestResults,
+    RetirementIncomePlan,
   },
 
   setup() {
