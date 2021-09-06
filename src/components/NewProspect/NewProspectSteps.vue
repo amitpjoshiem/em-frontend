@@ -1,10 +1,7 @@
 <template>
   <div class="bg-widget-bg rounded-lg px-5 mb-5">
     <div class="flex w-full pt-7">
-      <router-link
-        :to="{ name: 'basic-information' }"
-        class="w-1/5 text-center text-xs font-medium text-main"
-      >
+      <router-link :to="{ name: 'basic-information' }" class="w-1/5 text-center text-xs font-medium text-main">
         1. Basic
       </router-link>
       <router-link
@@ -53,10 +50,7 @@
       <div class="cycle-active" />
 
       <!-- STEP 2 -->
-      <div
-        class="flex-grow h-[3px]"
-        :class="{ 'bg-activity': step > 1, 'bg-input-border': step <= 1 }"
-      />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step > 1, 'bg-input-border': step <= 1 }" />
       <div
         :class="{
           'cycle-next': step === 2,
@@ -66,10 +60,7 @@
       />
 
       <!-- STEP 3 -->
-      <div
-        class="flex-grow h-[3px]"
-        :class="{ 'bg-activity': step > 2, 'bg-input-border': step <= 2 }"
-      />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step > 2, 'bg-input-border': step <= 2 }" />
       <div
         :class="{
           'cycle-next': step === 3,
@@ -79,10 +70,7 @@
       />
 
       <!-- STEP 4 -->
-      <div
-        class="flex-grow h-[3px]"
-        :class="{ 'bg-activity': step > 3, 'bg-input-border': step <= 3 }"
-      />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step > 3, 'bg-input-border': step <= 3 }" />
       <div
         :class="{
           'cycle-next': step === 4,
@@ -92,10 +80,7 @@
       />
 
       <!-- STEP 5 -->
-      <div
-        class="flex-grow h-[3px]"
-        :class="{ 'bg-activity': step > 4, 'bg-input-border': step <= 4 }"
-      />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step > 4, 'bg-input-border': step <= 4 }" />
       <div
         :class="{
           'cycle-next': step === 5,

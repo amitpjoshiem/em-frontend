@@ -21,11 +21,7 @@
       </div>
 
       <div>
-        <Button
-          default-blue-btn
-          text-btn="Go to the assets accounts"
-          @click="saveStep"
-        />
+        <Button default-blue-btn text-btn="Go to the assets accounts" @click="saveStep" />
       </div>
     </div>
   </div>

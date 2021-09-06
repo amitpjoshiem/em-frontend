@@ -1,13 +1,6 @@
 <template>
   <div>
-    <el-form
-      ref="form"
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      class="demo-ruleForm"
-      label-position="top"
-    >
+    <el-form ref="form" :model="ruleForm" status-icon :rules="rules" class="demo-ruleForm" label-position="top">
       <!-- GENERAL -->
       <div class="border-b px-16">
         <span class="text-main text-xl font-semibold">General</span>
@@ -28,10 +21,7 @@
 
         <div class="flex">
           <el-form-item label="Name" prop="name" class="w-9/12 pr-5">
-            <el-input
-              v-model="ruleForm.name"
-              placeholder="Enter prospect’s name"
-            />
+            <el-input v-model="ruleForm.name" placeholder="Enter prospect’s name" />
           </el-form-item>
           <el-form-item prop="birthday" label="Date of birth" class="w-3/12">
             <DatePicker v-model="ruleForm.birthday" />
@@ -40,57 +30,32 @@
 
         <div class="flex mt-6">
           <el-form-item label="E-mail" prop="email" class="w-5/12">
-            <el-input
-              v-model.email="ruleForm.email"
-              placeholder="Enter prospect’s e-mail"
-            />
+            <el-input v-model.email="ruleForm.email" placeholder="Enter prospect’s e-mail" />
           </el-form-item>
 
           <el-form-item label="Phone" prop="phone" class="w-5/12 px-5">
-            <el-input
-              v-model="ruleForm.phone"
-              v-maska="'(###) ###-####'"
-              placeholder="Enter prospect’s phone number"
-            />
+            <el-input v-model="ruleForm.phone" v-maska="'(###) ###-####'" placeholder="Enter prospect’s phone number" />
           </el-form-item>
-          <el-form-item
-            v-if="ruleForm.retired"
-            prop="retirement_date"
-            label="Retiretment date"
-            class="w-2/12"
-          >
+          <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retiretment date" class="w-2/12">
             <DatePicker v-model="ruleForm.retirement_date" />
           </el-form-item>
         </div>
 
         <div class="flex my-5">
           <el-form-item label="Address" prop="address" class="w-5/12 pr-5">
-            <el-input
-              v-model="ruleForm.address"
-              placeholder="Enter prospect’s address"
-            />
+            <el-input v-model="ruleForm.address" placeholder="Enter prospect’s address" />
           </el-form-item>
 
           <el-form-item label="City" prop="city" class="w-5/12 pr-5">
-            <el-input
-              v-model="ruleForm.city"
-              placeholder="Enter prospect’s city"
-            />
+            <el-input v-model="ruleForm.city" placeholder="Enter prospect’s city" />
           </el-form-item>
 
           <el-form-item label="State" prop="state" class="w-5/12 pr-5">
-            <el-input
-              v-model="ruleForm.state"
-              placeholder="Enter prospect’s state"
-            />
+            <el-input v-model="ruleForm.state" placeholder="Enter prospect’s state" />
           </el-form-item>
 
           <el-form-item label="ZIP" prop="zip" class="w-2/12">
-            <el-input
-              v-model="ruleForm.zip"
-              placeholder="000000"
-              type="number"
-            />
+            <el-input v-model="ruleForm.zip" placeholder="000000" type="number" />
           </el-form-item>
         </div>
       </div>
@@ -109,25 +74,15 @@
         </div>
         <div class="flex">
           <el-form-item label="Name" prop="spouse.name" class="w-9/12 pr-5">
-            <el-input
-              v-model="ruleForm.spouse.name"
-              placeholder="Enter spouse’s name"
-            />
+            <el-input v-model="ruleForm.spouse.name" placeholder="Enter spouse’s name" />
           </el-form-item>
-          <el-form-item
-            prop="spouse.birthday"
-            label="Date of birth"
-            class="w-3/12"
-          >
+          <el-form-item prop="spouse.birthday" label="Date of birth" class="w-3/12">
             <DatePicker v-model="ruleForm.spouse.birthday" />
           </el-form-item>
         </div>
         <div class="flex my-5">
           <el-form-item label="E-mail" prop="spouse.email" class="w-5/12">
-            <el-input
-              v-model.email="ruleForm.spouse.email"
-              placeholder="Enter spouse’s e-mail"
-            />
+            <el-input v-model.email="ruleForm.spouse.email" placeholder="Enter spouse’s e-mail" />
           </el-form-item>
 
           <el-form-item label="Phone" prop="spouse.phone" class="w-5/12 px-5">
@@ -166,10 +121,7 @@
             prop="house.market_value"
             class="w-5/12 pr-5"
           >
-            <el-input
-              v-model="ruleForm.house.market_value"
-              placeholder="$123000"
-            />
+            <el-input v-model="ruleForm.house.market_value" placeholder="$123000" />
           </el-form-item>
         </div>
         <div class="flex mt-5">
@@ -179,10 +131,7 @@
             prop="house.total_debt"
             class="w-5/12 pr-5"
           >
-            <el-input
-              v-model="ruleForm.house.total_debt"
-              placeholder="$123000"
-            />
+            <el-input v-model="ruleForm.house.total_debt" placeholder="$123000" />
           </el-form-item>
           <el-form-item
             v-if="ruleForm.house.type !== 'rent'"
@@ -190,10 +139,7 @@
             prop="house.remaining_mortgage_amount"
             class="w-5/12 pr-5"
           >
-            <el-input
-              v-model="ruleForm.house.remaining_mortgage_amount"
-              placeholder="$123000"
-            />
+            <el-input v-model="ruleForm.house.remaining_mortgage_amount" placeholder="$123000" />
           </el-form-item>
         </div>
         <div class="flex mb-5">
@@ -203,10 +149,7 @@
             prop="house.monthly_payment"
             class="w-5/12 pr-5"
           >
-            <el-input
-              v-model="ruleForm.house.monthly_payment"
-              placeholder="$123000"
-            />
+            <el-input v-model="ruleForm.house.monthly_payment" placeholder="$123000" />
           </el-form-item>
           <el-form-item
             v-if="ruleForm.house.type === 'rent'"
@@ -214,10 +157,7 @@
             prop="house.total_monthly_expenses"
             class="w-5/12 pr-5"
           >
-            <el-input
-              v-model="ruleForm.house.total_monthly_expenses"
-              placeholder="$123000"
-            />
+            <el-input v-model="ruleForm.house.total_monthly_expenses" placeholder="$123000" />
           </el-form-item>
         </div>
       </div>
@@ -229,35 +169,14 @@
           <span class="text-gray03 text-xs">Contact prospect</span>
         </div>
 
-        <el-form-item
-          v-for="(eh, index) in ruleForm.employment_history"
-          :key="index"
-        >
-          <el-form-item
-            :prop="'employment_history.' + index + '.company_name'"
-            label="Company name"
-            class="w-full"
-          >
-            <el-input
-              v-model="eh.company_name"
-              placeholder="Enter company name"
-            />
+        <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index">
+          <el-form-item :prop="'employment_history.' + index + '.company_name'" label="Company name" class="w-full">
+            <el-input v-model="eh.company_name" placeholder="Enter company name" />
           </el-form-item>
-          <el-form-item
-            :prop="'employment_history.' + index + '.occupation'"
-            label="Occupation"
-            class="w-full px-5"
-          >
-            <el-input
-              v-model="eh.occupation"
-              placeholder="Company occupation"
-            />
+          <el-form-item :prop="'employment_history.' + index + '.occupation'" label="Occupation" class="w-full px-5">
+            <el-input v-model="eh.occupation" placeholder="Company occupation" />
           </el-form-item>
-          <el-form-item
-            :prop="'employment_history.' + index + '.years'"
-            label="Years"
-            class="w-full"
-          >
+          <el-form-item :prop="'employment_history.' + index + '.years'" label="Years" class="w-full">
             <el-input v-model="eh.years" placeholder="00" />
           </el-form-item>
           <div>
@@ -268,49 +187,29 @@
             >
               +
             </div>
-            <div
-              v-else
-              class="add-employment cursor-pointer"
-              @click="removeEmployment(index)"
-            >
-              -
-            </div>
+            <div v-else class="add-employment cursor-pointer" @click="removeEmployment(index)">-</div>
           </div>
         </el-form-item>
 
         <div v-if="ruleForm.married" class="mt-5">
           <span class="text-gray03 text-xs">Spouse</span>
 
-          <el-form-item
-            v-for="(eh, index) in ruleForm.spouse.employment_history"
-            :key="index"
-            class="mb-10"
-          >
+          <el-form-item v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-10">
             <el-form-item
               :prop="'spouse.employment_history.' + index + '.company_name'"
               label="Company name"
               class="w-full"
             >
-              <el-input
-                v-model="eh.company_name"
-                placeholder="Enter company name"
-              />
+              <el-input v-model="eh.company_name" placeholder="Enter company name" />
             </el-form-item>
             <el-form-item
               :prop="'spouse.employment_history.' + index + '.occupation'"
               label="Occupation"
               class="w-full px-5"
             >
-              <el-input
-                v-model="eh.occupation"
-                placeholder="Company occupation"
-              />
+              <el-input v-model="eh.occupation" placeholder="Company occupation" />
             </el-form-item>
-            <el-form-item
-              :prop="'spouse.employment_history.' + index + '.years'"
-              label="Years"
-              class="w-full"
-            >
+            <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-full">
               <el-input v-model="eh.years" placeholder="00" />
             </el-form-item>
             <div>
@@ -321,13 +220,7 @@
               >
                 +
               </div>
-              <div
-                v-else
-                class="add-employment cursor-pointer"
-                @click="removeEmploymentSpouse(index)"
-              >
-                -
-              </div>
+              <div v-else class="add-employment cursor-pointer" @click="removeEmploymentSpouse(index)">-</div>
             </div>
           </el-form-item>
         </div>
@@ -338,35 +231,23 @@
         <el-form-item label="Risk tolerance?" class="mt-6">
           <el-radio-group v-model="ruleForm.other.risk">
             <el-radio label="conservative">Conservative</el-radio>
-            <el-radio label="moderately_conservative">
-              Moderately Conservative
-            </el-radio>
+            <el-radio label="moderately_conservative"> Moderately Conservative </el-radio>
             <el-radio label="moderate">Moderate</el-radio>
-            <el-radio label="moderately_aggressive">
-              Moderately Aggressive
-            </el-radio>
+            <el-radio label="moderately_aggressive"> Moderately Aggressive </el-radio>
             <el-radio label="aggressive">Aggressive</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          label="Does the prospect have any specific questions to discuss?"
-          prop="questions"
-        >
+        <el-form-item label="Does the prospect have any specific questions to discuss?" prop="questions">
           <el-input v-model="ruleForm.other.questions" type="textarea" />
         </el-form-item>
         <el-form-item label="Goal for retiretment" prop="retirement">
           <el-input v-model="ruleForm.other.retirement" type="textarea" />
         </el-form-item>
-        <el-form-item
-          label="Goal for retiretment money"
-          prop="retirement_money"
-        >
+        <el-form-item label="Goal for retiretment money" prop="retirement_money">
           <el-input v-model="ruleForm.other.retirement_money" type="textarea" />
         </el-form-item>
 
-        <el-form-item
-          label="Does the prospect currently work with the advisor?"
-        >
+        <el-form-item label="Does the prospect currently work with the advisor?">
           <el-radio-group v-model="ruleForm.other.work_with_advisor">
             <el-radio :label="true">Yes</el-radio>
             <el-radio :label="false">No</el-radio>
@@ -375,9 +256,7 @@
       </div>
 
       <div class="flex justify-end my-10">
-        <el-button type="primary" @click="submitForm('ruleForm')">
-          Go to the assets &amp; income
-        </el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')"> Go to the assets &amp; income </el-button>
       </div>
     </el-form>
   </div>
@@ -411,39 +290,27 @@ function setInitValue(ruleForm, member) {
     ruleForm.state = member.value.data.state
     ruleForm.zip = member.value.data.zip
     ruleForm.phone = member.value.data.phone
-    Object.assign(
-      ruleForm.employment_history,
-      member.value.data.employment_history.data
-    )
+    Object.assign(ruleForm.employment_history, member.value.data.employment_history.data)
     if (member.value.data.married) {
       ruleForm.spouse.name = member.value.data.spouse.data.name
       ruleForm.spouse.email = member.value.data.spouse.data.email
       ruleForm.spouse.birthday = member.value.data.spouse.data.birthday
       ruleForm.spouse.retired = member.value.data.spouse.data.retired
-      ruleForm.spouse.retirement_date =
-        member.value.data.spouse.data.retirement_date
+      ruleForm.spouse.retirement_date = member.value.data.spouse.data.retirement_date
       ruleForm.spouse.phone = member.value.data.spouse.data.phone
-      Object.assign(
-        ruleForm.spouse.employment_history,
-        member.value.data.spouse.data.employment_history.data
-      )
+      Object.assign(ruleForm.spouse.employment_history, member.value.data.spouse.data.employment_history.data)
     }
     ruleForm.house.type = member.value.data.house.data.type
     ruleForm.house.market_value = member.value.data.house.data.market_value
     ruleForm.house.total_debt = member.value.data.house.data.total_debt
-    ruleForm.house.remaining_mortgage_amount =
-      member.value.data.house.data.remaining_mortgage_amount
-    ruleForm.house.monthly_payment =
-      member.value.data.house.data.monthly_payment
-    ruleForm.house.total_monthly_expenses =
-      member.value.data.house.data.total_monthly_expenses
+    ruleForm.house.remaining_mortgage_amount = member.value.data.house.data.remaining_mortgage_amount
+    ruleForm.house.monthly_payment = member.value.data.house.data.monthly_payment
+    ruleForm.house.total_monthly_expenses = member.value.data.house.data.total_monthly_expenses
     ruleForm.other.risk = member.value.data.house.data.risk || 'conservative'
     ruleForm.other.questions = member.value.data.house.data.questions
     ruleForm.other.retirement = member.value.data.house.data.retirement
-    ruleForm.other.retirement_money =
-      member.value.data.house.data.retirement_money
-    ruleForm.other.work_with_advisor =
-      member.value.data.house.data.work_with_advisor
+    ruleForm.other.retirement_money = member.value.data.house.data.retirement_money
+    ruleForm.other.work_with_advisor = member.value.data.house.data.work_with_advisor
   }
 }
 
@@ -563,9 +430,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: isUpdateMember.value
-                ? 'Prospect update successfully'
-                : 'Prospect created successfully',
+              message: isUpdateMember.value ? 'Prospect update successfully' : 'Prospect created successfully',
             })
             store.commit('newProspect/setStep', step.value + 1)
             router.push({

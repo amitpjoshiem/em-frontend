@@ -54,10 +54,7 @@ class ApiClient {
   }
 
   async refreshToken() {
-    this.token =
-      this.status === API_CLIENT_STATUSES['pending']
-        ? this.token
-        : this.refreshTokenCall()
+    this.token = this.status === API_CLIENT_STATUSES['pending'] ? this.token : this.refreshTokenCall()
   }
 
   async fetch(url, options) {

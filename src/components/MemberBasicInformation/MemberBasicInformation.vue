@@ -41,21 +41,11 @@ export default {
     const route = useRoute()
     const id = route.params.id
 
-    const {
-      isLoading,
-      isError,
-      data,
-      house,
-      spouse,
-      employment,
-      other,
-      employmentProspect,
-      employmentSpouse,
-    } = useProspectDetails(id)
+    const { isLoading, isError, data, house, spouse, employment, other, employmentProspect, employmentSpouse } =
+      useProspectDetails(id)
 
     const getTitle = computed(() => {
-      if (data.value && data.value.type === 'prospect')
-        return 'Prospect details'
+      if (data.value && data.value.type === 'prospect') return 'Prospect details'
       return 'Client details'
     })
 

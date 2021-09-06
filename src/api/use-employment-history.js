@@ -13,12 +13,8 @@ export const useEmploymentHistory = (id) => {
     },
     {
       select: (data) => {
-        spouse.value = data.data.spouse.map(
-          (employment) => new EmploymentHistory(employment)
-        )
-        return data.data.member.map(
-          (employment) => new EmploymentHistory(employment)
-        )
+        spouse.value = data.data.spouse.map((employment) => new EmploymentHistory(employment))
+        return data.data.member.map((employment) => new EmploymentHistory(employment))
       },
     }
   )

@@ -27,16 +27,7 @@
     </div>
 
     <div class="pt-6 flex justify-between">
-      <div
-        class="
-          justify-between
-          flex flex-col
-          border border-widget-border
-          rounded-[10px]
-          pt-3
-          bg-white
-        "
-      >
+      <div class="justify-between flex flex-col border border-widget-border rounded-[10px] pt-3 bg-white">
         <div class="flex text-small items-center justify-between px-2.5">
           <span class="text-gray03">Total AUM</span>
           <div class="flex rounded-md p-1 bg-input-border bg-color-green">
@@ -44,22 +35,11 @@
             <span class="text-white"> 123k </span>
           </div>
         </div>
-        <span class="flex items-center justify-center text-xll font-medium">
-          $102M
-        </span>
+        <span class="flex items-center justify-center text-xll font-medium"> $102M </span>
         <InlineSvg :src="IconTotal" />
       </div>
 
-      <div
-        class="
-          justify-between
-          flex flex-col
-          border border-widget-border
-          rounded-[10px]
-          pt-3
-          bg-white
-        "
-      >
+      <div class="justify-between flex flex-col border border-widget-border rounded-[10px] pt-3 bg-white">
         <div class="flex text-small items-center justify-between px-2.5">
           <span class="text-gray03">Members</span>
           <div class="flex rounded-md p-1 bg-color-green">
@@ -67,9 +47,7 @@
             <span class="text-white"> 13 </span>
           </div>
         </div>
-        <span class="flex items-center justify-center text-xll font-medium">
-          138
-        </span>
+        <span class="flex items-center justify-center text-xll font-medium"> 138 </span>
         <InlineSvg :src="IconMembers" />
       </div>
     </div>

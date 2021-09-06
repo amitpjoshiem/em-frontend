@@ -1,8 +1,6 @@
 <template>
   <div class="border box-border color-light-gray rounded-lg">
-    <div class="text-smm font-medium text-main py-5 pl-5">
-      Prospect Asset Consolidations
-    </div>
+    <div class="text-smm font-medium text-main py-5 pl-5">Prospect Asset Consolidations</div>
     <div class="flex h-12 bg-widget-bg">
       <div class="w-2/10 title">name</div>
       <div class="w-1/10 title">

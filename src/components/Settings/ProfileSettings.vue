@@ -40,12 +40,7 @@ export default {
     ChangeName,
   },
   setup() {
-    const {
-      isLoading: isLoadingUserProfile,
-      isError: isErrorUserProfile,
-      data: user,
-      isFetched,
-    } = useUserProfile()
+    const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
 
     return {
       IconPencil,

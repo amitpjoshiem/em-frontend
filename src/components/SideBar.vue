@@ -10,10 +10,7 @@
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'dashboard' }"
       >
-        <InlineSvg
-          v-if="getRouteName === 'dashboard'"
-          :src="IconDashboardActive"
-        />
+        <InlineSvg v-if="getRouteName === 'dashboard'" :src="IconDashboardActive" />
         <InlineSvg v-else :src="IconDashboard" />
       </router-link>
       <router-link
@@ -26,14 +23,10 @@
         <InlineSvg v-if="getActiveListOfHouseholds" :src="IconListActive" />
         <InlineSvg v-else :src="IconList" />
       </router-link>
-      <div
-        class="item flex justify-center items-center cursor-pointer w-full h-14"
-      >
+      <div class="item flex justify-center items-center cursor-pointer w-full h-14">
         <img src="../assets/img/activity.png" />
       </div>
-      <div
-        class="item flex justify-center items-center cursor-pointer w-full h-14"
-      >
+      <div class="item flex justify-center items-center cursor-pointer w-full h-14">
         <img src="../assets/img/statistics.png" />
       </div>
     </div>
@@ -65,11 +58,7 @@ export default {
     })
 
     const getActiveListOfHouseholds = computed(() => {
-      return (
-        getRouteName.value === 'all' ||
-        getRouteName.value === 'clients' ||
-        getRouteName.value === 'prospects'
-      )
+      return getRouteName.value === 'all' || getRouteName.value === 'clients' || getRouteName.value === 'prospects'
     })
 
     return {

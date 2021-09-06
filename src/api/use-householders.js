@@ -12,9 +12,7 @@ export const useHouseholders = () => {
     return store.state.dashboard.houseHolderType
   })
 
-  const limit = computed(
-    () => store.state.globalComponents.itemsPerPage.values.dashboard
-  )
+  const limit = computed(() => store.state.globalComponents.itemsPerPage.values.dashboard)
 
   const reactiveType = ref(houseHolderType)
   const reactiveLimit = ref(limit)

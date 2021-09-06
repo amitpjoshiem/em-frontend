@@ -8,9 +8,7 @@ import { useStore } from 'vuex'
 export const useListHouseholders = ({ type, page }) => {
   const store = useStore()
 
-  const limit = computed(
-    () => store.state.globalComponents.itemsPerPage.values.listOfHouseholds
-  )
+  const limit = computed(() => store.state.globalComponents.itemsPerPage.values.listOfHouseholds)
 
   const reactiveType = ref(type)
   const reactiveLimit = ref(limit)

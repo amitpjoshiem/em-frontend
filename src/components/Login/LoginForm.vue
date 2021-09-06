@@ -2,33 +2,14 @@
   <div class="flex flex-col w-full items-center justify-center">
     <div class="form max-w-sm p-6 bg-widget-bg rounded-md w-[370px]">
       <div class="flex items-center justify-center p-2">
-        <div
-          class="
-            rounded-full
-            h-10
-            w-10
-            flex
-            items-center
-            justify-center
-            bg-lightgray03
-          "
-        >
+        <div class="rounded-full h-10 w-10 flex items-center justify-center bg-lightgray03">
           <InlineSvg :src="IconLoginForm" />
         </div>
       </div>
 
       <h1 class="text-center text-main font-medium text-2xl">Login</h1>
-      <h1 class="text-center text-gray03 text-xss">
-        Please enter you email and password
-      </h1>
-      <el-form
-        ref="form"
-        :model="ruleForm"
-        status-icon
-        :rules="rules"
-        class="demo-ruleForm"
-        label-position="top"
-      >
+      <h1 class="text-center text-gray03 text-xss">Please enter you email and password</h1>
+      <el-form ref="form" :model="ruleForm" status-icon :rules="rules" class="demo-ruleForm" label-position="top">
         <el-form-item label="E-mail" prop="email" class="py-3">
           <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" />
         </el-form-item>
@@ -55,9 +36,7 @@
     </div>
     <div class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
       <span class="text-xss text-gray03 cursor-pointer">
-        <router-link :to="{ name: 'forgotpassword' }">
-          Forgot your password?
-        </router-link>
+        <router-link :to="{ name: 'forgotpassword' }"> Forgot your password? </router-link>
       </span>
     </div>
   </div>
