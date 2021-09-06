@@ -60,6 +60,26 @@ export default {
               1.2, 1.5, 0.2, 0.3, 0.8, 0.9, 0.3, 0.4,
             ],
           },
+          {
+            borderSkipped: false,
+            borderColor: '#FF92A5',
+            maxBarThickness: 10,
+            backgroundColor: ['#FF92A5'],
+            data: [
+              1, 0.6, 0.4, 0.2, 0.2, 0.6, 0.7, 0.1, 0.9, 0.8, 1.2, 0.4, 0.1,
+              1.2, 1.5, 0.2, 0.3, 0.8, 0.9, 0.3, 0.4,
+            ],
+          },
+          {
+            borderSkipped: false,
+            borderColor: '#66B6FF',
+            maxBarThickness: 10,
+            backgroundColor: ['#66B6FF'],
+            data: [
+              1, 0.6, 0.4, 0.2, 0.2, 0.6, 0.7, 0.1, 0.9, 0.8, 1.2, 0.4, 0.1,
+              1.2, 1.5, 0.2, 0.3, 0.8, 0.9, 0.3, 0.4,
+            ],
+          },
         ],
       },
       options: {
@@ -71,6 +91,7 @@ export default {
             min: 0,
             max: 2,
             stepSize: 0.5,
+            stacked: true,
             ticks: {
               callback: function (value) {
                 return '$' + value + 'm'
@@ -87,6 +108,7 @@ export default {
             },
           },
           x: {
+            stacked: true,
             grid: {
               display: false,
             },
