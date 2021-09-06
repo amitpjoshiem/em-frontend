@@ -60,9 +60,9 @@
           </OpportunityItem>
         </template>
         <div v-else class="text-center">
-          <span class="text-main text-sm"
-            >You have not added yet Opportunity</span
-          >
+          <span class="text-main text-sm">
+            No recently added opportunities
+          </span>
         </div>
       </div>
       <el-skeleton v-else :rows="6" animated class="w-full p-3" />
