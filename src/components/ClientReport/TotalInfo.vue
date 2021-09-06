@@ -4,12 +4,8 @@
       <span class="text-gray03 font-semibold text-sm">TDA Total Value</span>
       <span class="text-main font-semibold text-2xl mt-2">$239,293</span>
     </div>
-    <div
-      class="w-4/12 mx-5 bg-widget-bg py-6 rounded flex flex-col items-center"
-    >
-      <span class="text-gray03 font-semibold text-sm">
-        Total Current Value
-      </span>
+    <div class="w-4/12 mx-5 bg-widget-bg py-6 rounded flex flex-col items-center">
+      <span class="text-gray03 font-semibold text-sm"> Total Current Value </span>
       <span class="text-main font-semibold text-2xl mt-2">$239,293</span>
     </div>
     <div class="w-4/12 bg-widget-bg py-6 rounded flex flex-col items-center">

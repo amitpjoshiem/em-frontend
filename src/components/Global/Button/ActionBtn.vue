@@ -1,15 +1,6 @@
 <template>
   <div
-    class="
-      relative
-      inline-block
-      text-left
-      rounded
-      py-2
-      px-3
-      cursor-pointer
-      bg-white
-    "
+    class="relative inline-block text-left rounded py-2 px-3 cursor-pointer bg-white"
     :class="{ 'border border-color-grey': border }"
     @click="showBlock"
   >
@@ -20,18 +11,7 @@
 
     <div
       v-show="isShow"
-      class="
-        origin-top-right
-        absolute
-        -right-5
-        mt-6
-        w-56
-        rounded-large
-        shadow-lg
-        bg-white
-        focus:outline-none
-        caret
-      "
+      class="origin-top-right absolute -right-5 mt-6 w-56 rounded-large shadow-lg bg-white focus:outline-none caret"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="menu-button"

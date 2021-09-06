@@ -22,27 +22,12 @@
   </td>
   <td class="text-main">{{ user.city }}</td>
   <td class="font-medium">
-    <PlugForField
-      :text="user.netWorth"
-      plug="&mdash;"
-      class="text-sm text-main font-semibold"
-    />
+    <PlugForField :text="user.netWorth" plug="&mdash;" class="text-sm text-main font-semibold" />
   </td>
   <td class="pr-5">
     <DropDown class="ml-2.5" :options="actionsOptions" @select="handleSelect">
       <template #titleDropDown>
-        <span
-          class="
-            cursor-pointer
-            bg-white
-            rounded
-            flex
-            justify-center
-            items-center
-            py-2
-            px-3
-          "
-        >
+        <span class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3">
           <InlineSvg :src="IconActionGray" />
         </span>
       </template>
@@ -156,8 +141,7 @@ export default {
           name: 'bluereport',
           params: { id: props.user.id },
         }),
-      'client-report': () =>
-        router.push({ name: 'clientreport', params: { id: props.user.id } }),
+      'client-report': () => router.push({ name: 'clientreport', params: { id: props.user.id } }),
       onboarding: () =>
         router.push({
           name: routerForStep(props.user.step),

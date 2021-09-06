@@ -4,12 +4,9 @@ import { useAlert } from '@/utils/use-alert'
 
 const useCreatePassword = () => {
   const router = useRouter()
-  const { response, error, fetching, fetchData } = useFetch(
-    '/password/create',
-    {
-      method: 'POST',
-    }
-  )
+  const { response, error, fetching, fetchData } = useFetch('/password/create', {
+    method: 'POST',
+  })
 
   const createPassword = async (body) => {
     await fetchData({ body })

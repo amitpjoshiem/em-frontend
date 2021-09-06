@@ -1,15 +1,9 @@
 <template>
   <div class="pl-24 pt-14 text-main w-10/12">
     <div class="flex py-5">
-      <div class="w-10/12 text-xss text-main font-medium">
-        Google Authenticator
-      </div>
+      <div class="w-10/12 text-xss text-main font-medium">Google Authenticator</div>
       <div class="w-2/12 flex justify-between">
-        <el-switch
-          v-model="value"
-          :loading="loading"
-          :before-change="beforeChange"
-        />
+        <el-switch v-model="value" :loading="loading" :before-change="beforeChange" />
       </div>
     </div>
 
@@ -18,13 +12,7 @@
         <img ref="qrCode" :src="response.data.url" class="pb-5" />
         <form @submit="verifyHandler">
           <InputTextForm name="code" type="number" placeholder="code" />
-          <Button
-            :default-primary="!fetching"
-            full
-            text-btn="Verify"
-            type="submit"
-            :disabled="fetching"
-          />
+          <Button :default-primary="!fetching" full text-btn="Verify" type="submit" :disabled="fetching" />
         </form>
       </div>
     </div>

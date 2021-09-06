@@ -1,16 +1,5 @@
 <template>
-  <div
-    class="
-      row-span-2
-      col-span-1
-      bg-widget-bg
-      rounded-[10px]
-      font-medium
-      pl-5
-      pt-5
-      pr-5
-    "
-  >
+  <div class="row-span-2 col-span-1 bg-widget-bg rounded-[10px] font-medium pl-5 pt-5 pr-5">
     <p class="text-smm text-main pb-2.5">Last Activity</p>
 
     <LastActivityItem

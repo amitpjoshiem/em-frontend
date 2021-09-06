@@ -17,33 +17,11 @@
       <CircularProgress :percentage="user.progress" />
       <span class="pl-2">{{ user.progress }}%</span>
     </div>
-    <div
-      class="
-        col-span-2
-        text-main text-xs
-        font-medium
-        flex
-        justify-center
-        items-center
-      "
-    >
-      ${{ user.balance }}
-    </div>
+    <div class="col-span-2 text-main text-xs font-medium flex justify-center items-center">${{ user.balance }}</div>
     <div class="col-span-1 flex justify-center items-center">
       <DropDown :options="actionsOptions">
         <template #titleDropDown>
-          <span
-            class="
-              cursor-pointer
-              bg-white
-              rounded
-              flex
-              justify-center
-              items-center
-              py-2
-              px-3
-            "
-          >
+          <span class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3">
             <InlineSvg :src="IconActionGray" />
           </span>
         </template>

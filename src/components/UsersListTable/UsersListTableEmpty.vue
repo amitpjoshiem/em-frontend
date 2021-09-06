@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="
-      bg-widget-bg
-      uppercase
-      text-gray03
-      h-6
-      flex
-      justify-center
-      items-center
-    "
-  >
+  <div class="bg-widget-bg uppercase text-gray03 h-6 flex justify-center items-center">
     <span class="w-7/24 text-small ml-5">householder Name</span>
     <span class="w-3/24 text-small">Created on</span>
     <span class="w-3/24 text-small">type</span>

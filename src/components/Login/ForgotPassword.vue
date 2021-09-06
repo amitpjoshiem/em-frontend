@@ -2,39 +2,17 @@
   <div class="flex flex-col w-full items-center justify-center">
     <div class="max-w-sm p-6 bg-widget-bg rounded-md w-[370px]">
       <div class="flex items-center justify-center p-2">
-        <div
-          class="
-            rounded-full
-            h-10
-            w-10
-            flex
-            items-center
-            justify-center
-            bg-lightgray03
-          "
-        >
+        <div class="rounded-full h-10 w-10 flex items-center justify-center bg-lightgray03">
           <InlineSvg :src="IconForgotPassword" />
         </div>
       </div>
 
-      <h1 class="text-center text-main font-medium text-2xl">
-        Forgot password?
-      </h1>
+      <h1 class="text-center text-main font-medium text-2xl">Forgot password?</h1>
       <h1 class="text-center text-gray03 text-xss">Please enter you email</h1>
       <div v-if="!sendFormForgotPass">
-        <el-form
-          ref="form"
-          :model="ruleForm"
-          status-icon
-          :rules="rules"
-          class="demo-ruleForm"
-          label-position="top"
-        >
+        <el-form ref="form" :model="ruleForm" status-icon :rules="rules" class="demo-ruleForm" label-position="top">
           <el-form-item label="E-mail" prop="email" class="py-3">
-            <el-input
-              v-model="ruleForm.email"
-              placeholder="Enter your e-mail"
-            />
+            <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" />
           </el-form-item>
         </el-form>
         <div class="text-center pt-5">

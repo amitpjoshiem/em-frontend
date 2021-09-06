@@ -1,22 +1,9 @@
 <template>
   <div>
     <div class="border box-border color-light-gray rounded-lg">
-      <div
-        class="
-          text-smm
-          font-medium
-          text-main
-          py-5
-          pl-5
-          flex
-          justify-between
-          px-5
-        "
-      >
+      <div class="text-smm font-medium text-main py-5 pl-5 flex justify-between px-5">
         <span>Child Opportunities</span>
-        <router-link
-          :to="{ name: 'add-opportunity', params: { id: prospectId } }"
-        >
+        <router-link :to="{ name: 'add-opportunity', params: { id: prospectId } }">
           <div
             class="
               h-9
@@ -60,9 +47,7 @@
           </OpportunityItem>
         </template>
         <div v-else class="text-center">
-          <span class="text-main text-sm">
-            No recently added opportunities
-          </span>
+          <span class="text-main text-sm"> No recently added opportunities </span>
         </div>
       </div>
       <el-skeleton v-else :rows="6" animated class="w-full p-3" />
@@ -94,11 +79,7 @@ export default {
 
     const { isLoading, isError, data } = useOpportunityList(prospectId)
 
-    const {
-      isLoading: isLoadingUserProfile,
-      isError: isErrorUserProfile,
-      data: userProfile,
-    } = useUserProfile()
+    const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: userProfile } = useUserProfile()
 
     return {
       IconPlus,

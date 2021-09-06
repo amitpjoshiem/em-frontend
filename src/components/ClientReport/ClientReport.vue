@@ -8,11 +8,7 @@
       </div>
 
       <div class="w-6/12 text-center">
-        <span
-          class="text-title text-color-link font-semibold"
-          v-html="getNameTitle"
-        >
-        </span>
+        <span class="text-title text-color-link font-semibold" v-html="getNameTitle"> </span>
         <span class="text-title text-main font-semibold">Client report</span>
       </div>
 

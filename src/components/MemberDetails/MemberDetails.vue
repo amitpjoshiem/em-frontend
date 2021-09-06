@@ -2,11 +2,7 @@
   <div class="p-5">
     <SubHeader :title="getTitle" back-page="dashboard" />
     <div class="flex my-5">
-      <WidgetMemberDetails
-        v-if="!isLoadingProspectDetails"
-        :user="data"
-        @updateMemberInfo="updateMemberInfo"
-      />
+      <WidgetMemberDetails v-if="!isLoadingProspectDetails" :user="data" @updateMemberInfo="updateMemberInfo" />
       <el-skeleton v-else :rows="6" animated class="w-8/24 pr-5 h-[264px]" />
       <AssetsAllocation />
     </div>
@@ -46,15 +42,10 @@ export default {
     const id = route.params.id
     const queryClient = useQueryClient()
 
-    const {
-      isLoading: isLoadingProspectDetails,
-      isError,
-      data,
-    } = useProspectDetails(id)
+    const { isLoading: isLoadingProspectDetails, isError, data } = useProspectDetails(id)
 
     const getTitle = computed(() => {
-      if (data.value && data.value.type === 'prospect')
-        return 'Prospect details'
+      if (data.value && data.value.type === 'prospect') return 'Prospect details'
       return 'Client details'
     })
 

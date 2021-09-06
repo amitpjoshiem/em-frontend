@@ -3,11 +3,7 @@
     <div v-if="isError">An error has occurred: {{ error }}</div>
     <div>
       <ListOfHouseholdsHeader />
-      <UsersListTable
-        v-if="!isFetching"
-        :items-header="itemsHeader"
-        :users-list="data"
-      />
+      <UsersListTable v-if="!isFetching" :items-header="itemsHeader" :users-list="data" />
       <el-skeleton v-else :rows="rows" animated class="p-5" />
     </div>
   </div>
@@ -28,12 +24,9 @@ export default {
   setup() {
     const store = useStore()
 
-    const { isFetching, isLoading, isError, data, houseHolderTypeHandler } =
-      useHouseholders()
+    const { isFetching, isLoading, isError, data, houseHolderTypeHandler } = useHouseholders()
 
-    const rows = computed(() =>
-      Number(store.state.globalComponents.itemsPerPage.values.dashboard)
-    )
+    const rows = computed(() => Number(store.state.globalComponents.itemsPerPage.values.dashboard))
 
     return {
       isFetching,

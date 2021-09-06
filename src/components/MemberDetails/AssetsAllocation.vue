@@ -15,9 +15,7 @@
             <div class="py-4">Growth</div>
             <div>Income</div>
           </div>
-          <div
-            class="flex flex-col justify-center text-main text-xs font-medium"
-          >
+          <div class="flex flex-col justify-center text-main text-xs font-medium">
             <div>{{ currencyFormat(10000) }}</div>
             <div class="py-4">{{ currencyFormat(8000) }}</div>
             <div>{{ currencyFormat(2000) }}</div>
@@ -29,17 +27,7 @@
       <DropDown class="flex justify-end pt-3 pr-3" :options="actionsOptions">
         <template #titleDropDown>
           <span
-            class="
-              cursor-pointer
-              bg-white
-              rounded
-              flex
-              justify-center
-              items-center
-              py-2
-              px-3
-              border border-color-grey
-            "
+            class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3 border border-color-grey"
           >
             <InlineSvg :src="IconAction" />
           </span>

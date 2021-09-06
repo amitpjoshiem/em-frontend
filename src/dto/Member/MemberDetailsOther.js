@@ -1,13 +1,5 @@
 class MemberDetailsOther {
-  constructor({
-    id,
-    risk,
-    questions,
-    retirement,
-    retirement_money,
-    work_with_advisor,
-    real_id,
-  }) {
+  constructor({ id, risk, questions, retirement, retirement_money, work_with_advisor, real_id }) {
     this.id = id
     this.risk = risk
     this.questions = questions

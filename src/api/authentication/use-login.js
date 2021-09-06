@@ -15,10 +15,7 @@ const useLogin = () => {
     const token = response.value.access_token
     tokenStorage.setByKey('access_token', token)
     apiClient.authenticate(token)
-    tokenStorage.setByKey(
-      'otp-type',
-      headers.value['x-otp-type'] ? headers.value['x-otp-type'] : ''
-    )
+    tokenStorage.setByKey('otp-type', headers.value['x-otp-type'] ? headers.value['x-otp-type'] : '')
     if (headers.value['x-otp-type']) {
       router.push({ name: 'otp' })
     } else {

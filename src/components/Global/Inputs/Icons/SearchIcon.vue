@@ -1,9 +1,6 @@
 <template>
   <span class="absolute inset-y-0 left-0 flex items-center">
-    <button
-      type="button"
-      class="pl-[11px] focus:outline-none focus:shadow-outline"
-    >
+    <button type="button" class="pl-[11px] focus:outline-none focus:shadow-outline">
       <InlineSvg :src="IconSearch" />
     </button>
   </span>

@@ -5,11 +5,7 @@
     </div>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item
-          v-for="(item, index) in options"
-          :key="index"
-          :command="item.command"
-        >
+        <el-dropdown-item v-for="(item, index) in options" :key="index" :command="item.command">
           <span :class="item.class">{{ item.title }}</span>
         </el-dropdown-item>
       </el-dropdown-menu>

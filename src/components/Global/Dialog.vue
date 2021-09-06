@@ -3,12 +3,7 @@
     <slot name="buttonDialog" />
   </div>
 
-  <el-dialog
-    v-model="dialogVisible"
-    :title="title"
-    :before-close="handleClose"
-    width="47%"
-  >
+  <el-dialog v-model="dialogVisible" :title="title" :before-close="handleClose" width="47%">
     <slot name="contentDialog" />
   </el-dialog>
 </template>
@@ -59,14 +54,10 @@ export default defineComponent({
         })
     }
 
-    const hideModal = computed(
-      () =>
-        store.state.globalComponents.dialog.showDialog[props.destinationDialog]
-    )
+    const hideModal = computed(() => store.state.globalComponents.dialog.showDialog[props.destinationDialog])
 
     watch(hideModal, (newValue, oldValue) => {
-      if (newValue !== oldValue && newValue === true)
-        dialogVisible.value = false
+      if (newValue !== oldValue && newValue === true) dialogVisible.value = false
     })
 
     return {

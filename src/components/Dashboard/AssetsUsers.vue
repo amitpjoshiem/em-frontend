@@ -1,10 +1,6 @@
 <template>
   <div class="border-t border-color-grey pb-5">
-    <AssetsUsersItem
-      v-for="(user, index) in usersList"
-      :key="index"
-      :user="user"
-    />
+    <AssetsUsersItem v-for="(user, index) in usersList" :key="index" :user="user" />
   </div>
 </template>
 <script>

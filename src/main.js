@@ -8,12 +8,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
 import InlineSvg from 'vue-inline-svg'
-import {
-  SchemaForm,
-  SchemaWizard,
-  SchemaFormFactory,
-  useSchemaForm,
-} from 'formvuelate'
+import { SchemaForm, SchemaWizard, SchemaFormFactory, useSchemaForm } from 'formvuelate'
 
 // Global Component Import
 import Input from '@/components/Global/Input/Input.vue'

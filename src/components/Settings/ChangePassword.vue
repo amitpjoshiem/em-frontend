@@ -1,20 +1,12 @@
 <template>
-  <Dialog
-    title="Change password"
-    confirm-action="changePassword"
-    destination-dialog="changePassword"
-  >
+  <Dialog title="Change password" confirm-action="changePassword" destination-dialog="changePassword">
     <template #buttonDialog>
       <div class="flex items-center">
         <InlineSvg :src="IconPencil" class="mb-1" />
       </div>
     </template>
     <template #contentDialog>
-      <SchemaFormWithValidation
-        :schema="schema"
-        schema-row-classes="pt-3"
-        @submit="savePass"
-      >
+      <SchemaFormWithValidation :schema="schema" schema-row-classes="pt-3" @submit="savePass">
         <template #afterForm>
           <div class="pt-12 text-right">
             <Button default-blue-btn text-btn="Save" type="submit" />

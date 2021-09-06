@@ -1,20 +1,12 @@
 <template>
-  <Dialog
-    title="Change password"
-    confirm-action="changeName"
-    destination-dialog="changeName"
-  >
+  <Dialog title="Change password" confirm-action="changeName" destination-dialog="changeName">
     <template #buttonDialog>
       <div class="flex items-center">
         <InlineSvg :src="IconPencil" class="mb-1" />
       </div>
     </template>
     <template #contentDialog>
-      <SchemaFormWithValidation
-        :schema="schema"
-        schema-row-classes="pt-3"
-        @submit="saveName"
-      >
+      <SchemaFormWithValidation :schema="schema" schema-row-classes="pt-3" @submit="saveName">
         <template #afterForm>
           <div class="pt-12 text-right">
             <Button default-blue-btn text-btn="Save" type="submit" />
@@ -59,12 +51,7 @@ export default {
       error,
     } = useMutation(changeUserName)
 
-    const {
-      isLoading: isLoadingUserProfile,
-      isError: isErrorUserProfile,
-      data: user,
-      refetch,
-    } = useUserProfile()
+    const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, refetch } = useUserProfile()
 
     const schema = ref(schemaChangeName)
     const formData = ref({})

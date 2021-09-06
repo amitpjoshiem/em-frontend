@@ -1,12 +1,9 @@
 import { useFetch } from '@/api/use-fetch'
 
 const useLogoutSalesForce = () => {
-  const { response, error, fetching, fetchData } = useFetch(
-    '/salesforce/auth/logout',
-    {
-      method: 'GET',
-    }
-  )
+  const { response, error, fetching, fetchData } = useFetch('/salesforce/auth/logout', {
+    method: 'GET',
+  })
 
   const logoutSalesForceAuth = async (body) => {
     await fetchData({ body })
