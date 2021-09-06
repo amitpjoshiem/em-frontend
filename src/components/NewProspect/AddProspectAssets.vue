@@ -23,102 +23,73 @@
           <div class="flex pb-2 mt-8">
             <div class="w-2/12"></div>
             <div class="w-5/12 text-gray03 text-xs">OWNER</div>
-            <div class="w-5/12 text-gray03 text-xs pl-2.5">SPOUSE</div>
-          </div>
-
-          <div class="flex items-center pb-2">
-            <div class="w-2/12 text-main font-semibold text-xss">Salary</div>
-            <el-form-item class="w-5/12 pr-2.5" prop="income.member.salary">
-              <el-input v-model="ruleForm.income.member.salary" />
-            </el-form-item>
-            <el-form-item class="w-5/12 pl-2.5" prop="income.spouse.salary">
-              <el-input v-model="ruleForm.income.spouse.salary" />
-            </el-form-item>
-          </div>
-
-          <div class="flex items-center pb-2">
-            <div class="w-2/12 text-main font-semibold text-xss">
-              Social Security
+            <div v-if="isMarried" class="w-5/12 text-gray03 text-xs pl-2.5">
+              SPOUSE
             </div>
-            <el-form-item
-              class="w-5/12 pr-2.5"
-              prop="income.member.social_security"
-            >
-              <el-input v-model="ruleForm.income.member.social_security" />
-            </el-form-item>
-            <el-form-item
-              class="w-5/12 pl-2.5"
-              prop="income.spouse.social_security"
-            >
-              <el-input v-model="ruleForm.income.spouse.social_security" />
-            </el-form-item>
           </div>
 
-          <div class="flex items-center pb-2">
-            <div class="w-2/12 text-main font-semibold text-xss">Pension</div>
-            <el-form-item class="w-5/12 pr-2.5" prop="income.member.pension">
-              <el-input v-model="ruleForm.income.member.pension" />
-            </el-form-item>
-            <el-form-item class="w-5/12 pl-2.5" prop="income.spouse.pension">
-              <el-input v-model="ruleForm.income.spouse.pension" />
-            </el-form-item>
-          </div>
+          <ItemFormAssets
+            v-model:member="ruleForm.income.member.salary"
+            v-model:spouse="ruleForm.income.spouse.salary"
+            prop-member="income.member.salary"
+            prop-spouse="income.spouse.salary"
+            title="Salary"
+            :is-married="isMarried"
+          />
 
-          <div class="flex items-center pb-2">
-            <div class="w-2/12 text-main font-semibold text-xss">
-              Rental income
-            </div>
-            <el-form-item
-              class="w-5/12 pr-2.5"
-              prop="income.member.rental_income"
-            >
-              <el-input v-model="ruleForm.income.member.rental_income" />
-            </el-form-item>
-            <el-form-item
-              class="w-5/12 pl-2.5"
-              prop="income.spouse.rental_income"
-            >
-              <el-input v-model="ruleForm.income.spouse.rental_income" />
-            </el-form-item>
-          </div>
+          <ItemFormAssets
+            v-model:member="ruleForm.income.member.social_security"
+            v-model:spouse="ruleForm.income.spouse.social_security"
+            prop-member="income.member.social_security"
+            prop-spouse="income.spouse.social_security"
+            title="Social Security"
+            :is-married="isMarried"
+          />
 
-          <div class="flex items-center pb-2">
-            <div class="w-2/12 text-main font-semibold text-xss">RMD’s</div>
-            <el-form-item class="w-5/12 pr-2.5" prop="income.member.rmds">
-              <el-input v-model="ruleForm.income.member.rmds" />
-            </el-form-item>
-            <el-form-item class="w-5/12 pl-2.5" prop="income.spouse.rmds">
-              <el-input v-model="ruleForm.income.spouse.rmds" />
-            </el-form-item>
-          </div>
+          <ItemFormAssets
+            v-model:member="ruleForm.income.member.pension"
+            v-model:spouse="ruleForm.income.spouse.pension"
+            prop-member="income.member.pension"
+            prop-spouse="income.spouse.pension"
+            title="Pension"
+            :is-married="isMarried"
+          />
 
-          <div class="flex items-center pb-2">
-            <div class="w-2/12 text-main font-semibold text-xss">
-              Interest/Dividents
-            </div>
-            <el-form-item
-              class="w-5/12 pr-2.5"
-              prop="income.member.interest_dividends"
-            >
-              <el-input v-model="ruleForm.income.member.interest_dividends" />
-            </el-form-item>
-            <el-form-item
-              class="w-5/12 pl-2.5"
-              prop="income.spouse.interest_dividends"
-            >
-              <el-input v-model="ruleForm.income.spouse.interest_dividends" />
-            </el-form-item>
-          </div>
+          <ItemFormAssets
+            v-model:member="ruleForm.income.member.rental_income"
+            v-model:spouse="ruleForm.income.spouse.rental_income"
+            prop-member="income.member.rental_income"
+            prop-spouse="income.spouse.rental_income"
+            title="Rental income"
+            :is-married="isMarried"
+          />
 
-          <div class="flex items-center pb-2">
-            <div class="w-2/12 text-main font-semibold text-xss">Other</div>
-            <el-form-item class="w-5/12 pr-2.5" prop="income.member.other">
-              <el-input v-model="ruleForm.income.member.other" />
-            </el-form-item>
-            <el-form-item class="w-5/12 pl-2.5" prop="income.spouse.other">
-              <el-input v-model="ruleForm.income.spouse.other" />
-            </el-form-item>
-          </div>
+          <ItemFormAssets
+            v-model:member="ruleForm.income.member.rmds"
+            v-model:spouse="ruleForm.income.spouse.rmds"
+            prop-member="income.member.rmds"
+            prop-spouse="income.spouse.rmds"
+            title="RMD’s"
+            :is-married="isMarried"
+          />
+
+          <ItemFormAssets
+            v-model:member="ruleForm.income.member.interest_dividends"
+            v-model:spouse="ruleForm.income.spouse.interest_dividends"
+            prop-member="income.member.interest_dividends"
+            prop-spouse="income.spouse.interest_dividends"
+            title="Interest/Dividents"
+            :is-married="isMarried"
+          />
+
+          <ItemFormAssets
+            v-model:member="ruleForm.income.member.other"
+            v-model:spouse="ruleForm.income.spouse.other"
+            prop-member="income.member.other"
+            prop-spouse="income.spouse.other"
+            title="Other"
+            :is-married="isMarried"
+          />
         </div>
       </div>
 
@@ -802,6 +773,8 @@ import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { initialAssetsInformation } from '@/components/NewProspect/initialState/assetsInformation'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 
+import ItemFormAssets from './ItemFormAssets.vue'
+
 function setInitValue(ruleForm, member) {
   if (member?.value?.data) {
     Object.assign(ruleForm, member.value.data)
@@ -810,6 +783,9 @@ function setInitValue(ruleForm, member) {
 
 export default {
   name: 'AddProspectAssets',
+  components: {
+    ItemFormAssets,
+  },
   setup() {
     const store = useStore()
     const router = useRouter()
@@ -982,6 +958,11 @@ export default {
       router.push({ name: 'basic-information', params: { id: memberId } })
     }
 
+    const isMarried = computed(() => {
+      if (memberAssets?.value?.data?.spouse) return true
+      return false
+    })
+
     const submitForm = async () => {
       let res
       if (isUpdateMember.value) {
@@ -1024,6 +1005,7 @@ export default {
       memberAssets,
       getMemberAssets,
       memberId,
+      isMarried,
     }
   },
 }
