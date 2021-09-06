@@ -211,7 +211,7 @@
           <el-form-item
             v-if="ruleForm.house.type === 'rent'"
             label="Total monthly expences"
-            prop="house.total_monthly"
+            prop="house.total_monthly_expenses"
             class="w-5/12 pr-5"
           >
             <el-input

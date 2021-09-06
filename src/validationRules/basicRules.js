@@ -8,10 +8,10 @@ const rules = {
     { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
   email: [
-    { required: true, message: 'Please input email address', trigger: 'blur' },
+    { required: true, message: 'The field cannot be empty', trigger: 'blur' },
     {
       type: 'email',
-      message: 'Please input correct email address',
+      message: 'Please enter valid email ID',
       trigger: 'blur',
     },
   ],
@@ -19,7 +19,7 @@ const rules = {
     {
       type: 'string',
       required: true,
-      message: 'Please phone',
+      message: 'The field cannot be empty',
     },
     { len: 14, trigger: 'blur', message: 'Incorrect phone number' },
   ],
@@ -43,7 +43,7 @@ const rules = {
   address: [
     {
       required: true,
-      message: 'Please input address',
+      message: 'The field cannot be empty',
       trigger: 'blur',
     },
     { trigger: 'blur' },
@@ -52,7 +52,7 @@ const rules = {
   city: [
     {
       required: true,
-      message: 'Please input city',
+      message: 'The field cannot be empty',
       trigger: 'blur',
     },
     { trigger: 'blur' },
@@ -61,7 +61,7 @@ const rules = {
   state: [
     {
       required: true,
-      message: 'Please input state',
+      message: 'The field cannot be empty',
       trigger: 'blur',
     },
     { trigger: 'blur' },
@@ -70,7 +70,7 @@ const rules = {
   zip: [
     {
       required: true,
-      message: 'Please ZIP',
+      message: 'The field cannot be empty',
       trigger: 'blur',
     },
     { trigger: 'blur' },
@@ -122,7 +122,7 @@ const rules = {
           {
             type: 'string',
             required: true,
-            message: 'Please spouse company name',
+            message: 'The field cannot be empty',
             trigger: 'blur',
           },
         ],
@@ -130,7 +130,7 @@ const rules = {
           {
             type: 'string',
             required: true,
-            message: 'Please spouse occupation',
+            message: 'The field cannot be empty',
             trigger: 'blur',
           },
         ],
@@ -188,7 +188,7 @@ const rules = {
         {
           type: 'string',
           required: true,
-          message: 'Please company name',
+          message: 'The field cannot be empty',
           trigger: 'blur',
         },
       ],
@@ -196,7 +196,7 @@ const rules = {
         {
           type: 'string',
           required: true,
-          message: 'Please occupation',
+          message: 'The field cannot be empty',
           trigger: 'blur',
         },
       ],
