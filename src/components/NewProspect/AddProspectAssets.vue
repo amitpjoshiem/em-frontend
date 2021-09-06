@@ -28,7 +28,7 @@
             </div>
           </div>
 
-          <ItemFormAssets
+          <ItemFormAssetsTwo
             v-model:member="ruleForm.income.member.salary"
             v-model:spouse="ruleForm.income.spouse.salary"
             prop-member="income.member.salary"
@@ -37,7 +37,7 @@
             :is-married="isMarried"
           />
 
-          <ItemFormAssets
+          <ItemFormAssetsTwo
             v-model:member="ruleForm.income.member.social_security"
             v-model:spouse="ruleForm.income.spouse.social_security"
             prop-member="income.member.social_security"
@@ -46,7 +46,7 @@
             :is-married="isMarried"
           />
 
-          <ItemFormAssets
+          <ItemFormAssetsTwo
             v-model:member="ruleForm.income.member.pension"
             v-model:spouse="ruleForm.income.spouse.pension"
             prop-member="income.member.pension"
@@ -55,7 +55,7 @@
             :is-married="isMarried"
           />
 
-          <ItemFormAssets
+          <ItemFormAssetsTwo
             v-model:member="ruleForm.income.member.rental_income"
             v-model:spouse="ruleForm.income.spouse.rental_income"
             prop-member="income.member.rental_income"
@@ -64,7 +64,7 @@
             :is-married="isMarried"
           />
 
-          <ItemFormAssets
+          <ItemFormAssetsTwo
             v-model:member="ruleForm.income.member.rmds"
             v-model:spouse="ruleForm.income.spouse.rmds"
             prop-member="income.member.rmds"
@@ -73,7 +73,7 @@
             :is-married="isMarried"
           />
 
-          <ItemFormAssets
+          <ItemFormAssetsTwo
             v-model:member="ruleForm.income.member.interest_dividends"
             v-model:spouse="ruleForm.income.spouse.interest_dividends"
             prop-member="income.member.interest_dividends"
@@ -82,7 +82,7 @@
             :is-married="isMarried"
           />
 
-          <ItemFormAssets
+          <ItemFormAssetsTwo
             v-model:member="ruleForm.income.member.other"
             v-model:spouse="ruleForm.income.spouse.other"
             prop-member="income.member.other"
@@ -772,8 +772,7 @@ import { scrollTop } from '@/utils/scrollTop'
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { initialAssetsInformation } from '@/components/NewProspect/initialState/assetsInformation'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
-
-import ItemFormAssets from './ItemFormAssets.vue'
+import ItemFormAssetsTwo from '@/components/NewProspect/ItemFormAssetsTwo.vue'
 
 function setInitValue(ruleForm, member) {
   if (member?.value?.data) {
@@ -784,7 +783,7 @@ function setInitValue(ruleForm, member) {
 export default {
   name: 'AddProspectAssets',
   components: {
-    ItemFormAssets,
+    ItemFormAssetsTwo,
   },
   setup() {
     const store = useStore()
