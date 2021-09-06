@@ -1,12 +1,4 @@
-export function User({
-  avatar,
-  name,
-  createdOn,
-  type,
-  onboarding,
-  location,
-  netWorth,
-}) {
+export function User({ avatar, name, createdOn, type, onboarding, location, netWorth }) {
   this.avatar = avatar
   this.name = name
   this.createdOn = createdOn

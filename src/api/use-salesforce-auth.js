@@ -1,12 +1,9 @@
 import { useFetch } from '@/api/use-fetch'
 
 const useSalesForceAuth = () => {
-  const { response, error, fetching, fetchData } = useFetch(
-    '/salesforce/auth/settings',
-    {
-      method: 'GET',
-    }
-  )
+  const { response, error, fetching, fetchData } = useFetch('/salesforce/auth/settings', {
+    method: 'GET',
+  })
 
   const getSalesForceAuth = async (body) => {
     await fetchData({ body })

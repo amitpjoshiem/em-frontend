@@ -1,12 +1,9 @@
 <template>
   <div>
     <div class="flex items-center justify-between">
-      <label
-        v-if="label"
-        class="label block text-main text-xss font-medium pb-2"
-        :class="labelClass"
-        >{{ label }}</label
-      >
+      <label v-if="label" class="label block text-main text-xss font-medium pb-2" :class="labelClass">{{
+        label
+      }}</label>
     </div>
     <div class="relative">
       <input
@@ -36,14 +33,8 @@
       />
       <slot name="icon" :showError="Boolean(validation.meta?.touched)">
         <span class="absolute inset-y-0 right-0 flex items-center">
-          <button
-            type="button"
-            class="p-1 focus:outline-none focus:shadow-outline"
-          >
-            <InlineSvg
-              v-if="Boolean(validation.meta?.touched)"
-              :src="IconInputError"
-            />
+          <button type="button" class="p-1 focus:outline-none focus:shadow-outline">
+            <InlineSvg v-if="Boolean(validation.meta?.touched)" :src="IconInputError" />
           </button>
         </span>
       </slot>
@@ -67,8 +58,7 @@ const labelVariants = {
 const inputVariants = {
   search: 'pl-[32px]',
   error: 'border-color-error',
-  inputTable:
-    'border-0 outline-none focus:border-0 focus:shadow-none px-0 py-0',
+  inputTable: 'border-0 outline-none focus:border-0 focus:shadow-none px-0 py-0',
 }
 
 export default {

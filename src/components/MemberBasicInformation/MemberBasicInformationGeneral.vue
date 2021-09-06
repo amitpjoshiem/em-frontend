@@ -9,30 +9,11 @@
         <span class="text-xs text-gray03 font-semibold mr-1">OWNER</span>
         <span
           v-if="!prospect.retired"
-          class="
-            text-border-green text-xxs
-            font-semibold
-            bg-light-green
-            rounded
-            pr-2
-            pl-1
-            py-1
-          "
+          class="text-border-green text-xxs font-semibold bg-light-green rounded pr-2 pl-1 py-1"
         >
           Not Retired
         </span>
-        <span
-          v-else
-          class="
-            text-xxs text-orange-badge
-            font-semibold
-            bg-orange-bg
-            rounded
-            pr-2
-            pl-1
-            py-1
-          "
-        >
+        <span v-else class="text-xxs text-orange-badge font-semibold bg-orange-bg rounded pr-2 pl-1 py-1">
           Retired
         </span>
       </div>
@@ -40,29 +21,13 @@
         <span class="text-xs text-gray03 font-semibold mr-1">SPOUSE</span>
         <span
           v-if="prospect.married && !spouse.retired"
-          class="
-            text-border-green text-xxs
-            font-semibold
-            bg-light-green
-            rounded
-            pr-2
-            pl-1
-            py-1
-          "
+          class="text-border-green text-xxs font-semibold bg-light-green rounded pr-2 pl-1 py-1"
         >
           Not Retired
         </span>
         <span
           v-if="prospect.married && spouse.retired"
-          class="
-            text-xxs text-orange-badge
-            font-semibold
-            bg-orange-bg
-            rounded
-            pr-2
-            pl-1
-            py-1
-          "
+          class="text-xxs text-orange-badge font-semibold bg-orange-bg rounded pr-2 pl-1 py-1"
         >
           Retired
         </span>
@@ -79,11 +44,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="spouse.name"
-          plug="&mdash;"
-          class="text-sm text-main font-semibold"
-        />
+        <PlugForField :text="spouse.name" plug="&mdash;" class="text-sm text-main font-semibold" />
       </div>
     </div>
 
@@ -97,11 +58,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="spouse.phone"
-          plug="&mdash;"
-          class="text-sm text-main"
-        />
+        <PlugForField :text="spouse.phone" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -115,11 +72,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="spouse.email"
-          plug="&mdash;"
-          class="text-sm text-main"
-        />
+        <PlugForField :text="spouse.email" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -133,19 +86,13 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="spouse.birthday"
-          plug="&mdash;"
-          class="text-sm text-main"
-        />
+        <PlugForField :text="spouse.birthday" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold">
-          Retiretment Date
-        </span>
+        <span class="text-xss text-gray03 font-semibold"> Retiretment Date </span>
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main">
@@ -153,11 +100,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="spouse.retirementDate"
-          plug="&mdash;"
-          class="text-sm text-main"
-        />
+        <PlugForField :text="spouse.retirementDate" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -189,18 +132,10 @@
         <span class="text-xss text-gray03 font-semibold">Company Name</span>
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="employmentProspect.companyName"
-          plug="&mdash;"
-          class="text-sm text-main"
-        />
+        <PlugForField :text="employmentProspect.companyName" plug="&mdash;" class="text-sm text-main" />
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="employmentSpouse.companyName"
-          plug="&mdash;"
-          class="text-sm text-main"
-        />
+        <PlugForField :text="employmentSpouse.companyName" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -209,18 +144,10 @@
         <span class="text-xss text-gray03 font-semibold">Occupation</span>
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="employmentProspect.occupation"
-          plug="&mdash;"
-          class="text-sm text-main"
-        />
+        <PlugForField :text="employmentProspect.occupation" plug="&mdash;" class="text-sm text-main" />
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="employmentSpouse.occupation"
-          plug="&mdash;"
-          class="text-sm text-main"
-        />
+        <PlugForField :text="employmentSpouse.occupation" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -229,18 +156,10 @@
         <span class="text-xss text-gray03 font-semibold">Years</span>
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="employmentProspect.years"
-          plug="&mdash;"
-          class="text-sm text-main"
-        />
+        <PlugForField :text="employmentProspect.years" plug="&mdash;" class="text-sm text-main" />
       </div>
       <div class="w-9/24">
-        <PlugForField
-          :text="employmentSpouse.years"
-          plug="&mdash;"
-          class="text-sm text-main"
-        />
+        <PlugForField :text="employmentSpouse.years" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
   </div>

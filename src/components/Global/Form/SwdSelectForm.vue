@@ -4,13 +4,7 @@
       {{ label }}
     </span>
     <el-select v-model="value" :size="size" @change="changeHandler">
-      <el-option
-        v-for="item in options"
-        :key="item.title"
-        :label="item.title"
-        :value="item.title"
-      >
-      </el-option>
+      <el-option v-for="item in options" :key="item.title" :label="item.title" :value="item.title"> </el-option>
     </el-select>
   </div>
 </template>

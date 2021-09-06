@@ -8,11 +8,7 @@
       </div>
 
       <div>
-        <Button
-          default-blue-btn
-          text-btn="Go to the stress test results"
-          @click="saveStep"
-        />
+        <Button default-blue-btn text-btn="Go to the stress test results" @click="saveStep" />
       </div>
     </div>
   </div>

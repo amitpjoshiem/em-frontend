@@ -54,11 +54,7 @@ export default {
       information: () => router.push({ name: 'information' }),
     }
 
-    const {
-      isLoading: isLoadingUserProfile,
-      isError: isErrorUserProfile,
-      data: user,
-    } = useUserProfile()
+    const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user } = useUserProfile()
 
     const handleSelect = (command) => {
       const actionHandler = actionsMap[command]

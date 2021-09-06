@@ -1,11 +1,9 @@
 <template>
   <div>
     <div class="flex items-center justify-between">
-      <label
-        class="label block text-main text-xss font-medium pb-2"
-        :class="labelGray ? 'text-gray03' : 'text-main'"
-        >{{ label }}</label
-      >
+      <label class="label block text-main text-xss font-medium pb-2" :class="labelGray ? 'text-gray03' : 'text-main'">{{
+        label
+      }}</label>
     </div>
     <div class="relative">
       <input
@@ -16,16 +14,7 @@
         :value="formValue"
         :placeholder="placeholder"
         :disabled="disabled"
-        class="
-          input
-          no-shadow-ios
-          w-full
-          pb-[5px]
-          pt-[5px]
-          border
-          rounded-md
-          justify-center
-        "
+        class="input no-shadow-ios w-full pb-[5px] pt-[5px] border rounded-md justify-center"
         :class="{
           'pl-[20px]': type !== 'search',
           'pl-[32px]': type === 'search',
@@ -35,29 +24,14 @@
         @blur="handleBlur"
         @input="handleChange"
       />
-      <span
-        v-if="showIconInput"
-        class="absolute inset-y-0 right-0 flex items-center"
-      >
-        <button
-          type="button"
-          class="p-1 focus:outline-none focus:shadow-outline"
-        >
+      <span v-if="showIconInput" class="absolute inset-y-0 right-0 flex items-center">
+        <button type="button" class="p-1 focus:outline-none focus:shadow-outline">
           <InlineSvg v-if="showError" :src="IconInputError" />
-          <InlineSvg
-            v-if="!showError && type === 'password'"
-            :src="IconShowPass"
-          />
+          <InlineSvg v-if="!showError && type === 'password'" :src="IconShowPass" />
         </button>
       </span>
-      <span
-        v-if="type === 'search'"
-        class="absolute inset-y-0 left-0 flex items-center"
-      >
-        <button
-          type="button"
-          class="pl-[11px] focus:outline-none focus:shadow-outline"
-        >
+      <span v-if="type === 'search'" class="absolute inset-y-0 left-0 flex items-center">
+        <button type="button" class="pl-[11px] focus:outline-none focus:shadow-outline">
           <InlineSvg :src="IconSearch" />
         </button>
       </span>

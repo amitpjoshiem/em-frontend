@@ -9,36 +9,28 @@
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
-      <div class="w-10/12 text-xss text-main font-medium">
-        I have been given access to the member
-      </div>
+      <div class="w-10/12 text-xss text-main font-medium">I have been given access to the member</div>
       <div class="w-2/12 flex justify-between">
         <el-switch v-model="value1" />
         <el-switch v-model="value2" />
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
-      <div class="w-10/12 text-xss text-main font-medium">
-        I have been given access to the member
-      </div>
+      <div class="w-10/12 text-xss text-main font-medium">I have been given access to the member</div>
       <div class="w-2/12 flex justify-between">
         <el-switch v-model="value3" />
         <el-switch v-model="value4" />
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
-      <div class="w-10/12 text-xss text-main font-medium">
-        Member information was updated by another user
-      </div>
+      <div class="w-10/12 text-xss text-main font-medium">Member information was updated by another user</div>
       <div class="w-2/12 flex justify-between">
         <el-switch v-model="value5" />
         <el-switch v-model="value6" />
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
-      <div class="w-10/12 text-xss text-main font-medium">
-        Member has reached retirement age
-      </div>
+      <div class="w-10/12 text-xss text-main font-medium">Member has reached retirement age</div>
       <div class="w-2/12 flex justify-between">
         <el-switch v-model="value7" />
         <el-switch v-model="value8" />

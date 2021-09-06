@@ -4,12 +4,9 @@ import { useStore } from 'vuex'
 const useForgot = () => {
   const store = useStore()
 
-  const { response, error, fetching, fetchData } = useFetch(
-    '/password/forgot',
-    {
-      method: 'POST',
-    }
-  )
+  const { response, error, fetching, fetchData } = useFetch('/password/forgot', {
+    method: 'POST',
+  })
 
   const forgot = async (body) => {
     await fetchData({ body })

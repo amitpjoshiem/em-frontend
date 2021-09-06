@@ -2,45 +2,14 @@
   <div class="px-20 flex flex-col justify-between h-full">
     <div class="">
       <div class="flex">
-        <Button
-          class="mr-5"
-          text-btn="Link an account"
-          witch-icon
-          icon-type="lock"
-          default-link-btn
-        />
-        <Button
-          class="ml-5"
-          text-btn="Upload a file"
-          witch-icon
-          icon-type="upload"
-          transparent-btn
-        />
+        <Button class="mr-5" text-btn="Link an account" witch-icon icon-type="lock" default-link-btn />
+        <Button class="ml-5" text-btn="Upload a file" witch-icon icon-type="upload" transparent-btn />
       </div>
       <div
         v-if="!isLinkAcount"
-        class="
-          flex flex-col
-          justify-center
-          items-center
-          border
-          bored-input-border
-          w-full
-          h-48
-          mt-5
-        "
+        class="flex flex-col justify-center items-center border bored-input-border w-full h-48 mt-5"
       >
-        <div
-          class="
-            bg-widget-bg
-            w-20
-            h-20
-            rounded-full
-            flex
-            justify-center
-            items-center
-          "
-        >
+        <div class="bg-widget-bg w-20 h-20 rounded-full flex justify-center items-center">
           <InlineSvg :src="IconFilePorfolio" />
         </div>
         <div class="text-gray03 text-sm text-center pt-3">
@@ -52,28 +21,16 @@
       <div v-if="isLinkAcount" class="mt-7">
         <div class="flex border-b border-color-grey pb-1.5">
           <span class="w-5/12 text-small text-gray03 uppercase">name</span>
-          <span class="w-2/12 text-small text-gray03 uppercase"
-            >Account type</span
-          >
-          <span class="w-2/12 text-small text-gray03 uppercase"
-            >Organization</span
-          >
+          <span class="w-2/12 text-small text-gray03 uppercase">Account type</span>
+          <span class="w-2/12 text-small text-gray03 uppercase">Organization</span>
           <span class="w-2/12 text-small text-gray03 uppercase">Net worth</span>
           <span class="w-1/12" />
         </div>
-        <div
-          v-for="(item, index) in linkAccount"
-          :key="index"
-          class="flex py-4 border-b border-color-grey"
-        >
-          <span class="w-5/12 text-sm text-main font-medium">{{
-            item.name
-          }}</span>
+        <div v-for="(item, index) in linkAccount" :key="index" class="flex py-4 border-b border-color-grey">
+          <span class="w-5/12 text-sm text-main font-medium">{{ item.name }}</span>
           <span class="w-2/12 text-sm text-main">{{ item.accountType }}</span>
           <span class="w-2/12 text-sm text-main">{{ item.accountType }}</span>
-          <span class="w-2/12 text-sm text-main font-medium">{{
-            item.netWorth
-          }}</span>
+          <span class="w-2/12 text-sm text-main font-medium">{{ item.netWorth }}</span>
           <span class="w-1/12 flex justify-end">
             <InlineSvg :src="IconDeleteLink" />
           </span>
@@ -87,11 +44,7 @@
       </div>
 
       <div>
-        <Button
-          default-blue-btn
-          text-btn="Go to the Assets Consolidations"
-          @click="saveStep"
-        />
+        <Button default-blue-btn text-btn="Go to the Assets Consolidations" @click="saveStep" />
       </div>
     </div>
   </div>

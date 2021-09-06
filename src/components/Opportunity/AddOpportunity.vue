@@ -2,93 +2,37 @@
   <div class="p-5">
     <SubHeader title="New opportunity" back-page="member-details" />
     <div
-      v-if="
-        !isLoadingInitOpportunity &&
-        !isLoadingProspectDetails &&
-        !isLoadingUserProfile
-      "
+      v-if="!isLoadingInitOpportunity && !isLoadingProspectDetails && !isLoadingUserProfile"
       class="border-color-grey px-10 pb-7"
     >
-      <el-form
-        ref="form"
-        :model="ruleForm"
-        status-icon
-        :rules="rules"
-        class="demo-ruleForm"
-        label-position="top"
-      >
+      <el-form ref="form" :model="ruleForm" status-icon :rules="rules" class="demo-ruleForm" label-position="top">
         <div class="flex">
-          <el-form-item
-            label="Opportunity owner"
-            prop="opportunity_owner"
-            class="w-6/12 pr-5"
-          >
-            <el-input
-              v-model="ruleForm.opportunity_owner"
-              placeholder="Enter prospect’s name"
-              :disabled="true"
-            />
+          <el-form-item label="Opportunity owner" prop="opportunity_owner" class="w-6/12 pr-5">
+            <el-input v-model="ruleForm.opportunity_owner" placeholder="Enter prospect’s name" :disabled="true" />
           </el-form-item>
           <el-form-item label="Stage" prop="stage" class="w-6/12 pr-3">
-            <el-select
-              v-model="ruleForm.stage"
-              placeholder="Stage"
-              class="w-full"
-            >
-              <el-option
-                v-for="item in initOpportunity.data.init.stage_list"
-                :key="item"
-                :label="item"
-                :value="item"
-              >
+            <el-select v-model="ruleForm.stage" placeholder="Stage" class="w-full">
+              <el-option v-for="item in initOpportunity.data.init.stage_list" :key="item" :label="item" :value="item">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item prop="close_date" label="Close date" class="w-3/12">
-            <el-date-picker
-              v-model="ruleForm.close_date"
-              type="date"
-              placeholder="Pick a date"
-            />
+            <el-date-picker v-model="ruleForm.close_date" type="date" placeholder="Pick a date" />
           </el-form-item>
         </div>
         <div class="flex">
-          <el-form-item
-            label="Opportunity name"
-            prop="opportunity_name"
-            class="w-6/12 pr-5"
-          >
-            <el-input
-              v-model="ruleForm.opportunity_name"
-              placeholder="Enter opportunity name"
-            />
+          <el-form-item label="Opportunity name" prop="opportunity_name" class="w-6/12 pr-5">
+            <el-input v-model="ruleForm.opportunity_name" placeholder="Enter opportunity name" />
           </el-form-item>
-          <el-form-item
-            label="Account name"
-            prop="account_name"
-            class="w-6/12 pr-5"
-          >
-            <el-input
-              v-model="ruleForm.account_name"
-              placeholder="Enter account name"
-              :disabled="true"
-            />
+          <el-form-item label="Account name" prop="account_name" class="w-6/12 pr-5">
+            <el-input v-model="ruleForm.account_name" placeholder="Enter account name" :disabled="true" />
           </el-form-item>
         </div>
 
         <div class="flex">
           <el-form-item label="Type" prop="type" class="w-6/12 pr-3">
-            <el-select
-              v-model="ruleForm.type"
-              placeholder="Type"
-              class="w-full"
-            >
-              <el-option
-                v-for="item in initOpportunity.data.init.type_list"
-                :key="item"
-                :label="item"
-                :value="item"
-              >
+            <el-select v-model="ruleForm.type" placeholder="Type" class="w-full">
+              <el-option v-for="item in initOpportunity.data.init.type_list" :key="item" :label="item" :value="item">
               </el-option>
             </el-select>
           </el-form-item>
@@ -99,9 +43,7 @@
       </el-form>
 
       <div class="flex justify-end my-10">
-        <el-button type="primary" @click="submitForm('ruleForm')">
-          Save
-        </el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')"> Save </el-button>
       </div>
     </div>
     <el-skeleton v-else :rows="11" animated class="p-5" />
@@ -135,11 +77,7 @@ export default {
       amount: '',
     })
 
-    const {
-      mutateAsync: addOpportunity,
-      isError,
-      error,
-    } = useMutation(createOpportunity)
+    const { mutateAsync: addOpportunity, isError, error } = useMutation(createOpportunity)
 
     const {
       isLoading: isLoadingProspectDetails,
@@ -147,17 +85,9 @@ export default {
       data: prospectDetails,
     } = useProspectDetails(id)
 
-    const {
-      isLoading: isLoadingInitOpportunity,
-      isErrorLoadingInit,
-      data: initOpportunity,
-    } = useOpportunityInit()
+    const { isLoading: isLoadingInitOpportunity, isErrorLoadingInit, data: initOpportunity } = useOpportunityInit()
 
-    const {
-      isLoading: isLoadingUserProfile,
-      isError: isErrorUserProfile,
-      data: userProfile,
-    } = useUserProfile()
+    const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: userProfile } = useUserProfile()
 
     watch(
       prospectDetails,

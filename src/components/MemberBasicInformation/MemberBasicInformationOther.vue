@@ -15,9 +15,7 @@
       </div>
       <div class="flex justify-between mb-7">
         <div class="w-2/12">
-          <span class="text-gray03 text-xss font-semibold">
-            Specific questions
-          </span>
+          <span class="text-gray03 text-xss font-semibold"> Specific questions </span>
         </div>
         <div class="w-10/12">
           <span class="text-main text-sm"> {{ other.questions }} </span>
@@ -25,9 +23,7 @@
       </div>
       <div class="flex justify-between mb-7">
         <div class="w-2/12">
-          <span class="text-gray03 text-xss font-semibold">
-            Goal for retirement
-          </span>
+          <span class="text-gray03 text-xss font-semibold"> Goal for retirement </span>
         </div>
         <div class="w-10/12">
           <span class="text-main text-sm"> {{ other.retirement }} </span>
@@ -36,9 +32,7 @@
 
       <div class="flex justify-between mb-7">
         <div class="w-2/12">
-          <span class="text-gray03 text-xss font-semibold">
-            Goal for retirement money
-          </span>
+          <span class="text-gray03 text-xss font-semibold"> Goal for retirement money </span>
         </div>
 
         <div class="w-10/12">

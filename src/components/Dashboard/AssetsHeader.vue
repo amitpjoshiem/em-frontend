@@ -6,17 +6,7 @@
       <DropDown class="ml-2" :options="actionsOptions">
         <template #titleDropDown>
           <span
-            class="
-              cursor-pointer
-              bg-white
-              rounded
-              flex
-              justify-center
-              items-center
-              py-2
-              px-3
-              border border-color-grey
-            "
+            class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3 border border-color-grey"
           >
             <InlineSvg :src="IconAction" />
           </span>

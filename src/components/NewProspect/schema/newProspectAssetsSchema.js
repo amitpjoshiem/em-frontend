@@ -975,8 +975,4 @@ const prospectAssetsSchemaNoLiquid = [
   // ************************************************
 ]
 
-export {
-  prospectAssetsSchemaCurrent,
-  prospectAssetsSchemaLiquid,
-  prospectAssetsSchemaNoLiquid,
-}
+export { prospectAssetsSchemaCurrent, prospectAssetsSchemaLiquid, prospectAssetsSchemaNoLiquid }

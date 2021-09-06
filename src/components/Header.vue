@@ -25,10 +25,7 @@
 
       <div class="border-l border-color-grey h-16" />
       <div>
-        <img
-          class="h-[13px] pr-5 pl-5 cursor-pointer"
-          src="../assets/img/notifications.png"
-        />
+        <img class="h-[13px] pr-5 pl-5 cursor-pointer" src="../assets/img/notifications.png" />
       </div>
       <div class="border-l border-color-grey h-16" />
       <div class="flex items-center justify-center pl-5 cursor-pointer">
@@ -56,23 +53,15 @@ export default {
 
     const newProspect = () => {
       if (
-        [
-          'basic-information',
-          'assets-information',
-          'assetsacount',
-          'assetsconsolidations',
-          'stresstest',
-        ].includes(route.name)
-      ) {
-        ElMessageBox.confirm(
-          'Are you sure you want to exit? All the unsaved changes will be lost',
-          'Info',
-          {
-            confirmButtonText: 'OK',
-            cancelButtonText: 'Cancel',
-            type: 'info',
-          }
+        ['basic-information', 'assets-information', 'assetsacount', 'assetsconsolidations', 'stresstest'].includes(
+          route.name
         )
+      ) {
+        ElMessageBox.confirm('Are you sure you want to exit? All the unsaved changes will be lost', 'Info', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'info',
+        })
           .then(() => {
             router.push({ name: 'basic-information' })
           })

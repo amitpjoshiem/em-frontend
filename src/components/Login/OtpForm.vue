@@ -2,17 +2,7 @@
   <div class="flex flex-col w-full items-center justify-center">
     <div class="form max-w-sm p-6 bg-widget-bg rounded-md w-[370px]">
       <div class="flex items-center justify-center p-2">
-        <div
-          class="
-            rounded-full
-            h-10
-            w-10
-            flex
-            items-center
-            justify-center
-            bg-lightgray03
-          "
-        >
+        <div class="rounded-full h-10 w-10 flex items-center justify-center bg-lightgray03">
           <InlineSvg :src="IconLoginForm" />
         </div>
       </div>
@@ -20,25 +10,13 @@
       <h1 class="text-center text-main font-medium text-2xl">Login</h1>
 
       <div>
-        <h1
-          v-if="otpType === 'email'"
-          class="text-center text-gray03 pt-2.5 text-sm"
-        >
+        <h1 v-if="otpType === 'email'" class="text-center text-gray03 pt-2.5 text-sm">
           We just sent you a temporary login code. Please check your inbox.
         </h1>
-        <h1
-          v-if="otpType === 'google'"
-          class="text-center text-gray03 pt-2.5 text-sm"
-        >
+        <h1 v-if="otpType === 'google'" class="text-center text-gray03 pt-2.5 text-sm">
           Please check your Google Authenticator.
         </h1>
-        <el-form
-          ref="form"
-          :model="ruleForm"
-          :rules="rules"
-          class="demo-ruleForm"
-          label-position="top"
-        >
+        <el-form ref="form" :model="ruleForm" :rules="rules" class="demo-ruleForm" label-position="top">
           <el-form-item label="OTP" prop="code" class="py-3">
             <el-input v-model="ruleForm.code" placeholder="Enter otp code" />
           </el-form-item>

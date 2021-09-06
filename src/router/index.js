@@ -12,40 +12,30 @@ const routes = [
       {
         path: 'dashboard',
         name: 'dashboard',
-        component: () =>
-          import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
+        component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
       },
       {
         path: 'new-prospect',
         name: 'newprospect',
-        component: () =>
-          import(
-            /* webpackChunkName: "newprospect" */ '../views/NewProspect.vue'
-          ),
+        component: () => import(/* webpackChunkName: "newprospect" */ '../views/NewProspect.vue'),
         children: [
           {
             path: 'basic/:id?',
             name: 'basic-information',
             component: () =>
-              import(
-                /* webpackChunkName: "newprospect" */ '../components/NewProspect/AddProspectBasicInfo.vue'
-              ),
+              import(/* webpackChunkName: "newprospect" */ '../components/NewProspect/AddProspectBasicInfo.vue'),
           },
           {
             path: 'assets/:id?',
             name: 'assets-information',
             component: () =>
-              import(
-                /* webpackChunkName: "newprospect" */ '../components/NewProspect/AddProspectAssets.vue'
-              ),
+              import(/* webpackChunkName: "newprospect" */ '../components/NewProspect/AddProspectAssets.vue'),
           },
           {
             path: 'assets-acount/:id?',
             name: 'assetsacount',
             component: () =>
-              import(
-                /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectAssetsAccounts.vue'
-              ),
+              import(/* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectAssetsAccounts.vue'),
           },
           {
             path: 'assets-consolidations/:id?',
@@ -59,9 +49,7 @@ const routes = [
             path: 'stress-test/:id?',
             name: 'stresstest',
             component: () =>
-              import(
-                /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectStressTest.vue'
-              ),
+              import(/* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectStressTest.vue'),
           },
           {
             path: '',
@@ -75,49 +63,35 @@ const routes = [
         path: 'blue-report/:id',
         name: 'bluereport',
         component: () =>
-          import(
-            /* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectBlueReport.vue'
-          ),
+          import(/* webpackChunkName: "newprospect" */ '../components/NewProspect/NewProspectBlueReport.vue'),
       },
       {
         path: 'client-report/:id',
         name: 'clientreport',
-        component: () =>
-          import(
-            /* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'
-          ),
+        component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
       },
       {
         path: 'list-of-households',
         name: 'list-of-households',
-        component: () =>
-          import(
-            /* webpackChunkName: "ListOfHouseholds" */ '../views/ListOfHouseholds.vue'
-          ),
+        component: () => import(/* webpackChunkName: "ListOfHouseholds" */ '../views/ListOfHouseholds.vue'),
         children: [
           {
             path: 'all',
             name: 'all',
             component: () =>
-              import(
-                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'
-              ),
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'),
           },
           {
             path: 'prospects',
             name: 'prospects',
             component: () =>
-              import(
-                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListProspects.vue'
-              ),
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListProspects.vue'),
           },
           {
             path: 'clients',
             name: 'clients',
             component: () =>
-              import(
-                /* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListClients.vue'
-              ),
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListClients.vue'),
           },
         ],
       },
@@ -126,9 +100,7 @@ const routes = [
         path: 'member-details/:id',
         name: 'member-details',
         component: () =>
-          import(
-            /* webpackChunkName: "MemberDetails" */ '../components/MemberDetails/MemberDetails.vue'
-          ),
+          import(/* webpackChunkName: "MemberDetails" */ '../components/MemberDetails/MemberDetails.vue'),
       },
 
       {
@@ -143,67 +115,46 @@ const routes = [
         path: 'prospect-employment/:id',
         name: 'prospect-employment',
         component: () =>
-          import(
-            /* webpackChunkName: "MemberDetails" */ '../components/EmploymentHistory/EmploymentHistory.vue'
-          ),
+          import(/* webpackChunkName: "MemberDetails" */ '../components/EmploymentHistory/EmploymentHistory.vue'),
       },
 
       {
         path: 'add-opportunity/:id',
         name: 'add-opportunity',
-        component: () =>
-          import(
-            /* webpackChunkName: "Opportunity" */ '../components/Opportunity/AddOpportunity.vue'
-          ),
+        component: () => import(/* webpackChunkName: "Opportunity" */ '../components/Opportunity/AddOpportunity.vue'),
       },
 
       {
         path: 'settings',
         name: 'settings',
-        component: () =>
-          import(
-            /* webpackChunkName: "settings" */ '../components/Settings/Settings.vue'
-          ),
+        component: () => import(/* webpackChunkName: "settings" */ '../components/Settings/Settings.vue'),
         children: [
           {
             path: 'profile',
             name: 'profile',
-            component: () =>
-              import(
-                /* webpackChunkName: "settings" */ '../components/Settings/ProfileSettings.vue'
-              ),
+            component: () => import(/* webpackChunkName: "settings" */ '../components/Settings/ProfileSettings.vue'),
           },
           {
             path: 'notifications',
             name: 'notifications',
             component: () =>
-              import(
-                /* webpackChunkName: "settings" */ '../components/Settings/NotificationsSettings.vue'
-              ),
+              import(/* webpackChunkName: "settings" */ '../components/Settings/NotificationsSettings.vue'),
           },
           {
             path: 'information',
             name: 'information',
             component: () =>
-              import(
-                /* webpackChunkName: "settings" */ '../components/Settings/InformationSettings.vue'
-              ),
+              import(/* webpackChunkName: "settings" */ '../components/Settings/InformationSettings.vue'),
           },
           {
             path: '2fa',
             name: '2fa',
-            component: () =>
-              import(
-                /* webpackChunkName: "settings" */ '../components/Settings/TwoFA.vue'
-              ),
+            component: () => import(/* webpackChunkName: "settings" */ '../components/Settings/TwoFA.vue'),
           },
           {
             path: 'salesforce',
             name: 'salesforce',
-            component: () =>
-              import(
-                /* webpackChunkName: "settings" */ '../components/Settings/SalesForceSettings.vue'
-              ),
+            component: () => import(/* webpackChunkName: "settings" */ '../components/Settings/SalesForceSettings.vue'),
           },
         ],
       },
@@ -211,8 +162,7 @@ const routes = [
       {
         path: 'logout',
         name: 'logout',
-        component: () =>
-          import(/* webpackChunkName: "logout" */ '../views/Logout.vue'),
+        component: () => import(/* webpackChunkName: "logout" */ '../views/Logout.vue'),
       },
 
       {
@@ -232,42 +182,27 @@ const routes = [
       {
         path: '',
         name: 'loginform',
-        component: () =>
-          import(
-            /* webpackChunkName: "login" */ '../components/Login/LoginForm.vue'
-          ),
+        component: () => import(/* webpackChunkName: "login" */ '../components/Login/LoginForm.vue'),
       },
       {
         path: 'forgot',
         name: 'forgotpassword',
-        component: () =>
-          import(
-            /* webpackChunkName: "login" */ '../components/Login/ForgotPassword.vue'
-          ),
+        component: () => import(/* webpackChunkName: "login" */ '../components/Login/ForgotPassword.vue'),
       },
       {
         path: 'reset-password',
         name: 'resetpassword',
-        component: () =>
-          import(
-            /* webpackChunkName: "login" */ '../components/Login/ResetPassword.vue'
-          ),
+        component: () => import(/* webpackChunkName: "login" */ '../components/Login/ResetPassword.vue'),
       },
       {
         path: 'create-password',
         name: 'createpassword',
-        component: () =>
-          import(
-            /* webpackChunkName: "login" */ '../components/Login/ResetPassword.vue'
-          ),
+        component: () => import(/* webpackChunkName: "login" */ '../components/Login/ResetPassword.vue'),
       },
       {
         path: 'otp',
         name: 'otp',
-        component: () =>
-          import(
-            /* webpackChunkName: "login" */ '../components/Login/OtpForm.vue'
-          ),
+        component: () => import(/* webpackChunkName: "login" */ '../components/Login/OtpForm.vue'),
       },
     ],
   },

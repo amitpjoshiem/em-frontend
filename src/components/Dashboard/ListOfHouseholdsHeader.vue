@@ -1,33 +1,13 @@
 <template>
   <div class="p-5 flex justify-between">
-    <router-link
-      :to="{ name: 'all' }"
-      class="cursor-pointer hover:text-activity"
-    >
-      List of Households
-    </router-link>
+    <router-link :to="{ name: 'all' }" class="cursor-pointer hover:text-activity"> List of Households </router-link>
     <div class="flex items-center">
       <ItemsPerPage :destination="'dashboard'" />
-      <SwdSelect
-        :options="actionsOptions"
-        size="small"
-        init-value="All"
-        @select="handleSelect"
-      />
+      <SwdSelect :options="actionsOptions" size="small" init-value="All" @select="handleSelect" />
       <DropDown class="ml-2" :options="actionsOptions">
         <template #titleDropDown>
           <span
-            class="
-              cursor-pointer
-              bg-white
-              rounded
-              flex
-              justify-center
-              items-center
-              py-2
-              px-3
-              border border-color-grey
-            "
+            class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3 border border-color-grey"
           >
             <InlineSvg :src="IconAction" />
           </span>

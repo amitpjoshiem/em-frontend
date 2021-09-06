@@ -6,12 +6,10 @@
     :class="{
       'bg-primary  text-white': defaultPrimary,
       'w-full': full,
-      'bg-input-border rounded-md h-10 text-color-grey cursor-not-allowed ':
-        disabled,
+      'bg-input-border rounded-md h-10 text-color-grey cursor-not-allowed ': disabled,
       'bg-activity px-7 text-white text-xss': defaultBlueBtn,
       'bg-color-grey text-xss px-7 text-activity': defaultGrayBtn,
-      'bg-color-link-btn w-full flex justify-center items-center text-xss font-medium':
-        defaultLinkBtn,
+      'bg-color-link-btn w-full flex justify-center items-center text-xss font-medium': defaultLinkBtn,
       'border border-dashed border-input-border w-full flex justify-center items-center text-xss font-medium':
         transparentBtn,
       'bg-activity text-xss text-white px-1.5': smallBtnActivity,
@@ -19,16 +17,8 @@
       'font-semibold': textSemiBold,
     }"
   >
-    <InlineSvg
-      v-if="witchIcon && iconType === 'lock'"
-      :src="IconLock"
-      class="mr-2"
-    />
-    <InlineSvg
-      v-if="witchIcon && iconType === 'upload'"
-      :src="IconUpload"
-      class="mr-2"
-    />
+    <InlineSvg v-if="witchIcon && iconType === 'lock'" :src="IconLock" class="mr-2" />
+    <InlineSvg v-if="witchIcon && iconType === 'upload'" :src="IconUpload" class="mr-2" />
     {{ textBtn }}
   </button>
 </template>

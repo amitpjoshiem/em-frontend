@@ -8,12 +8,8 @@ function getProperty(property, object) {
 
 export class EmploymentHistoryMerged {
   constructor(member, spouse) {
-    this.companyName = [member, spouse].map((object) =>
-      getProperty('companyName', object)
-    )
-    this.occupation = [member, spouse].map((object) =>
-      getProperty('occupation', object)
-    )
+    this.companyName = [member, spouse].map((object) => getProperty('companyName', object))
+    this.occupation = [member, spouse].map((object) => getProperty('occupation', object))
     this.years = [member, spouse].map((object) => getProperty('years', object))
   }
 }

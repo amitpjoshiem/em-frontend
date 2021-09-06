@@ -3,21 +3,13 @@
     <table v-if="usersList.length" class="table-fixed">
       <thead class="bg-widget-bg uppercase text-gray03 h-6">
         <tr class="text-small text-left h-6">
-          <th
-            v-for="(item, index) in itemsHeader"
-            :key="index"
-            :class="item.class"
-          >
+          <th v-for="(item, index) in itemsHeader" :key="index" :class="item.class">
             {{ item.title }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(user, index) in usersList"
-          :key="index"
-          class="text-xss h-12 border-b last:border-b-0 box-border"
-        >
+        <tr v-for="(user, index) in usersList" :key="index" class="text-xss h-12 border-b last:border-b-0 box-border">
           <UserListItem :user="user" />
         </tr>
       </tbody>
@@ -52,14 +44,7 @@ export default {
 
   computed: {
     getHeadlines() {
-      return [
-        'householder Name',
-        'Created on',
-        'type',
-        'Onboarding',
-        'location',
-        'net worth',
-      ]
+      return ['householder Name', 'Created on', 'type', 'Onboarding', 'location', 'net worth']
     },
   },
 }

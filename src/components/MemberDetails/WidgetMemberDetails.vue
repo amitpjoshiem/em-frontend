@@ -23,17 +23,7 @@
 
       <div class="flex justify-between py-3">
         <div class="flex items-center">
-          <span
-            class="
-              w-6
-              h-6
-              rounded-md
-              flex
-              justify-center
-              items-center
-              bg-color-error
-            "
-          >
+          <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
             <InlineSvg :src="IconProspectAge" />
           </span>
           <span class="ml-2 text-xs text-gray03">Age</span>
@@ -46,17 +36,7 @@
 
       <div class="flex justify-between">
         <div class="flex items-center">
-          <span
-            class="
-              w-6
-              h-6
-              rounded-md
-              flex
-              justify-center
-              items-center
-              bg-color-error
-            "
-          >
+          <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
             <InlineSvg :src="IconTotal" />
           </span>
           <span class="ml-2 text-xs text-gray03">Total net worth:</span>
@@ -68,17 +48,7 @@
 
       <div class="flex justify-between pt-3">
         <div class="flex items-center">
-          <span
-            class="
-              w-6
-              h-6
-              rounded-md
-              flex
-              justify-center
-              items-center
-              bg-color-error
-            "
-          >
+          <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
             <InlineSvg :src="IconGoal" />
           </span>
           <span class="ml-2 text-xs text-gray03">Goal:</span>
@@ -89,25 +59,14 @@
       </div>
 
       <div v-if="user.type === 'prospect'" class="flex justify-between pt-5">
-        <Button
-          small-btn-activity
-          text-semi-bold
-          text-btn="Convert to client"
-          @click="convert"
-        />
+        <Button small-btn-activity text-semi-bold text-btn="Convert to client" @click="convert" />
 
-        <router-link
-          :to="{ name: 'bluereport', params: { id: user.id } }"
-          class="pl-2.5 font-medium"
-        >
+        <router-link :to="{ name: 'bluereport', params: { id: user.id } }" class="pl-2.5 font-medium">
           <Button small-btn-gray text-semi-bold text-btn="Blueprint report" />
         </router-link>
       </div>
       <div v-else class="flex justify-end pt-5">
-        <router-link
-          :to="{ name: 'clientreport', params: { id: user.id } }"
-          class="pl-2.5 font-medium"
-        >
+        <router-link :to="{ name: 'clientreport', params: { id: user.id } }" class="pl-2.5 font-medium">
           <Button small-btn-gray text-semi-bold text-btn="Client report" />
         </router-link>
       </div>
@@ -138,13 +97,7 @@ export default {
     const route = useRoute()
     const memberId = route.params.id
 
-    const {
-      isLoading,
-      isFetching,
-      data,
-      error,
-      mutateAsync: convertClient,
-    } = useMutation(convertToClient)
+    const { isLoading, isFetching, data, error, mutateAsync: convertClient } = useMutation(convertToClient)
 
     const convert = async () => {
       const res = await convertToClient(memberId)
