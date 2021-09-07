@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!fetchingMember && !fetchingAssets">
     <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules">
       <!-- Current income -->
       <div class="border-b px-16 pb-7">
@@ -384,6 +384,7 @@
       </div>
     </el-form>
   </div>
+  <el-skeleton v-else :rows="15" animated />
 </template>
 
 <script>
@@ -398,6 +399,7 @@ import { scrollTop } from '@/utils/scrollTop'
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { initialAssetsInformation } from '@/components/NewProspect/initialState/assetsInformation'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
+import { useFetchMember } from '@/api/use-fetch-member'
 import ItemFormAssetsTwo from '@/components/NewProspect/ItemFormAssetsTwo.vue'
 import ItemFormAssetsFour from '@/components/NewProspect/ItemFormAssetsFour.vue'
 
@@ -423,11 +425,18 @@ export default {
 
     let memberId
 
-    const { response: memberAssets, getMemberAssets } = useFetchMemberAssets(route.params.id)
+    const { response: memberAssets, fetching: fetchingAssets, getMemberAssets } = useFetchMemberAssets(route.params.id)
 
     const { mutateAsync: create, isLoading, isError, isFetching, data, error } = useMutation(createAssetsIncome)
 
     const { mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
+
+    const {
+      response: member,
+      error: errorMember,
+      fetching: fetchingMember,
+      getMember,
+    } = useFetchMember(route.params.id)
 
     const ruleForm = reactive({
       income: {
@@ -556,6 +565,7 @@ export default {
       if (route.params.id) {
         memberId = route.params.id
         ruleForm.member_id = memberId
+        await getMember()
         await getMemberAssets()
         setInitValue(ruleForm, memberAssets)
       }
@@ -577,7 +587,7 @@ export default {
     }
 
     const isMarried = computed(() => {
-      if (memberAssets?.value?.data?.spouse) return true
+      if (member?.value?.data) return member.value.data.married
       return false
     })
 
@@ -622,8 +632,12 @@ export default {
       isUpdateMember,
       memberAssets,
       getMemberAssets,
+      fetchingAssets,
       memberId,
       isMarried,
+      member,
+      errorMember,
+      fetchingMember,
     }
   },
 }
