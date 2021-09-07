@@ -7,20 +7,15 @@
     <el-form-item v-if="isMarried" class="w-5/24 pr-2.5" :prop="propSpouse">
       <el-input :model-value="spouse" @input="handleChangeSpouse" />
     </el-form-item>
-    <el-form-item
-      class="w-5/24"
-      :prop="propOnq"
-      :class="{ 'pr-2.5': !isMarried, 'pl-2.5': isMarried }"
-    >
+    <el-form-item class="w-5/24" :prop="propOnq" :class="{ 'pr-2.5': !isMarried, 'pl-2.5': isMarried }">
       <el-input :model-value="onq" @input="handleChangeOnq" />
     </el-form-item>
     <el-form-item class="w-5/24 pl-2.5" :prop="propBalance">
-      <el-input :model-value="balance" @input="handleChangeBAlance" />
+      <el-input :model-value="balance" @input="handleChangeBalance" />
     </el-form-item>
   </div>
 </template>
 <script>
-import { ref } from 'vue'
 export default {
   name: 'ItemFormAssetsFour',
   props: {
@@ -35,6 +30,16 @@ export default {
       default: '',
     },
     member: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    onq: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    balance: {
       type: String,
       required: false,
       default: '',
@@ -67,8 +72,6 @@ export default {
   },
   emits: ['update:member', 'update:spouse', 'update:onq', 'update:balance'],
   setup(props, { emit }) {
-    const memberValue = ref(props.member)
-
     const handleChangeMember = (e) => {
       emit('update:member', e)
     }
@@ -90,7 +93,6 @@ export default {
       handleChangeSpouse,
       handleChangeOnq,
       handleChangeBalance,
-      memberValue,
     }
   },
 }

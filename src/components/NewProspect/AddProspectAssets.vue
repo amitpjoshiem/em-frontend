@@ -92,230 +92,173 @@
           <div class="w-5/24 text-gray03 text-xs pl-2.5">BALANCE</div>
         </div>
 
+        <!-- Cash/Checking/ Savings/MM -->
         <ItemFormAssetsFour
           v-model:member="ruleForm.liquid_assets.member.cash_checking_savings_mm"
           v-model:spouse="ruleForm.liquid_assets.spouse.cash_checking_savings_mm"
-          v-model:o_nq="ruleForm.liquid_assets.o_nq.cash_checking_savings_mm"
+          v-model:onq="ruleForm.liquid_assets.o_nq.cash_checking_savings_mm"
           v-model:balance="ruleForm.liquid_assets.balance.cash_checking_savings_mm"
-          prop-member="income.member.other"
-          prop-spouse="income.spouse.other"
-          title=" Cash/Checking/ Savings/MM"
+          prop-member="liquid_assets.member.cash_checking_savings_mm"
+          prop-spouse="liquid_assets.spouse.cash_checking_savings_mm"
+          prop-onq="liquid_assets.o_nq.cash_checking_savings_mm"
+          prop-balance="liquid_assets.balance.cash_checking_savings_mm"
+          title="Cash/Checking/ Savings/MM"
           :is-married="isMarried"
         />
 
-        <!-- <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">
-            Cash/Checking/ Savings/MM
-          </div>
-          <el-form-item
-            class="w-5/24 pr-2.5"
-            prop="liquid_assets.member.cash_checking_savings_mm"
-          >
-            <el-input
-              v-model="ruleForm.liquid_assets.member.cash_checking_savings_mm"
-            />
-          </el-form-item>
-          <el-form-item
-            class="w-5/24 pr-2.5"
-            prop="liquid_assets.spouse.cash_checking_savings_mm"
-          >
-            <el-input
-              v-model="ruleForm.liquid_assets.spouse.cash_checking_savings_mm"
-            />
-          </el-form-item>
-          <el-form-item
-            class="w-5/24 pl-2.5"
-            prop="liquid_assets.o_nq.cash_checking_savings_mm"
-          >
-            <el-input
-              v-model="ruleForm.liquid_assets.o_nq.cash_checking_savings_mm"
-            />
-          </el-form-item>
-          <el-form-item
-            class="w-5/24 pl-2.5"
-            prop="liquid_assets.balance.cash_checking_savings_mm"
-          >
-            <el-input
-              v-model="ruleForm.liquid_assets.balance.cash_checking_savings_mm"
-            />
-          </el-form-item>
-        </div> -->
+        <!-- CD’s -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.cds"
+          v-model:spouse="ruleForm.liquid_assets.spouse.cds"
+          v-model:onq="ruleForm.liquid_assets.o_nq.cds"
+          v-model:balance="ruleForm.liquid_assets.balance.cds"
+          prop-member="liquid_assets.member.cds"
+          prop-spouse="liquid_assets.spouse.cds"
+          prop-onq="liquid_assets.o_nq.cds"
+          prop-balance="liquid_assets.balance.cds"
+          title="CD’s"
+          :is-married="isMarried"
+        />
 
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">CD’s</div>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.member.cds">
-            <el-input v-model="ruleForm.liquid_assets.member.cds" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.spouse.cds">
-            <el-input v-model="ruleForm.liquid_assets.spouse.cds" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.o_nq.cds">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.cds" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.balance.cds">
-            <el-input v-model="ruleForm.liquid_assets.balance.cds" />
-          </el-form-item>
-        </div>
+        <!-- 401k/IRA (if over 59) -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.first_401k_ira_59"
+          v-model:spouse="ruleForm.liquid_assets.spouse.first_401k_ira_59"
+          v-model:onq="ruleForm.liquid_assets.o_nq.first_401k_ira_59"
+          v-model:balance="ruleForm.liquid_assets.balance.first_401k_ira_59"
+          prop-member="liquid_assets.member.first_401k_ira_59"
+          prop-spouse="liquid_assets.spouse.first_401k_ira_59"
+          prop-onq="liquid_assets.o_nq.first_401k_ira_59"
+          prop-balance="liquid_assets.balance.first_401k_ira_59"
+          title="401k/IRA (if over 59)"
+          :is-married="isMarried"
+        />
 
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">401k/IRA (if over 59)</div>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.member.first_401k_ira_59">
-            <el-input v-model="ruleForm.liquid_assets.member.first_401k_ira_59" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.spouse.first_401k_ira_59">
-            <el-input v-model="ruleForm.liquid_assets.spouse.first_401k_ira_59" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.o_nq.first_401k_ira_59">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.first_401k_ira_59" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.balance.first_401k_ira_59">
-            <el-input v-model="ruleForm.liquid_assets.balance.first_401k_ira_59" />
-          </el-form-item>
-        </div>
+        <!-- 401k/IRA -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.first_401k_ira"
+          v-model:spouse="ruleForm.liquid_assets.spouse.first_401k_ira"
+          v-model:onq="ruleForm.liquid_assets.o_nq.first_401k_ira"
+          v-model:balance="ruleForm.liquid_assets.balance.first_401k_ira"
+          prop-member="liquid_assets.member.first_401k_ira"
+          prop-spouse="liquid_assets.spouse.first_401k_ira"
+          prop-onq="liquid_assets.o_nq.first_401k_ira"
+          prop-balance="liquid_assets.balance.first_401k_ira"
+          title="401k/IRA"
+          :is-married="isMarried"
+        />
 
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">401k/IRA</div>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.member.first_401k_ira">
-            <el-input v-model="ruleForm.liquid_assets.member.first_401k_ira" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.spouse.first_401k_ira">
-            <el-input v-model="ruleForm.liquid_assets.spouse.first_401k_ira" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.o_nq.first_401k_ira">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.first_401k_ira" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.balance.first_401k_ira">
-            <el-input v-model="ruleForm.liquid_assets.balance.first_401k_ira" />
-          </el-form-item>
-        </div>
+        <!-- 401k/IRA -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.second_401k_ira"
+          v-model:spouse="ruleForm.liquid_assets.spouse.second_401k_ira"
+          v-model:onq="ruleForm.liquid_assets.o_nq.second_401k_ira"
+          v-model:balance="ruleForm.liquid_assets.balance.second_401k_ira"
+          prop-member="liquid_assets.member.second_401k_ira"
+          prop-spouse="liquid_assets.spouse.second_401k_ira"
+          prop-onq="liquid_assets.o_nq.second_401k_ira"
+          prop-balance="liquid_assets.balance.second_401k_ira"
+          title="401k/IRA"
+          :is-married="isMarried"
+        />
 
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">401k/IRA</div>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.member.second_401k_ira">
-            <el-input v-model="ruleForm.liquid_assets.member.second_401k_ira" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.spouse.second_401k_ira">
-            <el-input v-model="ruleForm.liquid_assets.spouse.second_401k_ira" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.o_nq.second_401k_ira">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.second_401k_ira" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.balance.second_401k_ira">
-            <el-input v-model="ruleForm.liquid_assets.balance.second_401k_ira" />
-          </el-form-item>
-        </div>
+        <!-- Stocks/Bonds/MF -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.stocks_bonds_mf"
+          v-model:spouse="ruleForm.liquid_assets.spouse.stocks_bonds_mf"
+          v-model:onq="ruleForm.liquid_assets.o_nq.stocks_bonds_mf"
+          v-model:balance="ruleForm.liquid_assets.balance.stocks_bonds_mf"
+          prop-member="liquid_assets.member.stocks_bonds_mf"
+          prop-spouse="liquid_assets.spouse.stocks_bonds_mf"
+          prop-onq="liquid_assets.o_nq.stocks_bonds_mf"
+          prop-balance="liquid_assets.balance.stocks_bonds_mf"
+          title="Stocks/Bonds/MF"
+          :is-married="isMarried"
+        />
 
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">Stocks/Bonds/MF</div>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.member.stocks_bonds_mf">
-            <el-input v-model="ruleForm.liquid_assets.member.stocks_bonds_mf" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.spouse.stocks_bonds_mf">
-            <el-input v-model="ruleForm.liquid_assets.spouse.stocks_bonds_mf" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.o_nq.stocks_bonds_mf">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.stocks_bonds_mf" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.balance.stocks_bonds_mf">
-            <el-input v-model="ruleForm.liquid_assets.balance.stocks_bonds_mf" />
-          </el-form-item>
-        </div>
+        <!-- Stocks/Bonds/MF -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.cash_value_life_insurance"
+          v-model:spouse="ruleForm.liquid_assets.spouse.cash_value_life_insurance"
+          v-model:onq="ruleForm.liquid_assets.o_nq.cash_value_life_insurance"
+          v-model:balance="ruleForm.liquid_assets.balance.cash_value_life_insurance"
+          prop-member="liquid_assets.member.cash_value_life_insurance"
+          prop-spouse="liquid_assets.spouse.cash_value_life_insurance"
+          prop-onq="liquid_assets.o_nq.cash_value_life_insurance"
+          prop-balance="liquid_assets.balance.cash_value_life_insurance"
+          title="Cash value life insurance"
+          :is-married="isMarried"
+        />
 
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">Cash value life insurance</div>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.member.cash_value_life_insurance">
-            <el-input v-model="ruleForm.liquid_assets.member.cash_value_life_insurance" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.spouse.cash_value_life_insurance">
-            <el-input v-model="ruleForm.liquid_assets.spouse.cash_value_life_insurance" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.o_nq.cash_value_life_insurance">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.cash_value_life_insurance" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.balance.cash_value_life_insurance">
-            <el-input v-model="ruleForm.liquid_assets.balance.cash_value_life_insurance" />
-          </el-form-item>
-        </div>
+        <!-- FA/VA not suject to penalty -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.fa_va_not_subject_to_penalty"
+          v-model:spouse="ruleForm.liquid_assets.spouse.fa_va_not_subject_to_penalty"
+          v-model:onq="ruleForm.liquid_assets.o_nq.fa_va_not_subject_to_penalty"
+          v-model:balance="ruleForm.liquid_assets.balance.fa_va_not_subject_to_penalty"
+          prop-member="liquid_assets.member.fa_va_not_subject_to_penalty"
+          prop-spouse="liquid_assets.spouse.fa_va_not_subject_to_penalty"
+          prop-onq="liquid_assets.o_nq.fa_va_not_subject_to_penalty"
+          prop-balance="liquid_assets.balance.fa_va_not_subject_to_penalty"
+          title="FA/VA not suject to penalty"
+          :is-married="isMarried"
+        />
 
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">FA/VA not suject to penalty</div>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.member.fa_va_not_subject_to_penalty">
-            <el-input v-model="ruleForm.liquid_assets.member.fa_va_not_subject_to_penalty" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.spouse.fa_va_not_subject_to_penalty">
-            <el-input v-model="ruleForm.liquid_assets.spouse.fa_va_not_subject_to_penalty" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.o_nq.fa_va_not_subject_to_penalty">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.fa_va_not_subject_to_penalty" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.balance.fa_va_not_subject_to_penalty">
-            <el-input v-model="ruleForm.liquid_assets.balance.fa_va_not_subject_to_penalty" />
-          </el-form-item>
-        </div>
+        <!-- Gift/Inheritance -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.gift_inheritance"
+          v-model:spouse="ruleForm.liquid_assets.spouse.gift_inheritance"
+          v-model:onq="ruleForm.liquid_assets.o_nq.gift_inheritance"
+          v-model:balance="ruleForm.liquid_assets.balance.gift_inheritance"
+          prop-member="liquid_assets.member.gift_inheritance"
+          prop-spouse="liquid_assets.spouse.gift_inheritance"
+          prop-onq="liquid_assets.o_nq.gift_inheritance"
+          prop-balance="liquid_assets.balance.gift_inheritance"
+          title="Gift/Inheritance"
+          :is-married="isMarried"
+        />
 
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">Gift/Inheritance</div>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.member.gift_inheritance">
-            <el-input v-model="ruleForm.liquid_assets.member.gift_inheritance" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.spouse.gift_inheritance">
-            <el-input v-model="ruleForm.liquid_assets.spouse.gift_inheritance" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.o_nq.gift_inheritance">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.gift_inheritance" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.balance.gift_inheritance">
-            <el-input v-model="ruleForm.liquid_assets.balance.gift_inheritance" />
-          </el-form-item>
-        </div>
+        <!-- Lump sum pension -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.lump_sum_pension"
+          v-model:spouse="ruleForm.liquid_assets.spouse.lump_sum_pension"
+          v-model:onq="ruleForm.liquid_assets.o_nq.lump_sum_pension"
+          v-model:balance="ruleForm.liquid_assets.balance.lump_sum_pension"
+          prop-member="liquid_assets.member.lump_sum_pension"
+          prop-spouse="liquid_assets.spouse.lump_sum_pension"
+          prop-onq="liquid_assets.o_nq.lump_sum_pension"
+          prop-balance="liquid_assets.balance.lump_sum_pension"
+          title="Lump sum pension"
+          :is-married="isMarried"
+        />
 
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">Lump sum pension</div>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.member.lump_sum_pension">
-            <el-input v-model="ruleForm.liquid_assets.member.lump_sum_pension" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.spouse.lump_sum_pension">
-            <el-input v-model="ruleForm.liquid_assets.spouse.lump_sum_pension" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.o_nq.lump_sum_pension">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.lump_sum_pension" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.balance.lump_sum_pension">
-            <el-input v-model="ruleForm.liquid_assets.balance.lump_sum_pension" />
-          </el-form-item>
-        </div>
+        <!-- Other liquid assets -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.other_liquid_assets"
+          v-model:spouse="ruleForm.liquid_assets.spouse.other_liquid_assets"
+          v-model:onq="ruleForm.liquid_assets.o_nq.other_liquid_assets"
+          v-model:balance="ruleForm.liquid_assets.balance.other_liquid_assets"
+          prop-member="liquid_assets.member.other_liquid_assets"
+          prop-spouse="liquid_assets.spouse.other_liquid_assets"
+          prop-onq="liquid_assets.o_nq.other_liquid_assets"
+          prop-balance="liquid_assets.balance.other_liquid_assets"
+          title="Other liquid assets"
+          :is-married="isMarried"
+        />
 
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">Other liquid assets</div>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.member.other_liquid_assets">
-            <el-input v-model="ruleForm.liquid_assets.member.other_liquid_assets" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5" prop="liquid_assets.spouse.other_liquid_assets">
-            <el-input v-model="ruleForm.liquid_assets.spouse.other_liquid_assets" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.o_nq.other_liquid_assets">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.other_liquid_assets" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5" prop="liquid_assets.balance.other_liquid_assets">
-            <el-input v-model="ruleForm.liquid_assets.balance.other_liquid_assets" />
-          </el-form-item>
-        </div>
-
-        <div class="flex items-center pb-2">
-          <div class="w-4/24 text-main font-semibold text-xss">Total</div>
-          <el-form-item class="w-5/24 pr-2.5">
-            <el-input v-model="ruleForm.liquid_assets.member.total" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pr-2.5">
-            <el-input v-model="ruleForm.liquid_assets.spouse.total" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5">
-            <el-input v-model="ruleForm.liquid_assets.o_nq.total" />
-          </el-form-item>
-          <el-form-item class="w-5/24 pl-2.5">
-            <el-input v-model="ruleForm.liquid_assets.balance.total" />
-          </el-form-item>
-        </div>
+        <!-- Total -->
+        <ItemFormAssetsFour
+          v-model:member="ruleForm.liquid_assets.member.total"
+          v-model:spouse="ruleForm.liquid_assets.spouse.total"
+          v-model:onq="ruleForm.liquid_assets.o_nq.total"
+          v-model:balance="ruleForm.liquid_assets.balance.total"
+          prop-member="liquid_assets.member.total"
+          prop-spouse="liquid_assets.spouse.total"
+          prop-onq="liquid_assets.o_nq.total"
+          prop-balance="liquid_assets.balance.total"
+          title="Total"
+          :is-married="isMarried"
+        />
       </div>
 
       <div class="border-b px-16 py-6">

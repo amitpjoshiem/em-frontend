@@ -10,7 +10,6 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue'
 export default {
   name: 'ItemFormAssetsTwo',
   props: {
@@ -47,8 +46,6 @@ export default {
   },
   emits: ['update:member', 'update:spouse'],
   setup(props, { emit }) {
-    const memberValue = ref(props.member)
-
     const handleChangeMember = (e) => {
       emit('update:member', e)
     }
@@ -59,7 +56,6 @@ export default {
     return {
       handleChangeMember,
       handleChangeSpouse,
-      memberValue,
     }
   },
 }
