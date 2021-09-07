@@ -1030,10 +1030,10 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@popperjs/core@^2.4.4":
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.2.tgz#adea7b6953cbb34651766b0548468e743c6a2353"
-  integrity sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==
+"@popperjs/core@^2.10.1":
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.10.1.tgz#728ecd95ab207aab8a9a4e421f0422db329232be"
+  integrity sha512-HnUhk1Sy9IuKrxEMdIRCxpIqPw6BFsbYSEUO9p/hNw5sMld/+3OLMWQP80F8/db9qsv3qUjs7ZR5bS/R+iinXw==
 
 "@soda/friendly-errors-webpack-plugin@^1.7.1":
   version "1.8.0"
@@ -3672,16 +3672,16 @@ electron-to-chromium@^1.3.723:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.736.tgz#f632d900a1f788dab22fec9c62ec5c9c8f0c4052"
   integrity sha512-DY8dA7gR51MSo66DqitEQoUMQ0Z+A2DSXFi7tK304bdTVqczCAfUuyQw6Wdg8hIoo5zIxkU1L24RQtUce1Ioig==
 
-element-plus@1.0.2-beta.71:
-  version "1.0.2-beta.71"
-  resolved "https://registry.yarnpkg.com/element-plus/-/element-plus-1.0.2-beta.71.tgz#148f16d5a0a800549989f7869bbf4d656c652d36"
-  integrity sha512-tlfbRORIav8gJcIpjZI5F6aJIVHIaDuGO6/vKu43lgYq4JS2JPNRTjvrSE2p4f5xLfaFNfOWjCS3sybXLfMg8g==
+element-plus@1.1.0-beta.9:
+  version "1.1.0-beta.9"
+  resolved "https://registry.yarnpkg.com/element-plus/-/element-plus-1.1.0-beta.9.tgz#e193cc956dfc9b731ed5cb32e2df0eddafd95dcd"
+  integrity sha512-QA5jOHDGSDJqVGAgzNrv5TTd/bLW+zICWy1ZQuvShzfrrIX8W+xL3RZdHJWANHhbBetLBHPFMvEzLSPvPmUosw==
   dependencies:
     "@element-plus/icons" "^0.0.11"
-    "@popperjs/core" "^2.4.4"
+    "@popperjs/core" "^2.10.1"
     async-validator "^3.4.0"
     dayjs "1.x"
-    lodash "^4.17.20"
+    lodash "^4.17.21"
     mitt "^2.1.0"
     normalize-wheel "^1.0.1"
     resize-observer-polyfill "^1.5.1"

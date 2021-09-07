@@ -36,6 +36,6 @@ export default {
 </script>
 
 <style lang="css">
-@import '~element-plus/lib/theme-chalk/index.css';
-@import '~element-plus/lib/theme-chalk/display.css';
+@import '~element-plus/dist/index.css';
+@import '~element-plus/theme-chalk/display.css';
 </style>
