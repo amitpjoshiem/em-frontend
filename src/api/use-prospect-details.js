@@ -24,11 +24,11 @@ export const useProspectDetails = (id) => {
     },
     {
       select: (data) => {
-        spouse.value = dataFactory(MemberDetailsSpouse, data.data.spouse.data)
-        house.value = dataFactory(MemberDetailsHouse, data.data.house.data)
-        other.value = dataFactory(MemberDetailsOther, data.data.other.data)
+        spouse.value = dataFactory(MemberDetailsSpouse, data.data.spouse)
+        house.value = dataFactory(MemberDetailsHouse, data.data.house)
+        other.value = dataFactory(MemberDetailsOther, data.data.other)
 
-        employmentProspect.value = dataFactory(MemberLastEmployment, data.data.employment_history.data[0])
+        employmentProspect.value = dataFactory(MemberLastEmployment, data.data.employment_history[0])
 
         // employmentSpouse.value = dataFactoryWithGet(
         //   SpouseLastEmployment,
@@ -37,7 +37,10 @@ export const useProspectDetails = (id) => {
         // )
 
         // TODO: temporary solutions
-        employmentSpouse.value = dataFactory(SpouseLastEmployment, data.data.spouse?.data?.employment_history?.data[0])
+        employmentSpouse.value = dataFactory(
+          SpouseLastEmployment,
+          data.data.spouse.length ? data.data.spouse?.employment_history[0] : []
+        )
 
         return new MemberDetailsUser(data.data)
       },
