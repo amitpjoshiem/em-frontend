@@ -11,7 +11,6 @@ import InlineSvg from 'vue-inline-svg'
 import { SchemaForm, SchemaWizard, SchemaFormFactory, useSchemaForm } from 'formvuelate'
 
 // Global Component Import
-import Input from '@/components/Global/Input/Input.vue'
 import Button from '@/components/Global/Button/Button.vue'
 import CircularProgress from '@/components/Global/CircularProgress.vue'
 import LinearProgress from '@/components/Global/LinearProgress.vue'
@@ -24,9 +23,6 @@ import SwdSelect from '@/components/Global/Form/SwdSelect.vue'
 import SwdSelectForm from '@/components/Global/Form/SwdSelectForm.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
 import DropDown from '@/components/Global/DropDown.vue'
-import InputText from '@/components/Global/Inputs/InputText.vue'
-import InputTextForm from '@/components/Global/Inputs/InputTextForm.js'
-import InputPassword from '@/components/Global/Inputs/InputPassword.vue'
 import Checkbox from '@/components/Global/Сheckbox.vue'
 import Label from '@/components/Global/Label.vue'
 import TextArea from '@/components/Global/TextArea.vue'
@@ -76,7 +72,6 @@ app.use(store)
 // Global Component
 const components = [
   ElProgress,
-  Input,
   Button,
   InlineSvg,
   CircularProgress,
@@ -93,9 +88,6 @@ const components = [
   ElDropdownMenu,
   ElDropdownItem,
   DropDown,
-  InputText,
-  InputTextForm,
-  InputPassword,
   SchemaForm,
   SchemaWizard,
   SchemaFormFactory,
