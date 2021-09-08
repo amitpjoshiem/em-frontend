@@ -27,6 +27,7 @@ import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
 import { changeUserName } from '@/api/vueQuery/change-user-name'
 import { reactive, ref, onMounted } from 'vue'
+import { rules } from '@/validationRules/changeName.js'
 
 export default {
   name: 'ChangePassword',
@@ -90,6 +91,7 @@ export default {
       refetch,
       ruleForm,
       form,
+      rules,
     }
   },
 }
