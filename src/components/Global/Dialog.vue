@@ -59,7 +59,7 @@ export default defineComponent({
     const showModal = () => {
       dialogVisible.value = true
       store.commit('globalComponents/setShowModal', {
-        destination: 'changeName',
+        destination: props.destinationDialog,
         value: true,
       })
     }

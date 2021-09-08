@@ -6,59 +6,90 @@
       </div>
     </template>
     <template #contentDialog>
-      <SchemaFormWithValidation :schema="schema" schema-row-classes="pt-3" @submit="savePass">
-        <template #afterForm>
-          <div class="pt-12 text-right">
-            <Button default-blue-btn text-btn="Save" type="submit" />
-          </div>
-        </template>
-      </SchemaFormWithValidation>
+      <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
+        <el-form-item label="Current password" prop="current_password">
+          <el-input v-model="ruleForm.current_password" type="password" autocomplete="off" />
+        </el-form-item>
+
+        <el-form-item label="Password" prop="password">
+          <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
+        </el-form-item>
+
+        <el-form-item label="Confirm" prop="password_confirmation">
+          <el-input v-model="ruleForm.password_confirmation" type="password" autocomplete="off" />
+        </el-form-item>
+
+        <div class="pt-3 text-right">
+          <Button default-blue-btn text-btn="Save" @click="savePass" />
+        </div>
+      </el-form>
     </template>
   </Dialog>
 </template>
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
 import { useChangePassword } from '@/api/authentication/use-change-password'
-import Label from '@/components/Global/Label.vue'
-import Input from '@/components/Global/Input/Input.vue'
-import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
-import { schemaChangePassword } from '@/components/Settings/schema/changePassword'
-import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
-import { ref, markRaw, reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { useStore } from 'vuex'
-
-const SchemaFormWithValidation = SchemaFormFactory([VeeValidatePlugin()])
-
-markRaw(Input)
-markRaw(Label)
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'ChangePassword',
-  components: { SchemaFormWithValidation },
 
   setup() {
     const store = useStore()
     const { response, error, fetching, changePassword } = useChangePassword()
 
-    const data = reactive({
-      hideDialog: false,
+    const ruleForm = reactive({
+      current_password: '',
+      password: '',
+      password_confirmation: '',
     })
+    const form = ref(null)
 
-    const schema = ref(schemaChangePassword)
-    const formData = ref({})
-    useSchemaForm(formData)
-
-    const savePass = async () => {
-      changePassword(formData.value)
+    const savePass = async (e) => {
+      e.preventDefault()
+      changePassword(ruleForm)
         .then(() => {
+          useAlert({
+            title: 'Success',
+            type: 'success',
+            message: 'Password has been changed successfully.',
+          })
+
           store.commit('globalComponents/setShowModal', {
             destination: 'changePassword',
-            value: true,
+            value: false,
           })
         })
         .catch((error) => {
           console.log(error)
         })
+    }
+
+    const validateCheckPass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Please input the password again'))
+      } else if (value !== ruleForm.password_confirmation) {
+        callback(new Error("Two inputs don't match!"))
+      } else {
+        callback()
+      }
+    }
+
+    const rules = {
+      current_password: [
+        { type: 'string', required: true, message: 'Please input current current password' },
+        { min: 6, message: 'Length should be min 6', trigger: 'blur' },
+      ],
+      password: [
+        { type: 'string', required: true, message: 'Please input correct password' },
+        { min: 6, message: 'Length should be min 6', trigger: 'blur' },
+      ],
+      password_confirmation: [
+        { type: 'string', required: true, message: 'Please input correct password confirmation' },
+        { validator: validateCheckPass, trigger: 'blur' },
+      ],
     }
 
     return {
@@ -68,8 +99,9 @@ export default {
       changePassword,
       IconPencil,
       savePass,
-      schema,
-      data,
+      ruleForm,
+      form,
+      rules,
     }
   },
 }
