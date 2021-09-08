@@ -1,7 +1,6 @@
 import { useFetch } from '@/api/use-fetch'
 import { useStore } from 'vuex'
 import { saveToStorage } from '@/utils/utilsLocalStorage'
-import { useAlert } from '@/utils/use-alert'
 
 const useVerifyGoogle = () => {
   const store = useStore()
@@ -15,12 +14,6 @@ const useVerifyGoogle = () => {
     if (error.value !== null) return
     store.commit('auth/setOtpType', body.service)
     saveToStorage(localStorage, 'otp-type', body.service)
-
-    useAlert({
-      type: 'Success',
-      title: 'Success',
-      message: 'This is a success message',
-    })
   }
 
   return {

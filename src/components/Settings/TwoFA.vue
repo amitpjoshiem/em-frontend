@@ -10,10 +10,14 @@
     <div v-if="response && response.data" class="mt-5">
       <div v-show="showForm" class="w-5/12">
         <img ref="qrCode" :src="response.data.url" class="pb-5" />
-        <form @submit="verifyHandler">
-          <InputTextForm name="code" type="number" placeholder="code" />
-          <Button :default-primary="!fetching" full text-btn="Verify" type="submit" :disabled="fetching" />
-        </form>
+        <el-form ref="form" :model="ruleForm" status-icon label-position="top">
+          <el-form-item label="Code" prop="code" class="w-full">
+            <el-input v-model="ruleForm.code" placeholder="Enter OTP code" />
+          </el-form-item>
+          <div class="pt-3 text-right">
+            <Button default-blue-btn text-btn="Save" @click="saveOtp" />
+          </div>
+        </el-form>
       </div>
     </div>
   </div>
@@ -25,9 +29,7 @@ import { useGoogleQr } from '@/api/use-google-qr'
 import { useVerifyGoogle } from '@/api/use-verify-google'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-
-import { useForm } from 'vee-validate'
-import * as yup from 'yup'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   setup() {
@@ -35,6 +37,13 @@ export default {
     const { response, error, fetching, getGoogleQr } = useGoogleQr()
     const { verifyGoogle } = useVerifyGoogle()
     const qrCode = ref(null)
+    const form = ref(null)
+
+    const ruleForm = reactive({
+      code: '',
+      value: false,
+      loading: false,
+    })
 
     const status = reactive({
       value: false,
@@ -65,19 +74,20 @@ export default {
       }
     }
 
-    const schema = yup.object({
-      code: yup.string().required().defined(),
-    })
-
-    const { handleSubmit } = useForm({
-      validationSchema: schema,
-      initialValues: {
-        code: '',
-        service: 'google',
-      },
-    })
-
-    const verifyHandler = handleSubmit(verifyGoogle)
+    const saveOtp = async (e) => {
+      e.preventDefault()
+      verifyGoogle({ service: 'google', code: ruleForm.code })
+        .then(() => {
+          useAlert({
+            title: 'Success',
+            type: 'success',
+            message: 'OTP has been changed successfully.',
+          })
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    }
 
     const otpType = computed(() => {
       return store.state.auth.otpType
@@ -95,9 +105,11 @@ export default {
       fetching,
       getGoogleQr,
       qrCode,
-      verifyHandler,
       otpType,
       showForm,
+      ruleForm,
+      form,
+      saveOtp,
     }
   },
 }
