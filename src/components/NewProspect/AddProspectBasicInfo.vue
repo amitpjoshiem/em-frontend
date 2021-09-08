@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form ref="form" :model="ruleForm" status-icon :rules="rules" class="demo-ruleForm" label-position="top">
+    <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
       <!-- GENERAL -->
       <div class="border-b px-16">
         <span class="text-main text-xl font-semibold">General</span>

@@ -1,46 +1,44 @@
 <template>
-  <Dialog title="Change password" confirm-action="changeName" destination-dialog="changeName">
+  <Dialog title="Change name" confirm-action="changeName" destination-dialog="changeName">
     <template #buttonDialog>
       <div class="flex items-center">
         <InlineSvg :src="IconPencil" class="mb-1" />
       </div>
     </template>
     <template #contentDialog>
-      <SchemaFormWithValidation :schema="schema" schema-row-classes="pt-3" @submit="saveName">
-        <template #afterForm>
-          <div class="pt-12 text-right">
-            <Button default-blue-btn text-btn="Save" type="submit" />
-          </div>
-        </template>
-      </SchemaFormWithValidation>
+      <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
+        <el-form-item label="First name" prop="first_name" class="w-full">
+          <el-input v-model="ruleForm.first_name" placeholder="Enter first name" />
+        </el-form-item>
+        <el-form-item label="Last name" prop="last_name" class="w-full">
+          <el-input v-model="ruleForm.last_name" placeholder="Enter last name" />
+        </el-form-item>
+        <div class="pt-3 text-right">
+          <Button default-blue-btn text-btn="Save" @click="saveName" />
+        </div>
+      </el-form>
     </template>
   </Dialog>
 </template>
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
-import Label from '@/components/Global/Label.vue'
-import Input from '@/components/Global/Input/Input.vue'
-import VeeValidatePlugin from '@formvuelate/plugin-vee-validate'
-import { schemaChangeName } from '@/components/Settings/schema/changeName'
-import { SchemaFormFactory, useSchemaForm } from 'formvuelate'
-import { ref, markRaw } from 'vue'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
 import { changeUserName } from '@/api/vueQuery/change-user-name'
-
-const SchemaFormWithValidation = SchemaFormFactory([VeeValidatePlugin()])
-
-markRaw(Input)
-markRaw(Label)
+import { reactive, ref, onMounted } from 'vue'
 
 export default {
   name: 'ChangePassword',
-  components: { SchemaFormWithValidation },
-
   setup() {
     const store = useStore()
     const queryClient = useQueryClient()
+    const form = ref(null)
+
+    const ruleForm = reactive({
+      first_name: '',
+      last_name: '',
+    })
 
     const {
       mutateAsync: changeUserNameProfile,
@@ -53,17 +51,23 @@ export default {
 
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, refetch } = useUserProfile()
 
-    const schema = ref(schemaChangeName)
-    const formData = ref({})
-    useSchemaForm(formData)
+    onMounted(async () => {
+      if (user.value.firstName) {
+        ruleForm.first_name = user.value.firstName
+      }
+      if (user.value.lastName) {
+        ruleForm.last_name = user.value.lastName
+      }
+    })
 
-    const saveName = async () => {
-      changeUserNameProfile({ form: formData.value, id: user.value.id })
+    const saveName = async (e) => {
+      e.preventDefault()
+      changeUserNameProfile({ form: ruleForm, id: user.value.id })
         .then(() => {
           queryClient.invalidateQueries(['users'])
           store.commit('globalComponents/setShowModal', {
             destination: 'changeName',
-            value: true,
+            value: false,
           })
         })
         .catch((error) => {
@@ -79,12 +83,13 @@ export default {
       data,
       error,
       saveName,
-      schema,
       IconPencil,
       isLoadingUserProfile,
       isErrorUserProfile,
       user,
       refetch,
+      ruleForm,
+      form,
     }
   },
 }
