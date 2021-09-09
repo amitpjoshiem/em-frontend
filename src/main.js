@@ -35,6 +35,7 @@ import Dialog from '@/components/Global/Dialog.vue'
 import Pagination from '@/components/Global/Pagination.vue'
 import SubHeader from '@/components/SubHeader.vue'
 import PlugForField from '@/components/Global/PlugForField.vue'
+import MemberActions from '@/components/Global/MemberActions.vue'
 
 import {
   ElProgress,
@@ -123,6 +124,7 @@ const components = [
   ElForm,
   ElFormItem,
   ElAutocomplete,
+  MemberActions,
 ]
 
 components.forEach((component) => {

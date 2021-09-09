@@ -3,7 +3,7 @@
     <div class="pb-5 flex">
       <div class="w-3/12">
         <router-link :to="{ name: 'list-of-households' }">
-          <BackButton text="List of households" />
+          <BackButton text="Back" @click="$router.go(-1)" />
         </router-link>
       </div>
 
