@@ -1,5 +1,5 @@
 <template>
-  <div type="text" class="cursor-pointer" @click="dialogVisible = true">
+  <div type="text" class="cursor-pointer" destroy-on-close @click="showModal">
     <slot name="buttonDialog" />
   </div>
 
@@ -56,14 +56,25 @@ export default defineComponent({
 
     const hideModal = computed(() => store.state.globalComponents.dialog.showDialog[props.destinationDialog])
 
+    const showModal = () => {
+      dialogVisible.value = true
+      store.commit('globalComponents/setShowModal', {
+        destination: props.destinationDialog,
+        value: true,
+      })
+    }
+
     watch(hideModal, (newValue, oldValue) => {
-      if (newValue !== oldValue && newValue === true) dialogVisible.value = false
+      if (newValue !== oldValue && newValue === false) {
+        dialogVisible.value = false
+      }
     })
 
     return {
       dialogVisible,
       handleClose,
       confirm,
+      showModal,
     }
   },
 })

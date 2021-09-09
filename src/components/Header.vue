@@ -1,6 +1,6 @@
 <template>
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
-    <InputSearch placeholder="Search householders" name="inputSearch" />
+    <RemoteSearch />
     <div class="flex items-center justify-end">
       <div
         class="
@@ -38,6 +38,7 @@
 
 <script>
 import UserAction from '@/components/UserAction.vue'
+import RemoteSearch from '@/components/Global/RemoteSearch.vue'
 import IconPlus from '@/assets/svg/icon-plus.svg'
 import { ElMessageBox } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
@@ -46,6 +47,7 @@ export default {
   name: 'Header',
   components: {
     UserAction,
+    RemoteSearch,
   },
   setup() {
     const route = useRoute()

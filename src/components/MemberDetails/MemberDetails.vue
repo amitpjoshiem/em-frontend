@@ -10,7 +10,7 @@
       <PastStressTestResults />
       <RetirementIncomePlan />
     </div>
-    <OpportunityTable class="mb-10" :prospect="data" />
+    <OpportunityTable class="mb-10" :prospect="data ? data : {}" />
     <TableAssetsConsolidations class="mb-10" />
   </div>
 </template>

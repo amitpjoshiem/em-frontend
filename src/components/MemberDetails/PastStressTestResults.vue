@@ -6,7 +6,7 @@
         <LiquidityChart />
         <GrowthChart />
       </div>
-      <Button :default-primary="!fetching" full text-btn="Stress test Hidden Levers" />
+      <Button default-primary full text-btn="Stress test Hidden Levers" />
     </div>
   </div>
 </template>
