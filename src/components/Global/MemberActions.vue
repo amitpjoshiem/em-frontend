@@ -34,7 +34,6 @@ const optionsPerStepAndType = {
 }
 
 function getClientStepHash(user) {
-  console.log('user', user)
   switch (true) {
     case user.type === 'client':
       return 'client'
