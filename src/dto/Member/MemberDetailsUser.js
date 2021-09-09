@@ -17,6 +17,7 @@ class MemberDetailsUser {
     updated_at,
     real_id,
     deleted_at,
+    step,
   }) {
     this.id = id
     this.type = type
@@ -35,6 +36,7 @@ class MemberDetailsUser {
     this.updatedAt = updated_at
     this.realId = real_id
     this.deletedAt = deleted_at
+    this.step = step
   }
 }
 
