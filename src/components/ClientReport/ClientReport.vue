@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading" class="p-5">
+  <div v-if="!isLoading" data-pdf-region="client-report" class="p-5">
     <div class="pb-5 flex">
       <div class="w-3/12">
         <router-link :to="{ name: 'list-of-households' }">
@@ -12,7 +12,7 @@
         <span class="text-title text-main font-semibold">Client report</span>
       </div>
 
-      <div class="flex items-center w-3/12">
+      <div class="flex items-center w-4/12">
         <div class="mr-2">
           <el-date-picker
             v-model="value"
@@ -22,7 +22,7 @@
             size="small"
           />
         </div>
-        <ShareBtn />
+        <ShareBtn pdf-region="client-report" />
       </div>
     </div>
 

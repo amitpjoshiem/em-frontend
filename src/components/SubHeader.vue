@@ -6,9 +6,7 @@
     <div class="w-6/12 text-center">
       <span class="text-title text-main font-semibold">{{ title }}</span>
     </div>
-    <div class="w-3/12 flex justify-end">
-      <ShareBtn class="w-8" />
-    </div>
+    <div class="w-3/12 flex justify-end"></div>
   </div>
 </template>
 
