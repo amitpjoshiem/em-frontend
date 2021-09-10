@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading" data-pdf-region="client-report" class="p-5">
+  <div v-if="!isLoading" class="p-5">
     <div class="pb-5 flex">
       <div class="w-3/12">
         <router-link :to="{ name: 'list-of-households' }">
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="flex">
+    <div class="flex" data-pdf-region="client-report">
       <CurrentYear />
       <SinceInception />
     </div>
