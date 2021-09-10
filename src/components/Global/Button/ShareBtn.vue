@@ -37,11 +37,13 @@ export default {
     const config = {
       'blue-report': {
         dataAttribute: 'blue-report',
-        jsDocOptions: [0, 0, 210, 150],
+        jsDocOptions: [10, 40, 190, 130],
+        titleText: 'Blueprint report',
       },
       'client-report': {
         dataAttribute: 'client-report',
-        jsDocOptions: [0, 0, 210, 130],
+        jsDocOptions: [10, 40, 190, 80],
+        titleText: 'Client report',
       },
     }
 
@@ -49,6 +51,7 @@ export default {
       const elemRef = document.querySelector(`[data-pdf-region="${config[props.pdfRegion].dataAttribute}"]`)
       html2canvas(elemRef).then((canvas) => {
         const doc = new jsPDF()
+        doc.text(config[props.pdfRegion].titleText, 90, 25)
         doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', ...config[props.pdfRegion].jsDocOptions)
         doc.save('report')
       })
