@@ -9,14 +9,20 @@
 </template>
 
 <script>
-import { useRoute } from 'vue-router'
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
 import IconShare from '@/assets/svg/icon-share.svg'
 export default {
   name: 'ShareBtn',
-  setup() {
-    const route = useRoute()
+  props: {
+    pdfRegion: {
+      type: String,
+      require: true,
+      default: '',
+    },
+  },
+
+  setup(props) {
     const actionsOptions = [
       {
         title: 'Download as PDF',
@@ -28,6 +34,26 @@ export default {
       },
     ]
 
+    const config = {
+      'blue-report': {
+        dataAttribute: 'blue-report',
+        jsDocOptions: [0, 0, 210, 150],
+      },
+      'client-report': {
+        dataAttribute: 'client-report',
+        jsDocOptions: [0, 0, 210, 130],
+      },
+    }
+
+    const downloadPdf = () => {
+      const elemRef = document.querySelector(`[data-pdf-region="${config[props.pdfRegion].dataAttribute}"]`)
+      html2canvas(elemRef).then((canvas) => {
+        const doc = new jsPDF()
+        doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', ...config[props.pdfRegion].jsDocOptions)
+        doc.save('report')
+      })
+    }
+
     const actionsMap = {
       download: () => downloadPdf(),
       share: () => console.log('share'),
@@ -36,27 +62,6 @@ export default {
     const handleSelect = (command) => {
       const actionHandler = actionsMap[command]
       actionHandler()
-    }
-
-    const downloadPdf = () => {
-      if (route.name === 'bluereport') downloadPdfBlueReport()
-      if (route.name === 'clientreport') downloadPdfClientReport()
-    }
-
-    const downloadPdfBlueReport = () => {
-      html2canvas(document.getElementById('blue-report')).then((canvas) => {
-        const doc = new jsPDF()
-        doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', 0, 0, 210, 150)
-        doc.save('report')
-      })
-    }
-
-    const downloadPdfClientReport = () => {
-      html2canvas(document.getElementById('client-report')).then((canvas) => {
-        const doc = new jsPDF()
-        doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', 0, 0, 210, 130)
-        doc.save('report')
-      })
     }
 
     return {

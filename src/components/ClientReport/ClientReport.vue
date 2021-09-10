@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading" id="client-report" class="p-5">
+  <div v-if="!isLoading" data-pdf-region="client-report" class="p-5">
     <div class="pb-5 flex">
       <div class="w-3/12">
         <router-link :to="{ name: 'list-of-households' }">
@@ -22,7 +22,7 @@
             size="small"
           />
         </div>
-        <ShareBtn />
+        <ShareBtn pdf-region="client-report" />
       </div>
     </div>
 
