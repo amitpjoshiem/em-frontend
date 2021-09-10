@@ -31,7 +31,9 @@
               <span class="ml-2 text-xs text-gray03">Blue-cash liquidity</span>
             </div>
           </div>
-          <div class="w-5/12 border border-color-grey rounded-lg mx-2 p-5">
+          <div
+            class="w-5/12 border border-color-grey rounded-lg ml-2 mr-5 p-5 flex flex-col items-center justify-center"
+          >
             <div>Total Expenses</div>
             <TotalChart />
           </div>
@@ -63,7 +65,7 @@
               </div>
             </div>
 
-            <div class="w-5/12 flex justify-center items-center -mt-11">
+            <div class="w-5/12 flex justify-center items-center -mt-11 pl-9">
               <NetWorthChart />
             </div>
           </div>
