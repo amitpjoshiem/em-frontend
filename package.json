@@ -10,10 +10,10 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
-    "@j-t-mcc/vue3-chartjs": "^1.1.2",
+    "@j-t-mcc/vue3-chartjs": "1.1.4",
     "@tailwindcss/postcss7-compat": "^2.1.2",
     "autoprefixer": "^9",
-    "chart.js": "^3.3.2",
+    "chart.js": "3.5.1",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.6",
     "element-plus": "1.1.0-beta.9",
