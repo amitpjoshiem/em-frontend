@@ -3,8 +3,8 @@
     <div class="flex justify-between items-center">
       <span class="text-smm font-medium">Pipe Line</span>
       <div class="flex">
-        <Select :options="options" large />
-        <DropDown class="ml-2.5" :options="actionsOptions">
+        <SwdSelect :options="options" init-value="Past year" size="small" class="w-36" />
+        <SwdDropDown class="ml-2.5" :options="actionsOptions">
           <template #titleDropDown>
             <span
               class="
@@ -22,7 +22,7 @@
               <InlineSvg :src="IconAction" />
             </span>
           </template>
-        </DropDown>
+        </SwdDropDown>
       </div>
     </div>
 
@@ -97,26 +97,40 @@ export default {
       },
       options: [
         {
-          value: 'Option1',
-          label: 'Past month',
+          title: 'Past year',
+          command: 'year',
         },
         {
-          value: 'Option2',
-          label: 'Option2',
+          title: 'Past month',
+          command: 'month',
         },
         {
-          value: 'Option3',
-          label: 'Option3',
-        },
-        {
-          value: 'Option4',
-          label: 'Option4',
-        },
-        {
-          value: 'Option5',
-          label: 'Option5',
+          title: 'Past day',
+          command: 'day',
         },
       ],
+      // options: [
+      //   {
+      //     value: 'Option1',
+      //     label: 'Past month',
+      //   },
+      //   {
+      //     value: 'Option2',
+      //     label: 'Option2',
+      //   },
+      //   {
+      //     value: 'Option3',
+      //     label: 'Option3',
+      //   },
+      //   {
+      //     value: 'Option4',
+      //     label: 'Option4',
+      //   },
+      //   {
+      //     value: 'Option5',
+      //     label: 'Option5',
+      //   },
+      // ],
       value: '',
     }
   },

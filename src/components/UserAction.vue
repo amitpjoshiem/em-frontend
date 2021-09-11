@@ -1,12 +1,12 @@
 <template>
-  <DropDown :options="actionsOptions" @select="handleSelect">
+  <SwdDropDown :options="actionsOptions" @select="handleSelect">
     <template #titleDropDown>
       <div v-if="!isLoadingUserProfile" class="flex items-center">
         <span class="px-2 py-2">{{ getNameTitle }}</span>
         <InlineSvg :src="IconUserAction" />
       </div>
     </template>
-  </DropDown>
+  </SwdDropDown>
 </template>
 <script>
 import IconUserAction from '@/assets/svg/icon-user-action.svg'

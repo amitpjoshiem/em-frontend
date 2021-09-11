@@ -1,5 +1,5 @@
 <template>
-  <Dialog title="Change password" confirm-action="changePassword" destination-dialog="changePassword">
+  <SwdDialog title="Change password" confirm-action="changePassword" destination-dialog="changePassword">
     <template #buttonDialog>
       <div class="flex items-center">
         <InlineSvg :src="IconPencil" class="mb-1" />
@@ -24,7 +24,7 @@
         </div>
       </el-form>
     </template>
-  </Dialog>
+  </SwdDialog>
 </template>
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'

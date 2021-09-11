@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'DropDown',
+  name: 'SwdDropDown',
   props: {
     options: {
       type: Array,
@@ -24,7 +24,7 @@ export default {
     },
   },
   emits: ['select'],
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const handleCommand = (command) => {
       emit('select', command)
     }

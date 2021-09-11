@@ -14,7 +14,7 @@ import { defineComponent, ref, computed } from 'vue'
 import dayjs from 'dayjs'
 
 export default defineComponent({
-  name: 'DatePicker',
+  name: 'SwdDatePicker',
   props: {
     modelValue: {
       type: String,

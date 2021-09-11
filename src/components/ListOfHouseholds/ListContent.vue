@@ -25,8 +25,8 @@
         </router-link>
       </div>
       <div class="flex">
-        <ItemsPerPage :destination="'listOfHouseholds'" />
-        <DropDown class="ml-2.5" :options="actionsOptions">
+        <SwdItemsPerPage :destination="'listOfHouseholds'" />
+        <SwdDropDown class="ml-2.5" :options="actionsOptions">
           <template #titleDropDown>
             <span
               class="
@@ -44,7 +44,7 @@
               <InlineSvg :src="IconAction" />
             </span>
           </template>
-        </DropDown>
+        </SwdDropDown>
       </div>
     </div>
     <router-view />

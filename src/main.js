@@ -14,12 +14,12 @@ import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
 import SwdAvatar from '@/components/Global/SwdAvatar.vue'
 import SwdTypeUserLabel from '@/components/Global/SwdTypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
-import SwdSelect from '@/components/Global/Form/SwdSelect.vue'
-import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
-import DropDown from '@/components/Global/DropDown.vue'
-import DatePicker from '@/components/Global/DatePicker.vue'
+import SwdSelect from '@/components/Global/SwdSelect.vue'
+import SwdItemsPerPage from '@/components/Global/SwdItemsPerPage.vue'
+import SwdDropDown from '@/components/Global/SwdDropDown.vue'
+import SwdDatePicker from '@/components/Global/SwdDatePicker.vue'
 import BackButton from '@/components/Global/Button/BackButton.vue'
-import Dialog from '@/components/Global/Dialog.vue'
+import SwdDialog from '@/components/Global/SwdDialog.vue'
 import SwdPagination from '@/components/Global/SwdPagination.vue'
 import SubHeader from '@/components/SubHeader.vue'
 import SwdStubForText from '@/components/Global/SwdStubForText.vue'
@@ -66,11 +66,11 @@ const components = [
   SwdAvatar,
   SwdTypeUserLabel,
   Select,
-  ItemsPerPage,
-  DropDown,
-  DatePicker,
+  SwdItemsPerPage,
+  SwdDropDown,
+  SwdDatePicker,
   BackButton,
-  Dialog,
+  SwdDialog,
   SwdPagination,
   SwdSelect,
   SubHeader,
