@@ -10,8 +10,6 @@ import InlineSvg from 'vue-inline-svg'
 
 // Global Component Import
 import Button from '@/components/Global/Button/Button.vue'
-import CircularProgress from '@/components/Global/CircularProgress.vue'
-import LinearProgress from '@/components/Global/LinearProgress.vue'
 import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
 import Avatar from '@/components/Global/Avatar.vue'
 import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
@@ -64,8 +62,6 @@ app.use(store)
 const components = [
   Button,
   InlineSvg,
-  CircularProgress,
-  LinearProgress,
   ShareBtn,
   Avatar,
   TypeUserLabel,

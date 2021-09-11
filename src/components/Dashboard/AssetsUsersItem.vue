@@ -14,7 +14,7 @@
       <span class="pl-2">{{ user.profit }}</span>
     </div>
     <div class="col-span-1 text-xs text-main flex justify-center items-center">
-      <CircularProgress :percentage="user.progress" />
+      <SwdCircularProgress :percentage="user.progress" />
       <span class="pl-2">{{ user.progress }}%</span>
     </div>
     <div class="col-span-2 text-main text-xs font-medium flex justify-center items-center">${{ user.balance }}</div>
@@ -33,11 +33,14 @@
 <script>
 import IconProfitUp from '@/assets/svg/profit-up.svg'
 import IconActionGray from '@/assets/svg/icon-action-gray.svg'
-
+import SwdCircularProgress from '@/components/Global/SwdCircularProgress.vue'
 import { User } from '@/components/Dashboard/DTO/usersList.js'
 
 export default {
   name: 'AssetsUsersItem',
+  components: {
+    SwdCircularProgress,
+  },
   props: {
     user: {
       type: User,

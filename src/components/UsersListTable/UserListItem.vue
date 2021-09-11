@@ -18,7 +18,7 @@
     <TypeUserLabel :user-type="user.type" />
   </td>
   <td>
-    <LinearProgress :percentage="getPercentage" :show-text="true" />
+    <SwdLinearProgress :percentage="getPercentage" :show-text="true" />
   </td>
   <td class="text-main">{{ user.city }}</td>
   <td class="font-medium">
@@ -30,10 +30,14 @@
 </template>
 
 <script>
+import SwdLinearProgress from '@/components/Global/SwdLinearProgress.vue'
 import { computed } from 'vue'
 
 export default {
   name: 'UserListItem',
+  components: {
+    SwdLinearProgress,
+  },
   props: {
     user: {
       type: Object,
