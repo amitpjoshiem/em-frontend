@@ -6,9 +6,7 @@ import store from './store'
 import dayjs from 'dayjs'
 
 import relativeTime from 'dayjs/plugin/relativeTime'
-
 import InlineSvg from 'vue-inline-svg'
-import { SchemaForm, SchemaWizard, SchemaFormFactory, useSchemaForm } from 'formvuelate'
 
 // Global Component Import
 import Button from '@/components/Global/Button/Button.vue'
@@ -89,10 +87,6 @@ const components = [
   ElDropdownMenu,
   ElDropdownItem,
   DropDown,
-  SchemaForm,
-  SchemaWizard,
-  SchemaFormFactory,
-  useSchemaForm,
   Checkbox,
   ElCheckbox,
   ElRadio,
