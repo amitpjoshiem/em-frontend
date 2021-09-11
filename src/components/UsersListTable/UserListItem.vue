@@ -15,14 +15,14 @@
     {{ user.createdAtFormatted }}
   </td>
   <td>
-    <TypeUserLabel :user-type="user.type" />
+    <SwdTypeUserLabel :user-type="user.type" />
   </td>
   <td>
     <SwdLinearProgress :percentage="getPercentage" :show-text="true" />
   </td>
   <td class="text-main">{{ user.city }}</td>
   <td class="font-medium">
-    <PlugForField :text="user.netWorth" plug="&mdash;" class="text-sm text-main font-semibold" />
+    <SwdStubForText :text="user.netWorth" plug="&mdash;" class="text-sm text-main font-semibold" />
   </td>
   <td class="pr-5">
     <MemberActions :user="user" />

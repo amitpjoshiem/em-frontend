@@ -44,7 +44,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="spouse.name" plug="&mdash;" class="text-sm text-main font-semibold" />
+        <SwdStubForText :text="spouse.name" plug="&mdash;" class="text-sm text-main font-semibold" />
       </div>
     </div>
 
@@ -58,7 +58,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="spouse.phone" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="spouse.phone" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -72,7 +72,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="spouse.email" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="spouse.email" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -86,7 +86,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="spouse.birthday" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="spouse.birthday" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -100,7 +100,7 @@
         </span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="spouse.retirementDate" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="spouse.retirementDate" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -132,10 +132,10 @@
         <span class="text-xss text-gray03 font-semibold">Company Name</span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentProspect.companyName" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="employmentProspect.companyName" plug="&mdash;" class="text-sm text-main" />
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentSpouse.companyName" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="employmentSpouse.companyName" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -144,10 +144,10 @@
         <span class="text-xss text-gray03 font-semibold">Occupation</span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentProspect.occupation" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="employmentProspect.occupation" plug="&mdash;" class="text-sm text-main" />
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentSpouse.occupation" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="employmentSpouse.occupation" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -156,10 +156,10 @@
         <span class="text-xss text-gray03 font-semibold">Years</span>
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentProspect.years" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="employmentProspect.years" plug="&mdash;" class="text-sm text-main" />
       </div>
       <div class="w-9/24">
-        <PlugForField :text="employmentSpouse.years" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="employmentSpouse.years" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
   </div>

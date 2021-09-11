@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'PlugForField',
+  name: 'SwdStubForText',
   props: {
     text: {
       type: [String, Number],

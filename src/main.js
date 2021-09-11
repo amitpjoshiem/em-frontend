@@ -12,7 +12,7 @@ import InlineSvg from 'vue-inline-svg'
 import Button from '@/components/Global/Button/Button.vue'
 import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
 import Avatar from '@/components/Global/Avatar.vue'
-import TypeUserLabel from '@/components/Global/TypeUserLabel.vue'
+import SwdTypeUserLabel from '@/components/Global/SwdTypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
 import SwdSelect from '@/components/Global/Form/SwdSelect.vue'
 import ItemsPerPage from '@/components/Global/ItemsPerPage.vue'
@@ -22,7 +22,7 @@ import BackButton from '@/components/Global/Button/BackButton.vue'
 import Dialog from '@/components/Global/Dialog.vue'
 import Pagination from '@/components/Global/Pagination.vue'
 import SubHeader from '@/components/SubHeader.vue'
-import PlugForField from '@/components/Global/PlugForField.vue'
+import SwdStubForText from '@/components/Global/SwdStubForText.vue'
 import MemberActions from '@/components/Global/MemberActions.vue'
 
 import {
@@ -64,7 +64,7 @@ const components = [
   InlineSvg,
   ShareBtn,
   Avatar,
-  TypeUserLabel,
+  SwdTypeUserLabel,
   Select,
   ItemsPerPage,
   DropDown,
@@ -74,7 +74,7 @@ const components = [
   Pagination,
   SwdSelect,
   SubHeader,
-  PlugForField,
+  SwdStubForText,
   MemberActions,
   ElForm,
   ElFormItem,

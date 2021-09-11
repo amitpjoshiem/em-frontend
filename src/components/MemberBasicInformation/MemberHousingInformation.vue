@@ -20,7 +20,7 @@
 
       <div v-if="house.type === 'own' || house.type === 'family'" class="flex justify-between mb-7">
         <span class="text-gray03 text-xss font-semibold">Total Debt</span>
-        <PlugForField :text="currencyFormat(house.totalDebt)" plug="&mdash;" />
+        <SwdStubForText :text="currencyFormat(house.totalDebt)" plug="&mdash;" />
       </div>
 
       <div v-if="house.type === 'own' || house.type === 'family'" class="flex justify-between mb-7">

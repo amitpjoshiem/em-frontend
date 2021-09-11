@@ -7,7 +7,7 @@
       {{ user.name }}
     </div>
     <div class="col-span-2 flex justify-center items-center">
-      <TypeUserLabel />
+      <SwdTypeUserLabel />
     </div>
     <div class="col-span-2 text-main text-xs flex items-center">
       <InlineSvg :src="IconProfitUp" />
