@@ -29,7 +29,7 @@
       </div>
       <div class="border-l border-color-grey h-16" />
       <div class="flex items-center justify-center pl-5 cursor-pointer">
-        <Avatar />
+        <SwdAvatar />
         <UserAction />
       </div>
     </div>

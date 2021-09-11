@@ -11,7 +11,7 @@ import InlineSvg from 'vue-inline-svg'
 // Global Component Import
 import Button from '@/components/Global/Button/Button.vue'
 import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
-import Avatar from '@/components/Global/Avatar.vue'
+import SwdAvatar from '@/components/Global/SwdAvatar.vue'
 import SwdTypeUserLabel from '@/components/Global/SwdTypeUserLabel.vue'
 import Select from '@/components/Global/Form/Select.vue'
 import SwdSelect from '@/components/Global/Form/SwdSelect.vue'
@@ -63,7 +63,7 @@ const components = [
   Button,
   InlineSvg,
   ShareBtn,
-  Avatar,
+  SwdAvatar,
   SwdTypeUserLabel,
   Select,
   ItemsPerPage,

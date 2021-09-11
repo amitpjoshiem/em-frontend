@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-12 pt-4">
     <div class="col-span-1 flex justify-center items-center">
-      <Avatar :size="'small'" />
+      <SwdAvatar :size="'small'" />
     </div>
     <div class="col-span-3 text-xs text-main font-medium flex items-center">
       {{ user.name }}

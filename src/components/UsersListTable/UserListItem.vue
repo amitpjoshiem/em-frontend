@@ -1,6 +1,6 @@
 <template>
   <td class="flex items-center h-12 ml-5">
-    <Avatar />
+    <SwdAvatar />
     <router-link
       :to="{
         name: user.step ? 'member-details' : 'basic-information',

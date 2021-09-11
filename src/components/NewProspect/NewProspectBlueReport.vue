@@ -11,7 +11,7 @@
           <div class="w-7/12 bg-widget-bg rounded-lg">
             <div class="border-b">
               <div class="flex p-5">
-                <Avatar />
+                <SwdAvatar />
                 <div class="flex flex-col ml-2">
                   <span class="text-sm text-main font-medium">John &amp; Sarah Travis</span>
                   <span class="text-small text-activity-item font-medium uppercase"> Prospect </span>
