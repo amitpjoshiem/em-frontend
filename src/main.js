@@ -20,10 +20,10 @@ import DropDown from '@/components/Global/DropDown.vue'
 import DatePicker from '@/components/Global/DatePicker.vue'
 import BackButton from '@/components/Global/Button/BackButton.vue'
 import Dialog from '@/components/Global/Dialog.vue'
-import Pagination from '@/components/Global/Pagination.vue'
+import SwdPagination from '@/components/Global/SwdPagination.vue'
 import SubHeader from '@/components/SubHeader.vue'
 import SwdStubForText from '@/components/Global/SwdStubForText.vue'
-import MemberActions from '@/components/Global/MemberActions.vue'
+import SwdMemberActions from '@/components/Global/SwdMemberActions.vue'
 
 import {
   ElProgress,
@@ -71,11 +71,11 @@ const components = [
   DatePicker,
   BackButton,
   Dialog,
-  Pagination,
+  SwdPagination,
   SwdSelect,
   SubHeader,
   SwdStubForText,
-  MemberActions,
+  SwdMemberActions,
   ElForm,
   ElFormItem,
   ElAutocomplete,

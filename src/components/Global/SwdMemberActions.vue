@@ -77,7 +77,7 @@ function buildOptions(user) {
 }
 
 export default {
-  name: 'MemberActions',
+  name: 'SwdMemberActions',
   props: {
     user: {
       type: Object,

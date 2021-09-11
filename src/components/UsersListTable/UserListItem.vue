@@ -25,7 +25,7 @@
     <SwdStubForText :text="user.netWorth" plug="&mdash;" class="text-sm text-main font-semibold" />
   </td>
   <td class="pr-5">
-    <MemberActions :user="user" />
+    <SwdMemberActions :user="user" />
   </td>
 </template>
 

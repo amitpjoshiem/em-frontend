@@ -19,7 +19,7 @@
             </span>
           </div>
         </div>
-        <MemberActions :user="user" />
+        <SwdMemberActions :user="user" />
       </div>
 
       <div class="flex justify-between py-3">

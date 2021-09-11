@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  name: 'Pagination',
+  name: 'SwdPagination',
   props: {
     options: {
       type: Object,
