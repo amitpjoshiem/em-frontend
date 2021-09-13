@@ -34,7 +34,7 @@
 import IconProfitUp from '@/assets/svg/profit-up.svg'
 import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import SwdCircularProgress from '@/components/Global/SwdCircularProgress.vue'
-import { User } from '@/components/Dashboard/DTO/usersList.js'
+// import { User } from '@/components/Dashboard/DTO/usersList.js'
 
 export default {
   name: 'AssetsUsersItem',
@@ -43,7 +43,7 @@ export default {
   },
   props: {
     user: {
-      type: User,
+      type: Object,
       require: true,
       default: () => {},
     },

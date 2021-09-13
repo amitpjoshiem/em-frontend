@@ -29,7 +29,7 @@ export const useProspectDetails = (id) => {
         employmentProspect.value = dataFactory(MemberLastEmployment, data.data.employment_history[0])
         employmentSpouse.value = dataFactory(
           SpouseLastEmployment,
-          data.data.spouse.length ? data.data.spouse?.employment_history[0] : []
+          data.data.spouse && data.data.spouse.employment_history?.length ? data.data.spouse.employment_history[0] : []
         )
 
         return new MemberDetailsUser(data.data)
