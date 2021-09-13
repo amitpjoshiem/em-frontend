@@ -3,5 +3,4 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './fonts.css';
 @import './main.css';
