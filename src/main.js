@@ -13,7 +13,6 @@ import Button from '@/components/Global/Button/Button.vue'
 import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
 import SwdAvatar from '@/components/Global/SwdAvatar.vue'
 import SwdTypeUserLabel from '@/components/Global/SwdTypeUserLabel.vue'
-import Select from '@/components/Global/Form/Select.vue'
 import SwdSelect from '@/components/Global/SwdSelect.vue'
 import SwdItemsPerPage from '@/components/Global/SwdItemsPerPage.vue'
 import SwdDropDown from '@/components/Global/SwdDropDown.vue'
@@ -65,7 +64,6 @@ const components = [
   ShareBtn,
   SwdAvatar,
   SwdTypeUserLabel,
-  Select,
   SwdItemsPerPage,
   SwdDropDown,
   SwdDatePicker,
