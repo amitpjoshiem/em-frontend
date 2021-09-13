@@ -179,15 +179,9 @@
           <el-form-item :prop="'employment_history.' + index + '.years'" label="Years" class="w-full">
             <el-input v-model="eh.years" placeholder="00" />
           </el-form-item>
-          <div>
-            <div
-              v-if="index === ruleForm.employment_history.length - 1"
-              class="add-employment cursor-pointer"
-              @click="addEmployment"
-            >
-              +
-            </div>
-            <div v-else class="add-employment cursor-pointer" @click="removeEmployment(index)">-</div>
+          <div class="w-12 pt-9 ml-3 cursor-pointer">
+            <InlineSvg v-if="index === ruleForm.employment_history.length - 1" :src="IconAdd" @click="addEmployment" />
+            <InlineSvg v-else :src="IconDelete" @click="removeEmployment(index)" />
           </div>
         </el-form-item>
 
@@ -212,15 +206,13 @@
             <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-full">
               <el-input v-model="eh.years" placeholder="00" />
             </el-form-item>
-            <div>
-              <div
+            <div class="w-12 pt-9 ml-3 cursor-pointer">
+              <InlineSvg
                 v-if="index === ruleForm.spouse.employment_history.length - 1"
-                class="add-employment cursor-pointer"
+                :src="IconAdd"
                 @click="addEmploymentSpouse"
-              >
-                +
-              </div>
-              <div v-else class="add-employment cursor-pointer" @click="removeEmploymentSpouse(index)">-</div>
+              />
+              <InlineSvg v-else :src="IconDelete" @click="removeEmploymentSpouse(index)" />
             </div>
           </el-form-item>
         </div>
@@ -276,6 +268,9 @@ import { maska } from 'maska'
 import { useFetchMember } from '@/api/use-fetch-member'
 import { scrollTop } from '@/utils/scrollTop'
 import { initialBasicInformation } from '@/components/NewProspect/initialState/basicInformation'
+
+import IconAdd from '@/assets/svg/icon-add.svg'
+import IconDelete from '@/assets/svg/icon-delete.svg'
 
 function setInitValue(ruleForm, member) {
   if (member?.value?.data) {
@@ -468,6 +463,8 @@ export default {
       errorMember,
       fetchingMember,
       isUpdateMember,
+      IconAdd,
+      IconDelete,
     }
   },
 }
