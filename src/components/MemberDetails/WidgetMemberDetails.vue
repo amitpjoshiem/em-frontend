@@ -3,7 +3,7 @@
     <div class="bg-widget-bg rounded-lg p-5">
       <div class="border-b pb-5 flex justify-between">
         <div class="flex">
-          <Avatar />
+          <SwdAvatar />
           <div class="flex flex-col ml-2">
             <router-link
               :to="{
@@ -19,7 +19,7 @@
             </span>
           </div>
         </div>
-        <MemberActions :user="user" />
+        <SwdMemberActions :user="user" />
       </div>
 
       <div class="flex justify-between py-3">

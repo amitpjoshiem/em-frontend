@@ -1,11 +1,11 @@
 <template>
-  <DropDown class="ml-2" :options="actionsOptions" @select="handleSelect">
+  <SwdDropDown class="ml-2" :options="actionsOptions" @select="handleSelect">
     <template #titleDropDown>
       <span class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3 border border-color-grey">
         <InlineSvg :src="IconShare" />
       </span>
     </template>
-  </DropDown>
+  </SwdDropDown>
 </template>
 
 <script>

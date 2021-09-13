@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  name: 'LinearProgress',
+  name: 'SwdLinearProgress',
   props: {
     percentage: {
       type: Number,

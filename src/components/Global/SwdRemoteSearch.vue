@@ -22,7 +22,7 @@ import { useSearchMembers } from '@/api/use-search-members.js'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: 'RemoteSearch',
+  name: 'SwdRemoteSearch',
   setup() {
     const router = useRouter()
     const links = ref([])

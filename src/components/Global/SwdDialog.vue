@@ -15,7 +15,7 @@ import { computed, watch } from 'vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({
-  name: 'Dialog',
+  name: 'SwdDialog',
   props: {
     title: {
       type: String,

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
-    <RemoteSearch />
+    <SwdRemoteSearch />
     <div class="flex items-center justify-end">
       <div
         class="
@@ -29,7 +29,7 @@
       </div>
       <div class="border-l border-color-grey h-16" />
       <div class="flex items-center justify-center pl-5 cursor-pointer">
-        <Avatar />
+        <SwdAvatar />
         <UserAction />
       </div>
     </div>
@@ -38,7 +38,7 @@
 
 <script>
 import UserAction from '@/components/UserAction.vue'
-import RemoteSearch from '@/components/Global/RemoteSearch.vue'
+import SwdRemoteSearch from '@/components/Global/SwdRemoteSearch.vue'
 import IconPlus from '@/assets/svg/icon-plus.svg'
 import { ElMessageBox } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
@@ -47,7 +47,7 @@ export default {
   name: 'Header',
   components: {
     UserAction,
-    RemoteSearch,
+    SwdRemoteSearch,
   },
   setup() {
     const route = useRoute()

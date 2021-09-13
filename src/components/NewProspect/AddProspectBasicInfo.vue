@@ -24,7 +24,7 @@
             <el-input v-model="ruleForm.name" placeholder="Enter prospect’s name" />
           </el-form-item>
           <el-form-item prop="birthday" label="Date of birth" class="w-3/12">
-            <DatePicker v-model="ruleForm.birthday" />
+            <SwdDatePicker v-model="ruleForm.birthday" />
           </el-form-item>
         </div>
 
@@ -37,7 +37,7 @@
             <el-input v-model="ruleForm.phone" v-maska="'(###) ###-####'" placeholder="Enter prospect’s phone number" />
           </el-form-item>
           <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retiretment date" class="w-2/12">
-            <DatePicker v-model="ruleForm.retirement_date" />
+            <SwdDatePicker v-model="ruleForm.retirement_date" />
           </el-form-item>
         </div>
 
@@ -77,7 +77,7 @@
             <el-input v-model="ruleForm.spouse.name" placeholder="Enter spouse’s name" />
           </el-form-item>
           <el-form-item prop="spouse.birthday" label="Date of birth" class="w-3/12">
-            <DatePicker v-model="ruleForm.spouse.birthday" />
+            <SwdDatePicker v-model="ruleForm.spouse.birthday" />
           </el-form-item>
         </div>
         <div class="flex my-5">
@@ -98,7 +98,7 @@
             label="Retiretment date"
             class="w-2/12"
           >
-            <DatePicker v-model="ruleForm.spouse.retirement_date" />
+            <SwdDatePicker v-model="ruleForm.spouse.retirement_date" />
           </el-form-item>
         </div>
       </div>

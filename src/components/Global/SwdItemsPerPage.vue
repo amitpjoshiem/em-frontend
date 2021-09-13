@@ -11,7 +11,7 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
-  name: 'ItemsPerPage',
+  name: 'SwdItemsPerPage',
   props: {
     actionsItemsPerPage: {
       type: Array,

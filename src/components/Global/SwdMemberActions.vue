@@ -1,11 +1,11 @@
 <template>
-  <DropDown class="ml-2.5" :options="actionsOptions" @select="handleSelect">
+  <SwdDropDown class="ml-2.5" :options="actionsOptions" @select="handleSelect">
     <template #titleDropDown>
       <span class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3">
         <InlineSvg :src="IconActionGray" />
       </span>
     </template>
-  </DropDown>
+  </SwdDropDown>
 </template>
 
 <script>
@@ -77,7 +77,7 @@ function buildOptions(user) {
 }
 
 export default {
-  name: 'MemberActions',
+  name: 'SwdMemberActions',
   props: {
     user: {
       type: Object,

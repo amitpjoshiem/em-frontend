@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="w-4/12 flex flex-col">
-      <DropDown class="flex justify-end pt-3 pr-3" :options="actionsOptions">
+      <SwdDropDown class="flex justify-end pt-3 pr-3" :options="actionsOptions">
         <template #titleDropDown>
           <span
             class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3 border border-color-grey"
@@ -32,7 +32,7 @@
             <InlineSvg :src="IconAction" />
           </span>
         </template>
-      </DropDown>
+      </SwdDropDown>
       <div class="flex justify-center items-center flex-col">
         <RiskLevelChart />
         <div class="mt-7 text-sm font-semibold">

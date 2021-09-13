@@ -1,6 +1,6 @@
 <template>
   <td class="flex items-center h-12 ml-5">
-    <Avatar />
+    <SwdAvatar />
     <router-link
       :to="{
         name: user.step ? 'member-details' : 'basic-information',
@@ -15,25 +15,29 @@
     {{ user.createdAtFormatted }}
   </td>
   <td>
-    <TypeUserLabel :user-type="user.type" />
+    <SwdTypeUserLabel :user-type="user.type" />
   </td>
   <td>
-    <LinearProgress :percentage="getPercentage" :show-text="true" />
+    <SwdLinearProgress :percentage="getPercentage" :show-text="true" />
   </td>
   <td class="text-main">{{ user.city }}</td>
   <td class="font-medium">
-    <PlugForField :text="user.netWorth" plug="&mdash;" class="text-sm text-main font-semibold" />
+    <SwdStubForText :text="user.netWorth" plug="&mdash;" class="text-sm text-main font-semibold" />
   </td>
   <td class="pr-5">
-    <MemberActions :user="user" />
+    <SwdMemberActions :user="user" />
   </td>
 </template>
 
 <script>
+import SwdLinearProgress from '@/components/Global/SwdLinearProgress.vue'
 import { computed } from 'vue'
 
 export default {
   name: 'UserListItem',
+  components: {
+    SwdLinearProgress,
+  },
   props: {
     user: {
       type: Object,

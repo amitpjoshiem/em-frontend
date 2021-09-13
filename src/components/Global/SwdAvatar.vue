@@ -8,7 +8,7 @@ import DefaultAvatar from '@/assets/img/avatar.png'
 import { computed } from 'vue'
 
 export default {
-  name: 'Avatar',
+  name: 'SwdAvatar',
   props: {
     link: {
       type: String,
@@ -18,18 +18,18 @@ export default {
     size: {
       type: String,
       require: false,
-      default: 'large',
+      default: 'medium',
       validator: (value) => {
-        return ['large', 'big', 'small'].includes(value)
+        return ['large', 'medium', 'small'].includes(value)
       },
     },
   },
 
   setup(props) {
     const avatarClassMap = {
-      large: 'h-8 w-8',
+      large: 'h-14 w-14',
+      medium: 'h-8 w-8',
       small: 'h-5 w-5',
-      big: 'h-14 w-14',
     }
 
     const avatarClass = computed(() => {

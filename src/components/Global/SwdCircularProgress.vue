@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'CircularProgress',
+  name: 'SwdCircularProgress',
   props: {
     percentage: {
       type: Number,

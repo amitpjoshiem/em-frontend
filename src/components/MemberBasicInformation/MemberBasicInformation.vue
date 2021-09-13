@@ -5,7 +5,7 @@
   <div v-else class="p-5">
     <div>
       <div class="flex items-center">
-        <Avatar :size="'big'" :link="prospect.avatar" />
+        <SwdAvatar size="large" :link="prospect.avatar" />
         <span class="text-main text-xl font-semibold ml-7">
           {{ prospect.name }}
         </span>
