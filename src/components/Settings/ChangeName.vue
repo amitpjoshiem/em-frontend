@@ -1,12 +1,12 @@
 <template>
-  <SwdDialog title="Change name" confirm-action="changeName" destination-dialog="changeName">
+  <SwdDialog :title="getDialogTitle" confirm-action="changeName" destination-dialog="changeName">
     <template #buttonDialog>
       <div class="flex items-center">
         <InlineSvg :src="IconPencil" class="mb-1" />
       </div>
     </template>
     <template #contentDialog>
-      <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
+      <el-form v-if="data.isShowForm" ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
         <el-form-item label="First name" prop="first_name" class="w-full">
           <el-input v-model="ruleForm.first_name" placeholder="Enter first name" />
         </el-form-item>
@@ -17,16 +17,22 @@
           <Button default-blue-btn text-btn="Save" @click="saveName" />
         </div>
       </el-form>
+      <div v-else class="flex flex-col items-center">
+        <InlineSvg :src="IconSuccesChanged" />
+        <span class="my-5">The name was succesfully changed!</span>
+        <Button default-blue-btn text-btn="Save" @click="closeDialog" />
+      </div>
     </template>
   </SwdDialog>
 </template>
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
+import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
 import { changeUserName } from '@/api/vueQuery/change-user-name'
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, computed } from 'vue'
 import { rules } from '@/validationRules/changeName.js'
 
 export default {
@@ -41,14 +47,11 @@ export default {
       last_name: '',
     })
 
-    const {
-      mutateAsync: changeUserNameProfile,
-      isLoading,
-      isError,
-      isFetching,
-      data,
-      error,
-    } = useMutation(changeUserName)
+    const data = reactive({
+      isShowForm: true,
+    })
+
+    const { mutateAsync: changeUserNameProfile, isLoading, isError, isFetching, error } = useMutation(changeUserName)
 
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, refetch } = useUserProfile()
 
@@ -66,15 +69,24 @@ export default {
       changeUserNameProfile({ form: ruleForm, id: user.value.id })
         .then(() => {
           queryClient.invalidateQueries(['users'])
-          store.commit('globalComponents/setShowModal', {
-            destination: 'changeName',
-            value: false,
-          })
+          data.isShowForm = false
         })
         .catch((error) => {
           console.error(error)
         })
     }
+
+    const closeDialog = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'changeName',
+        value: false,
+      })
+    }
+
+    const getDialogTitle = computed(() => {
+      if (data.isShowForm) return 'Change name'
+      return 'Succes'
+    })
 
     return {
       changeUserNameProfile,
@@ -92,6 +104,9 @@ export default {
       ruleForm,
       form,
       rules,
+      closeDialog,
+      IconSuccesChanged,
+      getDialogTitle,
     }
   },
 }
