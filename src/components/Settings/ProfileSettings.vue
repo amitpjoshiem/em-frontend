@@ -1,17 +1,16 @@
 <template>
   <div v-if="isFetched" class="pl-24 pt-11">
     <div class="flex items-center">
-      <SwdAvatar size="large" />
-      <!-- <div class="relative bottom-[-14px] left-[-16px] cursor-pointer" @click="newAvatar">
-        <InlineSvg :src="IconEditAvatar" />
-      </div> -->
-
+      <SwdAvatar size="large" :link="user.avatar.url" />
       <el-upload
         class="avatar-uploader"
         action="https://wealtheze.com/api/v1/media"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
+        with-credentials
+        :headers="headers"
+        :data="{ collection: 'avatar' }"
       >
         <div class="relative bottom-[-14px] left-[-16px] cursor-pointer">
           <InlineSvg :src="IconEditAvatar" />
@@ -46,11 +45,13 @@
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
 import IconEditAvatar from '@/assets/svg/icon-edit-avatar.svg'
-
 import { useUserProfile } from '@/api/use-user-profile.js'
-
 import ChangePassword from '@/components/Settings/ChangePassword.vue'
 import ChangeName from '@/components/Settings/ChangeName.vue'
+import { tokenStorage } from '@/api/api-client/TokenStorage'
+import { computed } from 'vue'
+import { updateUserAvatar } from '@/api/vueQuery/update-user-avatar'
+import { useMutation, useQueryClient } from 'vue-query'
 
 export default {
   components: {
@@ -59,25 +60,23 @@ export default {
   },
   setup() {
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
+    const { mutateAsync: updateUser } = useMutation(updateUserAvatar)
+    const queryClient = useQueryClient()
 
-    const handleAvatarSuccess = (res, file) => {
-      console.log('res', res)
-      console.log('file', file)
-      // this.imageUrl = URL.createObjectURL(file.raw)
+    const handleAvatarSuccess = async (res) => {
+      const form = { uuids: [res.data.uuid] }
+      await updateUser({ form, id: user.value.id })
+      queryClient.invalidateQueries(['users'])
     }
 
-    const beforeAvatarUpload = (file) => {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('Avatar picture must be JPG format!')
-      }
-      if (!isLt2M) {
-        this.$message.error('Avatar picture size can not exceed 2MB!')
-      }
-      return isJPG && isLt2M
+    const beforeAvatarUpload = () => {
+      return true
     }
+
+    const headers = computed(() => {
+      const token = tokenStorage.getByKey('access_token')
+      return { Authorization: `Bearer ${token}` }
+    })
 
     return {
       IconPencil,
@@ -88,6 +87,7 @@ export default {
       isFetched,
       handleAvatarSuccess,
       beforeAvatarUpload,
+      headers,
     }
   },
 }

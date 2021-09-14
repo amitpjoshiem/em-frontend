@@ -1,6 +1,6 @@
 <template>
   <div :class="avatarClass">
-    <img :src="link" />
+    <img :src="link" class="h-full w-full object-cover rounded-[100px]" />
   </div>
 </template>
 <script>
@@ -42,3 +42,5 @@ export default {
   },
 }
 </script>
+
+height: 100%; object-fit: cover; margin: 0 auto; width: 100%;
