@@ -2,6 +2,22 @@
   <div v-if="isFetched" class="pl-24 pt-11">
     <div class="flex items-center">
       <SwdAvatar size="large" />
+      <!-- <div class="relative bottom-[-14px] left-[-16px] cursor-pointer" @click="newAvatar">
+        <InlineSvg :src="IconEditAvatar" />
+      </div> -->
+
+      <el-upload
+        class="avatar-uploader"
+        action="https://wealtheze.com/api/v1/media"
+        :show-file-list="false"
+        :on-success="handleAvatarSuccess"
+        :before-upload="beforeAvatarUpload"
+      >
+        <div class="relative bottom-[-14px] left-[-16px] cursor-pointer">
+          <InlineSvg :src="IconEditAvatar" />
+        </div>
+      </el-upload>
+
       <div class="text-main text-xl ml-12 font-medium">My profile</div>
     </div>
     <div class="pt-12">
@@ -29,6 +45,8 @@
 
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
+import IconEditAvatar from '@/assets/svg/icon-edit-avatar.svg'
+
 import { useUserProfile } from '@/api/use-user-profile.js'
 
 import ChangePassword from '@/components/Settings/ChangePassword.vue'
@@ -42,12 +60,34 @@ export default {
   setup() {
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
 
+    const handleAvatarSuccess = (res, file) => {
+      console.log('res', res)
+      console.log('file', file)
+      // this.imageUrl = URL.createObjectURL(file.raw)
+    }
+
+    const beforeAvatarUpload = (file) => {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('Avatar picture must be JPG format!')
+      }
+      if (!isLt2M) {
+        this.$message.error('Avatar picture size can not exceed 2MB!')
+      }
+      return isJPG && isLt2M
+    }
+
     return {
       IconPencil,
+      IconEditAvatar,
       user,
       isLoadingUserProfile,
       isErrorUserProfile,
       isFetched,
+      handleAvatarSuccess,
+      beforeAvatarUpload,
     }
   },
 }
