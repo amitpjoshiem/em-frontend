@@ -1,7 +1,7 @@
 <template>
   <el-upload
     ref="innerRef"
-    action="https://wealtheze.com/api/v1/media"
+    :action="getUrlMedia"
     :show-file-list="false"
     :on-success="($event) => $emit('upload-success', $event)"
     :before-upload="uploadBeforeHook"
@@ -17,7 +17,7 @@
 
 <script>
 import { tokenStorage } from '@/api/api-client/TokenStorage'
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, nextTick } from 'vue'
 
 export default {
   props: {
@@ -41,13 +41,23 @@ export default {
       return { Authorization: `Bearer ${token}` }
     })
 
+    const getUrlMedia = computed(() => {
+      // eslint-disable-next-line no-undef
+      return process.env.VUE_APP_API_MEDIA_URL
+    })
+
     onMounted(() => {
-      setTimeout(() => {
+      nextTick(() => {
         emit('upload-mounted', innerRef)
       })
     })
 
-    return { headers, uploadRefFn, innerRef }
+    return {
+      headers,
+      uploadRefFn,
+      innerRef,
+      getUrlMedia,
+    }
   },
 }
 </script>
