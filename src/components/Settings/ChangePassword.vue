@@ -23,24 +23,22 @@
           <Button default-blue-btn text-btn="Save" @click="savePass" />
         </div>
       </el-form>
-      <div v-else class="flex flex-col items-center">
-        <InlineSvg :src="IconSuccesChanged" />
-        <span class="my-5">The password was succesfully changed!</span>
-        <Button default-blue-btn text-btn="Save" @click="closeDialog" />
-      </div>
+      <SwdDialogSucces v-else text="The password was succesfully changed!" @closeDialog="closeDialog" />
     </template>
   </SwdDialog>
 </template>
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
-import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
+import SwdDialogSucces from '@/components/Global/SwdDialogSucces.vue'
 import { useChangePassword } from '@/api/authentication/use-change-password'
 import { ref, reactive, computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
   name: 'ChangePassword',
-
+  components: {
+    SwdDialogSucces,
+  },
   setup() {
     const store = useStore()
     const { response, error, fetching, changePassword } = useChangePassword()
@@ -117,7 +115,6 @@ export default {
       data,
       closeDialog,
       getDialogTitle,
-      IconSuccesChanged,
     }
   },
 }

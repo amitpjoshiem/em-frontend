@@ -17,17 +17,13 @@
           <Button default-blue-btn text-btn="Save" @click="saveName" />
         </div>
       </el-form>
-      <div v-else class="flex flex-col items-center">
-        <InlineSvg :src="IconSuccesChanged" />
-        <span class="my-5">The name was succesfully changed!</span>
-        <Button default-blue-btn text-btn="Save" @click="closeDialog" />
-      </div>
+      <SwdDialogSucces v-else text="The name was succesfully changed!" @closeDialog="closeDialog" />
     </template>
   </SwdDialog>
 </template>
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
-import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
+import SwdDialogSucces from '@/components/Global/SwdDialogSucces.vue'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
@@ -37,6 +33,9 @@ import { rules } from '@/validationRules/changeName.js'
 
 export default {
   name: 'ChangePassword',
+  components: {
+    SwdDialogSucces,
+  },
   setup() {
     const store = useStore()
     const queryClient = useQueryClient()
@@ -105,7 +104,6 @@ export default {
       form,
       rules,
       closeDialog,
-      IconSuccesChanged,
       getDialogTitle,
     }
   },
