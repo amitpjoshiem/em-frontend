@@ -38,4 +38,5 @@ export default {
 <style lang="css">
 @import '~element-plus/dist/index.css';
 @import '~element-plus/theme-chalk/display.css';
+@import '~cropperjs/dist/cropper.css';
 </style>
