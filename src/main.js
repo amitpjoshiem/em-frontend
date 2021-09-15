@@ -48,6 +48,7 @@ import {
   ElForm,
   ElFormItem,
   ElAutocomplete,
+  ElUpload,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -97,6 +98,7 @@ const components = [
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
+  ElUpload,
 ]
 
 components.forEach((component) => {
