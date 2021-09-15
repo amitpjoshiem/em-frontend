@@ -48,14 +48,15 @@
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
 import IconEditAvatar from '@/assets/svg/icon-edit-avatar.svg'
-import { useUserProfile } from '@/api/use-user-profile.js'
 import ChangePassword from '@/components/Settings/ChangePassword.vue'
 import ChangeName from '@/components/Settings/ChangeName.vue'
+import SwdCropper from '@/components/Global/SwdCropper.vue'
+
+import { useUserProfile } from '@/api/use-user-profile.js'
 import { tokenStorage } from '@/api/api-client/TokenStorage'
 import { computed, reactive, ref } from 'vue'
 import { updateUserAvatar } from '@/api/vueQuery/update-user-avatar'
 import { useMutation, useQueryClient } from 'vue-query'
-import SwdCropper from './SwdCropper.vue'
 
 export default {
   components: {
