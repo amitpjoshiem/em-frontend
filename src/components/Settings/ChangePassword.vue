@@ -6,7 +6,7 @@
       </div>
     </template>
     <template #contentDialog>
-      <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
+      <el-form v-if="data.isShowForm" ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
         <el-form-item label="Current password" prop="current_password">
           <el-input v-model="ruleForm.current_password" type="password" autocomplete="off" />
         </el-form-item>
@@ -23,19 +23,22 @@
           <Button default-blue-btn text-btn="Save" @click="savePass" />
         </div>
       </el-form>
+      <SwdDialogSucces v-else text="The password was succesfully changed!" @closeDialog="closeDialog" />
     </template>
   </SwdDialog>
 </template>
 <script>
 import IconPencil from '@/assets/svg/icon-pencil.svg'
+import SwdDialogSucces from '@/components/Global/SwdDialogSucces.vue'
 import { useChangePassword } from '@/api/authentication/use-change-password'
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'ChangePassword',
-
+  components: {
+    SwdDialogSucces,
+  },
   setup() {
     const store = useStore()
     const { response, error, fetching, changePassword } = useChangePassword()
@@ -47,25 +50,32 @@ export default {
     })
     const form = ref(null)
 
+    const data = reactive({
+      isShowForm: true,
+    })
+
     const savePass = async (e) => {
       e.preventDefault()
       changePassword(ruleForm)
         .then(() => {
-          useAlert({
-            title: 'Success',
-            type: 'success',
-            message: 'Password has been changed successfully.',
-          })
-
-          store.commit('globalComponents/setShowModal', {
-            destination: 'changePassword',
-            value: false,
-          })
+          data.isShowForm = false
         })
         .catch((error) => {
           console.log(error)
         })
     }
+
+    const closeDialog = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'changePassword',
+        value: false,
+      })
+    }
+
+    const getDialogTitle = computed(() => {
+      if (data.isShowForm) return 'Change name'
+      return 'Succes'
+    })
 
     const validateCheckPass = (rule, value, callback) => {
       if (value === '') {
@@ -102,6 +112,9 @@ export default {
       ruleForm,
       form,
       rules,
+      data,
+      closeDialog,
+      getDialogTitle,
     }
   },
 }

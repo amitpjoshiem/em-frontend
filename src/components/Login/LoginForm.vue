@@ -53,7 +53,7 @@ export default {
   setup() {
     const ruleForm = reactive({
       email: '',
-      pass: '',
+      password: '',
     })
     const form = ref(null)
 
