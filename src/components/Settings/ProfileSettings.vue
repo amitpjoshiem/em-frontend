@@ -3,23 +3,19 @@
     <div class="flex items-center">
       <SwdCropper :show-cropper="state.isShowCropper" :file="state.file.raw" @change="change" />
       <SwdAvatar size="large" :link="user.avatar.url" />
-      <el-upload
-        ref="upload"
-        class="avatar-uploader"
-        action="https://wealtheze.com/api/v1/media"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload"
-        with-credentials
-        :headers="headers"
-        :data="{ collection: 'avatar' }"
-        :on-change="handleChange"
-        :auto-upload="false"
+      <SwdUpload
+        :upload-data="{ collection: 'avatar' }"
+        :upload-before-hook="beforeAvatarUpload"
+        @upload-change="handleChange"
+        @upload-success="handleAvatarSuccess"
+        @upload-mounted="bindRef"
       >
-        <div class="relative bottom-[-14px] left-[-16px] cursor-pointer">
-          <InlineSvg :src="IconEditAvatar" />
-        </div>
-      </el-upload>
+        <template #main>
+          <div class="relative bottom-[-14px] left-[-16px] cursor-pointer">
+            <InlineSvg :src="IconEditAvatar" />
+          </div>
+        </template>
+      </SwdUpload>
       <div class="text-main text-xl ml-12 font-medium">My profile</div>
     </div>
     <div class="pt-12">
@@ -51,6 +47,7 @@ import IconEditAvatar from '@/assets/svg/icon-edit-avatar.svg'
 import ChangePassword from '@/components/Settings/ChangePassword.vue'
 import ChangeName from '@/components/Settings/ChangeName.vue'
 import SwdCropper from '@/components/Global/SwdCropper.vue'
+import SwdUpload from '@/components/Global/SwdUpload.vue'
 
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { tokenStorage } from '@/api/api-client/TokenStorage'
@@ -63,6 +60,7 @@ export default {
     ChangePassword,
     ChangeName,
     SwdCropper,
+    SwdUpload,
   },
   setup() {
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
@@ -75,6 +73,7 @@ export default {
       file: '',
       imgSrc: '',
       croppedFile: '',
+      uploadRef: null,
     })
 
     const handleAvatarSuccess = async (res) => {
@@ -103,6 +102,10 @@ export default {
       upload.value.submit()
     }
 
+    const bindRef = (ref) => {
+      upload.value = ref.value
+    }
+
     return {
       IconPencil,
       IconEditAvatar,
@@ -117,6 +120,8 @@ export default {
       handleChange,
       upload,
       change,
+      bindRef,
+      uploadRef: state.uploadRef,
     }
   },
 }
