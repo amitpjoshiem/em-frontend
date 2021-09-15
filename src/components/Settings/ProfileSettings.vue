@@ -1,8 +1,7 @@
 <template>
   <div v-if="isFetched" class="pl-24 pt-11">
     <div class="flex items-center">
-      <vue-cropper v-if="state.isShowCropper" ref="cropper" :src="state.imgSrc" :aspect-ratio="1 / 1" />
-      <el-button type="primary" @click="cropImage">Primary</el-button>
+      <SwdCropper :show-cropper="state.isShowCropper" :file="state.file.raw" @change="change" />
       <SwdAvatar size="large" :link="user.avatar.url" />
       <el-upload
         ref="upload"
@@ -13,7 +12,7 @@
         :before-upload="beforeAvatarUpload"
         with-credentials
         :headers="headers"
-        :data="{ collection: 'avatar', file: state.file }"
+        :data="{ collection: 'avatar' }"
         :on-change="handleChange"
         :auto-upload="false"
       >
@@ -56,37 +55,36 @@ import { tokenStorage } from '@/api/api-client/TokenStorage'
 import { computed, reactive, ref } from 'vue'
 import { updateUserAvatar } from '@/api/vueQuery/update-user-avatar'
 import { useMutation, useQueryClient } from 'vue-query'
-
-import VueCropper from 'vue-cropperjs'
+import SwdCropper from './SwdCropper.vue'
 
 export default {
   components: {
     ChangePassword,
     ChangeName,
-    VueCropper,
+    SwdCropper,
   },
   setup() {
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
     const { mutateAsync: updateUser } = useMutation(updateUserAvatar)
     const queryClient = useQueryClient()
+    const upload = ref(null)
 
     const state = reactive({
       isShowCropper: false,
       file: '',
       imgSrc: '',
+      croppedFile: '',
     })
-
-    const cropper = ref(null)
-    const upload = ref(null)
 
     const handleAvatarSuccess = async (res) => {
       const form = { uuids: [res.data.uuid] }
       await updateUser({ form, id: user.value.id })
+      state.isShowCropper = false
       queryClient.invalidateQueries(['users'])
     }
 
     const beforeAvatarUpload = () => {
-      return Promise.resolve(state.file)
+      return Promise.resolve(state.croppedFile)
     }
 
     const headers = computed(() => {
@@ -95,28 +93,13 @@ export default {
     })
 
     const handleChange = (file) => {
-      setImage(file.raw)
+      state.file = file
       state.isShowCropper = true
     }
 
-    const setImage = (file) => {
-      if (typeof FileReader === 'function') {
-        const reader = new FileReader()
-        reader.onload = (event) => {
-          state.imgSrc = event.target.result
-          cropper.value.replace(event.target.result)
-        }
-        reader.readAsDataURL(file)
-      } else {
-        alert('Sorry, FileReader API not supported')
-      }
-    }
-
-    const cropImage = () => {
-      cropper.value.getCroppedCanvas().toBlob((blob) => {
-        state.file = new File([blob], 'avatar.png')
-        upload.value.submit()
-      })
+    const change = (file) => {
+      state.croppedFile = file
+      upload.value.submit()
     }
 
     return {
@@ -131,10 +114,8 @@ export default {
       headers,
       state,
       handleChange,
-      setImage,
-      cropper,
-      cropImage,
       upload,
+      change,
     }
   },
 }
