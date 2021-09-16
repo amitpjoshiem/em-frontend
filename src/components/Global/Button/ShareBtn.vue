@@ -6,7 +6,7 @@
       </span>
     </template>
   </SwdDropDown>
-  <SwdShareDialog />
+  <SwdShareDialog :pdf-region="pdfRegion" />
 </template>
 
 <script>

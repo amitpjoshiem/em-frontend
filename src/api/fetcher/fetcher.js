@@ -2,9 +2,14 @@ import { config } from '@/api/config'
 import { apiClient } from '@/api/api-client/ApiClient'
 import { useAlert } from '@/utils/use-alert'
 
+function getBody(data, options) {
+  const contentType = options.headers['Content-Type']
+  return contentType === 'application/json' ? JSON.stringify(data) : data
+}
+
 export const fetcher = async ({ url, data, options }) => {
-  options = { ...options, ...config }
-  const body = JSON.stringify(data)
+  options = { ...config, ...options }
+  const body = getBody(data, options)
   try {
     const response = await apiClient.fetch(url, { ...options, body })
     if (!response.ok) {

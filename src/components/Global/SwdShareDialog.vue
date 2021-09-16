@@ -38,6 +38,11 @@ import { defineComponent, reactive, watchEffect, ref, computed, nextTick } from 
 import { useStore } from 'vuex'
 import { ElMessageBox } from 'element-plus'
 import Schema from 'async-validator'
+import { uploadMedia } from '@/api/vueQuery/upload-media'
+import { useMutation } from 'vue-query'
+
+import { jsPDF } from 'jspdf'
+import html2canvas from 'html2canvas'
 
 export default defineComponent({
   name: 'SwdShareDialog',
@@ -48,17 +53,27 @@ export default defineComponent({
       require: true,
       default: false,
     },
+    pdfRegion: {
+      type: String,
+      require: true,
+      default: '',
+    },
   },
-  setup() {
+
+  setup(props) {
     const dialogVisible = ref(false)
     const store = useStore()
     const saveTagInput = ref(null)
+    const doc = new jsPDF()
+
+    const { mutateAsync: upload, isLoading, isError, isFetching, data, error } = useMutation(uploadMedia)
 
     const state = reactive({
       dynamicTags: ['1', '2', '3', '4'],
       inputVisible: false,
       inputValue: '',
       emailIsNotValid: false,
+      file: '',
     })
 
     const handleClose = (done) => {
@@ -75,8 +90,15 @@ export default defineComponent({
       dialogVisible.value = statusModal.value
     })
 
-    const confirm = () => {
-      console.log('confirm')
+    const confirm = async () => {
+      await createPdf()
+
+      const formData = new FormData()
+
+      formData.append('file', state.file, state.file.name)
+      formData.append('collection', 'member_report')
+      const res = await upload(formData)
+      console.log('res - ', res)
     }
 
     const removeTag = (tag) => {
@@ -120,6 +142,29 @@ export default defineComponent({
         })
     }
 
+    const config = {
+      'blue-report': {
+        dataAttribute: 'blue-report',
+        jsDocOptions: [10, 40, 190, 130],
+        titleText: 'Blueprint report',
+      },
+      'client-report': {
+        dataAttribute: 'client-report',
+        jsDocOptions: [10, 40, 190, 80],
+        titleText: 'Client report',
+      },
+    }
+
+    const createPdf = async () => {
+      const elemRef = document.querySelector(`[data-pdf-region="${config[props.pdfRegion].dataAttribute}"]`)
+      return html2canvas(elemRef).then((canvas) => {
+        doc.text(config[props.pdfRegion].titleText, 90, 25)
+        doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', ...config[props.pdfRegion].jsDocOptions)
+        const pdfReport = doc.output('blob', 'report-email.pdf')
+        state.file = new File([pdfReport], 'report-email.pdf')
+      })
+    }
+
     return {
       state,
       dialogVisible,
@@ -129,6 +174,13 @@ export default defineComponent({
       handleInputConfirm,
       saveTagInput,
       removeTag,
+
+      upload,
+      isLoading,
+      isError,
+      isFetching,
+      data,
+      error,
     }
   },
 })
