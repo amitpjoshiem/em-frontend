@@ -128,3 +128,23 @@
   font-size: 13px;
   font-weight: normal;
 }
+
+
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag {
+  margin-left: 10px;
+  height: 28px;
+  line-height: 28px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 150px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+.el-button--small {
+  min-height: 28px;
+}

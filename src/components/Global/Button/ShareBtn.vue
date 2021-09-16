@@ -6,14 +6,21 @@
       </span>
     </template>
   </SwdDropDown>
+  <SwdShareDialog />
 </template>
 
 <script>
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
 import IconShare from '@/assets/svg/icon-share.svg'
+import { useStore } from 'vuex'
+import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
+
 export default {
   name: 'ShareBtn',
+  components: {
+    SwdShareDialog,
+  },
   props: {
     pdfRegion: {
       type: String,
@@ -23,6 +30,8 @@ export default {
   },
 
   setup(props) {
+    const store = useStore()
+
     const actionsOptions = [
       {
         title: 'Download as PDF',
@@ -59,7 +68,14 @@ export default {
 
     const actionsMap = {
       download: () => downloadPdf(),
-      share: () => console.log('share'),
+      share: () => share(),
+    }
+
+    const share = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'shareFileEmailDialog',
+        value: true,
+      })
     }
 
     const handleSelect = (command) => {

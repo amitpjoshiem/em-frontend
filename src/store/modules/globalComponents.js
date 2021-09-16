@@ -24,6 +24,7 @@ const state = () => ({
     showDialog: {
       changeName: false,
       changePassword: false,
+      shareFileEmailDialog: false,
     },
   },
 })
