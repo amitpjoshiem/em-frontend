@@ -42,7 +42,7 @@ import { uploadMedia } from '@/api/vueQuery/upload-media'
 import { sendReport } from '@/api/vueQuery/send-report'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
-
+import { pdfConfig } from '@/config/pdf-config'
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
 
@@ -180,24 +180,11 @@ export default defineComponent({
         })
     }
 
-    const config = {
-      'blue-report': {
-        dataAttribute: 'blue-report',
-        jsDocOptions: [10, 40, 190, 130],
-        titleText: 'Blueprint report',
-      },
-      'client-report': {
-        dataAttribute: 'client-report',
-        jsDocOptions: [10, 40, 190, 80],
-        titleText: 'Client report',
-      },
-    }
-
     const createPdf = async () => {
-      const elemRef = document.querySelector(`[data-pdf-region="${config[props.pdfRegion].dataAttribute}"]`)
+      const elemRef = document.querySelector(`[data-pdf-region="${pdfConfig[props.pdfRegion].dataAttribute}"]`)
       return html2canvas(elemRef).then((canvas) => {
-        doc.text(config[props.pdfRegion].titleText, 90, 25)
-        doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', ...config[props.pdfRegion].jsDocOptions)
+        doc.text(pdfConfig[props.pdfRegion].titleText, 90, 25)
+        doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', ...pdfConfig[props.pdfRegion].jsDocOptions)
         const pdfReport = doc.output('blob', 'report-email.pdf')
         state.file = new File([pdfReport], 'report-email.pdf')
       })
@@ -212,14 +199,12 @@ export default defineComponent({
       handleInputConfirm,
       saveTagInput,
       removeTag,
-
       upload,
       isLoading,
       isError,
       isFetching,
       data,
       error,
-
       sendReportError,
       sendReport,
     }

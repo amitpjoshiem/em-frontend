@@ -15,6 +15,7 @@ import html2canvas from 'html2canvas'
 import IconShare from '@/assets/svg/icon-share.svg'
 import { useStore } from 'vuex'
 import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
+import { pdfConfig } from '@/config/pdf-config'
 
 export default {
   name: 'ShareBtn',
@@ -43,25 +44,12 @@ export default {
       },
     ]
 
-    const config = {
-      'blue-report': {
-        dataAttribute: 'blue-report',
-        jsDocOptions: [10, 40, 190, 130],
-        titleText: 'Blueprint report',
-      },
-      'client-report': {
-        dataAttribute: 'client-report',
-        jsDocOptions: [10, 40, 190, 80],
-        titleText: 'Client report',
-      },
-    }
-
     const downloadPdf = () => {
-      const elemRef = document.querySelector(`[data-pdf-region="${config[props.pdfRegion].dataAttribute}"]`)
+      const elemRef = document.querySelector(`[data-pdf-region="${pdfConfig[props.pdfRegion].dataAttribute}"]`)
       html2canvas(elemRef).then((canvas) => {
         const doc = new jsPDF()
-        doc.text(config[props.pdfRegion].titleText, 90, 25)
-        doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', ...config[props.pdfRegion].jsDocOptions)
+        doc.text(pdfConfig[props.pdfRegion].titleText, 90, 25)
+        doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', ...pdfConfig[props.pdfRegion].jsDocOptions)
         doc.save('report')
       })
     }
