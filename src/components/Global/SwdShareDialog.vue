@@ -1,18 +1,27 @@
 <template>
-  <el-dialog v-model="dialogVisible" title="Share" :before-close="handleClose">
+  <el-dialog v-model="dialogVisible" title="Share Data To" :before-close="handleClose">
+    <div class="my-2 font-semibold text-main">E-mail</div>
     <div>
       <el-tag v-for="tag in state.dynamicTags" :key="tag" closable :disable-transitions="false" @close="removeTag(tag)">
         {{ tag }}
       </el-tag>
-      <el-input
+      <el-form-item
         v-if="state.inputVisible"
-        ref="saveTagInput"
-        v-model="state.inputValue"
-        class="input-new-tag"
-        size="mini"
-        @keyup.enter="handleInputConfirm"
-        @blur="handleInputConfirm"
-      />
+        class="inline-block"
+        :error="!!state.emailIsNotValid"
+        :show-message="state.emailIsNotValid"
+      >
+        <el-input
+          ref="saveTagInput"
+          v-model="state.inputValue"
+          class="input-new-tag w-32"
+          size="mini"
+          @keyup.enter="handleInputConfirm"
+          @blur="handleInputConfirm"
+        />
+        <div class="el-form-item__error ml-2.5">{{ state.emailIsNotValid ? 'Email is not valid' : '    ' }}</div>
+      </el-form-item>
+
       <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Add e-mail</el-button>
     </div>
     <template #footer>
@@ -28,6 +37,7 @@
 import { defineComponent, reactive, watchEffect, ref, computed, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import { ElMessageBox } from 'element-plus'
+import Schema from 'async-validator'
 
 export default defineComponent({
   name: 'SwdShareDialog',
@@ -45,9 +55,10 @@ export default defineComponent({
     const saveTagInput = ref(null)
 
     const state = reactive({
-      dynamicTags: [],
+      dynamicTags: ['1', '2', '3', '4'],
       inputVisible: false,
       inputValue: '',
+      emailIsNotValid: false,
     })
 
     const handleClose = (done) => {
@@ -78,14 +89,35 @@ export default defineComponent({
         saveTagInput.value.focus()
       })
     }
+    const descriptor = {
+      email: {
+        type: 'email',
+        required: true,
+      },
+    }
+
+    const validator = new Schema(descriptor)
 
     const handleInputConfirm = () => {
-      let inputValue = state.inputValue
-      if (inputValue) {
-        state.dynamicTags.push(inputValue)
+      if (!state.inputValue) {
+        state.inputVisible = false
+        state.inputValue = ''
+        return
       }
-      state.inputVisible = false
-      state.inputValue = ''
+      let inputValue = state.inputValue
+      const emailObj = { email: inputValue }
+
+      validator
+        .validate(emailObj)
+        .then(() => {
+          state.dynamicTags.push(inputValue)
+          state.inputVisible = false
+          state.inputValue = ''
+          state.emailIsNotValid = false
+        })
+        .catch(() => {
+          state.emailIsNotValid = true
+        })
     }
 
     return {
