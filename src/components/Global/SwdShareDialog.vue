@@ -128,7 +128,7 @@ export default defineComponent({
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Prospect update successfully',
+          message: 'E-mail has been sent successfully',
         })
       } else {
         useAlert({
