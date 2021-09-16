@@ -5,22 +5,22 @@
       <el-tag v-for="tag in state.dynamicTags" :key="tag" closable :disable-transitions="false" @close="removeTag(tag)">
         {{ tag }}
       </el-tag>
-      <el-form-item
-        v-if="state.inputVisible"
-        class="inline-block"
-        :error="!!state.emailIsNotValid"
-        :show-message="state.emailIsNotValid"
-      >
-        <el-input
-          ref="saveTagInput"
-          v-model="state.inputValue"
-          class="input-new-tag w-32"
-          size="mini"
-          @keyup.enter="handleInputConfirm"
-          @blur="handleInputConfirm"
-        />
-        <div class="el-form-item__error ml-2.5">{{ state.emailIsNotValid ? 'Email is not valid' : '    ' }}</div>
-      </el-form-item>
+      <el-form v-if="state.inputVisible" @submit.prevent="handleInputConfirm">
+        <el-form-item
+          class="inline-block"
+          :error="state.emailIsNotValid ? 'Email is not valid' : ''"
+          :show-message="state.emailIsNotValid"
+        >
+          <el-input
+            ref="saveTagInput"
+            v-model="state.inputValue"
+            class="input-new-tag w-32"
+            size="mini"
+            @keyup.enter="handleInputConfirm"
+            @blur="handleInputConfirm"
+          />
+        </el-form-item>
+      </el-form>
 
       <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Add e-mail</el-button>
     </div>
