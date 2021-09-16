@@ -16,6 +16,7 @@ export const fetcher = async ({ url, data, options }) => {
       const body = await response.json()
       throw new Error(body.message)
     }
+    if (response.status === 204) return { succes: true }
     return response.json()
   } catch (error) {
     useAlert({

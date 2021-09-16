@@ -39,7 +39,9 @@ import { useStore } from 'vuex'
 import { ElMessageBox } from 'element-plus'
 import Schema from 'async-validator'
 import { uploadMedia } from '@/api/vueQuery/upload-media'
+import { sendReport } from '@/api/vueQuery/send-report'
 import { useMutation } from 'vue-query'
+import { useAlert } from '@/utils/use-alert'
 
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
@@ -67,9 +69,10 @@ export default defineComponent({
     const doc = new jsPDF()
 
     const { mutateAsync: upload, isLoading, isError, isFetching, data, error } = useMutation(uploadMedia)
+    const { mutateAsync: sendReportEmail, error: sendReportError } = useMutation(sendReport)
 
     const state = reactive({
-      dynamicTags: ['1', '2', '3', '4'],
+      dynamicTags: [],
       inputVisible: false,
       inputValue: '',
       emailIsNotValid: false,
@@ -98,7 +101,42 @@ export default defineComponent({
       formData.append('file', state.file, state.file.name)
       formData.append('collection', 'member_report')
       const res = await upload(formData)
-      console.log('res - ', res)
+
+      if (!('error' in res)) {
+        const uuid = res.data.uuid
+        await confirmSendReport(uuid)
+      } else {
+        useAlert({
+          title: 'Error',
+          type: 'error',
+          message: res.error.message,
+        })
+      }
+    }
+
+    const confirmSendReport = async (uuid) => {
+      const data = {
+        uuids: [uuid],
+        emails: state.dynamicTags,
+      }
+      const resSendReport = await sendReportEmail(data)
+      if (!('error' in resSendReport)) {
+        store.commit('globalComponents/setShowModal', {
+          destination: 'shareFileEmailDialog',
+          value: false,
+        })
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Prospect update successfully',
+        })
+      } else {
+        useAlert({
+          title: 'Error',
+          type: 'error',
+          message: resSendReport.error.message,
+        })
+      }
     }
 
     const removeTag = (tag) => {
@@ -181,6 +219,9 @@ export default defineComponent({
       isFetching,
       data,
       error,
+
+      sendReportError,
+      sendReport,
     }
   },
 })
