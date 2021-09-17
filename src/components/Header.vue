@@ -29,7 +29,7 @@
       </div>
       <div class="border-l border-color-grey h-16" />
       <div class="flex items-center justify-center pl-5 cursor-pointer">
-        <SwdAvatar />
+        <SwdAvatar :link="user.avatar.url" />
         <UserAction />
       </div>
     </div>
@@ -42,6 +42,7 @@ import SwdRemoteSearch from '@/components/Global/SwdRemoteSearch.vue'
 import IconPlus from '@/assets/svg/icon-plus.svg'
 import { ElMessageBox } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
+import { useUserProfile } from '@/api/use-user-profile.js'
 
 export default {
   name: 'Header',
@@ -52,6 +53,8 @@ export default {
   setup() {
     const route = useRoute()
     const router = useRouter()
+
+    const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
 
     const newProspect = () => {
       if (
@@ -76,6 +79,10 @@ export default {
     return {
       IconPlus,
       newProspect,
+      isLoadingUserProfile,
+      isErrorUserProfile,
+      user,
+      isFetched,
     }
   },
 }
