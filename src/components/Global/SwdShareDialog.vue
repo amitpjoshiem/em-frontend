@@ -99,7 +99,7 @@ export default defineComponent({
     const handleClose = (done) => {
       ElMessageBox.confirm('Are you sure to close this dialog?')
         .then(() => {
-          done()
+          done(closeDialog())
         })
         .catch(() => {})
     }
