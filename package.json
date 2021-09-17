@@ -10,6 +10,7 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
+    "@element-plus/icons": "^0.0.11",
     "@j-t-mcc/vue3-chartjs": "1.1.4",
     "@tailwindcss/postcss7-compat": "^2.1.2",
     "autoprefixer": "^9",

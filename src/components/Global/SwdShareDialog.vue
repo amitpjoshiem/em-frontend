@@ -27,7 +27,12 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="confirm">Confirm</el-button>
+        <el-button type="primary" :disabled="loadingSendReport || isLoading" @click="confirm">
+          <el-icon v-if="loadingSendReport || isLoading" class="is-loading">
+            <loading />
+          </el-icon>
+          Confirm
+        </el-button>
       </span>
     </template>
   </el-dialog>
@@ -46,8 +51,14 @@ import { pdfConfig } from '@/config/pdf-config'
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
 
+import { Loading } from '@element-plus/icons'
+
 export default defineComponent({
   name: 'SwdShareDialog',
+
+  components: {
+    Loading,
+  },
 
   props: {
     showDialog: {
@@ -69,7 +80,11 @@ export default defineComponent({
     const doc = new jsPDF()
 
     const { mutateAsync: upload, isLoading, isError, isFetching, data, error } = useMutation(uploadMedia)
-    const { mutateAsync: sendReportEmail, error: sendReportError } = useMutation(sendReport)
+    const {
+      mutateAsync: sendReportEmail,
+      error: sendReportError,
+      isLoading: loadingSendReport,
+    } = useMutation(sendReport)
 
     const state = reactive({
       dynamicTags: [],
@@ -207,6 +222,7 @@ export default defineComponent({
       error,
       sendReportError,
       sendReport,
+      loadingSendReport,
     }
   },
 })
