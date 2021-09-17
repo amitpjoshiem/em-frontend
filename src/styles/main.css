@@ -144,3 +144,10 @@
   width: 90px;
   vertical-align: bottom;
 }
+
+.el-icon {
+  font-size: 12px;
+}
+.el-dialog__body{
+  min-height: 200px;
+}

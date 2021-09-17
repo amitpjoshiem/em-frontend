@@ -50,6 +50,7 @@ import {
   ElAutocomplete,
   ElUpload,
   ElTag,
+  ElIcon,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -101,6 +102,7 @@ const components = [
   ElDropdownItem,
   ElUpload,
   ElTag,
+  ElIcon,
 ]
 
 components.forEach((component) => {

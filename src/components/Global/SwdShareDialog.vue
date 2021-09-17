@@ -1,7 +1,7 @@
 <template>
   <el-dialog v-model="dialogVisible" title="Share Data To" :before-close="handleClose">
-    <div class="my-2 font-semibold text-main">E-mail</div>
-    <div>
+    <div v-if="state.isShowForm">
+      <div class="my-2 font-semibold text-main">E-mail</div>
       <el-tag v-for="tag in state.dynamicTags" :key="tag" closable :disable-transitions="false" @close="removeTag(tag)">
         {{ tag }}
       </el-tag>
@@ -21,13 +21,18 @@
           />
         </el-form-item>
       </el-form>
-
       <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Add e-mail</el-button>
     </div>
+    <SwdDialogSucces v-else text="E-mail has been sent successfully" @closeDialog="closeDialog" />
     <template #footer>
-      <span class="dialog-footer">
+      <span v-if="state.isShowForm" class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="confirm">Confirm</el-button>
+        <el-button type="primary" :disabled="confirmBtnDisabled" @click="confirm">
+          <el-icon v-if="loadingSendReport || isLoading" class="is-loading">
+            <loading />
+          </el-icon>
+          Confirm
+        </el-button>
       </span>
     </template>
   </el-dialog>
@@ -45,9 +50,16 @@ import { useAlert } from '@/utils/use-alert'
 import { pdfConfig } from '@/config/pdf-config'
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
+import SwdDialogSucces from '@/components/Global/SwdDialogSucces.vue'
+import { Loading } from '@element-plus/icons'
 
 export default defineComponent({
   name: 'SwdShareDialog',
+
+  components: {
+    Loading,
+    SwdDialogSucces,
+  },
 
   props: {
     showDialog: {
@@ -69,7 +81,11 @@ export default defineComponent({
     const doc = new jsPDF()
 
     const { mutateAsync: upload, isLoading, isError, isFetching, data, error } = useMutation(uploadMedia)
-    const { mutateAsync: sendReportEmail, error: sendReportError } = useMutation(sendReport)
+    const {
+      mutateAsync: sendReportEmail,
+      error: sendReportError,
+      isLoading: loadingSendReport,
+    } = useMutation(sendReport)
 
     const state = reactive({
       dynamicTags: [],
@@ -77,17 +93,22 @@ export default defineComponent({
       inputValue: '',
       emailIsNotValid: false,
       file: '',
+      isShowForm: true,
     })
 
     const handleClose = (done) => {
       ElMessageBox.confirm('Are you sure to close this dialog?')
         .then(() => {
-          done()
+          done(closeDialog())
         })
         .catch(() => {})
     }
 
     const statusModal = computed(() => store.state.globalComponents.dialog.showDialog.shareFileEmailDialog)
+
+    const confirmBtnDisabled = computed(() => {
+      return loadingSendReport.value || isLoading.value || !state.dynamicTags.length
+    })
 
     watchEffect(() => {
       dialogVisible.value = statusModal.value
@@ -121,15 +142,7 @@ export default defineComponent({
       }
       const resSendReport = await sendReportEmail(data)
       if (!('error' in resSendReport)) {
-        store.commit('globalComponents/setShowModal', {
-          destination: 'shareFileEmailDialog',
-          value: false,
-        })
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Prospect update successfully',
-        })
+        state.isShowForm = false
       } else {
         useAlert({
           title: 'Error',
@@ -137,6 +150,13 @@ export default defineComponent({
           message: resSendReport.error.message,
         })
       }
+    }
+
+    const closeDialog = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'shareFileEmailDialog',
+        value: false,
+      })
     }
 
     const removeTag = (tag) => {
@@ -207,6 +227,9 @@ export default defineComponent({
       error,
       sendReportError,
       sendReport,
+      loadingSendReport,
+      closeDialog,
+      confirmBtnDisabled,
     }
   },
 })

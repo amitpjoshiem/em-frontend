@@ -29,7 +29,9 @@
       </div>
       <div class="border-l border-color-grey h-16" />
       <div class="flex items-center justify-center pl-5 cursor-pointer">
-        <SwdAvatar :link="user.avatar.url" />
+        <router-link :to="{ name: 'profile' }">
+          <SwdAvatar v-if="!isLoadingUserProfile" :link="user.avatar.url" />
+        </router-link>
         <UserAction />
       </div>
     </div>

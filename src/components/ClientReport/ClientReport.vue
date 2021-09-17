@@ -8,8 +8,8 @@
       </div>
 
       <div class="w-6/12 text-center">
-        <span class="text-title text-color-link font-semibold" v-html="getNameTitle"> </span>
-        <span class="text-title text-main font-semibold">Client report</span>
+        <span class="text-title text-color-link font-semibold">{{ member.name }}</span>
+        <span class="text-title text-main font-semibold"> Client report</span>
       </div>
 
       <div class="flex items-center w-4/12">
@@ -37,7 +37,7 @@
 <script>
 import { useClientReport } from '@/api/use-client-report.js'
 import { useRoute } from 'vue-router'
-import { computed, reactive, toRefs } from 'vue'
+import { reactive, toRefs } from 'vue'
 import CurrentYear from '@/components/ClientReport/CurrentYear.vue'
 import SinceInception from '@/components/ClientReport/SinceInception.vue'
 import TotalInfo from '@/components/ClientReport/TotalInfo.vue'
@@ -59,19 +59,11 @@ export default {
 
     const { isLoading, isError, data: member, spouse } = useClientReport(id)
 
-    const getNameTitle = computed(() => {
-      if (member.value.married) {
-        return member.value.name + ' &amp; ' + spouse.value.name
-      }
-      return member.value.name
-    })
-
     return {
       isLoading,
       isError,
       member,
       spouse,
-      getNameTitle,
       ...toRefs(state),
     }
   },
