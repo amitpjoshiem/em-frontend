@@ -1,7 +1,10 @@
 <template>
   <div class="bg-widget-bg rounded-lg px-5 mb-5">
     <div class="flex w-full pt-7">
-      <router-link :to="{ name: 'basic-information' }" class="w-1/5 text-center text-xs font-medium text-main">
+      <router-link
+        :to="{ name: 'basic-information', params: { id: memberId } }"
+        class="w-1/5 text-center text-xs font-medium text-main"
+      >
         1. Basic
       </router-link>
       <router-link
@@ -15,7 +18,7 @@
         2. Assets &amp; Income
       </router-link>
       <router-link
-        :to="{ name: 'assetsacount' }"
+        :to="{ name: 'assetsacount', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 3,
@@ -25,7 +28,7 @@
         3. Assets Accounts
       </router-link>
       <router-link
-        :to="{ name: 'assetsconsolidations' }"
+        :to="{ name: 'assetsconsolidations', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 4,
@@ -103,15 +106,23 @@
 <script>
 import { useStore } from 'vuex'
 import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'NewProspectSteps',
   setup() {
     const store = useStore()
+    const route = useRoute()
     const step = computed(() => store.state.newProspect.step)
+
+    const memberId = computed(() => {
+      if (route.params.id) return route.params.id
+      return ''
+    })
 
     return {
       step,
+      memberId,
     }
   },
 }
