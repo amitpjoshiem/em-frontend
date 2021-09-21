@@ -104,6 +104,13 @@ const routes = [
       },
 
       {
+        path: 'asset-allocation-details/:id',
+        name: 'asset-allocation-details',
+        component: () =>
+          import(/* webpackChunkName: "MemberDetails" */ '../components/AssetAllocation/AssetAllocationDetails.vue'),
+      },
+
+      {
         path: 'member-basic-information/:id',
         name: 'member-basic-information',
         component: () =>
