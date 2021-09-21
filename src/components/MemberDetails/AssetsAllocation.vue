@@ -1,7 +1,12 @@
 <template>
   <div class="border border-color-grey box-border flex w-16/24 rounded-md">
     <div class="border-r border-color-grey p-5 w-8/12">
-      <span class="text-main text-smm font-semibold">Asset Allocation</span>
+      <router-link
+        :to="{ name: 'asset-allocation-details', params: { id: memberId } }"
+        class="text-main text-smm font-semibold cursor-pointer"
+      >
+        <span class="text-main text-smm font-semibold">Asset Allocation</span>
+      </router-link>
       <div class="flex pt-3">
         <AssetsChart />
         <div class="flex ml-4">
@@ -49,6 +54,8 @@ import AssetsChart from '@/components/MemberDetails/Chart/AssetsChart.vue'
 import RiskLevelChart from '@/components/MemberDetails/Chart/RiskLevelChart.vue'
 import IconAction from '@/assets/svg/icon-action.svg'
 import { currencyFormat } from '@/utils/currencyFormat'
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
 export default {
   name: 'AssetsAllocation',
@@ -57,6 +64,8 @@ export default {
     RiskLevelChart,
   },
   setup() {
+    const route = useRoute()
+
     const actionsOptions = [
       {
         title: 'Item 1',
@@ -71,10 +80,17 @@ export default {
         command: 'item3',
       },
     ]
+
+    const memberId = computed(() => {
+      if (route.params.id) return route.params.id
+      return ''
+    })
+
     return {
       actionsOptions,
       currencyFormat,
       IconAction,
+      memberId,
     }
   },
 }

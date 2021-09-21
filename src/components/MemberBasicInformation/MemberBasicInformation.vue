@@ -1,7 +1,6 @@
 <template>
   <SubHeader class="p-5" :title="getTitle" back-page="member-details" />
   <el-skeleton v-if="isLoading" :rows="11" animated class="p-5" />
-
   <div v-else class="p-5">
     <div>
       <div class="flex items-center">
