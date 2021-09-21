@@ -20,16 +20,17 @@ const allAvailibleOptions = {
   2: { title: 'Blueprint Report', command: 'blueprint-report' },
   3: { title: 'Client Report', command: 'client-report' },
   4: { title: 'Onboarding', command: 'onboarding' },
+  5: { title: 'Assets Accounts', command: 'assets-accounts' },
 }
 
 const optionsPerStepAndType = {
   client: [1, 3],
-  'prospect@step-0': [4],
-  'prospect@step-1': [1, 4],
-  'prospect@step-2': [1, 4],
-  'prospect@step-3': [1, 4],
-  'prospect@step-4': [1, 4],
-  'prospect@step-5': [1, 4],
+  'prospect@step-0': [4, 5],
+  'prospect@step-1': [1, 4, 5],
+  'prospect@step-2': [1, 4, 5],
+  'prospect@step-3': [1, 4, 5],
+  'prospect@step-4': [1, 4, 5],
+  'prospect@step-5': [1, 4, 5],
   onboarding: [4],
 }
 
@@ -111,6 +112,7 @@ export default {
           name: routerForStep(props.user.step),
           params: { id: props.user.id, step: props.user.step },
         }),
+      'assets-accounts': () => router.push({ name: 'asset-accounts', params: { id: props.user.id } }),
     }
 
     return {

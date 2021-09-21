@@ -107,6 +107,19 @@ const routes = [
         path: 'asset-allocation-details/:id',
         name: 'asset-allocation-details',
         component: () =>
+          import(/* webpackChunkName: "Asset Allocation" */ '../components/AssetAllocation/AssetAllocationDetails.vue'),
+      },
+
+      {
+        path: 'asset-accounts/:id',
+        name: 'asset-accounts',
+        component: () =>
+          import(/* webpackChunkName: "Asset Accounts" */ '../components/AssetAccounts/AssetAccounts.vue'),
+      },
+      {
+        path: 'asset-allocation-details/:id',
+        name: 'asset-allocation-details',
+        component: () =>
           import(/* webpackChunkName: "MemberDetails" */ '../components/AssetAllocation/AssetAllocationDetails.vue'),
       },
 
