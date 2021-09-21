@@ -24,7 +24,7 @@ const allAvailibleOptions = {
 }
 
 const optionsPerStepAndType = {
-  client: [1, 3],
+  client: [1, 3, 5],
   'prospect@step-0': [4, 5],
   'prospect@step-1': [1, 4, 5],
   'prospect@step-2': [1, 4, 5],

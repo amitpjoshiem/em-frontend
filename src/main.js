@@ -51,6 +51,10 @@ import {
   ElUpload,
   ElTag,
   ElIcon,
+  ElCollapse,
+  ElCollapseItem,
+  ElTable,
+  ElTableColumn,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -103,6 +107,10 @@ const components = [
   ElUpload,
   ElTag,
   ElIcon,
+  ElCollapse,
+  ElCollapseItem,
+  ElTable,
+  ElTableColumn,
 ]
 
 components.forEach((component) => {

@@ -1,9 +1,81 @@
 <template>
-  <div>AssetAccounts</div>
+  <div v-if="!isLoadingisErrorLoadingYodleeStatus && !isLoadingisErrorLoadingYodleeProviders" class="p-5">
+    <SubHeader title="Asset Accounts" back-page="member-details" />
+    <div class="border border-color-grey box-border p-5 rounded-md">
+      <div class="text-main font-semibold text-smm">Status</div>
+      <el-steps v-if="showStatusBar" :active="2" finish-status="success" align-center>
+        <el-step title="Link sent"></el-step>
+        <el-step title="Link used"></el-step>
+        <el-step title="Yodlee created"></el-step>
+      </el-steps>
+      <Button v-else class="w-3/12 mt-5" text-btn="Link an account" witch-icon icon-type="lock" default-link-btn />
+    </div>
+
+    <div class="border border-color-grey box-border p-5 rounded-md mt-5">
+      <div class="text-main font-semibold text-smm mb-5">Providers</div>
+      <el-collapse accordion>
+        <el-collapse-item v-for="(item, index) in yodleeProviders.data" :key="index" :title="item.name">
+          <template v-if="item.accounts">
+            <el-table :data="item.accounts" style="width: 100%">
+              <el-table-column prop="name" label="Name" width="300" />
+              <el-table-column prop="status" label="status" />
+              <el-table-column prop="type" label="type" />
+              <el-table-column prop="container" label="container" />
+              <el-table-column prop="balance" label="balance" />
+            </el-table>
+          </template>
+        </el-collapse-item>
+      </el-collapse>
+    </div>
+  </div>
+  <div v-else>Loading...</div>
 </template>
 <script>
+import { useYodleeStatus } from '@/api/use-yodlee-status.js'
+import { useYodleeProviders } from '@/api/use-yodlee-providers.js'
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+
 export default {
   name: 'AssetAccounts',
-  setup() {},
+  setup() {
+    const route = useRoute()
+
+    const memberId = route.params.id
+
+    const {
+      isLoading: isLoadingisErrorLoadingYodleeStatus,
+      isErrorLoadingYodleeStatus,
+      data: yodleeStatus,
+    } = useYodleeStatus(memberId)
+
+    const {
+      isLoading: isLoadingisErrorLoadingYodleeProviders,
+      isErrorLoadingYodleeProviders,
+      data: yodleeProviders,
+    } = useYodleeProviders(memberId)
+
+    const showStatusBar = computed(() => {
+      return (
+        yodleeStatus.value.data.yodlee_created || yodleeStatus.value.data.link_sent || yodleeStatus.value.data.link_used
+      )
+    })
+
+    return {
+      yodleeStatus,
+      isErrorLoadingYodleeStatus,
+      isLoadingisErrorLoadingYodleeStatus,
+      isLoadingisErrorLoadingYodleeProviders,
+      isErrorLoadingYodleeProviders,
+      yodleeProviders,
+      showStatusBar,
+    }
+  },
 }
 </script>
+
+<style>
+.el-step__title {
+  font-size: 14px;
+}
+</style>
