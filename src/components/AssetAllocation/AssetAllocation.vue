@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div class="w-9/12 rounded-l-md border-color-grey border pt-6 pb-6 pr-5">
-      <div class="pl-5">Asset Allocation</div>
+      <div class="pl-5 text-main font-semibold text-smm mb-2">Asset Allocation</div>
       <div class="flex">
         <div class="w-4/12 flex justify-center items-center">
           <ChartAssetAllocation />
