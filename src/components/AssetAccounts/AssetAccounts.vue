@@ -1,6 +1,6 @@
 <template>
   <SubHeader title="Asset Accounts" back-page="member-details" class="p-5" />
-  <div v-if="!isLoadingisErrorLoadingYodleeStatus && !isLoadingisErrorLoadingYodleeProviders" class="p-5">
+  <div v-if="!isLoadingYodleeStatus && !isLoadingYodleeProviders" class="p-5">
     <div class="border border-color-grey box-border p-5 rounded-md">
       <div class="text-main font-semibold text-smm">Status</div>
       <el-steps v-if="haveYodleeAcc" :active="activeStep" finish-status="success" align-center>
@@ -53,13 +53,13 @@ export default {
     const memberId = route.params.id
 
     const {
-      isLoading: isLoadingisErrorLoadingYodleeStatus,
+      isLoading: isLoadingYodleeStatus,
       error: isErrorLoadingYodleeStatus,
       data: yodleeStatus,
     } = useYodleeStatus(memberId)
 
     const {
-      isLoading: isLoadingisErrorLoadingYodleeProviders,
+      isLoading: isLoadingYodleeProviders,
       error: isErrorLoadingYodleeProviders,
       data: yodleeProviders,
     } = useYodleeProviders(memberId)
@@ -93,8 +93,8 @@ export default {
     return {
       yodleeStatus,
       isErrorLoadingYodleeStatus,
-      isLoadingisErrorLoadingYodleeStatus,
-      isLoadingisErrorLoadingYodleeProviders,
+      isLoadingYodleeStatus,
+      isLoadingYodleeProviders,
       isErrorLoadingYodleeProviders,
       yodleeProviders,
       haveYodleeAcc,
@@ -107,9 +107,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.el-step__title {
-  font-size: 14px;
-}
-</style>
