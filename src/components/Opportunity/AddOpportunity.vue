@@ -17,7 +17,7 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="close_date" label="Close date" class="w-3/12">
-            <el-date-picker v-model="ruleForm.close_date" type="date" placeholder="Pick a date" />
+            <SwdDatePicker v-model="ruleForm.close_date" />
           </el-form-item>
         </div>
         <div class="flex">
