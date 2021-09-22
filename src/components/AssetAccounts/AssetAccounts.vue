@@ -3,10 +3,11 @@
   <div v-if="!isLoadingisErrorLoadingYodleeStatus && !isLoadingisErrorLoadingYodleeProviders" class="p-5">
     <div class="border border-color-grey box-border p-5 rounded-md">
       <div class="text-main font-semibold text-smm">Status</div>
-      <el-steps v-if="haveYodleeAcc" :active="2" finish-status="success" align-center>
+      <el-steps v-if="haveYodleeAcc" :active="activeStep" finish-status="success" align-center>
+        <el-step title="Yodlee created" />
         <el-step title="Link sent" />
         <el-step title="Link used" />
-        <el-step title="Yodlee created" />
+        <el-step title="Provider count" />
       </el-steps>
       <Button
         v-else
@@ -15,7 +16,7 @@
         witch-icon
         icon-type="lock"
         default-link-btn
-        @click="linkYodleeAcc"
+        @click="sendLinkYodlee"
       />
     </div>
 
@@ -41,10 +42,7 @@
 <script>
 import { useYodleeStatus } from '@/api/use-yodlee-status.js'
 import { useYodleeProviders } from '@/api/use-yodlee-providers.js'
-import { createYodleeAcc } from '@/api/vueQuery/create-yodlee-acc'
-import { useMutation } from 'vue-query'
-import { useAlert } from '@/utils/use-alert'
-import { useQueryClient } from 'vue-query'
+import { useFetchYodleeSendLink } from '@/api/use-fetch-yodlee-send-link.js'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
@@ -52,47 +50,44 @@ export default {
   name: 'AssetAccounts',
   setup() {
     const route = useRoute()
-    const queryClient = useQueryClient()
     const memberId = route.params.id
 
     const {
       isLoading: isLoadingisErrorLoadingYodleeStatus,
-      isErrorLoadingYodleeStatus,
+      error: isErrorLoadingYodleeStatus,
       data: yodleeStatus,
     } = useYodleeStatus(memberId)
 
     const {
       isLoading: isLoadingisErrorLoadingYodleeProviders,
-      isErrorLoadingYodleeProviders,
+      error: isErrorLoadingYodleeProviders,
       data: yodleeProviders,
     } = useYodleeProviders(memberId)
 
-    const {
-      mutateAsync: createYodlee,
-      isLoading,
-      isError,
-      isFetching,
-      data,
-      error,
-      refetch,
-    } = useMutation(createYodleeAcc)
+    const { response: sendLinkStatus, fetching: fetchingSendLink, sendLink } = useFetchYodleeSendLink(route.params.id)
 
     const haveYodleeAcc = computed(() => {
-      return (
-        yodleeStatus.value.data.yodlee_created || yodleeStatus.value.data.link_sent || yodleeStatus.value.data.link_used
-      )
+      return yodleeStatus.value.data.yodlee_created
     })
 
-    const linkYodleeAcc = async () => {
-      const res = await createYodlee(memberId)
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Link send email',
-        })
-        queryClient.invalidateQueries(['yodlee/status'])
+    const activeStep = computed(() => {
+      const status = yodleeStatus.value.data
+      switch (true) {
+        case status.yodlee_created === 'false':
+          return 1
+        case status.link_sent === 'false':
+          return 2
+        case status.link_used === 'false':
+          return 3
+        case !!status.provider_count.length === 'false':
+          return 4
+        default:
+          return 1
       }
+    })
+
+    const sendLinkYodlee = async () => {
+      await sendLink()
     }
 
     return {
@@ -103,15 +98,11 @@ export default {
       isErrorLoadingYodleeProviders,
       yodleeProviders,
       haveYodleeAcc,
-      linkYodleeAcc,
-
-      isLoading,
-      isError,
-      isFetching,
-      data,
-      error,
-      refetch,
-      createYodlee,
+      sendLinkYodlee,
+      activeStep,
+      sendLinkStatus,
+      fetchingSendLink,
+      sendLink,
     }
   },
 }
