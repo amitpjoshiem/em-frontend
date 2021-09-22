@@ -1,12 +1,12 @@
 <template>
+  <SubHeader title="Asset Accounts" back-page="member-details" class="p-5" />
   <div v-if="!isLoadingisErrorLoadingYodleeStatus && !isLoadingisErrorLoadingYodleeProviders" class="p-5">
-    <SubHeader title="Asset Accounts" back-page="member-details" />
     <div class="border border-color-grey box-border p-5 rounded-md">
       <div class="text-main font-semibold text-smm">Status</div>
       <el-steps v-if="showStatusBar" :active="2" finish-status="success" align-center>
-        <el-step title="Link sent"></el-step>
-        <el-step title="Link used"></el-step>
-        <el-step title="Yodlee created"></el-step>
+        <el-step title="Link sent" />
+        <el-step title="Link used" />
+        <el-step title="Yodlee created" />
       </el-steps>
       <Button v-else class="w-3/12 mt-5" text-btn="Link an account" witch-icon icon-type="lock" default-link-btn />
     </div>
@@ -28,7 +28,7 @@
       </el-collapse>
     </div>
   </div>
-  <div v-else>Loading...</div>
+  <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
 <script>
 import { useYodleeStatus } from '@/api/use-yodlee-status.js'
