@@ -8,7 +8,7 @@
         1. Basic
       </router-link>
       <router-link
-        :to="{ name: 'assets-information' }"
+        :to="{ name: 'assets-information', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 2,
@@ -38,7 +38,7 @@
         4. Assets Consolidations
       </router-link>
       <router-link
-        :to="{ name: 'stresstest' }"
+        :to="{ name: 'stresstest', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
           'text-title-gray': step < 5,

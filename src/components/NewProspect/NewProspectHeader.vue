@@ -60,7 +60,7 @@ export default {
         case 4:
           return 'Assets Consolidations'
         case 5:
-          return 'Stress Test Results'
+          return 'Stress Test'
         default:
           return 'Header title'
       }
