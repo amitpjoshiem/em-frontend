@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div class="border box-border color-light-gray rounded-lg"></div>
     <TableAssetsConsolidations />
     <div class="flex justify-end my-6">
       <div class="pr-3">
@@ -14,7 +13,7 @@
   </div>
 </template>
 <script>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { scrollTop } from '@/utils/scrollTop'
@@ -28,6 +27,7 @@ export default {
   },
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const store = useStore()
 
     onMounted(() => {
@@ -39,12 +39,12 @@ export default {
 
     const saveStep = () => {
       store.commit('newProspect/setStep', step.value + 1)
-      router.push({ name: 'stresstest' })
+      router.push({ name: 'stresstest', params: { id: route.params.id } })
     }
 
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - 1)
-      router.push({ name: 'assetsacount' })
+      router.push({ name: 'assetsacount', params: { id: route.params.id } })
     }
 
     return {

@@ -209,7 +209,7 @@ import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import HoldingsChart from '@/components/NewProspect/Chart/HoldingsChart.vue'
 import RecommendationChart from '@/components/NewProspect/Chart/RecommendationChart.vue'
 import { computed } from 'vue'
@@ -224,6 +224,7 @@ export default {
   setup() {
     const store = useStore()
     const router = useRouter()
+    const route = useRoute()
 
     onMounted(() => {
       store.commit('newProspect/setStep', 5)
@@ -233,12 +234,12 @@ export default {
     const step = computed(() => store.state.newProspect.step)
 
     const saveStep = () => {
-      router.push({ name: 'bluereport' })
+      router.push({ name: 'bluereport', params: { id: route.params.id } })
     }
 
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - 1)
-      router.push({ name: 'assetsconsolidations' })
+      router.push({ name: 'assetsconsolidations', params: { id: route.params.id } })
     }
 
     return {
