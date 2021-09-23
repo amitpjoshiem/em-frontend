@@ -6,12 +6,11 @@ class FetchTransport {
   async fetch(url, options) {
     const absoluteUrl = new URL(this.baseUrl + url)
     if (options?.searchParams) {
-      Object.keys(options.searchParams).forEach((key) =>
-        absoluteUrl.searchParams.append(key, options.searchParams[key])
-      )
+      Object.keys(options.searchParams).forEach((key) => {
+        if (options.searchParams[key] !== undefined) absoluteUrl.searchParams.append(key, options.searchParams[key])
+      })
     }
     const response = await fetch(absoluteUrl, options)
-
     return response
   }
 }
