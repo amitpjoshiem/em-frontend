@@ -93,10 +93,10 @@ export default {
           })
           break
         case 5:
-          router.push({ name: 'stresstest' })
+          router.push({ name: 'stresstest', params: { id: route.params.id ? route.params.id : '' } })
           break
         case 6:
-          router.push({ name: 'bluereport' })
+          router.push({ name: 'bluereport', params: { id: route.params.id ? route.params.id : '' } })
           break
         default:
           router.push({ name: 'dashboard' })
