@@ -34,7 +34,7 @@
       </div>
 
       <div v-if="!isLoading">
-        <template v-if="data.lenght">
+        <template v-if="!isEmptyObject(data)">
           <OpportunityItem
             v-for="(user, index) in data"
             :key="index"
@@ -61,6 +61,7 @@ import { useRoute } from 'vue-router'
 import OpportunityItem from '@/components/MemberDetails/OpportunityItem.vue'
 import { useOpportunityList } from '@/api/use-opportunity-list.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
+import { isEmptyObject } from '@/utils/use-empty-object'
 
 export default {
   name: 'OpportunityTable',
@@ -90,6 +91,7 @@ export default {
       isLoadingUserProfile,
       isErrorUserProfile,
       userProfile,
+      isEmptyObject,
     }
   },
 }
