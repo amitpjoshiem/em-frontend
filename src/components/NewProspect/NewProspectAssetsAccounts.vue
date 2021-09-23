@@ -65,7 +65,7 @@ export default {
 
     const saveStep = () => {
       store.commit('newProspect/setStep', step.value + 1)
-      router.push({ name: 'assetsconsolidations' })
+      router.push({ name: 'assetsconsolidations', params: { id: route.params.id } })
     }
 
     const backStep = () => {
