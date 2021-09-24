@@ -19,20 +19,16 @@ export default {
     const router = useRouter()
     const actionsOptions = [
       {
-        title: 'Profile settings',
-        command: 'profile-settings',
+        title: 'Profile',
+        command: 'profile',
       },
       {
-        title: 'Notifications settings',
-        command: 'notifications-settings',
+        title: 'Settings',
+        command: 'settings',
       },
       {
-        title: 'Integrations',
-        command: 'integrations',
-      },
-      {
-        title: 'Information',
-        command: 'information',
+        title: 'Last Activity',
+        command: 'activity',
       },
       {
         title: 'Logout',
@@ -48,10 +44,9 @@ export default {
 
     const actionsMap = {
       logout: () => router.push({ name: 'logout' }),
-      'profile-settings': () => router.push({ name: 'profile' }),
-      'notifications-settings': () => router.push({ name: 'notifications' }),
-      integrations: () => console.log('integrations'),
-      information: () => router.push({ name: 'information' }),
+      profile: () => router.push({ name: 'profile' }),
+      activity: () => router.push({ name: 'last-activity' }),
+      settings: () => router.push({ name: 'settings' }),
     }
 
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user } = useUserProfile()

@@ -1,13 +1,10 @@
 <template>
-  <div v-if="!fetching" class="pl-24 pt-14 text-main w-10/12">
-    <div class="flex py-5">
-      <div class="w-10/12 text-xss text-main font-medium">Connect salesforce account</div>
-      <div class="w-2/12 flex justify-between">
-        <el-switch v-model="value" :loading="loading" :before-change="beforeChange" />
-      </div>
+  <div class="flex py-5">
+    <div class="w-10/12 text-xss text-main font-medium">Connect salesforce account</div>
+    <div class="w-2/12 flex justify-between">
+      <el-switch v-model="value" :loading="loading" :before-change="beforeChange" />
     </div>
   </div>
-  <el-skeleton v-else :rows="3" animated class="p-5" />
 </template>
 <script>
 import { reactive, toRefs } from 'vue'
