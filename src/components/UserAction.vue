@@ -20,7 +20,7 @@ export default {
     const actionsOptions = [
       {
         title: 'Profile',
-        command: 'profile-settings',
+        command: 'profile',
       },
       {
         title: 'Settings',
@@ -44,7 +44,7 @@ export default {
 
     const actionsMap = {
       logout: () => router.push({ name: 'logout' }),
-      'profile-settings': () => router.push({ name: 'profile' }),
+      profile: () => router.push({ name: 'profile' }),
       activity: () => router.push({ name: 'last-activity' }),
       settings: () => router.push({ name: 'settings' }),
     }
