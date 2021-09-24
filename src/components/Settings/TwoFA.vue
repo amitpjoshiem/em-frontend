@@ -1,24 +1,22 @@
 <template>
-  <div class="pl-24 pt-14 text-main w-10/12">
-    <div class="flex py-5">
-      <div class="w-10/12 text-xss text-main font-medium">Google Authenticator</div>
-      <div class="w-2/12 flex justify-between">
-        <el-switch v-model="value" :loading="loading" :before-change="beforeChange" />
-      </div>
+  <div class="flex py-5">
+    <div class="w-10/12 text-xss text-main font-medium">Google Authenticator</div>
+    <div class="w-2/12 flex justify-between">
+      <el-switch v-model="value" :loading="loading" :before-change="beforeChange" />
     </div>
+  </div>
 
-    <div v-if="response && response.data" class="mt-5">
-      <div v-show="showForm" class="w-5/12">
-        <img ref="qrCode" :src="response.data.url" class="pb-5" />
-        <el-form ref="form" :model="ruleForm" status-icon label-position="top">
-          <el-form-item label="Code" prop="code" class="w-full">
-            <el-input v-model="ruleForm.code" placeholder="Enter OTP code" />
-          </el-form-item>
-          <div class="pt-3 text-right">
-            <Button default-blue-btn text-btn="Save" @click="saveOtp" />
-          </div>
-        </el-form>
-      </div>
+  <div v-if="response && response.data" class="mt-5">
+    <div v-show="showForm" class="w-5/12">
+      <img ref="qrCode" :src="response.data.url" class="pb-5" />
+      <el-form ref="form" :model="ruleForm" status-icon label-position="top">
+        <el-form-item label="Code" prop="code" class="w-full">
+          <el-input v-model="ruleForm.code" placeholder="Enter OTP code" />
+        </el-form-item>
+        <div class="pt-3 text-right">
+          <Button default-blue-btn text-btn="Save" @click="saveOtp" />
+        </div>
+      </el-form>
     </div>
   </div>
 </template>
@@ -32,6 +30,7 @@ import { computed } from 'vue'
 import { useAlert } from '@/utils/use-alert'
 
 export default {
+  name: 'TwoFA',
   setup() {
     const store = useStore()
     const { response, error, fetching, getGoogleQr } = useGoogleQr()

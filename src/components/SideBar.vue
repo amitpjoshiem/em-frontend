@@ -23,9 +23,14 @@
         <InlineSvg v-if="getActiveListOfHouseholds" :src="IconListActive" />
         <InlineSvg v-else :src="IconList" />
       </router-link>
-      <div class="item flex justify-center items-center cursor-pointer w-full h-14">
-        <img src="../assets/img/activity.png" />
-      </div>
+      <router-link
+        :to="{ name: 'activity' }"
+        class="item flex justify-center items-center cursor-pointer w-full h-14"
+        :class="{ active: getRouteName === 'activity' }"
+      >
+        <InlineSvg v-if="getRouteName === 'activity'" :src="IconActivityActiv" />
+        <InlineSvg v-else :src="IconActivityGray" />
+      </router-link>
       <div class="item flex justify-center items-center cursor-pointer w-full h-14">
         <img src="../assets/img/statistics.png" />
       </div>
@@ -43,6 +48,8 @@ import IconListActive from '@/assets/svg/list-sidebar-active.svg'
 import IconAssets from '@/assets/svg/icon-assets.svg'
 import IconDashboard from '@/assets/svg/dashboard-sidebar.svg'
 import IconDashboardActive from '@/assets/svg/dashboard-sidebar-active.svg'
+import IconActivityActiv from '@/assets/svg/icon-activity-activ.svg'
+import IconActivityGray from '@/assets/svg/icon-activity-gray.svg'
 
 export default {
   setup() {
@@ -70,6 +77,8 @@ export default {
       isAuth,
       getRouteName,
       getActiveListOfHouseholds,
+      IconActivityGray,
+      IconActivityActiv,
     }
   },
 }

@@ -1,6 +1,5 @@
 <template>
-  <div class="pl-24 pt-14 text-main w-10/12">
-    <div class="text-xl pb-8">Notifications</div>
+  <div>
     <div class="flex">
       <div class="w-10/12"></div>
       <div class="w-2/12 flex justify-between text-gray03 text-xss">
@@ -41,6 +40,7 @@
 
 <script>
 export default {
+  name: 'NotificationsSettngs',
   data() {
     return {
       value1: true,

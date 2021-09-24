@@ -6,17 +6,36 @@
       </div>
     </router-link>
 
-    <router-link :to="{ name: 'notifications' }">
-      <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'notifications' }">
-        Notifications settings
-      </div>
-    </router-link>
-
     <router-link :to="{ name: 'information' }">
       <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'information' }">
         Information
       </div>
     </router-link>
+
+    <router-link :to="{ name: 'partners' }">
+      <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'partners' }">
+        Partners
+      </div>
+    </router-link>
+
+    <router-link :to="{ name: 'settings' }">
+      <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'settings' }">
+        Settings
+      </div>
+    </router-link>
+
+    <router-link :to="{ name: 'last-activity' }">
+      <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'last-activity' }">
+        Last Activity
+      </div>
+    </router-link>
+
+    <!-- <router-link :to="{ name: 'notifications' }">
+      <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'notifications' }">
+        Notifications settings
+      </div>
+    </router-link>
+
     <router-link :to="{ name: '2fa' }">
       <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === '2fa' }">
         Two step authentication
@@ -26,7 +45,7 @@
       <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'salesforce' }">
         Salesforce
       </div>
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 
