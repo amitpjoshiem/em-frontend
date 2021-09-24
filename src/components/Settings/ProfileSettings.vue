@@ -21,7 +21,7 @@
     <div class="pt-12">
       <div class="flex items-center">
         <div class="text-xss text-title-gray w-2/12">Full name</div>
-        <div class="text-main text-base mr-3">{{ user.userFullName }}</div>
+        <div class="text-main text-base mr-3">{{ userFullName }}</div>
         <ChangeName />
       </div>
       <div class="flex items-center pt-11">
@@ -92,6 +92,12 @@ export default {
       return { Authorization: `Bearer ${token}` }
     })
 
+    const userFullName = computed(() => {
+      const lastName = user.value.lastName !== null ? user.value.lastName : '...'
+      const firstName = user.value.firstName !== null ? user.value.firstName : '...'
+      return lastName + ' ' + firstName
+    })
+
     const handleChange = (file) => {
       state.file = file
       state.isShowCropper = true
@@ -122,6 +128,7 @@ export default {
       change,
       bindRef,
       uploadRef: state.uploadRef,
+      userFullName,
     }
   },
 }

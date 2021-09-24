@@ -6,9 +6,6 @@ class UserProfile {
     this.email = email
     this.avatar = avatar
   }
-  get userFullName() {
-    return this.lastName + ' ' + this.firstName
-  }
 }
 
 export { UserProfile }
