@@ -29,23 +29,6 @@
         Last Activity
       </div>
     </router-link>
-
-    <!-- <router-link :to="{ name: 'notifications' }">
-      <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'notifications' }">
-        Notifications settings
-      </div>
-    </router-link>
-
-    <router-link :to="{ name: '2fa' }">
-      <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === '2fa' }">
-        Two step authentication
-      </div>
-    </router-link>
-    <router-link :to="{ name: 'salesforce' }">
-      <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'salesforce' }">
-        Salesforce
-      </div>
-    </router-link> -->
   </div>
 </template>
 
