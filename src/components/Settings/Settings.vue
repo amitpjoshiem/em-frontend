@@ -1,5 +1,5 @@
 <template>
-  <div class="p-10 text-main">
+  <div class="pl-24 pt-14 text-main w-10/12">
     <div class="text-xl pb-8">Settings</div>
     <el-collapse accordion>
       <el-collapse-item title="Notifications">
