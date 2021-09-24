@@ -45,7 +45,7 @@ export default {
     const actionsMap = {
       logout: () => router.push({ name: 'logout' }),
       'profile-settings': () => router.push({ name: 'profile' }),
-      activity: () => router.push({ name: 'activity' }),
+      activity: () => router.push({ name: 'last-activity' }),
       settings: () => router.push({ name: 'settings' }),
     }
 
