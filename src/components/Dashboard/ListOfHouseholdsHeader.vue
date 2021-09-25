@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'all' }" class="cursor-pointer hover:text-activity"> List of Households </router-link>
     <div class="flex items-center">
       <SwdItemsPerPage :destination="'dashboard'" />
-      <SwdSelect :options="actionsOptions" size="small" init-value="All" @select="handleSelect" />
+      <SwdNativeSelect :options="actionsOptions" size="small" init-value="All" @select="handleSelect" />
       <SwdDropDown class="ml-2" :options="actionsOptions">
         <template #titleDropDown>
           <span

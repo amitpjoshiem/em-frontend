@@ -3,17 +3,20 @@
     <span v-if="label" class="label block text-main text-xss font-medium pb-2">
       {{ label }}
     </span>
-    <el-select v-model="data.value" :size="size" @change="handleCommand()">
-      <el-option v-for="item in options" :key="item.title" :label="item.title" :value="item.title" />
-    </el-select>
+    <select
+      v-model="data.value"
+      class="styled-select border rounded-md border-input-border text-main text-xss px-2 py-1 bg-white"
+      @change="handleCommand($event)"
+    >
+      <option v-for="(item, index) in options" :key="index" :value="item.title">{{ item.title }}</option>
+    </select>
   </div>
 </template>
-
 <script>
 import { reactive } from 'vue'
 
 export default {
-  name: 'SwdSelect',
+  name: 'SwdNativeSelect',
   props: {
     options: {
       type: Array,
@@ -42,9 +45,9 @@ export default {
       value: props.initValue,
     })
 
-    const handleCommand = (command) => {
-      data.value = command
-      emit('select', command)
+    const handleCommand = (e) => {
+      data.value = e.target.value
+      emit('select', e.target.value)
     }
 
     return {
@@ -54,3 +57,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.styled-select {
+  height: 30px;
+}
+</style>

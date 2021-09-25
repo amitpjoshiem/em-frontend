@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center">
     <span class="text-smm font-medium">Assets</span>
     <div class="flex items-center">
-      <SwdSelect :options="options" init-value="Past year" size="small" class="w-36" />
+      <SwdNativeSelect :options="options" init-value="Past year" size="small" class="w-36" />
       <SwdDropDown class="ml-2" :options="actionsOptions">
         <template #titleDropDown>
           <span
