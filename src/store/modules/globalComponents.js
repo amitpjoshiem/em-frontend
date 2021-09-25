@@ -27,6 +27,10 @@ const state = () => ({
       shareFileEmailDialog: false,
     },
   },
+  sortMembers: {
+    orderBy: 'created_at',
+    sortedBy: 'desc',
+  },
 })
 
 const mutations = {
@@ -38,6 +42,12 @@ const mutations = {
   setShowModal(state, data) {
     const { destination, value } = data
     state.dialog.showDialog[destination] = value
+  },
+
+  setSortMembers(state, data) {
+    const { orderBy, sortedBy } = data
+    state.sortMembers.orderBy = orderBy
+    state.sortMembers.sortedBy = sortedBy
   },
 }
 
