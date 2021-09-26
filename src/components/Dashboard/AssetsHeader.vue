@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center">
     <span class="text-smm font-medium">Assets</span>
     <div class="flex items-center">
-      <SwdNativeSelect :options="options" init-value="Past year" size="small" class="w-36" />
+      <SwdNativeSelect :options="options" init-value="Past year" size="large" />
       <SwdDropDown class="ml-2" :options="actionsOptions">
         <template #titleDropDown>
           <span
@@ -57,28 +57,6 @@ export default {
           command: 'day',
         },
       ],
-      // options: [
-      //   {
-      //     value: 'Option1',
-      //     label: 'Past month',
-      //   },
-      //   {
-      //     value: 'Option2',
-      //     label: 'Option2',
-      //   },
-      //   {
-      //     value: 'Option3',
-      //     label: 'Option3',
-      //   },
-      //   {
-      //     value: 'Option4',
-      //     label: 'Option4',
-      //   },
-      //   {
-      //     value: 'Option5',
-      //     label: 'Option5',
-      //   },
-      // ],
       value: '',
     }
   },
