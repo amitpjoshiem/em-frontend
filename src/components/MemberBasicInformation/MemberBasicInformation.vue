@@ -82,7 +82,6 @@ export default {
     })
 
     const handleAvatarSuccess = async (res) => {
-      console.log('res - ', res)
       const form = { uuids: [res.data.uuid] }
       await updateMember({ form, id })
       state.isShowCropper = false
