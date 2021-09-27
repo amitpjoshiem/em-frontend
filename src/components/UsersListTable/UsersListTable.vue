@@ -6,10 +6,10 @@
     cell-class-name="cell-class"
     header-cell-class-name="header-class"
     header-row-class-name="header-row-class"
-    :default-sort="{ prop: 'created_at', order: 'descending' }"
+    :default-sort="getDefaultSort"
     @sort-change="change"
   >
-    <el-table-column prop="name" label="Name" min-width="240" sortable>
+    <el-table-column prop="name" label="Name" min-width="240" sortable="custom">
       <template #default="scope">
         <!-- <SwdAvatar /> -->
         <router-link
@@ -24,7 +24,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column prop="created_at" label="createdAt" min-width="110" sortable>
+    <el-table-column prop="created_at" label="createdAt" min-width="110" sortable="custom">
       <template #default="scope">
         <span>{{ scope.row.createdAtFormatted }}</span>
       </template>
@@ -56,16 +56,12 @@
 </template>
 
 <script>
-// import UsersListTableEmpty from '@/components/UsersListTable/UsersListTableEmpty.vue'
-// import UserListItem from '@/components/UsersListTable/UserListItem.vue'
+import { computed } from 'vue-demi'
 import { useStore } from 'vuex'
 
 export default {
   name: 'UsersListTable',
-  components: {
-    // UsersListTableEmpty,
-    // UserListItem,
-  },
+  components: {},
   props: {
     itemsHeader: {
       type: Array,
@@ -82,20 +78,24 @@ export default {
     const store = useStore()
 
     const change = (e) => {
-      console.log('==============')
-      // const { prop, order } = e
-      // console.log('prop - ', prop)
-      // console.log('order - ', order)
-      console.log(e)
       const orderBy = e.prop
-      const sortedBy = e.order === 'ascending' ? 'asc' : 'desc'
+      const sortedBy = e.order
       store.commit('globalComponents/setSortMembers', {
         orderBy,
         sortedBy,
       })
     }
+
+    const getDefaultSort = computed(() => {
+      return {
+        prop: store.state.globalComponents.sortMembers.orderBy,
+        order: store.state.globalComponents.sortMembers.sortedBy,
+      }
+    })
+
     return {
       change,
+      getDefaultSort,
     }
   },
 

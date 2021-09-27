@@ -9,7 +9,11 @@ export const useListHouseholders = ({ type, page }) => {
   const store = useStore()
 
   const limit = computed(() => store.state.globalComponents.itemsPerPage.values.listOfHouseholds)
-  const orderBy = computed(() => store.state.globalComponents.sortMembers.orderBy)
+  const orderBy = computed(() => {
+    if (store.state.globalComponents.sortMembers.orderBy === 'ascending') return 'asc'
+    if (store.state.globalComponents.sortMembers.orderBy === 'descending') return 'desc'
+    return undefined
+  })
   const sortedBy = computed(() => store.state.globalComponents.sortMembers.sortedBy)
 
   const reactiveType = ref(type)

@@ -29,7 +29,7 @@ const state = () => ({
   },
   sortMembers: {
     orderBy: 'created_at',
-    sortedBy: 'desc',
+    sortedBy: 'descending',
   },
 })
 
