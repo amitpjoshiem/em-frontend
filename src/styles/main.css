@@ -104,7 +104,7 @@
 /* Chrome, Safari, Edge, Opera */
 .el-input__inner::-webkit-outer-spin-button,
 .el-input__inner::-webkit-inner-spin-button{
-  /* -webkit-appearance: none; */
+  -webkit-appearance: none;
   margin: 0;
 }
 
