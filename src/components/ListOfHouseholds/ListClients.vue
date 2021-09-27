@@ -2,7 +2,7 @@
   <div>
     <UsersListTable v-if="!isLoading" :items-header="itemsHeader" :users-list="data" />
     <el-skeleton v-else :rows="rows" animated class="p-5" />
-    <div class="flex items-center justify-center border-t border-color-grey py-6">
+    <div class="flex items-center justify-center border-color-grey py-6">
       <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
     </div>
   </div>

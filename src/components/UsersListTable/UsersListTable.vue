@@ -9,22 +9,13 @@
     :default-sort="getDefaultSort"
     @sort-change="change"
   >
-    <el-table-column prop="name" label="Name" min-width="240" sortable="custom">
+    <el-table-column prop="name" label="Name" min-width="240" sortable>
       <template #default="scope">
-        <!-- <SwdAvatar /> -->
-        <router-link
-          :to="{
-            name: scope.row.step ? 'member-details' : 'basic-information',
-            params: { id: scope.row.id },
-          }"
-          class="pl-2.5 font-medium"
-        >
-          {{ scope.row.name }}
-        </router-link>
+        <UserListName :id="scope.row.id" :name="scope.row.name" :step="scope.row.step" />
       </template>
     </el-table-column>
 
-    <el-table-column prop="created_at" label="createdAt" min-width="110" sortable="custom">
+    <el-table-column prop="created_at" label="createdAt" min-width="110" sortable>
       <template #default="scope">
         <span>{{ scope.row.createdAtFormatted }}</span>
       </template>
@@ -35,9 +26,9 @@
         <SwdTypeUserLabel :user-type="scope.row.type" />
       </template>
     </el-table-column>
-    <el-table-column label="Onboarding" min-width="130">
+    <el-table-column label="Onboarding" prop="step" min-width="130" sortable>
       <template #default="scope">
-        <span>{{ scope.row.step }}</span>
+        <SwdLinearProgress :percentage="Number(scope.row.step) * 20" :show-text="true" />
       </template>
     </el-table-column>
 
@@ -58,10 +49,15 @@
 <script>
 import { computed } from 'vue-demi'
 import { useStore } from 'vuex'
+import SwdLinearProgress from '@/components/Global/SwdLinearProgress.vue'
+import UserListName from './UserListName.vue'
 
 export default {
   name: 'UsersListTable',
-  components: {},
+  components: {
+    UserListName,
+    SwdLinearProgress,
+  },
   props: {
     itemsHeader: {
       type: Array,
