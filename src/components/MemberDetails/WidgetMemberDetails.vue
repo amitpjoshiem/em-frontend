@@ -3,7 +3,7 @@
     <div class="bg-widget-bg rounded-lg p-5">
       <div class="border-b pb-5 flex justify-between">
         <div class="flex">
-          <SwdAvatar />
+          <SwdAvatar :link="user.avatar.url" />
           <div class="flex flex-col ml-2">
             <router-link
               :to="{
