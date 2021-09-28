@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center">
-    <SwdAvatar />
+    <SwdAvatar :link="getAvatarUrl" />
     <router-link
       :to="{
         name: step ? 'member-details' : 'basic-information',
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+
 export default {
   name: 'UserListName',
   props: {
@@ -32,7 +34,21 @@ export default {
       require: true,
       default: '',
     },
+    avatar: {
+      type: String,
+      require: true,
+      default: '',
+    },
   },
-  setup() {},
+  setup(props) {
+    const getAvatarUrl = computed(() => {
+      if (props.avatar?.url) return props.avatar.url
+      return ''
+    })
+
+    return {
+      getAvatarUrl,
+    }
+  },
 }
 </script>

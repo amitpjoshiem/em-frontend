@@ -11,7 +11,7 @@
   >
     <el-table-column prop="name" label="Name" min-width="240" sortable>
       <template #default="scope">
-        <UserListName :id="scope.row.id" :name="scope.row.name" :step="scope.row.step" />
+        <UserListName :id="scope.row.id" :name="scope.row.name" :step="scope.row.step" :avatar="scope.row.avatar" />
       </template>
     </el-table-column>
 
