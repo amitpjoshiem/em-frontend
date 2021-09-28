@@ -4,7 +4,7 @@
     <el-collapse v-if="!isLoading" accordion>
       <el-collapse-item title="SalesForce">
         <div class="flex">
-          <div class="w-10/12 text-xss text-main font-medium">Status</div>
+          <div class="w-10/12 text-xss text-main font-medium">Connection Status</div>
           <div class="w-2/12 flex justify-between">
             <el-icon v-if="data.data.salesforce" color="green">
               <success-filled style="width: 25px; height: 25px" />
@@ -18,7 +18,7 @@
       </el-collapse-item>
       <el-collapse-item title="HiddenLevers">
         <div class="flex">
-          <div class="w-10/12 text-xss text-main font-medium">Status</div>
+          <div class="w-10/12 text-xss text-main font-medium">Connection Status</div>
           <div class="w-2/12 flex justify-between">
             <el-icon v-if="data.data.hiddenlevers" color="green">
               <success-filled style="width: 25px; height: 25px" />
@@ -32,7 +32,7 @@
       </el-collapse-item>
       <el-collapse-item title="Yodlee">
         <div class="flex">
-          <div class="w-10/12 text-xss text-main font-medium">Status</div>
+          <div class="w-10/12 text-xss text-main font-medium">Connection Status</div>
           <div class="w-2/12 flex justify-between">
             <el-icon v-if="data.data.yodlee" color="green">
               <success-filled style="width: 25px; height: 25px" />
