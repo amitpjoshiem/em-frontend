@@ -9,9 +9,17 @@ export const useListHouseholders = ({ type, page }) => {
   const store = useStore()
 
   const limit = computed(() => store.state.globalComponents.itemsPerPage.values.listOfHouseholds)
+  const orderBy = computed(() => store.state.globalComponents.sortMembers.orderBy)
+  const sortedBy = computed(() => {
+    if (store.state.globalComponents.sortMembers.sortedBy === 'ascending') return 'asc'
+    if (store.state.globalComponents.sortMembers.sortedBy === 'descending') return 'desc'
+    return undefined
+  })
 
   const reactiveType = ref(type)
   const reactiveLimit = ref(limit)
+  const reactiveOrderBy = ref(orderBy)
+  const reactiveSortedBy = ref(sortedBy)
   const reactivePage = ref(page)
 
   const queryKey = reactive([
@@ -19,6 +27,8 @@ export const useListHouseholders = ({ type, page }) => {
     {
       reactiveType,
       reactiveLimit,
+      reactiveOrderBy,
+      reactiveSortedBy,
       reactivePage,
     },
   ])

@@ -1,32 +1,62 @@
 <template>
-  <div>
-    <table v-if="usersList.length" class="table-fixed">
-      <thead class="bg-widget-bg uppercase text-gray03 h-6">
-        <tr class="text-small text-left h-6">
-          <th v-for="(item, index) in itemsHeader" :key="index" :class="item.class">
-            {{ item.title }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(user, index) in usersList" :key="index" class="text-xss h-12 border-b last:border-b-0 box-border">
-          <UserListItem :user="user" />
-        </tr>
-      </tbody>
-    </table>
-    <UsersListTableEmpty v-else />
-  </div>
+  <el-table
+    :data="usersList"
+    style="width: 100%"
+    row-class-name="row-class"
+    cell-class-name="cell-class"
+    header-cell-class-name="header-class"
+    header-row-class-name="header-row-class"
+    :default-sort="getDefaultSort"
+    @sort-change="change"
+  >
+    <el-table-column prop="name" label="Name" min-width="240" sortable>
+      <template #default="scope">
+        <UserListName :id="scope.row.id" :name="scope.row.name" :step="scope.row.step" />
+      </template>
+    </el-table-column>
+
+    <el-table-column prop="created_at" label="createdAt" min-width="110" sortable>
+      <template #default="scope">
+        <span>{{ scope.row.createdAtFormatted }}</span>
+      </template>
+    </el-table-column>
+
+    <el-table-column label="Type" min-width="110">
+      <template #default="scope">
+        <SwdTypeUserLabel :user-type="scope.row.type" />
+      </template>
+    </el-table-column>
+    <el-table-column label="Onboarding" prop="step" min-width="130" sortable>
+      <template #default="scope">
+        <SwdLinearProgress :percentage="Number(scope.row.step) * 20" :show-text="true" />
+      </template>
+    </el-table-column>
+
+    <el-table-column prop="city" label="Location" min-width="170" />
+
+    <el-table-column label="net worth" min-width="110">
+      <SwdStubForText text="" plug="&mdash;" class="text-sm text-main font-semibold" />
+    </el-table-column>
+
+    <el-table-column label="" min-width="47">
+      <template #default="scope">
+        <SwdMemberActions :user="scope.row" />
+      </template>
+    </el-table-column>
+  </el-table>
 </template>
 
 <script>
-import UsersListTableEmpty from '@/components/UsersListTable/UsersListTableEmpty.vue'
-import UserListItem from '@/components/UsersListTable/UserListItem.vue'
+import { computed } from 'vue-demi'
+import { useStore } from 'vuex'
+import SwdLinearProgress from '@/components/Global/SwdLinearProgress.vue'
+import UserListName from './UserListName.vue'
 
 export default {
   name: 'UsersListTable',
   components: {
-    UsersListTableEmpty,
-    UserListItem,
+    UserListName,
+    SwdLinearProgress,
   },
   props: {
     itemsHeader: {
@@ -40,7 +70,30 @@ export default {
       default: () => [],
     },
   },
-  setup() {},
+  setup() {
+    const store = useStore()
+
+    const change = (e) => {
+      const orderBy = e.prop
+      const sortedBy = e.order
+      store.commit('globalComponents/setSortMembers', {
+        orderBy,
+        sortedBy,
+      })
+    }
+
+    const getDefaultSort = computed(() => {
+      return {
+        prop: store.state.globalComponents.sortMembers.orderBy,
+        order: store.state.globalComponents.sortMembers.sortedBy,
+      }
+    })
+
+    return {
+      change,
+      getDefaultSort,
+    }
+  },
 
   computed: {
     getHeadlines() {
@@ -49,3 +102,15 @@ export default {
   },
 }
 </script>
+
+<style>
+.header-class {
+  background-color: #f2f5fa !important;
+  height: 24px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  color: #aab5cf;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+</style>

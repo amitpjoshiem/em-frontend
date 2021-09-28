@@ -6,7 +6,7 @@ class UserFullInfo {
     this.type = type
     this.address = address
     this.city = city
-    this.createdAt = created_at
+    this.created_at = created_at
     this.netWorth = net_worth
     this.step = step
   }
