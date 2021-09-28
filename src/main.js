@@ -23,6 +23,7 @@ import SwdPagination from '@/components/Global/SwdPagination.vue'
 import SubHeader from '@/components/SubHeader.vue'
 import SwdStubForText from '@/components/Global/SwdStubForText.vue'
 import SwdMemberActions from '@/components/Global/SwdMemberActions.vue'
+import SwdNativeSelect from '@/components/Global/SwdNativeSelect.vue'
 
 import {
   ElProgress,
@@ -81,6 +82,7 @@ const components = [
   SubHeader,
   SwdStubForText,
   SwdMemberActions,
+  SwdNativeSelect,
   ElForm,
   ElFormItem,
   ElAutocomplete,
