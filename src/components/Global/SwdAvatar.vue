@@ -1,6 +1,6 @@
 <template>
   <div :class="avatarClass">
-    <img :src="link" class="h-full w-full object-cover rounded-[100px]" />
+    <img :src="getAvatar" class="h-full w-full object-cover rounded-[100px]" />
   </div>
 </template>
 <script>
@@ -13,7 +13,7 @@ export default {
     link: {
       type: String,
       require: false,
-      default: DefaultAvatar,
+      default: () => '',
     },
     size: {
       type: String,
@@ -36,8 +36,14 @@ export default {
       return avatarClassMap[props.size]
     })
 
+    const getAvatar = computed(() => {
+      if (props.link) return props.link
+      return DefaultAvatar
+    })
+
     return {
       avatarClass,
+      getAvatar,
     }
   },
 }

@@ -1,6 +1,6 @@
 <template>
   <td class="flex items-center h-12 ml-5">
-    <SwdAvatar />
+    <SwdAvatar :link="getAvatarUrl" />
     <router-link
       :to="{
         name: user.step ? 'member-details' : 'basic-information',
@@ -53,8 +53,14 @@ export default {
       return 0
     })
 
+    const getAvatarUrl = computed(() => {
+      if (props.user?.avatar?.url) return props.user.avatar.url
+      return ''
+    })
+
     return {
       getPercentage,
+      getAvatarUrl,
     }
   },
 }
