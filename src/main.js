@@ -56,6 +56,7 @@ import {
   ElCollapseItem,
   ElTable,
   ElTableColumn,
+  ElResult,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -113,6 +114,7 @@ const components = [
   ElCollapseItem,
   ElTable,
   ElTableColumn,
+  ElResult,
 ]
 
 components.forEach((component) => {
