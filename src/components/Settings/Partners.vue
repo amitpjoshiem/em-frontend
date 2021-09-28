@@ -45,6 +45,7 @@
         <YodleeSettings />
       </el-collapse-item>
     </el-collapse>
+    <el-skeleton v-else :rows="5" animated />
   </div>
 </template>
 <script>
