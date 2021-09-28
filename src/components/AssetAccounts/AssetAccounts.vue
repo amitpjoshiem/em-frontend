@@ -3,14 +3,16 @@
   <div v-if="!isLoadingYodleeStatus && !isLoadingYodleeProviders" class="p-5">
     <div class="border border-color-grey box-border p-5 rounded-md">
       <div class="text-main font-semibold text-smm">Status</div>
-      <el-steps v-if="haveYodleeAcc" :active="activeStep" finish-status="success" align-center>
+      <el-steps :active="activeStep" finish-status="success" align-center>
         <el-step title="Yodlee created" />
         <el-step title="Link sent" />
         <el-step title="Link used" />
         <el-step title="Provider count" />
       </el-steps>
+    </div>
+    <div class="border border-color-grey box-border p-5 rounded-md mt-5">
+      <div class="text-main font-semibold text-smm">Send Link</div>
       <Button
-        v-else
         class="w-3/12 mt-5"
         text-btn="Link an account"
         witch-icon
@@ -73,13 +75,13 @@ export default {
     const activeStep = computed(() => {
       const status = yodleeStatus.value.data
       switch (true) {
-        case status.yodlee_created === 'false':
+        case status.yodlee_created === false:
           return 1
-        case status.link_sent === 'false':
+        case status.link_sent === false:
           return 2
-        case status.link_used === 'false':
+        case status.link_used === false:
           return 3
-        case !!status.provider_count.length === 'false':
+        case !!status.provider_count.length === false:
           return 4
         default:
           return 1
