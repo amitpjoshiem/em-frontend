@@ -57,6 +57,8 @@ import {
   ElTable,
   ElTableColumn,
   ElResult,
+  ElTimeline,
+  ElTimelineItem,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -115,6 +117,8 @@ const components = [
   ElTable,
   ElTableColumn,
   ElResult,
+  ElTimeline,
+  ElTimelineItem,
 ]
 
 components.forEach((component) => {
