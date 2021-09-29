@@ -1,6 +1,6 @@
 <template>
   <SwdSubHeader title="Asset Accounts" class="p-5" />
-  <div v-if="!isLoadingYodleeStatus && !isLoadingYodleeProviders" class="p-5">
+  <div v-if="!isFetchingYodleeStatus && !isFetchingYodleeProviders" class="p-5">
     <div class="border border-color-grey box-border p-5 rounded-md">
       <div class="text-main font-semibold text-smm">Status</div>
       <el-steps :active="activeStep" finish-status="success" align-center>
@@ -21,8 +21,8 @@
         default-link-btn
         @click="sendLinkYodlee"
       />
-      <div v-else>
-        <span>timer</span>
+      <div>
+        <span class="text-main font-semibold text-xs">Expired link: {{ getFormatTime }}</span>
       </div>
     </div>
 
@@ -50,8 +50,9 @@ import { useYodleeStatus } from '@/api/use-yodlee-status.js'
 import { useYodleeProviders } from '@/api/use-yodlee-providers.js'
 import { useFetchYodleeSendLink } from '@/api/use-fetch-yodlee-send-link.js'
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, reactive, onUnmounted, onMounted } from 'vue'
 import { useQueryClient } from 'vue-query'
+import dayjs from 'dayjs'
 
 export default {
   name: 'AssetAccounts',
@@ -60,22 +61,59 @@ export default {
     const memberId = route.params.id
     const queryClient = useQueryClient()
 
-    const {
-      isLoading: isLoadingYodleeStatus,
-      error: isErrorLoadingYodleeStatus,
-      data: yodleeStatus,
-    } = useYodleeStatus(memberId)
+    const state = reactive({
+      timer: null,
+      currentTime: '',
+    })
 
     const {
-      isLoading: isLoadingYodleeProviders,
+      response: yodleeStatus,
+      error: isErrorLoadingYodleeStatus,
+      fetching: isFetchingYodleeStatus,
+      getYodleeStatus,
+    } = useYodleeStatus(route.params.id)
+
+    const {
       error: isErrorLoadingYodleeProviders,
       data: yodleeProviders,
+      isFetching: isFetchingYodleeProviders,
     } = useYodleeProviders(memberId)
 
-    const { response: sendLinkStatus, fetching: fetchingSendLink, sendLink } = useFetchYodleeSendLink(route.params.id)
+    const {
+      response: sendLinkStatus,
+      fetching: fetchingSendLink,
+      isLoading: loadingLinkStatus,
+      sendLink,
+    } = useFetchYodleeSendLink(route.params.id)
 
     const haveYodleeAcc = computed(() => {
       return yodleeStatus.value.data.yodlee_created
+    })
+
+    onMounted(async () => {
+      await getYodleeStatus()
+      if (yodleeStatus.value.data.link_ttl) {
+        state.currentTime = yodleeStatus.value.data.link_ttl
+        setTimer()
+      }
+    })
+
+    onUnmounted(() => {
+      stopTimer()
+    })
+
+    const setTimer = () => {
+      state.timer = setInterval(() => {
+        state.currentTime--
+      }, 1000)
+    }
+
+    const stopTimer = () => {
+      clearTimeout(state.timer)
+    }
+
+    const getFormatTime = computed(() => {
+      return dayjs(state.currentTime).format('mm:ss')
     })
 
     const activeStep = computed(() => {
@@ -100,11 +138,12 @@ export default {
     }
 
     return {
+      state,
       yodleeStatus,
       isErrorLoadingYodleeStatus,
-      isLoadingYodleeStatus,
-      isLoadingYodleeProviders,
+      isFetchingYodleeStatus,
       isErrorLoadingYodleeProviders,
+      isFetchingYodleeProviders,
       yodleeProviders,
       haveYodleeAcc,
       sendLinkYodlee,
@@ -112,6 +151,8 @@ export default {
       sendLinkStatus,
       fetchingSendLink,
       sendLink,
+      loadingLinkStatus,
+      getFormatTime,
     }
   },
 }
