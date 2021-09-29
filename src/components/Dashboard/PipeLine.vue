@@ -2,7 +2,7 @@
   <div class="col-span-1 p-5 bg-widget-bg rounded-[10px]">
     <div class="flex justify-between items-center">
       <span class="text-smm font-medium">Pipe Line</span>
-      <SwdNativeSelect :options="options" init-value="Past year" />
+      <SwdNativeSelect :options="options" init-value="Past month" />
     </div>
 
     <div class="pt-6 flex justify-between">
@@ -75,28 +75,6 @@ export default {
           command: 'day',
         },
       ],
-      // options: [
-      //   {
-      //     value: 'Option1',
-      //     label: 'Past month',
-      //   },
-      //   {
-      //     value: 'Option2',
-      //     label: 'Option2',
-      //   },
-      //   {
-      //     value: 'Option3',
-      //     label: 'Option3',
-      //   },
-      //   {
-      //     value: 'Option4',
-      //     label: 'Option4',
-      //   },
-      //   {
-      //     value: 'Option5',
-      //     label: 'Option5',
-      //   },
-      // ],
       value: '',
     }
   },

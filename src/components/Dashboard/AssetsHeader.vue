@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between items-center">
     <span class="text-smm font-medium">Assets</span>
-    <SwdNativeSelect :options="options" init-value="Past year" size="large" />
+    <SwdNativeSelect :options="options" init-value="Past month" size="large" />
   </div>
 </template>
 
