@@ -1,16 +1,19 @@
 <template>
-  <SubHeader title="Asset Accounts" back-page="member-details" class="p-5" />
-  <div v-if="!isLoadingYodleeStatus && !isLoadingYodleeProviders" class="p-5">
+  <SwdSubHeader title="Asset Accounts" class="p-5" />
+  <div v-if="isShowContent" class="p-5">
     <div class="border border-color-grey box-border p-5 rounded-md">
       <div class="text-main font-semibold text-smm">Status</div>
-      <el-steps v-if="haveYodleeAcc" :active="activeStep" finish-status="success" align-center>
+      <el-steps :active="activeStep" finish-status="success" align-center>
         <el-step title="Yodlee created" />
         <el-step title="Link sent" />
         <el-step title="Link used" />
         <el-step title="Provider count" />
       </el-steps>
+    </div>
+    <div v-if="haveYodleeAcc" class="border border-color-grey box-border p-5 rounded-md mt-5">
+      <div class="text-main font-semibold text-smm">Send Link</div>
       <Button
-        v-else
+        v-if="!yodleeStatus.data.link_sent"
         class="w-3/12 mt-5"
         text-btn="Link an account"
         witch-icon
@@ -18,6 +21,9 @@
         default-link-btn
         @click="sendLinkYodlee"
       />
+      <div>
+        <span class="text-main font-semibold text-xs">Expired link: {{ getFormatTime }}</span>
+      </div>
     </div>
 
     <div v-if="haveYodleeAcc" class="border border-color-grey box-border p-5 rounded-md mt-5">
@@ -44,58 +50,80 @@ import { useYodleeStatus } from '@/api/use-yodlee-status.js'
 import { useYodleeProviders } from '@/api/use-yodlee-providers.js'
 import { useFetchYodleeSendLink } from '@/api/use-fetch-yodlee-send-link.js'
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useQueryClient } from 'vue-query'
+import { useTimer } from '@/utils/useTimer'
 
 export default {
   name: 'AssetAccounts',
   setup() {
     const route = useRoute()
     const memberId = route.params.id
+    const queryClient = useQueryClient()
+    const { startTimer, getFormatTime } = useTimer()
 
     const {
-      isLoading: isLoadingYodleeStatus,
+      response: yodleeStatus,
       error: isErrorLoadingYodleeStatus,
-      data: yodleeStatus,
-    } = useYodleeStatus(memberId)
+      fetching: isFetchingYodleeStatus,
+      getYodleeStatus,
+    } = useYodleeStatus(route.params.id)
 
     const {
-      isLoading: isLoadingYodleeProviders,
       error: isErrorLoadingYodleeProviders,
       data: yodleeProviders,
+      isFetching: isFetchingYodleeProviders,
     } = useYodleeProviders(memberId)
 
-    const { response: sendLinkStatus, fetching: fetchingSendLink, sendLink } = useFetchYodleeSendLink(route.params.id)
+    const {
+      response: sendLinkStatus,
+      fetching: fetchingSendLink,
+      isLoading: loadingLinkStatus,
+      sendLink,
+    } = useFetchYodleeSendLink(route.params.id)
 
     const haveYodleeAcc = computed(() => {
       return yodleeStatus.value.data.yodlee_created
     })
 
+    const isShowContent = computed(() => {
+      return !isFetchingYodleeStatus.value && !isFetchingYodleeProviders.value
+    })
+
+    onMounted(async () => {
+      await getYodleeStatus()
+      if (yodleeStatus.value.data.link_ttl) {
+        startTimer(yodleeStatus.value.data.link_ttl)
+      }
+    })
+
     const activeStep = computed(() => {
       const status = yodleeStatus.value.data
       switch (true) {
-        case status.yodlee_created === 'false':
+        case status.yodlee_created === false:
+          return 0
+        case status.link_sent === false:
           return 1
-        case status.link_sent === 'false':
+        case status.link_used === false:
           return 2
-        case status.link_used === 'false':
+        case !!status.provider_count.length === false:
           return 3
-        case !!status.provider_count.length === 'false':
-          return 4
         default:
-          return 1
+          return 0
       }
     })
 
     const sendLinkYodlee = async () => {
       await sendLink()
+      queryClient.invalidateQueries(['yodlee/status'])
     }
 
     return {
       yodleeStatus,
       isErrorLoadingYodleeStatus,
-      isLoadingYodleeStatus,
-      isLoadingYodleeProviders,
+      isFetchingYodleeStatus,
       isErrorLoadingYodleeProviders,
+      isFetchingYodleeProviders,
       yodleeProviders,
       haveYodleeAcc,
       sendLinkYodlee,
@@ -103,6 +131,9 @@ export default {
       sendLinkStatus,
       fetchingSendLink,
       sendLink,
+      loadingLinkStatus,
+      getFormatTime,
+      isShowContent,
     }
   },
 }

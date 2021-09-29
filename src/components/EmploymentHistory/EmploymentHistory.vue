@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SubHeader title="Employment history" back-page="member-basic-information" />
+    <SwdSubHeader title="Employment history" />
     <div v-if="!isLoading">
       <div class="flex mt-4">
         <div class="w-4/12"></div>

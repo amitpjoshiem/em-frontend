@@ -60,10 +60,9 @@ const routes = [
         ],
       },
       {
-        path: 'blue-report/:id',
-        name: 'bluereport',
-        component: () =>
-          import(/* webpackChunkName: "BlueReport" */ '../components/NewProspect/NewProspectBlueReport.vue'),
+        path: 'member-report/:id',
+        name: 'member-report',
+        component: () => import(/* webpackChunkName: "MemberReport" */ '../components/Report/MemberReport.vue'),
       },
       {
         path: 'client-report/:id',

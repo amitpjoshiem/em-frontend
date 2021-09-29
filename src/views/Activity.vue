@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SubHeader title="Activity" back-page="dashboard" />
+    <SwdSubHeader title="Activity" />
   </div>
 </template>
 <script>

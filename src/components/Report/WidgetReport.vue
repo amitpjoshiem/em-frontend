@@ -1,0 +1,56 @@
+<template>
+  <div class="w-7/12 bg-widget-bg rounded-lg">
+    <div class="border-b">
+      <div class="flex p-5">
+        <SwdAvatar :link="getAvatarUrl" />
+        <div class="flex flex-col ml-2">
+          <span class="text-sm text-main font-medium">{{ member.data?.name }}</span>
+          <span class="text-small text-activity-item font-medium uppercase"> {{ member.data?.type }} </span>
+        </div>
+      </div>
+    </div>
+    <div class="flex p-5 items-center">
+      <InlineSvg :src="IconRedRisk" />
+      <span class="ml-2 text-xs text-gray03">Red risk</span>
+    </div>
+    <div class="flex pl-5 items-center">
+      <InlineSvg :src="IconOpenSafety" />
+      <span class="ml-2 text-xs text-gray03">Open-safety</span>
+    </div>
+    <div class="flex p-5 items-center">
+      <InlineSvg :src="IconBlueCash" />
+      <span class="ml-2 text-xs text-gray03">Blue-cash liquidity</span>
+    </div>
+  </div>
+</template>
+
+<script>
+import { computed } from 'vue'
+import IconRedRisk from '@/assets/svg/icon-red-risk.svg'
+import IconOpenSafety from '@/assets/svg/icon-open-safety.svg'
+import IconBlueCash from '@/assets/svg/icon-blue-cash.svg'
+
+export default {
+  name: 'WidgetReport',
+  props: {
+    member: {
+      type: Object,
+      require: false,
+      default: () => {},
+    },
+  },
+  setup(props) {
+    const getAvatarUrl = computed(() => {
+      if (props.member.data?.avatar?.url) return props.member.data.avatar.url
+      return ''
+    })
+
+    return {
+      getAvatarUrl,
+      IconRedRisk,
+      IconOpenSafety,
+      IconBlueCash,
+    }
+  },
+}
+</script>

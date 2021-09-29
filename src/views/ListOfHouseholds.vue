@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SubHeader title="List of Households" back-page="dashboard" />
+    <SwdSubHeader title="List of Households" />
     <ListContent />
   </div>
 </template>

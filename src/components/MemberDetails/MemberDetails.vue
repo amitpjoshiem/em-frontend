@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SubHeader :title="getTitle" back-page="dashboard" />
+    <SwdSubHeader :title="getTitle" />
     <div class="flex my-5">
       <WidgetMemberDetails v-if="!isLoadingProspectDetails" :user="data" @updateMemberInfo="updateMemberInfo" />
       <el-skeleton v-else :rows="6" animated class="w-8/24 pr-5 h-[264px]" />

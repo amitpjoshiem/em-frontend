@@ -20,7 +20,7 @@ import SwdDatePicker from '@/components/Global/SwdDatePicker.vue'
 import BackButton from '@/components/Global/Button/BackButton.vue'
 import SwdDialog from '@/components/Global/SwdDialog.vue'
 import SwdPagination from '@/components/Global/SwdPagination.vue'
-import SubHeader from '@/components/SubHeader.vue'
+import SwdSubHeader from '@/components/SwdSubHeader.vue'
 import SwdStubForText from '@/components/Global/SwdStubForText.vue'
 import SwdMemberActions from '@/components/Global/SwdMemberActions.vue'
 import SwdNativeSelect from '@/components/Global/SwdNativeSelect.vue'
@@ -80,7 +80,7 @@ const components = [
   SwdDialog,
   SwdPagination,
   SwdSelect,
-  SubHeader,
+  SwdSubHeader,
   SwdStubForText,
   SwdMemberActions,
   SwdNativeSelect,

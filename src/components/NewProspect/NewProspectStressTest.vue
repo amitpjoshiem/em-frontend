@@ -234,7 +234,7 @@ export default {
     const step = computed(() => store.state.newProspect.step)
 
     const saveStep = () => {
-      router.push({ name: 'bluereport', params: { id: route.params.id } })
+      router.push({ name: 'member-report', params: { id: route.params.id } })
     }
 
     const backStep = () => {

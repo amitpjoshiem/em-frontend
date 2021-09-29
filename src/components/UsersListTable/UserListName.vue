@@ -35,9 +35,9 @@ export default {
       default: '',
     },
     avatar: {
-      type: String,
+      type: [Object, Array],
       require: true,
-      default: '',
+      default: () => {},
     },
   },
   setup(props) {
