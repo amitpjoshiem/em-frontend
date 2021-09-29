@@ -86,7 +86,6 @@ export default {
   background-position-y: 3px;
   border: 1px solid #dfdfdf;
   border-radius: 2px;
-  margin-right: 2rem;
   padding: 1rem;
   padding-right: 2rem;
 }

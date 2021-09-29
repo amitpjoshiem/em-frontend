@@ -4,20 +4,10 @@
     <div class="flex items-center">
       <SwdItemsPerPage :destination="'dashboard'" />
       <SwdNativeSelect :options="actionsOptions" init-value="All" @select="handleSelect" />
-      <SwdDropDown class="ml-2" :options="actionsOptions">
-        <template #titleDropDown>
-          <span
-            class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3 border border-color-grey"
-          >
-            <InlineSvg :src="IconAction" />
-          </span>
-        </template>
-      </SwdDropDown>
     </div>
   </div>
 </template>
 <script>
-import IconAction from '@/assets/svg/icon-action.svg'
 import { useStore } from 'vuex'
 
 export default {
@@ -68,7 +58,6 @@ export default {
 
     return {
       actionsOptions,
-      IconAction,
       options,
       handleSelect,
     }
