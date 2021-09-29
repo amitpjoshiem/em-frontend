@@ -1,6 +1,6 @@
 <template>
   <div class="px-5">
-    <SubHeader class="p-5" title="Asset Allocation Details" back-page="member-details" />
+    <SwdSubHeader class="p-5" title="Asset Allocation Details" />
     <AssetAllocation />
     <Assets />
   </div>

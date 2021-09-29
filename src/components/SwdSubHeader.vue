@@ -6,7 +6,9 @@
     <div class="w-6/12 text-center">
       <span class="text-title text-main font-semibold">{{ title }}</span>
     </div>
-    <div class="w-3/12 flex justify-end"></div>
+    <div class="w-3/12 text-right">
+      <ShareBtn v-if="withShareBtn" :pdf-region="region" />
+    </div>
   </div>
 </template>
 
@@ -14,17 +16,22 @@
 import { useRouter } from 'vue-router'
 
 export default {
-  name: 'SubHeader',
+  name: 'SwdSubHeader',
   props: {
     title: {
       type: String,
       require: true,
       default: 'header',
     },
-    backPage: {
+    withShareBtn: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    region: {
       type: String,
-      require: true,
-      default: 'dashboard',
+      require: false,
+      default: '',
     },
   },
   setup(props) {

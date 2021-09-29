@@ -8,10 +8,10 @@
     <div class="flex" data-pdf-region="blue-report">
       <div class="w-7/12">
         <div class="flex">
-          <div class="w-7/12 bg-widget-bg rounded-lg">
+          <div v-if="!fetchingMember" class="w-7/12 bg-widget-bg rounded-lg">
             <div class="border-b">
               <div class="flex p-5">
-                <SwdAvatar :link="user.avatar.url" />
+                <SwdAvatar :link="getAvatarUrl" />
                 <div class="flex flex-col ml-2">
                   <span class="text-sm text-main font-medium">John &amp; Sarah Travis</span>
                   <span class="text-small text-activity-item font-medium uppercase"> Prospect </span>
@@ -155,16 +155,14 @@
 </template>
 
 <script>
-import IconRedRisk from '@/assets/svg/icon-red-risk.svg'
-import IconOpenSafety from '@/assets/svg/icon-open-safety.svg'
-import IconBlueCash from '@/assets/svg/icon-blue-cash.svg'
 import IconCheckGreen from '@/assets/svg/icon-check-green.svg'
 import TotalChart from '@/components/NewProspect/Chart/TotalChart.vue'
 import NetWorthChart from '@/components/NewProspect/Chart/NetWorthChart.vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useMonthlyIncome, useMonthlyExpenses } from '@/components/NewProspect/DTO/blueReport'
+import { useFetchMember } from '@/api/use-fetch-member'
 
 export default {
   name: 'NewPeospectBlueReport',
@@ -177,6 +175,7 @@ export default {
     const { data: monthlyExpenses } = useMonthlyExpenses()
 
     const router = useRouter()
+    const route = useRoute()
     const store = useStore()
 
     const step = computed(() => store.state.newProspect.step)
@@ -186,14 +185,31 @@ export default {
       router.push({ name: 'stresstest' })
     }
 
+    const getAvatarUrl = computed(() => {
+      if (member.value.data?.avatar?.url) return member.value.data.avatar.url
+      return ''
+    })
+
+    onMounted(async () => {
+      await getMember()
+    })
+
+    const {
+      response: member,
+      error: errorMember,
+      fetching: fetchingMember,
+      getMember,
+    } = useFetchMember(route.params.id)
+
     return {
-      IconRedRisk,
-      IconOpenSafety,
-      IconBlueCash,
       monthlyIncome,
       monthlyExpenses,
       IconCheckGreen,
       back,
+      getAvatarUrl,
+      member,
+      errorMember,
+      fetchingMember,
     }
   },
 }

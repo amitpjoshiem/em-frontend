@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SubHeader title="New opportunity" back-page="member-details" />
+    <SwdSubHeader title="New opportunity" />
     <div
       v-if="!isLoadingInitOpportunity && !isLoadingProspectDetails && !isLoadingUserProfile"
       class="border-color-grey px-10 pb-7"
