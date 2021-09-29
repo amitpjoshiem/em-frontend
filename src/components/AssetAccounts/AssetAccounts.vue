@@ -1,6 +1,6 @@
 <template>
   <SwdSubHeader title="Asset Accounts" class="p-5" />
-  <div v-if="!isFetchingYodleeStatus && !isFetchingYodleeProviders" class="p-5">
+  <div v-if="isShowContent" class="p-5">
     <div class="border border-color-grey box-border p-5 rounded-md">
       <div class="text-main font-semibold text-smm">Status</div>
       <el-steps :active="activeStep" finish-status="success" align-center>
@@ -50,9 +50,9 @@ import { useYodleeStatus } from '@/api/use-yodlee-status.js'
 import { useYodleeProviders } from '@/api/use-yodlee-providers.js'
 import { useFetchYodleeSendLink } from '@/api/use-fetch-yodlee-send-link.js'
 import { useRoute } from 'vue-router'
-import { computed, reactive, onUnmounted, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useQueryClient } from 'vue-query'
-import dayjs from 'dayjs'
+import { useTimer } from '@/utils/useTimer'
 
 export default {
   name: 'AssetAccounts',
@@ -60,11 +60,7 @@ export default {
     const route = useRoute()
     const memberId = route.params.id
     const queryClient = useQueryClient()
-
-    const state = reactive({
-      timer: null,
-      currentTime: '',
-    })
+    const { startTimer, getFormatTime } = useTimer()
 
     const {
       response: yodleeStatus,
@@ -90,30 +86,15 @@ export default {
       return yodleeStatus.value.data.yodlee_created
     })
 
+    const isShowContent = computed(() => {
+      return !isFetchingYodleeStatus.value && !isFetchingYodleeProviders.value
+    })
+
     onMounted(async () => {
       await getYodleeStatus()
       if (yodleeStatus.value.data.link_ttl) {
-        state.currentTime = yodleeStatus.value.data.link_ttl
-        setTimer()
+        startTimer(yodleeStatus.value.data.link_ttl)
       }
-    })
-
-    onUnmounted(() => {
-      stopTimer()
-    })
-
-    const setTimer = () => {
-      state.timer = setInterval(() => {
-        state.currentTime--
-      }, 1000)
-    }
-
-    const stopTimer = () => {
-      clearTimeout(state.timer)
-    }
-
-    const getFormatTime = computed(() => {
-      return dayjs(state.currentTime).format('mm:ss')
     })
 
     const activeStep = computed(() => {
@@ -138,7 +119,6 @@ export default {
     }
 
     return {
-      state,
       yodleeStatus,
       isErrorLoadingYodleeStatus,
       isFetchingYodleeStatus,
@@ -153,6 +133,7 @@ export default {
       sendLink,
       loadingLinkStatus,
       getFormatTime,
+      isShowContent,
     }
   },
 }
