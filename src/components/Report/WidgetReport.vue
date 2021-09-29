@@ -4,8 +4,8 @@
       <div class="flex p-5">
         <SwdAvatar :link="getAvatarUrl" />
         <div class="flex flex-col ml-2">
-          <span class="text-sm text-main font-medium">John &amp; Sarah Travis</span>
-          <span class="text-small text-activity-item font-medium uppercase"> Prospect </span>
+          <span class="text-sm text-main font-medium">{{ member.data?.name }}</span>
+          <span class="text-small text-activity-item font-medium uppercase"> {{ member.data?.type }} </span>
         </div>
       </div>
     </div>
