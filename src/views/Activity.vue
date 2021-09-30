@@ -5,10 +5,13 @@
       <div v-if="!isFetching">
         <span class="text-main text-smm font-semibold">Your Activity</span>
         <div class="mt-5">
-          <el-timeline>
+          <el-timeline v-for="(elem, index) in getData" :key="index">
+            <div class="mb-6 text-gray03 font-semibold">
+              {{ elem.day }}
+            </div>
             <el-timeline-item
-              v-for="(item, index) in getData"
-              :key="index"
+              v-for="item in elem.content"
+              :key="item.timestamp"
               center
               :timestamp="item.timestamp"
               placement="top"
@@ -34,13 +37,11 @@ export default {
     const { data, error, isFetching, refetch } = useFetchActivities()
 
     const getData = computed(() => {
-      const timeLine = data.value.data
-      // console.log('data - ', timeLine)
-      Object.keys(timeLine).forEach((key) => {
-        // console.log('----', timeLine[key])
+      const res = []
+      Object.keys(data.value.data).forEach((key) => {
+        res.push({ day: key, content: data.value.data[key] })
       })
-      return timeLine['2021-09-30']
-      // return '2323'
+      return res
     })
 
     return {
