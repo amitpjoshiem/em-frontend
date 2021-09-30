@@ -13,7 +13,7 @@ export function useTimer() {
 
   const setTimer = () => {
     state.timer = setInterval(() => {
-      state.currentTime--
+      state.currentTime = state.currentTime - 1000
     }, 1000)
   }
 
