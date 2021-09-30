@@ -59,6 +59,7 @@ import {
   ElResult,
   ElTimeline,
   ElTimelineItem,
+  ElCard,
 } from 'element-plus'
 
 import './styles/index.css'
@@ -119,6 +120,7 @@ const components = [
   ElResult,
   ElTimeline,
   ElTimelineItem,
+  ElCard,
 ]
 
 components.forEach((component) => {
