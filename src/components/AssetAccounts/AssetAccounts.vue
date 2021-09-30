@@ -22,7 +22,9 @@
         @click="sendLinkYodlee"
       />
       <div>
-        <span class="text-main font-semibold text-xs">Expired link: {{ getFormatTime }}</span>
+        <span v-if="yodleeStatus.data.link_sent" class="text-main font-semibold text-xs">
+          Expired link: {{ getFormatTime }}
+        </span>
       </div>
     </div>
 
@@ -50,7 +52,7 @@ import { useYodleeStatus } from '@/api/use-yodlee-status.js'
 import { useYodleeProviders } from '@/api/use-yodlee-providers.js'
 import { useFetchYodleeSendLink } from '@/api/use-fetch-yodlee-send-link.js'
 import { useRoute } from 'vue-router'
-import { computed, onMounted } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { useQueryClient } from 'vue-query'
 import { useTimer } from '@/utils/useTimer'
 
@@ -63,16 +65,17 @@ export default {
     const { startTimer, getFormatTime } = useTimer()
 
     const {
-      response: yodleeStatus,
+      data: yodleeStatus,
       error: isErrorLoadingYodleeStatus,
-      fetching: isFetchingYodleeStatus,
-      getYodleeStatus,
+      isFetching: isFetchingYodleeStatus,
+      refetch: refetchYodleeStatus,
     } = useYodleeStatus(route.params.id)
 
     const {
       error: isErrorLoadingYodleeProviders,
       data: yodleeProviders,
       isFetching: isFetchingYodleeProviders,
+      isLoading: isLoadingYodleeProviders,
     } = useYodleeProviders(memberId)
 
     const {
@@ -90,9 +93,8 @@ export default {
       return !isFetchingYodleeStatus.value && !isFetchingYodleeProviders.value
     })
 
-    onMounted(async () => {
-      await getYodleeStatus()
-      if (yodleeStatus.value.data.link_ttl) {
+    watchEffect(() => {
+      if (!isFetchingYodleeStatus.value) {
         startTimer(yodleeStatus.value.data.link_ttl)
       }
     })
@@ -134,6 +136,8 @@ export default {
       loadingLinkStatus,
       getFormatTime,
       isShowContent,
+      refetchYodleeStatus,
+      isLoadingYodleeProviders,
     }
   },
 }
