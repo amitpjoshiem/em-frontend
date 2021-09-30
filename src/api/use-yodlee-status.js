@@ -1,21 +1,16 @@
-import { useFetch } from '@/api/use-fetch'
+import { useQuery } from 'vue-query'
+import { fetchYodleeStatus } from './vueQuery/fetch-yodlee-status'
 
-const useYodleeStatus = (id) => {
-  const { response, error, fetching, fetchData } = useFetch(`/yodlee/${id}/status`, {
-    method: 'GET',
+export const useYodleeStatus = (id) => {
+  const { isLoading, isError, isFetching, refetch, data } = useQuery(['yodlee/status', id], () => {
+    return fetchYodleeStatus(id)
   })
 
-  const getYodleeStatus = async (body) => {
-    await fetchData({ body })
-    if (error.value !== null) return
-  }
-
   return {
-    response,
-    error,
-    fetching,
-    getYodleeStatus,
+    isLoading,
+    isError,
+    data,
+    refetch,
+    isFetching,
   }
 }
-
-export { useYodleeStatus }
