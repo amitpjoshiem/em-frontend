@@ -1,22 +1,25 @@
 <template>
   <div v-if="!isFetching" class="border rounded-lg p-5">
     <span class="text-main text-smm font-semibold">Your Activity</span>
-    <div class="mt-5">
-      <el-timeline v-for="(elem, index) in data.data" :key="index">
-        <div class="mb-6 text-gray03 font-semibold">
-          <TitleDayActivity :day="elem.day" />
-        </div>
-        <el-timeline-item
-          v-for="item in elem.events"
-          :key="item.timestamp"
-          center
-          :timestamp="item.timestamp"
-          placement="top"
-          color="#66B6FF"
-        >
-          <div v-html="item.content" />
-        </el-timeline-item>
-      </el-timeline>
+    <div class="infinite-list-wrapper" style="overflow: auto">
+      <ul v-infinite-scroll="load" class="list">
+        <el-timeline v-for="(elem, index) in activities.data" :key="index">
+          <div class="mb-6 text-gray03 font-semibold">
+            <TitleDayActivity :day="elem.day" />
+          </div>
+          <el-timeline-item
+            v-for="item in elem.events"
+            :key="item.timestamp"
+            center
+            :timestamp="item.timestamp"
+            placement="top"
+            color="#66B6FF"
+          >
+            <div v-html="item.content" />
+          </el-timeline-item>
+        </el-timeline>
+      </ul>
+      <p v-if="loading">Loading...</p>
     </div>
   </div>
   <el-skeleton v-else :rows="5" animated class="p-5" />
@@ -32,15 +35,23 @@ export default {
     TitleDayActivity,
   },
   setup() {
-    const activeName = ref('')
-    const { data, error, isFetching, refetch } = useFetchActivities()
+    const loading = ref(false)
+    const { data: activities, error, isFetching, refetch } = useFetchActivities()
+
+    const load = () => {
+      loading.value = true
+      setTimeout(() => {
+        console.log('loading')
+      }, 1000)
+    }
 
     return {
-      activeName,
-      data,
+      activities,
       error,
       isFetching,
       refetch,
+      loading,
+      load,
     }
   },
 }
@@ -79,5 +90,9 @@ export default {
 
 .el-timeline-item__content {
   width: 90%;
+}
+
+.infinite-list-wrapper {
+  height: 780px;
 }
 </style>

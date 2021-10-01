@@ -27,42 +27,7 @@ import SwdStubForText from '@/components/Global/SwdStubForText.vue'
 import SwdMemberActions from '@/components/Global/SwdMemberActions.vue'
 import SwdNativeSelect from '@/components/Global/SwdNativeSelect.vue'
 
-import {
-  ElProgress,
-  ElDropdown,
-  ElDropdownMenu,
-  ElDropdownItem,
-  ElSteps,
-  ElStep,
-  ElCheckbox,
-  ElRadio,
-  ElInput,
-  ElDatePicker,
-  ElPopover,
-  ElSwitch,
-  ElDialog,
-  ElButton,
-  ElPagination,
-  ElRadioGroup,
-  ElPopper,
-  ElSelect,
-  ElOption,
-  ElSkeleton,
-  ElForm,
-  ElFormItem,
-  ElAutocomplete,
-  ElUpload,
-  ElTag,
-  ElIcon,
-  ElCollapse,
-  ElCollapseItem,
-  ElTable,
-  ElTableColumn,
-  ElResult,
-  ElTimeline,
-  ElTimelineItem,
-  ElCard,
-} from 'element-plus'
+import ElementPlus from 'element-plus'
 
 import './styles/index.css'
 
@@ -70,6 +35,7 @@ const app = createApp(App)
 
 app.use(router)
 app.use(store)
+app.use(ElementPlus)
 
 // Global Component
 const components = [
@@ -89,40 +55,6 @@ const components = [
   SwdStubForText,
   SwdMemberActions,
   SwdNativeSelect,
-  ElForm,
-  ElFormItem,
-  ElAutocomplete,
-  ElProgress,
-  ElSkeleton,
-  ElOption,
-  ElRadioGroup,
-  ElPopper,
-  ElSelect,
-  ElButton,
-  ElPagination,
-  ElSwitch,
-  ElDialog,
-  ElPopover,
-  ElCheckbox,
-  ElRadio,
-  ElInput,
-  ElDatePicker,
-  ElSteps,
-  ElStep,
-  ElDropdown,
-  ElDropdownMenu,
-  ElDropdownItem,
-  ElUpload,
-  ElTag,
-  ElIcon,
-  ElCollapse,
-  ElCollapseItem,
-  ElTable,
-  ElTableColumn,
-  ElResult,
-  ElTimeline,
-  ElTimelineItem,
-  ElCard,
 ]
 
 components.forEach((component) => {
