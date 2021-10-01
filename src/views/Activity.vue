@@ -28,18 +28,18 @@
 <script>
 import { ref, computed } from 'vue'
 import { useFetchActivities } from '@/api/use-fetch-activities.js'
+import dayjs from 'dayjs'
 
 export default {
   name: 'Activity',
   setup() {
     const activeName = ref('')
-
     const { data, error, isFetching, refetch } = useFetchActivities()
 
     const getData = computed(() => {
       const res = []
       Object.keys(data.value.data).forEach((key) => {
-        res.push({ day: key, content: data.value.data[key] })
+        res.push({ day: dayjs(key).calendar(null), content: data.value.data[key] })
       })
       return res
     })
