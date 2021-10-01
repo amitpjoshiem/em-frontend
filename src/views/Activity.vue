@@ -1,8 +1,8 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="Activity" />
-    <div class="border rounded-lg p-5">
-      <div v-if="!isFetching">
+    <div v-if="!isFetching" class="border rounded-lg p-5">
+      <div>
         <span class="text-main text-smm font-semibold">Your Activity</span>
         <div class="mt-5">
           <el-timeline v-for="(elem, index) in getData" :key="index">
@@ -23,6 +23,7 @@
         </div>
       </div>
     </div>
+    <el-skeleton v-else :rows="5" animated class="p-5" />
   </div>
 </template>
 <script>
