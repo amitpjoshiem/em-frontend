@@ -20,8 +20,8 @@ export default {
           command: 'month',
         },
         {
-          title: 'Past day',
-          command: 'day',
+          title: 'Past quarter',
+          command: 'quarter',
         },
       ],
       value: '',

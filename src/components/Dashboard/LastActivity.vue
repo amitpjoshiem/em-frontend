@@ -37,6 +37,10 @@ export default {
           data: '5:07pm, today',
           text: 'You have changed Norma Barnett profile info',
         },
+        {
+          data: '5:07pm, today',
+          text: 'You have changed Norma Barnett profile info',
+        },
       ],
     }
   },
