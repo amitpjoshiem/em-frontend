@@ -1,9 +1,15 @@
 <template>
-  <div v-if="!isFetching" class="border rounded-lg p-5">
+  <!-- <div v-if="!isLoading">
+    <pre>
+    {{ getActivitiData }}
+
+    </pre>
+  </div> -->
+  <div v-if="!isLoading" class="border rounded-lg p-5">
     <span class="text-main text-smm font-semibold">Your Activity</span>
     <div class="infinite-list-wrapper" style="overflow: auto">
-      <ul v-infinite-scroll="load" class="list">
-        <el-timeline v-for="(elem, index) in activities.data" :key="index">
+      <ul v-infinite-scroll="load" class="list p-1 mr-4">
+        <el-timeline v-for="(elem, index) in getActivitiData" :key="index">
           <div class="mb-6 text-gray03 font-semibold">
             <TitleDayActivity :day="elem.day" />
           </div>
@@ -21,13 +27,38 @@
       </ul>
       <p v-if="loading">Loading...</p>
     </div>
+    <!-- <div class="infinite-list-wrapper" style="overflow: auto">
+      <ul v-infinite-scroll="load" class="list p-1 mr-4">
+        <div v-for="(item, index) in activities.pages" :key="index">
+          <el-timeline v-for="(elem, index) in item.data.data" :key="index">
+            <div class="mb-6 text-gray03 font-semibold">
+              <TitleDayActivity :day="elem.day" />
+            </div>
+            <el-timeline-item
+              v-for="item in elem.events"
+              :key="item.timestamp"
+              center
+              :timestamp="item.timestamp"
+              placement="top"
+              color="#66B6FF"
+            >
+              <div v-html="item.content" />
+            </el-timeline-item>
+          </el-timeline>
+        </div>
+      </ul>
+      <p v-if="loading">Loading...</p>
+    </div> -->
   </div>
-  <el-skeleton v-else :rows="5" animated class="p-5" />
+  <!-- <el-skeleton v-else :rows="5" animated class="p-5" /> -->
 </template>
 <script>
-import { ref } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { useFetchActivities } from '@/api/use-fetch-activities.js'
 import TitleDayActivity from './TitleDayActivity.vue'
+import dayjs from 'dayjs'
+import { useStore } from 'vuex'
+import { useInfiniteQuery } from 'vue-query'
 
 export default {
   name: 'ActivityContent',
@@ -35,8 +66,39 @@ export default {
     TitleDayActivity,
   },
   setup() {
+    const store = useStore()
     const loading = ref(false)
-    const { data: activities, error, isFetching, refetch } = useFetchActivities()
+    const {
+      data: activities,
+      error,
+      refetch,
+      isFetched,
+      isLoading,
+    } = useInfiniteQuery('activities', useFetchActivities, {}, { enabled: false })
+
+    const state = reactive({
+      betweenData: '',
+      currentData: dayjs().format('YYYY-MM-DD'),
+      previousData: '',
+    })
+
+    onMounted(async () => {
+      setPeriod()
+    })
+
+    const setPeriod = () => {
+      state.betweenData =
+        `created_at:` + dayjs().subtract(7, 'day').format('YYYY-MM-DD') + ',' + dayjs().format('YYYY-MM-DD')
+      store.commit('globalComponents/setActivityPeriod', state.betweenData)
+      refetch.value()
+    }
+
+    const getActivitiData = computed(() => {
+      const ttt = activities.value.pages.map((element) => {
+        if (element.data !== undefined) return element.data.data
+      })
+      return ttt[0]
+    })
 
     const load = () => {
       loading.value = true
@@ -46,12 +108,15 @@ export default {
     }
 
     return {
+      state,
       activities,
       error,
-      isFetching,
       refetch,
       loading,
       load,
+      isFetched,
+      isLoading,
+      getActivitiData,
     }
   },
 }
