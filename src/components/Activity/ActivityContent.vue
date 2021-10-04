@@ -1,59 +1,34 @@
 <template>
-  <!-- <div v-if="!isLoading">
-    <pre>
-    {{ getActivitiData }}
-
-    </pre>
-  </div> -->
   <div v-if="!isLoading" class="border rounded-lg p-5">
     <span class="text-main text-smm font-semibold">Your Activity</span>
     <div class="infinite-list-wrapper" style="overflow: auto">
-      <ul v-infinite-scroll="load" class="list p-1 mr-4">
-        <el-timeline v-for="(elem, index) in getActivitiData" :key="index">
-          <div class="mb-6 text-gray03 font-semibold">
-            <TitleDayActivity :day="elem.day" />
+      <ul v-infinite-scroll="load" class="list p-1 mr-4" :infinite-scroll-disabled="state.disabledLoad">
+        <div v-for="(activ, index) in activities.pages" :key="index">
+          <div v-if="activ.data !== undefined">
+            <el-timeline v-for="elem in activ.data.data" :key="elem.day">
+              <div class="mb-6 text-gray03 font-semibold">
+                <TitleDayActivity :day="elem.day" />
+              </div>
+              <el-timeline-item
+                v-for="item in elem.events"
+                :key="item.timestamp"
+                center
+                :timestamp="item.timestamp"
+                placement="top"
+                color="#66B6FF"
+              >
+                <div v-html="item.content" />
+              </el-timeline-item>
+            </el-timeline>
           </div>
-          <el-timeline-item
-            v-for="item in elem.events"
-            :key="item.timestamp"
-            center
-            :timestamp="item.timestamp"
-            placement="top"
-            color="#66B6FF"
-          >
-            <div v-html="item.content" />
-          </el-timeline-item>
-        </el-timeline>
-      </ul>
-      <p v-if="loading">Loading...</p>
-    </div>
-    <!-- <div class="infinite-list-wrapper" style="overflow: auto">
-      <ul v-infinite-scroll="load" class="list p-1 mr-4">
-        <div v-for="(item, index) in activities.pages" :key="index">
-          <el-timeline v-for="(elem, index) in item.data.data" :key="index">
-            <div class="mb-6 text-gray03 font-semibold">
-              <TitleDayActivity :day="elem.day" />
-            </div>
-            <el-timeline-item
-              v-for="item in elem.events"
-              :key="item.timestamp"
-              center
-              :timestamp="item.timestamp"
-              placement="top"
-              color="#66B6FF"
-            >
-              <div v-html="item.content" />
-            </el-timeline-item>
-          </el-timeline>
         </div>
       </ul>
       <p v-if="loading">Loading...</p>
-    </div> -->
+    </div>
   </div>
-  <!-- <el-skeleton v-else :rows="5" animated class="p-5" /> -->
 </template>
 <script>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useFetchActivities } from '@/api/use-fetch-activities.js'
 import TitleDayActivity from './TitleDayActivity.vue'
 import dayjs from 'dayjs'
@@ -68,6 +43,7 @@ export default {
   setup() {
     const store = useStore()
     const loading = ref(false)
+
     const {
       data: activities,
       error,
@@ -78,8 +54,9 @@ export default {
 
     const state = reactive({
       betweenData: '',
-      currentData: dayjs().format('YYYY-MM-DD'),
+      currentData: '',
       previousData: '',
+      disabledLoad: true,
     })
 
     onMounted(async () => {
@@ -87,22 +64,30 @@ export default {
     })
 
     const setPeriod = () => {
-      state.betweenData =
-        `created_at:` + dayjs().subtract(7, 'day').format('YYYY-MM-DD') + ',' + dayjs().format('YYYY-MM-DD')
+      state.currentData = dayjs().format('YYYY-MM-DD')
+      state.previousData = dayjs(state.currentData).subtract(7, 'day').format('YYYY-MM-DD')
+      state.betweenData = `created_at:` + state.previousData + ',' + state.currentData
       store.commit('globalComponents/setActivityPeriod', state.betweenData)
-      refetch.value()
+      refetch.value().then(() => {
+        state.disabledLoad = false
+      })
     }
 
-    const getActivitiData = computed(() => {
-      const ttt = activities.value.pages.map((element) => {
-        if (element.data !== undefined) return element.data.data
-      })
-      return ttt[0]
-    })
+    // const getActivitiData = computed(() => {
+    //   const ttt = activities.value.pages.map((element) => {
+    //     if (element.data !== undefined) return element.data.data
+    //   })
+    //   return ttt[0]
+    // })
 
     const load = () => {
       loading.value = true
       setTimeout(() => {
+        state.currentData = state.previousData
+        state.previousData = dayjs(state.previousData).subtract(7, 'day').format('YYYY-MM-DD')
+        state.betweenData = `created_at:` + state.previousData + ',' + state.currentData
+        store.commit('globalComponents/setActivityPeriod', state.betweenData)
+        refetch.value()
         console.log('loading')
       }, 1000)
     }
@@ -116,7 +101,7 @@ export default {
       load,
       isFetched,
       isLoading,
-      getActivitiData,
+      // getActivitiData,
     }
   },
 }
