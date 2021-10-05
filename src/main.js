@@ -5,6 +5,9 @@ import router from './router'
 import store from './store'
 import dayjs from 'dayjs'
 
+import calendar from 'dayjs/plugin/calendar'
+import updateLocale from 'dayjs/plugin/updateLocale'
+
 import relativeTime from 'dayjs/plugin/relativeTime'
 import InlineSvg from 'vue-inline-svg'
 
@@ -123,5 +126,17 @@ components.forEach((component) => {
 
 app.config.globalProperties.$dayjs = dayjs
 dayjs.extend(relativeTime)
+
+dayjs.extend(calendar)
+dayjs.extend(updateLocale)
+
+dayjs.updateLocale('en', {
+  calendar: {
+    sameDay: '[Today]',
+    lastDay: '[Yesterday]',
+    lastWeek: 'D MMM YYYY',
+    sameElse: 'D MMM YYYY',
+  },
+})
 
 app.mount('#app')
