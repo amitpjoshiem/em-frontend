@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-widget-bg p-2.5 rounded-md mt-5">
-    <div class="flex items-center">
+  <div class="bg-widget-bg p-2.5 rounded-md mt-5 flex justify-center">
+    <div class="flex items-center justify-between w-8/12">
       <div class="bg-activity rounded-md flex justify-center items-center w-5 h-5">
         <InlineSvg :src="IconIncomeTop" class="w-2" />
       </div>
