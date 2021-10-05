@@ -2,7 +2,12 @@
   <div class="border rounded-lg p-5">
     <span class="text-main text-smm font-semibold">Your Activity</span>
     <div class="infinite-list-wrapper" style="overflow: auto">
-      <ul v-if="status === 'success'" v-infinite-scroll="load" class="list p-1 mr-4">
+      <ul
+        v-if="status === 'success'"
+        v-infinite-scroll="load"
+        class="list p-1 mr-4"
+        infinite-scroll-disabled="disabled"
+      >
         <div v-for="(activ, index) in activities.pages" :key="index">
           <div v-if="activ.data !== undefined">
             <el-timeline v-for="elem in activ.data" :key="elem.day">
@@ -42,6 +47,7 @@ export default {
   setup() {
     const store = useStore()
     const loading = ref(false)
+    const disabled = computed(() => loading.value)
 
     const state = reactive({
       betweenData: '',
@@ -81,7 +87,7 @@ export default {
       loading.value = true
       setTimeout(() => {
         state.currentData = state.previousData
-        state.previousData = dayjs(state.previousData).subtract(7, 'day').format('YYYY-MM-DD')
+        state.previousData = dayjs(state.currentData).subtract(7, 'day').format('YYYY-MM-DD')
         state.betweenData = `created_at:` + state.previousData + ',' + state.currentData
         store.commit('globalComponents/setActivityPeriod', state.betweenData)
         fetchNextPage.value()
@@ -97,6 +103,7 @@ export default {
       load,
       fetchNextPage,
       status,
+      disabled,
     }
   },
 }

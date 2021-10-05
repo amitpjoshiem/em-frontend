@@ -8,7 +8,7 @@ export const useFetchActivities = (initialData) => {
 
   const limit = computed(() => store.state.globalComponents.activity.limit)
   const searchFields = computed(() => store.state.globalComponents.activity.searchFields)
-  const search = computed(() => store.state.globalComponents.activity.between)
+  const search = computed(() => store.state.globalComponents.activity.period)
 
   const reactiveLimit = ref(limit)
   const reactiveSearchFields = ref(searchFields)
