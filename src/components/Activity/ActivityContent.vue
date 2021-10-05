@@ -1,6 +1,6 @@
 <template>
   <div class="border rounded-lg p-5">
-    <span class="text-main text-smm font-semibold">Your Activity</span>
+    <div class="text-main text-smm font-semibold">Your Activity</div>
     <div class="infinite-list-wrapper" style="overflow: auto">
       <ul
         v-if="status === 'success'"
@@ -28,7 +28,10 @@
           </div>
         </div>
       </ul>
-      <p v-if="loading">Loading...</p>
+      <el-skeleton v-else-if="!loading" :rows="15" animated />
+      <div v-if="loading" class="text-center">
+        <span>Loading...</span>
+      </div>
     </div>
   </div>
 </template>
@@ -83,16 +86,15 @@ export default {
       fetchNextPage.value()
     }
 
-    const load = () => {
+    const load = async () => {
       loading.value = true
-      setTimeout(() => {
-        state.currentData = state.previousData
-        state.previousData = dayjs(state.currentData).subtract(7, 'day').format('YYYY-MM-DD')
-        state.betweenData = `created_at:` + state.previousData + ',' + state.currentData
-        store.commit('globalComponents/setActivityPeriod', state.betweenData)
-        fetchNextPage.value()
+      state.currentData = state.previousData
+      state.previousData = dayjs(state.currentData).subtract(7, 'day').format('YYYY-MM-DD')
+      state.betweenData = `created_at:` + state.previousData + ',' + state.currentData
+      store.commit('globalComponents/setActivityPeriod', state.betweenData)
+      fetchNextPage.value().then(() => {
         loading.value = false
-      }, 1000)
+      })
     }
     return {
       state,
