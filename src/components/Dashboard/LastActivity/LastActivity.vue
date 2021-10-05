@@ -7,7 +7,6 @@
           <div class="h-[9px] w-[9px] rounded-full mb-[2px] mr-[8px] bg-activity" />
           <div class="text-activity-item font-medium">
             <DateListActivity :day="item.day" :timestamp="elem.timestamp" />
-            <!-- <span class="ml-1">{{ elem.timestamp }}</span> -->
           </div>
         </div>
         <div class="pt-px text-main" v-html="elem.content" />
