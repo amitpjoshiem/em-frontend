@@ -15,7 +15,7 @@
 <script>
 import PipeLine from '@/components/Dashboard/PipeLine.vue'
 import HeaderDashboard from '@/components/Dashboard/HeaderDashboard.vue'
-import LastActivity from '@/components/Dashboard/LastActivity.vue'
+import LastActivity from '@/components/Dashboard/LastActivity/LastActivity.vue'
 import Assets from '@/components/Dashboard/Assets.vue'
 import ListOfHouseholds from '@/components/Dashboard/ListOfHouseholds.vue'
 
