@@ -1,5 +1,6 @@
 <template>
-  <span>{{ getData }}</span>
+  <span>{{ getDay }}</span>
+  <span class="ml-1">{{ timestamp }}</span>
 </template>
 <script>
 import dayjs from 'dayjs'
@@ -12,13 +13,18 @@ export default {
       require: true,
       default: '',
     },
+    timestamp: {
+      type: String,
+      require: true,
+      default: '',
+    },
   },
   setup(props) {
-    const getData = computed(() => {
+    const getDay = computed(() => {
       return dayjs(props.day).calendar(null)
     })
     return {
-      getData,
+      getDay,
     }
   },
 }

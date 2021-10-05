@@ -6,8 +6,8 @@
         <div class="flex items-center">
           <div class="h-[9px] w-[9px] rounded-full mb-[2px] mr-[8px] bg-activity" />
           <div class="text-activity-item font-medium">
-            <TitleDayActivity :day="item.day" />
-            <span class="ml-1">{{ elem.timestamp }}</span>
+            <DateListActivity :day="item.day" :timestamp="elem.timestamp" />
+            <!-- <span class="ml-1">{{ elem.timestamp }}</span> -->
           </div>
         </div>
         <div class="pt-px text-main" v-html="elem.content" />
@@ -19,13 +19,13 @@
 <script>
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
 import { useDashboardLastActivity } from '@/api/use-dashboard-last-activity.js'
-import TitleDayActivity from '@/components/Dashboard/LastActivity/TitleDayActivity.vue'
+import DateListActivity from '@/components/Dashboard/LastActivity/DateListActivity.vue'
 
 export default {
   name: 'LastActivity',
 
   components: {
-    TitleDayActivity,
+    DateListActivity,
   },
   setup() {
     const { error, data: activity, isFetching, isLoading } = useDashboardLastActivity()
