@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { useFetchActivities } from '@/api/use-fetch-activities.js'
 import TitleDayActivity from './TitleDayActivity.vue'
 import dayjs from 'dayjs'
@@ -43,16 +43,29 @@ export default {
     const store = useStore()
     const loading = ref(false)
 
-    const { data: activities, error, refetch, fetchNextPage, status } = useFetchActivities()
-
     const state = reactive({
       betweenData: '',
       currentData: '',
       previousData: '',
-      disabledLoad: true,
+      initialData: '',
     })
 
-    onMounted(async () => {
+    const getInitialData = computed(() => {
+      const currentData = dayjs().format('YYYY-MM-DD')
+      const previousData = dayjs(currentData).subtract(7, 'day').format('YYYY-MM-DD')
+      const betweenData = `created_at:` + previousData + ',' + currentData
+      store.commit('globalComponents/setActivityPeriod', state.betweenData)
+
+      return {
+        reactiveSearch: betweenData,
+        reactiveLimit: `0`,
+        reactiveSearchFields: `created_at:between`,
+      }
+    })
+
+    const { data: activities, error, refetch, fetchNextPage, status } = useFetchActivities(getInitialData.value)
+
+    onMounted(() => {
       setPeriod()
     })
 
@@ -75,7 +88,6 @@ export default {
         loading.value = false
       }, 1000)
     }
-
     return {
       state,
       activities,

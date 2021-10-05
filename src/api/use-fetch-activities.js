@@ -3,12 +3,12 @@ import { fetchActivities } from './vueQuery/fetch-activities'
 import { reactive, ref, computed } from 'vue'
 import { useStore } from 'vuex'
 
-export const useFetchActivities = () => {
+export const useFetchActivities = (initialData) => {
   const store = useStore()
 
   const limit = computed(() => store.state.globalComponents.activity.limit)
   const searchFields = computed(() => store.state.globalComponents.activity.searchFields)
-  const search = computed(() => store.state.globalComponents.activity.period)
+  const search = computed(() => store.state.globalComponents.activity.between)
 
   const reactiveLimit = ref(limit)
   const reactiveSearchFields = ref(searchFields)
@@ -28,9 +28,9 @@ export const useFetchActivities = () => {
       [
         'activity',
         {
-          reactiveSearch: `created_at:2021-09-28,2021-10-05`,
-          reactiveLimit: `0`,
-          reactiveSearchFields: `created_at:between`,
+          reactiveSearch: initialData.reactiveSearch,
+          reactiveLimit: initialData.reactiveLimit,
+          reactiveSearchFields: initialData.reactiveSearchFields,
         },
       ],
       fetchActivities,
