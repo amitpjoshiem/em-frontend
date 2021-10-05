@@ -1,11 +1,11 @@
 <template>
-  <div v-if="!isLoading" class="border rounded-lg p-5">
+  <div class="border rounded-lg p-5">
     <span class="text-main text-smm font-semibold">Your Activity</span>
     <div class="infinite-list-wrapper" style="overflow: auto">
-      <ul v-infinite-scroll="load" class="list p-1 mr-4" :infinite-scroll-disabled="state.disabledLoad">
+      <ul v-if="status === 'success'" v-infinite-scroll="load" class="list p-1 mr-4">
         <div v-for="(activ, index) in activities.pages" :key="index">
           <div v-if="activ.data !== undefined">
-            <el-timeline v-for="elem in activ.data.data" :key="elem.day">
+            <el-timeline v-for="elem in activ.data" :key="elem.day">
               <div class="mb-6 text-gray03 font-semibold">
                 <TitleDayActivity :day="elem.day" />
               </div>
@@ -33,7 +33,6 @@ import { useFetchActivities } from '@/api/use-fetch-activities.js'
 import TitleDayActivity from './TitleDayActivity.vue'
 import dayjs from 'dayjs'
 import { useStore } from 'vuex'
-import { useInfiniteQuery } from 'vue-query'
 
 export default {
   name: 'ActivityContent',
@@ -44,13 +43,7 @@ export default {
     const store = useStore()
     const loading = ref(false)
 
-    const {
-      data: activities,
-      error,
-      refetch,
-      isFetched,
-      isLoading,
-    } = useInfiniteQuery('activities', useFetchActivities, {}, { enabled: false })
+    const { data: activities, error, refetch, fetchNextPage, status } = useFetchActivities()
 
     const state = reactive({
       betweenData: '',
@@ -68,17 +61,8 @@ export default {
       state.previousData = dayjs(state.currentData).subtract(7, 'day').format('YYYY-MM-DD')
       state.betweenData = `created_at:` + state.previousData + ',' + state.currentData
       store.commit('globalComponents/setActivityPeriod', state.betweenData)
-      refetch.value().then(() => {
-        state.disabledLoad = false
-      })
+      fetchNextPage.value()
     }
-
-    // const getActivitiData = computed(() => {
-    //   const ttt = activities.value.pages.map((element) => {
-    //     if (element.data !== undefined) return element.data.data
-    //   })
-    //   return ttt[0]
-    // })
 
     const load = () => {
       loading.value = true
@@ -87,8 +71,8 @@ export default {
         state.previousData = dayjs(state.previousData).subtract(7, 'day').format('YYYY-MM-DD')
         state.betweenData = `created_at:` + state.previousData + ',' + state.currentData
         store.commit('globalComponents/setActivityPeriod', state.betweenData)
-        refetch.value()
-        console.log('loading')
+        fetchNextPage.value()
+        loading.value = false
       }, 1000)
     }
 
@@ -99,9 +83,8 @@ export default {
       refetch,
       loading,
       load,
-      isFetched,
-      isLoading,
-      // getActivitiData,
+      fetchNextPage,
+      status,
     }
   },
 }

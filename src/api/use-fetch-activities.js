@@ -1,9 +1,9 @@
-import { useQuery } from 'vue-query'
+import { useInfiniteQuery } from 'vue-query'
 import { fetchActivities } from './vueQuery/fetch-activities'
 import { reactive, ref, computed } from 'vue'
 import { useStore } from 'vuex'
 
-export const useFetchActivities = (_, options = {}) => {
+export const useFetchActivities = () => {
   const store = useStore()
 
   const limit = computed(() => store.state.globalComponents.activity.limit)
@@ -15,20 +15,39 @@ export const useFetchActivities = (_, options = {}) => {
   const reactiveSearch = ref(search)
 
   const queryKey = reactive([
-    'activities',
+    'activity',
     {
       reactiveLimit,
       reactiveSearchFields,
       reactiveSearch,
     },
   ])
-  const query = useQuery(queryKey, {
-    cacheTime: 0,
-    queryFn: fetchActivities,
-    ...options,
-  })
+
+  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, refetch, isLoading } =
+    useInfiniteQuery(
+      [
+        'activity',
+        {
+          reactiveSearch: `created_at:2021-09-28,2021-10-05`,
+          reactiveLimit: `0`,
+          reactiveSearchFields: `created_at:between`,
+        },
+      ],
+      fetchActivities,
+      {
+        getNextPageParam: () => queryKey,
+      }
+    )
 
   return {
-    ...query,
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+    refetch,
+    isLoading,
   }
 }
