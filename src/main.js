@@ -7,10 +7,8 @@ import dayjs from 'dayjs'
 
 import calendar from 'dayjs/plugin/calendar'
 import updateLocale from 'dayjs/plugin/updateLocale'
-
 import relativeTime from 'dayjs/plugin/relativeTime'
-import calendar from 'dayjs/plugin/calendar'
-import updateLocale from 'dayjs/plugin/updateLocale'
+
 import InlineSvg from 'vue-inline-svg'
 
 // Global Component Import
