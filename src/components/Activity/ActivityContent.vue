@@ -147,6 +147,6 @@ export default {
 }
 
 .infinite-list-wrapper {
-  height: 780px;
+  height: 77vh;
 }
 </style>
