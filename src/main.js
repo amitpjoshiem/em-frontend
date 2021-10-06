@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import calendar from 'dayjs/plugin/calendar'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import duration from 'dayjs/plugin/duration'
 
 import InlineSvg from 'vue-inline-svg'
 
@@ -80,6 +81,7 @@ dayjs.updateLocale('en', {
 
 dayjs.extend(calendar)
 dayjs.extend(updateLocale)
+dayjs.extend(duration)
 
 dayjs.updateLocale('en', {
   calendar: {

@@ -60,7 +60,9 @@ export default {
     })
 
     const getInitialData = computed(() => {
-      const currentData = dayjs().format('YYYY-MM-DD')
+      const currentData = dayjs()
+        .add(dayjs.duration({ days: 1 }))
+        .format('YYYY-MM-DD')
       const previousData = dayjs(currentData).subtract(7, 'day').format('YYYY-MM-DD')
       const betweenData = `created_at:` + previousData + ',' + currentData
       store.commit('globalComponents/setActivityPeriod', state.betweenData)
@@ -79,7 +81,9 @@ export default {
     })
 
     const setPeriod = () => {
-      state.currentData = dayjs().format('YYYY-MM-DD')
+      state.currentData = dayjs()
+        .add(dayjs.duration({ days: 1 }))
+        .format('YYYY-MM-DD')
       state.previousData = dayjs(state.currentData).subtract(7, 'day').format('YYYY-MM-DD')
       state.betweenData = `created_at:` + state.previousData + ',' + state.currentData
       store.commit('globalComponents/setActivityPeriod', state.betweenData)
