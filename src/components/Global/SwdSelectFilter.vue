@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <SwdNativeSelect :options="actions" :init-value="initValue" @select="handleSelectFilter" />
-  </div>
+  <SwdNativeSelect :options="actions" :init-value="initValue" @select="handleSelectFilter" />
 </template>
 <script>
 import { computed } from 'vue'
