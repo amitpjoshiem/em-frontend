@@ -51,6 +51,11 @@ const state = () => ({
     orderBy: 'created_at',
     sortedBy: 'descending',
   },
+  activity: {
+    limit: 0,
+    searchFields: `created_at:between`,
+    period: '',
+  },
 })
 
 const mutations = {
@@ -73,6 +78,10 @@ const mutations = {
     const { orderBy, sortedBy } = data
     state.sortMembers.orderBy = orderBy
     state.sortMembers.sortedBy = sortedBy
+  },
+
+  setActivityPeriod(state, value) {
+    state.activity.period = value
   },
 }
 
