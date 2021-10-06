@@ -37,6 +37,7 @@ const state = () => ({
     ],
     values: {
       default: 'month',
+      opportunitiesBlock: 'month',
       pipeLine: 'month',
     },
   },

@@ -2,7 +2,7 @@
   <div v-if="!isLoading" class="col-span-1 p-5 bg-widget-bg rounded-[10px]">
     <div class="flex justify-between items-center">
       <span class="text-smm font-medium">Pipe Line</span>
-      <SwdSelectFilter />
+      <SwdSelectFilter destination="pipeLine" />
     </div>
     <div class="pt-6 flex justify-between">
       <div class="justify-between flex flex-col border border-widget-border rounded-[10px] pt-3 bg-white">
