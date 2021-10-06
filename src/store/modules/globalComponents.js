@@ -20,6 +20,26 @@ const state = () => ({
       listOfHouseholds: '6',
     },
   },
+  selectFilter: {
+    options: [
+      {
+        title: 'Past year',
+        command: 'year',
+      },
+      {
+        title: 'Past month',
+        command: 'month',
+      },
+      {
+        title: 'Past quarter',
+        command: 'quarter',
+      },
+    ],
+    values: {
+      default: 'month',
+      pipeLine: 'month',
+    },
+  },
   dialog: {
     showDialog: {
       changeName: false,
@@ -37,6 +57,11 @@ const mutations = {
   setDestinationItemsPerPage(state, data) {
     const { destination, value } = data
     state.itemsPerPage.values[destination] = value
+  },
+
+  setDestinationSelectFilter(state, data) {
+    const { destination, value } = data
+    state.selectFilter.values[destination] = value
   },
 
   setShowModal(state, data) {

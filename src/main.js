@@ -27,6 +27,7 @@ import SwdSubHeader from '@/components/SwdSubHeader.vue'
 import SwdStubForText from '@/components/Global/SwdStubForText.vue'
 import SwdMemberActions from '@/components/Global/SwdMemberActions.vue'
 import SwdNativeSelect from '@/components/Global/SwdNativeSelect.vue'
+import SwdSelectFilter from '@/components/Global/SwdSelectFilter.vue'
 
 import {
   ElProgress,
@@ -87,6 +88,7 @@ const components = [
   SwdStubForText,
   SwdMemberActions,
   SwdNativeSelect,
+  SwdSelectFilter,
   ElForm,
   ElFormItem,
   ElAutocomplete,
