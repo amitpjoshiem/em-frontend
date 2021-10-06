@@ -9,7 +9,7 @@
       class="styled-select border rounded-md border-input-border text-main text-xss px-2 py-1 bg-white"
       @change="handleCommand($event)"
     >
-      <option v-for="(item, index) in options" :key="index" :value="item.title">{{ item.title }}</option>
+      <option v-for="(item, index) in options" :key="index" :value="item.command">{{ item.title }}</option>
     </select>
   </div>
 </template>

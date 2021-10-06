@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'all' }" class="cursor-pointer hover:text-activity"> List of Households </router-link>
     <div class="flex items-center">
       <SwdItemsPerPage :destination="'dashboard'" />
-      <SwdNativeSelect :options="actionsOptions" init-value="All" @select="handleSelect" />
+      <SwdNativeSelect :options="actionsOptions" init-value="all" @select="handleSelect" />
     </div>
   </div>
 </template>
@@ -30,25 +30,10 @@ export default {
       },
     ]
 
-    const options = [
-      {
-        value: 'Option1',
-        label: 'All',
-      },
-      {
-        value: 'Option2',
-        label: 'Prospect',
-      },
-      {
-        value: 'Option3',
-        label: 'Clients',
-      },
-    ]
-
     const actionsMap = {
-      All: () => store.commit('dashboard/setHouseHolderType', 'all'),
-      Clients: () => store.commit('dashboard/setHouseHolderType', 'client'),
-      Prospect: () => store.commit('dashboard/setHouseHolderType', 'prospect'),
+      all: () => store.commit('dashboard/setHouseHolderType', 'all'),
+      clients: () => store.commit('dashboard/setHouseHolderType', 'client'),
+      prospect: () => store.commit('dashboard/setHouseHolderType', 'prospect'),
     }
 
     const handleSelect = (command) => {
@@ -58,7 +43,6 @@ export default {
 
     return {
       actionsOptions,
-      options,
       handleSelect,
     }
   },
