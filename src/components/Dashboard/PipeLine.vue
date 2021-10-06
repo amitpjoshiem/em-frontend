@@ -10,10 +10,12 @@
           <span class="text-gray03">Total AUM</span>
           <div class="flex rounded-md p-1 bg-color-green">
             <InlineSvg :src="IconUpArrow" class="mt-px" />
-            <span class="text-white"> {{ getTotalNewAmount }} </span>
+            <span class="text-white"> {{ currencyCompact(pipeLine.data.new_aum) }} </span>
           </div>
         </div>
-        <span class="flex items-center justify-center text-xll font-medium"> {{ getTotalAmount }} </span>
+        <span class="flex items-center justify-center text-xll font-medium">
+          {{ currencyCompact(pipeLine.data.aum) }}
+        </span>
         <InlineSvg :src="IconTotal" />
       </div>
 
@@ -38,28 +40,13 @@ import IconTotal from '@/assets/svg/total.svg'
 import IconMembers from '@/assets/svg/members.svg'
 import IconUpArrow from '@/assets/svg/up-arrow.svg'
 import IconPipeLineEmpty from '@/assets/svg/icon-pipe-line-empty.svg'
-import { computed } from 'vue'
-
+import { currencyCompact } from '@/utils/currencyCompactFormat'
 import { useDashboardPipeLine } from '@/api/use-dashboard-pipeline.js'
 
 export default {
   name: 'PipeLine',
   setup() {
     const { isLoading, isError, data: pipeLine, refetch } = useDashboardPipeLine()
-
-    const getTotalAmount = computed(() => {
-      if (pipeLine.value.data.aum > 1000000000) return Math.round(pipeLine.value.data.aum / 1000000000) + 'B'
-      if (pipeLine.value.data.aum > 1000000) return Math.round(pipeLine.value.data.aum / 1000000) + 'M'
-      if (pipeLine.value.data.aum > 1000) return Math.round(pipeLine.value.data.aum / 1000) + 'K'
-      return pipeLine.value.data.aum
-    })
-
-    const getTotalNewAmount = computed(() => {
-      if (pipeLine.value.data.new_aum > 1000000000) return Math.round(pipeLine.value.data.aum / 1000000000) + 'B'
-      if (pipeLine.value.data.new_aum > 1000000) return Math.round(pipeLine.value.data.aum / 1000000) + 'M'
-      if (pipeLine.value.data.new_aum > 1000) return Math.round(pipeLine.value.data.aum / 1000) + 'K'
-      return pipeLine.value.data.new_aum
-    })
 
     return {
       IconTotal,
@@ -70,8 +57,7 @@ export default {
       isError,
       pipeLine,
       refetch,
-      getTotalAmount,
-      getTotalNewAmount,
+      currencyCompact,
     }
   },
 }
