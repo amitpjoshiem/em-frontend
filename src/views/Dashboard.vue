@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-5">
+  <div class="px-5">
     <HeaderDashboard />
     <div class="flex">
       <div class="flex flex-col w-2/3">
