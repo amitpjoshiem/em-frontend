@@ -1,25 +1,25 @@
 <template>
-  <div v-if="!isLoading" class="col-span-1 p-5 bg-widget-bg rounded-[10px]">
+  <div v-if="!isLoading" class="p-5 bg-widget-bg rounded-lg">
     <div class="flex justify-between items-center">
       <span class="text-smm font-medium">Pipe Line</span>
       <SwdSelectFilter destination="pipeLine" />
     </div>
     <div class="pt-6 flex justify-between mb-2">
-      <div class="justify-between flex flex-col border border-widget-border rounded-[10px] pt-3 bg-white">
+      <div class="justify-between flex flex-col border border-widget-border rounded-lg pt-3 bg-white w-5/12">
         <div class="flex text-small items-center justify-between px-2.5">
           <span class="text-gray03">Total AUM</span>
           <div class="flex rounded-md p-1 bg-color-green">
             <InlineSvg :src="IconUpArrow" class="mt-[2px] mr-px" />
-            <span class="text-white ml-px font-semibold"> {{ currencyCompact(pipeLine.data.new_aum) }} </span>
+            <span class="text-white ml-px font-semibold"> ${{ currencyCompact(pipeLine.data.new_aum) }} </span>
           </div>
         </div>
         <span class="flex items-center justify-center text-xll font-medium">
-          {{ currencyCompact(pipeLine.data.aum) }}
+          ${{ currencyCompact(pipeLine.data.aum) }}
         </span>
         <InlineSvg :src="IconTotal" />
       </div>
 
-      <div class="justify-between flex flex-col border border-widget-border rounded-[10px] pt-3 bg-white">
+      <div class="justify-between flex flex-col border border-widget-border rounded-lg pt-3 bg-white w-5/12">
         <div class="flex text-small items-center justify-between px-2.5">
           <span class="text-gray03">Members</span>
           <div class="flex rounded-md p-1 bg-color-green">
@@ -28,7 +28,9 @@
           </div>
         </div>
         <span class="flex items-center justify-center text-xll font-medium"> {{ pipeLine.data.members }} </span>
-        <InlineSvg :src="IconMembers" />
+        <div class="-ml-px">
+          <InlineSvg :src="IconMembers" />
+        </div>
       </div>
     </div>
   </div>

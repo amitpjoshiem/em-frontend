@@ -2,8 +2,8 @@
   <div class="container px-5">
     <HeaderDashboard />
     <div class="flex">
-      <div class="flex flex-col">
-        <OpportunitiesBlock class="w-2/3" />
+      <div class="flex flex-col w-2/3">
+        <OpportunitiesBlock />
         <TopMembers />
       </div>
       <div class="w-1/3 flex flex-col justify-between">

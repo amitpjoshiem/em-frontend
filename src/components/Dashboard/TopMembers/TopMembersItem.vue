@@ -3,10 +3,10 @@
     <div class="flex justify-center items-center w-1/12">
       <SwdAvatar :link="getAvatarUrl" size="small" />
     </div>
-    <div class="text-xs text-main font-medium flex items-center w-4/12">
+    <div class="text-xs text-main font-medium flex items-center w-3/12">
       {{ member.name }}
     </div>
-    <div class="flex justify-center items-center w-2/12">
+    <div class="flex items-center w-3/12">
       <SwdTypeUserLabel class="text-xs" />
     </div>
     <div class="text-xs text-main font-medium flex items-center w-3/12">
