@@ -1,5 +1,5 @@
 <template>
-  <div class="flex pt-3">
+  <div class="flex py-2">
     <div class="flex justify-center items-center w-1/12">
       <SwdAvatar :link="getAvatarUrl" size="small" />
     </div>
@@ -18,7 +18,7 @@
     <div class="col-span-1 flex justify-center items-center w-1/12">
       <SwdDropDown :options="actionsOptions">
         <template #titleDropDown>
-          <span class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3 border">
+          <span class="cursor-pointer bg-white rounded flex justify-center items-center py-1 px-2 border">
             <InlineSvg :src="IconActionGray" />
           </span>
         </template>

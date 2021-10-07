@@ -13,10 +13,10 @@
         <span class="text-small text-gray03">Total Income: </span>
         <span class="text-sm font-medium">{{ currencyFormat(total) }}</span>
       </div>
-      <div class="flex items-center justify-center h-4.5 rounded-md bg-gray03">
+      <div class="flex items-center justify-center h-4.5 rounded-md" :class="getPercentClass">
         <div class="flex items-center px-1 py-px">
-          <InlineSvg :src="IconLightning" class="w-2 mr-[2px]" />
-          <span class="text-smallx text-white font-semibold">{{ percentFormat(percent / 100) }}</span>
+          <InlineSvg :src="IconLightning" class="w-2 mx-1" :class="{ 'icon-transform': !up }" />
+          <span class="text-small text-white font-semibold">{{ percentFormat(percent / 100) }}</span>
         </div>
       </div>
     </div>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+
 import IconIncomeTop from '@/assets/svg/icon-income-top.svg'
 import IconLightning from '@/assets/svg/icon-lightning.svg'
 
@@ -36,14 +38,14 @@ import { percentFormat } from '@/utils/percentFormat'
 export default {
   props: {
     percent: {
-      type: String,
+      type: Number,
       require: true,
-      default: '',
+      default: 0,
     },
     total: {
-      type: String,
+      type: Number,
       require: true,
-      default: '',
+      default: 0,
     },
     up: {
       type: Boolean,
@@ -51,8 +53,13 @@ export default {
       default: true,
     },
   },
-  setup() {
+  setup(props) {
+    const getPercentClass = computed(() => {
+      if (props.up) return 'bg-border-green'
+      return 'bg-color-error'
+    })
     return {
+      getPercentClass,
       IconDownRisk,
       IconUpRisk,
       IconIncomeTop,
@@ -63,3 +70,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.icon-transform {
+  transform: scale(1, -1);
+}
+</style>

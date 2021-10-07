@@ -1,5 +1,5 @@
 <template>
-  <div class="border-l border-r border-b rounded-b-xl border-color-grey pb-5 topmembers-block">
+  <div class="border-l border-r border-b rounded-b-xl border-color-grey pt-4 topmembers-block">
     <div v-if="!isLoading">
       <TopMembersItem v-for="(member, index) in members.data" :key="index" :member="member" />
     </div>

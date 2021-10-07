@@ -3,7 +3,7 @@
     <OpportunitiesBlockHeader class="pt-5 pr-5 pl-5" />
     <div v-if="!isLoading">
       <div class="p-5">
-        <OpportunitiesBlockChart />
+        <OpportunitiesBlockChart :values="opportunity.data.values" />
         <OpportunitiesBlockTotal
           :percent="opportunity.data.percent"
           :total="opportunity.data.total"
