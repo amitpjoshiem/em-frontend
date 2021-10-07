@@ -7,7 +7,7 @@
       {{ member.name }}
     </div>
     <div class="flex justify-center items-center w-2/12">
-      <SwdTypeUserLabel />
+      <SwdTypeUserLabel class="text-xs" />
     </div>
     <div class="text-xs text-main font-medium flex items-center w-3/12">
       {{ member.stage }}

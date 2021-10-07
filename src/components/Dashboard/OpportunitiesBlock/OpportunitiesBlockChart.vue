@@ -14,6 +14,7 @@
 import { ref } from 'vue'
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import { computed } from 'vue'
+import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
   name: 'App',
@@ -64,6 +65,9 @@ export default {
           y: {
             type: 'linear',
             ticks: {
+              callback: function (value) {
+                return currencyFormat(value)
+              },
               font: {
                 size: 9,
               },
@@ -96,6 +100,7 @@ export default {
     return {
       doughnutChart,
       chartRef,
+      currencyFormat,
     }
   },
 }
