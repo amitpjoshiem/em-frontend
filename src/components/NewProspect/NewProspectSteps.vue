@@ -51,55 +51,24 @@
     <div class="flex items-center pb-7">
       <!-- STEP 1 -->
       <div class="cycle-active" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step >= 1 }" />
+      <div :class="{ 'cycle-next': step === 1, 'cycle-active': step > 1 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 2, 'bg-activity': step >= 2 }" />
 
       <!-- STEP 2 -->
-      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step > 1, 'bg-input-border': step <= 1 }" />
-      <div
-        :class="{
-          'cycle-next': step === 2,
-          'cycle-default': step < 2,
-          'cycle-active': step > 2,
-        }"
-      />
+      <div :class="{ 'cycle-default': step < 2, 'cycle-active': step > 2, 'cycle-next': step === 2 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 3, 'bg-activity': step >= 3 }" />
 
       <!-- STEP 3 -->
-      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step > 2, 'bg-input-border': step <= 2 }" />
-      <div
-        :class="{
-          'cycle-next': step === 3,
-          'cycle-default': step < 3,
-          'cycle-active': step > 3,
-        }"
-      />
+      <div :class="{ 'cycle-default': step < 3, 'cycle-active': step > 3, 'cycle-next': step === 3 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 4, 'bg-activity': step >= 4 }" />
 
       <!-- STEP 4 -->
-      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step > 3, 'bg-input-border': step <= 3 }" />
-      <div
-        :class="{
-          'cycle-next': step === 4,
-          'cycle-default': step < 4,
-          'cycle-active': step > 4,
-        }"
-      />
+      <div :class="{ 'cycle-default': step < 4, 'cycle-active': step > 4, 'cycle-next': step === 4 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 5, 'bg-activity': step >= 5 }" />
 
       <!-- STEP 5 -->
-      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step > 4, 'bg-input-border': step <= 4 }" />
-      <div
-        :class="{
-          'cycle-next': step === 5,
-          'cycle-default': step < 5,
-          'cycle-active': step > 5,
-        }"
-      />
-      <!-- STEP 6 -->
-      <div class="flex-grow h-[3px] bg-input-border" />
-      <div
-        :class="{
-          'cycle-next': step === 6,
-          'cycle-default': step < 6,
-          'cycle-active': step > 6,
-        }"
-      />
+      <div :class="{ 'cycle-default': step < 5, 'cycle-active': step > 5, 'cycle-next': step === 5 }" />
     </div>
   </div>
 </template>
