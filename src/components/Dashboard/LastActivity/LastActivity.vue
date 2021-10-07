@@ -42,7 +42,6 @@ export default {
 
 <style scoped>
 .active-item:not(:first-of-type) {
-  border-top: 1px solid #ebf0fa;
   margin-left: -20px;
   margin-right: -20px;
   padding: 15px 20px;

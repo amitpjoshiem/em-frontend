@@ -43,6 +43,5 @@ export default {
 <style>
 .opportuniti-block {
   height: 300px;
-  width: 600px;
 }
 </style>

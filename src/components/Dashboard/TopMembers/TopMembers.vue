@@ -1,5 +1,5 @@
 <template>
-  <div class="border-l border-r border-b rounded-b-xl border-color-grey pt-4 topmembers-block">
+  <div class="border-l border-r border-b rounded-b-xl border-color-grey pt-4 topmembers-block mr-5">
     <div v-if="!isLoading">
       <TopMembersItem v-for="(member, index) in members.data" :key="index" :member="member" />
     </div>
@@ -33,6 +33,5 @@ export default {
 <style>
 .topmembers-block {
   height: 230px;
-  width: 600px;
 }
 </style>
