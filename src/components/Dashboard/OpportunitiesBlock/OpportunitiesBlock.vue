@@ -4,7 +4,11 @@
     <div v-if="!isLoading">
       <div class="p-5">
         <OpportunitiesBlockChart />
-        <OpportunitiesBlockTotal />
+        <OpportunitiesBlockTotal
+          :percent="opportunity.data.percent"
+          :total="opportunity.data.total"
+          :up="opportunity.data.up"
+        />
       </div>
     </div>
     <el-skeleton v-else :rows="5" animated class="p-5" />
