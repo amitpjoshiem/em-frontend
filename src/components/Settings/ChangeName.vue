@@ -32,7 +32,7 @@ import { reactive, ref, onMounted, computed } from 'vue'
 import { rules } from '@/validationRules/changeName.js'
 
 export default {
-  name: 'ChangePassword',
+  name: 'ChangeName',
   components: {
     SwdDialogSucces,
   },
@@ -76,6 +76,7 @@ export default {
     }
 
     const closeDialog = () => {
+      data.isShowForm = true
       store.commit('globalComponents/setShowModal', {
         destination: 'changeName',
         value: false,
