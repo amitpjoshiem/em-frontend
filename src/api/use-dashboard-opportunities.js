@@ -6,7 +6,7 @@ import { useStore } from 'vuex'
 export const useDashboardOpportunities = () => {
   const store = useStore()
 
-  const type = computed(() => store.state.globalComponents.selectFilter.values.opportunities)
+  const type = computed(() => store.state.globalComponents.selectFilter.values.opportunitiesBlock)
   const reactiveType = ref(type)
 
   const queryKey = reactive([
