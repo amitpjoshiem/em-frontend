@@ -3,7 +3,7 @@
     <div class="flex justify-center items-center w-1/12">
       <SwdAvatar :link="getAvatarUrl" size="small" />
     </div>
-    <div class="text-xs text-main font-medium flex items-center w-3/12">
+    <div class="text-xs text-main font-medium flex items-center w-4/12">
       {{ member.name }}
     </div>
     <div class="flex justify-center items-center w-2/12">
@@ -13,16 +13,7 @@
       {{ member.stage }}
     </div>
     <div class="text-xs text-main font-medium flex items-center w-2/12">
-      {{ member.amount }}
-    </div>
-    <div class="col-span-1 flex justify-center items-center w-1/12">
-      <SwdDropDown :options="actionsOptions">
-        <template #titleDropDown>
-          <span class="cursor-pointer bg-white rounded flex justify-center items-center py-1 px-2 border">
-            <InlineSvg :src="IconActionGray" />
-          </span>
-        </template>
-      </SwdDropDown>
+      {{ currencyFormat(member.amount) }}
     </div>
   </div>
 </template>
@@ -31,6 +22,7 @@
 import IconProfitUp from '@/assets/svg/profit-up.svg'
 import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import { computed } from 'vue'
+import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
   name: 'TopMembersItem',
@@ -63,6 +55,7 @@ export default {
       actionsOptions,
       IconActionGray,
       getAvatarUrl,
+      currencyFormat,
     }
   },
 }
