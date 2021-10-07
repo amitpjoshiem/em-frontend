@@ -13,20 +13,41 @@
 <script>
 import { ref } from 'vue'
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
+import { computed } from 'vue'
+import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
   name: 'App',
   components: {
     Vue3ChartJs,
   },
-  setup() {
+  props: {
+    values: {
+      type: Array,
+      require: true,
+      default: () => [],
+    },
+  },
+  setup(props) {
     const chartRef = ref(null)
+
+    const getData = computed(() => {
+      const chartData = {
+        data: [],
+        labels: [],
+      }
+      props.values.forEach((item) => {
+        chartData.data.push(Math.round(item.amount))
+        chartData.labels.push(item.period)
+      })
+      return chartData
+    })
 
     const doughnutChart = {
       id: 'doughnut',
       type: 'bar',
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: getData.value.labels,
         datasets: [
           {
             borderRadius: 20,
@@ -34,7 +55,7 @@ export default {
             borderColor: '#41B883',
             maxBarThickness: 10,
             backgroundColor: ['#66B6FF'],
-            data: [40, 20, 80, 10, 30, 50, 80, 25, 87, 34, 28, 84],
+            data: getData.value.data,
           },
         ],
       },
@@ -43,13 +64,9 @@ export default {
         scales: {
           y: {
             type: 'linear',
-            grace: '5%',
-            min: 0,
-            max: 100,
-            stepSize: 20,
             ticks: {
               callback: function (value) {
-                return value + '%'
+                return currencyFormat(value)
               },
               font: {
                 size: 9,
@@ -83,6 +100,7 @@ export default {
     return {
       doughnutChart,
       chartRef,
+      currencyFormat,
     }
   },
 }

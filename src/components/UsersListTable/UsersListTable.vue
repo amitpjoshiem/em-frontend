@@ -17,30 +17,35 @@
 
     <el-table-column prop="created_at" label="createdAt" min-width="110" sortable>
       <template #default="scope">
-        <span>{{ scope.row.createdAtFormatted }}</span>
+        <span class="text-xss">{{ scope.row.createdAtFormatted }}</span>
       </template>
     </el-table-column>
 
     <el-table-column label="Type" min-width="110">
       <template #default="scope">
-        <SwdTypeUserLabel :user-type="scope.row.type" />
+        <SwdTypeUserLabel :user-type="scope.row.type" class="text-xss" />
       </template>
     </el-table-column>
+
     <el-table-column label="Onboarding" prop="step" min-width="130" sortable>
       <template #default="scope">
         <SwdLinearProgress :percentage="Number(scope.row.step) * 20" :show-text="true" />
       </template>
     </el-table-column>
 
-    <el-table-column prop="city" label="Location" min-width="170" />
-
-    <el-table-column label="net worth" min-width="110">
-      <SwdStubForText text="" plug="&mdash;" class="text-sm text-main font-semibold" />
+    <el-table-column prop="city" label="Location" min-width="170" class="text-xss">
+      <template #default="scope">
+        <span class="text-xss">{{ scope.row.city }}</span>
+      </template>
     </el-table-column>
 
-    <el-table-column label="" min-width="47">
+    <el-table-column label="net worth" min-width="80">
+      <SwdStubForText text="" plug="&mdash;" class="text-xss text-main font-semibold" />
+    </el-table-column>
+
+    <el-table-column min-width="55">
       <template #default="scope">
-        <SwdMemberActions :user="scope.row" />
+        <SwdMemberActions :user="scope.row" class="border rounded" />
       </template>
     </el-table-column>
   </el-table>
