@@ -32,7 +32,7 @@
       <div class="text-main font-semibold text-smm mb-5">Providers</div>
       <el-collapse accordion>
         <el-collapse-item v-for="(item, index) in yodleeProviders.data" :key="index" :title="item.name">
-          <template v-if="item.accounts">
+          <template v-if="Array.isArray(item.accounts) && item.accounts.length">
             <el-table :data="item.accounts" style="width: 100%">
               <el-table-column prop="name" label="Name" width="300" />
               <el-table-column prop="status" label="status" />
