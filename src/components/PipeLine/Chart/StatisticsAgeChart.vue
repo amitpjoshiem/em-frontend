@@ -12,10 +12,7 @@
     </div>
     <div class="pt-8 ml-2.5 text-xs text-main">
       <div v-for="(item, index) in values" :key="index" class="flex items-center mb-5">
-        <div class="bg-activity rounded-full w-2 h-2 mr-2.5" />
-        <span>{{ item.start_age }}-</span>
-        <span>{{ item.end_age }} - </span>
-        <span class="font-semibold ml-1">{{ percentFormat(item.percent / 100) }}</span>
+        <LegendChartAge :item="item" :index="index" />
       </div>
     </div>
   </div>
@@ -25,12 +22,14 @@
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import { chartWithTextCenter } from '@/utils/chartWithText'
 import { computed } from 'vue'
-import { percentFormat } from '@/utils/percentFormat'
+
+import LegendChartAge from './LegendChartAge.vue'
 
 export default {
   name: 'StatisticsAgeChart',
   components: {
     Vue3ChartJs,
+    LegendChartAge,
   },
   props: {
     values: {
@@ -74,7 +73,6 @@ export default {
     return {
       doughnutChart,
       getData,
-      percentFormat,
     }
   },
 }
