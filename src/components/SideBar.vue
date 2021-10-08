@@ -31,9 +31,9 @@
         <InlineSvg v-if="getRouteName === 'activity'" :src="IconActivityActiv" />
         <InlineSvg v-else :src="IconActivityGray" />
       </router-link>
-      <div class="item flex justify-center items-center cursor-pointer w-full h-14">
+      <router-link :to="{ name: 'pipeline' }" class="item flex justify-center items-center cursor-pointer w-full h-14">
         <img src="../assets/img/statistics.png" />
-      </div>
+      </router-link>
     </div>
   </aside>
 </template>
