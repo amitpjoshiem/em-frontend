@@ -33,12 +33,23 @@
       <el-collapse accordion>
         <el-collapse-item v-for="(item, index) in yodleeProviders.data" :key="index" :title="item.name">
           <template v-if="Array.isArray(item.accounts) && item.accounts.length">
-            <el-table :data="item.accounts" style="width: 100%">
+            <el-table
+              border
+              :data="item.accounts"
+              style="width: 100%"
+              header-cell-class-name="header-class"
+              header-row-class-name="header-row-class"
+              row-class-name="row-class-name"
+            >
               <el-table-column prop="name" label="Name" width="300" />
               <el-table-column prop="status" label="status" />
               <el-table-column prop="type" label="type" />
               <el-table-column prop="container" label="container" />
-              <el-table-column prop="balance" label="balance" />
+              <el-table-column prop="balance" label="balance">
+                <template #default="scope">
+                  <span>{{ currencyFormat(scope.row.balance.split(' ')[0]) }}</span>
+                </template>
+              </el-table-column>
             </el-table>
           </template>
         </el-collapse-item>
@@ -55,6 +66,7 @@ import { useRoute } from 'vue-router'
 import { computed, watchEffect } from 'vue'
 import { useQueryClient } from 'vue-query'
 import { useTimer } from '@/utils/useTimer'
+import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
   name: 'AssetAccounts',
@@ -138,7 +150,25 @@ export default {
       isShowContent,
       refetchYodleeStatus,
       isLoadingYodleeProviders,
+      currencyFormat,
     }
   },
 }
 </script>
+
+<style>
+.header-class {
+  background-color: #f2f5fa !important;
+  height: 24px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  color: #aab5cf;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.row-class-name {
+  color: #424450;
+  font-size: 13px;
+}
+</style>
