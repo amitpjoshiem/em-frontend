@@ -1,14 +1,15 @@
 <template>
-  <div class="border border-input-border rounded-md p-5">
+  <div class="border border-color-grey rounded-xl p-5">
     <div class="text-smm text-main font-semibold mb-5">HouseholdsStatistics</div>
-    <div class="flex">
-      <div v-if="!isLoadingRetired" class="w-8/12 mr-2.5">
+    <div v-if="!isLoadingRetired && !isLoadingAge" class="flex">
+      <div class="w-8/12 mr-2.5">
         <StatisticsRetiredChart :values="statisticsRetired.data" />
       </div>
-      <div v-if="!isLoadingAge" class="w-4/12 ml-2.5 -mt-4">
+      <div class="w-4/12 ml-2.5 -mt-6">
         <StatisticsAgeChart :values="statisticsAge.data" />
       </div>
     </div>
+    <el-skeleton v-else :rows="3" animated class="p-5" />
   </div>
 </template>
 <script>

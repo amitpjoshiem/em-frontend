@@ -24,8 +24,8 @@
       </div>
 
       <div class="border-l border-color-grey h-16" />
-      <div>
-        <img class="h-[13px] pr-5 pl-5 cursor-pointer" src="../assets/img/notifications.png" />
+      <div class="px-5">
+        <InlineSvg :src="IconNotifications" class="cursor-pointer" />
       </div>
       <div class="border-l border-color-grey h-16" />
       <div class="flex items-center justify-center pl-5 cursor-pointer">
@@ -42,6 +42,7 @@
 import UserAction from '@/components/UserAction.vue'
 import SwdRemoteSearch from '@/components/Global/SwdRemoteSearch.vue'
 import IconPlus from '@/assets/svg/icon-plus.svg'
+import IconNotifications from '@/assets/svg/icon-notifications.svg'
 import { ElMessageBox } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserProfile } from '@/api/use-user-profile.js'
@@ -85,6 +86,7 @@ export default {
       isErrorUserProfile,
       user,
       isFetched,
+      IconNotifications,
     }
   },
 }

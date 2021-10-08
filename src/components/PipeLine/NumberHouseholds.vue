@@ -1,9 +1,10 @@
 <template>
-  <div class="border border-input-border rounded-md p-5">
+  <div class="border border-color-grey rounded-xl p-5">
     <div class="text-smm text-main font-semibold mb-5">Number of Households</div>
     <div v-if="!isLoadingCount">
-      <StatisticsCountChart :values="statisticsCount.data" />
+      <StatisticsCountChart :values="statisticsCount.data" class="my-4" />
     </div>
+    <el-skeleton v-else :rows="3" animated class="p-5" />
   </div>
 </template>
 <script>
