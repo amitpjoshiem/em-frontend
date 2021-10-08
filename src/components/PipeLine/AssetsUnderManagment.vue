@@ -13,10 +13,10 @@ export default {
     AumChart,
   },
   setup() {
-    const { isLoading: isLoading, isError, data: aum } = usePipeLineAum()
+    const { isLoading, isError, data: aum } = usePipeLineAum()
 
     return {
-      isLoading: isLoading,
+      isLoading,
       isError,
       aum,
     }
