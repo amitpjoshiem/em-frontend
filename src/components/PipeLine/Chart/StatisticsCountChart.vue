@@ -1,24 +1,12 @@
 <template>
-  <div class="flex">
-    <div class="w-10/12">
-      <vue3-chart-js
-        :id="doughnutChart.id"
-        ref="chartRef"
-        :type="doughnutChart.type"
-        :data="doughnutChart.data"
-        :options="doughnutChart.options"
-      />
-    </div>
-    <div class="w-2/12 flex flex-col ml-2.5">
-      <div class="flex items-center">
-        <div class="bg-color-error rounded-full w-2 h-2" />
-        <span class="text-xs text-main ml-1">Retired</span>
-      </div>
-      <div class="flex items-center mt-2.5">
-        <div class="bg-activity rounded-full w-2 h-2" />
-        <span class="text-xs text-main ml-1">Employers</span>
-      </div>
-    </div>
+  <div>
+    <vue3-chart-js
+      :id="doughnutChart.id"
+      ref="chartRef"
+      :type="doughnutChart.type"
+      :data="doughnutChart.data"
+      :options="doughnutChart.options"
+    />
   </div>
 </template>
 
@@ -26,10 +14,10 @@
 import { ref } from 'vue'
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import { computed } from 'vue'
-import { currencyCompact } from '@/utils/currencyCompactFormat'
+import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
-  name: 'StatisticsRetiredChart',
+  name: 'StatisticsCountChart',
   components: {
     Vue3ChartJs,
   },
@@ -45,42 +33,29 @@ export default {
 
     const getData = computed(() => {
       const chartData = {
-        employers: [],
-        retired: [],
+        data: [],
         labels: [],
       }
       props.values.forEach((item) => {
-        chartData.employers.push(item.employers)
-        chartData.retired.push(item.retired)
-        chartData.labels.push(item.month)
+        chartData.data.push(item.count)
+        chartData.labels.push(item.period)
       })
-
       return chartData
     })
 
     const doughnutChart = {
-      id: 'aumChart',
-      type: 'line',
+      id: 'doughnut',
+      type: 'bar',
       data: {
         labels: getData.value.labels,
         datasets: [
           {
             borderRadius: 20,
             borderSkipped: false,
-            borderColor: '#66B6FF',
+            borderColor: '#41B883',
             maxBarThickness: 10,
             backgroundColor: ['#66B6FF'],
-            data: getData.value.employers,
-            cubicInterpolationMode: 'monotone',
-          },
-          {
-            borderRadius: 20,
-            borderSkipped: false,
-            borderColor: '#FF92A5',
-            maxBarThickness: 10,
-            backgroundColor: ['#FF92A5'],
-            data: getData.value.retired,
-            cubicInterpolationMode: 'monotone',
+            data: getData.value.data,
           },
         ],
       },
@@ -122,7 +97,7 @@ export default {
     return {
       doughnutChart,
       chartRef,
-      currencyCompact,
+      currencyFormat,
     }
   },
 }

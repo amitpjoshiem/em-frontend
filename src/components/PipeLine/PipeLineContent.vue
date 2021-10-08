@@ -1,16 +1,14 @@
 <template>
-  <div class="flex">
+  <div class="flex mb-5">
     <AssetsUnderManagment class="w-6/12 mr-2.5" />
     <NumberHouseholds class="w-6/12 ml-2.5" />
   </div>
   <HouseholdsStatistics />
-  <Allocation />
 </template>
 <script>
-import AssetsUnderManagment from './AssetsUnderManagment.vue'
-import NumberHouseholds from './NumberHouseholds.vue'
-import HouseholdsStatistics from './HouseholdsStatistics.vue'
-import Allocation from './Allocation.vue'
+import AssetsUnderManagment from '@/components/PipeLine/AssetsUnderManagment.vue'
+import NumberHouseholds from '@/components/PipeLine//NumberHouseholds.vue'
+import HouseholdsStatistics from '@/components/PipeLine//HouseholdsStatistics.vue'
 
 export default {
   name: 'PipeLineContent',
@@ -18,7 +16,6 @@ export default {
     AssetsUnderManagment,
     NumberHouseholds,
     HouseholdsStatistics,
-    Allocation,
   },
   setup() {},
 }

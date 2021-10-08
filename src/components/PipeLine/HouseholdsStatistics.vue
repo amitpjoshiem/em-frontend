@@ -1,27 +1,18 @@
 <template>
   <div class="border border-input-border rounded-md p-5">
-    <div>HouseholdsStatistics</div>
-
-    <div v-if="!isLoadingCount">
-      <div>COUNT</div>
-      {{ statisticsCount }}
-    </div>
-    <div v-if="!isLoadingRetired">
-      <!-- <div>RETIRED</div> -->
-      <StatisticsRetiredChart :values="statisticsRetired.data" />
-      <!-- {{ statisticsRetired }} -->
-    </div>
-
-    <div v-if="!isLoadingAge">
-      <!-- <div>AGE</div> -->
-      <StatisticsAgeChart />
-      <!-- {{ statisticsAge }} -->
+    <div class="text-smm text-main font-semibold mb-5">HouseholdsStatistics</div>
+    <div class="flex">
+      <div v-if="!isLoadingRetired" class="w-8/12 mr-2.5">
+        <StatisticsRetiredChart :values="statisticsRetired.data" />
+      </div>
+      <div v-if="!isLoadingAge" class="w-4/12 ml-2.5 -mt-4">
+        <StatisticsAgeChart :values="statisticsAge.data" />
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { usePipeLineStatisticsAge } from '@/api/use-pipeline-statistics-age.js'
-import { usePipeLineStatisticsCount } from '@/api/use-pipeline-statistics-count.js'
 import { usePipeLineStatisticsRetired } from '@/api/use-pipeline-statistics-retired.js'
 
 import StatisticsRetiredChart from './Chart/StatisticsRetiredChart.vue'
@@ -35,7 +26,6 @@ export default {
   },
   setup() {
     const { isLoading: isLoadingAge, isError: isErrorAge, data: statisticsAge } = usePipeLineStatisticsAge()
-    const { isLoading: isLoadingCount, isError: isErrorCount, data: statisticsCount } = usePipeLineStatisticsCount()
     const {
       isLoading: isLoadingRetired,
       isError: isErrorRetired,
@@ -46,9 +36,6 @@ export default {
       isLoadingAge,
       isErrorAge,
       statisticsAge,
-      isLoadingCount,
-      isErrorCount,
-      statisticsCount,
       isLoadingRetired,
       isErrorRetired,
       statisticsRetired,
