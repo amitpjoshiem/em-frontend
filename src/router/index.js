@@ -100,6 +100,11 @@ const routes = [
         name: 'activity',
         component: () => import(/* webpackChunkName: "Activity" */ '../views/Activity.vue'),
       },
+      {
+        path: 'pipeline',
+        name: 'pipeline',
+        component: () => import(/* webpackChunkName: "Activity" */ '../views/PipeLine.vue'),
+      },
 
       {
         path: 'member-details/:id',
