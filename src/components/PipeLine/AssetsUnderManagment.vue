@@ -9,7 +9,8 @@
 </template>
 <script>
 import { usePipeLineAum } from '@/api/use-pipeline-aum.js'
-import AumChart from './Chart/AumChart.vue'
+import AumChart from '@/components/PipeLine/Chart/AumChart/AumChart.vue'
+
 export default {
   name: 'AssetsUnderManagment',
   components: {

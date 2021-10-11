@@ -16,8 +16,8 @@
 import { usePipeLineStatisticsAge } from '@/api/use-pipeline-statistics-age.js'
 import { usePipeLineStatisticsRetired } from '@/api/use-pipeline-statistics-retired.js'
 
-import StatisticsRetiredChart from './Chart/StatisticsRetiredChart.vue'
-import StatisticsAgeChart from './Chart/StatisticsAgeChart.vue'
+import StatisticsRetiredChart from '@/components/PipeLine/Chart/StatisticsRetiredChart/StatisticsRetiredChart.vue'
+import StatisticsAgeChart from '@/components/PipeLine/Chart/StatisticsAgeChart/StatisticsAgeChart.vue'
 
 export default {
   name: 'HouseholdsStatistics',
