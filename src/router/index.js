@@ -219,14 +219,16 @@ const routes = [
         component: () => import(/* webpackChunkName: "Login" */ '../components/Login/ForgotPassword.vue'),
       },
       {
-        path: 'reset-password',
-        name: 'resetpassword',
+        path: 'password-reset',
+        name: 'passwordreset',
         component: () => import(/* webpackChunkName: "Login" */ '../components/Login/ResetPassword.vue'),
+        props: { context: 'reset' },
       },
       {
-        path: 'create-password',
-        name: 'createpassword',
+        path: 'password-create',
+        name: 'passwordcreate',
         component: () => import(/* webpackChunkName: "Login" */ '../components/Login/ResetPassword.vue'),
+        props: { context: 'create' },
       },
       {
         path: 'otp',
