@@ -15,7 +15,6 @@
   </div>
 </template>
 <script>
-import { useRoute } from 'vue-router'
 import OpportunityTable from '@/components/MemberDetails/OpportunityTable.vue'
 import TableAssetsConsolidations from '@/components/Table/TableAssetsConsolidations.vue'
 import WidgetMemberDetails from '@/components/MemberDetails/WidgetMemberDetails.vue'
@@ -24,7 +23,6 @@ import PastStressTestResults from '@/components/MemberDetails/PastStressTestResu
 import RetirementIncomePlan from '@/components/MemberDetails/RetirementIncomePlan.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
-import { useQueryClient } from 'vue-query'
 
 export default {
   name: 'MemberDetails',
@@ -38,20 +36,12 @@ export default {
   },
 
   setup() {
-    const route = useRoute()
-    const id = route.params.id
-    const queryClient = useQueryClient()
-
-    const { isLoading: isLoadingProspectDetails, isError, data } = useProspectDetails(id)
+    const { isLoading: isLoadingProspectDetails, isError, data, updateMemberInfo } = useProspectDetails()
 
     const getTitle = computed(() => {
       if (data.value && data.value.type === 'prospect') return 'Prospect details'
       return 'Client details'
     })
-
-    const updateMemberInfo = () => {
-      queryClient.invalidateQueries(['member'])
-    }
 
     return {
       isLoadingProspectDetails,

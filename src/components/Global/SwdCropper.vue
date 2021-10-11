@@ -1,6 +1,12 @@
 <template>
-  <el-dialog v-model="dialogVisible" title="Change avatar" :before-close="handleClose">
-    <vue-cropper ref="cropper" :aspect-ratio="1 / 1" :src="state.imgSrc" />
+  <el-dialog
+    v-model="dialogVisible"
+    title="Change avatar"
+    :before-close="handleClose"
+    width="40%"
+    custom-class="dialog-style"
+  >
+    <vue-cropper ref="cropper" :src="state.imgSrc" :container-style="{ 'max-width': '450px', 'max-height': '700px' }" />
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
@@ -87,3 +93,14 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+.dialog-style {
+  margin-top: 10vh !important;
+}
+
+.dialog-style .el-dialog__body {
+  display: flex;
+  justify-content: center;
+}
+</style>
