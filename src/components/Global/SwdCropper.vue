@@ -1,6 +1,6 @@
 <template>
-  <el-dialog v-model="dialogVisible" title="Change avatar" :before-close="handleClose">
-    <vue-cropper ref="cropper" :aspect-ratio="1 / 1" :src="state.imgSrc" />
+  <el-dialog v-model="dialogVisible" title="Change avatar" :before-close="handleClose" width="30%">
+    <vue-cropper ref="cropper" :src="state.imgSrc" container-style="max-width: 400px; max-height: 650px" />
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
