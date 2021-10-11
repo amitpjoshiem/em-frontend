@@ -69,18 +69,6 @@ app.config.globalProperties.$dayjs = dayjs
 dayjs.extend(relativeTime)
 dayjs.extend(calendar)
 dayjs.extend(updateLocale)
-
-dayjs.updateLocale('en', {
-  calendar: {
-    sameDay: '[Today]',
-    lastDay: '[Yesterday]',
-    lastWeek: 'D MMM YYYY',
-    sameElse: 'D MMM YYYY',
-  },
-})
-
-dayjs.extend(calendar)
-dayjs.extend(updateLocale)
 dayjs.extend(duration)
 
 dayjs.updateLocale('en', {
