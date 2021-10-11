@@ -1,4 +1,4 @@
-import { useQuery } from 'vue-query'
+import { useQuery, useQueryClient } from 'vue-query'
 import { MemberDetailsUser } from '@/dto/Member/MemberDetailsUser'
 import { MemberDetailsHouse } from '@/dto/Member/MemberDetailsHouse'
 import { MemberDetailsSpouse } from '@/dto/Member/MemberDetailsSpouse'
@@ -7,18 +7,24 @@ import { MemberLastEmployment } from '@/dto/Member/MemberLastEmployment'
 import { SpouseLastEmployment } from '@/dto/Member/SpouseLastEmployment'
 import { fetchMember } from '@/api/vueQuery/fetch-member'
 import { dataFactory } from '@/utils/dataFactory'
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
-export const useProspectDetails = (id) => {
+export const useProspectDetails = () => {
   let spouse = reactive({})
   let house = reactive({})
   let other = reactive({})
   let employmentProspect = reactive({})
   let employmentSpouse = reactive({})
+  const route = useRoute()
+  const queryClient = useQueryClient()
 
-  const { isLoading, isError, data } = useQuery(
-    ['member', id],
+  const idCallback = () => route.params.id
+
+  const { isLoading, isError, data, refetch } = useQuery(
+    ['member'],
     () => {
+      const id = idCallback()
       return fetchMember(id)
     },
     {
@@ -37,6 +43,20 @@ export const useProspectDetails = (id) => {
     }
   )
 
+  watch(
+    route,
+    (newV, oldV) => {
+      if (Boolean(newV?.params?.id) && oldV?.params?.id !== undefined) {
+        updateMemberInfo()
+      }
+    },
+    { immediate: true, deep: true }
+  )
+
+  const updateMemberInfo = () => {
+    queryClient.invalidateQueries(['member'])
+  }
+
   return {
     isLoading,
     isError,
@@ -46,5 +66,7 @@ export const useProspectDetails = (id) => {
     employmentProspect,
     employmentSpouse,
     other,
+    refetch,
+    updateMemberInfo,
   }
 }
