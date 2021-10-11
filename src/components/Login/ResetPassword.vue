@@ -11,19 +11,19 @@
 
       <div class="py-5">
         <el-form ref="form" :model="ruleForm" :rules="rules" class="demo-ruleForm" label-position="top">
-          <el-form-item label="Password" prop="pass">
-            <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+          <el-form-item label="Password" prop="password">
+            <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
           </el-form-item>
-          <el-form-item label="Confirm" prop="checkPass">
-            <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" />
+          <el-form-item label="Confirm" prop="password_confirmation">
+            <el-input v-model="ruleForm.password_confirmation" type="password" autocomplete="off" />
           </el-form-item>
         </el-form>
         <div class="text-center pt-5">
           <Button
-            :default-primary="!fetching"
+            :default-primary="!fetchingCreate && !fetchingReset"
             full
             :text-btn="'Continue'"
-            :disabled="fetching"
+            :disabled="fetchingCreate || fetchingReset"
             @click="submitForm('ruleForm')"
           />
         </div>
@@ -38,11 +38,13 @@ import IconForgotPassword from '@/assets/svg/icon-forgot-password.svg'
 import { reactive, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCreatePassword } from '@/api/authentication/use-create-password'
+import { useResetPassword } from '@/api/authentication/use-reset-password'
 
 export default {
   name: 'ResetPassword',
-  setup() {
-    const { response, error, fetching, createPassword } = useCreatePassword()
+  setup(_, { attrs }) {
+    const { fetchingCreate, createPassword } = useCreatePassword()
+    const { fetchingReset, resetPassword } = useResetPassword()
     const route = useRoute()
 
     const data = reactive({
@@ -51,8 +53,8 @@ export default {
     })
 
     const ruleForm = reactive({
-      pass: '',
-      checkPass: '',
+      password: '',
+      password_confirmation: '',
     })
     const form = ref(null)
 
@@ -64,6 +66,10 @@ export default {
     const submitForm = async () => {
       form.value.validate((valid) => {
         if (valid) {
+          if (attrs.context === 'reset') {
+            resetPassword({ ...ruleForm, ...data })
+            return
+          }
           createPassword(ruleForm)
         } else {
           return false
@@ -74,7 +80,7 @@ export default {
     const validateCheckPass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('Please input the password again'))
-      } else if (value !== ruleForm.pass) {
+      } else if (value !== ruleForm.password) {
         callback(new Error("Two inputs don't match!"))
       } else {
         callback()
@@ -82,20 +88,17 @@ export default {
     }
 
     const rules = {
-      pass: [
+      password: [
         { type: 'string', required: true, message: 'Please input password' },
         { min: 6, message: 'Length should be min 6', trigger: 'blur' },
       ],
-      checkPass: [
+      password_confirmation: [
         { type: 'string', required: true, message: 'Please input password' },
         { validator: validateCheckPass, trigger: 'blur' },
       ],
     }
 
     return {
-      response,
-      error,
-      fetching,
       data,
       route,
       IconForgotPassword,
@@ -103,6 +106,8 @@ export default {
       form,
       submitForm,
       rules,
+      fetchingCreate,
+      fetchingReset,
     }
   },
 }
