@@ -23,12 +23,6 @@
         Settings
       </div>
     </router-link>
-
-    <router-link :to="{ name: 'last-activity' }">
-      <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'last-activity' }">
-        Last Activity
-      </div>
-    </router-link>
   </div>
 </template>
 
