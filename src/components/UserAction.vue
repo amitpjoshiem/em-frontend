@@ -27,10 +27,6 @@ export default {
         command: 'settings',
       },
       {
-        title: 'Last Activity',
-        command: 'activity',
-      },
-      {
         title: 'Logout',
         command: 'logout',
         class: 'font-medium',
@@ -45,7 +41,6 @@ export default {
     const actionsMap = {
       logout: () => router.push({ name: 'logout' }),
       profile: () => router.push({ name: 'profile' }),
-      activity: () => router.push({ name: 'last-activity' }),
       settings: () => router.push({ name: 'settings' }),
     }
 

@@ -180,11 +180,6 @@ const routes = [
             name: 'settings',
             component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Settings.vue'),
           },
-          {
-            path: 'last-activity',
-            name: 'last-activity',
-            component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/LastActivity.vue'),
-          },
         ],
       },
 
