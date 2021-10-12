@@ -1,6 +1,6 @@
 <template>
   <div class="border rounded-lg p-5">
-    <div class="text-main text-smm font-semibold">Your Activity</div>
+    <div class="text-main text-smm font-semibold mb-5">Your Activity</div>
     <div class="infinite-list-wrapper" style="overflow: auto">
       <ul
         v-if="status === 'success'"
@@ -95,5 +95,13 @@ export default {
 
 .infinite-list-wrapper {
   height: 77vh;
+}
+
+.el-timeline-item__tail {
+  margin-top: 13px;
+}
+
+.el-timeline-item__node--normal {
+  margin-top: 13px;
 }
 </style>
