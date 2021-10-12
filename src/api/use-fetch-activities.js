@@ -50,7 +50,7 @@ export const useFetchActivities = () => {
     reactiveSearchFields: state.searchFields,
   }
 
-  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, refetch, isLoading } =
+  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, isLoading } =
     useInfiniteQuery(['activity', queryKeySuffix], fetchActivities, {
       getNextPageParam: () => [
         'activity',
@@ -79,7 +79,6 @@ export const useFetchActivities = () => {
     isFetching,
     isFetchingNextPage,
     status,
-    refetch,
     isLoading,
     load,
     disabled,

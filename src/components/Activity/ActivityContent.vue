@@ -36,11 +36,8 @@
   </div>
 </template>
 <script>
-// import { ref, reactive, onMounted, computed } from 'vue'
 import { useFetchActivities } from '@/api/use-fetch-activities.js'
 import TitleDayActivity from './TitleDayActivity.vue'
-// import dayjs from 'dayjs'
-// import { useStore } from 'vuex'
 
 export default {
   name: 'ActivityContent',
@@ -48,63 +45,12 @@ export default {
     TitleDayActivity,
   },
   setup() {
-    // const store = useStore()
-
-    // const state = reactive({
-    //   betweenData: '',
-    //   currentData: '',
-    //   previousData: '',
-    // })
-
-    // const getInitialData = computed(() => {
-    //   const currentData = dayjs()
-    //     .add(dayjs.duration({ days: 1 }))
-    //     .format('YYYY-MM-DD')
-    //   const previousData = dayjs(currentData).subtract(7, 'day').format('YYYY-MM-DD')
-    //   const betweenData = `created_at:` + previousData + ',' + currentData
-    //   store.commit('globalComponents/setActivityPeriod', state.betweenData)
-
-    //   return {
-    //     reactiveSearch: betweenData,
-    //     reactiveLimit: `0`,
-    //     reactiveSearchFields: `created_at:between`,
-    //   }
-    // })
-
-    const { data: activities, error, refetch, fetchNextPage, status, load, disabled, loading } = useFetchActivities()
-
-    // onMounted(() => {
-    //   setPeriod()
-    // })
-
-    // const setPeriod = () => {
-    //   state.currentData = dayjs()
-    //     .add(dayjs.duration({ days: 1 }))
-    //     .format('YYYY-MM-DD')
-    //   state.previousData = dayjs(state.currentData).subtract(7, 'day').format('YYYY-MM-DD')
-    //   state.betweenData = `created_at:` + state.previousData + ',' + state.currentData
-    //   store.commit('globalComponents/setActivityPeriod', state.betweenData)
-    //   fetchNextPage.value()
-    // }
-
-    // const load = async () => {
-    //   loading.value = true
-    //   state.currentData = state.previousData
-    //   state.previousData = dayjs(state.currentData).subtract(7, 'day').format('YYYY-MM-DD')
-    //   state.betweenData = `created_at:` + state.previousData + ',' + state.currentData
-    //   store.commit('globalComponents/setActivityPeriod', state.betweenData)
-    //   fetchNextPage.value().then(() => {
-    //     loading.value = false
-    //   })
-    // }
+    const { data: activities, error, status, load, disabled, loading } = useFetchActivities()
     return {
-      // state,
       activities,
       error,
-      refetch,
       loading,
       load,
-      fetchNextPage,
       status,
       disabled,
     }
