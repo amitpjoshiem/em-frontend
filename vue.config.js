@@ -11,6 +11,13 @@ module.exports = {
       orientation: 'landscape',
     },
 
+    icons: [
+      {
+        src: './src/assets/svg/icon-logo.svg',
+        sizes: '72x72',
+      },
+    ],
+
     workboxPluginMode: 'GenerateSW',
     // workboxPluginMode: 'InjectManifest',
     // workboxOptions: {
