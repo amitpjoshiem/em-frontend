@@ -34,7 +34,7 @@
       </div>
 
       <div v-if="!isLoading">
-        <template v-if="!isEmptyObject(data)">
+        <template v-if="data.length">
           <OpportunityItem
             v-for="(user, index) in data"
             :key="index"
@@ -46,7 +46,7 @@
             {{ user }}
           </OpportunityItem>
         </template>
-        <div v-else class="text-center">
+        <div v-else class="text-center py-2">
           <span class="text-main text-sm"> No recently added opportunities </span>
         </div>
       </div>
