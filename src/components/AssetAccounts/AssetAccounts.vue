@@ -10,7 +10,10 @@
         <el-step title="Provider count" />
       </el-steps>
     </div>
-    <div v-if="haveYodleeAcc" class="border border-color-grey box-border p-5 rounded-md mt-5">
+    <div
+      v-if="haveYodleeAcc && !yodleeStatus.data.link_used"
+      class="border border-color-grey box-border p-5 rounded-md mt-5"
+    >
       <div class="text-main font-semibold text-smm">Send Link</div>
       <Button
         v-if="!yodleeStatus.data.link_sent"
