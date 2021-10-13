@@ -33,7 +33,7 @@
 
     <div v-if="haveYodleeAcc" class="border border-color-grey box-border p-5 rounded-md mt-5">
       <div class="text-main font-semibold text-smm mb-5">Providers</div>
-      <el-collapse v-if="yodleeProviders.data.length" accordion>
+      <el-collapse v-if="yodleeProviders?.data?.length" accordion>
         <el-collapse-item v-for="(item, index) in yodleeProviders.data" :key="index" :title="item.name">
           <template v-if="Array.isArray(item.accounts) && item.accounts.length">
             <el-table
