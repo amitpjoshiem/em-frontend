@@ -57,7 +57,7 @@
           </template>
         </el-collapse-item>
       </el-collapse>
-      <div>
+      <div v-else>
         <span class="text-main text-sm py-2">No active provider accounts</span>
       </div>
     </div>
