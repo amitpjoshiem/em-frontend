@@ -34,7 +34,6 @@ import { useRouter, useRoute } from 'vue-router'
 import { scrollTop } from '@/utils/scrollTop'
 import { useYodleeStatus } from '@/api/use-yodlee-status.js'
 import { useFetchYodleeSendLink } from '@/api/use-fetch-yodlee-send-link.js'
-import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'AssetsAccounts',
@@ -78,13 +77,6 @@ export default {
 
     const sendLinkYodlee = async () => {
       await sendLink()
-      if (linkSendError.value) {
-        useAlert({
-          title: 'Error',
-          type: 'error',
-          message: linkSendError.value,
-        })
-      }
     }
 
     return {
@@ -95,10 +87,10 @@ export default {
       yodleeStatus,
       isErrorLoadingYodleeStatus,
       isLoadingisErrorLoadingYodleeStatus,
-
       sendLinkStatus,
       fetchingSendLink,
       sendLinkYodlee,
+      linkSendError,
     }
   },
 }
