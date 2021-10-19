@@ -1,5 +1,6 @@
 const state = () => ({
   notifications: [],
+  showModal: false,
 })
 
 const mutations = {
@@ -9,6 +10,10 @@ const mutations = {
 
   clearAllNoifications(state) {
     state.notifications = []
+  },
+
+  setShowModal(state, value) {
+    state.showModal = value
   },
 }
 

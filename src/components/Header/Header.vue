@@ -2,8 +2,8 @@
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
     <SwdRemoteSearch />
     <div class="flex items-center justify-end">
-      <div class="border border-input-border p-2 mr-2 cursor-pointer rounded-md" @click="sendEvent">
-        <span>test send event</span>
+      <div class="border border-input-border p-2 mr-2 cursor-pointer rounded-md" @click="getNotificationTest()">
+        <span>test send notifications event</span>
       </div>
       <div
         class="
@@ -86,10 +86,6 @@ export default {
       }
     }
 
-    const sendEvent = () => {
-      getNotificationTest()
-    }
-
     return {
       IconPlus,
       newProspect,
@@ -97,7 +93,7 @@ export default {
       isErrorUserProfile,
       user,
       isFetched,
-      sendEvent,
+      getNotificationTest,
       response,
       error,
       fetching,
