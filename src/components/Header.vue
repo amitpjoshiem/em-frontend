@@ -2,6 +2,9 @@
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
     <SwdRemoteSearch />
     <div class="flex items-center justify-end">
+      <div class="border border-input-border p-2 mr-2 cursor-pointer rounded-md" @click="sendEvent">
+        <span>test event</span>
+      </div>
       <div
         class="
           h-9
@@ -46,6 +49,7 @@ import IconNotifications from '@/assets/svg/icon-notifications.svg'
 import { ElMessageBox } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserProfile } from '@/api/use-user-profile.js'
+import { useNotificationTest } from '@/api/use-notification-test'
 
 export default {
   name: 'Header',
@@ -58,6 +62,8 @@ export default {
     const router = useRouter()
 
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
+
+    const { response, error, fetching, getNotificationTest } = useNotificationTest()
 
     const newProspect = () => {
       if (
@@ -79,6 +85,11 @@ export default {
       }
     }
 
+    const sendEvent = () => {
+      getNotificationTest()
+      console.log('sendEvent')
+    }
+
     return {
       IconPlus,
       newProspect,
@@ -87,6 +98,10 @@ export default {
       user,
       isFetched,
       IconNotifications,
+      sendEvent,
+      response,
+      error,
+      fetching,
     }
   },
 }
