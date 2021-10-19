@@ -3,6 +3,7 @@ import auth from './modules/auth'
 import dashboard from './modules/dashboard'
 import newProspect from './modules/newProspect'
 import globalComponents from './modules/globalComponents'
+import notifications from './modules/notifications'
 
 import createPersistedState from 'vuex-persistedstate'
 
@@ -17,6 +18,7 @@ export default createStore({
     dashboard,
     newProspect,
     globalComponents,
+    notifications,
   },
   plugins: [dataState],
 })
