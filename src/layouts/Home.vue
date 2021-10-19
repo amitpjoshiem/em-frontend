@@ -10,7 +10,7 @@
 
 <script>
 import SideBar from '@/components/SideBar.vue'
-import Header from '@/components/Header.vue'
+import Header from '@/components/Header/Header.vue'
 
 export default {
   name: 'Home',

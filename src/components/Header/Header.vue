@@ -2,6 +2,9 @@
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
     <SwdRemoteSearch />
     <div class="flex items-center justify-end">
+      <div class="border border-input-border p-2 mr-2 cursor-pointer rounded-md" @click="getNotificationTest()">
+        <span>test send notifications event</span>
+      </div>
       <div
         class="
           h-9
@@ -24,9 +27,8 @@
       </div>
 
       <div class="border-l border-color-grey h-16" />
-      <div class="px-5">
-        <InlineSvg :src="IconNotifications" class="cursor-pointer" />
-      </div>
+      <HeaderNotificationsBlock />
+
       <div class="border-l border-color-grey h-16" />
       <div class="flex items-center justify-center pl-5 cursor-pointer">
         <router-link :to="{ name: 'profile' }">
@@ -42,22 +44,27 @@
 import UserAction from '@/components/UserAction.vue'
 import SwdRemoteSearch from '@/components/Global/SwdRemoteSearch.vue'
 import IconPlus from '@/assets/svg/icon-plus.svg'
-import IconNotifications from '@/assets/svg/icon-notifications.svg'
 import { ElMessageBox } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserProfile } from '@/api/use-user-profile.js'
+import { useNotificationTest } from '@/api/use-notification-test'
+
+import HeaderNotificationsBlock from './HeaderNotificationsBlock.vue'
 
 export default {
   name: 'Header',
   components: {
     UserAction,
     SwdRemoteSearch,
+    HeaderNotificationsBlock,
   },
   setup() {
     const route = useRoute()
     const router = useRouter()
 
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
+
+    const { response, error, fetching, getNotificationTest } = useNotificationTest()
 
     const newProspect = () => {
       if (
@@ -86,7 +93,10 @@ export default {
       isErrorUserProfile,
       user,
       isFetched,
-      IconNotifications,
+      getNotificationTest,
+      response,
+      error,
+      fetching,
     }
   },
 }

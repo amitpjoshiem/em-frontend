@@ -6,10 +6,10 @@
 <script>
 import { onMounted } from 'vue'
 import { useStore } from 'vuex'
-
 import { useQueryProvider } from 'vue-query'
 import { VueQueryDevTools } from 'vue-query/devtools'
 import { tokenStorage } from './api/api-client/TokenStorage'
+import { useSockets } from './sockets/use-sockets'
 
 export default {
   components: {
@@ -24,6 +24,7 @@ export default {
       const access_token = tokenStorage.getByKey('access_token')
       if (access_token !== null && auth && auth.isAuth !== null) {
         store.commit('auth/setAuthUser', true)
+        useSockets()
       } else {
         store.commit('auth/setAuthUser', false)
       }

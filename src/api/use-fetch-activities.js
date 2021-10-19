@@ -9,7 +9,6 @@ const activity = {
 }
 
 function getPreviousDate(date) {
-  console.log()
   return dayjs(date).subtract(7, 'day').format('YYYY-MM-DD')
 }
 
