@@ -88,7 +88,6 @@ export default {
 
     const sendEvent = () => {
       getNotificationTest()
-      console.log('sendEvent')
     }
 
     return {

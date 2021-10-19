@@ -24,7 +24,6 @@ export async function useSockets() {
 
   await getNotificationChannel()
   const echo_channel = response.value.channel
-  console.log('echo_channel - ', echo_channel)
   window.Echo.channel(echo_channel).listen('.notification', (e) => {
     store.dispatch('notifications/newNotifications', {
       value: e,
