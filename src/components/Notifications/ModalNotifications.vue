@@ -30,9 +30,7 @@
         :key="index"
         class="py-5 border-b border-color-grey flex justify-between"
       >
-        <span class="text-main text-sm">
-          {{ item.notification }}
-        </span>
+        <span class="text-main text-sm" v-html="item.notification" />
         <span class="text-gray03 text-xs">
           {{ item.timestamp }}
         </span>
