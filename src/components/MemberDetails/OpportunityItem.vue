@@ -1,13 +1,10 @@
 <template>
   <div class="flex text-xs items-center text-center">
-    <div class="w-2/12 item px-2">
+    <div class="w-4/12 item px-2">
       {{ user.name }}
     </div>
     <div class="w-2/12 item">
       {{ prospect.name }}
-    </div>
-    <div class="w-2/12 item">
-      {{ userProfile.name }}
     </div>
     <div class="w-2/12 item">{{ user.amount }}</div>
     <div class="w-2/12 item">{{ user.stage }}</div>
@@ -36,6 +33,6 @@ export default {
 
 <style scoped>
 .item {
-  @apply border-r  text-xs text-text-light-gray flex items-center justify-center uppercase text-center last:border-r-0 h-10;
+  @apply border-r  text-xs text-text-light-gray flex items-center justify-center uppercase text-center last:border-r-0 h-12;
 }
 </style>

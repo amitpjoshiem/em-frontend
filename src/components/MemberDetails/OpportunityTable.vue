@@ -25,9 +25,8 @@
         </router-link>
       </div>
       <div class="flex h-12 bg-widget-bg">
-        <div class="w-2/12 title">Opportunity name</div>
+        <div class="w-4/12 title">Opportunity name</div>
         <div class="w-2/12 title">Account name</div>
-        <div class="w-2/12 title">Account owner</div>
         <div class="w-2/12 title">Amount</div>
         <div class="w-2/12 title">Stage</div>
         <div class="w-2/12 title">Close date</div>
