@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="isShowModal"
+    v-if="isShowModalNotification"
     ref="modalRef"
     class="
       modal-notifications
@@ -42,30 +42,28 @@
 </template>
 <script>
 import { useOnClickOutside } from '@/utils/useOnClickOutside'
-import { ref, computed } from 'vue'
-import { useStore } from 'vuex'
+import { ref } from 'vue'
 import { useNotification } from '@/components/Notifications/use-notifications'
 
 export default {
   name: 'ModalNotifications',
   setup() {
-    const store = useStore()
+    const {
+      notifications,
+      hasNewNotification,
+      markAllNotificationsAsRead,
+      isShowModalNotification,
+      closeModalNotification,
+    } = useNotification()
+
     const modalRef = ref(null)
-    const { notifications, hasNewNotification, markAllNotificationsAsRead } = useNotification()
-
-    useOnClickOutside(modalRef, () => {
-      store.commit('notifications/setShowModal', false)
-    })
-
-    const isShowModal = computed(() => {
-      return store.state.notifications.showModal
-    })
+    useOnClickOutside(modalRef, closeModalNotification)
 
     return {
       modalRef,
       notifications,
       hasNewNotification,
-      isShowModal,
+      isShowModalNotification,
       markAllNotificationsAsRead,
     }
   },

@@ -21,9 +21,24 @@ export const useNotification = () => {
     })
   }
 
+  const showModalNotification = () => {
+    if (hasNewNotification.value) store.commit('notifications/setShowModal', true)
+  }
+
+  const closeModalNotification = () => {
+    store.commit('notifications/setShowModal', false)
+  }
+
+  const isShowModalNotification = computed(() => {
+    return store.state.notifications.showModal
+  })
+
   return {
     hasNewNotification,
     notifications,
     markAllNotificationsAsRead,
+    showModalNotification,
+    closeModalNotification,
+    isShowModalNotification,
   }
 }
