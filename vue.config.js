@@ -1,6 +1,6 @@
 module.exports = {
   pwa: {
-    name: 'SWD App',
+    name: 'SWD App 1',
     themeColor: '#042D52',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
