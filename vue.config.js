@@ -9,14 +9,16 @@ module.exports = {
     manifestOptions: {
       display: 'fullscreen',
       orientation: 'landscape',
+      icons: [
+        {
+          favicon32: './src/assets/svg/icon-logo.svg',
+          favicon16: './src/assets/svg/icon-logo.svg',
+          appleTouchIcon: './src/assets/svg/icon-logo.svg',
+          maskIcon: './src/assets/svg/icon-logo.svg',
+          msTileImage: './src/assets/svg/icon-logo.svg',
+        },
+      ],
     },
-
-    icons: [
-      {
-        src: './src/assets/svg/icon-logo.svg',
-        sizes: '72x72',
-      },
-    ],
 
     workboxPluginMode: 'GenerateSW',
     // workboxPluginMode: 'InjectManifest',
