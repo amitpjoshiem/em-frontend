@@ -11,11 +11,11 @@ module.exports = {
       orientation: 'landscape',
       icons: [
         {
-          favicon32: './src/assets/svg/icon-logo.svg',
-          favicon16: './src/assets/svg/icon-logo.svg',
-          appleTouchIcon: './src/assets/svg/icon-logo.svg',
-          maskIcon: './src/assets/svg/icon-logo.svg',
-          msTileImage: './src/assets/svg/icon-logo.svg',
+          favicon32: '/img/icons/icon-logo.svg',
+          favicon16: '/img/icons/icon-logo.svg',
+          appleTouchIcon: '/img/icons/icon-logo.svg',
+          maskIcon: '/img/icons/icon-logo.svg',
+          msTileImage: '/img/icons/icon-logo.svg',
         },
       ],
     },
