@@ -20,6 +20,14 @@ module.exports = {
       ],
     },
 
+    iconPaths: {
+      favicon32: '/img/icons/icon-logo.svg',
+      favicon16: '/img/icons/icon-logo.svg',
+      appleTouchIcon: '/img/icons/icon-logo.svg',
+      maskIcon: '/img/icons/icon-logo.svg',
+      msTileImage: '/img/icons/icon-logo.svg',
+    },
+
     workboxPluginMode: 'GenerateSW',
     // workboxPluginMode: 'InjectManifest',
     // workboxOptions: {
