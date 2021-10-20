@@ -9,23 +9,45 @@ module.exports = {
     manifestOptions: {
       display: 'fullscreen',
       orientation: 'landscape',
+      // icons: [
+      //   {
+      //     favicon32: 'img/icons/icon-logo.png',
+      //     favicon16: 'img/icons/icon-logo.png',
+      //     appleTouchIcon: 'img/icons/icon-logo.png',
+      //     maskIcon: 'img/icons/icon-logo.png',
+      //     msTileImage: 'img/icons/icon-logo.png',
+      //   },
+      // ],
       icons: [
         {
-          favicon32: 'img/icons/icon-logo.png',
-          favicon16: 'img/icons/icon-logo.png',
-          appleTouchIcon: 'img/icons/icon-logo.png',
-          maskIcon: 'img/icons/icon-logo.png',
-          msTileImage: 'img/icons/icon-logo.png',
+          src: 'img/icons/icon-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: 'img/icons/icon-256x256.png',
+          sizes: '256x256',
+          type: 'image/png',
+        },
+        {
+          src: 'img/icons/icon-384x384.png',
+          sizes: '384x384',
+          type: 'image/png',
+        },
+        {
+          src: 'img/icons/icon-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
         },
       ],
     },
 
     iconPaths: {
-      favicon32: 'img/icons/icon-logo.png',
-      favicon16: 'img/icons/icon-logo.png',
-      appleTouchIcon: 'img/icons/icon-logo.png',
-      maskIcon: 'img/icons/icon-logo.png',
-      msTileImage: 'img/icons/icon-logo.png',
+      favicon32: 'img/icons/icon-192x192.png',
+      favicon16: 'img/icons/icon-192x192.png',
+      appleTouchIcon: 'img/icons/icon-512x512.png',
+      maskIcon: 'img/icons/icon-512x512.png',
+      msTileImage: 'img/icons/icon-512x512.png',
     },
 
     workboxPluginMode: 'GenerateSW',
