@@ -10,7 +10,6 @@
 import IconNotifications from '@/assets/svg/icon-notifications.svg'
 import ModalNotifications from '@/components/Notifications/ModalNotifications.vue'
 import { useNotification } from '@/components/Notifications/use-notifications'
-import { useStore } from 'vuex'
 
 export default {
   name: 'HeaderNotificationsBlock',
@@ -18,12 +17,7 @@ export default {
     ModalNotifications,
   },
   setup() {
-    const store = useStore()
-
-    const { hasNewNotification } = useNotification()
-    const showModalNotification = () => {
-      if (hasNewNotification) store.commit('notifications/setShowModal', true)
-    }
+    const { hasNewNotification, showModalNotification } = useNotification()
 
     return {
       hasNewNotification,
