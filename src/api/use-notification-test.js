@@ -13,7 +13,7 @@ const useNotificationTest = () => {
       useAlert({
         title: 'Success',
         type: 'success',
-        message: 'Test notification success send',
+        message: 'Test notification was sent successfully',
       })
     } else {
       useAlert({
