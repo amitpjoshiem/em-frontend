@@ -1,23 +1,14 @@
 module.exports = {
   pwa: {
-    name: 'SWD App 1',
+    name: 'SWD',
     themeColor: '#042D52',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black',
+    appleMobileWebAppStatusBarStyle: '#042D52',
 
     manifestOptions: {
       display: 'fullscreen',
       orientation: 'landscape',
-      // icons: [
-      //   {
-      //     favicon32: 'img/icons/icon-logo.png',
-      //     favicon16: 'img/icons/icon-logo.png',
-      //     appleTouchIcon: 'img/icons/icon-logo.png',
-      //     maskIcon: 'img/icons/icon-logo.png',
-      //     msTileImage: 'img/icons/icon-logo.png',
-      //   },
-      // ],
       icons: [
         {
           src: 'img/icons/icon-192x192.png',
@@ -51,9 +42,5 @@ module.exports = {
     },
 
     workboxPluginMode: 'GenerateSW',
-    // workboxPluginMode: 'InjectManifest',
-    // workboxOptions: {
-    //   swSrc: 'dev/sw.js',
-    // },
   },
 }
