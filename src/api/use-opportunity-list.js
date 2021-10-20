@@ -10,7 +10,8 @@ export const useOpportunityList = (id) => {
     },
     {
       select: (data) => {
-        return data.data.map((opportunity) => new OpportunityList(opportunity))
+        if (data && data.data) return data.data.map((opportunity) => new OpportunityList(opportunity))
+        return []
       },
     }
   )
