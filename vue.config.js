@@ -11,21 +11,21 @@ module.exports = {
       orientation: 'landscape',
       icons: [
         {
-          favicon32: 'img/icons/icon-logo.svg',
-          favicon16: 'img/icons/icon-logo.svg',
-          appleTouchIcon: 'img/icons/icon-logo.svg',
-          maskIcon: 'img/icons/icon-logo.svg',
-          msTileImage: 'img/icons/icon-logo.svg',
+          favicon32: 'img/icons/icon-logo.png',
+          favicon16: 'img/icons/icon-logo.png',
+          appleTouchIcon: 'img/icons/icon-logo.png',
+          maskIcon: 'img/icons/icon-logo.png',
+          msTileImage: 'img/icons/icon-logo.png',
         },
       ],
     },
 
     iconPaths: {
-      favicon32: 'img/icons/icon-logo.svg',
-      favicon16: 'img/icons/icon-logo.svg',
-      appleTouchIcon: 'img/icons/icon-logo.svg',
-      maskIcon: 'img/icons/icon-logo.svg',
-      msTileImage: 'img/icons/icon-logo.svg',
+      favicon32: 'img/icons/icon-logo.png',
+      favicon16: 'img/icons/icon-logo.png',
+      appleTouchIcon: 'img/icons/icon-logo.png',
+      maskIcon: 'img/icons/icon-logo.png',
+      msTileImage: 'img/icons/icon-logo.png',
     },
 
     workboxPluginMode: 'GenerateSW',
