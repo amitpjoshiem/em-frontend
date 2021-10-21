@@ -43,7 +43,7 @@ class MemberDetailsUser {
   }
 
   get retirementDateFormatted() {
-    return dayjs(this.retirementDate).format('DD/MM/YYYY')
+    return dayjs(this.retirement_date).format('DD/MM/YYYY')
   }
 
   get birthdayFormatted() {

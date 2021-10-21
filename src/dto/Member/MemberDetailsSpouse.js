@@ -39,11 +39,13 @@ class MemberDetailsSpouse {
   }
 
   get retirementDateFormatted() {
-    return dayjs(this.retirementDate).format('DD/MM/YYYY')
+    if (this.retirement_date !== undefined) return dayjs(this.retirement_date).format('DD/MM/YYYY')
+    return ''
   }
 
   get birthdayFormatted() {
-    return dayjs(this.birthday).format('DD/MM/YYYY')
+    if (this.birthday !== undefined) return dayjs(this.birthday).format('DD/MM/YYYY')
+    return ''
   }
 }
 
