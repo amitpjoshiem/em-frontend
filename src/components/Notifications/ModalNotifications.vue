@@ -30,7 +30,7 @@
         :key="index"
         class="py-5 border-b border-color-grey flex justify-between"
       >
-        <span class="text-main text-sm" v-html="item.notification" />
+        <span class="text-main text-sm item-notifications" v-html="item.notification" />
         <span class="text-gray03 text-xs">
           {{ item.timestamp }}
         </span>
@@ -90,5 +90,9 @@ export default {
   position: absolute;
   right: 17px;
   top: -10px;
+}
+
+.item-notifications p a {
+  color: #66b6ff;
 }
 </style>
