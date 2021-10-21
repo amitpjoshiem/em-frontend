@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 class MemberDetailsSpouse {
   constructor({
     id,
@@ -35,6 +36,14 @@ class MemberDetailsSpouse {
     this.updatedAt = updated_at
     this.realId = real_id
     this.deletedAt = deleted_at
+  }
+
+  get retirementDateFormatted() {
+    return dayjs(this.retirementDate).format('DD/MM/YYYY')
+  }
+
+  get birthdayFormatted() {
+    return dayjs(this.birthday).format('DD/MM/YYYY')
   }
 }
 

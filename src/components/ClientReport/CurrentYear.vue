@@ -7,7 +7,7 @@
         </span>
         <span class="ml-4 text-main text-title font-semibold"> Current Year </span>
       </div>
-      <span class="text-small text-gray03">issue date: 2021-10-03</span>
+      <span class="text-small text-gray03">issue date: 21/10/2021</span>
     </div>
     <div class="border border-color-grey flex justify-between px-5 py-2">
       <span class="text-gray03 text-xs font-semibold"> Carrier: Acme Inc </span>

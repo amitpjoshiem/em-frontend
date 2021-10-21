@@ -82,11 +82,11 @@
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main">
-          {{ prospect.birthday }}
+          {{ prospect.birthdayFormatted }}
         </span>
       </div>
       <div class="w-9/24">
-        <SwdStubForText :text="spouse.birthday" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="spouse.birthdayFormatted" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
@@ -96,11 +96,11 @@
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main">
-          {{ prospect.retirementDate }}
+          {{ prospect.retirementDateFormatted }}
         </span>
       </div>
       <div class="w-9/24">
-        <SwdStubForText :text="spouse.retirementDate" plug="&mdash;" class="text-sm text-main" />
+        <SwdStubForText :text="spouse.retirementDateFormatted" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
 
