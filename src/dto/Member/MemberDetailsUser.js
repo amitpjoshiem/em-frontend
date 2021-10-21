@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 class MemberDetailsUser {
   constructor({
     id,
@@ -39,6 +40,14 @@ class MemberDetailsUser {
     this.deletedAt = deleted_at
     this.step = step
     this.avatar = avatar
+  }
+
+  get retirementDateFormatted() {
+    return dayjs(this.retirementDate).format('DD/MM/YYYY')
+  }
+
+  get birthdayFormatted() {
+    return dayjs(this.birthday).format('DD/MM/YYYY')
   }
 }
 
