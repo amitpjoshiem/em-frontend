@@ -33,6 +33,10 @@ module.exports = {
       ],
     },
 
+    workboxOptions: {
+      skipWaiting: true,
+    },
+
     iconPaths: {
       favicon32: 'img/icons/icon-192x192.png',
       favicon16: 'img/icons/icon-192x192.png',
