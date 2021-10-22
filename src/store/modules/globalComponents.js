@@ -52,6 +52,7 @@ const state = () => ({
     orderBy: 'created_at',
     sortedBy: 'descending',
   },
+  showDialogReloadPage: false,
 })
 
 const mutations = {
@@ -74,6 +75,10 @@ const mutations = {
     const { orderBy, sortedBy } = data
     state.sortMembers.orderBy = orderBy
     state.sortMembers.sortedBy = sortedBy
+  },
+
+  setShowDialogRealodPage(state, value) {
+    state.showDialogReloadPage = value
   },
 }
 

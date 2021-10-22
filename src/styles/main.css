@@ -163,3 +163,13 @@
 .el-form-item__error {
   font-size: 11px;
 }
+
+.dialog-reload > .el-dialog__body {
+  min-height: 100px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.dialog-reload > .el-dialog__body p {
+  text-align: center;
+}
