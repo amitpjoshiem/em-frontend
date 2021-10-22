@@ -30,7 +30,7 @@ export default {
       } else {
         store.commit('auth/setAuthUser', false)
       }
-
+      console.log('test pwa modal')
       const otpType = tokenStorage.getByKey('otp-type')
       store.commit('auth/setOtpType', otpType)
     })
