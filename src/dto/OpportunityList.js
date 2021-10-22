@@ -8,7 +8,7 @@ class OpportunityList {
   }
 
   get closeDateFormatted() {
-    return dayjs(this.closeDate).format('DD/MM/YYYY')
+    return dayjs(this.closeDate).format('MM/DD/YYYY')
   }
 }
 

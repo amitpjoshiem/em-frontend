@@ -1,48 +1,75 @@
 <template>
   <div class="border border-color-grey rounded-lg mr-5 mt-5 p-5">
     <span>Concerns</span>
-    <div class="flex justify-between pt-5">
-      <div>
-        <div class="flex text-xs text-main">
-          <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
-          <span class="ml-1.5"> High Fees</span>
-        </div>
-        <div class="flex pt-2 text-xs text-main">
-          <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
-          <span class="ml-1.5"> Extremely high market exposure</span>
-        </div>
-        <div class="flex pt-2 text-xs text-main">
-          <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
-          <span class="ml-1.5"> Simple</span>
-        </div>
+
+    <div class="flex">
+      <div class="flex flex-col">
+        <el-checkbox v-model="checked1" label="High Fees" />
+        <el-checkbox v-model="checked2" label="Extremely high market exposure" />
+        <el-checkbox v-model="checked6" label="Design, implement and monitoring income strategy" />
       </div>
-      <div>
-        <div class="flex text-xs text-main">
-          <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
-          <span class="ml-1.5"> Keep the money safe</span>
-        </div>
-        <div class="flex pt-2 text-xs text-main">
-          <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
-          <span class="ml-1.5"> Massive Overlap</span>
-        </div>
-        <div class="flex pt-2 text-xs text-main">
-          <InlineSvg :src="IconCheckGreen" class="mt-[3px]" />
-          <span class="ml-1.5"> Design, implement and monitoring income strategy</span>
-        </div>
+      <div class="flex flex-col ml-2">
+        <el-checkbox v-model="checked4" label="Keep the money safe" />
+        <el-checkbox v-model="checked5" label="Massive Overlap" />
+        <el-checkbox v-model="checked3" label="Simple" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import IconCheckGreen from '@/assets/svg/icon-check-green.svg'
+import { reactive, toRefs, watch } from 'vue'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'Concerns',
   setup() {
-    return {
-      IconCheckGreen,
-    }
+    const state = reactive({
+      checked1: false,
+      checked2: false,
+      checked3: false,
+      checked4: false,
+      checked5: false,
+      checked6: false,
+    })
+
+    watch(
+      () => state,
+      () => {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Update successfully',
+        })
+      },
+      { deep: true }
+    )
+
+    return toRefs(state)
   },
 }
 </script>
+
+<style>
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: #76e1bb;
+  border-color: #76e1bb;
+  border-radius: 10px;
+}
+
+.el-checkbox__inner {
+  border-radius: 10px;
+}
+.el-checkbox__input.is-focus .el-checkbox__inner {
+  border-color: #76e1bb;
+}
+
+.el-checkbox__label {
+  font-size: 12px;
+  color: #aab5cf;
+}
+
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: #76e1bb;
+}
+</style>
