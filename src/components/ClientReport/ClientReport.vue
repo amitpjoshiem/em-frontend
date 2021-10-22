@@ -26,9 +26,19 @@
       </div>
     </div>
 
-    <div class="flex" data-pdf-region="client-report">
-      <CurrentYear />
-      <SinceInception />
+    <div data-pdf-region="client-report">
+      <div class="flex mb-5">
+        <CurrentYear />
+        <SinceInception />
+      </div>
+      <div class="flex mb-5">
+        <CurrentYear />
+        <SinceInception />
+      </div>
+      <div class="flex mb-5">
+        <CurrentYear />
+        <SinceInception />
+      </div>
     </div>
     <TotalInfo />
   </div>
