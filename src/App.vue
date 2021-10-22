@@ -1,6 +1,7 @@
 <template>
   <router-view />
   <VueQueryDevTools />
+  <ModalReloadPage />
 </template>
 
 <script>
@@ -10,10 +11,11 @@ import { useQueryProvider } from 'vue-query'
 import { VueQueryDevTools } from 'vue-query/devtools'
 import { tokenStorage } from './api/api-client/TokenStorage'
 import { useSockets } from './sockets/use-sockets'
-
+import ModalReloadPage from './components/ModalRealoadPage.vue'
 export default {
   components: {
     VueQueryDevTools,
+    ModalReloadPage,
   },
   setup() {
     useQueryProvider()
