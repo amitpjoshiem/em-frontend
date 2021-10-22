@@ -52,7 +52,7 @@ const state = () => ({
     orderBy: 'created_at',
     sortedBy: 'descending',
   },
-  showDialogReloadPage: true,
+  showDialogReloadPage: false,
 })
 
 const mutations = {

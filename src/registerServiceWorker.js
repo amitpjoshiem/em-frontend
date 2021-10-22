@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
-// /* eslint-disable no-console */
-
 import { register } from 'register-service-worker'
+import store from './store'
 
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.VUE_APP_BASE_URL}service-worker.js`, {
@@ -18,7 +17,7 @@ if (process.env.NODE_ENV === 'production') {
     },
     updatefound() {
       console.log('New content is downloading.')
-      console.log('test PWA updatefound')
+      store.commit('globalComponents/setShowDialogRealodPage', true)
     },
     updated() {
       console.log('New content is available; please refresh.')
