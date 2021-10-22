@@ -39,10 +39,6 @@
         <CurrentYear />
         <SinceInception />
       </div>
-      <div class="flex mb-5">
-        <CurrentYear />
-        <SinceInception />
-      </div>
     </div>
     <TotalInfo />
   </div>
