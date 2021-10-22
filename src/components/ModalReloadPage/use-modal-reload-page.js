@@ -10,8 +10,13 @@ export const useModalReloadPage = () => {
     window.location.reload()
   }
 
+  const hideModal = () => {
+    store.commit('globalComponents/setShowDialogRealodPage', false)
+  }
+
   return {
     isShowModal,
     reloadPage,
+    hideModal,
   }
 }
