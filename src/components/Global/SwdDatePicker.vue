@@ -3,7 +3,7 @@
     v-model="value"
     type="date"
     :placeholder="getPlaceholder"
-    format="YYYY-MM-DD"
+    format="MM/DD/YYYY"
     @change="changeHandler"
   />
 </template>
@@ -31,11 +31,11 @@ export default defineComponent({
     }
 
     const getPlaceholder = computed(() => {
-      return dayjs(new Date()).format('YYYY-MM-DD')
+      return dayjs(new Date()).format('MM/DD/YYYY')
     })
 
     const changeHandler = (e) => {
-      const date = dayjs(e).format('YYYY-MM-DD')
+      const date = dayjs(e).format('MM/DD/YYYY')
       emitValue(date)
     }
 
