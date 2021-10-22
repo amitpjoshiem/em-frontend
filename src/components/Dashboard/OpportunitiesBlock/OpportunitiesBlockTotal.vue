@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-widget-bg p-2.5 rounded-md mt-5 flex justify-center">
+  <div class="bg-red-700 p-2.5 rounded-md mt-5 flex justify-center">
+    <!-- <div class="bg-widget-bg p-2.5 rounded-md mt-5 flex justify-center"> -->
     <div class="flex items-center justify-between w-8/12">
       <div>
         <InlineSvg v-if="up" :src="IconUpRisk" class="h-5" />
