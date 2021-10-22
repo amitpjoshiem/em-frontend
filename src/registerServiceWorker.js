@@ -12,13 +12,13 @@ if (process.env.NODE_ENV === 'production') {
     },
     registered() {
       console.log('Service worker has been registered.')
-      console.log('test test test test')
     },
     cached() {
       console.log('Content has been cached for offline use.')
     },
     updatefound() {
       console.log('New content is downloading.')
+      console.log('test PWA updatefound')
     },
     updated() {
       console.log('New content is available; please refresh.')
