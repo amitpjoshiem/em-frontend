@@ -34,7 +34,8 @@ module.exports = {
     },
 
     workboxOptions: {
-      skipWaiting: true,
+      swSrc: './src/registerServiceWorker.js',
+      // skipWaiting: true,
     },
 
     iconPaths: {
