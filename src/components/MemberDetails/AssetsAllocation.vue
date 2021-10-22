@@ -8,22 +8,30 @@
         <span class="text-main text-smm font-semibold">Asset Allocation</span>
       </router-link>
       <div class="flex pt-3">
-        <AssetsChart />
+        <AssetsChart :values="ruleForm" />
         <div class="flex ml-4">
           <div class="flex flex-col justify-center mr-3">
             <div class="bg-dark-blue-charts w-2 h-2 rounded-full" />
-            <div class="bg-activity w-2 h-2 rounded-full my-6" />
+            <div class="bg-activity w-2 h-2 rounded-full my-9" />
             <div class="bg-color-error w-2 h-2 rounded-full" />
           </div>
           <div class="flex flex-col justify-center text-main text-xs mr-3">
             <div>Liquidity</div>
-            <div class="py-4">Growth</div>
+            <div class="my-7">Growth</div>
             <div>Income</div>
           </div>
           <div class="flex flex-col justify-center text-main text-xs font-medium">
-            <div>{{ currencyFormat(10000) }}</div>
-            <div class="py-4">{{ currencyFormat(8000) }}</div>
-            <div>{{ currencyFormat(2000) }}</div>
+            <el-form ref="form" :model="ruleForm" status-icon :rules="rules" size="mini">
+              <el-form-item prop="assetsData.liquidity" class="">
+                <el-input v-model="ruleForm.assetsData.liquidity" placeholder="$12345" @change="changeAssets()" />
+              </el-form-item>
+              <el-form-item prop="assetsData.growth" class="mt-4">
+                <el-input v-model="ruleForm.assetsData.growth" placeholder="$12345" @change="changeAssets()" />
+              </el-form-item>
+              <el-form-item prop="assetsData.income" class="mt-4">
+                <el-input v-model="ruleForm.assetsData.income" placeholder="$12345" @change="changeAssets()" />
+              </el-form-item>
+            </el-form>
           </div>
         </div>
       </div>
@@ -55,8 +63,8 @@ import RiskLevelChart from '@/components/MemberDetails/Chart/RiskLevelChart.vue'
 import IconAction from '@/assets/svg/icon-action.svg'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
-
+import { computed, reactive } from 'vue'
+import { rules } from '@/validationRules/memberDetailsAssetsRules.js'
 export default {
   name: 'AssetsAllocation',
   components: {
@@ -65,6 +73,24 @@ export default {
   },
   setup() {
     const route = useRoute()
+
+    const ruleForm = reactive({
+      assetsData: {
+        income: '',
+        growth: '',
+        liquidity: '',
+      },
+      total: 0,
+    })
+
+    const changeAssets = () => {
+      ruleForm.total = 0
+      for (const key in ruleForm.assetsData) {
+        if (Object.hasOwnProperty.call(ruleForm.assetsData, key)) {
+          if (!isNaN(ruleForm.assetsData[key])) ruleForm.total += Number(ruleForm.assetsData[key])
+        }
+      }
+    }
 
     const actionsOptions = [
       {
@@ -91,6 +117,9 @@ export default {
       currencyFormat,
       IconAction,
       memberId,
+      ruleForm,
+      changeAssets,
+      rules,
     }
   },
 }
