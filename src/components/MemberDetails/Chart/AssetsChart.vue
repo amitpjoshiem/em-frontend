@@ -41,7 +41,7 @@ export default {
             data: Object.values(props.values.assetsData),
           },
         ]
-        doughnutChart.options.elements.center.text = 'Monthly ' + currencyFormat(props.values.total)
+        doughnutChart.options.elements.center.text = 'Total ' + currencyFormat(props.values.total)
         chartRef.value.update()
       },
       { deep: true }
@@ -61,7 +61,7 @@ export default {
       options: {
         elements: {
           center: {
-            text: 'Monthly $0',
+            text: 'Total $0',
             size: 12,
           },
         },
