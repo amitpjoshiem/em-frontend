@@ -7,7 +7,7 @@ export const useModalReloadPage = () => {
   const isShowModal = computed(() => store.state.globalComponents.showDialogReloadPage)
 
   const reloadPage = () => {
-    window.location.reload()
+    window.location.reload(true)
   }
 
   const hideModal = () => {
