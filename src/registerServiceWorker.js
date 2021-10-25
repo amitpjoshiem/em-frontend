@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
       )
     },
     registered(registration) {
-      console.log('Service worker has been registered.', registration)
+      console.log('Service worker has been registered.')
       setInterval(() => {
         registration.update()
       }, 5000)
@@ -19,11 +19,10 @@ if (process.env.NODE_ENV === 'production') {
       console.log('Content has been cached for offline use.')
     },
     updatefound() {
-      console.log("NEW CONTENT FOUND")
       console.log('New content is downloading.')
     },
     updated(updated) {
-      console.log('New content is available; please refresh.', updated)
+      console.log('New content is available; please refresh.')
       store.commit('globalComponents/setShowDialogRealodPage', true)
     },
     offline() {
