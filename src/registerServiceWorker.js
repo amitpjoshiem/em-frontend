@@ -9,8 +9,8 @@ if (process.env.NODE_ENV === 'production') {
         'App is being served from cache by a service worker.\n' + 'For more details, visit https://goo.gl/AFskqB'
       )
     },
-    registered() {
-      console.log('Service worker has been registered.')
+    registered(registration) {
+      console.log('Service worker has been registered.', registration)
     },
     cached() {
       console.log('Content has been cached for offline use.')
@@ -19,8 +19,8 @@ if (process.env.NODE_ENV === 'production') {
       console.log("NEW CONTENT FOUND")
       console.log('New content is downloading.')
     },
-    updated() {
-      console.log('New content is available; please refresh.')
+    updated(updated) {
+      console.log('New content is available; please refresh.', updated)
       store.commit('globalComponents/setShowDialogRealodPage', true)
     },
     offline() {
