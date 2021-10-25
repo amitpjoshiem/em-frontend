@@ -60,6 +60,7 @@ export default {
     }
 
     const share = () => {
+      console.log("HERE")
       store.commit('globalComponents/setShowModal', {
         destination: 'shareFileEmailDialog',
         value: true,
