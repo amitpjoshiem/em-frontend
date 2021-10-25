@@ -11,14 +11,6 @@ if (process.env.NODE_ENV === 'production') {
     },
     registered(registration) {
       console.log('Service worker has been registered.')
-
-      registration.addEventListener('controllerchange', (e) => {
-        // This fires when the service worker controlling this page
-        // changes, eg a new worker has skipped waiting and become
-        // the new active worker.
-        console.log("CHONTROLLER CHANGE FROM REGISTRATIN", e)
-      });
-
       setInterval(() => {
         registration.update()
       }, 5000)
