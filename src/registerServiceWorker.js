@@ -32,4 +32,11 @@ if (process.env.NODE_ENV === 'production') {
       console.error('Error during service worker registration:', error)
     },
   })
+
+  navigator.serviceWorker.addEventListener('controllerchange', (e) => {
+    // This fires when the service worker controlling this page
+    // changes, eg a new worker has skipped waiting and become
+    // the new active worker.
+    console.log("CHONTROLLER CHANGE", e)
+  });
 }
