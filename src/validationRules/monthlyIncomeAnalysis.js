@@ -1,99 +1,95 @@
 const rules = {
-  montly: {
-    member_current: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    member_future: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    spouse_current: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    spouse_future: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    rental_current: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    pensions_current: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    pensions_future: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    rental_future: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    investments_current: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    investments_future: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-  },
-  total: {
-    tax: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    ira: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-    ira_second: [
-      {
-        validator: validateNumber,
-        trigger: 'change',
-        required: false,
-      },
-    ],
-  },
+  current_member: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  current_spouse: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  current_pensions: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  current_rental_income: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  current_investment: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  future_member: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  future_spouse: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  future_pensions: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  future_rental_income: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  future_investment: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  tax: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  ira_first: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
+  ira_second: [
+    {
+      validator: validateNumber,
+      trigger: 'change',
+      required: false,
+    },
+  ],
 }
 
 function validateNumber(rule, value, callback) {
