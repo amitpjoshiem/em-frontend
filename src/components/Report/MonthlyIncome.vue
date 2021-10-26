@@ -99,10 +99,6 @@
         <span>{{ currencyFormat(ruleForm.short_fall) }}</span>
       </div>
     </div>
-
-    <div class="flex justify-end mt-5">
-      <el-button type="primary" size="small">Update</el-button>
-    </div>
   </div>
 </template>
 <script>
