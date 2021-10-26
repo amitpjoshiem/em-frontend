@@ -1,18 +1,21 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="Blueprint report" class="p-5" with-share-btn region="blue-report" />
-    <div v-if="!fetchingMember" class="flex" data-pdf-region="blue-report">
-      <div class="w-7/12">
-        <div class="flex">
-          <WidgetReport :member="member" />
-          <TotalExpenses />
+    <div v-if="!fetchingMember">
+      <div class="flex" data-pdf-region="blue-report">
+        <div class="w-7/12">
+          <div class="flex">
+            <WidgetReport :member="member" />
+            <TotalExpenses />
+          </div>
+          <NetWorth />
+          <Concerns />
         </div>
-        <NetWorth />
-        <Concerns />
+        <MonthlyIncome />
       </div>
-      <MonthlyIncome />
+      <NotesMember :notes="member.data?.notes" />
     </div>
-    <el-skeleton v-else :rows="10" animated class="p-5" />
+    <el-skeleton v-show="fetchingMember" :rows="10" animated class="p-5" />
   </div>
 </template>
 
@@ -22,6 +25,7 @@ import TotalExpenses from '@/components/Report/TotalExpenses.vue'
 import NetWorth from '@/components/Report/NetWorth.vue'
 import Concerns from '@/components/Report/Concerns.vue'
 import MonthlyIncome from '@/components/Report/MonthlyIncome.vue'
+import NotesMember from '@/components/Report/NotesMember.vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { computed, onMounted } from 'vue'
@@ -35,6 +39,7 @@ export default {
     WidgetReport,
     Concerns,
     MonthlyIncome,
+    NotesMember,
   },
   setup() {
     const router = useRouter()

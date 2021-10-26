@@ -20,6 +20,7 @@ class MemberDetailsUser {
     deleted_at,
     step,
     avatar,
+    notes,
   }) {
     this.id = id
     this.type = type
@@ -40,6 +41,7 @@ class MemberDetailsUser {
     this.deletedAt = deleted_at
     this.step = step
     this.avatar = avatar
+    this.notes = notes
   }
 
   get retirementDateFormatted() {
