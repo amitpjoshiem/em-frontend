@@ -194,3 +194,9 @@
 .el-checkbox__input.is-checked + .el-checkbox__label {
   color: #76e1bb;
 }
+
+.el-input-group__append,
+.el-input-group__prepend {
+  padding-left: 5px;
+  padding-right: 5px;
+}
