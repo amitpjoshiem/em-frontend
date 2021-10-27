@@ -17,7 +17,13 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="close_date" label="Close date" class="w-3/12">
-            <SwdDatePicker v-model="ruleForm.close_date" />
+            <el-date-picker
+              v-model="ruleForm.close_date"
+              type="date"
+              :placeholder="getPlaceholder"
+              format="MM/DD/YYYY"
+              value-format="MM/DD/YYYY"
+            />
           </el-form-item>
         </div>
         <div class="flex">
@@ -51,7 +57,7 @@
 </template>
 
 <script>
-import { reactive, watch, ref } from 'vue'
+import { reactive, watch, ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useOpportunityInit } from '@/api/use-opportunity-init.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
@@ -60,6 +66,7 @@ import { createOpportunity } from '@/api/vueQuery/create-opportunity'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/opportunity.js'
+import dayjs from 'dayjs'
 
 export default {
   name: 'AddOpportunity',
@@ -127,6 +134,10 @@ export default {
       })
     }
 
+    const getPlaceholder = computed(() => {
+      return dayjs(new Date()).format('MM/DD/YYYY')
+    })
+
     return {
       isError,
       isErrorProspectDetails,
@@ -143,6 +154,7 @@ export default {
       submitForm,
       form,
       rules,
+      getPlaceholder,
     }
   },
 }

@@ -24,7 +24,13 @@
             <el-input v-model="ruleForm.name" placeholder="Enter prospect’s name" />
           </el-form-item>
           <el-form-item prop="birthday" label="Date of birth" class="w-3/12">
-            <SwdDatePicker v-model="ruleForm.birthday" />
+            <el-date-picker
+              v-model="ruleForm.birthday"
+              type="date"
+              :placeholder="getPlaceholder"
+              format="MM/DD/YYYY"
+              value-format="MM/DD/YYYY"
+            />
           </el-form-item>
         </div>
 
@@ -37,7 +43,13 @@
             <el-input v-model="ruleForm.phone" v-maska="'(###) ###-####'" placeholder="Enter prospect’s phone number" />
           </el-form-item>
           <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retiretment date" class="w-2/12">
-            <SwdDatePicker v-model="ruleForm.retirement_date" />
+            <el-date-picker
+              v-model="ruleForm.retirement_date"
+              type="date"
+              :placeholder="getPlaceholder"
+              format="MM/DD/YYYY"
+              value-format="MM/DD/YYYY"
+            />
           </el-form-item>
         </div>
 
@@ -77,7 +89,13 @@
             <el-input v-model="ruleForm.spouse.name" placeholder="Enter spouse’s name" />
           </el-form-item>
           <el-form-item prop="spouse.birthday" label="Date of birth" class="w-3/12">
-            <SwdDatePicker v-model="ruleForm.spouse.birthday" />
+            <el-date-picker
+              v-model="ruleForm.spouse.birthday"
+              type="date"
+              :placeholder="getPlaceholder"
+              format="MM/DD/YYYY"
+              value-format="MM/DD/YYYY"
+            />
           </el-form-item>
         </div>
         <div class="flex my-5">
@@ -98,7 +116,13 @@
             label="Retiretment date"
             class="w-2/12"
           >
-            <SwdDatePicker v-model="ruleForm.spouse.retirement_date" />
+            <el-date-picker
+              v-model="ruleForm.spouse.retirement_date"
+              type="date"
+              :placeholder="getPlaceholder"
+              format="MM/DD/YYYY"
+              value-format="MM/DD/YYYY"
+            />
           </el-form-item>
         </div>
       </div>
@@ -268,7 +292,7 @@ import { maska } from 'maska'
 import { useFetchMember } from '@/api/use-fetch-member'
 import { scrollTop } from '@/utils/scrollTop'
 import { initialBasicInformation } from '@/components/NewProspect/initialState/basicInformation'
-
+import dayjs from 'dayjs'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 
@@ -276,6 +300,10 @@ function setInitValue(ruleForm, member) {
   if (member?.value?.data) {
     Object.assign(ruleForm, member.value.data)
   }
+  ruleForm.birthday = dayjs(ruleForm.birthday).format('MM/DD/YYYY')
+  ruleForm.retirement_date = dayjs(ruleForm.retirement_date).format('MM/DD/YYYY')
+  ruleForm.spouse.birthday = dayjs(ruleForm.spouse.birthday).format('MM/DD/YYYY')
+  ruleForm.spouse.retirement_date = dayjs(ruleForm.spouse.retirement_date).format('MM/DD/YYYY')
 }
 
 export default {
@@ -444,6 +472,10 @@ export default {
       }
     }
 
+    const getPlaceholder = computed(() => {
+      return dayjs(new Date()).format('MM/DD/YYYY')
+    })
+
     return {
       ruleForm,
       rules,
@@ -465,6 +497,7 @@ export default {
       isUpdateMember,
       IconAdd,
       IconDelete,
+      getPlaceholder,
     }
   },
 }
