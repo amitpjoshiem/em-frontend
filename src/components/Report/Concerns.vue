@@ -1,7 +1,6 @@
 <template>
   <div class="border border-color-grey rounded-lg mr-5 mt-5 p-5">
-    <span>Concerns</span>
-
+    <span class="text-main text-smm font-semibold">Concerns</span>
     <div class="flex">
       <div class="flex flex-col">
         <el-checkbox v-model="state.high_fees" label="High Fees" />

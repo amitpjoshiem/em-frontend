@@ -20,7 +20,6 @@ import SwdTypeUserLabel from '@/components/Global/SwdTypeUserLabel.vue'
 import SwdSelect from '@/components/Global/SwdSelect.vue'
 import SwdItemsPerPage from '@/components/Global/SwdItemsPerPage.vue'
 import SwdDropDown from '@/components/Global/SwdDropDown.vue'
-import SwdDatePicker from '@/components/Global/SwdDatePicker.vue'
 import BackButton from '@/components/Global/Button/BackButton.vue'
 import SwdDialog from '@/components/Global/SwdDialog.vue'
 import SwdPagination from '@/components/Global/SwdPagination.vue'
@@ -50,7 +49,6 @@ const components = [
   SwdTypeUserLabel,
   SwdItemsPerPage,
   SwdDropDown,
-  SwdDatePicker,
   BackButton,
   SwdDialog,
   SwdPagination,
