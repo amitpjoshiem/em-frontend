@@ -4,7 +4,7 @@ import { MonthlyIncomeAnalysis } from '../dto/MonthlyIncomeAnalysis'
 
 export const useFetchMonthlyIncomeAnalysis = (id) => {
   const { isLoading, isFetching, isError, data } = useQuery(
-    ['blueprint/incomeAnalysis'],
+    ['blueprint/incomeAnalysis', id],
     () => {
       return fetchMonthlyIncomeAnalysis(id)
     },
