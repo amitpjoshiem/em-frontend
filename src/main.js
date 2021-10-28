@@ -28,6 +28,7 @@ import SwdStubForText from '@/components/Global/SwdStubForText.vue'
 import SwdMemberActions from '@/components/Global/SwdMemberActions.vue'
 import SwdNativeSelect from '@/components/Global/SwdNativeSelect.vue'
 import SwdSelectFilter from '@/components/Global/SwdSelectFilter.vue'
+import SwdSpinner from '@/components/Global/SwdSpinner.vue'
 
 import ElementPlus from 'element-plus'
 
@@ -57,6 +58,7 @@ const components = [
   SwdMemberActions,
   SwdNativeSelect,
   SwdSelectFilter,
+  SwdSpinner,
 ]
 
 components.forEach((component) => {
