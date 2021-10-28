@@ -38,7 +38,7 @@ export default {
         doughnutChart.data.datasets = [
           {
             backgroundColor: ['#FF92A5', '#66B6FF', '#53576A'],
-            data: Object.values(props.values.assetsData),
+            data: [props.values.liquidity, props.values.growth, props.values.income],
           },
         ]
         doughnutChart.options.elements.center.text = 'Total ' + currencyFormat(props.values.total)
@@ -53,15 +53,15 @@ export default {
       data: {
         datasets: [
           {
-            backgroundColor: ['#D3D3D3'],
-            data: [1],
+            backgroundColor: props.values.total !== '0' ? ['#FF92A5', '#66B6FF', '#53576A'] : ['#D3D3D3'],
+            data: props.values.total !== '0' ? [props.values.liquidity, props.values.growth, props.values.income] : [1],
           },
         ],
       },
       options: {
         elements: {
           center: {
-            text: 'Total $0',
+            text: 'Total ' + currencyFormat(props.values.total),
             size: 12,
           },
         },

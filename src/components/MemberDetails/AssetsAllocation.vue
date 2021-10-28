@@ -7,7 +7,7 @@
       >
         <span class="text-main text-smm font-semibold">Asset Allocation</span>
       </router-link>
-      <div class="flex pt-3">
+      <div v-if="!isLoading" class="flex pt-3">
         <AssetsChart :values="ruleForm" />
         <div class="flex ml-4">
           <div class="flex flex-col justify-center mr-3">
@@ -21,20 +21,27 @@
             <div>Income</div>
           </div>
           <div class="flex flex-col justify-center text-main text-xs font-medium">
-            <el-form ref="form" :model="ruleForm" status-icon :rules="rules" size="mini">
-              <el-form-item prop="assetsData.liquidity" class="">
-                <el-input v-model="ruleForm.assetsData.liquidity" placeholder="$12345" @change="changeAssets()" />
+            <el-form ref="form" :model="ruleForm" status-icon size="mini">
+              <el-form-item>
+                <el-input v-model="ruleForm.liquidity" placeholder="$12345" type="number" @change="change()">
+                  <template #prepend>$</template>
+                </el-input>
               </el-form-item>
-              <el-form-item prop="assetsData.growth" class="mt-4">
-                <el-input v-model="ruleForm.assetsData.growth" placeholder="$12345" @change="changeAssets()" />
+              <el-form-item class="mt-4">
+                <el-input v-model="ruleForm.growth" placeholder="$12345" type="number" @change="change()">
+                  <template #prepend>$</template>
+                </el-input>
               </el-form-item>
-              <el-form-item prop="assetsData.income" class="mt-4">
-                <el-input v-model="ruleForm.assetsData.income" placeholder="$12345" @change="changeAssets()" />
+              <el-form-item class="mt-4">
+                <el-input v-model="ruleForm.income" placeholder="$12345" type="number" @change="change()">
+                  <template #prepend>$</template>
+                </el-input>
               </el-form-item>
             </el-form>
           </div>
         </div>
       </div>
+      <el-skeleton v-else :rows="4" animated />
     </div>
     <div class="w-4/12 flex flex-col pt-10">
       <div class="flex justify-center items-center flex-col">
@@ -54,8 +61,12 @@ import RiskLevelChart from '@/components/MemberDetails/Chart/RiskLevelChart.vue'
 import IconAction from '@/assets/svg/icon-action.svg'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useRoute } from 'vue-router'
-import { computed, reactive } from 'vue'
-import { rules } from '@/validationRules/memberDetailsAssetsRules.js'
+import { reactive, ref, watchEffect } from 'vue'
+import { useFetchMemberDetailsAssets } from '@/api/use-fetch-member-details-assets.js'
+import { createMemberDetailsAssets } from '@/api/vueQuery/create-member-details-assets'
+import { useQueryClient } from 'vue-query'
+import { useMutation } from 'vue-query'
+
 export default {
   name: 'AssetsAllocation',
   components: {
@@ -63,54 +74,58 @@ export default {
     RiskLevelChart,
   },
   setup() {
+    const form = ref(null)
     const route = useRoute()
+    const memberId = route.params.id
+    const queryClient = useQueryClient()
+
+    const { isLoading, isFetching, isError, data: assetsData } = useFetchMemberDetailsAssets(memberId)
+
+    const {
+      mutateAsync: create,
+      isLoading: isLoadingCreate,
+      isError: isErrorCreate,
+      isFetching: isFetchingCreate,
+      data: dataCreate,
+    } = useMutation(createMemberDetailsAssets)
 
     const ruleForm = reactive({
-      assetsData: {
-        income: '',
-        growth: '',
-        liquidity: '',
-      },
+      growth: '',
+      income: '',
+      liquidity: '',
       total: 0,
     })
 
-    const changeAssets = () => {
-      ruleForm.total = 0
-      for (const key in ruleForm.assetsData) {
-        if (Object.hasOwnProperty.call(ruleForm.assetsData, key)) {
-          if (!isNaN(ruleForm.assetsData[key])) ruleForm.total += Number(ruleForm.assetsData[key])
-        }
+    const change = async () => {
+      const res = await create({ id: memberId, data: ruleForm })
+      if (!('error' in res)) {
+        queryClient.invalidateQueries(['member/assetAllocation'])
+        Object.assign(ruleForm, res.data)
       }
     }
 
-    const actionsOptions = [
-      {
-        title: 'Item 1',
-        command: 'item-1',
-      },
-      {
-        title: 'Item 2',
-        command: 'item2',
-      },
-      {
-        title: 'Item 3',
-        command: 'item3',
-      },
-    ]
-
-    const memberId = computed(() => {
-      if (route.params.id) return route.params.id
-      return ''
+    watchEffect(() => {
+      if (isLoading.value === false) {
+        Object.assign(ruleForm, assetsData.value)
+      }
     })
 
     return {
-      actionsOptions,
       currencyFormat,
       IconAction,
       memberId,
       ruleForm,
-      changeAssets,
-      rules,
+      form,
+      change,
+      assetsData,
+      isError,
+      isLoading,
+      isFetching,
+      create,
+      isLoadingCreate,
+      isErrorCreate,
+      isFetchingCreate,
+      dataCreate,
     }
   },
 }

@@ -4,7 +4,7 @@ import { ConcernsBlueReport } from '../dto/ConcernsBlueReport'
 
 export const useFetchConcernsBlueReport = (id) => {
   const { isLoading, isError, data } = useQuery(
-    ['blueprint/concern'],
+    ['blueprint/concern', id],
     () => {
       return fetchConcernsBlueReport(id)
     },
