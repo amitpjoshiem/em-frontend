@@ -8,7 +8,7 @@
       <div class="w-4/12 text-xs text-gray03">Current</div>
       <div class="w-4/12 text-xs text-gray03">Future</div>
     </div>
-    <el-form ref="form" :model="ruleForm" status-icon :rules="rules" size="mini">
+    <el-form ref="form" :model="ruleForm" status-icon size="mini">
       <!-- Member -->
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Member</div>
@@ -127,7 +127,6 @@
 <script>
 import { ref, reactive } from 'vue'
 import { currencyFormat } from '@/utils/currencyFormat'
-import { rules } from '@/validationRules/monthlyIncomeAnalysis.js'
 import { useRoute } from 'vue-router'
 import { useFetchMonthlyIncomeAnalysis } from '@/api/use-fetch-monthly-income-analysis.js'
 import { createMonthlyIncomeAnalysis } from '@/api/vueQuery/create-monthly-income-analysis'
@@ -165,7 +164,6 @@ export default {
       form,
       ruleForm,
       currencyFormat,
-      rules,
       change,
       isLoading,
       isError,
