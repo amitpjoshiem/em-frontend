@@ -8,7 +8,6 @@
       <div class="w-4/12 text-xs text-gray03">Current</div>
       <div class="w-4/12 text-xs text-gray03">Future</div>
     </div>
-
     <el-form ref="form" :model="ruleForm" status-icon :rules="rules" size="mini">
       <!-- Member -->
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
@@ -83,8 +82,8 @@
 
       <div class="bg-widget-bg px-5 py-2 text-xss text-main font-medium flex justify-between">
         <div class="w-8/12">Total</div>
-        <SwdSpinner v-if="isLoadingCreate" />
-        <div v-else class="w-4/12 text-right font-semibold pr-1">{{ currencyFormat(ruleForm.total) }}</div>
+        <SwdSpinner v-if="isFetching" />
+        <div v-else class="w-4/12 text-right font-semibold pr-1">{{ currencyFormat(monthlyIncome.total) }}</div>
       </div>
 
       <!-- Tax -->
@@ -119,7 +118,8 @@
     <div class="bg-color-light-blue rounded-br-lg rounded-bl-lg text-xss text-main font-medium">
       <div class="pl-5 pr-5 py-3 flex justify-between">
         <span>Monthly Expenses:</span>
-        <span>{{ currencyFormat(ruleForm.monthly_expenses) }}</span>
+        <SwdSpinner v-if="isFetching" />
+        <span v-else>{{ currencyFormat(monthlyIncome.monthly_expenses) }}</span>
       </div>
     </div>
   </div>
@@ -128,19 +128,21 @@
 import { ref, reactive } from 'vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { rules } from '@/validationRules/monthlyIncomeAnalysis.js'
-
 import { useRoute } from 'vue-router'
 import { useFetchMonthlyIncomeAnalysis } from '@/api/use-fetch-monthly-income-analysis.js'
 import { createMonthlyIncomeAnalysis } from '@/api/vueQuery/create-monthly-income-analysis'
 import { useMutation } from 'vue-query'
+import { useQueryClient } from 'vue-query'
+
 export default {
   name: 'MonthlyIncome',
   setup() {
     const form = ref(null)
     const route = useRoute()
+    const queryClient = useQueryClient()
     const id = route.params.id
 
-    const { isLoading, isError, data } = useFetchMonthlyIncomeAnalysis(id)
+    const { isLoading, isFetching, isError, data: monthlyIncome } = useFetchMonthlyIncomeAnalysis(id)
 
     const {
       mutateAsync: create,
@@ -150,10 +152,13 @@ export default {
       data: dataCreate,
     } = useMutation(createMonthlyIncomeAnalysis)
 
-    const ruleForm = reactive({ ...data.value })
+    const ruleForm = reactive({ ...monthlyIncome.value })
 
     const change = async () => {
-      await create({ id, data: ruleForm })
+      const res = await create({ id, data: ruleForm })
+      if (!('error' in res)) {
+        queryClient.invalidateQueries(['blueprint/incomeAnalysis'])
+      }
     }
 
     return {
@@ -164,12 +169,13 @@ export default {
       change,
       isLoading,
       isError,
-      data,
+      monthlyIncome,
       create,
       isLoadingCreate,
       isErrorCreate,
       isFetchingCreate,
       dataCreate,
+      isFetching,
     }
   },
 }
