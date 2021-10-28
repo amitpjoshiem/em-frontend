@@ -1,6 +1,6 @@
 <template>
   <div class="border border-color-grey rounded-lg mr-5 mt-5 p-5">
-    <span>Net Worth</span>
+    <span class="text-main text-smm font-semibold">Net Worth</span>
     <div class="flex mt-5">
       <div class="w-7/12 flex justify-between">
         <div class="flex flex-col items-center pt-1.5">

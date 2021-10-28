@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-color-grey rounded-lg mr-5 mt-5 p-5">
+  <div class="border border-color-grey rounded-lg mr-5 mt-5 px-5 py-6">
     <span class="text-main text-smm font-semibold">Concerns</span>
     <div class="flex">
       <div class="flex flex-col">
