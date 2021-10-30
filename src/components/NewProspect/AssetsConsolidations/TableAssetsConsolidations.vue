@@ -26,7 +26,7 @@
     </div>
 
     <!-- Item table -->
-    <div v-if="!isLoading" :class="{ 'pointer-events-none': isUpdateTable }">
+    <div v-if="!isLoading">
       <div v-for="(item, index) in state" :key="index" class="flex h-10">
         <!-- name -->
         <div class="w-2/10 item">
@@ -38,7 +38,7 @@
         </div>
         <!-- AMOUNT -->
         <div class="w-1/10 item">
-          <el-input v-model="state[index].amount" size="mini" type="number" max="100" @change="change(index)" />
+          <el-input v-model="state[index].amount" size="mini" type="number" @change="change(index)" />
         </div>
         <!-- MANAGEMENT EXPENCE -->
         <div class="w-1/10 item" :class="{ invalidate: errors['management_expense_' + index] }">
@@ -46,7 +46,7 @@
             v-model="state[index].management_expense"
             size="mini"
             type="number"
-            @change="change($event, index, 'management_expense', 'Management Expense')"
+            @change="change(index, $event, 'management_expense', 'Management Expense')"
           />
         </div>
         <!-- TURNOVER -->
@@ -55,16 +55,26 @@
             v-model="state[index].turnover"
             size="mini"
             type="number"
-            @change="change($event, index, 'turnover', 'Turnover')"
+            @change="change(index, $event, 'turnover', 'Turnover')"
           />
         </div>
         <!-- TRADING COSTS -->
-        <div class="w-1/10 item">
-          <el-input v-model="state[index].trading_cost" size="mini" type="number" @change="change(index)" />
+        <div class="w-1/10 item" :class="{ invalidate: errors['trading_cost_' + index] }">
+          <el-input
+            v-model="state[index].trading_cost"
+            size="mini"
+            type="number"
+            @change="change(index, $event, 'trading_cost', 'Trading costs')"
+          />
         </div>
         <!-- WRAP FEE -->
-        <div class="w-1/10 item">
-          <el-input v-model="state[index].wrap_fee" size="mini" type="number" @change="change(index)" />
+        <div class="w-1/10 item" :class="{ invalidate: errors['wrap_fee_' + index] }">
+          <el-input
+            v-model="state[index].wrap_fee"
+            size="mini"
+            type="number"
+            @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
+          />
         </div>
         <!-- TOTAL COST IN % -->
         <div class="w-1/10 item">
@@ -78,11 +88,9 @@
     </div>
 
     <!-- TOTAL -->
-
     <div v-if="!isLoading" class="flex h-10">
       <div class="w-2/10 total">Totals</div>
       <div class="w-1/10 total">
-        <!-- <SwdSpinner v-if="!isUpdateTable" /> -->
         <span>{{ total.value.percent_of_holdings }}%</span>
       </div>
       <div class="w-1/10 total">
@@ -111,7 +119,7 @@
 </template>
 
 <script>
-import { reactive, watchEffect, computed, ref } from 'vue'
+import { reactive, watchEffect, ref } from 'vue'
 import { useAsetsConsolidationsMember } from '@/api/use-assets-consolidations-member.js'
 import { updateMemberAssetsConsolidation } from '@/api/vueQuery/update-member-assets-consolidation'
 import { useAlert } from '@/utils/use-alert'
@@ -140,7 +148,7 @@ export default {
       }
     })
 
-    const change = async (value, index, field, title) => {
+    const change = async (index, value = 0, field = '', title = '') => {
       const valueNum = Number(value)
       if (valueNum < 0 || valueNum > 100) {
         errors[field + '_' + index] = true
@@ -162,11 +170,6 @@ export default {
       isUpdate.value = false
     }
 
-    const isUpdateTable = computed(() => {
-      return false
-      // return isFetching && isUpdate
-    })
-
     return {
       state,
       change,
@@ -177,7 +180,6 @@ export default {
       currencyFormat,
       total,
       errors,
-      isUpdateTable,
     }
   },
 }
