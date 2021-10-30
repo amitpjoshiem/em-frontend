@@ -1,50 +1,58 @@
 <template>
   <div class="border box-border color-light-gray rounded-lg">
     <div class="text-smm font-medium text-main py-5 pl-5">Prospect Asset Consolidations</div>
-    <div class="flex h-12 bg-widget-bg">
-      <div class="w-6/24 title">name</div>
-      <div class="w-2/24 title">
-        % of <br />
-        Holdings
+
+    <div v-if="!isLoading">
+      <div class="flex h-12 bg-widget-bg">
+        <div class="w-6/24 title">name</div>
+        <div class="w-2/24 title">
+          % of <br />
+          Holdings
+        </div>
+        <div class="w-3/24 title">Amount</div>
+        <div class="w-2/24 title">Management expence %</div>
+        <div class="w-2/24 title">Turnover %</div>
+        <div class="w-2/24 title">
+          Trading <br />
+          costs
+        </div>
+        <div class="w-2/24 title">Wrap Fee</div>
+        <div class="w-2/24 title">
+          Total cost <br />
+          in %
+        </div>
+        <div class="w-3/24 title">
+          Total cost <br />
+          in $
+        </div>
+        <div class="w-1/24 title" />
       </div>
-      <div class="w-3/24 title">Amount</div>
-      <div class="w-2/24 title">Management expence %</div>
-      <div class="w-2/24 title">Turnover %</div>
-      <div class="w-2/24 title">
-        Trading <br />
-        costs
-      </div>
-      <div class="w-2/24 title">Wrap Fee</div>
-      <div class="w-2/24 title">
-        Total cost <br />
-        in %
-      </div>
-      <div class="w-3/24 title">
-        Total cost <br />
-        in $
-      </div>
-      <div class="w-1/24 title" />
     </div>
 
     <!-- Item table -->
-    <div v-if="!isLoading">
+    <div>
       <div v-for="(item, index) in state" :key="index" class="flex h-10">
         <!-- name -->
         <div class="w-6/24 item">
-          <el-input v-model="state[index].name" size="mini" @change="change(index)" />
+          <el-input v-model="state[index].name" size="mini" :disabled="isLoadingUpdate" @change="change(index)" />
         </div>
         <!-- HOLDINGS -->
-        <div class="w-2/24 item">
-          <span>{{ item.percent_of_holdings }}%</span>
-        </div>
+        <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
         <!-- AMOUNT -->
         <div class="w-3/24 item">
-          <el-input v-model="state[index].amount" size="mini" type="number" @change="change(index)" />
+          <el-input
+            v-model="state[index].amount"
+            size="mini"
+            type="number"
+            :disabled="isLoadingUpdate"
+            @change="change(index)"
+          />
         </div>
         <!-- MANAGEMENT EXPENCE -->
         <div class="w-2/24 item" :class="{ invalidate: errors['management_expense_' + index] }">
           <el-input
             v-model="state[index].management_expense"
+            :disabled="isLoadingUpdate"
             size="mini"
             type="number"
             @change="change(index, $event, 'management_expense', 'Management Expense')"
@@ -54,6 +62,7 @@
         <div class="w-2/24 item" :class="{ invalidate: errors['turnover_' + index] }">
           <el-input
             v-model="state[index].turnover"
+            :disabled="isLoadingUpdate"
             size="mini"
             type="number"
             @change="change(index, $event, 'turnover', 'Turnover')"
@@ -63,6 +72,7 @@
         <div class="w-2/24 item" :class="{ invalidate: errors['trading_cost_' + index] }">
           <el-input
             v-model="state[index].trading_cost"
+            :disabled="isLoadingUpdate"
             size="mini"
             type="number"
             @change="change(index, $event, 'trading_cost', 'Trading costs')"
@@ -72,6 +82,7 @@
         <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + index] }">
           <el-input
             v-model="state[index].wrap_fee"
+            :disabled="isLoadingUpdate"
             size="mini"
             type="number"
             @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
@@ -83,7 +94,7 @@
         </div>
         <!-- TOTAL COST IN $ -->
         <div class="w-3/24 item">
-          <span>{{ currencyFormat(item.total_cost) }}</span>
+          {{ currencyFormat(item.total_cost) }}
         </div>
         <div class="w-1/24 item">
           <div class="w-[15px] h-[15px] cursor-pointer">
@@ -97,28 +108,36 @@
     <div v-if="!isLoading" class="flex h-10">
       <div class="w-6/24 total">Totals</div>
       <div class="w-2/24 total">
-        <span>{{ total.value.percent_of_holdings }}%</span>
+        <SwdSpinner v-if="isFetching" />
+        <span v-else>{{ total.value.percent_of_holdings }}%</span>
       </div>
       <div class="w-3/24 total">
-        <span>{{ currencyFormat(total.value.amount) }}</span>
+        <SwdSpinner v-if="isFetching" />
+        <span v-else>{{ currencyFormat(total.value.amount) }}</span>
       </div>
       <div class="w-2/24 total">
-        <span>{{ total.value.management_expense }}%</span>
+        <SwdSpinner v-if="isFetching" />
+        <span v-else>{{ total.value.management_expense }}%</span>
       </div>
       <div class="w-2/24 total">
-        <span>{{ total.value.turnover }}%</span>
+        <SwdSpinner v-if="isFetching" />
+        <span v-else>{{ total.value.turnover }}%</span>
       </div>
       <div class="w-2/24 total">
-        <span>{{ total.value.trading_cost }}%</span>
+        <SwdSpinner v-if="isFetching" />
+        <span v-else>{{ total.value.trading_cost }}%</span>
       </div>
       <div class="w-2/24 total">
-        <span>{{ total.value.wrap_fee }}%</span>
+        <SwdSpinner v-if="isFetching" />
+        <span v-else>{{ total.value.wrap_fee }}%</span>
       </div>
       <div class="w-2/24 total">
-        <span>{{ total.value.total_cost_percent }}%</span>
+        <SwdSpinner v-if="isFetching" />
+        <span v-else>{{ total.value.total_cost_percent }}%</span>
       </div>
       <div class="w-3/24 total">
-        <span>{{ currencyFormat(total.value.total_cost) }}</span>
+        <SwdSpinner v-if="isFetching" />
+        <span v-else>{{ currencyFormat(total.value.total_cost) }}</span>
       </div>
       <div class="w-1/24 total">
         <div class="w-[15px] h-[15px] cursor-pointer">
@@ -126,11 +145,12 @@
         </div>
       </div>
     </div>
+    <el-skeleton v-else :rows="10" animated class="p-5" />
   </div>
 </template>
 
 <script>
-import { reactive, watchEffect } from 'vue'
+import { reactive, watchEffect, ref } from 'vue'
 import { useAsetsConsolidationsMember } from '@/api/use-assets-consolidations-member.js'
 import { updateMemberAssetsConsolidation } from '@/api/vueQuery/update-member-assets-consolidation'
 import { createMemberAssetsConsolidation } from '@/api/vueQuery/create-member-assets-consolidation'
@@ -150,6 +170,7 @@ export default {
     const route = useRoute()
     const queryClient = useQueryClient()
     const id = route.params.id
+    const isLoadingUpdate = ref(false)
 
     const { isLoading, isFetching, isError, data: assetsData, total } = useAsetsConsolidationsMember(id)
     const { mutateAsync: updateAssetsConsolidation } = useMutation(updateMemberAssetsConsolidation)
@@ -176,6 +197,8 @@ export default {
         })
         return
       }
+
+      isLoadingUpdate.value = true
       const res = await updateAssetsConsolidation({ form: state[index], id: state[index].id })
       if (!('error' in res)) {
         for (var key in errors) {
@@ -183,6 +206,7 @@ export default {
         }
         queryClient.invalidateQueries(['AsetsConsolidationsMember', id])
       }
+      isLoadingUpdate.value = false
     }
 
     const addTableLine = async () => {
@@ -214,6 +238,8 @@ export default {
 
       addTableLine,
       removeTableLine,
+
+      isLoadingUpdate,
     }
   },
 }
@@ -237,6 +263,8 @@ export default {
 .item .el-input .el-input__inner {
   border-style: none;
   text-align: center;
+  border-radius: 0;
+  height: 38px;
 }
 
 .invalidate .el-input .el-input__inner {
