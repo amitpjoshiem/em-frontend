@@ -42,7 +42,7 @@ const routes = [
             name: 'assetsconsolidations',
             component: () =>
               import(
-                /* webpackChunkName: "NewProspect" */ '../components/NewProspect/NewProspectAssetsConsolidations.vue'
+                /* webpackChunkName: "NewProspect" */ '../components/NewProspect/AssetsConsolidations/AssetsConsolidations.vue'
               ),
           },
           {

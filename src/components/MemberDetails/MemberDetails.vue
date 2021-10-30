@@ -11,12 +11,12 @@
       <RetirementIncomePlan />
     </div>
     <OpportunityTable class="mb-10" :prospect="data ? data : {}" />
-    <TableAssetsConsolidations class="mb-10" />
+    <!-- <TableAssetsConsolidations class="mb-10" /> -->
   </div>
 </template>
 <script>
 import OpportunityTable from '@/components/MemberDetails/OpportunityTable.vue'
-import TableAssetsConsolidations from '@/components/Table/TableAssetsConsolidations.vue'
+// import TableAssetsConsolidations from '@/components/Table/TableAssetsConsolidations.vue'
 import WidgetMemberDetails from '@/components/MemberDetails/WidgetMemberDetails.vue'
 import AssetsAllocation from '@/components/MemberDetails/AssetsAllocation.vue'
 import PastStressTestResults from '@/components/MemberDetails/PastStressTestResults.vue'
@@ -28,7 +28,7 @@ export default {
   name: 'MemberDetails',
   components: {
     OpportunityTable,
-    TableAssetsConsolidations,
+    // TableAssetsConsolidations,
     WidgetMemberDetails,
     AssetsAllocation,
     PastStressTestResults,
