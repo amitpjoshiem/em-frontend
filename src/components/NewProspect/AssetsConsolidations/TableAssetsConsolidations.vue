@@ -5,94 +5,82 @@
     <div v-if="!isLoading">
       <HeaderTable />
 
-      <!-- Item table -->
-      <div>
-        <div v-for="(item, index) in state" :key="index" class="flex h-10">
-          <!-- name -->
-          <div class="w-6/24 item">
-            <el-input v-model="state[index].name" size="mini" :disabled="isLoadingUpdate" @change="change(index)" />
-          </div>
-          <!-- HOLDINGS -->
-          <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
-          <!-- AMOUNT -->
-          <div class="w-3/24 item">
-            <el-input
-              v-model="state[index].amount"
-              size="mini"
-              type="number"
-              :disabled="isLoadingUpdate"
-              @change="change(index)"
-            />
-          </div>
-          <!-- MANAGEMENT EXPENCE -->
-          <div class="w-2/24 item" :class="{ invalidate: errors['management_expense_' + index] }">
-            <el-input
-              v-model="state[index].management_expense"
-              :disabled="isLoadingUpdate"
-              size="mini"
-              type="number"
-              @change="change(index, $event, 'management_expense', 'Management Expense')"
-            />
-          </div>
-          <!-- TURNOVER -->
-          <div class="w-2/24 item" :class="{ invalidate: errors['turnover_' + index] }">
-            <el-input
-              v-model="state[index].turnover"
-              :disabled="isLoadingUpdate"
-              size="mini"
-              type="number"
-              @change="change(index, $event, 'turnover', 'Turnover')"
-            />
-          </div>
-          <!-- TRADING COSTS -->
-          <div class="w-2/24 item" :class="{ invalidate: errors['trading_cost_' + index] }">
-            <el-input
-              v-model="state[index].trading_cost"
-              :disabled="isLoadingUpdate"
-              size="mini"
-              type="number"
-              @change="change(index, $event, 'trading_cost', 'Trading costs')"
-            />
-          </div>
-          <!-- WRAP FEE -->
-          <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + index] }">
-            <el-input
-              v-model="state[index].wrap_fee"
-              :disabled="isLoadingUpdate"
-              size="mini"
-              type="number"
-              @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
-            />
-          </div>
-          <!-- TOTAL COST IN % -->
-          <div class="w-2/24 item">
-            <span>{{ item.total_cost_percent }}%</span>
-          </div>
-          <!-- TOTAL COST IN $ -->
-          <div class="w-3/24 item">
-            {{ currencyFormat(item.total_cost) }}
-          </div>
-          <div class="w-1/24 item">
-            <div class="w-[15px] h-[15px] cursor-pointer">
-              <el-popconfirm
-                confirm-button-text="Yes"
-                cancel-button-text="No"
-                icon="el-icon-info"
-                icon-color="red"
-                title="Are you sure to delete this?"
-                @confirm="confirmEvent(item.id, index)"
-              >
-                <template #reference>
-                  <span>
-                    <InlineSvg :src="IconDelete" />
-                  </span>
-                </template>
-              </el-popconfirm>
-            </div>
+      <div v-for="(item, index) in state" :key="index" class="flex h-10">
+        <div class="w-6/24 item">
+          <el-input v-model="state[index].name" size="mini" :disabled="isDisabledForm" @change="change(index)" />
+        </div>
+        <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
+        <div class="w-3/24 item">
+          <el-input
+            v-model="state[index].amount"
+            size="mini"
+            type="number"
+            :disabled="isDisabledForm"
+            @change="change(index)"
+          />
+        </div>
+        <div class="w-2/24 item" :class="{ invalidate: errors['management_expense_' + index] }">
+          <el-input
+            v-model="state[index].management_expense"
+            :disabled="isDisabledForm"
+            size="mini"
+            type="number"
+            @change="change(index, $event, 'management_expense', 'Management Expense')"
+          />
+        </div>
+        <div class="w-2/24 item" :class="{ invalidate: errors['turnover_' + index] }">
+          <el-input
+            v-model="state[index].turnover"
+            :disabled="isDisabledForm"
+            size="mini"
+            type="number"
+            @change="change(index, $event, 'turnover', 'Turnover')"
+          />
+        </div>
+        <div class="w-2/24 item" :class="{ invalidate: errors['trading_cost_' + index] }">
+          <el-input
+            v-model="state[index].trading_cost"
+            :disabled="isDisabledForm"
+            size="mini"
+            type="number"
+            @change="change(index, $event, 'trading_cost', 'Trading costs')"
+          />
+        </div>
+        <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + index] }">
+          <el-input
+            v-model="state[index].wrap_fee"
+            :disabled="isDisabledForm"
+            size="mini"
+            type="number"
+            @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
+          />
+        </div>
+        <div class="w-2/24 item">
+          <span>{{ item.total_cost_percent }}%</span>
+        </div>
+        <div class="w-3/24 item">
+          {{ currencyFormat(item.total_cost) }}
+        </div>
+        <div class="w-1/24 item">
+          <div class="w-[15px] h-[15px] cursor-pointer">
+            <el-popconfirm
+              confirm-button-text="Yes"
+              cancel-button-text="No"
+              icon="el-icon-info"
+              icon-color="red"
+              title="Are you sure to delete this?"
+              @confirm="confirmEvent(item.id, index)"
+            >
+              <template #reference>
+                <span>
+                  <InlineSvg :src="IconDelete" />
+                </span>
+              </template>
+            </el-popconfirm>
           </div>
         </div>
       </div>
-      <TotalTable :total="total" :is-fetching="isFetching" @addTableLine="addTableLine" />
+      <TotalTable :total="total" :is-fetching="isDisabledForm" @addTableLine="addTableLine" />
     </div>
 
     <el-skeleton v-else :rows="10" animated class="p-5" />
@@ -100,7 +88,7 @@
 </template>
 
 <script>
-import { reactive, watchEffect, ref } from 'vue'
+import { reactive, watchEffect, ref, computed } from 'vue'
 import { useAsetsConsolidationsMember } from '@/api/use-assets-consolidations-member.js'
 import { updateMemberAssetsConsolidation } from '@/api/vueQuery/update-member-assets-consolidation'
 import { createMemberAssetsConsolidation } from '@/api/vueQuery/create-member-assets-consolidation'
@@ -176,6 +164,10 @@ export default {
       }
     }
 
+    const isDisabledForm = computed(() => {
+      return isLoadingUpdate.value || isFetching.value
+    })
+
     return {
       state,
       change,
@@ -190,6 +182,7 @@ export default {
       addTableLine,
       isLoadingUpdate,
       confirmEvent,
+      isDisabledForm,
     }
   },
 }
