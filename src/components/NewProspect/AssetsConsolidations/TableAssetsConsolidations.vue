@@ -3,148 +3,139 @@
     <div class="text-smm font-medium text-main py-5 pl-5">Prospect Asset Consolidations</div>
 
     <div v-if="!isLoading">
-      <div class="flex h-12 bg-widget-bg">
-        <div class="w-6/24 title">name</div>
-        <div class="w-2/24 title">
-          % of <br />
-          Holdings
-        </div>
-        <div class="w-3/24 title">Amount</div>
-        <div class="w-2/24 title">Management expence %</div>
-        <div class="w-2/24 title">Turnover %</div>
-        <div class="w-2/24 title">
-          Trading <br />
-          costs
-        </div>
-        <div class="w-2/24 title">Wrap Fee</div>
-        <div class="w-2/24 title">
-          Total cost <br />
-          in %
-        </div>
-        <div class="w-3/24 title">
-          Total cost <br />
-          in $
-        </div>
-        <div class="w-1/24 title" />
-      </div>
-    </div>
+      <HeaderTableAssetsConsolidations />
 
-    <!-- Item table -->
-    <div>
-      <div v-for="(item, index) in state" :key="index" class="flex h-10">
-        <!-- name -->
-        <div class="w-6/24 item">
-          <el-input v-model="state[index].name" size="mini" :disabled="isLoadingUpdate" @change="change(index)" />
+      <!-- Item table -->
+      <div>
+        <div v-for="(item, index) in state" :key="index" class="flex h-10">
+          <!-- name -->
+          <div class="w-6/24 item">
+            <el-input v-model="state[index].name" size="mini" :disabled="isLoadingUpdate" @change="change(index)" />
+          </div>
+          <!-- HOLDINGS -->
+          <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
+          <!-- AMOUNT -->
+          <div class="w-3/24 item">
+            <el-input
+              v-model="state[index].amount"
+              size="mini"
+              type="number"
+              :disabled="isLoadingUpdate"
+              @change="change(index)"
+            />
+          </div>
+          <!-- MANAGEMENT EXPENCE -->
+          <div class="w-2/24 item" :class="{ invalidate: errors['management_expense_' + index] }">
+            <el-input
+              v-model="state[index].management_expense"
+              :disabled="isLoadingUpdate"
+              size="mini"
+              type="number"
+              @change="change(index, $event, 'management_expense', 'Management Expense')"
+            />
+          </div>
+          <!-- TURNOVER -->
+          <div class="w-2/24 item" :class="{ invalidate: errors['turnover_' + index] }">
+            <el-input
+              v-model="state[index].turnover"
+              :disabled="isLoadingUpdate"
+              size="mini"
+              type="number"
+              @change="change(index, $event, 'turnover', 'Turnover')"
+            />
+          </div>
+          <!-- TRADING COSTS -->
+          <div class="w-2/24 item" :class="{ invalidate: errors['trading_cost_' + index] }">
+            <el-input
+              v-model="state[index].trading_cost"
+              :disabled="isLoadingUpdate"
+              size="mini"
+              type="number"
+              @change="change(index, $event, 'trading_cost', 'Trading costs')"
+            />
+          </div>
+          <!-- WRAP FEE -->
+          <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + index] }">
+            <el-input
+              v-model="state[index].wrap_fee"
+              :disabled="isLoadingUpdate"
+              size="mini"
+              type="number"
+              @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
+            />
+          </div>
+          <!-- TOTAL COST IN % -->
+          <div class="w-2/24 item">
+            <span>{{ item.total_cost_percent }}%</span>
+          </div>
+          <!-- TOTAL COST IN $ -->
+          <div class="w-3/24 item">
+            {{ currencyFormat(item.total_cost) }}
+          </div>
+          <div class="w-1/24 item">
+            <div class="w-[15px] h-[15px] cursor-pointer">
+              <el-popconfirm
+                confirm-button-text="Yes"
+                cancel-button-text="No"
+                icon="el-icon-info"
+                icon-color="red"
+                title="Are you sure to delete this?"
+                @confirm="confirmEvent(item.id, index)"
+              >
+                <template #reference>
+                  <span>
+                    <InlineSvg :src="IconDelete" />
+                  </span>
+                </template>
+              </el-popconfirm>
+            </div>
+          </div>
         </div>
-        <!-- HOLDINGS -->
-        <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
-        <!-- AMOUNT -->
-        <div class="w-3/24 item">
-          <el-input
-            v-model="state[index].amount"
-            size="mini"
-            type="number"
-            :disabled="isLoadingUpdate"
-            @change="change(index)"
-          />
+      </div>
+
+      <!-- TOTAL -->
+      <div v-if="!isLoading" class="flex h-10">
+        <div class="w-6/24 total">Totals</div>
+        <div class="w-2/24 total">
+          <SwdSpinner v-if="isFetching" />
+          <span v-else>{{ total.value.percent_of_holdings }}%</span>
         </div>
-        <!-- MANAGEMENT EXPENCE -->
-        <div class="w-2/24 item" :class="{ invalidate: errors['management_expense_' + index] }">
-          <el-input
-            v-model="state[index].management_expense"
-            :disabled="isLoadingUpdate"
-            size="mini"
-            type="number"
-            @change="change(index, $event, 'management_expense', 'Management Expense')"
-          />
+        <div class="w-3/24 total">
+          <SwdSpinner v-if="isFetching" />
+          <span v-else>{{ currencyFormat(total.value.amount) }}</span>
         </div>
-        <!-- TURNOVER -->
-        <div class="w-2/24 item" :class="{ invalidate: errors['turnover_' + index] }">
-          <el-input
-            v-model="state[index].turnover"
-            :disabled="isLoadingUpdate"
-            size="mini"
-            type="number"
-            @change="change(index, $event, 'turnover', 'Turnover')"
-          />
+        <div class="w-2/24 total">
+          <SwdSpinner v-if="isFetching" />
+          <span v-else>{{ total.value.management_expense }}%</span>
         </div>
-        <!-- TRADING COSTS -->
-        <div class="w-2/24 item" :class="{ invalidate: errors['trading_cost_' + index] }">
-          <el-input
-            v-model="state[index].trading_cost"
-            :disabled="isLoadingUpdate"
-            size="mini"
-            type="number"
-            @change="change(index, $event, 'trading_cost', 'Trading costs')"
-          />
+        <div class="w-2/24 total">
+          <SwdSpinner v-if="isFetching" />
+          <span v-else>{{ total.value.turnover }}%</span>
         </div>
-        <!-- WRAP FEE -->
-        <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + index] }">
-          <el-input
-            v-model="state[index].wrap_fee"
-            :disabled="isLoadingUpdate"
-            size="mini"
-            type="number"
-            @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
-          />
+        <div class="w-2/24 total">
+          <SwdSpinner v-if="isFetching" />
+          <span v-else>{{ total.value.trading_cost }}%</span>
         </div>
-        <!-- TOTAL COST IN % -->
-        <div class="w-2/24 item">
-          <span>{{ item.total_cost_percent }}%</span>
+        <div class="w-2/24 total">
+          <SwdSpinner v-if="isFetching" />
+          <span v-else>{{ total.value.wrap_fee }}%</span>
         </div>
-        <!-- TOTAL COST IN $ -->
-        <div class="w-3/24 item">
-          {{ currencyFormat(item.total_cost) }}
+        <div class="w-2/24 total">
+          <SwdSpinner v-if="isFetching" />
+          <span v-else>{{ total.value.total_cost_percent }}%</span>
         </div>
-        <div class="w-1/24 item">
+        <div class="w-3/24 total">
+          <SwdSpinner v-if="isFetching" />
+          <span v-else>{{ currencyFormat(total.value.total_cost) }}</span>
+        </div>
+        <div class="w-1/24 total">
           <div class="w-[15px] h-[15px] cursor-pointer">
-            <InlineSvg :src="IconDelete" @click="removeTableLine(item.id, index)" />
+            <InlineSvg :src="IconAdd" @click="addTableLine" />
           </div>
         </div>
       </div>
     </div>
 
-    <!-- TOTAL -->
-    <div v-if="!isLoading" class="flex h-10">
-      <div class="w-6/24 total">Totals</div>
-      <div class="w-2/24 total">
-        <SwdSpinner v-if="isFetching" />
-        <span v-else>{{ total.value.percent_of_holdings }}%</span>
-      </div>
-      <div class="w-3/24 total">
-        <SwdSpinner v-if="isFetching" />
-        <span v-else>{{ currencyFormat(total.value.amount) }}</span>
-      </div>
-      <div class="w-2/24 total">
-        <SwdSpinner v-if="isFetching" />
-        <span v-else>{{ total.value.management_expense }}%</span>
-      </div>
-      <div class="w-2/24 total">
-        <SwdSpinner v-if="isFetching" />
-        <span v-else>{{ total.value.turnover }}%</span>
-      </div>
-      <div class="w-2/24 total">
-        <SwdSpinner v-if="isFetching" />
-        <span v-else>{{ total.value.trading_cost }}%</span>
-      </div>
-      <div class="w-2/24 total">
-        <SwdSpinner v-if="isFetching" />
-        <span v-else>{{ total.value.wrap_fee }}%</span>
-      </div>
-      <div class="w-2/24 total">
-        <SwdSpinner v-if="isFetching" />
-        <span v-else>{{ total.value.total_cost_percent }}%</span>
-      </div>
-      <div class="w-3/24 total">
-        <SwdSpinner v-if="isFetching" />
-        <span v-else>{{ currencyFormat(total.value.total_cost) }}</span>
-      </div>
-      <div class="w-1/24 total">
-        <div class="w-[15px] h-[15px] cursor-pointer">
-          <InlineSvg :src="IconAdd" @click="addTableLine" />
-        </div>
-      </div>
-    </div>
     <el-skeleton v-else :rows="10" animated class="p-5" />
   </div>
 </template>
@@ -164,8 +155,13 @@ import { useMutation, useQueryClient } from 'vue-query'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 
+import HeaderTableAssetsConsolidations from '@/components/NewProspect/AssetsConsolidations/HeaderTableAssetsConsolidations.vue'
+
 export default {
   name: 'TableAssetsConsolidations',
+  components: {
+    HeaderTableAssetsConsolidations,
+  },
   setup() {
     const route = useRoute()
     const queryClient = useQueryClient()
@@ -216,7 +212,7 @@ export default {
       }
     }
 
-    const removeTableLine = async (idAssetsConsolidation, index) => {
+    const confirmEvent = async (idAssetsConsolidation, index) => {
       const res = await deleteAssetsConsolidation(idAssetsConsolidation)
       if (!('error' in res)) {
         state.splice(index, 1)
@@ -235,21 +231,15 @@ export default {
       errors,
       IconAdd,
       IconDelete,
-
       addTableLine,
-      removeTableLine,
-
       isLoadingUpdate,
+      confirmEvent,
     }
   },
 }
 </script>
 
 <style scoped>
-.title {
-  @apply border-r border-b border-title-gray text-small text-gray03 flex items-center justify-center uppercase text-center last:border-r-0;
-}
-
 .item {
   @apply border-r border-b border-title-gray text-xs text-text-light-gray flex items-center justify-center uppercase text-center last:border-r-0;
 }
