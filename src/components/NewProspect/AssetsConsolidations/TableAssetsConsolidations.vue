@@ -3,7 +3,7 @@
     <div class="text-smm font-medium text-main py-5 pl-5">Prospect Asset Consolidations</div>
 
     <div v-if="!isLoading">
-      <HeaderTableAssetsConsolidations />
+      <HeaderTable />
 
       <!-- Item table -->
       <div>
@@ -92,48 +92,7 @@
           </div>
         </div>
       </div>
-
-      <!-- TOTAL -->
-      <div v-if="!isLoading" class="flex h-10">
-        <div class="w-6/24 total">Totals</div>
-        <div class="w-2/24 total">
-          <SwdSpinner v-if="isFetching" />
-          <span v-else>{{ total.value.percent_of_holdings }}%</span>
-        </div>
-        <div class="w-3/24 total">
-          <SwdSpinner v-if="isFetching" />
-          <span v-else>{{ currencyFormat(total.value.amount) }}</span>
-        </div>
-        <div class="w-2/24 total">
-          <SwdSpinner v-if="isFetching" />
-          <span v-else>{{ total.value.management_expense }}%</span>
-        </div>
-        <div class="w-2/24 total">
-          <SwdSpinner v-if="isFetching" />
-          <span v-else>{{ total.value.turnover }}%</span>
-        </div>
-        <div class="w-2/24 total">
-          <SwdSpinner v-if="isFetching" />
-          <span v-else>{{ total.value.trading_cost }}%</span>
-        </div>
-        <div class="w-2/24 total">
-          <SwdSpinner v-if="isFetching" />
-          <span v-else>{{ total.value.wrap_fee }}%</span>
-        </div>
-        <div class="w-2/24 total">
-          <SwdSpinner v-if="isFetching" />
-          <span v-else>{{ total.value.total_cost_percent }}%</span>
-        </div>
-        <div class="w-3/24 total">
-          <SwdSpinner v-if="isFetching" />
-          <span v-else>{{ currencyFormat(total.value.total_cost) }}</span>
-        </div>
-        <div class="w-1/24 total">
-          <div class="w-[15px] h-[15px] cursor-pointer">
-            <InlineSvg :src="IconAdd" @click="addTableLine" />
-          </div>
-        </div>
-      </div>
+      <TotalTable :total="total" :is-fetching="isFetching" @addTableLine="addTableLine" />
     </div>
 
     <el-skeleton v-else :rows="10" animated class="p-5" />
@@ -148,19 +107,17 @@ import { createMemberAssetsConsolidation } from '@/api/vueQuery/create-member-as
 import { deleteMemberAssetsConsolidation } from '@/api/vueQuery/delete-member-assets-consolidation'
 import { useAlert } from '@/utils/use-alert'
 import { currencyFormat } from '@/utils/currencyFormat'
-
 import { useRoute } from 'vue-router'
 import { useMutation, useQueryClient } from 'vue-query'
-
-import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
-
-import HeaderTableAssetsConsolidations from '@/components/NewProspect/AssetsConsolidations/HeaderTableAssetsConsolidations.vue'
+import HeaderTable from '@/components/NewProspect/AssetsConsolidations/HeaderTable.vue'
+import TotalTable from '@/components/NewProspect/AssetsConsolidations/TotalTable.vue'
 
 export default {
   name: 'TableAssetsConsolidations',
   components: {
-    HeaderTableAssetsConsolidations,
+    HeaderTable,
+    TotalTable,
   },
   setup() {
     const route = useRoute()
@@ -229,7 +186,6 @@ export default {
       currencyFormat,
       total,
       errors,
-      IconAdd,
       IconDelete,
       addTableLine,
       isLoadingUpdate,
@@ -242,10 +198,6 @@ export default {
 <style scoped>
 .item {
   @apply border-r border-b border-title-gray text-xs text-text-light-gray flex items-center justify-center uppercase text-center last:border-r-0;
-}
-
-.total {
-  @apply border-r border-title-gray bg-color-grey text-xs font-medium text-main flex items-center justify-center text-center last:border-r-0 last:bg-white;
 }
 </style>
 
