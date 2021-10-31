@@ -12,9 +12,6 @@ export const useAsetsConsolidationsMember = (id) => {
       return fetchAsetsConsolidationsMember(id)
     },
     {
-      // placeholderData: {
-      //   data: new MonthlyIncomeAnalysis(),
-      // },
       select: (data) => {
         total.value = data.data.find((item) => {
           return item.id === 'total'
