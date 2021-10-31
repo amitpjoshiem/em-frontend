@@ -17,7 +17,7 @@ import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { scrollTop } from '@/utils/scrollTop'
 
-import TableAssetsConsolidations from './TableAssetsConsolidations.vue'
+import TableAssetsConsolidations from '@/components/NewProspect/AssetsConsolidations/TableAssetsConsolidations.vue'
 
 export default {
   name: 'AssetsConsolidations',
