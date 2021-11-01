@@ -1,6 +1,6 @@
 <template>
   <div class="border box-border color-light-gray rounded-lg">
-    <div class="text-smm font-medium text-main py-5 pl-5">Prospect Asset Consolidations</div>
+    <div class="text-smm font-medium text-main py-5 pl-5">Asset Consolidations</div>
 
     <div v-if="!isLoading">
       <HeaderTable />
