@@ -216,6 +216,7 @@ import { computed } from 'vue'
 import { scrollTop } from '@/utils/scrollTop'
 
 export default {
+  name: 'NewProspectStressTest',
   components: {
     HoldingsChart,
     RecommendationChart,

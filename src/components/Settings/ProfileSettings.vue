@@ -50,7 +50,6 @@ import SwdCropper from '@/components/Global/SwdCropper.vue'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 
 import { useUserProfile } from '@/api/use-user-profile.js'
-import { tokenStorage } from '@/api/api-client/TokenStorage'
 import { computed, reactive, ref } from 'vue'
 import { updateUserAvatar } from '@/api/vueQuery/update-user-avatar'
 import { useMutation, useQueryClient } from 'vue-query'
@@ -87,11 +86,6 @@ export default {
       return Promise.resolve(state.croppedFile)
     }
 
-    const headers = computed(() => {
-      const token = tokenStorage.getByKey('access_token')
-      return { Authorization: `Bearer ${token}` }
-    })
-
     const userFullName = computed(() => {
       const lastName = user.value.lastName !== null ? user.value.lastName : '...'
       const firstName = user.value.firstName !== null ? user.value.firstName : '...'
@@ -121,7 +115,6 @@ export default {
       isFetched,
       handleAvatarSuccess,
       beforeAvatarUpload,
-      headers,
       state,
       handleChange,
       upload,

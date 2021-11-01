@@ -2,14 +2,15 @@
   <el-upload
     ref="innerRef"
     :action="getUrlMedia"
-    :show-file-list="false"
+    :show-file-list="showFileList"
     :on-success="($event) => $emit('upload-success', $event)"
     :before-upload="uploadBeforeHook"
     with-credentials
     :headers="headers"
     :data="uploadData"
     :on-change="($event) => $emit('upload-change', $event)"
-    :auto-upload="false"
+    :auto-upload="autoUpload"
+    list-type="picture"
   >
     <slot name="main" />
   </el-upload>
@@ -20,6 +21,7 @@ import { tokenStorage } from '@/api/api-client/TokenStorage'
 import { computed, ref, onMounted, nextTick } from 'vue'
 
 export default {
+  name: 'SwdUpload',
   props: {
     uploadData: {
       type: Object,
@@ -30,6 +32,16 @@ export default {
       type: Function,
       required: false,
       default: (file) => Promise.resolve(file),
+    },
+    showFileList: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    autoUpload: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   emits: ['upload-success', 'upload-before', 'upload-change', 'upload-mounted'],
