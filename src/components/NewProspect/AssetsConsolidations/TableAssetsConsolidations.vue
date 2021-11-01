@@ -161,6 +161,7 @@ export default {
       const res = await deleteAssetsConsolidation(idAssetsConsolidation)
       if (!('error' in res)) {
         state.splice(index, 1)
+        queryClient.invalidateQueries(['AsetsConsolidationsMember', id])
       }
     }
 
