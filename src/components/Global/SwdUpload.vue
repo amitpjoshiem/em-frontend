@@ -30,7 +30,18 @@
           <el-button type="primary" size="mini" plain class="mr-5" @click="handlePictureCardPreview(file)">
             Prewiev
           </el-button>
-          <el-button type="danger" size="mini" plain @click="handleRemove(file.id)">Remove</el-button>
+          <el-popconfirm
+            confirm-button-text="Yes"
+            cancel-button-text="No"
+            icon="el-icon-info"
+            icon-color="red"
+            title="Are you sure to delete this?"
+            @confirm="handleRemove(file.id)"
+          >
+            <template #reference>
+              <el-button type="danger" size="mini" plain>Remove</el-button>
+            </template>
+          </el-popconfirm>
         </div>
       </div>
     </template>
