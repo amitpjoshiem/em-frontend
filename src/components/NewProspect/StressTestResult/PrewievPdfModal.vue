@@ -18,7 +18,7 @@
 <script>
 import { useStore } from 'vuex'
 import { reactive, watchEffect } from 'vue'
-import PdfViewer from './PdfViewer'
+import PdfViewer from '@/components/NewProspect/StressTestResult/PdfViewer'
 
 export default {
   name: 'PrewiewPdfModal',

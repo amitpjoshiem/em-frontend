@@ -42,7 +42,7 @@ import { useFetchStressTest } from '@/api/use-fetch-stress-test.js'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
 import { useQueryClient } from 'vue-query'
 
-import PrewiewPdfModal from './PrewievPdfModal.vue'
+import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 
 export default {
   name: 'NewProspectPdf',
