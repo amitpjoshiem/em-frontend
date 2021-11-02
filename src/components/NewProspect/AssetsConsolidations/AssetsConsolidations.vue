@@ -5,7 +5,6 @@
       <div class="pr-3">
         <Button default-gray-btn text-btn="Back" @click="backStep" />
       </div>
-
       <div>
         <Button default-blue-btn text-btn="Go to the stress test results" @click="saveStep" />
       </div>
@@ -18,7 +17,7 @@ import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { scrollTop } from '@/utils/scrollTop'
 
-import TableAssetsConsolidations from '@/components/Table/TableAssetsConsolidations.vue'
+import TableAssetsConsolidations from '@/components/NewProspect/AssetsConsolidations/TableAssetsConsolidations.vue'
 
 export default {
   name: 'AssetsConsolidations',
