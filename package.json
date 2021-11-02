@@ -22,6 +22,7 @@
     "jspdf": "2.4.0",
     "laravel-echo": "^1.11.2",
     "maska": "^1.4.2",
+    "pdfvuer": "^2.0.1",
     "postcss": "^7",
     "pusher-js": "^7.0.3",
     "register-service-worker": "^1.7.1",

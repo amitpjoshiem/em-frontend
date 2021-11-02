@@ -93,14 +93,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style>
-.dialog-style {
-  margin-top: 10vh !important;
-}
-
-.dialog-style .el-dialog__body {
-  display: flex;
-  justify-content: center;
-}
-</style>

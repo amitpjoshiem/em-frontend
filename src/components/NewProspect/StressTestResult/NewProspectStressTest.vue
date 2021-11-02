@@ -205,17 +205,17 @@
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
 import { useRouter, useRoute } from 'vue-router'
 import HoldingsChart from '@/components/NewProspect/Chart/HoldingsChart.vue'
 import RecommendationChart from '@/components/NewProspect/Chart/RecommendationChart.vue'
-import { computed } from 'vue'
 import { scrollTop } from '@/utils/scrollTop'
 
 export default {
+  name: 'NewProspectStressTest',
   components: {
     HoldingsChart,
     RecommendationChart,

@@ -200,3 +200,12 @@
   padding-left: 5px;
   padding-right: 5px;
 }
+
+.dialog-style {
+  margin-top: 10vh !important;
+}
+
+.dialog-style .el-dialog__body {
+  display: flex;
+  justify-content: center;
+}

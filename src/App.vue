@@ -18,7 +18,13 @@ export default {
     ModalReloadPage,
   },
   setup() {
-    useQueryProvider()
+    useQueryProvider({
+      defaultOptions: {
+        queries: {
+          refetchOnWindowFocus: false,
+        },
+      },
+    })
 
     const store = useStore()
     onMounted(() => {

@@ -49,7 +49,9 @@ const routes = [
             path: 'stress-test/:id?',
             name: 'stresstest',
             component: () =>
-              import(/* webpackChunkName: "NewProspect" */ '../components/NewProspect/NewProspectStressTest.vue'),
+              import(
+                /* webpackChunkName: "NewProspect" */ '../components/NewProspect/StressTestResult/NewProspectPdf.vue'
+              ),
           },
           {
             path: '',

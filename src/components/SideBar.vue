@@ -1,9 +1,9 @@
 <template>
   <aside class="bg-primary min-h-screen flex flex-col w-[68px]">
-    <router-link :to="{ name: 'dashboard' }">
+    <router-link :to="{ name: 'dashboard' }" class="fixed">
       <InlineSvg :src="IconLogo" />
     </router-link>
-    <div v-if="isAuth" class="flex flex-col pt-32 items-center flex-grow">
+    <div v-if="isAuth" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
       <router-link
         :to="{ name: 'dashboard' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"

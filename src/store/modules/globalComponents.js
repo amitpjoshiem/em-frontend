@@ -46,6 +46,7 @@ const state = () => ({
       changeName: false,
       changePassword: false,
       shareFileEmailDialog: false,
+      prewievPdf: false,
     },
   },
   sortMembers: {
