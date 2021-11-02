@@ -1,12 +1,12 @@
 <template>
   <el-dialog
-    v-model="dialogVisible"
+    v-model="state.dialogVisible"
     title="Prewiev PDF"
     width="80%"
-    custom-class="dialog-style"
+    custom-class="dialog-style pdf-viewer"
     :before-close="closeDialog"
   >
-    <iframe type="application/pdf" :src="pdfUrl" width="750" height="450" />
+    <PdfViewer type="application/pdf" :src="pdfUrl" :page="1" />
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="closeDialog">Close</el-button>
@@ -17,10 +17,14 @@
 
 <script>
 import { useStore } from 'vuex'
-import { computed, watchEffect } from 'vue'
+import { reactive, watchEffect } from 'vue'
+import PdfViewer from './PdfViewer'
 
 export default {
   name: 'PrewiewPdfModal',
+  components: {
+    PdfViewer,
+  },
   props: {
     pdfUrl: {
       type: String,
@@ -31,12 +35,12 @@ export default {
   setup() {
     const store = useStore()
 
-    const dialogVisible = computed(() => {
-      return store.state.globalComponents.dialog.showDialog.prewievPdf
+    const state = reactive({
+      dialogVisible: false,
     })
 
     watchEffect(() => {
-      dialogVisible.value = store.state.globalComponents.dialog.showDialog.prewievPdf
+      state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
     })
 
     const closeDialog = () => {
@@ -48,8 +52,15 @@ export default {
 
     return {
       closeDialog,
-      dialogVisible,
+      state,
     }
   },
 }
 </script>
+
+<style>
+.pdf-viewer .el-dialog__body {
+  max-height: 70vh;
+  overflow: scroll;
+}
+</style>

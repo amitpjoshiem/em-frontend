@@ -21,16 +21,16 @@
       <Button default-gray-btn text-btn="Back" class="mr-5" @click="backStep" />
       <Button default-blue-btn text-btn="Show Report" @click="saveStep" />
     </div>
-    <PrewiewPdfModal :pdf-url="state.previewUrl" />
   </div>
   <el-skeleton v-else :rows="10" animated class="p-5" />
+  <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
 </template>
 
 <script>
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { computed } from 'vue'
@@ -90,12 +90,17 @@ export default {
     }
 
     const openPrewiev = (pdfUrl) => {
+      state.dialogVisible = true
       state.previewUrl = pdfUrl
       store.commit('globalComponents/setShowModal', {
         destination: 'prewievPdf',
         value: true,
       })
     }
+
+    watchEffect(() => {
+      state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
+    })
 
     // const handleRemove = (file, fileList) => {
     //   console.log(file, fileList)
