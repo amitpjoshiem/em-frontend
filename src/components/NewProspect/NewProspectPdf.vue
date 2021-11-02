@@ -1,29 +1,29 @@
 <template>
   <div v-if="!isLoading">
-    <div>
-      <SwdUpload
-        :upload-data="{ collection: 'stress_test' }"
-        :file-list="stressTestDocument.data"
-        :show-file-list="true"
-        :auto-upload="true"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        @upload-success="handleSuccess"
-        @upload-mounted="bindRef"
-      >
-        <template #main>
-          <div class="flex">
-            <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
-            <div class="el-upload__tip">PDF files only</div>
-          </div>
-        </template>
-      </SwdUpload>
-    </div>
+    <SwdUpload
+      :upload-data="{ collection: 'stress_test' }"
+      :file-list="stressTestDocument.data"
+      :show-file-list="true"
+      :auto-upload="true"
+      :show-file-block="true"
+      @upload-success="handleSuccess"
+      @upload-mounted="bindRef"
+      @open-prewiev="openPrewiev"
+    >
+      <template #main>
+        <div class="flex">
+          <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
+          <div class="el-upload__tip">PDF files only</div>
+        </div>
+      </template>
+    </SwdUpload>
     <div class="flex justify-end my-6">
       <Button default-gray-btn text-btn="Back" class="mr-5" @click="backStep" />
       <Button default-blue-btn text-btn="Show Report" @click="saveStep" />
     </div>
+    <PrewiewPdfModal :pdf-url="state.previewUrl" />
   </div>
+  <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
 
 <script>
@@ -39,10 +39,13 @@ import { createStressTest } from '@/api/vueQuery/create-stress-test'
 import { useMutation } from 'vue-query'
 import { useFetchStressTest } from '@/api/use-fetch-stress-test.js'
 
+import PrewiewPdfModal from './PrewievPdfModal.vue'
+
 export default {
   name: 'NewProspectPdf',
   components: {
     SwdUpload,
+    PrewiewPdfModal,
   },
   setup() {
     const store = useStore()
@@ -62,6 +65,8 @@ export default {
     const state = reactive({
       file: '',
       uploadRef: null,
+      dialogVisible: false,
+      previewUrl: '',
     })
 
     const step = computed(() => store.state.newProspect.step)
@@ -84,13 +89,17 @@ export default {
       upload.value = ref.value
     }
 
-    const handleRemove = (file, fileList) => {
-      console.log(file, fileList)
+    const openPrewiev = (pdfUrl) => {
+      state.previewUrl = pdfUrl
+      store.commit('globalComponents/setShowModal', {
+        destination: 'prewievPdf',
+        value: true,
+      })
     }
 
-    const handlePreview = (file) => {
-      console.log(file)
-    }
+    // const handleRemove = (file, fileList) => {
+    //   console.log(file, fileList)
+    // }
 
     return {
       IconDownRisk,
@@ -102,14 +111,13 @@ export default {
       bindRef,
       create,
       error,
-
       isLoading,
       isFetching,
       isError,
       stressTestDocument,
+      openPrewiev,
 
-      handleRemove,
-      handlePreview,
+      // handleRemove,
     }
   },
 }
