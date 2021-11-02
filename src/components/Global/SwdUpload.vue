@@ -14,12 +14,24 @@
   >
     <slot name="main" />
     <template v-if="showFileBlock" #file="{ file }">
-      <div>
-        <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
-      </div>
-      <div class="flex justify-center flex-col mt-[10px] ml-3 cursor-pointer" @click="handlePictureCardPreview(file)">
-        <div>{{ file.name }}</div>
-        <div>{{ file.created_at }}</div>
+      <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+      <div class="flex justify-between items-center mt-[10px] ml-3">
+        <div class="flex flex-col">
+          <div>
+            <span class="text-gray03">File name: </span>
+            <span class="font-semibold text-main">{{ file.name }}</span>
+          </div>
+          <div>
+            <span class="text-gray03">Created at: </span>
+            <span class="font-semibold text-main">{{ file.created_at ? file.created_at : 'a few minutes ago' }}</span>
+          </div>
+        </div>
+        <div>
+          <el-button type="primary" size="mini" plain class="mr-5" @click="handlePictureCardPreview(file)">
+            Prewiev
+          </el-button>
+          <el-button type="danger" size="mini" plain @click="handleRemove(file.id)">Remove</el-button>
+        </div>
       </div>
     </template>
   </el-upload>
@@ -28,9 +40,9 @@
 <script>
 import { tokenStorage } from '@/api/api-client/TokenStorage'
 import { computed, ref, onMounted, nextTick } from 'vue'
-
 export default {
   name: 'SwdUpload',
+
   props: {
     uploadData: {
       type: Object,
@@ -58,7 +70,7 @@ export default {
       default: false,
     },
   },
-  emits: ['upload-success', 'upload-before', 'upload-change', 'upload-mounted', 'open-prewiev'],
+  emits: ['upload-success', 'upload-before', 'upload-change', 'upload-mounted', 'open-prewiev', 'remove-media'],
   setup(props, { emit }) {
     const innerRef = ref(null)
     const uploadRefFn = () => props.uploadRef
@@ -82,12 +94,17 @@ export default {
       emit('open-prewiev', file.url)
     }
 
+    const handleRemove = (id) => {
+      emit('remove-media', id)
+    }
+
     return {
       headers,
       uploadRefFn,
       innerRef,
       getUrlMedia,
       handlePictureCardPreview,
+      handleRemove,
     }
   },
 }

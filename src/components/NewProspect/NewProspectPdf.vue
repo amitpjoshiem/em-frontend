@@ -9,9 +9,10 @@
       @upload-success="handleSuccess"
       @upload-mounted="bindRef"
       @open-prewiev="openPrewiev"
+      @remove-media="removeMedia"
     >
       <template #main>
-        <div class="flex">
+        <div class="flex my-5">
           <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
           <div class="el-upload__tip">PDF files only</div>
         </div>
@@ -38,6 +39,8 @@ import { scrollTop } from '@/utils/scrollTop'
 import { createStressTest } from '@/api/vueQuery/create-stress-test'
 import { useMutation } from 'vue-query'
 import { useFetchStressTest } from '@/api/use-fetch-stress-test.js'
+import { deleteMedia } from '@/api/vueQuery/delete-media'
+import { useQueryClient } from 'vue-query'
 
 import PrewiewPdfModal from './PrewievPdfModal.vue'
 
@@ -52,10 +55,12 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const upload = ref(null)
+    const queryClient = useQueryClient()
     const id = route.params.id
 
     const { isLoading, isFetching, isError, data: stressTestDocument } = useFetchStressTest(id)
     const { mutateAsync: create, error } = useMutation(createStressTest)
+    const { mutateAsync: deletePdf } = useMutation(deleteMedia)
 
     onMounted(() => {
       store.commit('newProspect/setStep', 5)
@@ -102,9 +107,12 @@ export default {
       state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
     })
 
-    // const handleRemove = (file, fileList) => {
-    //   console.log(file, fileList)
-    // }
+    const removeMedia = async (media) => {
+      const res = await deletePdf(media)
+      if (!('error' in res)) {
+        queryClient.invalidateQueries(['stressTest', id])
+      }
+    }
 
     return {
       IconDownRisk,
@@ -121,8 +129,7 @@ export default {
       isError,
       stressTestDocument,
       openPrewiev,
-
-      // handleRemove,
+      removeMedia,
     }
   },
 }
