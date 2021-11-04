@@ -1,5 +1,5 @@
 <template>
-  <div class="w-5/12">
+  <div v-if="isFetched" class="w-5/12">
     <div class="bg-widget-bg pt-5 pl-5 pb-2 rounded-tr-lg rounded-tl-lg text-smm text-main font-medium">
       Monthly Income analysis
     </div>
@@ -123,9 +123,10 @@
       </div>
     </div>
   </div>
+  <el-skeleton v-else :rows="15" animated class="w-5/12" />
 </template>
 <script>
-import { ref, reactive } from 'vue'
+import { ref, reactive, watchEffect } from 'vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useRoute } from 'vue-router'
 import { useFetchMonthlyIncomeAnalysis } from '@/api/use-fetch-monthly-income-analysis.js'
@@ -141,7 +142,7 @@ export default {
     const queryClient = useQueryClient()
     const id = route.params.id
 
-    const { isLoading, isFetching, isError, data: monthlyIncome } = useFetchMonthlyIncomeAnalysis(id)
+    const { isLoading, isFetching, isFetched, isError, data: monthlyIncome } = useFetchMonthlyIncomeAnalysis(id)
 
     const {
       mutateAsync: create,
@@ -151,7 +152,13 @@ export default {
       data: dataCreate,
     } = useMutation(createMonthlyIncomeAnalysis)
 
-    const ruleForm = reactive({ ...monthlyIncome.value })
+    const ruleForm = reactive({})
+
+    watchEffect(() => {
+      if (isLoading.value === false) {
+        Object.assign(ruleForm, monthlyIncome.value)
+      }
+    })
 
     const change = async () => {
       const res = await create({ id, data: ruleForm })
@@ -174,6 +181,7 @@ export default {
       isFetchingCreate,
       dataCreate,
       isFetching,
+      isFetched,
     }
   },
 }

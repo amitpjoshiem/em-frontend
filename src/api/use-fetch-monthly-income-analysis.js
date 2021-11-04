@@ -3,7 +3,7 @@ import { fetchMonthlyIncomeAnalysis } from './vueQuery/fetch-monthly-income-anal
 import { MonthlyIncomeAnalysis } from '../dto/MonthlyIncomeAnalysis'
 
 export const useFetchMonthlyIncomeAnalysis = (id) => {
-  const { isLoading, isFetching, isError, data } = useQuery(
+  const { isLoading, isFetching, isError, data, isFetched } = useQuery(
     ['blueprint/incomeAnalysis', id],
     () => {
       return fetchMonthlyIncomeAnalysis(id)
@@ -23,5 +23,6 @@ export const useFetchMonthlyIncomeAnalysis = (id) => {
     isFetching,
     isError,
     data,
+    isFetched,
   }
 }
