@@ -70,13 +70,6 @@ function routerForStep(step) {
   }
 }
 
-// 0   => self::default,
-// 1   => self::basic,
-// 2   => self::ASSETS_INCOME,
-// 3   => self::ASSETS_ACCOUNTS,
-// 4   => self::ASSETS_CONSOLIDATION,
-// 5   => self::STRESS_TEST,
-
 function buildOptions(user) {
   const hash = getClientStepHash(user)
   const optionsIds = optionsPerStepAndType[hash]
