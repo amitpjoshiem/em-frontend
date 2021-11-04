@@ -209,3 +209,12 @@
   display: flex;
   justify-content: center;
 }
+
+/* hot fix: [bug report] the position of El input with icon is disordered #4207 */
+.el-input__suffix{
+  top: 30%;
+}
+
+.el-input__prefix{
+  top: 10%;
+}
