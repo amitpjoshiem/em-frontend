@@ -41,8 +41,9 @@ import { useMutation } from 'vue-query'
 import { useFetchStressTest } from '@/api/use-fetch-stress-test.js'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
 import { useQueryClient } from 'vue-query'
-
 import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
+import { fetchStressTestConfirm } from '@/api/vueQuery/fetch-stress-test-confirm'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'NewProspectPdf',
@@ -61,6 +62,7 @@ export default {
     const { isLoading, isFetching, isError, data: stressTestDocument } = useFetchStressTest(id)
     const { mutateAsync: create, error } = useMutation(createStressTest)
     const { mutateAsync: deletePdf } = useMutation(deleteMedia)
+    const { mutateAsync: stressTestConfirm } = useMutation(fetchStressTestConfirm)
 
     onMounted(() => {
       store.commit('newProspect/setStep', 5)
@@ -76,8 +78,16 @@ export default {
 
     const step = computed(() => store.state.newProspect.step)
 
-    const saveStep = () => {
-      router.push({ name: 'member-report', params: { id: route.params.id } })
+    const saveStep = async () => {
+      const res = await stressTestConfirm(route.params.id)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Prospect update successfully',
+        })
+        router.push({ name: 'member-report', params: { id: route.params.id } })
+      }
     }
 
     const backStep = () => {

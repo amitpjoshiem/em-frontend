@@ -97,7 +97,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style>
 .cycle-active {
   width: 9px;
   height: 9px;

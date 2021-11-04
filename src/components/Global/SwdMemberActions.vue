@@ -38,15 +38,15 @@ function getClientStepHash(user) {
   switch (true) {
     case user.type === 'client':
       return 'client'
-    case user.type === 'prospect' && user.step === 1:
+    case user.type === 'prospect' && user.step === 'basic':
       return 'prospect@step-1'
-    case user.type === 'prospect' && user.step === 2:
+    case user.type === 'prospect' && user.step === 'assets_income':
       return 'prospect@step-2'
-    case user.type === 'prospect' && user.step === 3:
+    case user.type === 'prospect' && user.step === 'assets_accounts':
       return 'prospect@step-3'
-    case user.type === 'prospect' && user.step === 4:
+    case user.type === 'prospect' && user.step === 'assets_consolidation':
       return 'prospect@step-4'
-    case user.type === 'prospect' && user.step === 5:
+    case user.type === 'prospect' && user.step === 'stress_test':
       return 'prospect@step-5'
     default:
       return 'onboarding'
@@ -55,15 +55,15 @@ function getClientStepHash(user) {
 
 function routerForStep(step) {
   switch (true) {
-    case step === 0:
+    case step === 'default':
       return 'basic-information'
-    case step === 1:
+    case step === 'basic':
       return 'assets-information'
-    case step === 2:
+    case step === 'assets_income':
       return 'assetsacount'
-    case step === 3:
+    case step === 'assets_accounts':
       return 'assetsconsolidations'
-    case step === 4:
+    case step === 'assets_consolidation':
       return 'stresstest'
     default:
       return 'basic-information'

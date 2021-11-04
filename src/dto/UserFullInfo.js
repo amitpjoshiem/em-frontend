@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 class UserFullInfo {
-  constructor({ id, name, type, address, city, created_at, net_worth, step, avatar }) {
+  constructor({ id, name, type, address, city, created_at, net_worth, step, avatar, onboarding }) {
     this.id = id
     this.name = name
     this.type = type
@@ -10,6 +10,7 @@ class UserFullInfo {
     this.netWorth = net_worth
     this.step = step
     this.avatar = avatar
+    this.onboarding = onboarding
   }
 
   get createdAtFormatted() {

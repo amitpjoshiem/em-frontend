@@ -29,7 +29,7 @@
 
     <el-table-column label="Onboarding" prop="step" min-width="130" sortable>
       <template #default="scope">
-        <SwdLinearProgress :percentage="Number(scope.row.step) * 20" :show-text="true" />
+        <SwdLinearProgress :percentage="scope.row.onboarding" :show-text="true" />
       </template>
     </el-table-column>
 
@@ -55,7 +55,7 @@
 import { computed } from 'vue-demi'
 import { useStore } from 'vuex'
 import SwdLinearProgress from '@/components/Global/SwdLinearProgress.vue'
-import UserListName from './UserListName.vue'
+import UserListName from '@/components/UsersListTable/UserListName.vue'
 
 export default {
   name: 'UsersListTable',
