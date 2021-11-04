@@ -17,6 +17,10 @@ import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { scrollTop } from '@/utils/scrollTop'
 
+import { fetchAssetsConsolidationsConfirm } from '@/api/vueQuery/fetch-assets-consolidations-confirm'
+import { useMutation } from 'vue-query'
+import { useAlert } from '@/utils/use-alert'
+
 import TableAssetsConsolidations from '@/components/NewProspect/AssetsConsolidations/TableAssetsConsolidations.vue'
 
 export default {
@@ -29,6 +33,8 @@ export default {
     const route = useRoute()
     const store = useStore()
 
+    const { mutateAsync: assetsConfirm } = useMutation(fetchAssetsConsolidationsConfirm)
+
     onMounted(() => {
       store.commit('newProspect/setStep', 4)
       scrollTop()
@@ -36,9 +42,17 @@ export default {
 
     const step = computed(() => store.state.newProspect.step)
 
-    const saveStep = () => {
-      store.commit('newProspect/setStep', step.value + 1)
-      router.push({ name: 'stresstest', params: { id: route.params.id } })
+    const saveStep = async () => {
+      const res = await assetsConfirm(route.params.id)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Prospect update successfully',
+        })
+        store.commit('newProspect/setStep', step.value + 1)
+        router.push({ name: 'stresstest', params: { id: route.params.id } })
+      }
     }
 
     const backStep = () => {

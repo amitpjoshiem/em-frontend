@@ -34,6 +34,9 @@ import { useRouter, useRoute } from 'vue-router'
 import { scrollTop } from '@/utils/scrollTop'
 import { useYodleeStatus } from '@/api/use-yodlee-status.js'
 import { useFetchYodleeSendLink } from '@/api/use-fetch-yodlee-send-link.js'
+import { fetchAssetsAccountsConfirm } from '@/api/vueQuery/fetch-assets-accounts-confirm'
+import { useMutation } from 'vue-query'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'AssetsAccounts',
@@ -55,6 +58,8 @@ export default {
       data: yodleeStatus,
     } = useYodleeStatus(route.params.id)
 
+    const { mutateAsync: assetsConfirm } = useMutation(fetchAssetsAccountsConfirm)
+
     onMounted(() => {
       store.commit('newProspect/setStep', 3)
       scrollTop()
@@ -62,9 +67,17 @@ export default {
 
     const step = computed(() => store.state.newProspect.step)
 
-    const saveStep = () => {
-      store.commit('newProspect/setStep', step.value + 1)
-      router.push({ name: 'assetsconsolidations', params: { id: route.params.id } })
+    const saveStep = async () => {
+      const res = await assetsConfirm(route.params.id)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Prospect update successfully',
+        })
+        store.commit('newProspect/setStep', step.value + 1)
+        router.push({ name: 'assetsconsolidations', params: { id: route.params.id } })
+      }
     }
 
     const backStep = () => {
@@ -91,6 +104,7 @@ export default {
       fetchingSendLink,
       sendLinkYodlee,
       linkSendError,
+      assetsConfirm,
     }
   },
 }

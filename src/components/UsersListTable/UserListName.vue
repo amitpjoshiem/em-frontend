@@ -3,7 +3,7 @@
     <SwdAvatar :link="getAvatarUrl" />
     <router-link
       :to="{
-        name: step ? 'member-details' : 'basic-information',
+        name: step !== 'default' ? 'member-details' : 'basic-information',
         params: { id: id },
       }"
       class="pl-2.5 text-main text-xss font-semibold"
@@ -20,9 +20,9 @@ export default {
   name: 'UserListName',
   props: {
     step: {
-      type: Number,
+      type: String,
       require: true,
-      default: 0,
+      default: '',
     },
     id: {
       type: String,
