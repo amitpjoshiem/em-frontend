@@ -3,7 +3,7 @@ import { fetchConcernsBlueReport } from './vueQuery/fetch-concerns-blue-report'
 import { ConcernsBlueReport } from '../dto/ConcernsBlueReport'
 
 export const useFetchConcernsBlueReport = (id) => {
-  const { isLoading, isError, data } = useQuery(
+  const { isLoading, isError, data, isFetching } = useQuery(
     ['blueprint/concern', id],
     () => {
       return fetchConcernsBlueReport(id)
@@ -22,5 +22,6 @@ export const useFetchConcernsBlueReport = (id) => {
     isLoading,
     isError,
     data,
+    isFetching,
   }
 }
