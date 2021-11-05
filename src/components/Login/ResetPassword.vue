@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full items-center justify-center">
-    <div class="max-w-sm p-6 bg-widget-bg rounded-md w-[370px]">
+    <div class="max-w-sm pt-6 pl-6 pr-6 bg-widget-bg rounded-md w-[370px]">
       <div class="flex items-center justify-center p-2">
         <div class="rounded-full h-10 w-10 flex items-center justify-center bg-lightgray03">
           <InlineSvg :src="IconForgotPassword" />
@@ -10,23 +10,34 @@
       <h1 class="text-center text-main font-medium text-2xl">Create a new password</h1>
 
       <div class="py-5">
-        <el-form ref="form" :model="ruleForm" :rules="rules" class="demo-ruleForm" label-position="top">
+        <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
           <el-form-item label="Password" prop="password">
-            <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
+            <el-input
+              v-model="ruleForm.password"
+              type="password"
+              autocomplete="off"
+              placeholder="Please input password"
+            />
           </el-form-item>
           <el-form-item label="Confirm" prop="password_confirmation">
-            <el-input v-model="ruleForm.password_confirmation" type="password" autocomplete="off" />
+            <el-input
+              v-model="ruleForm.password_confirmation"
+              type="password"
+              autocomplete="off"
+              placeholder="Please input password"
+            />
+          </el-form-item>
+          <el-form-item>
+            <Button
+              :default-primary="!fetchingCreate && !fetchingReset"
+              full
+              text-btn="Continue"
+              type="Submit"
+              :disabled="fetchingCreate || fetchingReset"
+              @click="submit()"
+            />
           </el-form-item>
         </el-form>
-        <div class="text-center pt-5">
-          <Button
-            :default-primary="!fetchingCreate && !fetchingReset"
-            full
-            :text-btn="'Continue'"
-            :disabled="fetchingCreate || fetchingReset"
-            @click="submitForm('ruleForm')"
-          />
-        </div>
       </div>
     </div>
   </div>
@@ -63,7 +74,7 @@ export default {
       data.token = route.query.token
     })
 
-    const submitForm = async () => {
+    const submit = async () => {
       form.value.validate((valid) => {
         if (valid) {
           if (attrs.context === 'reset') {
@@ -104,7 +115,7 @@ export default {
       IconForgotPassword,
       ruleForm,
       form,
-      submitForm,
+      submit,
       rules,
       fetchingCreate,
       fetchingReset,

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full items-center justify-center">
-    <div class="max-w-sm p-6 bg-widget-bg rounded-md w-[370px]">
+    <div class="max-w-sm pt-6 pl-6 pr-6 bg-widget-bg rounded-md w-[370px]">
       <div class="flex items-center justify-center p-2">
         <div class="rounded-full h-10 w-10 flex items-center justify-center bg-lightgray03">
           <InlineSvg :src="IconForgotPassword" />
@@ -10,22 +10,23 @@
       <h1 class="text-center text-main font-medium text-2xl">Forgot password?</h1>
       <h1 class="text-center text-gray03 text-xss">Please enter you email</h1>
       <div v-if="!sendFormForgotPass">
-        <el-form ref="form" :model="ruleForm" status-icon :rules="rules" class="demo-ruleForm" label-position="top">
+        <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top" @submit.prevent="submit">
           <el-form-item label="E-mail" prop="email" class="py-3">
             <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" />
           </el-form-item>
+          <el-form-item>
+            <Button
+              :default-primary="!fetching"
+              full
+              text-btn="Continue"
+              :disabled="fetching"
+              type="submit"
+              @click="submit()"
+            />
+          </el-form-item>
         </el-form>
-        <div class="text-center pt-5">
-          <Button
-            :default-primary="!fetching"
-            full
-            :text-btn="'Continue'"
-            :disabled="fetching"
-            @click="submitForm('ruleForm')"
-          />
-        </div>
       </div>
-      <div v-else>{{ response.message }}</div>
+      <div v-else class="pt-2">{{ response.message }}</div>
     </div>
   </div>
 </template>
@@ -47,7 +48,7 @@ export default {
 
     const { response, error, fetching, forgot } = useForgot()
 
-    const submitForm = async () => {
+    const submit = async () => {
       form.value.validate((valid) => {
         if (valid) {
           forgot(ruleForm)
@@ -62,7 +63,7 @@ export default {
       error,
       fetching,
       IconForgotPassword,
-      submitForm,
+      submit,
       ruleForm,
       form,
       rules,
