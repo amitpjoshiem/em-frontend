@@ -5,7 +5,7 @@
       v-if="!isLoadingInitOpportunity && !isLoadingProspectDetails && !isLoadingUserProfile"
       class="border-color-grey px-10 pb-7"
     >
-      <el-form ref="form" :model="ruleForm" status-icon :rules="rules" class="demo-ruleForm" label-position="top">
+      <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
         <div class="flex">
           <el-form-item label="Opportunity owner" prop="opportunity_owner" class="w-6/12 pr-5">
             <el-input v-model="ruleForm.opportunity_owner" placeholder="Enter prospect’s name" :disabled="true" />

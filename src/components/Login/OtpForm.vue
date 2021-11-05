@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full items-center justify-center">
-    <div class="form max-w-sm p-6 bg-widget-bg rounded-md w-[370px]">
+    <div class="form max-w-sm pt-6 pl-6 pr-6 bg-widget-bg rounded-md w-[370px]">
       <div class="flex items-center justify-center p-2">
         <div class="rounded-full h-10 w-10 flex items-center justify-center bg-lightgray03">
           <InlineSvg :src="IconLoginForm" />
@@ -16,20 +16,21 @@
         <h1 v-if="otpType === 'google'" class="text-center text-gray03 pt-2.5 text-sm">
           Please check your Google Authenticator.
         </h1>
-        <el-form ref="form" :model="ruleForm" :rules="rules" class="demo-ruleForm" label-position="top">
+        <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
           <el-form-item label="OTP" prop="code" class="py-3">
-            <el-input v-model="ruleForm.code" placeholder="Enter otp code" />
+            <el-input v-model="ruleForm.code" type="number" placeholder="Enter otp code" />
+          </el-form-item>
+          <el-form-item>
+            <Button
+              :default-primary="!fetching"
+              full
+              type="submit"
+              text-btn="Continue"
+              :disabled="fetching"
+              @click="submit()"
+            />
           </el-form-item>
         </el-form>
-        <div class="text-center pt-5">
-          <Button
-            :default-primary="!fetching"
-            full
-            :text-btn="'Continue'"
-            :disabled="fetching"
-            @click="submitForm('ruleForm')"
-          />
-        </div>
       </div>
     </div>
   </div>
@@ -49,7 +50,7 @@ export default {
     const { response, error, fetching, otpAuth } = useOtp()
 
     const ruleForm = reactive({
-      code: '',
+      code: undefined,
     })
     const form = ref(null)
 
@@ -57,7 +58,7 @@ export default {
       return store.state.auth.otpType
     })
 
-    const submitForm = async () => {
+    const submit = async () => {
       form.value.validate((valid) => {
         if (valid) {
           otpAuth(ruleForm)
@@ -75,7 +76,7 @@ export default {
       otpType,
       ruleForm,
       form,
-      submitForm,
+      submit,
       rules,
     }
   },

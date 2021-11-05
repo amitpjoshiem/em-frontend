@@ -8,7 +8,12 @@
     <template #contentDialog>
       <el-form v-if="data.isShowForm" ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
         <el-form-item label="Current password" prop="current_password">
-          <el-input v-model="ruleForm.current_password" type="password" autocomplete="off" />
+          <el-input
+            v-model="ruleForm.current_password"
+            type="password"
+            autocomplete="off"
+            placeholder="Please input password"
+          />
         </el-form-item>
 
         <el-form-item label="Password" prop="password">
@@ -16,7 +21,12 @@
         </el-form-item>
 
         <el-form-item label="Confirm" prop="password_confirmation">
-          <el-input v-model="ruleForm.password_confirmation" type="password" autocomplete="off" />
+          <el-input
+            v-model="ruleForm.password_confirmation"
+            type="password"
+            autocomplete="off"
+            placeholder="Please input password"
+          />
         </el-form-item>
 
         <div class="pt-3 text-right">
