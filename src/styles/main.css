@@ -142,9 +142,10 @@
   vertical-align: bottom;
 }
 
-.el-icon {
+/* .el-icon {
   font-size: 12px;
-}
+} */
+
 .el-dialog__body{
   min-height: 200px;
 }
@@ -208,13 +209,4 @@
 .dialog-style .el-dialog__body {
   display: flex;
   justify-content: center;
-}
-
-/* hot fix: [bug report] the position of El input with icon is disordered #4207 */
-.el-input__suffix{
-  top: 30%;
-}
-
-.el-input__prefix{
-  top: 10%;
 }

@@ -3719,10 +3719,10 @@ electron-to-chromium@^1.3.723:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.736.tgz#f632d900a1f788dab22fec9c62ec5c9c8f0c4052"
   integrity sha512-DY8dA7gR51MSo66DqitEQoUMQ0Z+A2DSXFi7tK304bdTVqczCAfUuyQw6Wdg8hIoo5zIxkU1L24RQtUce1Ioig==
 
-element-plus@1.2.0-beta.1:
-  version "1.2.0-beta.1"
-  resolved "https://registry.yarnpkg.com/element-plus/-/element-plus-1.2.0-beta.1.tgz#77bfd993741be1731540dd997dbde0d03d065b5e"
-  integrity sha512-TvO2NPoCcG0PDph2SHz3xZ+wnTNJvlKHfb1P6uJsYMUhUCWtSaWGXE1kPQVnyi/tWYlQJG05CT4iO3B4+uEj9w==
+element-plus@1.2.0-beta.2:
+  version "1.2.0-beta.2"
+  resolved "https://registry.yarnpkg.com/element-plus/-/element-plus-1.2.0-beta.2.tgz#f6c6093405cce55fad45f08d15b8a92dfa72e9c3"
+  integrity sha512-A5HpcpgcpoZZgVpAm1fy7sLb5zQj/tafhcJqD7avc4v3NgWDqSa58CNp5B7fpvVhXihRGWssqQjnTh2VczGGfw==
   dependencies:
     "@element-plus/icons" "^0.0.11"
     "@popperjs/core" "^2.10.2"
