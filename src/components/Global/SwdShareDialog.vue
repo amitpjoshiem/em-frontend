@@ -26,7 +26,7 @@
     <SwdDialogSucces v-else text="E-mail has been sent successfully" @closeDialog="closeDialog" />
     <template #footer>
       <span v-if="state.isShowForm" class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button @click="closeDialog">Cancel</el-button>
         <el-button type="primary" :disabled="confirmBtnDisabled" @click="confirm">
           <el-icon v-if="loadingSendReport || isLoading" class="is-loading">
             <loading />
@@ -67,14 +67,9 @@ export default defineComponent({
       require: true,
       default: false,
     },
-    pdfRegion: {
-      type: String,
-      require: true,
-      default: '',
-    },
   },
 
-  setup(props) {
+  setup() {
     const dialogVisible = ref(false)
     const store = useStore()
     const saveTagInput = ref(null)
@@ -86,6 +81,9 @@ export default defineComponent({
       error: sendReportError,
       isLoading: loadingSendReport,
     } = useMutation(sendReport)
+
+    const statusModal = computed(() => store.state.globalComponents.dialog.showDialog.shareFileEmailDialog)
+    const pdfRegion = computed(() => store.state.globalComponents.pdfRegion)
 
     const state = reactive({
       dynamicTags: [],
@@ -103,8 +101,6 @@ export default defineComponent({
         })
         .catch(() => {})
     }
-
-    const statusModal = computed(() => store.state.globalComponents.dialog.showDialog.shareFileEmailDialog)
 
     const confirmBtnDisabled = computed(() => {
       return loadingSendReport.value || isLoading.value || !state.dynamicTags.length
@@ -201,10 +197,10 @@ export default defineComponent({
     }
 
     const createPdf = async () => {
-      const elemRef = document.querySelector(`[data-pdf-region="${pdfConfig[props.pdfRegion].dataAttribute}"]`)
+      const elemRef = document.querySelector(`[data-pdf-region="${pdfConfig[pdfRegion.value].dataAttribute}"]`)
       return html2canvas(elemRef).then((canvas) => {
-        doc.text(pdfConfig[props.pdfRegion].titleText, 90, 25)
-        doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', ...pdfConfig[props.pdfRegion].jsDocOptions)
+        doc.text(pdfConfig[pdfRegion.value].titleText, 90, 25)
+        doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', ...pdfConfig[pdfRegion.value].jsDocOptions)
         const pdfReport = doc.output('blob', 'report-email.pdf')
         state.file = new File([pdfReport], 'report-email.pdf')
       })
