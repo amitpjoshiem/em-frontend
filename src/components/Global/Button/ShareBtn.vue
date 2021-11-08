@@ -6,7 +6,6 @@
       </span>
     </template>
   </SwdDropDown>
-  <SwdShareDialog :pdf-region="pdfRegion" />
 </template>
 
 <script>
@@ -14,14 +13,10 @@ import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
 import IconShare from '@/assets/svg/icon-share.svg'
 import { useStore } from 'vuex'
-import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
 import { pdfConfig } from '@/config/pdf-config'
 
 export default {
   name: 'ShareBtn',
-  components: {
-    SwdShareDialog,
-  },
   props: {
     pdfRegion: {
       type: String,
@@ -64,6 +59,7 @@ export default {
         destination: 'shareFileEmailDialog',
         value: true,
       })
+      store.commit('globalComponents/setPdfRegion', props.pdfRegion)
     }
 
     const handleSelect = (command) => {
