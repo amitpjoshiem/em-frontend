@@ -52,29 +52,12 @@ export default {
         datasets: [
           {
             borderSkipped: false,
-            borderColor: '#76E1BB',
+            borderRadius: 20,
+            borderColor: '#D3D3D3',
             maxBarThickness: 10,
-            backgroundColor: ['#76E1BB'],
+            backgroundColor: ['#D3D3D3'],
             data: [
-              1, 0.6, 0.4, 0.2, 0.2, 0.6, 0.7, 0.1, 0.9, 0.8, 1.2, 0.4, 0.1, 1.2, 1.5, 0.2, 0.3, 0.8, 0.9, 0.3, 0.4,
-            ],
-          },
-          {
-            borderSkipped: false,
-            borderColor: '#FF92A5',
-            maxBarThickness: 10,
-            backgroundColor: ['#FF92A5'],
-            data: [
-              1, 0.6, 0.4, 0.2, 0.2, 0.6, 0.7, 0.1, 0.9, 0.8, 1.2, 0.4, 0.1, 1.2, 1.5, 0.2, 0.3, 0.8, 0.9, 0.3, 0.4,
-            ],
-          },
-          {
-            borderSkipped: false,
-            borderColor: '#66B6FF',
-            maxBarThickness: 10,
-            backgroundColor: ['#66B6FF'],
-            data: [
-              1, 0.6, 0.4, 0.2, 0.2, 0.6, 0.7, 0.1, 0.9, 0.8, 1.2, 0.4, 0.1, 1.2, 1.5, 0.2, 0.3, 0.8, 0.9, 0.3, 0.4,
+              0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
             ],
           },
         ],

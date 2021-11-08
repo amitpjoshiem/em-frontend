@@ -10,11 +10,11 @@
       </div>
       <div class="text-main text-xs">
         <span>Projected </span>
-        <span class="font-semibold">$6,000/mo</span>
+        <span class="font-semibold">---</span>
       </div>
       <div class="text-main text-xs">
         <span>Planned </span>
-        <span class="font-semibold">$8,000/mo</span>
+        <span class="font-semibold">---</span>
       </div>
     </div>
   </div>
@@ -27,6 +27,5 @@ export default {
   components: {
     RetirementIncomeChart,
   },
-  setup() {},
 }
 </script>
