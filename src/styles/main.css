@@ -144,6 +144,10 @@
   vertical-align: bottom;
 }
 
+/* .el-icon {
+  font-size: 12px;
+} */
+
 .el-dialog__body{
   min-height: 200px;
 }
@@ -202,9 +206,4 @@
 
 .dialog-style {
   margin-top: 10vh !important;
-}
-
-.dialog-style .el-dialog__body {
-  /* display: flex; */
-  /* justify-content: center; */
 }
