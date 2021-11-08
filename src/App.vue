@@ -2,6 +2,7 @@
   <router-view />
   <VueQueryDevTools />
   <ModalReloadPage />
+  <SwdShareDialog />
 </template>
 
 <script>
@@ -12,10 +13,13 @@ import { VueQueryDevTools } from 'vue-query/devtools'
 import { tokenStorage } from './api/api-client/TokenStorage'
 import { useSockets } from './sockets/use-sockets'
 import ModalReloadPage from '@/components/ModalReloadPage/ModalRealoadPage.vue'
+import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
+
 export default {
   components: {
     VueQueryDevTools,
     ModalReloadPage,
+    SwdShareDialog,
   },
   setup() {
     useQueryProvider({

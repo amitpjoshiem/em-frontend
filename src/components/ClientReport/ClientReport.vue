@@ -9,7 +9,7 @@
 
       <div class="w-6/12 text-center">
         <span class="text-title text-color-link font-semibold">{{ member.name }}</span>
-        <span class="text-title text-main font-semibold">Client report</span>
+        <span class="text-title text-main font-semibold"> Client report</span>
       </div>
 
       <div class="flex items-center w-4/12">
