@@ -53,6 +53,7 @@ const state = () => ({
     orderBy: 'created_at',
     sortedBy: 'descending',
   },
+  pdfRegion: '',
   showDialogReloadPage: false,
 })
 
@@ -80,6 +81,10 @@ const mutations = {
 
   setShowDialogRealodPage(state, value) {
     state.showDialogReloadPage = value
+  },
+
+  setPdfRegion(state, value) {
+    state.pdfRegion = value
   },
 }
 

@@ -16,6 +16,7 @@
       <NotesMember :notes="member.data?.notes" />
     </div>
     <el-skeleton v-show="fetchingMember" :rows="10" animated class="p-5" />
+    <SwdShareDialog />
   </div>
 </template>
 
@@ -26,6 +27,8 @@ import NetWorth from '@/components/Report/NetWorth.vue'
 import Concerns from '@/components/Report/Concerns.vue'
 import MonthlyIncome from '@/components/Report/MonthlyIncome.vue'
 import NotesMember from '@/components/Report/NotesMember.vue'
+import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
+
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { computed, onMounted } from 'vue'
@@ -40,6 +43,7 @@ export default {
     Concerns,
     MonthlyIncome,
     NotesMember,
+    SwdShareDialog,
   },
   setup() {
     const router = useRouter()

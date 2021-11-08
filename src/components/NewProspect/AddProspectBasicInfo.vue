@@ -189,8 +189,8 @@
 
       <div class="px-16 mt-7 border-b">
         <span class="text-main text-xl font-semibold">Employment history</span>
-        <div class="mt-5">
-          <span class="text-gray03 text-xs">Contact prospect</span>
+        <div class="my-5">
+          <span class="text-gray03 text-xs uppercase">Contact prospect</span>
         </div>
 
         <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index">
@@ -210,7 +210,9 @@
         </el-form-item>
 
         <div v-if="ruleForm.married" class="mt-5">
-          <span class="text-gray03 text-xs">Spouse</span>
+          <div class="my-5">
+            <span class="text-gray03 text-xs uppercase">Spouse</span>
+          </div>
 
           <el-form-item v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-10">
             <el-form-item

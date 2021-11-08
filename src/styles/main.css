@@ -131,20 +131,19 @@
   margin-right: 10px;
   margin-bottom: 10px;
 }
+
 .button-new-tag {
   height: 32px;
   line-height: 30px;
   padding-top: 0;
   padding-bottom: 0;
 }
+
 .input-new-tag {
   width: 90px;
   vertical-align: bottom;
 }
 
-.el-icon {
-  font-size: 12px;
-}
 .el-dialog__body{
   min-height: 200px;
 }
@@ -206,6 +205,6 @@
 }
 
 .dialog-style .el-dialog__body {
-  display: flex;
-  justify-content: center;
+  /* display: flex; */
+  /* justify-content: center; */
 }
