@@ -7,7 +7,7 @@
       <AssetsAllocation />
     </div>
     <div class="flex mb-5">
-      <PastStressTestResults />
+      <WidgetPastStress />
       <RetirementIncomePlan />
     </div>
     <OpportunityTable class="mb-10" :prospect="data ? data : {}" />
@@ -18,7 +18,7 @@
 import OpportunityTable from '@/components/MemberDetails/OpportunityTable.vue'
 import WidgetMemberDetails from '@/components/MemberDetails/WidgetMemberDetails.vue'
 import AssetsAllocation from '@/components/MemberDetails/AssetsAllocation.vue'
-import PastStressTestResults from '@/components/MemberDetails/PastStressTestResults.vue'
+import WidgetPastStress from '@/components/MemberDetails/WidgetPastStress.vue'
 import RetirementIncomePlan from '@/components/MemberDetails/RetirementIncomePlan.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
@@ -31,7 +31,7 @@ export default {
     OpportunityTable,
     WidgetMemberDetails,
     AssetsAllocation,
-    PastStressTestResults,
+    WidgetPastStress,
     RetirementIncomePlan,
     AssetsConsolidations,
   },

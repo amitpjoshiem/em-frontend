@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading">
+  <div v-if="!isFetching">
     <SwdUpload
       :upload-data="{ collection: 'stress_test' }"
       :file-list="stressTestDocument.data"
@@ -16,9 +16,10 @@
           <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
           <div class="el-upload__tip">PDF files only</div>
         </div>
+        <div v-if="!stressTestDocument.data.length" class="text-gray03">No documents uploaded</div>
       </template>
     </SwdUpload>
-    <div class="flex justify-end my-6">
+    <div v-if="showNavBtn" class="flex justify-end my-6">
       <Button default-gray-btn text-btn="Back" class="mr-5" @click="backStep" />
       <Button default-blue-btn text-btn="Show Report" @click="saveStep" />
     </div>
@@ -50,6 +51,13 @@ export default {
   components: {
     SwdUpload,
     PrewiewPdfModal,
+  },
+  props: {
+    showNavBtn: {
+      type: Boolean,
+      require: false,
+      default: true,
+    },
   },
   setup() {
     const store = useStore()
@@ -97,7 +105,10 @@ export default {
 
     const handleSuccess = async (res) => {
       const data = { uuids: [res.data.uuid] }
-      await create({ id, data })
+      const response = await create({ id, data })
+      if (!('error' in response)) {
+        queryClient.invalidateQueries(['stressTest', id])
+      }
     }
 
     const bindRef = (ref) => {
