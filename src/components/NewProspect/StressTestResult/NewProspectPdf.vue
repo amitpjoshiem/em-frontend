@@ -105,11 +105,10 @@ export default {
 
     const handleSuccess = async (res) => {
       const data = { uuids: [res.data.uuid] }
-      await create({ id, data })
-      // const response = await create({ id, data })
-      // if (!('error' in response)) {
-      //   queryClient.invalidateQueries(['stressTest', id])
-      // }
+      const response = await create({ id, data })
+      if (!('error' in response)) {
+        queryClient.invalidateQueries(['stressTest', id])
+      }
     }
 
     const bindRef = (ref) => {

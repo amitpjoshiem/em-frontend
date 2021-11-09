@@ -1,5 +1,5 @@
 <template>
-  <div class="w-8/24 bg-widget-bg rounded-lg mr-5">
+  <div class="w-8/24 border rounded-lg mr-5">
     <div v-if="!isLoading" class="p-5 flex flex-col h-full justify-between">
       <div class="text-main text-smm font-semibold mb-3">Past Stress Test Results</div>
       <div v-if="isAvailableCocument" class="flex flex-col">
