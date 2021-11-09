@@ -116,6 +116,21 @@ const routes = [
       },
 
       {
+        path: 'past-stress-test/:id',
+        name: 'past-stress-test',
+        component: () =>
+          import(
+            /* webpackChunkName: "PastStressTestResults" */ '../components/MemberDetails/PastStressTestResults.vue'
+          ),
+      },
+
+      {
+        path: 'asset-allocation-details/:id',
+        name: 'asset-allocation-details',
+        component: () =>
+          import(/* webpackChunkName: "AssetAllocation" */ '../components/AssetAllocation/AssetAllocationDetails.vue'),
+      },
+      {
         path: 'asset-allocation-details/:id',
         name: 'asset-allocation-details',
         component: () =>

@@ -19,7 +19,7 @@
   >
     <InlineSvg v-if="witchIcon && iconType === 'lock'" :src="IconLock" class="mr-2" />
     <InlineSvg v-if="witchIcon && iconType === 'upload'" :src="IconUpload" class="mr-2" />
-    {{ textBtn }}
+    <span :class="{ 'px-3': wideBtn }">{{ textBtn }}</span>
   </button>
 </template>
 
@@ -107,6 +107,10 @@ export default {
       default: '',
     },
     transparentBtn: {
+      type: Boolean,
+      default: false,
+    },
+    wideBtn: {
       type: Boolean,
       default: false,
     },

@@ -1,26 +1,17 @@
 <template>
-  <div class="w-8/24 bg-widget-bg rounded-lg mr-5">
-    <div class="p-5">
-      <span class="text-main text-smm font-semibold"> Past Stress Test Results </span>
-      <div class="flex mb-6">
-        <LiquidityChart />
-        <GrowthChart />
-      </div>
-      <Button default-primary full text-btn="Stress test Hidden Levers" />
+  <div class="p-5">
+    <SwdSubHeader title="Past Stress Test Results" />
+    <div class="p-5 border border-color-grey roundedlg">
+      <NewProspectPdf :show-nav-btn="false" />
     </div>
   </div>
 </template>
-
 <script>
-import LiquidityChart from '@/components/MemberDetails/Chart/LiquidityChart.vue'
-import GrowthChart from '@/components/MemberDetails/Chart/GrowthChart.vue'
-
+import NewProspectPdf from '@/components/NewProspect/StressTestResult/NewProspectPdf.vue'
 export default {
-  name: 'PastStressTestResults',
+  namer: 'PastStressTestResults',
   components: {
-    LiquidityChart,
-    GrowthChart,
+    NewProspectPdf,
   },
-  setup() {},
 }
 </script>
