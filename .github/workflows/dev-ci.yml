@@ -38,6 +38,7 @@ jobs:
           VUE_APP_API_MEDIA_URL: ${{ secrets.VUE_APP_API_MEDIA_URL }}
           VUE_APP_WEBSOCKETS_KEY: ${{ secrets.VUE_APP_WEBSOCKETS_KEY }}
           VUE_APP_WEBSOCKETS_SERVER: ${{ secrets.VUE_APP_WEBSOCKETS_SERVER }}
+          VUE_APP_WEBSOCKETS_PORT: ${{ secrets.VUE_APP_WEBSOCKETS_PORT }}
       - name: set AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
