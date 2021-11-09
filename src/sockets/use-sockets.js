@@ -1,32 +1,28 @@
 /* eslint-disable no-undef */
-import Echo from 'laravel-echo'
-import Pusher from 'pusher-js'
 import { useStore } from 'vuex'
 import { useNotificationChannel } from '@/api/use-notification-channel'
 
-window.Pusher = Pusher
-
-window.Echo = new Echo({
-  broadcaster: 'pusher',
-  key: process.env.VUE_APP_WEBSOCKETS_KEY,
-  wsHost: process.env.VUE_APP_WEBSOCKETS_SERVER,
-  wsPort: 6001,
-  wssPort: 6001,
-  forceTLS: false,
-  disableStats: true,
-  encrypted: true,
-})
+import { tokenStorage } from '@/api/api-client/TokenStorage'
+import Centrifuge from 'centrifuge'
 
 export async function useSockets() {
   const store = useStore()
-
+  const token = tokenStorage.getByKey('access_token')
   const { response, getNotificationChannel } = useNotificationChannel()
+  const centrifuge = new Centrifuge(
+    `wss://${process.env.VUE_APP_WEBSOCKETS_SERVER}:${process.env.VUE_APP_WEBSOCKETS_PORT}/connection/websocket`
+  )
+  centrifuge.setConnectData({
+    token,
+  })
+  centrifuge.connect()
 
   await getNotificationChannel()
-  const echo_channel = response.value.channel
-  window.Echo.channel(echo_channel).listen('.notification', (e) => {
+  const channel = response.value.channel
+
+  centrifuge.subscribe(channel, function (ctx) {
     store.dispatch('notifications/newNotifications', {
-      value: e,
+      value: ctx.data,
     })
   })
 }
