@@ -1,5 +1,5 @@
 <template>
-  <div class="px-3 pt-4 pb-4 border border-color-grey box-border rounded-r-md border-l-0">
+  <div class="px-3 pt-4 pb-4 border border-color-grey box-border rounded-r-md border-l-0 w-6/24">
     <div class="flex justify-between items-center text-smm font-semibold">
       <span class="text-main">Other</span>
       <el-button size="mini" @click="showMore">More</el-button>

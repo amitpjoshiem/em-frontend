@@ -4,7 +4,7 @@
     <div v-if="!isLoadingProspectDetails" class="flex my-5">
       <WidgetMemberDetails :user="member" class="w-8/24" @updateMemberInfo="updateMemberInfo" />
       <AssetsAllocation class="w-10/24" />
-      <WidgetOther class="w-6/24" :other="other" />
+      <WidgetOther :other="other" />
     </div>
     <el-skeleton v-else :rows="6" animated class="pr-5 h-[264px]" />
 
