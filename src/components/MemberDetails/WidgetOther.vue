@@ -44,7 +44,7 @@ export default {
     const store = useStore()
 
     const getText = (text) => {
-      if (text.length > 28) return text.slice(0, 28) + '...'
+      if (text && text.length > 28) return text.slice(0, 28) + '...'
       return text
     }
 
