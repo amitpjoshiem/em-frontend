@@ -215,3 +215,19 @@
 .el-form-item--mini .el-form-item__label{
   line-height: normal;
 }
+
+.item .el-input .el-input__inner {
+  border-style: none;
+  text-align: center;
+  border-radius: 0;
+  height: 38px;
+}
+
+.invalidate .el-input .el-input__inner {
+  color: red;
+  font-weight: 600;
+}
+
+.item .hover-row .el-input .el-input__inner {
+  border-style: solid;
+}

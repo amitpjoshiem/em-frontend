@@ -1,10 +1,17 @@
 <template>
   <div class="border box-border color-light-gray rounded-lg">
-    <div class="text-smm font-medium text-main py-5 pl-5">Asset Consolidations</div>
+    <div class="flex justify-between items-center p-5">
+      <div class="text-smm font-medium text-main">Asset Consolidations</div>
+      <div class="flex">
+        <ExportExcel />
+        <router-link :to="{ name: 'document-export', params: { id: memberId } }" class="pl-3">
+          <el-button size="mini">More documents</el-button>
+        </router-link>
+      </div>
+    </div>
 
     <div v-if="!isLoading">
       <HeaderTable />
-
       <div v-for="(item, index) in state" :key="index" class="flex h-10">
         <div class="w-6/24 item">
           <el-input v-model="state[index].name" size="mini" :disabled="isDisabledForm" @change="change(index)" />
@@ -82,7 +89,6 @@
       </div>
       <TotalTable :total="total" :is-fetching="isDisabledForm" @addTableLine="addTableLine" />
     </div>
-
     <el-skeleton v-else :rows="10" animated class="p-5" />
   </div>
 </template>
@@ -100,20 +106,22 @@ import { useMutation, useQueryClient } from 'vue-query'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import HeaderTable from '@/components/NewProspect/AssetsConsolidations/HeaderTable.vue'
 import TotalTable from '@/components/NewProspect/AssetsConsolidations/TotalTable.vue'
+import ExportExcel from '@/components/NewProspect/AssetsConsolidations/ExportExcel.vue'
 
 export default {
   name: 'TableAssetsConsolidations',
   components: {
     HeaderTable,
     TotalTable,
+    ExportExcel,
   },
   setup() {
     const route = useRoute()
     const queryClient = useQueryClient()
-    const id = route.params.id
+    const memberId = route.params.id
     const isLoadingUpdate = ref(false)
 
-    const { isLoading, isFetching, isError, data: assetsData, total } = useAsetsConsolidationsMember(id)
+    const { isLoading, isFetching, isError, data: assetsData, total } = useAsetsConsolidationsMember(memberId)
     const { mutateAsync: updateAssetsConsolidation } = useMutation(updateMemberAssetsConsolidation)
     const { mutateAsync: createAssetsConsolidation } = useMutation(createMemberAssetsConsolidation)
     const { mutateAsync: deleteAssetsConsolidation } = useMutation(deleteMemberAssetsConsolidation)
@@ -145,15 +153,15 @@ export default {
         for (var key in errors) {
           delete errors[key]
         }
-        queryClient.invalidateQueries(['AsetsConsolidationsMember', id])
+        queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
       }
       isLoadingUpdate.value = false
     }
 
     const addTableLine = async () => {
-      const res = await createAssetsConsolidation(id)
+      const res = await createAssetsConsolidation(memberId)
       if (!('error' in res)) {
-        queryClient.invalidateQueries(['AsetsConsolidationsMember', id])
+        queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
       }
     }
 
@@ -161,7 +169,7 @@ export default {
       const res = await deleteAssetsConsolidation(idAssetsConsolidation)
       if (!('error' in res)) {
         state.splice(index, 1)
-        queryClient.invalidateQueries(['AsetsConsolidationsMember', id])
+        queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
       }
     }
 
@@ -184,6 +192,7 @@ export default {
       isLoadingUpdate,
       confirmEvent,
       isDisabledForm,
+      memberId,
     }
   },
 }
@@ -192,23 +201,5 @@ export default {
 <style scoped>
 .item {
   @apply border-r border-b border-title-gray text-xs text-text-light-gray flex items-center justify-center uppercase text-center last:border-r-0;
-}
-</style>
-
-<style>
-.item .el-input .el-input__inner {
-  border-style: none;
-  text-align: center;
-  border-radius: 0;
-  height: 38px;
-}
-
-.invalidate .el-input .el-input__inner {
-  color: red;
-  font-weight: 600;
-}
-
-.item .hover-row .el-input .el-input__inner {
-  border-style: solid;
 }
 </style>
