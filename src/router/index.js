@@ -62,6 +62,14 @@ const routes = [
         ],
       },
       {
+        path: 'document-export/:id',
+        name: 'document-export',
+        component: () =>
+          import(
+            /* webpackChunkName: "DocumentExport" */ '../components/NewProspect/AssetsConsolidations/DocumentExport.vue'
+          ),
+      },
+      {
         path: 'member-report/:id',
         name: 'member-report',
         component: () => import(/* webpackChunkName: "MemberReport" */ '../components/Report/MemberReport.vue'),

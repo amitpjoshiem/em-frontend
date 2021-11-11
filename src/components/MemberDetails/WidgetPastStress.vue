@@ -29,6 +29,7 @@
           </div>
         </div>
       </div>
+      <div v-else class="text-gray03 text-sm text-center">No recently added documents</div>
       <Button
         small-btn-gray
         text-semi-bold
