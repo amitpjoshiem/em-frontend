@@ -61,9 +61,9 @@ export default {
       data: {
         datasets: [
           {
-            backgroundColor: getTotal.value !== '0' ? ['#53576A', '#66B6FF', '#FF92A5'] : ['#D3D3D3'],
+            backgroundColor: getTotal.value !== 0 ? ['#53576A', '#66B6FF', '#FF92A5'] : ['#D3D3D3'],
             data:
-              getTotal.value !== '0'
+              getTotal.value !== 0
                 ? [props.values.liquid.percent, props.values.market.percent, props.values.income_safe.percent]
                 : [1],
           },
