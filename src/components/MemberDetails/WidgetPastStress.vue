@@ -29,7 +29,12 @@
           </div>
         </div>
       </div>
-      <div v-else class="text-gray03 text-sm text-center">No recently added documents</div>
+      <div v-else class="flex flex-col items-center justify-center">
+        <div class="bg-widget-bg rounded-full w-12 h-12 flex flex-col items-center justify-center mb-3">
+          <InlineSvg :src="IconEmptyUsers" />
+        </div>
+        <p class="text-gray03 text-sm">No recently added documents</p>
+      </div>
       <Button
         small-btn-gray
         text-semi-bold
@@ -49,6 +54,7 @@ import { useFetchStressTest } from '@/api/use-fetch-stress-test.js'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
+import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
   name: 'WidgetPastStress',
@@ -98,6 +104,7 @@ export default {
       moreActionStressTest,
       openPrewiev,
       state,
+      IconEmptyUsers,
     }
   },
 }
