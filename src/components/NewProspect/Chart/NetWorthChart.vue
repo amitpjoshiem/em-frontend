@@ -14,7 +14,7 @@
 <script>
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import { chartWithTextCenter } from '@/utils/chartWithText'
-import { ref, watch, computed } from 'vue'
+import { ref, watch } from 'vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
@@ -41,19 +41,11 @@ export default {
             data: [props.values.liquid.percent, props.values.market.percent, props.values.income_safe.percent],
           },
         ]
-        doughnutChart.options.elements.center.text = 'Total ' + currencyFormat(getTotal.value)
+        doughnutChart.options.elements.center.text = 'Total ' + currencyFormat(props.values.total)
         chartRef.value.update()
       },
       { deep: true }
     )
-
-    const getTotal = computed(() => {
-      return (
-        Number(props.values.liquid.amount) +
-        Number(props.values.market.amount) +
-        Number(props.values.income_safe.amount)
-      )
-    })
 
     const doughnutChart = {
       id: 'doughnut',
@@ -61,9 +53,9 @@ export default {
       data: {
         datasets: [
           {
-            backgroundColor: getTotal.value !== 0 ? ['#53576A', '#66B6FF', '#FF92A5'] : ['#D3D3D3'],
+            backgroundColor: props.values.total !== 0 ? ['#53576A', '#66B6FF', '#FF92A5'] : ['#D3D3D3'],
             data:
-              getTotal.value !== 0
+              props.values.total !== 0
                 ? [props.values.liquid.percent, props.values.market.percent, props.values.income_safe.percent]
                 : [1],
           },
@@ -72,7 +64,7 @@ export default {
       options: {
         elements: {
           center: {
-            text: 'Total ' + currencyFormat(getTotal.value),
+            text: 'Total ' + currencyFormat(props.values.total),
             size: 12,
           },
         },
