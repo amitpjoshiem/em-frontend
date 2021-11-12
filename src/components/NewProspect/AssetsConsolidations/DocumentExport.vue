@@ -2,7 +2,15 @@
   <div class="p-5">
     <SwdSubHeader title="Document import" />
     <div v-if="!isLoading">
-      <DocumentExportItem v-for="(elem, index) in document.data" :key="index" :item="elem" />
+      <template v-if="document.data.length">
+        <DocumentExportItem v-for="(elem, index) in document.data" :key="index" :item="elem" />
+      </template>
+      <div v-else class="text-gray03 flex items-center flex-col mt-5">
+        <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+          <InlineSvg :src="IconEmptyUsers" />
+        </div>
+        <p>No recently added documents</p>
+      </div>
     </div>
     <el-skeleton v-else :rows="10" animated />
   </div>
@@ -10,6 +18,8 @@
 <script>
 import { useFetchExcelDocuments } from '@/api/use-fetch-excel-documents.js'
 import DocumentExportItem from '@/components/NewProspect/AssetsConsolidations/DocumentExportItem.vue'
+import { useRoute } from 'vue-router'
+import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
   name: 'DocumentExport',
@@ -17,13 +27,16 @@ export default {
     DocumentExportItem,
   },
   setup() {
-    const { isLoading, isError, isFetching, data: document } = useFetchExcelDocuments()
+    const route = useRoute()
+
+    const { isLoading, isError, isFetching, data: document } = useFetchExcelDocuments(route.params.id)
 
     return {
       isLoading,
       isError,
       document,
       isFetching,
+      IconEmptyUsers,
     }
   },
 }
