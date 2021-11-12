@@ -7,13 +7,11 @@
       <WidgetOther :other="other" />
     </div>
     <el-skeleton v-else :rows="6" animated class="pr-5 h-[264px]" />
-
     <div class="flex mb-5">
       <WidgetPastStress />
       <RetirementIncomePlan />
     </div>
     <OpportunityTable class="mb-10" :prospect="member ? member : {}" />
-    <AssetsConsolidations class="mb-10" />
   </div>
 </template>
 <script>
@@ -22,11 +20,9 @@ import WidgetMemberDetails from '@/components/MemberDetails/WidgetMemberDetails.
 import AssetsAllocation from '@/components/MemberDetails/AssetsAllocation.vue'
 import WidgetPastStress from '@/components/MemberDetails/WidgetPastStress.vue'
 import RetirementIncomePlan from '@/components/MemberDetails/RetirementIncomePlan.vue'
+import WidgetOther from '@/components/MemberDetails/WidgetOther.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
-
-import AssetsConsolidations from '@/components/NewProspect/AssetsConsolidations/AssetsConsolidations.vue'
-import WidgetOther from '@/components/MemberDetails/WidgetOther.vue'
 
 export default {
   name: 'MemberDetails',
@@ -36,7 +32,6 @@ export default {
     AssetsAllocation,
     WidgetPastStress,
     RetirementIncomePlan,
-    AssetsConsolidations,
     WidgetOther,
   },
 

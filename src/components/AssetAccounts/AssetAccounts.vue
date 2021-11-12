@@ -1,68 +1,74 @@
 <template>
   <SwdSubHeader title="Asset Accounts" class="p-5" />
-  <div v-if="isShowContent" class="p-5">
-    <div class="border border-color-grey box-border p-5 rounded-md">
-      <div class="text-main font-semibold text-smm">Status</div>
-      <el-steps :active="activeStep" finish-status="success" align-center>
-        <el-step title="Yodlee created" />
-        <el-step title="Link sent" />
-        <el-step title="Link used" />
-        <el-step title="Provider count" />
-      </el-steps>
-    </div>
-    <div
-      v-if="haveYodleeAcc && !yodleeStatus.data.link_used"
-      class="border border-color-grey box-border p-5 rounded-md mt-5"
-    >
-      <div class="text-main font-semibold text-smm">Send Link</div>
-      <Button
-        v-if="!yodleeStatus.data.link_sent"
-        class="w-3/12 mt-5"
-        text-btn="Link an account"
-        witch-icon
-        icon-type="lock"
-        default-link-btn
-        @click="sendLinkYodlee"
-      />
-      <div>
-        <span v-if="yodleeStatus.data.link_sent" class="text-main font-semibold text-xs">
-          Expired link: {{ getFormatTime }}
-        </span>
+  <div>
+    <div v-if="isShowYodlleContent" class="p-5">
+      <div class="border border-color-grey box-border p-5 rounded-md">
+        <div class="text-main font-semibold text-smm">Status</div>
+        <el-steps :active="activeStep" finish-status="success" align-center>
+          <el-step title="Yodlee created" />
+          <el-step title="Link sent" />
+          <el-step title="Link used" />
+          <el-step title="Provider count" />
+        </el-steps>
       </div>
-    </div>
+      <div
+        v-if="haveYodleeAcc && !yodleeStatus.data.link_used"
+        class="border border-color-grey box-border p-5 rounded-md mt-5"
+      >
+        <div class="text-main font-semibold text-smm">Send Link</div>
+        <Button
+          v-if="!yodleeStatus.data.link_sent"
+          class="w-3/12 mt-5"
+          text-btn="Link an account"
+          witch-icon
+          icon-type="lock"
+          default-link-btn
+          @click="sendLinkYodlee"
+        />
+        <div>
+          <span v-if="yodleeStatus.data.link_sent" class="text-main font-semibold text-xs">
+            Expired link: {{ getFormatTime }}
+          </span>
+        </div>
+      </div>
 
-    <div v-if="haveYodleeAcc" class="border border-color-grey box-border p-5 rounded-md mt-5">
-      <div class="text-main font-semibold text-smm mb-5">Providers</div>
-      <el-collapse v-if="yodleeProviders?.data?.length" accordion>
-        <el-collapse-item v-for="(item, index) in yodleeProviders.data" :key="index" :title="item.name">
-          <template v-if="Array.isArray(item.accounts) && item.accounts.length">
-            <el-table
-              border
-              :data="item.accounts"
-              style="width: 100%"
-              header-cell-class-name="header-class"
-              header-row-class-name="header-row-class"
-              row-class-name="row-class-name"
-            >
-              <el-table-column prop="name" label="Name" width="300" />
-              <el-table-column prop="status" label="status" />
-              <el-table-column prop="type" label="type" />
-              <el-table-column prop="container" label="container" />
-              <el-table-column prop="balance" label="balance">
-                <template #default="scope">
-                  <span>{{ currencyFormat(scope.row.balance.split(' ')[0]) }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-          </template>
-        </el-collapse-item>
-      </el-collapse>
-      <div v-else>
-        <span class="text-main text-sm py-2">No active provider accounts</span>
+      <div v-if="haveYodleeAcc" class="border border-color-grey box-border p-5 rounded-md mt-5">
+        <div class="text-main font-semibold text-smm mb-5">Providers</div>
+        <el-collapse v-if="yodleeProviders?.data?.length" accordion>
+          <el-collapse-item v-for="(item, index) in yodleeProviders.data" :key="index" :title="item.name">
+            <template v-if="Array.isArray(item.accounts) && item.accounts.length">
+              <el-table
+                border
+                :data="item.accounts"
+                style="width: 100%"
+                header-cell-class-name="header-class"
+                header-row-class-name="header-row-class"
+                row-class-name="row-class-name"
+              >
+                <el-table-column prop="name" label="Name" width="300" />
+                <el-table-column prop="status" label="status" />
+                <el-table-column prop="type" label="type" />
+                <el-table-column prop="container" label="container" />
+                <el-table-column prop="balance" label="balance">
+                  <template #default="scope">
+                    <span>{{ currencyFormat(scope.row.balance.split(' ')[0]) }}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </template>
+          </el-collapse-item>
+        </el-collapse>
+        <div v-else>
+          <span class="text-main text-sm py-2">No active provider accounts</span>
+        </div>
       </div>
     </div>
+    <el-skeleton v-else :rows="10" animated class="p-5" />
   </div>
-  <el-skeleton v-else :rows="10" animated class="p-5" />
+
+  <div class="p-5 mb-10">
+    <TableAssetsConsolidations />
+  </div>
 </template>
 <script>
 import { useYodleeStatus } from '@/api/use-yodlee-status.js'
@@ -73,9 +79,13 @@ import { computed, watchEffect } from 'vue'
 import { useQueryClient } from 'vue-query'
 import { useTimer } from '@/utils/useTimer'
 import { currencyFormat } from '@/utils/currencyFormat'
+import TableAssetsConsolidations from '@/components/NewProspect/AssetsConsolidations/TableAssetsConsolidations.vue'
 
 export default {
   name: 'AssetAccounts',
+  components: {
+    TableAssetsConsolidations,
+  },
   setup() {
     const route = useRoute()
     const memberId = route.params.id
@@ -107,7 +117,7 @@ export default {
       return yodleeStatus.value.data.yodlee_created
     })
 
-    const isShowContent = computed(() => {
+    const isShowYodlleContent = computed(() => {
       return !isFetchingYodleeStatus.value && !isFetchingYodleeProviders.value
     })
 
@@ -153,7 +163,7 @@ export default {
       sendLink,
       loadingLinkStatus,
       getFormatTime,
-      isShowContent,
+      isShowYodlleContent,
       refetchYodleeStatus,
       isLoadingYodleeProviders,
       currencyFormat,
