@@ -81,7 +81,7 @@ export default {
             resetPassword({ ...ruleForm, ...data })
             return
           }
-          createPassword(ruleForm)
+          createPassword({ ...ruleForm, ...data })
         } else {
           return false
         }
