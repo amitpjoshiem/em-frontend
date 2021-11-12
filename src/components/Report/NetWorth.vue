@@ -77,6 +77,7 @@ function setInitValue(ruleForm, data) {
   ruleForm.market.percent = data.market.percent !== null ? data.market.percent : ''
   ruleForm.liquid.percent = data.liquid.percent !== null ? data.liquid.percent : ''
   ruleForm.income_safe.percent = data.income_safe.percent !== null ? data.income_safe.percent : ''
+  ruleForm.total = data.total
 }
 
 function setPercentageValue(ruleForm, data) {
@@ -121,6 +122,7 @@ export default {
         percent: '',
         amount: '',
       },
+      total: 0,
     })
 
     watchEffect(() => {
