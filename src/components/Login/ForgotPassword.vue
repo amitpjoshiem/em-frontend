@@ -26,7 +26,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div v-else class="pt-2">{{ response.message }}</div>
+      <div v-else class="my-5">{{ response.message }}</div>
     </div>
   </div>
 </template>
