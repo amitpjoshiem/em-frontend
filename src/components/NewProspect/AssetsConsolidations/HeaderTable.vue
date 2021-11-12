@@ -6,8 +6,8 @@
       Holdings
     </div>
     <div class="w-3/24 title">Amount</div>
-    <div class="w-2/24 title">Management expence %</div>
-    <div class="w-2/24 title">Turnover %</div>
+    <div class="w-2/24 title">Management expence</div>
+    <div class="w-2/24 title">Turnover</div>
     <div class="w-2/24 title">
       Trading <br />
       costs

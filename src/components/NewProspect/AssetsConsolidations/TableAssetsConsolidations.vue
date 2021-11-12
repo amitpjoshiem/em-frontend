@@ -17,14 +17,18 @@
           <el-input v-model="state[index].name" size="mini" :disabled="isDisabledForm" @change="change(index)" />
         </div>
         <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
-        <div class="w-3/24 item">
+        <div class="w-3/24 item amount">
           <el-input
             v-model="state[index].amount"
             size="mini"
             type="number"
             :disabled="isDisabledForm"
             @change="change(index)"
-          />
+            @focus="focusInput('amount', index)"
+            @blur="blurInput"
+          >
+            <template v-if="focusElem === 'amount' + index" #prepend>$</template>
+          </el-input>
         </div>
         <div class="w-2/24 item" :class="{ invalidate: errors['management_expense_' + index] }">
           <el-input
@@ -33,7 +37,11 @@
             size="mini"
             type="number"
             @change="change(index, $event, 'management_expense', 'Management Expense')"
-          />
+            @focus="focusInput('management_expense', index)"
+            @blur="blurInput"
+          >
+            <template v-if="focusElem === 'management_expense' + index" #prepend>%</template>
+          </el-input>
         </div>
         <div class="w-2/24 item" :class="{ invalidate: errors['turnover_' + index] }">
           <el-input
@@ -42,7 +50,11 @@
             size="mini"
             type="number"
             @change="change(index, $event, 'turnover', 'Turnover')"
-          />
+            @focus="focusInput('turnover', index)"
+            @blur="blurInput"
+          >
+            <template v-if="focusElem === 'turnover' + index" #prepend>%</template>
+          </el-input>
         </div>
         <div class="w-2/24 item" :class="{ invalidate: errors['trading_cost_' + index] }">
           <el-input
@@ -51,7 +63,11 @@
             size="mini"
             type="number"
             @change="change(index, $event, 'trading_cost', 'Trading costs')"
-          />
+            @focus="focusInput('trading_cost', index)"
+            @blur="blurInput"
+          >
+            <template v-if="focusElem === 'trading_cost' + index" #prepend>%</template>
+          </el-input>
         </div>
         <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + index] }">
           <el-input
@@ -60,7 +76,11 @@
             size="mini"
             type="number"
             @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
-          />
+            @focus="focusInput('wrap_fee', index)"
+            @blur="blurInput"
+          >
+            <template v-if="focusElem === 'wrap_fee' + index" #prepend>%</template>
+          </el-input>
         </div>
         <div class="w-2/24 item">
           <span>{{ item.total_cost_percent }}%</span>
@@ -120,6 +140,7 @@ export default {
     const queryClient = useQueryClient()
     const memberId = route.params.id
     const isLoadingUpdate = ref(false)
+    const focusElem = ref(null)
 
     const { isLoading, isFetching, isError, data: assetsData, total } = useAsetsConsolidationsMember(memberId)
     const { mutateAsync: updateAssetsConsolidation } = useMutation(updateMemberAssetsConsolidation)
@@ -177,6 +198,14 @@ export default {
       return isLoadingUpdate.value || isFetching.value
     })
 
+    const focusInput = (name, index) => {
+      focusElem.value = name + index
+    }
+
+    const blurInput = () => {
+      focusElem.value = null
+    }
+
     return {
       state,
       change,
@@ -193,6 +222,9 @@ export default {
       confirmEvent,
       isDisabledForm,
       memberId,
+      focusInput,
+      focusElem,
+      blurInput,
     }
   },
 }
@@ -201,5 +233,20 @@ export default {
 <style scoped>
 .item {
   @apply border-r border-b border-title-gray text-xs text-text-light-gray flex items-center justify-center uppercase text-center last:border-r-0;
+}
+</style>
+
+<style>
+.item .el-input-group__prepend {
+  border: none;
+  border-radius: 0;
+  height: 39px;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.amount .el-input-group__prepend {
+  padding-left: 3px;
+  padding-right: 3px;
 }
 </style>
