@@ -98,10 +98,6 @@ export default {
 }
 
 .el-timeline-item__tail {
-  margin-top: 13px;
-}
-
-.el-timeline-item__node--normal {
-  margin-top: 13px;
+  margin-top: 15px;
 }
 </style>
