@@ -10,6 +10,7 @@
 <script>
 import { useFetchExcelDocuments } from '@/api/use-fetch-excel-documents.js'
 import DocumentExportItem from '@/components/NewProspect/AssetsConsolidations/DocumentExportItem.vue'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'DocumentExport',
@@ -17,7 +18,9 @@ export default {
     DocumentExportItem,
   },
   setup() {
-    const { isLoading, isError, isFetching, data: document } = useFetchExcelDocuments()
+    const route = useRoute()
+
+    const { isLoading, isError, isFetching, data: document } = useFetchExcelDocuments(route.params.id)
 
     return {
       isLoading,

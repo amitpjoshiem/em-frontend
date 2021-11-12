@@ -1,8 +1,8 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function fetchExcelDocuments() {
+function fetchExcelDocuments(id) {
   return fetcher({
-    url: `/assets_consolidations/export/excel?orderBy=created_at&sortedBy=desc`,
+    url: `/assets_consolidations/${id}/export/excel?orderBy=created_at&sortedBy=desc`,
     options: { method: 'GET' },
   })
 }
