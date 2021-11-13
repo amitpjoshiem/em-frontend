@@ -1,8 +1,8 @@
 <template>
   <div v-if="!isFetching">
     <SwdUpload
-      :upload-data="{ collection: 'stress_test' }"
-      :file-list="stressTestDocument.data"
+      :upload-data="{ collection: 'assets_consolidation_docs' }"
+      :file-list="assetsConsolidationDocs.data"
       :show-file-list="true"
       :auto-upload="true"
       :show-file-block="true"
@@ -16,13 +16,9 @@
           <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
           <div class="el-upload__tip">PDF files only</div>
         </div>
-        <div v-if="!stressTestDocument.data.length" class="text-gray03 pb5">No documents uploaded</div>
+        <div v-if="!assetsConsolidationDocs.data.length" class="text-gray03 pb-5">No documents uploaded</div>
       </template>
     </SwdUpload>
-    <div v-if="showNavBtn" class="flex justify-end my-6">
-      <Button default-gray-btn text-btn="Back" class="mr-5" @click="backStep" />
-      <Button default-blue-btn text-btn="Show Report" @click="saveStep" />
-    </div>
   </div>
   <el-skeleton v-else :rows="10" animated class="p-5" />
   <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
@@ -32,50 +28,33 @@
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { onMounted, reactive, ref, watchEffect } from 'vue'
+import { reactive, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter, useRoute } from 'vue-router'
-import { computed } from 'vue'
-import { scrollTop } from '@/utils/scrollTop'
-import { createStressTest } from '@/api/vueQuery/create-stress-test'
+import { useRoute } from 'vue-router'
+import { createAssetsConsolidationDocs } from '@/api/vueQuery/create-assets-consolidation-docs'
+import { useFetchAssetsConsolidationDocs } from '@/api/use-fetch-assets-consolidation-docs'
 import { useMutation } from 'vue-query'
-import { useFetchStressTest } from '@/api/use-fetch-stress-test.js'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
 import { useQueryClient } from 'vue-query'
 import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
-import { fetchStressTestConfirm } from '@/api/vueQuery/fetch-stress-test-confirm'
-import { useAlert } from '@/utils/use-alert'
 
 export default {
-  name: 'NewProspectPdf',
+  name: 'AccountStatementsPdf',
   components: {
     SwdUpload,
     PrewiewPdfModal,
   },
-  props: {
-    showNavBtn: {
-      type: Boolean,
-      require: false,
-      default: true,
-    },
-  },
+
   setup() {
     const store = useStore()
-    const router = useRouter()
     const route = useRoute()
     const upload = ref(null)
     const queryClient = useQueryClient()
     const id = route.params.id
 
-    const { isLoading, isFetching, isError, data: stressTestDocument } = useFetchStressTest(id)
-    const { mutateAsync: create, error } = useMutation(createStressTest)
+    const { isLoading, isFetching, isError, data: assetsConsolidationDocs } = useFetchAssetsConsolidationDocs(id)
+    const { mutateAsync: createDoc, error } = useMutation(createAssetsConsolidationDocs)
     const { mutateAsync: deletePdf } = useMutation(deleteMedia)
-    const { mutateAsync: stressTestConfirm } = useMutation(fetchStressTestConfirm)
-
-    onMounted(() => {
-      store.commit('newProspect/setStep', 5)
-      scrollTop()
-    })
 
     const state = reactive({
       file: '',
@@ -84,30 +63,11 @@ export default {
       previewUrl: '',
     })
 
-    const step = computed(() => store.state.newProspect.step)
-
-    const saveStep = async () => {
-      const res = await stressTestConfirm(route.params.id)
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Prospect update successfully',
-        })
-        router.push({ name: 'member-report', params: { id: route.params.id } })
-      }
-    }
-
-    const backStep = () => {
-      store.commit('newProspect/setStep', step.value - 1)
-      router.push({ name: 'assetsconsolidations', params: { id: route.params.id } })
-    }
-
     const handleSuccess = async (res) => {
       const data = { uuids: [res.data.uuid] }
-      const response = await create({ id, data })
+      const response = await createDoc({ id, data })
       if (!('error' in response)) {
-        queryClient.invalidateQueries(['stressTest', id])
+        queryClient.invalidateQueries(['assetsConsolidationDocs', id])
       }
     }
 
@@ -131,24 +91,22 @@ export default {
     const removeMedia = async (media) => {
       const res = await deletePdf(media)
       if (!('error' in res)) {
-        queryClient.invalidateQueries(['stressTest', id])
+        queryClient.invalidateQueries(['assetsConsolidationDocs', id])
       }
     }
 
     return {
       IconDownRisk,
       IconUpRisk,
-      saveStep,
-      backStep,
       state,
       handleSuccess,
       bindRef,
-      create,
+      createDoc,
       error,
       isLoading,
       isFetching,
       isError,
-      stressTestDocument,
+      assetsConsolidationDocs,
       openPrewiev,
       removeMedia,
     }
