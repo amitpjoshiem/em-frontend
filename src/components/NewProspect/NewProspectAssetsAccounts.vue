@@ -1,7 +1,7 @@
 <template>
-  <div class="px-20 flex flex-col justify-between h-full">
+  <div class="py-5 px-5 flex flex-col justify-between h-full">
     <div class="">
-      <div class="flex">
+      <div class="flex flex-col">
         <Button
           class="mr-5"
           text-btn="Link an account"
@@ -10,6 +10,9 @@
           default-link-btn
           @click="sendLinkYodlee"
         />
+        <div class="mt-3 text-sm">
+          Account connection is optional. You can skip this step and go to Assets Consolidations
+        </div>
       </div>
     </div>
 

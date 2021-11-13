@@ -2,35 +2,51 @@
   <SwdSubHeader title="Asset Accounts" class="p-5" />
   <div>
     <div v-if="isShowYodlleContent" class="p-5">
-      <div class="border border-color-grey box-border p-5 rounded-md">
-        <div class="text-main font-semibold text-smm">Status</div>
-        <el-steps :active="activeStep" finish-status="success" align-center>
-          <el-step title="Yodlee created" />
-          <el-step title="Link sent" />
-          <el-step title="Link used" />
-          <el-step title="Provider count" />
-        </el-steps>
-      </div>
-      <div
-        v-if="haveYodleeAcc && !yodleeStatus.data.link_used"
-        class="border border-color-grey box-border p-5 rounded-md mt-5"
-      >
-        <div class="text-main font-semibold text-smm">Send Link</div>
-        <Button
-          v-if="!yodleeStatus.data.link_sent"
-          class="w-3/12 mt-5"
-          text-btn="Link an account"
-          witch-icon
-          icon-type="lock"
-          default-link-btn
-          @click="sendLinkYodlee"
-        />
-        <div>
-          <span v-if="yodleeStatus.data.link_sent" class="text-main font-semibold text-xs">
-            Expired link: {{ getFormatTime }}
-          </span>
+      <template v-if="yodleeStatus.data.yodlee_created">
+        <div class="border border-color-grey box-border p-5 rounded-md">
+          <div class="text-main font-semibold text-smm">Status</div>
+          <el-steps :active="activeStep" finish-status="success" align-center>
+            <el-step title="Yodlee created" />
+            <el-step title="Link sent" />
+            <el-step title="Link used" />
+            <el-step title="Provider count" />
+          </el-steps>
         </div>
-      </div>
+        <div
+          v-if="haveYodleeAcc && !yodleeStatus.data.link_used"
+          class="border border-color-grey box-border p-5 rounded-md mt-5"
+        >
+          <div class="text-main font-semibold text-smm">Send Link</div>
+          <Button
+            v-if="!yodleeStatus.data.link_sent"
+            class="w-3/12 mt-5"
+            text-btn="Link an account"
+            witch-icon
+            icon-type="lock"
+            default-link-btn
+            @click="sendLinkYodlee"
+          />
+          <div>
+            <span v-if="yodleeStatus.data.link_sent" class="text-main font-semibold text-xs">
+              Expired link: {{ getFormatTime }}
+            </span>
+          </div>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="border border-color-grey box-border p-5 rounded-md my-5">
+          <div class="text-smm font-medium text-main">Create Yodlee account</div>
+          <Button
+            class="w-3/12 mt-5"
+            text-btn="Create account"
+            witch-icon
+            default-link-btn
+            @click="createAccountYodlee"
+          />
+        </div>
+        <AccountStatements />
+      </template>
 
       <div v-if="haveYodleeAcc" class="border border-color-grey box-border p-5 rounded-md mt-5">
         <div class="text-main font-semibold text-smm mb-5">Providers</div>
@@ -79,12 +95,16 @@ import { computed, watchEffect } from 'vue'
 import { useQueryClient } from 'vue-query'
 import { useTimer } from '@/utils/useTimer'
 import { currencyFormat } from '@/utils/currencyFormat'
+import { useMutation } from 'vue-query'
+import { createYodlee } from '@/api/vueQuery/create-yodlee'
 import TableAssetsConsolidations from '@/components/NewProspect/AssetsConsolidations/TableAssetsConsolidations.vue'
+import AccountStatements from '@/components/NewProspect/AssetsConsolidations/AccountStatements.vue'
 
 export default {
   name: 'AssetAccounts',
   components: {
     TableAssetsConsolidations,
+    AccountStatements,
   },
   setup() {
     const route = useRoute()
@@ -112,6 +132,8 @@ export default {
       isLoading: loadingLinkStatus,
       sendLink,
     } = useFetchYodleeSendLink(route.params.id)
+
+    const { mutateAsync: createYodleeAccount, isLoadingCreateYodlee } = useMutation(createYodlee)
 
     const haveYodleeAcc = computed(() => {
       return yodleeStatus.value.data.yodlee_created
@@ -148,6 +170,13 @@ export default {
       queryClient.invalidateQueries(['yodlee/status'])
     }
 
+    const createAccountYodlee = async () => {
+      const res = await createYodleeAccount(memberId)
+      if (!('error' in res)) {
+        queryClient.invalidateQueries(['yodlee/status', memberId])
+      }
+    }
+
     return {
       yodleeStatus,
       isErrorLoadingYodleeStatus,
@@ -167,6 +196,9 @@ export default {
       refetchYodleeStatus,
       isLoadingYodleeProviders,
       currencyFormat,
+      createAccountYodlee,
+      createYodleeAccount,
+      isLoadingCreateYodlee,
     }
   },
 }
