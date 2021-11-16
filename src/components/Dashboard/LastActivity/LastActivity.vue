@@ -1,16 +1,29 @@
 <template>
-  <div v-if="!isLoading" class="row-span-2 col-span-1 bg-widget-bg rounded-[10px] font-medium pl-5 pt-5 pr-5">
+  <div
+    v-if="!isLoading"
+    class="row-span-2 col-span-1 bg-widget-bg rounded-[10px] font-medium pl-5 pt-5 pr-5 min-h-[250px]"
+  >
     <p class="text-smm text-main pb-4">Last Activity</p>
-    <div v-for="item in activity.data" :key="item.day" class="flex flex-col text-xs">
-      <div v-for="elem in item.events" :key="elem.timestamp" class="active-item">
-        <div class="flex items-center">
-          <div class="h-[9px] w-[9px] rounded-full mb-[2px] mr-[8px] bg-activity" />
-          <div class="text-activity-item font-medium">
-            <DateListActivity :day="item.day" :timestamp="elem.timestamp" />
+
+    <template v-if="activity.data.length">
+      <div v-for="item in activity.data" :key="item.day" class="flex flex-col text-xs">
+        <div v-for="elem in item.events" :key="elem.timestamp" class="active-item">
+          <div class="flex items-center">
+            <div class="h-[9px] w-[9px] rounded-full mb-[2px] mr-[8px] bg-activity" />
+            <div class="text-activity-item font-medium">
+              <DateListActivity :day="item.day" :timestamp="elem.timestamp" />
+            </div>
           </div>
+          <div class="pt-px text-main" v-html="elem.content" />
         </div>
-        <div class="pt-px text-main" v-html="elem.content" />
       </div>
+    </template>
+
+    <div v-else class="flex flex-col justify-center items-center">
+      <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center mt-5">
+        <InlineSvg :src="IconLastActivityEmpty" />
+      </div>
+      <span class="text-gray03 font-semibold text-xss mt-5">No recently activity</span>
     </div>
   </div>
   <el-skeleton v-else :rows="6" animated />

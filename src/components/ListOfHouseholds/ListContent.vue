@@ -26,7 +26,7 @@
       </div>
       <div class="flex">
         <SwdItemsPerPage :destination="'listOfHouseholds'" />
-        <SwdDropDown class="ml-2.5" :options="actionsOptions">
+        <!-- <SwdDropDown class="ml-2.5" :options="actionsOptions">
           <template #titleDropDown>
             <span
               class="
@@ -44,7 +44,7 @@
               <InlineSvg :src="IconAction" />
             </span>
           </template>
-        </SwdDropDown>
+        </SwdDropDown> -->
       </div>
     </div>
     <router-view />
@@ -66,20 +66,20 @@ export default {
       return route.name
     })
 
-    const actionsOptions = [
-      {
-        title: 'Item 1',
-        command: 'item-1',
-      },
-      {
-        title: 'Item 2',
-        command: 'item2',
-      },
-    ]
+    // const actionsOptions = [
+    //   {
+    //     title: 'Item 1',
+    //     command: 'item-1',
+    //   },
+    //   {
+    //     title: 'Item 2',
+    //     command: 'item2',
+    //   },
+    // ]
 
     return {
       getActiveTab,
-      actionsOptions,
+      // actionsOptions,
       IconAction,
     }
   },

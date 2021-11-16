@@ -4,32 +4,40 @@
       <span class="text-smm font-medium">Pipe Line</span>
       <SwdSelectFilter destination="pipeLine" />
     </div>
-    <div class="pt-6 flex justify-between mb-2">
+    <div class="pt-6 flex justify-between mb-5">
       <div class="justify-between flex flex-col border border-widget-border rounded-lg pt-3 bg-white w-5/12">
         <div class="flex text-small items-center justify-between px-2.5">
           <span class="text-gray03">Total AUM</span>
-          <div class="flex rounded-md p-1 bg-color-green">
-            <InlineSvg :src="IconUpArrow" class="mt-[2px] mr-px" />
+          <div
+            class="flex rounded-md p-1"
+            :class="{ 'bg-color-green': pipeLine.data.new_aum, 'bg-input-border': pipeLine.data.new_aum === null }"
+          >
+            <InlineSvg v-if="pipeLine.data.new_aum !== null" :src="IconUpArrow" class="mt-[2px] mr-px" />
             <span class="text-white ml-px font-semibold"> ${{ currencyCompact(pipeLine.data.new_aum) }} </span>
           </div>
         </div>
         <span class="flex items-center justify-center text-xll font-medium">
           ${{ currencyCompact(pipeLine.data.aum) }}
         </span>
-        <InlineSvg :src="IconTotal" />
+        <InlineSvg v-if="pipeLine.data.new_aum === null" :src="IconTotalGray" />
+        <InlineSvg v-else :src="IconTotal" />
       </div>
 
       <div class="justify-between flex flex-col border border-widget-border rounded-lg pt-3 bg-white w-5/12">
         <div class="flex text-small items-center justify-between px-2.5">
           <span class="text-gray03">Members</span>
-          <div class="flex rounded-md p-1 bg-color-green">
+          <div
+            class="flex rounded-md p-1"
+            :class="{ 'bg-color-green': pipeLine.data.new_aum, 'bg-input-border': pipeLine.data.new_aum === null }"
+          >
             <InlineSvg :src="IconUpArrow" class="mt-[2px]" />
             <span class="text-white ml-px font-semibold"> {{ pipeLine.data.new_members }} </span>
           </div>
         </div>
         <span class="flex items-center justify-center text-xll font-medium"> {{ pipeLine.data.members }} </span>
         <div class="-ml-px">
-          <InlineSvg :src="IconMembers" />
+          <InlineSvg v-if="pipeLine.data.members" :src="IconMembers" />
+          <InlineSvg v-else :src="IconTotalGray" />
         </div>
       </div>
     </div>
@@ -39,6 +47,7 @@
 
 <script>
 import IconTotal from '@/assets/svg/total.svg'
+import IconTotalGray from '@/assets/svg/total-gray.svg'
 import IconMembers from '@/assets/svg/members.svg'
 import IconUpArrow from '@/assets/svg/up-arrow.svg'
 import IconPipeLineEmpty from '@/assets/svg/icon-pipe-line-empty.svg'
@@ -60,6 +69,7 @@ export default {
       pipeLine,
       refetch,
       currencyCompact,
+      IconTotalGray,
     }
   },
 }

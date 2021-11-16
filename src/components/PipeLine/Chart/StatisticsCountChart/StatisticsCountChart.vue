@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <vue3-chart-js v-bind="chartOptions" ref="chartRef" />
-  </div>
+  <vue3-chart-js v-bind="chartOptions" ref="chartRef" />
 </template>
 
 <script>

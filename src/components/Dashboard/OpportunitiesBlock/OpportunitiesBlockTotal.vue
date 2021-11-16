@@ -3,6 +3,7 @@
     <div class="flex items-center justify-between w-8/12">
       <div>
         <InlineSvg v-if="up" :src="IconUpRisk" class="h-5" />
+        <InlineSvg v-else-if="up === null" :src="IconUpRiskEmpty" class="h-5" />
         <InlineSvg v-else :src="IconDownRisk" class="h-5" />
       </div>
       <div>
@@ -27,6 +28,7 @@ import IconLightning from '@/assets/svg/icon-lightning.svg'
 
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
+import IconUpRiskEmpty from '@/assets/svg/icon-risk-empty.svg'
 
 import { currencyFormat } from '@/utils/currencyFormat'
 import { percentFormat } from '@/utils/percentFormat'
@@ -52,12 +54,15 @@ export default {
   setup(props) {
     const getPercentClass = computed(() => {
       if (props.up) return 'bg-border-green'
+      if (props.up === null) 'input-border'
       return 'bg-color-error'
     })
+
     return {
       getPercentClass,
       IconDownRisk,
       IconUpRisk,
+      IconUpRiskEmpty,
       IconIncomeTop,
       IconLightning,
       currencyFormat,
