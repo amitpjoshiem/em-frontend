@@ -6,9 +6,14 @@ export const useStatisticsAgeChartDataOptions = (values = []) => {
     const chartData = {
       percent: [],
     }
-    values.forEach((item) => {
-      chartData.percent.push(Math.round(item.percent))
-    })
+    if (values.length) {
+      values.forEach((item) => {
+        chartData.percent.push(Math.round(item.percent))
+      })
+    } else {
+      chartData.percent = [0, 0, 0]
+    }
+
     return chartData
   })
 
@@ -17,8 +22,8 @@ export const useStatisticsAgeChartDataOptions = (values = []) => {
     data: {
       datasets: [
         {
-          backgroundColor: ['#FF92A5', '#66B6FF', '#53576A'],
-          data: getData.value.percent,
+          backgroundColor: values.length ? ['#FF92A5', '#66B6FF', '#53576A'] : ['#D3D3D3'],
+          data: values.length ? getData.value.percent : [1],
         },
       ],
     },
