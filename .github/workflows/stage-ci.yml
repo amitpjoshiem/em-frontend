@@ -1,0 +1,52 @@
+name: Dev CI/CD
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the develop branch
+  push:
+    branches:
+      - stage
+
+jobs:
+  primary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: cache node modules
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            ./node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: install dependencies
+        run: yarn install --frozen-lockfile
+      - name: build
+        run: yarn build
+        env:
+          VUE_APP_API_URL: ${{ secrets.VUE_APP_API_URL_STAGE }}
+          VUE_APP_ENV: production
+          VUE_APP_BASE_URL: ${{ secrets.VUE_APP_BASE_URL }}
+          VUE_APP_API_MEDIA_URL: ${{ secrets.VUE_APP_API_MEDIA_URL_STAGE }}
+          VUE_APP_WEBSOCKETS_SERVER: ${{ secrets.VUE_APP_WEBSOCKETS_SERVER_STAGE }}
+          VUE_APP_WEBSOCKETS_PORT: ${{ secrets.VUE_APP_WEBSOCKETS_PORT_STAGE }}
+      - name: set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: aws deploy
+        run: |
+          aws s3 sync ./dist s3://swd-web-stage --delete
+      - name: aws cloudfront invalidation
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_STAGE }} --paths /*
