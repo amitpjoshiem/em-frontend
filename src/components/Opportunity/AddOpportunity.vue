@@ -49,7 +49,12 @@
       </el-form>
 
       <div class="flex justify-end my-10">
-        <el-button type="primary" @click="submitForm('ruleForm')"> Save </el-button>
+        <el-button type="primary" :disabled="disabledSave" @click="submitForm('ruleForm')">
+          <div class="flex items-center">
+            <SwdSpinner v-if="disabledSave" class="mr-2" />
+            <span>Save</span>
+          </div>
+        </el-button>
       </div>
     </div>
     <el-skeleton v-else :rows="11" animated class="p-5" />
@@ -75,6 +80,7 @@ export default {
     const router = useRouter()
     const form = ref(null)
     const id = route.params.id
+    const disabledSave = ref(false)
 
     const ruleForm = reactive({
       member_id: '',
@@ -119,6 +125,7 @@ export default {
     const submitForm = async () => {
       form.value.validate(async (valid) => {
         if (valid) {
+          disabledSave.value = true
           const res = await addOpportunity({ ...ruleForm, member_id: id })
           if (!('error' in res)) {
             useAlert({
@@ -128,6 +135,7 @@ export default {
             })
             router.push({ name: 'member-details', params: { id } })
           }
+          disabledSave.value = false
         } else {
           return false
         }
@@ -155,6 +163,7 @@ export default {
       form,
       rules,
       getPlaceholder,
+      disabledSave,
     }
   },
 }
