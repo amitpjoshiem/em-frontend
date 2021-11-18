@@ -34,7 +34,6 @@
               text-btn="Continue"
               type="Submit"
               :disabled="fetchingCreate || fetchingReset"
-              @click="submit()"
             />
           </el-form-item>
         </el-form>

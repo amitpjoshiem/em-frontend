@@ -15,14 +15,7 @@
             <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" />
           </el-form-item>
           <el-form-item>
-            <Button
-              :default-primary="!fetching"
-              full
-              text-btn="Continue"
-              :disabled="fetching"
-              type="submit"
-              @click="submit()"
-            />
+            <Button :default-primary="!fetching" full text-btn="Continue" :disabled="fetching" type="submit" />
           </el-form-item>
         </el-form>
       </div>
