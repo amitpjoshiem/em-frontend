@@ -12,6 +12,11 @@ const useCreatePassword = () => {
     await fetchData({ body })
 
     if (response.value.status === 204) {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Create password successfully',
+      })
       router.push({ name: 'home' })
     } else {
       useAlert({
