@@ -400,8 +400,8 @@ import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { initialAssetsInformation } from '@/components/NewProspect/initialState/assetsInformation'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member'
-import ItemFormAssetsTwo from '@/components/NewProspect/ItemFormAssetsTwo.vue'
-import ItemFormAssetsFour from '@/components/NewProspect/ItemFormAssetsFour.vue'
+import ItemFormAssetsTwo from '@/components/NewProspect/ProspectAssets/ItemFormAssetsTwo.vue'
+import ItemFormAssetsFour from '@/components/NewProspect/ProspectAssets/ItemFormAssetsFour.vue'
 
 function setInitValue(ruleForm, member) {
   if (member?.value?.data) {
