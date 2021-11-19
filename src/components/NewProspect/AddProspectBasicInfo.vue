@@ -67,7 +67,7 @@
           </el-form-item>
 
           <el-form-item label="ZIP" prop="zip" class="w-2/12">
-            <el-input v-model="ruleForm.zip" placeholder="000000" type="number" />
+            <el-input v-model="ruleForm.zip" placeholder="000000" inputmode="numeric" />
           </el-form-item>
         </div>
       </div>
@@ -108,6 +108,7 @@
               v-model="ruleForm.spouse.phone"
               v-maska="'(###) ###-####'"
               placeholder="Enter spouse’s phone number"
+              inputmode="numeric"
             />
           </el-form-item>
           <el-form-item
@@ -145,7 +146,7 @@
             prop="house.market_value"
             class="w-5/12 pr-5"
           >
-            <el-input v-model="ruleForm.house.market_value" placeholder="$123000" />
+            <el-input v-model="ruleForm.house.market_value" placeholder="$123000" inputmode="numeric" />
           </el-form-item>
         </div>
         <div class="flex mt-5">
@@ -155,7 +156,7 @@
             prop="house.total_debt"
             class="w-5/12 pr-5"
           >
-            <el-input v-model="ruleForm.house.total_debt" placeholder="$123000" />
+            <el-input v-model="ruleForm.house.total_debt" placeholder="$123000" inputmode="numeric" />
           </el-form-item>
           <el-form-item
             v-if="ruleForm.house.type !== 'rent'"
@@ -163,7 +164,7 @@
             prop="house.remaining_mortgage_amount"
             class="w-5/12 pr-5"
           >
-            <el-input v-model="ruleForm.house.remaining_mortgage_amount" placeholder="$123000" />
+            <el-input v-model="ruleForm.house.remaining_mortgage_amount" placeholder="$123000" inputmode="numeric" />
           </el-form-item>
         </div>
         <div class="flex mb-5">
@@ -173,7 +174,7 @@
             prop="house.monthly_payment"
             class="w-5/12 pr-5"
           >
-            <el-input v-model="ruleForm.house.monthly_payment" placeholder="$123000" />
+            <el-input v-model="ruleForm.house.monthly_payment" placeholder="$123000" inputmode="numeric" />
           </el-form-item>
           <el-form-item
             v-if="ruleForm.house.type === 'rent'"
@@ -181,7 +182,7 @@
             prop="house.total_monthly_expenses"
             class="w-5/12 pr-5"
           >
-            <el-input v-model="ruleForm.house.total_monthly_expenses" placeholder="$123000" />
+            <el-input v-model="ruleForm.house.total_monthly_expenses" placeholder="$123000" inputmode="numeric" />
           </el-form-item>
         </div>
       </div>
@@ -201,7 +202,7 @@
             <el-input v-model="eh.occupation" placeholder="Company occupation" />
           </el-form-item>
           <el-form-item :prop="'employment_history.' + index + '.years'" label="Years" class="w-full">
-            <el-input v-model="eh.years" placeholder="00" />
+            <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
           </el-form-item>
           <div class="w-12 pt-9 ml-3 cursor-pointer">
             <InlineSvg v-if="index === ruleForm.employment_history.length - 1" :src="IconAdd" @click="addEmployment" />
@@ -230,7 +231,7 @@
               <el-input v-model="eh.occupation" placeholder="Company occupation" />
             </el-form-item>
             <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-full">
-              <el-input v-model="eh.years" placeholder="00" />
+              <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
             </el-form-item>
             <div class="w-12 pt-9 ml-3 cursor-pointer">
               <InlineSvg
