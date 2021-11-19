@@ -29,7 +29,9 @@ const routes = [
             path: 'assets/:id?',
             name: 'assets-information',
             component: () =>
-              import(/* webpackChunkName: "NewProspect" */ '../components/NewProspect/AddProspectAssets.vue'),
+              import(
+                /* webpackChunkName: "NewProspect" */ '../components/NewProspect/ProspectAssets/AddProspectAssets.vue'
+              ),
           },
           {
             path: 'assets-acount/:id?',
