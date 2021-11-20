@@ -2,7 +2,11 @@
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
     <SwdRemoteSearch />
     <div class="flex items-center justify-end">
-      <div class="border border-input-border p-2 mr-2 cursor-pointer rounded-md" @click="getNotificationTest()">
+      <div
+        v-if="showContent.testNotificationsBtn"
+        class="border border-input-border p-2 mr-2 cursor-pointer rounded-md"
+        @click="getNotificationTest()"
+      >
         <span>test send notifications event</span>
       </div>
       <div
@@ -48,8 +52,8 @@ import { ElMessageBox } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useNotificationTest } from '@/api/use-notification-test'
-
-import HeaderNotificationsBlock from './HeaderNotificationsBlock.vue'
+import HeaderNotificationsBlock from '@/components/Header/HeaderNotificationsBlock.vue'
+import { useShowContentEnv } from '@/utils/use-show-content-env'
 
 export default {
   name: 'Header',
@@ -65,6 +69,8 @@ export default {
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
 
     const { response, error, fetching, getNotificationTest } = useNotificationTest()
+
+    const { showContent } = useShowContentEnv()
 
     const newProspect = () => {
       if (
@@ -97,6 +103,7 @@ export default {
       response,
       error,
       fetching,
+      showContent,
     }
   },
 }
