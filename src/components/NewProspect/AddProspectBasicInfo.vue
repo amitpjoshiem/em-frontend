@@ -463,8 +463,7 @@ export default {
     }
 
     const addEmploymentSpouse = () => {
-      const length =
-        ruleForm.spouse && ruleForm.spouse.employment_history ? ruleForm.spouse.employment_history.length : 0
+      const length = ruleForm.spouse.employment_history.length
       ruleForm.spouse.employment_history.push({
         company_name: '',
         occupation: '',
@@ -482,7 +481,23 @@ export default {
     })
 
     const changeMarried = () => {
-      if (ruleForm.married) addEmploymentSpouse()
+      if (ruleForm.married && !ruleForm.spouse.length) {
+        ruleForm.spouse = {
+          name: '',
+          email: '',
+          birthday: '',
+          retired: false,
+          retirement_date: '',
+          phone: '',
+          employment_history: [
+            {
+              company_name: '',
+              occupation: '',
+              years: '',
+            },
+          ],
+        }
+      }
     }
 
     return {
