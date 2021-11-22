@@ -19,7 +19,7 @@
         <span class="flex items-center justify-center text-xll font-medium">
           ${{ currencyCompact(pipeLine.data.aum) }}
         </span>
-        <InlineSvg v-if="pipeLine.data.new_aum === null" :src="IconTotalGray" />
+        <InlineSvg v-if="pipeLine.data.aum === null" :src="IconTotalGray" />
         <InlineSvg v-else :src="IconTotal" />
       </div>
 
