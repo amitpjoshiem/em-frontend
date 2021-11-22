@@ -307,7 +307,13 @@ function setInitValue(ruleForm, member) {
   ruleForm.retirement_date = dayjs(ruleForm.retirement_date).format('MM/DD/YYYY')
   ruleForm.spouse.birthday = dayjs(ruleForm.spouse.birthday).format('MM/DD/YYYY')
   ruleForm.spouse.retirement_date = dayjs(ruleForm.spouse.retirement_date).format('MM/DD/YYYY')
-  if (ruleForm.spouse.employment_history === undefined) ruleForm.spouse.employment_history = []
+  if (ruleForm.spouse.employment_history && !ruleForm.spouse.employment_history.length) {
+    ruleForm.spouse.employment_history.push({
+      company_name: '',
+      occupation: '',
+      years: '',
+    })
+  }
 }
 
 export default {
