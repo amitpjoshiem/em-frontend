@@ -10,29 +10,29 @@
     <div class="flex border-b border-color-grey py-5">
       <div class="w-10/12 text-xss text-main font-medium">I have been given access to the member</div>
       <div class="w-2/12 flex justify-between">
-        <el-switch v-model="value1" />
-        <el-switch v-model="value2" />
+        <el-switch v-model="value1" disabled />
+        <el-switch v-model="value2" disabled />
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
       <div class="w-10/12 text-xss text-main font-medium">I have been given access to the member</div>
       <div class="w-2/12 flex justify-between">
-        <el-switch v-model="value3" />
-        <el-switch v-model="value4" />
+        <el-switch v-model="value3" disabled />
+        <el-switch v-model="value4" disabled />
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
       <div class="w-10/12 text-xss text-main font-medium">Member information was updated by another user</div>
       <div class="w-2/12 flex justify-between">
-        <el-switch v-model="value5" />
-        <el-switch v-model="value6" />
+        <el-switch v-model="value5" disabled />
+        <el-switch v-model="value6" disabled />
       </div>
     </div>
     <div class="flex border-b border-color-grey py-5">
       <div class="w-10/12 text-xss text-main font-medium">Member has reached retirement age</div>
       <div class="w-2/12 flex justify-between">
-        <el-switch v-model="value7" />
-        <el-switch v-model="value8" />
+        <el-switch v-model="value7" disabled />
+        <el-switch v-model="value8" disabled />
       </div>
     </div>
   </div>
@@ -44,13 +44,13 @@ export default {
   data() {
     return {
       value1: true,
-      value2: true,
-      value3: false,
+      value2: false,
+      value3: true,
       value4: false,
       value5: true,
-      value6: true,
-      value7: false,
-      value8: true,
+      value6: false,
+      value7: true,
+      value8: false,
     }
   },
 }

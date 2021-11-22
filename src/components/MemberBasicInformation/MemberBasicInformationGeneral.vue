@@ -96,7 +96,7 @@
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main">
-          {{ prospect.retirementDateFormatted }}
+          <SwdStubForText :text="prospect.retirementDateFormatted" plug="&mdash;" class="text-sm text-main" />
         </span>
       </div>
       <div class="w-9/24">

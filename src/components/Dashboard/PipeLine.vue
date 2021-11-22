@@ -19,7 +19,7 @@
         <span class="flex items-center justify-center text-xll font-medium">
           ${{ currencyCompact(pipeLine.data.aum) }}
         </span>
-        <InlineSvg v-if="pipeLine.data.new_aum === null" :src="IconTotalGray" />
+        <InlineSvg v-if="pipeLine.data.aum === null" :src="IconTotalGray" />
         <InlineSvg v-else :src="IconTotal" />
       </div>
 
@@ -28,7 +28,10 @@
           <span class="text-gray03">Members</span>
           <div
             class="flex rounded-md p-1"
-            :class="{ 'bg-color-green': pipeLine.data.new_aum, 'bg-input-border': pipeLine.data.new_aum === null }"
+            :class="{
+              'bg-color-green': pipeLine.data.new_members,
+              'bg-input-border': pipeLine.data.new_members === null,
+            }"
           >
             <InlineSvg :src="IconUpArrow" class="mt-[2px]" />
             <span class="text-white ml-px font-semibold"> {{ pipeLine.data.new_members }} </span>

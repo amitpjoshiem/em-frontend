@@ -12,7 +12,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="Married?">
-            <el-radio-group v-model="ruleForm.married">
+            <el-radio-group v-model="ruleForm.married" @change="changeMarried">
               <el-radio :label="true">Yes</el-radio>
               <el-radio :label="false">No</el-radio>
             </el-radio-group>
@@ -307,6 +307,13 @@ function setInitValue(ruleForm, member) {
   ruleForm.retirement_date = dayjs(ruleForm.retirement_date).format('MM/DD/YYYY')
   ruleForm.spouse.birthday = dayjs(ruleForm.spouse.birthday).format('MM/DD/YYYY')
   ruleForm.spouse.retirement_date = dayjs(ruleForm.spouse.retirement_date).format('MM/DD/YYYY')
+  if (ruleForm.spouse.employment_history && !ruleForm.spouse.employment_history.length) {
+    ruleForm.spouse.employment_history.push({
+      company_name: '',
+      occupation: '',
+      years: '',
+    })
+  }
 }
 
 export default {
@@ -479,6 +486,26 @@ export default {
       return dayjs(new Date()).format('MM/DD/YYYY')
     })
 
+    const changeMarried = () => {
+      if (ruleForm.married && !ruleForm.spouse.length) {
+        ruleForm.spouse = {
+          name: '',
+          email: '',
+          birthday: '',
+          retired: false,
+          retirement_date: '',
+          phone: '',
+          employment_history: [
+            {
+              company_name: '',
+              occupation: '',
+              years: '',
+            },
+          ],
+        }
+      }
+    }
+
     return {
       ruleForm,
       rules,
@@ -501,6 +528,7 @@ export default {
       IconAdd,
       IconDelete,
       getPlaceholder,
+      changeMarried,
     }
   },
 }

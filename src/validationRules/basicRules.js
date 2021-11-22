@@ -28,7 +28,7 @@ const rules = {
       type: 'date',
       required: true,
       message: 'Please pick a date',
-      trigger: 'change',
+      trigger: 'blur',
     },
   ],
   retirement_date: [
@@ -36,7 +36,7 @@ const rules = {
       type: 'date',
       required: true,
       message: 'Please pick a date',
-      trigger: 'change',
+      trigger: 'blur',
     },
   ],
 
@@ -89,7 +89,7 @@ const rules = {
         type: 'date',
         required: true,
         message: 'Please pick a date',
-        trigger: 'change',
+        trigger: 'blur',
       },
     ],
     email: [
@@ -113,7 +113,7 @@ const rules = {
         type: 'date',
         required: true,
         message: 'Please pick a date',
-        trigger: 'change',
+        trigger: 'blur',
       },
     ],
     employment_history: [
