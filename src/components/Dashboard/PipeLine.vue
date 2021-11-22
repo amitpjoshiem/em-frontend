@@ -28,7 +28,10 @@
           <span class="text-gray03">Members</span>
           <div
             class="flex rounded-md p-1"
-            :class="{ 'bg-color-green': pipeLine.data.new_aum, 'bg-input-border': pipeLine.data.new_aum === null }"
+            :class="{
+              'bg-color-green': pipeLine.data.new_members,
+              'bg-input-border': pipeLine.data.new_members === null,
+            }"
           >
             <InlineSvg :src="IconUpArrow" class="mt-[2px]" />
             <span class="text-white ml-px font-semibold"> {{ pipeLine.data.new_members }} </span>
