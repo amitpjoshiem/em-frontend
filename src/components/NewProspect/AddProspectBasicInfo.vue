@@ -196,14 +196,43 @@
 
         <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index">
           <el-form-item :prop="'employment_history.' + index + '.company_name'" label="Company name" class="w-full">
-            <el-input v-model="eh.company_name" placeholder="Enter company name" />
+            <el-input
+              v-model="eh.company_name"
+              placeholder="Enter company name"
+              @change="changeCompanyNameMember(index)"
+            />
           </el-form-item>
-          <el-form-item :prop="'employment_history.' + index + '.occupation'" label="Occupation" class="w-full px-5">
-            <el-input v-model="eh.occupation" placeholder="Company occupation" />
-          </el-form-item>
-          <el-form-item :prop="'employment_history.' + index + '.years'" label="Years" class="w-full">
-            <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
-          </el-form-item>
+
+          <template v-if="ruleForm.employment_history[index].company_name.length">
+            <el-form-item :prop="'employment_history.' + index + '.occupation'" label="Occupation" class="w-full px-5">
+              <el-input v-model="eh.occupation" placeholder="Company occupation" />
+            </el-form-item>
+            <el-form-item
+              v-if="ruleForm.employment_history[index].company_name.length"
+              :prop="'employment_history.' + index + '.years'"
+              label="Years"
+              class="w-full"
+            >
+              <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
+            </el-form-item>
+          </template>
+
+          <template v-else>
+            <el-form-item label="Occupation" class="w-full px-5">
+              <el-input
+                placeholder="Company occupation"
+                :disabled="!ruleForm.employment_history[index].company_name.length"
+              />
+            </el-form-item>
+            <el-form-item label="Years" class="w-full">
+              <el-input
+                placeholder="00"
+                inputmode="numeric"
+                :disabled="!ruleForm.employment_history[index].company_name.length"
+              />
+            </el-form-item>
+          </template>
+
           <div class="w-12 pt-9 ml-3 cursor-pointer">
             <InlineSvg v-if="index === ruleForm.employment_history.length - 1" :src="IconAdd" @click="addEmployment" />
             <InlineSvg v-else :src="IconDelete" @click="removeEmployment(index)" />
@@ -221,18 +250,42 @@
               label="Company name"
               class="w-full"
             >
-              <el-input v-model="eh.company_name" placeholder="Enter company name" />
+              <el-input
+                v-model="eh.company_name"
+                placeholder="Enter company name"
+                @change="changeCompanyNameSpouse(index)"
+              />
             </el-form-item>
-            <el-form-item
-              :prop="'spouse.employment_history.' + index + '.occupation'"
-              label="Occupation"
-              class="w-full px-5"
-            >
-              <el-input v-model="eh.occupation" placeholder="Company occupation" />
-            </el-form-item>
-            <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-full">
-              <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
-            </el-form-item>
+
+            <template v-if="ruleForm.spouse.employment_history[index].company_name.length">
+              <el-form-item
+                :prop="'spouse.employment_history.' + index + '.occupation'"
+                label="Occupation"
+                class="w-full px-5"
+              >
+                <el-input v-model="eh.occupation" placeholder="Company occupation" />
+              </el-form-item>
+              <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-full">
+                <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
+              </el-form-item>
+            </template>
+
+            <template v-else>
+              <el-form-item label="Occupation" class="w-full px-5">
+                <el-input
+                  placeholder="Company occupation"
+                  :disabled="!ruleForm.spouse.employment_history[index].company_name.length"
+                />
+              </el-form-item>
+              <el-form-item label="Years" class="w-full">
+                <el-input
+                  placeholder="00"
+                  inputmode="numeric"
+                  :disabled="!ruleForm.spouse.employment_history[index].company_name.length"
+                />
+              </el-form-item>
+            </template>
+
             <div class="w-12 pt-9 ml-3 cursor-pointer">
               <InlineSvg
                 v-if="index === ruleForm.spouse.employment_history.length - 1"
@@ -462,9 +515,9 @@ export default {
         years: '',
       })
       rules.employment_history[length] = {
-        company_name: employmentHistoryRule.company_name,
-        occupation: employmentHistoryRule.occupation,
-        years: employmentHistoryRule.years,
+        company_name: [employmentHistoryRule.company_name],
+        occupation: [employmentHistoryRule.occupation],
+        years: [employmentHistoryRule.years],
       }
     }
 
@@ -476,9 +529,9 @@ export default {
         years: '',
       })
       rules.spouse.employment_history[length] = {
-        company_name: employmentHistoryRule.company_name,
-        occupation: employmentHistoryRule.occupation,
-        years: employmentHistoryRule.years,
+        company_name: [employmentHistoryRule.company_name],
+        occupation: [employmentHistoryRule.occupation],
+        years: [employmentHistoryRule.years],
       }
     }
 
@@ -506,6 +559,26 @@ export default {
       }
     }
 
+    const changeCompanyNameMember = (index) => {
+      if (ruleForm.employment_history[index].company_name.length) {
+        rules.employment_history[index].occupation[0].required = true
+        rules.employment_history[index].years[0].required = true
+      } else {
+        rules.employment_history[index].occupation[0].required = false
+        rules.employment_history[index].years[0].required = false
+      }
+    }
+
+    const changeCompanyNameSpouse = (index) => {
+      if (ruleForm.spouse.employment_history[index].company_name.length) {
+        rules.spouse.employment_history[index].occupation[0].required = true
+        rules.spouse.employment_history[index].years[0].required = true
+      } else {
+        rules.spouse.employment_history[index].occupation[0].required = false
+        rules.spouse.employment_history[index].years[0].required = false
+      }
+    }
+
     return {
       ruleForm,
       rules,
@@ -529,6 +602,8 @@ export default {
       IconDelete,
       getPlaceholder,
       changeMarried,
+      changeCompanyNameMember,
+      changeCompanyNameSpouse,
     }
   },
 }
