@@ -5,6 +5,9 @@ import router from './router'
 import store from './store'
 import dayjs from 'dayjs'
 
+import * as Sentry from '@sentry/vue'
+import { Integrations } from '@sentry/tracing'
+
 import calendar from 'dayjs/plugin/calendar'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -78,6 +81,23 @@ dayjs.updateLocale('en', {
     lastWeek: 'D MMM YYYY',
     sameElse: 'D MMM YYYY',
   },
+})
+
+Sentry.init({
+  app,
+  dsn: 'https://eaebde97ebfd4d078a6a37d6f26caf33@sentry.uinno.dev//4',
+  // eslint-disable-next-line no-undef
+  environment: process.env.NODE_ENV,
+  integrations: [
+    new Integrations.BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+      tracingOrigins: ['localhost', 'my-site-url.com', /^\//],
+    }),
+  ],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
 })
 
 app.mount('#app')
