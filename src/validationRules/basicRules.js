@@ -15,14 +15,7 @@ const rules = {
       trigger: 'blur',
     },
   ],
-  phone: [
-    {
-      type: 'string',
-      required: true,
-      message: 'The field cannot be empty',
-    },
-    { len: 14, trigger: 'blur', message: 'Incorrect phone number' },
-  ],
+  phone: [{ len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
   birthday: [
     {
       type: 'date',
@@ -39,42 +32,7 @@ const rules = {
       trigger: 'blur',
     },
   ],
-
-  address: [
-    {
-      required: true,
-      message: 'The field cannot be empty',
-      trigger: 'blur',
-    },
-    { trigger: 'blur' },
-  ],
-
-  city: [
-    {
-      required: true,
-      message: 'The field cannot be empty',
-      trigger: 'blur',
-    },
-    { trigger: 'blur' },
-  ],
-
-  state: [
-    {
-      required: true,
-      message: 'The field cannot be empty',
-      trigger: 'blur',
-    },
-    { trigger: 'blur' },
-  ],
-
-  zip: [
-    {
-      required: true,
-      message: 'The field cannot be empty',
-      trigger: 'blur',
-    },
-    { trigger: 'blur' },
-  ],
+  zip: [{ validator: validateNumber, trigger: 'blur' }],
   spouse: {
     name: [
       {
@@ -104,10 +62,7 @@ const rules = {
         trigger: ['blur'],
       },
     ],
-    phone: [
-      { type: 'string', required: true, message: 'Please spouse phone' },
-      { len: 14, trigger: 'blur', message: 'Incorrect phone number' },
-    ],
+    phone: [{ len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
     retirement_date: [
       {
         type: 'date',
@@ -121,7 +76,7 @@ const rules = {
         company_name: [
           {
             type: 'string',
-            required: true,
+            required: false,
             message: 'The field cannot be empty',
             trigger: 'blur',
           },
@@ -129,7 +84,7 @@ const rules = {
         occupation: [
           {
             type: 'string',
-            required: true,
+            required: false,
             message: 'The field cannot be empty',
             trigger: 'blur',
           },
@@ -138,7 +93,7 @@ const rules = {
           {
             validator: validateNumber,
             trigger: 'blur',
-            required: true,
+            required: false,
           },
         ],
       },
@@ -187,7 +142,7 @@ const rules = {
       company_name: [
         {
           type: 'string',
-          required: true,
+          required: false,
           message: 'The field cannot be empty',
           trigger: 'blur',
         },
@@ -195,7 +150,7 @@ const rules = {
       occupation: [
         {
           type: 'string',
-          required: true,
+          required: false,
           message: 'The field cannot be empty',
           trigger: 'blur',
         },
@@ -204,7 +159,7 @@ const rules = {
         {
           validator: validateNumber,
           trigger: 'blur',
-          required: true,
+          required: false,
         },
       ],
     },
@@ -213,31 +168,29 @@ const rules = {
 
 const employmentHistoryRule = {
   company_name: {
-    required: true,
+    required: false,
     message: 'Company name can not be null',
     trigger: 'blur',
   },
   occupation: {
-    required: true,
+    required: false,
     message: 'Occupation can not be null',
     trigger: 'blur',
   },
   years: {
-    required: true,
-    message: 'Years can not be null',
+    validator: validateNumber,
+    required: false,
     trigger: 'blur',
   },
 }
 
 function validateNumber(rule, value, callback) {
-  if (!value) {
-    callback(new Error('The field cannot be empty'))
-  }
   if (isNaN(value)) {
     callback(new Error('Data is not a number'))
-  } else {
-    callback()
   }
+  if (!rule.required) {
+    callback()
+  } else if (!value) callback(new Error('The field cannot be empty'))
 }
 
 export { rules, employmentHistoryRule }
