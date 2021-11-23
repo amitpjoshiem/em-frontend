@@ -32,7 +32,14 @@ const rules = {
       trigger: 'blur',
     },
   ],
-  zip: [{ validator: validateNumber, trigger: 'blur' }],
+
+  zip: [
+    {
+      required: false,
+      validator: validateNumber,
+    },
+    { trigger: 'blur' },
+  ],
   spouse: {
     name: [
       {
@@ -178,8 +185,8 @@ const employmentHistoryRule = {
     trigger: 'blur',
   },
   years: {
-    validator: validateNumber,
     required: false,
+    message: 'Years can not be null',
     trigger: 'blur',
   },
 }
@@ -188,9 +195,12 @@ function validateNumber(rule, value, callback) {
   if (isNaN(value)) {
     callback(new Error('Data is not a number'))
   }
-  if (!rule.required) {
-    callback()
-  } else if (!value) callback(new Error('The field cannot be empty'))
+
+  if (rule.required && !value) {
+    callback(new Error('The field cannot be empty'))
+  }
+
+  callback()
 }
 
 export { rules, employmentHistoryRule }
