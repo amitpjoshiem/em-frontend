@@ -87,7 +87,7 @@ Sentry.init({
   app,
   dsn: 'https://eaebde97ebfd4d078a6a37d6f26caf33@sentry.uinno.dev//4',
   // eslint-disable-next-line no-undef
-  environment: process.env.NODE_ENV,
+  environment: process.env.VUE_APP_ENV,
   integrations: [
     new Integrations.BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),

@@ -2,9 +2,6 @@
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
     <SwdRemoteSearch />
     <div class="flex items-center justify-end">
-      <div>
-        {{ showContent }}
-      </div>
       <div
         v-if="showContent.testNotificationsBtn"
         class="border border-input-border p-1 mr-2 cursor-pointer rounded-md"
