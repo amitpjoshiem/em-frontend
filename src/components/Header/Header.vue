@@ -4,10 +4,17 @@
     <div class="flex items-center justify-end">
       <div
         v-if="showContent.testNotificationsBtn"
-        class="border border-input-border p-2 mr-2 cursor-pointer rounded-md"
+        class="border border-input-border p-1 mr-2 cursor-pointer rounded-md"
         @click="getNotificationTest()"
       >
-        <span>test send notifications event</span>
+        <span class="text-xss">test send notifications</span>
+      </div>
+      <div
+        v-if="showContent.testSentryBtn"
+        class="border border-input-border p-1 mr-2 cursor-pointer rounded-md"
+        @click="throwError()"
+      >
+        <span class="text-xss">test sentry</span>
       </div>
       <div
         class="
@@ -92,6 +99,10 @@ export default {
       }
     }
 
+    const throwError = () => {
+      throw new Error('Sentry Error')
+    }
+
     return {
       IconPlus,
       newProspect,
@@ -104,6 +115,7 @@ export default {
       error,
       fetching,
       showContent,
+      throwError,
     }
   },
 }
