@@ -10,6 +10,7 @@ export function useShowContentEnv() {
   if (process.env.NODE_ENV === 'development') {
     showContent.testNotificationsBtn = true
     showContent.testSentryBtn = true
+    showContent.env = process.env.NODE_ENV
   }
 
   return { showContent }
