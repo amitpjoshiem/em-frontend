@@ -5,8 +5,8 @@ import router from './router'
 import store from './store'
 import dayjs from 'dayjs'
 
-// import * as Sentry from '@sentry/vue'
-// import { Integrations } from '@sentry/tracing'
+import * as Sentry from '@sentry/vue'
+import { Integrations } from '@sentry/tracing'
 
 import calendar from 'dayjs/plugin/calendar'
 import updateLocale from 'dayjs/plugin/updateLocale'
@@ -83,18 +83,18 @@ dayjs.updateLocale('en', {
   },
 })
 
-// Sentry.init({
-//   app,
-//   dsn: 'https://eaebde97ebfd4d078a6a37d6f26caf33@sentry.uinno.dev//4',
-//   // eslint-disable-next-line no-undef
-//   environment: process.env.VUE_APP_ENV,
-//   integrations: [
-//     new Integrations.BrowserTracing({
-//       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-//       tracingOrigins: ['https://dev.app.swdgroup.net/', 'https://stage.app.swdgroup.net/', /^\//],
-//     }),
-//   ],
-//   tracesSampleRate: 1.0,
-// })
+Sentry.init({
+  app,
+  dsn: 'https://eaebde97ebfd4d078a6a37d6f26caf33@sentry.uinno.dev//4',
+  // eslint-disable-next-line no-undef
+  environment: process.env.VUE_APP_ENV,
+  integrations: [
+    new Integrations.BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+      tracingOrigins: ['https://dev.app.swdgroup.net/', 'https://stage.app.swdgroup.net/', /^\//],
+    }),
+  ],
+  tracesSampleRate: 1.0,
+})
 
 app.mount('#app')
