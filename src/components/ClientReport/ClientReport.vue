@@ -8,7 +8,7 @@
       </div>
 
       <div class="w-6/12 text-center">
-        <span class="text-title text-color-link font-semibold">{{ member.name }}</span>
+        <!-- <span class="text-title text-color-link font-semibold">{{ member.name }}</span> -->
         <span class="text-title text-main font-semibold"> Client report</span>
       </div>
 
@@ -26,18 +26,12 @@
       </div>
     </div>
 
-    <div data-pdf-region="client-report">
-      <div class="flex mb-5">
-        <CurrentYear />
-        <SinceInception />
+    <div class="flex w-full" data-pdf-region="client-report">
+      <div class="w-6/12 mr-2">
+        <CurrentYear v-for="item in clientReport.data.current_year" :key="item.id" :contract="item" />
       </div>
-      <div class="flex mb-5">
-        <CurrentYear />
-        <SinceInception />
-      </div>
-      <div class="flex mb-5">
-        <CurrentYear />
-        <SinceInception />
+      <div class="w-6/12 ml-2">
+        <SinceInception v-for="item in clientReport.data.since_inception" :key="item.id" :contract="item" />
       </div>
     </div>
     <TotalInfo />
@@ -45,12 +39,13 @@
   <el-skeleton v-else :rows="rows" animated class="p-5" />
 </template>
 <script>
-import { useClientReport } from '@/api/use-client-report.js'
 import { useRoute } from 'vue-router'
 import { reactive, toRefs } from 'vue'
 import CurrentYear from '@/components/ClientReport/CurrentYear.vue'
 import SinceInception from '@/components/ClientReport/SinceInception.vue'
 import TotalInfo from '@/components/ClientReport/TotalInfo.vue'
+
+import { useClientReports } from '@/api/use-fetch-client-reports.js'
 
 export default {
   name: 'ClientReport',
@@ -61,19 +56,17 @@ export default {
   },
   setup() {
     const route = useRoute()
-    const id = route.params.id
 
     const state = reactive({
       value: '',
     })
 
-    const { isLoading, isError, data: member, spouse } = useClientReport(id)
+    const { isLoading, isError, data: clientReport } = useClientReports(route.params.id)
 
     return {
       isLoading,
       isError,
-      member,
-      spouse,
+      clientReport,
       ...toRefs(state),
     }
   },
