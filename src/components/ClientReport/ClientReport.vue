@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading" class="p-5">
+  <div v-if="!isLoading && !isLoadingProspectDetails" class="p-5">
     <div class="pb-5 flex">
       <div class="w-3/12">
         <router-link :to="{ name: 'list-of-households' }">
@@ -8,7 +8,7 @@
       </div>
 
       <div class="w-6/12 text-center">
-        <!-- <span class="text-title text-color-link font-semibold">{{ member.name }}</span> -->
+        <span class="text-title text-color-link font-semibold">{{ member.name }}</span>
         <span class="text-title text-main font-semibold"> Client report</span>
       </div>
 
@@ -36,7 +36,7 @@
     </div>
     <TotalInfo />
   </div>
-  <el-skeleton v-else :rows="rows" animated class="p-5" />
+  <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
 <script>
 import { useRoute } from 'vue-router'
@@ -46,6 +46,7 @@ import SinceInception from '@/components/ClientReport/SinceInception.vue'
 import TotalInfo from '@/components/ClientReport/TotalInfo.vue'
 
 import { useClientReports } from '@/api/use-fetch-client-reports.js'
+import { useProspectDetails } from '@/api/use-prospect-details.js'
 
 export default {
   name: 'ClientReport',
@@ -62,11 +63,15 @@ export default {
     })
 
     const { isLoading, isError, data: clientReport } = useClientReports(route.params.id)
+    const { isLoading: isLoadingProspectDetails, isError: isErrorProspectDetails, data: member } = useProspectDetails()
 
     return {
       isLoading,
       isError,
       clientReport,
+      isLoadingProspectDetails,
+      isErrorProspectDetails,
+      member,
       ...toRefs(state),
     }
   },
