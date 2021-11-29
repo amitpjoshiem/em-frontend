@@ -26,13 +26,11 @@
       </div>
     </div>
 
-    <div class="flex w-full" data-pdf-region="client-report">
-      <div class="w-6/12 mr-2">
-        <CurrentYear v-for="item in clientReport.data.current_year" :key="item.id" :contract="item" />
-      </div>
-      <div class="w-6/12 ml-2">
+    <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
+      <CurrentYear v-for="item in clientReport.data.current_year" :key="item.id" :contract="item" />
+      <!-- <div class="w-6/12 ml-2">
         <SinceInception v-for="item in clientReport.data.since_inception" :key="item.id" :contract="item" />
-      </div>
+      </div> -->
     </div>
     <TotalInfo />
   </div>
@@ -42,7 +40,7 @@
 import { useRoute } from 'vue-router'
 import { reactive, toRefs } from 'vue'
 import CurrentYear from '@/components/ClientReport/CurrentYear.vue'
-import SinceInception from '@/components/ClientReport/SinceInception.vue'
+// import SinceInception from '@/components/ClientReport/SinceInception.vue'
 import TotalInfo from '@/components/ClientReport/TotalInfo.vue'
 
 import { useClientReports } from '@/api/use-fetch-client-reports.js'
@@ -52,7 +50,7 @@ export default {
   name: 'ClientReport',
   components: {
     CurrentYear,
-    SinceInception,
+    // SinceInception,
     TotalInfo,
   },
   setup() {
