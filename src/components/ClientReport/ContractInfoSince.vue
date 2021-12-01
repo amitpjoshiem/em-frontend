@@ -25,11 +25,11 @@
         <th class="border border-input-border w-1/10 py-1" scope="col">Average Growth</th>
       </tr>
       <tr>
-        <td class="border border-input-border w-2/10 py-1 font-semibold">50</td>
-        <td class="border border-input-border w-2/10 py-1 font-semibold">30</td>
-        <td class="border border-input-border w-2/10 py-1 font-semibold">100</td>
-        <td class="border border-input-border w-2/10 py-1 font-semibold">80</td>
-        <td class="border border-input-border w-2/10 py-1 font-semibold">80</td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">50</td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">30</td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">100</td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">80</td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">80</td>
       </tr>
     </table>
   </div>
