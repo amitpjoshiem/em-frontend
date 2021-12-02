@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading" class="p-5">
+  <div v-if="!isLoading && !isLoadingProspectDetails" class="p-5">
     <div class="pb-5 flex">
       <div class="w-3/12">
         <router-link :to="{ name: 'list-of-households' }">
@@ -26,54 +26,50 @@
       </div>
     </div>
 
-    <div data-pdf-region="client-report">
-      <div class="flex mb-5">
-        <CurrentYear />
-        <SinceInception />
-      </div>
-      <div class="flex mb-5">
-        <CurrentYear />
-        <SinceInception />
-      </div>
-      <div class="flex mb-5">
-        <CurrentYear />
-        <SinceInception />
-      </div>
+    <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
+      <CurrentYear v-for="item in clientReport.data.current_year" :key="item.id" :contract="item" />
+      <!-- <div class="w-6/12 ml-2">
+        <SinceInception v-for="item in clientReport.data.since_inception" :key="item.id" :contract="item" />
+      </div> -->
     </div>
     <TotalInfo />
   </div>
-  <el-skeleton v-else :rows="rows" animated class="p-5" />
+  <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
 <script>
-import { useClientReport } from '@/api/use-client-report.js'
 import { useRoute } from 'vue-router'
 import { reactive, toRefs } from 'vue'
 import CurrentYear from '@/components/ClientReport/CurrentYear.vue'
-import SinceInception from '@/components/ClientReport/SinceInception.vue'
+// import SinceInception from '@/components/ClientReport/SinceInception.vue'
 import TotalInfo from '@/components/ClientReport/TotalInfo.vue'
+
+import { useClientReports } from '@/api/use-fetch-client-reports.js'
+import { useProspectDetails } from '@/api/use-prospect-details.js'
 
 export default {
   name: 'ClientReport',
   components: {
     CurrentYear,
-    SinceInception,
+    // SinceInception,
     TotalInfo,
   },
   setup() {
     const route = useRoute()
-    const id = route.params.id
 
     const state = reactive({
       value: '',
     })
 
-    const { isLoading, isError, data: member, spouse } = useClientReport(id)
+    const { isLoading, isError, data: clientReport } = useClientReports(route.params.id)
+    const { isLoading: isLoadingProspectDetails, isError: isErrorProspectDetails, data: member } = useProspectDetails()
 
     return {
       isLoading,
       isError,
+      clientReport,
+      isLoadingProspectDetails,
+      isErrorProspectDetails,
       member,
-      spouse,
       ...toRefs(state),
     }
   },

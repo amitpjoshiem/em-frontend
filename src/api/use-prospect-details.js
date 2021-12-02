@@ -46,7 +46,7 @@ export const useProspectDetails = () => {
   watch(
     route,
     (newV, oldV) => {
-      if (Boolean(newV?.params?.id) && oldV?.params?.id !== undefined) {
+      if (Boolean(newV?.params?.id) && oldV?.params?.id !== undefined && newV.name !== 'contract-info') {
         updateMemberInfo()
       }
     },
