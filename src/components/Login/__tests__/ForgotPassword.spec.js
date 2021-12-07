@@ -34,18 +34,15 @@ describe('ForgotPassword component', () => {
   })
 
   test('Show error if email is empty', async () => {
-    const form = wrapper.find('form')
-    await form.trigger('submit')
+    await wrapper.find('form').trigger('submit')
+
     const itemError = wrapper.find('.el-form-item__error')
     expect(itemError.text()).toBe('Please input email address')
   })
 
   test('Show error if email is invalid', async () => {
-    const input = wrapper.find('input')
-    const form = wrapper.find('form')
-
-    await input.setValue('my@mail')
-    await form.trigger('submit')
+    await wrapper.find('input').setValue('my@mail')
+    await wrapper.find('form').trigger('submit')
 
     const itemError = wrapper.find('.el-form-item__error')
     expect(itemError.text()).toBe('Please input correct email address')
