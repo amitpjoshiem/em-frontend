@@ -62,6 +62,7 @@ export default {
       rules,
     }
   },
+
   computed: mapState({
     sendFormForgotPass: (state) => state.auth.sendFormForgotPass,
   }),
