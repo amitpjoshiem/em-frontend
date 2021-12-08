@@ -29,7 +29,7 @@
       </tr>
       <tr class="bg-widget-bg">
         <th class="border border-input-border w-1/10 py-1" scope="col">Beginning Balance</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Interested Credited</th>
+        <th class="border border-input-border w-1/10 py-1" scope="col">Interest credited</th>
         <th class="border border-input-border w-1/10 py-1" scope="col">Growth</th>
         <th class="border border-input-border w-1/10 py-1" scope="col">Withdrawals</th>
         <th class="border border-input-border w-1/10 py-1" scope="col">Contract value</th>

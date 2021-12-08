@@ -20,7 +20,7 @@
       <tr class="bg-widget-bg">
         <th class="border border-input-border w-1/10 py-1" scope="col">Total Premiums</th>
         <th class="border border-input-border w-1/10 py-1" scope="col">Bonus Received</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Interested Credited</th>
+        <th class="border border-input-border w-1/10 py-1" scope="col">Interest credited</th>
         <th class="border border-input-border w-1/10 py-1" scope="col">Total Withdrawals</th>
         <th class="border border-input-border w-1/10 py-1" scope="col">Average Growth</th>
       </tr>
