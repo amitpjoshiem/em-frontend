@@ -63,7 +63,7 @@ describe('ForgotPassword component', () => {
     expect(itemError.text()).toBe('Please input correct email address')
   })
 
-  test('Show error if email is valid', async () => {
+  test('Send email is valid', async () => {
     await wrapper.find('input').setValue('my@mail.com')
     await wrapper.find('form').trigger('submit')
     expect(mockForgotFunction).toHaveBeenCalledWith({ email: 'my@mail.com' })
