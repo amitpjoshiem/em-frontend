@@ -53,4 +53,8 @@ describe('TopMembersItem.vue', () => {
   test('content testing member stage', () => {
     expect(wrapper.find('[data-testid="top-members-stage"]').text()).toBe('Closed Won')
   })
+
+  test('content testing member stage', () => {
+    expect(wrapper.find('[data-testid="top-members-currency"]').text()).toBe('$98,106.02')
+  })
 })

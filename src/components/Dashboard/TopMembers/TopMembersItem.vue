@@ -12,7 +12,7 @@
     <div class="text-xs text-main font-medium flex items-center w-3/12" data-testid="top-members-stage">
       {{ member.stage }}
     </div>
-    <div class="text-xs text-main font-medium flex items-center w-2/12">
+    <div class="text-xs text-main font-medium flex items-center w-2/12" data-testid="top-members-currency">
       {{ currencyFormat(member.amount) }}
     </div>
   </div>
