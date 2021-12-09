@@ -9,7 +9,7 @@ describe('SwdCircularProgress.vue', () => {
       global: {
         plugins: [ElementPlus],
       },
-      propsData: {
+      props: {
         percentage: 20,
         showText: false,
       },
