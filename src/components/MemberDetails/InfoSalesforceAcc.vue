@@ -3,7 +3,7 @@
     v-if="!isLoading && data.length"
     class="border border-color-grey box-border rounded-md mt-1 text-xxs p-2 flex justify-between items-center"
   >
-    <span class="text-red-500 font-semibold">Salesforce account not connection</span>
+    <span class="text-red-500 font-semibold">Salesforce account not connected</span>
     <el-button type="primary" plain size="mini">Connect</el-button>
   </div>
 </template>
