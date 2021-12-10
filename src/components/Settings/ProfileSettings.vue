@@ -25,6 +25,10 @@
         <ChangeName />
       </div>
       <div class="flex items-center pt-11">
+        <div class="text-xss text-title-gray w-2/12">Position</div>
+        <div class="text-main text-base mr-3">{{ user.position ? user.position : 'Position not added' }}</div>
+      </div>
+      <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Phone</div>
         <div class="text-main text-base mr-3">+12223334455</div>
       </div>
@@ -55,6 +59,7 @@ import { updateUserAvatar } from '@/api/vueQuery/update-user-avatar'
 import { useMutation, useQueryClient } from 'vue-query'
 
 export default {
+  name: 'ProfileSettings',
   components: {
     ChangePassword,
     ChangeName,
