@@ -4,7 +4,7 @@
       <span class="text-main">Other</span>
       <el-button size="mini" @click="showMore">More</el-button>
     </div>
-    <div class="text-xs">
+    <div class="text-xs pt-3">
       <div class="border-input-border border rounded-md p-2 w-full my-2">
         <p class="text-gray03 mb-[2px]">Risk level:</p>
         <p class="font-semibold">{{ other.value.risk }}</p>

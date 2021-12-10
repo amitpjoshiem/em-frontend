@@ -6,7 +6,7 @@
     >
       <span class="text-main text-smm font-semibold">Asset Allocation</span>
     </router-link>
-    <div v-if="!isLoading" class="flex pt-3">
+    <div v-if="!isLoading" class="flex pt-8">
       <AssetsChart :values="ruleForm" />
       <div class="flex ml-4">
         <div class="flex flex-col justify-center mr-3">

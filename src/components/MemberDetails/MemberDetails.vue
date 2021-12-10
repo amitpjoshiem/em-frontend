@@ -2,7 +2,10 @@
   <div class="p-5">
     <SwdSubHeader :title="getTitle" />
     <div v-if="!isLoadingProspectDetails" class="flex my-5">
-      <WidgetMemberDetails :user="member" class="w-8/24" @updateMemberInfo="updateMemberInfo" />
+      <div class="w-8/24 mr-5">
+        <WidgetMemberDetails :user="member" @updateMemberInfo="updateMemberInfo" />
+        <!-- <InfoSalesforceAcc /> -->
+      </div>
       <AssetsAllocation class="w-10/24" />
       <WidgetOther :other="other" />
     </div>
@@ -21,6 +24,7 @@ import AssetsAllocation from '@/components/MemberDetails/AssetsAllocation.vue'
 import WidgetPastStress from '@/components/MemberDetails/WidgetPastStress.vue'
 import RetirementIncomePlan from '@/components/MemberDetails/RetirementIncomePlan.vue'
 import WidgetOther from '@/components/MemberDetails/WidgetOther.vue'
+// import InfoSalesforceAcc from '@/components/MemberDetails/InfoSalesforceAcc.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
 
@@ -33,6 +37,7 @@ export default {
     WidgetPastStress,
     RetirementIncomePlan,
     WidgetOther,
+    // InfoSalesforceAcc,
   },
 
   setup() {
