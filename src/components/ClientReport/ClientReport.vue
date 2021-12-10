@@ -6,12 +6,10 @@
           <BackButton text="Back" @click="$router.go(-1)" />
         </router-link>
       </div>
-
       <div class="w-6/12 text-center">
         <span class="text-title text-color-link font-semibold">{{ member.name }}</span>
         <span class="text-title text-main font-semibold"> Client report</span>
       </div>
-
       <div class="flex items-center w-4/12">
         <div class="mr-2">
           <el-date-picker
@@ -25,12 +23,8 @@
         <ShareBtn pdf-region="client-report" />
       </div>
     </div>
-
     <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
       <CurrentYear v-for="item in clientReport.data.current_year" :key="item.id" :contract="item" />
-      <!-- <div class="w-6/12 ml-2">
-        <SinceInception v-for="item in clientReport.data.since_inception" :key="item.id" :contract="item" />
-      </div> -->
     </div>
     <TotalInfo />
   </div>
@@ -40,9 +34,7 @@
 import { useRoute } from 'vue-router'
 import { reactive, toRefs } from 'vue'
 import CurrentYear from '@/components/ClientReport/CurrentYear.vue'
-// import SinceInception from '@/components/ClientReport/SinceInception.vue'
 import TotalInfo from '@/components/ClientReport/TotalInfo.vue'
-
 import { useClientReports } from '@/api/use-fetch-client-reports.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 
@@ -50,7 +42,6 @@ export default {
   name: 'ClientReport',
   components: {
     CurrentYear,
-    // SinceInception,
     TotalInfo,
   },
   setup() {
