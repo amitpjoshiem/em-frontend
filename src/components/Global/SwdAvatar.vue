@@ -48,5 +48,3 @@ export default {
   },
 }
 </script>
-
-height: 100%; object-fit: cover; margin: 0 auto; width: 100%;

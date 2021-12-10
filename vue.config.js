@@ -5,7 +5,7 @@ module.exports = {
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: '#042D52',
-
+    background_color: '#fff',
     manifestOptions: {
       display: 'fullscreen',
       orientation: 'landscape',

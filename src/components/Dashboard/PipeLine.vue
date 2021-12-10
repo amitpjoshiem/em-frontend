@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isLoading" class="p-5 bg-widget-bg rounded-lg">
     <div class="flex justify-between items-center">
-      <span class="text-smm font-medium">Pipe Line</span>
+      <router-link :to="{ name: 'pipeline' }" class="text-smm font-medium hover:text-activity">Pipe Line</router-link>
       <SwdSelectFilter destination="pipeLine" />
     </div>
     <div class="pt-6 flex justify-between mb-5">

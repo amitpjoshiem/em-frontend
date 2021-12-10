@@ -82,6 +82,16 @@ const routes = [
         component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
       },
       {
+        path: 'contract-info/:id',
+        name: 'contract-info',
+        component: () => import(/* webpackChunkName: "ContractInfo" */ '../components/ClientReport/ContractInfo.vue'),
+      },
+      {
+        path: 'client-report/:id',
+        name: 'clientreport',
+        component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
+      },
+      {
         path: 'list-of-households',
         name: 'list-of-households',
         component: () => import(/* webpackChunkName: "ListOfHouseholds" */ '../views/ListOfHouseholds.vue'),
