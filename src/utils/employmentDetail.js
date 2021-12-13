@@ -1,3 +1,5 @@
+import { isEmptyObject } from '@/utils/use-empty-object'
+
 function getProperty(property, object) {
   if (!object && typeof object !== 'object') {
     return ''
@@ -15,7 +17,7 @@ export class EmploymentHistoryMerged {
 }
 
 export function employmentDetails(member, spouse) {
-  const lenght = Math.max(member.length, spouse.length)
+  const lenght = Math.max(member.length, isEmptyObject(spouse) ? 0 : spouse.length)
   const employmentArray = []
 
   for (let i = 0; i < lenght; i++) {
