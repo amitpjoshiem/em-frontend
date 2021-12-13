@@ -84,8 +84,4 @@ describe('EmploymentHistoryItem.vue', () => {
     expect(wrapper.find('[data-testid="employment-history-occupation-member"]').text()).toBe('—')
     expect(wrapper.find('[data-testid="employment-history-years-member"]').text()).toBe('—')
   })
-
-  // test('content testing member stage', () => {
-  //   expect(wrapper.find('[data-testid="top-members-stage"]').text()).toBe('Closed Won')
-  // })
 })
