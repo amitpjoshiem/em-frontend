@@ -8,7 +8,7 @@
         <div class="w-4/12 text-sm text-gray03 font-semibold">SPOUSE</div>
       </div>
       <div v-for="item in employment" :key="item.id">
-        <EmploymentHistoryItem :elem="item" />
+        <EmploymentHistoryItem :employment-item="item" />
       </div>
     </div>
     <el-skeleton v-else :rows="5" animated class="p-5" />
