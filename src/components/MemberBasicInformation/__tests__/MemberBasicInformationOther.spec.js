@@ -11,71 +11,54 @@ describe('MemberBasicInformationOther.vue', () => {
     wrapper = mount(MemberBasicInformationOther, {
       props: {
         other: {
-          companyName: ['Uinno', 'Engineersmind'],
-          occupation: ['FE developer', 'BE developer'],
-          years: ['11', '22'],
+          questions: 'March Hare, who had followed him into the roof of the March Hare meekly replied.',
+          retirement: 'And how do you call him Tortoise, if he thought it had lost something.',
+          retirementMoney: 'Alice began telling them her adventures from the Queen said to Alice;',
+          risk: 'aggressive',
+          id: 'v6qgy4dowaz0b75l',
         },
       },
     })
   })
 
   test('renders MemberBasicInformationOther prospect', () => {
-    expect(wrapper.props().employmentItem).toEqual({
-      companyName: ['Uinno', 'Engineersmind'],
-      occupation: ['FE developer', 'BE developer'],
-      years: ['11', '22'],
+    expect(wrapper.props().other).toEqual({
+      questions: 'March Hare, who had followed him into the roof of the March Hare meekly replied.',
+      retirement: 'And how do you call him Tortoise, if he thought it had lost something.',
+      retirementMoney: 'Alice began telling them her adventures from the Queen said to Alice;',
+      risk: 'aggressive',
+      id: 'v6qgy4dowaz0b75l',
     })
   })
 
-  // test('content testing member company name', () => {
-  //   expect(wrapper.find('[data-testid="employment-history-companyname-member"]').text()).toBe('Uinno')
-  // })
+  test('content testing member basic information other risk', () => {
+    expect(wrapper.find('[data-testid="member-basic-information-other-risk"]').text()).toBe('aggressive')
+  })
 
-  // test('content testing spouse company name', () => {
-  //   expect(wrapper.find('[data-testid="employment-history-companyname-spouse"]').text()).toBe('Engineersmind')
-  // })
+  test('content testing member basic information other questions', () => {
+    expect(wrapper.find('[data-testid="member-basic-information-other-questions"]').text()).toBe(
+      'March Hare, who had followed him into the roof of the March Hare meekly replied.'
+    )
+  })
 
-  // test('content testing member occupation', () => {
-  //   expect(wrapper.find('[data-testid="employment-history-occupation-member"]').text()).toBe('FE developer')
-  // })
+  test('content testing member basic information other retirement', () => {
+    expect(wrapper.find('[data-testid="member-basic-information-other-retirement"]').text()).toBe(
+      'And how do you call him Tortoise, if he thought it had lost something.'
+    )
+  })
 
-  // test('content testing member occupation', () => {
-  //   expect(wrapper.find('[data-testid="employment-history-occupation-spouse"]').text()).toBe('BE developer')
-  // })
+  test('content testing member basic information other retirement money', () => {
+    expect(wrapper.find('[data-testid="member-basic-information-other-retirementMoney"]').text()).toBe(
+      'Alice began telling them her adventures from the Queen said to Alice;'
+    )
+  })
 
-  // test('content testing member years', () => {
-  //   expect(wrapper.find('[data-testid="employment-history-years-member"]').text()).toBe('11')
-  // })
-
-  // test('content testing spouse years', () => {
-  //   expect(wrapper.find('[data-testid="employment-history-years-spouse"]').text()).toBe('22')
-  // })
-
-  // test('content testing spouse empty employment-history ', async () => {
-  //   await wrapper.setProps({
-  //     employmentItem: {
-  //       companyName: ['Uinno', ''],
-  //       occupation: ['FE developer', ''],
-  //       years: ['11', ''],
-  //     },
-  //   })
-
-  //   expect(wrapper.find('[data-testid="employment-history-companyname-spouse"]').text()).toBe('—')
-  //   expect(wrapper.find('[data-testid="employment-history-occupation-spouse"]').text()).toBe('—')
-  //   expect(wrapper.find('[data-testid="employment-history-years-spouse"]').text()).toBe('—')
-  // })
-
-  // test('content testing member empty employment-history ', async () => {
-  //   await wrapper.setProps({
-  //     employmentItem: {
-  //       companyName: ['', 'Uinno'],
-  //       occupation: ['', 'FE developer'],
-  //       years: ['', '11'],
-  //     },
-  //   })
-
-  //   expect(wrapper.find('[data-testid="employment-history-companyname-member"]').text()).toBe('—')
-  //   expect(wrapper.find('[data-testid="employment-history-occupation-member"]').text()).toBe('—')
-  //   expect(wrapper.find('[data-testid="employment-history-years-member"]').text()).toBe('—')
-  // })
+  test('content testing member basic information no other', async () => {
+    await wrapper.setProps({
+      other: {
+        id: '',
+      },
+    })
+    expect(wrapper.find('[data-testid="member-basic-information-no-other"]').text()).toBe('No other information')
+  })
 })
