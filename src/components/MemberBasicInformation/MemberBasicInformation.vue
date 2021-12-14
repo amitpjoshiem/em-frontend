@@ -41,11 +41,11 @@ import MemberHousingInformation from '@/components/MemberBasicInformation/Member
 import MemberBasicInformationOther from '@/components/MemberBasicInformation/MemberBasicInformationOther.vue'
 import SwdCropper from '@/components/Global/SwdCropper.vue'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
+import IconEditAvatar from '@/assets/svg/icon-edit-avatar.svg'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useRoute } from 'vue-router'
 import { computed, reactive, ref } from 'vue'
 import { tokenStorage } from '@/api/api-client/TokenStorage'
-import IconEditAvatar from '@/assets/svg/icon-edit-avatar.svg'
 import { useMutation, useQueryClient } from 'vue-query'
 import { updateMembers } from '@/api/vueQuery/update-members'
 
