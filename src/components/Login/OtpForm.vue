@@ -6,16 +6,12 @@
           <InlineSvg :src="IconLoginForm" />
         </div>
       </div>
-
       <h1 class="text-center text-main font-medium text-2xl">Login</h1>
-
       <div>
-        <h1 v-if="otpType === 'email'" class="text-center text-gray03 pt-2.5 text-sm">
+        <h1 v-if="otpTypeEmail" class="text-center text-gray03 pt-2.5 text-sm">
           We just sent you a temporary login code. Please check your inbox.
         </h1>
-        <h1 v-if="otpType === 'google'" class="text-center text-gray03 pt-2.5 text-sm">
-          Please check your Google Authenticator.
-        </h1>
+        <h1 v-else class="text-center text-gray03 pt-2.5 text-sm">Please check your Google Authenticator.</h1>
         <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
           <el-form-item label="OTP" prop="code" class="py-3">
             <el-input v-model="ruleForm.code" type="number" placeholder="Enter otp code" />
@@ -33,7 +29,7 @@
         </el-form>
       </div>
     </div>
-    <div v-if="otpType === 'email'" class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
+    <div v-if="otpTypeEmail" class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
       <span class="text-xss text-gray03 cursor-pointer" @click="resendOtp">Resend OTP code</span>
     </div>
   </div>
@@ -58,8 +54,8 @@ export default {
     })
     const form = ref(null)
 
-    const otpType = computed(() => {
-      return store.state.auth.otpType
+    const otpTypeEmail = computed(() => {
+      return store.state.auth.otpType === 'email'
     })
 
     const submit = async () => {
@@ -76,7 +72,7 @@ export default {
       useAlert({
         title: 'Success',
         type: 'success',
-        message: 'OTP code sent to email',
+        message: 'We just resent you a temporary login code. Please check your inbox.',
       })
     }
 
@@ -85,7 +81,7 @@ export default {
       error,
       fetching,
       IconLoginForm,
-      otpType,
+      otpTypeEmail,
       ruleForm,
       form,
       submit,
