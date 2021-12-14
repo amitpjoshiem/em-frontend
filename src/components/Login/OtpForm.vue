@@ -33,6 +33,9 @@
         </el-form>
       </div>
     </div>
+    <div v-if="isShowResend" class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
+      <span class="text-xss text-gray03 cursor-pointer" @click="resendOtp">Resend OTP code</span>
+    </div>
   </div>
 </template>
 
@@ -42,6 +45,8 @@ import { useStore } from 'vuex'
 import { computed, reactive, ref } from 'vue'
 import { useOtp } from '@/api/authentication/use-otp'
 import { rules } from '@/validationRules/login.js'
+import { useAlert } from '@/utils/use-alert'
+import { tokenStorage } from '@/api/api-client/TokenStorage'
 
 export default {
   name: 'OtpForm',
@@ -68,6 +73,18 @@ export default {
       })
     }
 
+    const resendOtp = () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'OTP code sent to email',
+      })
+    }
+
+    const isShowResend = computed(() => {
+      return tokenStorage.getByKey('otp-type') === 'email'
+    })
+
     return {
       response,
       error,
@@ -78,6 +95,8 @@ export default {
       form,
       submit,
       rules,
+      resendOtp,
+      isShowResend,
     }
   },
 }
