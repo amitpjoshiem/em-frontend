@@ -14,7 +14,7 @@ class UserFullInfo {
   }
 
   get createdAtFormatted() {
-    return dayjs(this.createdAt).format('MM/DD/YYYY')
+    return dayjs(this.created_at).format('MM/DD/YYYY')
   }
 }
 
