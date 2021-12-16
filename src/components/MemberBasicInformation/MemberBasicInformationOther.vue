@@ -50,13 +50,13 @@
   </div>
 </template>
 <script>
-// import { MemberDetailsOther } from '@/dto/Member/MemberDetailsOther'
+import { MemberDetailsOther } from '@/dto/Member/MemberDetailsOther'
 
 export default {
   name: 'MemberBasicInformationOther',
   props: {
     other: {
-      type: Object,
+      type: MemberDetailsOther,
       require: true,
       default: () => {},
     },

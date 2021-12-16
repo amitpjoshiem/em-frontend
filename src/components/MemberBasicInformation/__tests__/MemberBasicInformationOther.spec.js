@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { mount } from '@vue/test-utils'
 import MemberBasicInformationOther from '@/components/MemberBasicInformation/MemberBasicInformationOther.vue'
+import { MemberDetailsOther } from '@/dto/Member/MemberDetailsOther'
 
 let wrapper = null
 
@@ -10,13 +11,14 @@ describe('MemberBasicInformationOther.vue', () => {
   beforeEach(() => {
     wrapper = mount(MemberBasicInformationOther, {
       props: {
-        other: {
+        other: new MemberDetailsOther({
           questions: 'March Hare, who had followed him into the roof of the March Hare meekly replied.',
           retirement: 'And how do you call him Tortoise, if he thought it had lost something.',
-          retirementMoney: 'Alice began telling them her adventures from the Queen said to Alice;',
+          retirement_money: 'Alice began telling them her adventures from the Queen said to Alice;',
           risk: 'aggressive',
           id: 'v6qgy4dowaz0b75l',
-        },
+          realId: undefined,
+        }),
       },
     })
   })
@@ -28,6 +30,7 @@ describe('MemberBasicInformationOther.vue', () => {
       retirementMoney: 'Alice began telling them her adventures from the Queen said to Alice;',
       risk: 'aggressive',
       id: 'v6qgy4dowaz0b75l',
+      realId: undefined,
     })
   })
 

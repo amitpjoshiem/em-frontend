@@ -25,9 +25,9 @@
       </div>
     </div>
 
-    <MemberBasicInformationGeneral
+    <MemberBasicInformationGeneral :prospect="prospect" :spouse="spouse.value" />
+    <MemberBasicInformationEmployment
       :prospect="prospect"
-      :spouse="spouse.value"
       :employment-prospect="employmentProspect.value"
       :employment-spouse="employmentSpouse.value"
     />
@@ -38,6 +38,7 @@
 <script>
 import MemberBasicInformationGeneral from '@/components/MemberBasicInformation/MemberBasicInformationGeneral.vue'
 import MemberHousingInformation from '@/components/MemberBasicInformation/MemberHousingInformation.vue'
+import MemberBasicInformationEmployment from '@/components/MemberBasicInformation/MemberBasicInformationEmployment.vue'
 import MemberBasicInformationOther from '@/components/MemberBasicInformation/MemberBasicInformationOther.vue'
 import SwdCropper from '@/components/Global/SwdCropper.vue'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
@@ -54,6 +55,7 @@ export default {
   components: {
     MemberBasicInformationGeneral,
     MemberHousingInformation,
+    MemberBasicInformationEmployment,
     MemberBasicInformationOther,
     SwdCropper,
     SwdUpload,
