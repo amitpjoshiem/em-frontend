@@ -77,7 +77,7 @@ export default {
           useAlert({
             title: 'Success',
             type: 'success',
-            message: 'We just resent you a temporary login code. Please check your inbox.',
+            message: 'We just have sent you new login code. Please check your inbox.',
           })
         }
       })
