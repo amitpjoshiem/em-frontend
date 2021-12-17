@@ -68,7 +68,7 @@ export default {
     }
 
     const confirmDelete = async () => {
-      const res = deleteChild(props.user.id)
+      const res = await deleteChild(props.user.id)
       if (!('error' in res)) {
         queryClient.invalidateQueries(['opportunityList', memberId])
       }
