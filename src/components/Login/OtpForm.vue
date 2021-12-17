@@ -30,7 +30,7 @@
       </div>
     </div>
     <div v-if="otpTypeEmail" class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
-      <span class="text-xss text-gray03 cursor-pointer" @click="resendOtp">Resend OTP code</span>
+      <span class="text-xss text-gray03 cursor-pointer" @click="getResendOtp">Resend OTP code</span>
     </div>
   </div>
 </template>
@@ -42,12 +42,14 @@ import { computed, reactive, ref } from 'vue'
 import { useOtp } from '@/api/authentication/use-otp'
 import { rules } from '@/validationRules/login.js'
 import { useAlert } from '@/utils/use-alert'
+import { useResendOtp } from '@/api/use-fetch-resend-otp.js'
 
 export default {
   name: 'OtpForm',
   setup() {
     const store = useStore()
     const { response, error, fetching, otpAuth } = useOtp()
+    const { isLoading, isError, data, refetch: refetchOtpCode } = useResendOtp({ enabled: false })
 
     const ruleForm = reactive({
       code: undefined,
@@ -68,11 +70,16 @@ export default {
       })
     }
 
-    const resendOtp = () => {
-      useAlert({
-        title: 'Success',
-        type: 'success',
-        message: 'We just resent you a temporary login code. Please check your inbox.',
+    const getResendOtp = async () => {
+      refetchOtpCode.value().then((res) => {
+        const data = res.data
+        if (data.succes) {
+          useAlert({
+            title: 'Success',
+            type: 'success',
+            message: 'We just resent you a temporary login code. Please check your inbox.',
+          })
+        }
       })
     }
 
@@ -86,7 +93,11 @@ export default {
       form,
       submit,
       rules,
-      resendOtp,
+      getResendOtp,
+      isLoading,
+      isError,
+      data,
+      refetchOtpCode,
     }
   },
 }
