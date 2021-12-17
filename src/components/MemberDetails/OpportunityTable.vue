@@ -25,11 +25,12 @@
         </router-link>
       </div>
       <div class="flex h-12 bg-widget-bg">
-        <div class="w-4/12 title">Opportunity name</div>
-        <div class="w-2/12 title">Account name</div>
-        <div class="w-2/12 title">Amount</div>
-        <div class="w-2/12 title">Stage</div>
-        <div class="w-2/12 title">Close date</div>
+        <div class="w-8/24 title">Opportunity name</div>
+        <div class="w-4/24 title">Account name</div>
+        <div class="w-4/24 title">Amount</div>
+        <div class="w-4/24 title">Stage</div>
+        <div class="w-3/24 title">Close date</div>
+        <div class="w-1/24 title" />
       </div>
 
       <div v-if="!isLoading">
