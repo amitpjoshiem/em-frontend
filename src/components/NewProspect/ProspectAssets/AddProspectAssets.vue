@@ -431,10 +431,12 @@ import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member'
 import ItemFormAssetsTwo from '@/components/NewProspect/ProspectAssets/ItemFormAssetsTwo.vue'
 import ItemFormAssetsFour from '@/components/NewProspect/ProspectAssets/ItemFormAssetsFour.vue'
+import { setValueByPath } from '@/utils/setValueByPath'
+import { getByPath } from '../../../utils/getByPath'
 
 function setInitValue(ruleForm, memberAssets) {
   if (memberAssets?.data) {
-    Object.assign(ruleForm, memberAssets.data)
+    Object.assign(ruleForm, JSON.parse(JSON.stringify(memberAssets.data)))
   }
 }
 
@@ -634,16 +636,32 @@ export default {
     }
 
     const validateMemberAssetFieldAndUpdate = (field) => {
-      validateMemberAssetField(field, updateOrCreateMemberAssets)
+      validateMemberAssetField(field, updateSingleField.bind(null, field))
     }
 
-    const updateOrCreateMemberAssets = async () => {
+    const updateSingleField = async (field) => {
+      const patchObject = {}
+
+      const newValue = getByPath(ruleForm, field)
+      const oldValue = getByPath(memberAssets.value.data, field)
+
+      if (Number(newValue) === Number(oldValue)) {
+        return
+      }
+
+      setValueByPath(patchObject, field, newValue)
+      setValueByPath(patchObject, 'member_id', memberId)
+
+      updateOrCreateMemberAssets(patchObject)
+    }
+
+    const updateOrCreateMemberAssets = async (patchObject = ruleForm) => {
       let res
 
       if (isUpdateMember.value) {
-        res = await updateMemberAssets(ruleForm)
+        res = await updateMemberAssets(patchObject)
       } else {
-        res = await create(ruleForm)
+        res = await create(patchObject)
       }
       queryClient.invalidateQueries(['MemberAssets', memberId])
 
