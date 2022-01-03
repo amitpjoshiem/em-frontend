@@ -11,6 +11,7 @@
         :to="{ name: 'assets-information', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
+          'disabled-link': !memberId,
           'text-title-gray': step < 2,
           'font-medium text-main': step > 1,
         }"
@@ -21,6 +22,7 @@
         :to="{ name: 'assetsacount', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
+          'disabled-link': !memberId,
           'text-title-gray': step < 3,
           'font-medium text-main': step > 2,
         }"
@@ -31,6 +33,7 @@
         :to="{ name: 'assetsconsolidations', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
+          'disabled-link': !memberId,
           'text-title-gray': step < 4,
           'font-medium text-main': step > 3,
         }"
@@ -41,6 +44,7 @@
         :to="{ name: 'stresstest', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
+          'disabled-link': !memberId,
           'text-title-gray': step < 5,
           'font-medium text-main': step > 4,
         }"
@@ -118,5 +122,9 @@ export default {
   background: white;
   border: 2px solid #d4ddeb;
   border-radius: 50%;
+}
+
+.disabled-link {
+  pointer-events: none;
 }
 </style>
