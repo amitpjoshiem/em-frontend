@@ -5,7 +5,7 @@
       <el-input
         :disabled="disabled"
         :model-value="member"
-        type="number"
+        inputmode="numeric"
         @input="handleChangeMember"
         @blur="blurHandler(propMember)"
       />
@@ -14,7 +14,7 @@
       <el-input
         :disabled="disabled"
         :model-value="spouse"
-        type="number"
+        inputmode="numeric"
         @input="handleChangeSpouse"
         @blur="blurHandler(propSpouse)"
       />
@@ -23,7 +23,7 @@
       <el-input
         :disabled="disabled"
         :model-value="onq"
-        type="number"
+        inputmode="numeric"
         @input="handleChangeOnq"
         @blur="blurHandler(propOnq)"
       />
@@ -32,7 +32,7 @@
       <el-input
         :disabled="disabled"
         :model-value="balance"
-        type="number"
+        inputmode="numeric"
         @input="handleChangeBalance"
         @blur="blurHandler(propBalance)"
       />
