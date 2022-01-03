@@ -31,6 +31,7 @@ const useLogin = () => {
     await fetchData({ body })
     if (error.value !== null) {
       useAlert({ type: 'error', title: 'Error', message: error.value })
+      error.value = null
       return
     }
     storeAccessTokenAndRedirectToDashboard()
