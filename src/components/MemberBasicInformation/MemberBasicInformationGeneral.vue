@@ -92,7 +92,7 @@
 
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold"> Retiretment Date </span>
+        <span class="text-xss text-gray03 font-semibold"> Retirement Date </span>
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main">

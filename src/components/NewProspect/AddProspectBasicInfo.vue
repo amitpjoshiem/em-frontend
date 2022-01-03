@@ -42,7 +42,7 @@
           <el-form-item label="Phone" prop="phone" class="w-5/12 px-5">
             <el-input v-model="ruleForm.phone" v-maska="'(###) ###-####'" placeholder="Enter prospect’s phone number" />
           </el-form-item>
-          <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retiretment date" class="w-2/12">
+          <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retirement date" class="w-2/12">
             <el-date-picker
               v-model="ruleForm.retirement_date"
               type="date"
@@ -114,7 +114,7 @@
           <el-form-item
             v-if="ruleForm.spouse.retired"
             prop="spouse.retirement_date"
-            label="Retiretment date"
+            label="Retirement date"
             class="w-2/12"
           >
             <el-date-picker
