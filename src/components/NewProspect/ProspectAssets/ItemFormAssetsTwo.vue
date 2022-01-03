@@ -2,10 +2,10 @@
   <div class="flex items-center mb-5">
     <div class="w-2/12 text-main font-semibold text-xss">{{ title }}</div>
     <el-form-item class="w-5/12 pr-2.5 mb-0" :prop="propMember">
-      <el-input type="number" :model-value="member" @input="handleChangeMember" @blur="blurHandler(propMember)" />
+      <el-input inputmode="numeric" :model-value="member" @input="handleChangeMember" @blur="blurHandler(propMember)" />
     </el-form-item>
     <el-form-item v-if="isMarried" class="w-5/12 pl-2.5 mb-0" :prop="propSpouse">
-      <el-input type="number" :model-value="spouse" @input="handleChangeSpouse" @blur="blurHandler(propSpouse)" />
+      <el-input inputmode="numeric" :model-value="spouse" @input="handleChangeSpouse" @blur="blurHandler(propSpouse)" />
     </el-form-item>
   </div>
 </template>
