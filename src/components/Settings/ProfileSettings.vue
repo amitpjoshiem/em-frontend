@@ -57,6 +57,7 @@ import { useUserProfile } from '@/api/use-user-profile.js'
 import { computed, reactive, ref } from 'vue'
 import { updateUserAvatar } from '@/api/vueQuery/update-user-avatar'
 import { useMutation, useQueryClient } from 'vue-query'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'ProfileSettings',
@@ -85,6 +86,11 @@ export default {
       await updateUser({ form, id: user.value.id })
       state.isShowCropper = false
       queryClient.invalidateQueries(['users'])
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Avatar image changed successfully',
+      })
     }
 
     const beforeAvatarUpload = () => {
@@ -98,6 +104,15 @@ export default {
     })
 
     const handleChange = (file) => {
+      const isLt5M = file.size / 1024 / 1024 < 5
+      if (!isLt5M) {
+        useAlert({
+          type: 'error',
+          title: 'Error',
+          message: 'Avatar image size can not exceed 5MB!',
+        })
+        return
+      }
       state.file = file
       state.isShowCropper = true
     }

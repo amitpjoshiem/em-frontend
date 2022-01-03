@@ -5,12 +5,21 @@
     :before-close="handleClose"
     width="40%"
     custom-class="dialog-style"
+    @closed="closeCropper"
   >
     <vue-cropper ref="cropper" :src="state.imgSrc" :container-style="{ 'max-width': '450px', 'max-height': '700px' }" />
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="cropImage">Confirm</el-button>
+        <el-button
+          type="primary"
+          :disabled="disabledConfirmBtn"
+          :loading="disabledConfirmBtn"
+          style="max-height: 40px; top: 1px"
+          @click="cropImage"
+        >
+          Confirm
+        </el-button>
       </span>
     </template>
   </el-dialog>
@@ -44,6 +53,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const dialogVisible = ref(false)
     const cropper = ref(null)
+    const disabledConfirmBtn = ref(false)
     const state = reactive({
       imgSrc: '',
     })
@@ -78,8 +88,13 @@ export default defineComponent({
 
     const cropImage = () => {
       cropper.value.getCroppedCanvas().toBlob((blob) => {
+        disabledConfirmBtn.value = true
         emit('change', new File([blob], 'avatar.png'))
       })
+    }
+
+    const closeCropper = () => {
+      disabledConfirmBtn.value = false
     }
 
     return {
@@ -89,6 +104,8 @@ export default defineComponent({
       setImage,
       cropImage,
       cropper,
+      disabledConfirmBtn,
+      closeCropper,
     }
   },
 })

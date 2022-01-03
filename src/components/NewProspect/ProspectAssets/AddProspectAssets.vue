@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!fetchingMember && !fetchingAssets">
+  <div v-if="!fetchingMember && !isMemberAssetsLoading">
     <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules">
       <!-- Current income -->
       <div class="border-b px-16 pb-7">
@@ -25,6 +25,7 @@
             prop-spouse="income.spouse.salary"
             title="Salary"
             :is-married="isMarried"
+            @blur="validateMemberAssetFieldAndUpdate"
           />
 
           <!-- Social Security -->
@@ -35,6 +36,7 @@
             prop-spouse="income.spouse.social_security"
             title="Social Security"
             :is-married="isMarried"
+            @blur="validateMemberAssetFieldAndUpdate"
           />
 
           <!-- Pension -->
@@ -45,6 +47,7 @@
             prop-spouse="income.spouse.pension"
             title="Pension"
             :is-married="isMarried"
+            @blur="validateMemberAssetFieldAndUpdate"
           />
 
           <!-- Rental income -->
@@ -55,6 +58,7 @@
             prop-spouse="income.spouse.rental_income"
             title="Rental income"
             :is-married="isMarried"
+            @blur="validateMemberAssetFieldAndUpdate"
           />
 
           <!-- RMD’s -->
@@ -65,6 +69,7 @@
             prop-spouse="income.spouse.rmds"
             title="RMD’s"
             :is-married="isMarried"
+            @blur="validateMemberAssetFieldAndUpdate"
           />
 
           <!-- Interest/Dividents -->
@@ -75,6 +80,7 @@
             prop-spouse="income.spouse.interest_dividends"
             title="Interest/Dividents"
             :is-married="isMarried"
+            @blur="validateMemberAssetFieldAndUpdate"
           />
 
           <!-- Other -->
@@ -85,6 +91,7 @@
             prop-spouse="income.spouse.other"
             title="Other"
             :is-married="isMarried"
+            @blur="validateMemberAssetFieldAndUpdate"
           />
         </div>
       </div>
@@ -111,6 +118,7 @@
           prop-balance="liquid_assets.balance.cash_checking_savings_mm"
           title="Cash/Checking/ Savings/MM"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- CD’s -->
@@ -125,6 +133,7 @@
           prop-balance="liquid_assets.balance.cds"
           title="CD’s"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- 401k/IRA (if over 59) -->
@@ -139,6 +148,7 @@
           prop-balance="liquid_assets.balance.first_401k_ira_59"
           title="401k/IRA (if over 59)"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- 401k/IRA -->
@@ -153,6 +163,7 @@
           prop-balance="liquid_assets.balance.first_401k_ira"
           title="401k/IRA"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- 401k/IRA -->
@@ -167,6 +178,7 @@
           prop-balance="liquid_assets.balance.second_401k_ira"
           title="401k/IRA"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- Stocks/Bonds/MF -->
@@ -181,6 +193,7 @@
           prop-balance="liquid_assets.balance.stocks_bonds_mf"
           title="Stocks/Bonds/MF"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- Stocks/Bonds/MF -->
@@ -195,6 +208,7 @@
           prop-balance="liquid_assets.balance.cash_value_life_insurance"
           title="Cash value life insurance"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- FA/VA not suject to penalty -->
@@ -209,6 +223,7 @@
           prop-balance="liquid_assets.balance.fa_va_not_subject_to_penalty"
           title="FA/VA not suject to penalty"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- Gift/Inheritance -->
@@ -223,6 +238,7 @@
           prop-balance="liquid_assets.balance.gift_inheritance"
           title="Gift/Inheritance"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- Lump sum pension -->
@@ -237,6 +253,7 @@
           prop-balance="liquid_assets.balance.lump_sum_pension"
           title="Lump sum pension"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- Other liquid assets -->
@@ -251,6 +268,7 @@
           prop-balance="liquid_assets.balance.other_liquid_assets"
           title="Other liquid assets"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- Total -->
@@ -259,12 +277,14 @@
           v-model:spouse="ruleForm.liquid_assets.spouse.total"
           v-model:onq="ruleForm.liquid_assets.o_nq.total"
           v-model:balance="ruleForm.liquid_assets.balance.total"
+          disabled
           prop-member="liquid_assets.member.total"
           prop-spouse="liquid_assets.spouse.total"
           prop-onq="liquid_assets.o_nq.total"
           prop-balance="liquid_assets.balance.total"
           title="Total"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
       </div>
 
@@ -290,6 +310,7 @@
           prop-balance="non_liquid_assets.balance.value_of_home"
           title="Value of home"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- 401k/IRA (if over 59) -->
@@ -304,6 +325,7 @@
           prop-balance="non_liquid_assets.balance.first_401k_ira_59"
           title="401k/IRA (if over 59)"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- 401k/IRA -->
@@ -318,6 +340,7 @@
           prop-balance="non_liquid_assets.balance.first_401k_ira"
           title="401k/IRA"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- 401k/IRA -->
@@ -332,6 +355,7 @@
           prop-balance="non_liquid_assets.balance.second_401k_ira"
           title="401k/IRA"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- FA/VA suject to penalty -->
@@ -346,6 +370,7 @@
           prop-balance="non_liquid_assets.balance.fa_va_subject_to_penalty"
           title="FA/VA suject to penalty"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- Other -->
@@ -360,6 +385,7 @@
           prop-balance="non_liquid_assets.balance.other"
           title="Other"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
 
         <!-- Total -->
@@ -368,12 +394,14 @@
           v-model:spouse="ruleForm.non_liquid_assets.spouse.total"
           v-model:onq="ruleForm.non_liquid_assets.o_nq.total"
           v-model:balance="ruleForm.non_liquid_assets.balance.total"
+          disabled
           prop-member="non_liquid_assets.member.total"
           prop-spouse="non_liquid_assets.spouse.total"
           prop-onq="non_liquid_assets.o_nq.total"
           prop-balance="non_liquid_assets.balance.total"
           title="Total"
           :is-married="isMarried"
+          @blur="validateMemberAssetFieldAndUpdate"
         />
       </div>
       <div class="flex justify-end my-10">
@@ -388,11 +416,12 @@
 </template>
 
 <script>
+import { watchEffect, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { computed, reactive, onMounted, watch } from 'vue'
 import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
-import { useMutation } from 'vue-query'
+import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/assetsRules.js'
 import { scrollTop } from '@/utils/scrollTop'
@@ -402,10 +431,12 @@ import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member'
 import ItemFormAssetsTwo from '@/components/NewProspect/ProspectAssets/ItemFormAssetsTwo.vue'
 import ItemFormAssetsFour from '@/components/NewProspect/ProspectAssets/ItemFormAssetsFour.vue'
+import { setValueByPath } from '@/utils/setValueByPath'
+import { getByPath } from '../../../utils/getByPath'
 
-function setInitValue(ruleForm, member) {
-  if (member?.value?.data) {
-    Object.assign(ruleForm, member.value.data)
+function setInitValue(ruleForm, memberAssets) {
+  if (memberAssets?.data) {
+    Object.assign(ruleForm, JSON.parse(JSON.stringify(memberAssets.data)))
   }
 }
 
@@ -416,16 +447,17 @@ export default {
     ItemFormAssetsFour,
   },
   setup() {
+    const queryClient = useQueryClient()
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
-
+    const form = ref()
     const step = computed(() => store.state.newProspect.step)
     const isUpdateMember = computed(() => !!route.params.id)
 
     let memberId
 
-    const { response: memberAssets, fetching: fetchingAssets, getMemberAssets } = useFetchMemberAssets(route.params.id)
+    const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
 
     const { mutateAsync: create, isLoading, isError, isFetching, data, error } = useMutation(createAssetsIncome)
 
@@ -566,8 +598,12 @@ export default {
         memberId = route.params.id
         ruleForm.member_id = memberId
         await getMember()
-        await getMemberAssets()
-        setInitValue(ruleForm, memberAssets)
+      }
+    })
+
+    watchEffect(() => {
+      if (isMemberAssetsLoading.value === false) {
+        setInitValue(ruleForm, memberAssets.value)
       }
     })
 
@@ -591,13 +627,50 @@ export default {
       return false
     })
 
-    const submitForm = async () => {
-      let res
-      if (isUpdateMember.value) {
-        res = await updateMemberAssets(ruleForm)
-      } else {
-        res = await create(ruleForm)
+    const validateMemberAssetField = async (field, cb) => {
+      form.value.validateField(field, async (error) => {
+        if (!error) {
+          cb()
+        }
+      })
+    }
+
+    const validateMemberAssetFieldAndUpdate = (field) => {
+      validateMemberAssetField(field, updateSingleField.bind(null, field))
+    }
+
+    const updateSingleField = async (field) => {
+      const patchObject = {}
+
+      const newValue = getByPath(ruleForm, field)
+      const oldValue = getByPath(memberAssets.value.data, field)
+
+      if (Number(newValue) === Number(oldValue)) {
+        return
       }
+
+      setValueByPath(patchObject, field, newValue)
+      setValueByPath(patchObject, 'member_id', memberId)
+
+      updateOrCreateMemberAssets(patchObject)
+    }
+
+    const updateOrCreateMemberAssets = async (patchObject = ruleForm) => {
+      let res
+
+      if (isUpdateMember.value) {
+        res = await updateMemberAssets(patchObject)
+      } else {
+        res = await create(patchObject)
+      }
+      queryClient.invalidateQueries(['MemberAssets', memberId])
+
+      return res
+    }
+
+    const submitForm = async () => {
+      const res = await updateOrCreateMemberAssets()
+
       if (!('error' in res)) {
         useAlert({
           title: 'Success',
@@ -631,13 +704,15 @@ export default {
       rules,
       isUpdateMember,
       memberAssets,
-      getMemberAssets,
-      fetchingAssets,
+      isMemberAssetsLoading,
       memberId,
       isMarried,
       member,
       errorMember,
       fetchingMember,
+      updateOrCreateMemberAssets,
+      form,
+      validateMemberAssetFieldAndUpdate,
     }
   },
 }
