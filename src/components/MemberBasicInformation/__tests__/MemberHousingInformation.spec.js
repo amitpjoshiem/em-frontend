@@ -2,6 +2,7 @@
 import { mount } from '@vue/test-utils'
 import MemberHousingInformation from '@/components/MemberBasicInformation/MemberHousingInformation.vue'
 import SwdStubForText from '@/components/Global/SwdStubForText.vue'
+import { MemberDetailsHouse } from '@/dto/Member/MemberDetailsHouse'
 
 let wrapper = null
 
@@ -16,15 +17,15 @@ describe('MemberHousingInformation.vue', () => {
         },
       },
       props: {
-        house: {
+        house: new MemberDetailsHouse({
           id: 'v6qgy4dowaz0b75l',
-          marketValue: '1000.000',
-          monthlyPayment: '1000.000',
-          remainingMortgageAmount: '1000.000',
-          totalDebt: '1000.000',
-          totalMonthlyExpenses: '1000.000',
+          market_value: '1000.000',
+          monthly_payment: '1000.000',
+          remaining_mortgage_amount: '1000.000',
+          total_debt: '1000.000',
+          total_monthly_expenses: '1000.000',
           type: 'family',
-        },
+        }),
       },
     })
   })

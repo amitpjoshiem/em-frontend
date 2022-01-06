@@ -2,15 +2,12 @@
   <div class="border border-t-0 border-color-grey rounded-b px-10 pb-10">
     <div class="flex mb-7">
       <div class="w-6/24">
-        <!-- <router-link
+        <router-link
           :to="{ name: 'prospect-employment', params: { id: prospect.id } }"
           class="text-base text-main font-semibold"
         >
           Employment History
-        </router-link> -->
-        <!-- <span class="text-base text-main font-semibold cursor-pointer" @click="goEmploymentHistory">
-          Employment History
-        </span> -->
+        </router-link>
       </div>
     </div>
     <div class="flex mb-7">
@@ -50,39 +47,27 @@
 </template>
 
 <script>
-// import { MemberDetailsUser } from '@/dto/Member/MemberDetailsUser'
-// import { SpouseLastEmployment } from '@/dto/Member/SpouseLastEmployment'
-// import { MemberLastEmployment } from '@/dto/Member/MemberLastEmployment'
+import { MemberDetailsUser } from '@/dto/Member/MemberDetailsUser'
+import { SpouseLastEmployment } from '@/dto/Member/SpouseLastEmployment'
+import { MemberLastEmployment } from '@/dto/Member/MemberLastEmployment'
 export default {
   name: 'MemberBasicInformationEmployment',
   props: {
     prospect: {
-      type: Object,
-      // type: MemberDetailsUser,
+      type: MemberDetailsUser,
       require: true,
       default: () => {},
     },
     employmentProspect: {
-      type: Object,
-      // type: MemberLastEmployment,
+      type: MemberLastEmployment,
       require: true,
       default: () => {},
     },
     employmentSpouse: {
-      type: Object,
-      // type: SpouseLastEmployment,
+      type: SpouseLastEmployment,
       require: true,
       default: () => {},
     },
-  },
-  setup() {
-    const goEmploymentHistory = () => {
-      console.log('goEmploymentHistory')
-    }
-
-    return {
-      goEmploymentHistory,
-    }
   },
 }
 </script>

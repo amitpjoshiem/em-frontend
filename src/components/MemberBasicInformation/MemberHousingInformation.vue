@@ -58,13 +58,13 @@
 
 <script>
 import { currencyFormat } from '@/utils/currencyFormat'
-// import { MemberDetailsHouse } from '@/dto/Member/MemberDetailsHouse'
+import { MemberDetailsHouse } from '@/dto/Member/MemberDetailsHouse'
 
 export default {
   name: 'MemberHousingInformation',
   props: {
     house: {
-      type: Object,
+      type: MemberDetailsHouse,
       require: true,
       default: () => {},
     },
