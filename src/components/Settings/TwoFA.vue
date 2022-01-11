@@ -2,7 +2,12 @@
   <div class="flex py-5">
     <div class="w-10/12 text-xss text-main font-medium">SMS Authenticator</div>
     <div class="w-2/12 flex justify-between">
-      <el-switch v-model="smsOtp" :loading="loadingPhone" :before-change="changePhoneOtp" />
+      <el-switch
+        v-model="smsOtp"
+        :loading="loadingPhone"
+        :before-change="changePhoneOtp"
+        :disabled="user.phone_status !== 'verified'"
+      />
     </div>
   </div>
 
@@ -35,12 +40,14 @@ import { useOtpsChange } from '@/api/use-otps-change'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 import { useAlert } from '@/utils/use-alert'
+import { useUserProfile } from '@/api/use-user-profile.js'
 
 export default {
   name: 'TwoFA',
   setup() {
     const store = useStore()
     const { response, error, fetching, getGoogleQr } = useGoogleQr()
+    const { isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
     const { otpsChange } = useOtpsChange()
     const qrCode = ref(null)
     const form = ref(null)
@@ -139,6 +146,9 @@ export default {
       form,
       saveOtp,
       changePhoneOtp,
+      isErrorUserProfile,
+      user,
+      isFetched,
     }
   },
 }

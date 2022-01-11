@@ -34,8 +34,8 @@
       </div>
       <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Phone</div>
-        <div class="text-main text-base mr-3">{{ user.phone }}</div>
-        <div class="mr-2" :class="getClassStatusPhone">
+        <div class="text-main text-base mr-3">{{ user.phone ? user.phone : 'Phone number not add' }}</div>
+        <div v-if="user.phone" class="mr-2" :class="getClassStatusPhone">
           {{ user.phone_status }}
         </div>
         <ChangePhone />
