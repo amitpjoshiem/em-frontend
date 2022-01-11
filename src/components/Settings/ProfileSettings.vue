@@ -51,6 +51,7 @@
       </div>
     </div>
   </div>
+  <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
 
 <script>
@@ -78,7 +79,7 @@ export default {
     SwdUpload,
   },
   setup() {
-    const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
+    const { isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
     const { mutateAsync: updateUser } = useMutation(updateUserAvatar)
     const queryClient = useQueryClient()
     const upload = ref(null)
@@ -145,7 +146,6 @@ export default {
       IconPencil,
       IconEditAvatar,
       user,
-      isLoadingUserProfile,
       isErrorUserProfile,
       isFetched,
       handleAvatarSuccess,

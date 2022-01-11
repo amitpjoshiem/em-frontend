@@ -6,15 +6,7 @@
       </div>
     </template>
     <template #contentDialog>
-      <el-form
-        v-if="state.isShowForm"
-        ref="form"
-        :model="ruleForm"
-        status-icon
-        label-position="top"
-        :rules="rules"
-        @submit.prevent="submit"
-      >
+      <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules" @submit.prevent="submit">
         <el-form-item v-if="state.isShowConfirmCode" label="Confirm code" class="w-full" prop="code">
           <el-input v-model="ruleForm.code" placeholder="Enter confirm code" />
         </el-form-item>
@@ -65,7 +57,6 @@ export default {
     })
 
     const state = reactive({
-      isShowForm: true,
       isShowConfirmCode: false,
     })
 
@@ -125,7 +116,6 @@ export default {
     }
 
     const closeDialog = () => {
-      state.isShowForm = true
       store.commit('globalComponents/setShowModal', {
         destination: 'changePhone',
         value: false,
@@ -133,7 +123,6 @@ export default {
     }
 
     const backStep = () => {
-      console.log('backStep')
       ruleForm.code = null
       state.isShowConfirmCode = false
     }
