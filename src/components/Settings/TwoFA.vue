@@ -110,35 +110,19 @@ export default {
     })
 
     const changePhoneOtp = () => {
-      if (!state.smsOtp) {
-        otpsChange({ service: 'phone' })
-          .then(() => {
-            useAlert({
-              title: 'Success',
-              type: 'success',
-              message: 'OTP has been changed successfully.',
-            })
-            state.smsOtp = true
-            state.googleOtp = false
+      otpsChange({ service: state.smsOtp ? 'email' : 'phone' })
+        .then(() => {
+          useAlert({
+            title: 'Success',
+            type: 'success',
+            message: 'OTP has been changed successfully.',
           })
-          .catch((error) => {
-            console.error(error)
-          })
-      } else {
-        otpsChange({ service: 'email' })
-          .then(() => {
-            useAlert({
-              title: 'Success',
-              type: 'success',
-              message: 'OTP has been changed successfully.',
-            })
-            state.smsOtp = false
-            state.googleOtp = false
-          })
-          .catch((error) => {
-            console.error(error)
-          })
-      }
+          state.smsOtp = true
+          state.googleOtp = false
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     }
 
     return {
