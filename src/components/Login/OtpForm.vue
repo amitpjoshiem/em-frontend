@@ -11,7 +11,10 @@
         <h1 v-if="otpTypeEmail" class="text-center text-gray03 pt-2.5 text-sm">
           We just sent you a temporary login code. Please check your inbox.
         </h1>
-        <h1 v-else class="text-center text-gray03 pt-2.5 text-sm">Please check your Google Authenticator.</h1>
+        <h1 v-if="otpTypeGoogle" class="text-center text-gray03 pt-2.5 text-sm">
+          Please check your Google Authenticator.
+        </h1>
+        <h1 v-if="otpTypePhone" class="text-center text-gray03 pt-2.5 text-sm">Please check your SMS.</h1>
         <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
           <el-form-item label="OTP" prop="code" class="py-3">
             <el-input v-model="ruleForm.code" type="number" placeholder="Enter otp code" />
@@ -29,7 +32,7 @@
         </el-form>
       </div>
     </div>
-    <div v-if="otpTypeEmail" class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
+    <div v-if="otpTypeEmail || otpTypePhone" class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
       <span class="text-xss text-gray03 cursor-pointer" @click="getResendOtp">Resend OTP code</span>
     </div>
   </div>
@@ -58,6 +61,14 @@ export default {
 
     const otpTypeEmail = computed(() => {
       return store.state.auth.otpType === 'email'
+    })
+
+    const otpTypeGoogle = computed(() => {
+      return store.state.auth.otpType === 'google'
+    })
+
+    const otpTypePhone = computed(() => {
+      return store.state.auth.otpType === 'phone'
     })
 
     const submit = async () => {
@@ -98,6 +109,8 @@ export default {
       isError,
       data,
       refetchOtpCode,
+      otpTypeGoogle,
+      otpTypePhone,
     }
   },
 }
