@@ -1,15 +1,22 @@
 <template>
   <div class="flex py-5">
+    <div class="w-10/12 text-xss text-main font-medium">SMS Authenticator</div>
+    <div class="w-2/12 flex justify-between">
+      <el-switch v-model="smsOtp" :loading="loadingPhone" :before-change="changePhoneOtp" />
+    </div>
+  </div>
+
+  <div class="flex py-5">
     <div class="w-10/12 text-xss text-main font-medium">Google Authenticator</div>
     <div class="w-2/12 flex justify-between">
-      <el-switch v-model="value" :loading="loading" :before-change="beforeChange" />
+      <el-switch v-model="googleOtp" :loading="loadingGoogle" :before-change="beforeChange" />
     </div>
   </div>
 
   <div v-if="response && response.data" class="mt-5">
     <div v-show="showForm" class="w-5/12">
       <img ref="qrCode" :src="response.data.url" class="pb-5" />
-      <el-form ref="form" :model="ruleForm" status-icon label-position="top">
+      <el-form ref="form" :model="ruleForm" state-icon label-position="top">
         <el-form-item label="Code" prop="code" class="w-full">
           <el-input v-model="ruleForm.code" placeholder="Enter OTP code" />
         </el-form-item>
@@ -24,7 +31,7 @@
 <script>
 import { ref, reactive, toRefs, onMounted } from 'vue'
 import { useGoogleQr } from '@/api/use-google-qr'
-import { useVerifyGoogle } from '@/api/use-verify-google'
+import { useOtpsChange } from '@/api/use-otps-change'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 import { useAlert } from '@/utils/use-alert'
@@ -34,40 +41,45 @@ export default {
   setup() {
     const store = useStore()
     const { response, error, fetching, getGoogleQr } = useGoogleQr()
-    const { verifyGoogle } = useVerifyGoogle()
+    const { otpsChange } = useOtpsChange()
     const qrCode = ref(null)
     const form = ref(null)
 
     const ruleForm = reactive({
       code: '',
-      value: false,
-      loading: false,
+      googleOtp: false,
+      smsOtp: false,
+      loadingGoogle: false,
+      loadingPhone: false,
     })
 
-    const status = reactive({
-      value: false,
-      loading: false,
+    const state = reactive({
+      googleOtp: false,
+      smsOtp: false,
+      loadingGoogle: false,
+      loadingPhone: false,
     })
 
     onMounted(() => {
-      status.value = !!(store.state.auth.otpType === 'google')
+      if (store.state.auth.otpType === 'google') state.googleOtp = true
+      if (store.state.auth.otpType === 'phone') state.smsOtp = true
     })
 
     const beforeChange = () => {
-      status.loading = true
-      if (!status.value) {
+      state.loadingGoogle = true
+      if (!state.googleOtp) {
         return new Promise((resolve) => {
           return getGoogleQr().then(() => {
             qrCode.value.addEventListener('load', () => {
-              status.loading = false
+              state.loadingGoogle = false
             })
             return resolve(true)
           })
         })
       } else {
         return new Promise((resolve) => {
-          verifyGoogle({ service: 'email' })
-          status.loading = false
+          otpsChange({ service: 'email' })
+          state.loadingGoogle = false
           return resolve(true)
         })
       }
@@ -75,13 +87,14 @@ export default {
 
     const saveOtp = async (e) => {
       e.preventDefault()
-      verifyGoogle({ service: 'google', code: ruleForm.code })
+      otpsChange({ service: 'google', code: ruleForm.code })
         .then(() => {
           useAlert({
             title: 'Success',
             type: 'success',
             message: 'OTP has been changed successfully.',
           })
+          state.smsOtp = false
         })
         .catch((error) => {
           console.error(error)
@@ -93,11 +106,43 @@ export default {
     })
 
     const showForm = computed(() => {
-      return !status.loading && otpType.value !== 'google' && status.value
+      return !state.loadingGoogle && otpType.value !== 'google' && state.googleOtp
     })
 
+    const changePhoneOtp = () => {
+      if (!state.smsOtp) {
+        otpsChange({ service: 'phone' })
+          .then(() => {
+            useAlert({
+              title: 'Success',
+              type: 'success',
+              message: 'OTP has been changed successfully.',
+            })
+            state.smsOtp = true
+            state.googleOtp = false
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      } else {
+        otpsChange({ service: 'email' })
+          .then(() => {
+            useAlert({
+              title: 'Success',
+              type: 'success',
+              message: 'OTP has been changed successfully.',
+            })
+            state.smsOtp = false
+            state.googleOtp = false
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      }
+    }
+
     return {
-      ...toRefs(status),
+      ...toRefs(state),
       beforeChange,
       response,
       error,
@@ -109,6 +154,7 @@ export default {
       ruleForm,
       form,
       saveOtp,
+      changePhoneOtp,
     }
   },
 }

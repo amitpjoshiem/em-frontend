@@ -19,6 +19,7 @@ const useOtp = () => {
         title: 'Error',
         message: error.value,
       })
+      error.value = null
       return
     }
     store.commit('auth/setAuthUser', true)
