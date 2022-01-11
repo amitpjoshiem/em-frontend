@@ -3,7 +3,7 @@
     <span class="text-main text-smm font-semibold">Net Worth</span>
     <div v-if="isFetched" class="flex mt-5">
       <div class="w-8/12">
-        <el-form ref="form" :model="ruleForm" status-icon size="mini">
+        <el-form ref="form" :model="ruleForm" status-icon size="small">
           <div class="flex justify-center items-center">
             <div class="bg-dark-blue-charts w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Liquid</div>

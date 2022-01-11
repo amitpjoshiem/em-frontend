@@ -195,7 +195,11 @@
         </div>
 
         <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index">
-          <el-form-item :prop="'employment_history.' + index + '.company_name'" label="Company name" class="w-full">
+          <el-form-item
+            :prop="'employment_history.' + index + '.company_name'"
+            label="Company name"
+            class="w-7/24 mr-4"
+          >
             <el-input
               v-model="eh.company_name"
               placeholder="Enter company name"
@@ -204,27 +208,27 @@
           </el-form-item>
 
           <template v-if="ruleForm.employment_history[index].company_name.length">
-            <el-form-item :prop="'employment_history.' + index + '.occupation'" label="Occupation" class="w-full px-5">
+            <el-form-item :prop="'employment_history.' + index + '.occupation'" label="Occupation" class="w-7/24 mr-4">
               <el-input v-model="eh.occupation" placeholder="Company occupation" />
             </el-form-item>
             <el-form-item
               v-if="ruleForm.employment_history[index].company_name.length"
               :prop="'employment_history.' + index + '.years'"
               label="Years"
-              class="w-full"
+              class="w-7/24 mr-4"
             >
               <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
             </el-form-item>
           </template>
 
           <template v-else>
-            <el-form-item label="Occupation" class="w-full px-5">
+            <el-form-item label="Occupation" class="w-7/24 mr-4">
               <el-input
                 placeholder="Company occupation"
                 :disabled="!ruleForm.employment_history[index].company_name.length"
               />
             </el-form-item>
-            <el-form-item label="Years" class="w-full">
+            <el-form-item label="Years" class="w-7/24 mr-4">
               <el-input
                 placeholder="00"
                 inputmode="numeric"
@@ -233,7 +237,7 @@
             </el-form-item>
           </template>
 
-          <div class="w-12 pt-9 ml-3 cursor-pointer">
+          <div class="w-5 pt-9 ml-3 cursor-pointer w-3/24">
             <InlineSvg v-if="index === ruleForm.employment_history.length - 1" :src="IconAdd" @click="addEmployment" />
             <InlineSvg v-else :src="IconDelete" @click="removeEmployment(index)" />
           </div>
@@ -248,7 +252,7 @@
             <el-form-item
               :prop="'spouse.employment_history.' + index + '.company_name'"
               label="Company name"
-              class="w-full"
+              class="w-7/24 mr-4"
             >
               <el-input
                 v-model="eh.company_name"
@@ -261,23 +265,23 @@
               <el-form-item
                 :prop="'spouse.employment_history.' + index + '.occupation'"
                 label="Occupation"
-                class="w-full px-5"
+                class="w-7/24 mr-4"
               >
                 <el-input v-model="eh.occupation" placeholder="Company occupation" />
               </el-form-item>
-              <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-full">
+              <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-7/24 mr-4">
                 <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
               </el-form-item>
             </template>
 
             <template v-else>
-              <el-form-item label="Occupation" class="w-full px-5">
+              <el-form-item label="Occupation" class="w-7/24 mr-4">
                 <el-input
                   placeholder="Company occupation"
                   :disabled="!ruleForm.spouse.employment_history[index].company_name.length"
                 />
               </el-form-item>
-              <el-form-item label="Years" class="w-full">
+              <el-form-item label="Years" class="w-7/24 mr-4">
                 <el-input
                   placeholder="00"
                   inputmode="numeric"
@@ -286,7 +290,7 @@
               </el-form-item>
             </template>
 
-            <div class="w-12 pt-9 ml-3 cursor-pointer">
+            <div class="w-5 pt-9 ml-3 cursor-pointer w-3/24">
               <InlineSvg
                 v-if="index === ruleForm.spouse.employment_history.length - 1"
                 :src="IconAdd"

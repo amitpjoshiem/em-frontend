@@ -15,7 +15,7 @@
             ref="saveTagInput"
             v-model="state.inputValue"
             class="input-new-tag w-32"
-            size="mini"
+            size="small"
             @keyup.enter="handleInputConfirm"
             @blur="handleInputConfirm"
           />

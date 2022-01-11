@@ -20,7 +20,7 @@
           <div>Income</div>
         </div>
         <div class="flex flex-col justify-center text-main text-xs font-medium">
-          <el-form ref="form" :model="ruleForm" status-icon size="mini">
+          <el-form ref="form" :model="ruleForm" status-icon size="small">
             <el-form-item>
               <el-input v-model="ruleForm.liquidity" placeholder="$12345" type="number" @change="change()">
                 <template #prepend>$</template>

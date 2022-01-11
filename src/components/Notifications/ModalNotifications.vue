@@ -11,7 +11,7 @@
       bg-white
       absolute
       top-[75px]
-      right-[125px]
+      right-[155px]
       z-50
       shadow-xl
     "
