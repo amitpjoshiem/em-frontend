@@ -1,7 +1,7 @@
 <template>
   <div class="rounded-full w-2 h-2 mr-2.5" :class="getClassLegend" />
   <span>{{ item.start_age }}-</span>
-  <span>{{ item.end_age }} - </span>
+  <span>{{ item.end_age }}</span>
   <span class="font-semibold ml-1">{{ percentFormat(item.percent / 100) }}</span>
 </template>
 <script>
