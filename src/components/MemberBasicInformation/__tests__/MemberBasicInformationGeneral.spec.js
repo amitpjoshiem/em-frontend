@@ -26,6 +26,7 @@ describe('MemberBasicInformationGeneral.vue', () => {
           retired: true,
           retirement_date: '2018-07-27',
           address: '99438 Mueller Unions Suite 316\nSouth Davon, WV 44058-4201',
+          married: true,
         }),
         spouse: new MemberDetailsSpouse({
           name: 'Wilfrid Hayes',
@@ -49,6 +50,7 @@ describe('MemberBasicInformationGeneral.vue', () => {
       retired: true,
       retirementDate: '2018-07-27',
       address: '99438 Mueller Unions Suite 316\nSouth Davon, WV 44058-4201',
+      married: true,
     })
   })
 
@@ -112,12 +114,22 @@ describe('MemberBasicInformationGeneral.vue', () => {
     expect(wrapper.find('[data-testid="member-basic-information-spouse-retirement-date"]').text()).toBe('07/27/2018')
   })
 
-  // test('content testing member basic information no other', async () => {
-  //   await wrapper.setProps({
-  //     other: {
-  //       id: '',
-  //     },
-  //   })
-  //   expect(wrapper.find('[data-testid="member-basic-information-no-other"]').text()).toBe('No other information')
-  // })
+  test('type member testing basic information general prospect', () => {
+    expect(wrapper.find('[data-testid="type-member-basic-information-prospect-retired"]').text()).toBe('Retired')
+  })
+
+  test('type member testing basic information general prospect', async () => {
+    await wrapper.setProps({
+      prospect: {
+        retired: false,
+      },
+    })
+    expect(wrapper.find('[data-testid="type-member-basic-information-prospect-not-retired"]').text()).toBe(
+      'Not Retired'
+    )
+  })
+
+  test('type member testing basic information general spouse', () => {
+    expect(wrapper.find('[data-testid="type-member-basic-information-spouse-retired"]').text()).toBe('Retired')
+  })
 })
