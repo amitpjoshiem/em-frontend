@@ -14,8 +14,9 @@
 <script>
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import { chartWithTextCenter } from '@/utils/chartWithText'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { currencyFormat } from '@/utils/currencyFormat'
+import { currencyCompact } from '@/utils/currencyCompactFormat'
 
 export default {
   name: 'NetWorthChart',
@@ -47,6 +48,11 @@ export default {
       { deep: true }
     )
 
+    const getTotal = computed(() => {
+      if (props.values.total > 10000000) return currencyCompact(props.values.total)
+      return currencyFormat(props.values.total, 0, 0)
+    })
+
     const doughnutChart = {
       id: 'doughnut',
       type: 'doughnut',
@@ -64,7 +70,7 @@ export default {
       options: {
         elements: {
           center: {
-            text: 'Total ' + currencyFormat(props.values.total),
+            text: 'Total ' + getTotal.value,
             size: 12,
           },
         },

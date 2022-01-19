@@ -41,10 +41,12 @@
 <script>
 import { defineComponent, reactive, watchEffect, ref, computed, nextTick } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 import Schema from 'async-validator'
 import { uploadMedia } from '@/api/vueQuery/upload-media'
 import { sendReport } from '@/api/vueQuery/send-report'
+import { sendBlueprintReport } from '@/api/vueQuery/send-blueprint-report'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { pdfConfig } from '@/config/pdf-config'
@@ -70,17 +72,25 @@ export default defineComponent({
   },
 
   setup() {
+    const route = useRoute()
     const dialogVisible = ref(false)
     const store = useStore()
     const saveTagInput = ref(null)
     const doc = new jsPDF()
 
     const { mutateAsync: upload, isLoading, isError, isFetching, data, error } = useMutation(uploadMedia)
+
     const {
       mutateAsync: sendReportEmail,
       error: sendReportError,
       isLoading: loadingSendReport,
     } = useMutation(sendReport)
+
+    const {
+      mutateAsync: sendBlueprintReportEmail,
+      error: errorSendBlueprintReport,
+      isLoading: loadingSendlueprintReport,
+    } = useMutation(sendBlueprintReport)
 
     const statusModal = computed(() => store.state.globalComponents.dialog.showDialog.shareFileEmailDialog)
     const pdfRegion = computed(() => store.state.globalComponents.pdfRegion)
@@ -111,10 +121,35 @@ export default defineComponent({
     })
 
     const confirm = async () => {
+      if (pdfRegion.value === 'blue-report') {
+        sendBackendPdf()
+        return
+      }
+
+      if (pdfRegion.value === 'client-report') {
+        sendFrontendPdf()
+      }
+    }
+
+    const sendBackendPdf = async () => {
+      const data = {
+        emails: state.dynamicTags,
+      }
+      const resSendReport = await sendBlueprintReportEmail({ data, member_id: route.params.id })
+      if (!('error' in resSendReport)) {
+        state.isShowForm = false
+      } else {
+        useAlert({
+          title: 'Error',
+          type: 'error',
+          message: resSendReport.error.message,
+        })
+      }
+    }
+
+    const sendFrontendPdf = async () => {
       await createPdf()
-
       const formData = new FormData()
-
       formData.append('file', state.file, state.file.name)
       formData.append('collection', 'member_report')
       const res = await upload(formData)
@@ -153,6 +188,8 @@ export default defineComponent({
         destination: 'shareFileEmailDialog',
         value: false,
       })
+      state.isShowForm = true
+      state.dynamicTags = []
     }
 
     const removeTag = (tag) => {
@@ -226,6 +263,9 @@ export default defineComponent({
       loadingSendReport,
       closeDialog,
       confirmBtnDisabled,
+      sendBlueprintReportEmail,
+      errorSendBlueprintReport,
+      loadingSendlueprintReport,
     }
   },
 })
