@@ -1,5 +1,5 @@
 <template>
-  <div class="flex py-5">
+  <!-- <div class="flex py-5">
     <div class="w-10/12 text-xss text-main font-medium">SMS Authenticator</div>
     <div class="w-2/12 flex justify-between">
       <el-switch
@@ -9,7 +9,7 @@
         :disabled="user.phone_status !== 'verified'"
       />
     </div>
-  </div>
+  </div> -->
 
   <div class="flex py-5">
     <div class="w-10/12 text-xss text-main font-medium">Google Authenticator</div>

@@ -38,7 +38,7 @@
         <div v-if="user.phone" class="mr-2" :class="getClassStatusPhone">
           {{ user.phone_status }}
         </div>
-        <ChangePhone />
+        <!-- <ChangePhone /> -->
       </div>
       <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">E-mail</div>
@@ -59,7 +59,7 @@ import IconPencil from '@/assets/svg/icon-pencil.svg'
 import IconEditAvatar from '@/assets/svg/icon-edit-avatar.svg'
 import ChangePassword from '@/components/Settings/ChangePassword.vue'
 import ChangeName from '@/components/Settings/ChangeName.vue'
-import ChangePhone from '@/components/Settings/ChangePhone.vue'
+// import ChangePhone from '@/components/Settings/ChangePhone.vue'
 import SwdCropper from '@/components/Global/SwdCropper.vue'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 
@@ -74,7 +74,7 @@ export default {
   components: {
     ChangePassword,
     ChangeName,
-    ChangePhone,
+    // ChangePhone,
     SwdCropper,
     SwdUpload,
   },
