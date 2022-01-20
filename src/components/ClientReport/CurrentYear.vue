@@ -25,7 +25,7 @@
       <span class="text-main text-sm font-semibold">{{ currencyFormat(contract.contract_value) }}</span>
     </div>
     <div class="border border-t-0 border-color-grey flex justify-end px-4 py-2">
-      <el-button size="mini" @click="moreAction">More info</el-button>
+      <el-button size="small" @click="moreAction">More info</el-button>
     </div>
   </div>
 </template>

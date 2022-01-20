@@ -2,7 +2,7 @@
   <button
     :type="type"
     :disabled="disabled"
-    class="rounded-md h-10"
+    class="rounded-md h-8"
     :class="{
       'bg-primary  text-white': defaultPrimary,
       'w-full': full,

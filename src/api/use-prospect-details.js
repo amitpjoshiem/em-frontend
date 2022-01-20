@@ -21,13 +21,16 @@ export const useProspectDetails = () => {
 
   const idCallback = () => route.params.id
 
-  const { isLoading, isError, data, refetch } = useQuery(
-    ['member'],
+  const queryKey = reactive(['member'])
+
+  const query = useQuery(
+    queryKey,
     () => {
       const id = idCallback()
       return fetchMember(id)
     },
     {
+      cacheTime: 0,
       select: (data) => {
         spouse.value = dataFactory(MemberDetailsSpouse, data.data.spouse)
         house.value = dataFactory(MemberDetailsHouse, data.data.house)
@@ -58,15 +61,12 @@ export const useProspectDetails = () => {
   }
 
   return {
-    isLoading,
-    isError,
-    data,
     spouse,
     house,
     employmentProspect,
     employmentSpouse,
     other,
-    refetch,
+    ...query,
     updateMemberInfo,
   }
 }

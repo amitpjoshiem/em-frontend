@@ -29,8 +29,16 @@
         <div class="text-main text-base mr-3">{{ user.position ? user.position : 'Position not added' }}</div>
       </div>
       <div class="flex items-center pt-11">
+        <div class="text-xss text-title-gray w-2/12">NPN</div>
+        <div class="text-main text-base mr-3">{{ user.npn ? user.npn : 'NPN not added' }}</div>
+      </div>
+      <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Phone</div>
-        <div class="text-main text-base mr-3">+12223334455</div>
+        <div class="text-main text-base mr-3">{{ user.phone ? user.phone : 'Phone number not add' }}</div>
+        <div v-if="user.phone" class="mr-2" :class="getClassStatusPhone">
+          {{ user.phone_status }}
+        </div>
+        <!-- <ChangePhone /> -->
       </div>
       <div class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">E-mail</div>
@@ -43,6 +51,7 @@
       </div>
     </div>
   </div>
+  <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
 
 <script>
@@ -50,6 +59,7 @@ import IconPencil from '@/assets/svg/icon-pencil.svg'
 import IconEditAvatar from '@/assets/svg/icon-edit-avatar.svg'
 import ChangePassword from '@/components/Settings/ChangePassword.vue'
 import ChangeName from '@/components/Settings/ChangeName.vue'
+// import ChangePhone from '@/components/Settings/ChangePhone.vue'
 import SwdCropper from '@/components/Global/SwdCropper.vue'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 
@@ -64,11 +74,12 @@ export default {
   components: {
     ChangePassword,
     ChangeName,
+    // ChangePhone,
     SwdCropper,
     SwdUpload,
   },
   setup() {
-    const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
+    const { isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
     const { mutateAsync: updateUser } = useMutation(updateUserAvatar)
     const queryClient = useQueryClient()
     const upload = ref(null)
@@ -126,11 +137,15 @@ export default {
       upload.value = ref.value
     }
 
+    const getClassStatusPhone = computed(() => {
+      if (user.value.phone_status === 'expired') return 'text-red-500'
+      return 'text-green-500'
+    })
+
     return {
       IconPencil,
       IconEditAvatar,
       user,
-      isLoadingUserProfile,
       isErrorUserProfile,
       isFetched,
       handleAvatarSuccess,
@@ -142,6 +157,7 @@ export default {
       bindRef,
       uploadRef: state.uploadRef,
       userFullName,
+      getClassStatusPhone,
     }
   },
 }

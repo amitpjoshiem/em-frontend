@@ -40,7 +40,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column label="net worth" min-width="80">
+    <el-table-column label="net worth" min-width="85">
       <SwdStubForText text="" plug="&mdash;" class="text-xss text-main font-semibold" />
     </el-table-column>
 

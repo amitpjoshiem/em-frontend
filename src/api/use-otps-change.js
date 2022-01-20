@@ -2,14 +2,14 @@ import { useFetch } from '@/api/use-fetch'
 import { useStore } from 'vuex'
 import { saveToStorage } from '@/utils/utilsLocalStorage'
 
-const useVerifyGoogle = () => {
+const useOtpsChange = () => {
   const store = useStore()
 
   const { response, error, fetching, fetchData } = useFetch('/otps/change', {
     method: 'post',
   })
 
-  const verifyGoogle = async (body) => {
+  const otpsChange = async (body) => {
     await fetchData({ body })
     if (error.value !== null) return
     store.commit('auth/setOtpType', body.service)
@@ -20,8 +20,8 @@ const useVerifyGoogle = () => {
     response,
     error,
     fetching,
-    verifyGoogle,
+    otpsChange,
   }
 }
 
-export { useVerifyGoogle }
+export { useOtpsChange }

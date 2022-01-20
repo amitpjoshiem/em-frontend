@@ -27,7 +27,7 @@
           </div>
         </div>
         <div>
-          <el-button type="primary" size="mini" plain class="mr-5" @click="handlePictureCardPreview(file)">
+          <el-button type="primary" size="small" plain class="mr-5" @click="handlePictureCardPreview(file)">
             Prewiev
           </el-button>
           <el-popconfirm
@@ -39,7 +39,7 @@
             @confirm="handleRemove(file.id)"
           >
             <template #reference>
-              <el-button type="danger" size="mini" plain>Remove</el-button>
+              <el-button type="danger" size="small" plain>Remove</el-button>
             </template>
           </el-popconfirm>
         </div>

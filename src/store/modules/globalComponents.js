@@ -48,6 +48,7 @@ const state = () => ({
       shareFileEmailDialog: false,
       prewievPdf: false,
       moreOtherInfo: false,
+      changePhone: false,
     },
   },
   sortMembers: {

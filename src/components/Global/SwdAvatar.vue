@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import DefaultAvatar from '@/assets/img/avatar.png'
+import SwdDefaultAvatar from '@/assets/img/default-avatar.png'
 import { computed } from 'vue'
 
 export default {
@@ -38,12 +38,13 @@ export default {
 
     const getAvatar = computed(() => {
       if (props.link) return props.link
-      return DefaultAvatar
+      return SwdDefaultAvatar
     })
 
     return {
       avatarClass,
       getAvatar,
+      SwdDefaultAvatar,
     }
   },
 }

@@ -5,7 +5,7 @@
       <div class="flex">
         <ExportExcel />
         <router-link :to="{ name: 'document-export', params: { id: memberId } }" class="pl-3">
-          <el-button size="mini">More documents</el-button>
+          <el-button size="small">More documents</el-button>
         </router-link>
       </div>
     </div>
@@ -14,13 +14,13 @@
       <HeaderTable />
       <div v-for="(item, index) in state" :key="index" class="flex h-10">
         <div class="w-6/24 item">
-          <el-input v-model="state[index].name" size="mini" :disabled="isDisabledForm" @change="change(index)" />
+          <el-input v-model="state[index].name" size="small" :disabled="isDisabledForm" @change="change(index)" />
         </div>
         <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
         <div class="w-3/24 item amount">
           <el-input
             v-model="state[index].amount"
-            size="mini"
+            size="small"
             type="number"
             :disabled="isDisabledForm"
             @change="change(index)"
@@ -34,7 +34,7 @@
           <el-input
             v-model="state[index].management_expense"
             :disabled="isDisabledForm"
-            size="mini"
+            size="small"
             type="number"
             @change="change(index, $event, 'management_expense', 'Management Expense')"
             @focus="focusInput('management_expense', index)"
@@ -47,7 +47,7 @@
           <el-input
             v-model="state[index].turnover"
             :disabled="isDisabledForm"
-            size="mini"
+            size="small"
             type="number"
             @change="change(index, $event, 'turnover', 'Turnover')"
             @focus="focusInput('turnover', index)"
@@ -60,7 +60,7 @@
           <el-input
             v-model="state[index].trading_cost"
             :disabled="isDisabledForm"
-            size="mini"
+            size="small"
             type="number"
             @change="change(index, $event, 'trading_cost', 'Trading costs')"
             @focus="focusInput('trading_cost', index)"
@@ -73,7 +73,7 @@
           <el-input
             v-model="state[index].wrap_fee"
             :disabled="isDisabledForm"
-            size="mini"
+            size="small"
             type="number"
             @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
             @focus="focusInput('wrap_fee', index)"

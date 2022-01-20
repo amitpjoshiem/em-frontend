@@ -7,7 +7,7 @@
         <span class="mt-1">{{ getTime }}</span>
       </div>
     </div>
-    <el-button v-if="item.status === 'process'" type="primary" size="mini" plain disabled>
+    <el-button v-if="item.status === 'process'" type="primary" size="small" plain disabled>
       <div class="flex items-center">
         <SwdSpinner />
         <span class="pl-2">processing</span>
@@ -21,7 +21,7 @@
     >
       download
     </a>
-    <el-button v-if="item.status === 'error'" type="danger" size="mini" plain disabled>error</el-button>
+    <el-button v-if="item.status === 'error'" type="danger" size="small" plain disabled>error</el-button>
   </div>
 </template>
 <script>
