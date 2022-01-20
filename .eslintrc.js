@@ -1,11 +1,7 @@
 module.exports = {
   plugins: ['prettier'],
 
-  extends: [
-    'eslint:recommended',
-    'plugin:vue/vue3-recommended',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'prettier'],
 
   rules: {
     'prettier/prettier': 'warn',
