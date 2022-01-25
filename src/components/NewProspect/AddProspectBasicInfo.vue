@@ -207,7 +207,7 @@
             />
           </el-form-item>
 
-          <template v-if="ruleForm.employment_history[index].company_name.length">
+          <template v-if="!!ruleForm.employment_history[index].company_name.trim().length">
             <el-form-item :prop="'employment_history.' + index + '.occupation'" label="Occupation" class="w-7/24 mr-4">
               <el-input v-model="eh.occupation" placeholder="Company occupation" />
             </el-form-item>
@@ -225,14 +225,14 @@
             <el-form-item label="Occupation" class="w-7/24 mr-4">
               <el-input
                 placeholder="Company occupation"
-                :disabled="!ruleForm.employment_history[index].company_name.length"
+                :disabled="!ruleForm.employment_history[index].company_name.trim().length"
               />
             </el-form-item>
             <el-form-item label="Years" class="w-7/24 mr-4">
               <el-input
                 placeholder="00"
                 inputmode="numeric"
-                :disabled="!ruleForm.employment_history[index].company_name.length"
+                :disabled="!ruleForm.employment_history[index].company_name.trim().length"
               />
             </el-form-item>
           </template>
@@ -261,7 +261,7 @@
               />
             </el-form-item>
 
-            <template v-if="ruleForm.spouse.employment_history[index].company_name.length">
+            <template v-if="ruleForm.spouse.employment_history[index].company_name.trim().length">
               <el-form-item
                 :prop="'spouse.employment_history.' + index + '.occupation'"
                 label="Occupation"
@@ -278,14 +278,14 @@
               <el-form-item label="Occupation" class="w-7/24 mr-4">
                 <el-input
                   placeholder="Company occupation"
-                  :disabled="!ruleForm.spouse.employment_history[index].company_name.length"
+                  :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
                 />
               </el-form-item>
               <el-form-item label="Years" class="w-7/24 mr-4">
                 <el-input
                   placeholder="00"
                   inputmode="numeric"
-                  :disabled="!ruleForm.spouse.employment_history[index].company_name.length"
+                  :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
                 />
               </el-form-item>
             </template>
@@ -571,7 +571,7 @@ export default {
     }
 
     const changeCompanyNameMember = (index) => {
-      if (ruleForm.employment_history[index].company_name.length) {
+      if (ruleForm.employment_history[index].company_name.trim().length) {
         rules.employment_history[index].occupation[0].required = true
         rules.employment_history[index].years[0].required = true
       } else {
