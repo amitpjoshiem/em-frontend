@@ -5,7 +5,9 @@
         <span class="w-9 h-9 rounded-md flex justify-center items-center bg-activity">
           <InlineSvg :src="IconCurrentYear" />
         </span>
-        <span class="ml-4 text-main text-title font-semibold">Contract {{ contract.contract_number }}</span>
+        <router-link :to="{ name: 'contract-info', params: { id: contract.id } }">
+          <span class="ml-4 text-main text-title font-semibold">Contract {{ contract.contract_number }}</span>
+        </router-link>
       </div>
       <span class="text-xs text-gray03">issue date: {{ getIssueDate }}</span>
     </div>
@@ -38,7 +40,7 @@ import dayjs from 'dayjs'
 import { useRouter } from 'vue-router'
 
 export default {
-  name: 'CurrentYear',
+  name: 'ContractItem',
 
   props: {
     contract: {
@@ -56,7 +58,6 @@ export default {
     })
 
     const moreAction = () => {
-      console.log('moreAction')
       router.push({ name: 'contract-info', params: { id: props.contract.id } })
     }
 

@@ -2,9 +2,7 @@
   <div v-if="!isLoading && !isLoadingProspectDetails" class="p-5">
     <div class="pb-5 flex">
       <div class="w-3/12">
-        <router-link :to="{ name: 'list-of-households' }">
-          <BackButton text="Back" @click="$router.go(-1)" />
-        </router-link>
+        <BackButton text="Back" @click="$router.go(-1)" />
       </div>
       <div class="w-6/12 text-center">
         <span class="text-title text-color-link font-semibold">{{ member.name }}</span>
@@ -20,11 +18,10 @@
             size="small"
           />
         </div>
-        <ShareBtn pdf-region="client-report" />
       </div>
     </div>
     <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
-      <CurrentYear v-for="item in clientReport.data" :key="item.id" :contract="item" />
+      <ContractItem v-for="item in clientReport.data" :key="item.id" :contract="item" />
     </div>
     <TotalInfo />
   </div>
@@ -33,7 +30,7 @@
 <script>
 import { useRoute } from 'vue-router'
 import { reactive, toRefs } from 'vue'
-import CurrentYear from '@/components/ClientReport/CurrentYear.vue'
+import ContractItem from '@/components/ClientReport/ContractItem.vue'
 import TotalInfo from '@/components/ClientReport/TotalInfo.vue'
 import { useClientReportsAll } from '@/api/use-fetch-client-reports-all.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
@@ -41,7 +38,7 @@ import { useProspectDetails } from '@/api/use-prospect-details.js'
 export default {
   name: 'ClientReport',
   components: {
-    CurrentYear,
+    ContractItem,
     TotalInfo,
   },
   setup() {
