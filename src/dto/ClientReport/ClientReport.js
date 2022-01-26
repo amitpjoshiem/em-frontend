@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 class ClientReport {
-  constructor({ carrier, contract_number, origination_date, contract_year }) {
+  constructor({ id, carrier, contract_number, origination_date, contract_year }) {
+    this.id = id
     this.carrier = carrier
     this.contractNumber = contract_number
     this.originationDate = origination_date

@@ -1,6 +1,6 @@
 import { useFetch } from '@/api/use-fetch'
 
-const useFetchBlueReport = (member_id) => {
+const useDownloadBlueReport = (member_id) => {
   const { response, error, fetching, fetchData } = useFetch(`/blueprint/pdf/${member_id}/`, {
     method: 'GET',
   })
@@ -18,4 +18,4 @@ const useFetchBlueReport = (member_id) => {
   }
 }
 
-export { useFetchBlueReport }
+export { useDownloadBlueReport }

@@ -1,6 +1,12 @@
 <template>
   <div class="p-5">
-    <SwdSubHeader title="Blueprint report" class="p-5" with-share-btn region="blue-report" />
+    <SwdSubHeader
+      title="Blueprint report"
+      class="p-5"
+      with-share-btn
+      region="blue-report"
+      :report-id="route.params.id"
+    />
     <div>
       <div class="flex" data-pdf-region="blue-report">
         <div class="w-7/12">

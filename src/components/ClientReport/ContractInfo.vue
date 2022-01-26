@@ -1,15 +1,5 @@
 <template>
-  <div class="p-5 mb-5 flex">
-    <div class="w-3/12">
-      <BackButton text="Back" @click="$router.go(-1)" />
-    </div>
-    <div class="w-6/12 text-center">
-      <span class="text-title text-main font-semibold">Contract info</span>
-    </div>
-    <div class="flex justify-end w-3/12">
-      <ShareBtn pdf-region="client-report" />
-    </div>
-  </div>
+  <SwdSubHeader title="Blueprint report" class="p-5" />
   <div v-if="!isLoading">
     <div class="p-5">
       <div class="border rounded-md border-input-border p-5 mb-10">

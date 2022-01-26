@@ -19,6 +19,7 @@
           />
         </div>
       </div>
+      <ShareBtn pdf-region="client-report" />
     </div>
     <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
       <ContractItem v-for="item in clientReport.data" :key="item.id" :contract="item" />
