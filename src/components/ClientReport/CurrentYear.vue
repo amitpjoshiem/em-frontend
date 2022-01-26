@@ -17,12 +17,12 @@
 
     <div class="border border-t-0 border-color-grey flex justify-between px-4 py-2">
       <span class="text-main text-sm">Beginning Balance</span>
-      <span class="text-main text-sm font-semibold">---</span>
+      <span class="text-main text-sm font-semibold">{{ currencyFormat(contract.current_year.beginning_balance) }}</span>
     </div>
 
     <div class="border border-t-0 border-color-grey flex justify-between px-4 py-2">
       <span class="text-main text-sm">Contract Value</span>
-      <span class="text-main text-sm font-semibold">{{ currencyFormat(contract.contract_value) }}</span>
+      <span class="text-main text-sm font-semibold">{{ currencyFormat(contract.current_year.current_value) }}</span>
     </div>
     <div class="border border-t-0 border-color-grey flex justify-end px-4 py-2">
       <el-button size="small" @click="moreAction">More info</el-button>
@@ -52,7 +52,7 @@ export default {
     const router = useRouter()
 
     const getIssueDate = computed(() => {
-      return dayjs(props.contract.issue_at).format('MM/DD/YYYY')
+      return dayjs(props.contract.origination_date).format('MM/DD/YYYY')
     })
 
     const moreAction = () => {

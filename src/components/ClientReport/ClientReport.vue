@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
-      <CurrentYear v-for="item in clientReport.data.current_year" :key="item.id" :contract="item" />
+      <CurrentYear v-for="item in clientReport.data" :key="item.id" :contract="item" />
     </div>
     <TotalInfo />
   </div>
@@ -35,7 +35,7 @@ import { useRoute } from 'vue-router'
 import { reactive, toRefs } from 'vue'
 import CurrentYear from '@/components/ClientReport/CurrentYear.vue'
 import TotalInfo from '@/components/ClientReport/TotalInfo.vue'
-import { useClientReports } from '@/api/use-fetch-client-reports.js'
+import { useClientReportsAll } from '@/api/use-fetch-client-reports-all.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 
 export default {
@@ -51,7 +51,7 @@ export default {
       value: '',
     })
 
-    const { isLoading, isError, data: clientReport } = useClientReports(route.params.id)
+    const { isLoading, isError, data: clientReport } = useClientReportsAll(route.params.id)
     const { isLoading: isLoadingProspectDetails, isError: isErrorProspectDetails, data: member } = useProspectDetails()
 
     return {
