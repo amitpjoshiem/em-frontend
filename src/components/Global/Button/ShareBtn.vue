@@ -9,11 +9,8 @@
 </template>
 
 <script>
-// import { jsPDF } from 'jspdf'
-// import html2canvas from 'html2canvas'
 import IconShare from '@/assets/svg/icon-share.svg'
 import { useStore } from 'vuex'
-// import { pdfConfig } from '@/config/pdf-config'
 import { useDownloadBlueReport } from '@/api/use-download-blue-report'
 import { useDownloadClientReport } from '@/api/use-download-client-report'
 import { useRoute } from 'vue-router'
@@ -56,19 +53,19 @@ export default {
     ]
 
     const downloadPdf = async () => {
-      let blob
+      let blob = null
+      let res = null
       if (props.pdfRegion === 'blue-report') {
         await getBlueReport()
-        const res = await fetch(blueReportPdf.value.data.link)
-        blob = await res.blob()
+        res = await fetch(blueReportPdf.value.data.link)
       }
 
       if (props.pdfRegion === 'client-report') {
         await getClientReport()
-        const res = await fetch(clientReportPdf.value.data.link)
-        blob = await res.blob()
+        res = await fetch(clientReportPdf.value.data.link)
       }
 
+      blob = await res.blob()
       const url = window.URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
@@ -108,7 +105,6 @@ export default {
       isLoadingProspectDetails,
       isError,
       member,
-
       clientReportPdf,
       erroeClientReport,
       fetchingClientReport,
