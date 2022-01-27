@@ -4,9 +4,7 @@
       <div class="text-smm font-medium text-main">Asset Consolidations</div>
       <div class="flex">
         <ExportExcel />
-        <router-link :to="{ name: 'document-export', params: { id: memberId } }" class="pl-3">
-          <el-button size="small">More documents</el-button>
-        </router-link>
+        <el-button size="small" class="ml-2" @click="moreDocuments">More documents</el-button>
       </div>
     </div>
 
@@ -121,7 +119,7 @@ import { createMemberAssetsConsolidation } from '@/api/vueQuery/create-member-as
 import { deleteMemberAssetsConsolidation } from '@/api/vueQuery/delete-member-assets-consolidation'
 import { useAlert } from '@/utils/use-alert'
 import { currencyFormat } from '@/utils/currencyFormat'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useMutation, useQueryClient } from 'vue-query'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import HeaderTable from '@/components/NewProspect/AssetsConsolidations/HeaderTable.vue'
@@ -137,6 +135,7 @@ export default {
   },
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const queryClient = useQueryClient()
     const memberId = route.params.id
     const isLoadingUpdate = ref(false)
@@ -206,6 +205,10 @@ export default {
       focusElem.value = null
     }
 
+    const moreDocuments = () => {
+      router.push({ name: 'document-export', params: { id: memberId } })
+    }
+
     return {
       state,
       change,
@@ -225,6 +228,7 @@ export default {
       focusInput,
       focusElem,
       blurInput,
+      moreDocuments,
     }
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-color-grey rounded-lg mr-5 mt-5 px-5 py-6">
+  <div class="border border-color-grey rounded-lg mr-5 mt-5 py-8 px-5">
     <span class="text-main text-smm font-semibold">Concerns</span>
     <div v-if="!isFetching">
       <div class="flex">
