@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-color-grey rounded-lg mr-5 mt-5 p-5">
+  <div class="border border-color-grey rounded-lg mr-5 mt-5 py-7 px-5">
     <span class="text-main text-smm font-semibold">Net Worth</span>
     <div v-if="isFetched" class="flex mt-5">
       <div class="w-8/12">

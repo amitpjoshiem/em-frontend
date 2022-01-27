@@ -21,7 +21,7 @@
     "chart.js": "3.7.0",
     "core-js": "3.19.1",
     "dayjs": "^1.10.6",
-    "element-plus": "1.3.0-beta.3",
+    "element-plus": "1.3.0-beta.9",
     "maska": "^1.4.2",
     "pdfvuer": "^2.0.1",
     "postcss": "^7",
