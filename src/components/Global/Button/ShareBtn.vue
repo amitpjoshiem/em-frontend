@@ -9,12 +9,10 @@
 </template>
 
 <script>
-import { jsPDF } from 'jspdf'
-import html2canvas from 'html2canvas'
 import IconShare from '@/assets/svg/icon-share.svg'
 import { useStore } from 'vuex'
-import { pdfConfig } from '@/config/pdf-config'
-import { useFetchBlueReport } from '@/api/use-fetch-blue-report'
+import { useDownloadBlueReport } from '@/api/use-download-blue-report'
+import { useDownloadClientReport } from '@/api/use-download-client-report'
 import { useRoute } from 'vue-router'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 
@@ -32,8 +30,16 @@ export default {
     const store = useStore()
     const route = useRoute()
 
+    const id = route.params.id
+
     const { isLoading: isLoadingProspectDetails, isError, data: member } = useProspectDetails()
-    const { response: blueReportPdf, error, fetching, getBlueReport } = useFetchBlueReport(route.params.id)
+    const { response: blueReportPdf, error, fetching, getBlueReport } = useDownloadBlueReport(id)
+    const {
+      response: clientReportPdf,
+      error: erroeClientReport,
+      fetching: fetchingClientReport,
+      getClientReport,
+    } = useDownloadClientReport(id)
 
     const actionsOptions = [
       {
@@ -47,32 +53,27 @@ export default {
     ]
 
     const downloadPdf = async () => {
+      let blob = null
+      let res = null
       if (props.pdfRegion === 'blue-report') {
         await getBlueReport()
-        const res = await fetch(blueReportPdf.value.data.link)
-        const blob = await res.blob()
-        const url = window.URL.createObjectURL(blob)
-
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', member.value.name + '.pdf')
-        link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }))
-        setTimeout(function () {
-          link.remove()
-        }, 100)
-
-        return
+        res = await fetch(blueReportPdf.value.data.link)
       }
 
       if (props.pdfRegion === 'client-report') {
-        const elemRef = document.querySelector(`[data-pdf-region="${pdfConfig[props.pdfRegion].dataAttribute}"]`)
-        html2canvas(elemRef).then((canvas) => {
-          const doc = new jsPDF()
-          doc.text(pdfConfig[props.pdfRegion].titleText, 90, 25)
-          doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', ...pdfConfig[props.pdfRegion].jsDocOptions)
-          doc.save('report')
-        })
+        await getClientReport()
+        res = await fetch(clientReportPdf.value.data.link)
       }
+
+      blob = await res.blob()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', member.value.name + '.pdf')
+      link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }))
+      setTimeout(function () {
+        link.remove()
+      }, 100)
     }
 
     const actionsMap = {
@@ -104,6 +105,10 @@ export default {
       isLoadingProspectDetails,
       isError,
       member,
+      clientReportPdf,
+      erroeClientReport,
+      fetchingClientReport,
+      getClientReport,
     }
   },
 }

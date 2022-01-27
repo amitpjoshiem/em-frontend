@@ -3,21 +3,21 @@
     <div class="flex justify-between text-sm">
       <div class="font-semibold text-base">
         <span class="pr-2">Carrier:</span>
-        <span>Developer</span>
+        <span>{{ clientReport.carrier }}</span>
       </div>
-      <div>
+      <!-- <div>
         <span class="pr-2">Income Account Value:</span>
         <span>{{ currencyFormat(99999999) }}</span>
-      </div>
+      </div> -->
     </div>
     <div class="flex justify-between mt-5 text-sm">
       <div>
         <span class="pr-2">Contract# </span>
-        <span>12232323</span>
+        <span>{{ clientReport.contractNumber }}</span>
       </div>
       <div>
         <span class="pr-2">IssueDate: </span>
-        <span>01/01/2021</span>
+        <span>{{ clientReport.originationDateFormatted }}</span>
       </div>
     </div>
 
@@ -32,14 +32,24 @@
         <th class="border border-input-border w-1/10 py-1" scope="col">Interest credited</th>
         <th class="border border-input-border w-1/10 py-1" scope="col">Growth</th>
         <th class="border border-input-border w-1/10 py-1" scope="col">Withdrawals</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Contract value</th>
+        <th class="border border-input-border w-1/10 py-1" scope="col">Current value</th>
       </tr>
       <tr>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">50</td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">30</td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">100</td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">80</td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">80</td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+          {{ currencyFormat(clientReportYear.beginningBalance) }}
+        </td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+          {{ currencyFormat(clientReportYear.interestCredited) }}
+        </td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+          {{ currencyFormat(clientReportYear.growth) }}
+        </td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+          {{ currencyFormat(clientReportYear.withdrawals) }}
+        </td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+          {{ currencyFormat(clientReportYear.currentValue) }}
+        </td>
       </tr>
     </table>
   </div>
@@ -47,9 +57,23 @@
 
 <script>
 import { currencyFormat } from '@/utils/currencyFormat'
+import { ClientReport } from '@/dto/ClientReport/ClientReport'
+import { ClientReportYear } from '@/dto/ClientReport/ClientReportYear'
 
 export default {
   name: 'ContractInfoYear',
+  props: {
+    clientReport: {
+      type: ClientReport,
+      require: true,
+      default: () => {},
+    },
+    clientReportYear: {
+      type: ClientReportYear,
+      require: true,
+      default: () => {},
+    },
+  },
   setup() {
     return {
       currencyFormat,
