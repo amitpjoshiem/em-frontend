@@ -21,10 +21,17 @@
       </div>
       <ShareBtn pdf-region="client-report" />
     </div>
-    <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
-      <ContractItem v-for="item in clientReport.data" :key="item.id" :contract="item" />
-    </div>
-    <TotalInfo />
+    <template v-if="clientReport.data.length">
+      <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
+        <ContractItem v-for="item in clientReport.data" :key="item.id" :contract="item" />
+      </div>
+      <TotalInfo />
+    </template>
+    <template v-else>
+      <div class="text-center text-main mt-5">
+        <span>No client reports available</span>
+      </div>
+    </template>
   </div>
   <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
