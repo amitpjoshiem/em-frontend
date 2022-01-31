@@ -22,17 +22,35 @@
         <div class="flex flex-col justify-center text-main text-xs font-medium">
           <el-form ref="form" :model="ruleForm" status-icon size="small">
             <el-form-item>
-              <el-input v-model="ruleForm.liquidity" placeholder="$12345" type="number" @change="change()">
+              <el-input
+                v-model="ruleForm.liquidity"
+                placeholder="$12345"
+                type="number"
+                :disabled="isLoadingCreate"
+                @change="change()"
+              >
                 <template #prepend>$</template>
               </el-input>
             </el-form-item>
             <el-form-item class="mt-4">
-              <el-input v-model="ruleForm.growth" placeholder="$12345" type="number" @change="change()">
+              <el-input
+                v-model="ruleForm.growth"
+                placeholder="$12345"
+                type="number"
+                :disabled="isLoadingCreate"
+                @change="change()"
+              >
                 <template #prepend>$</template>
               </el-input>
             </el-form-item>
             <el-form-item class="mt-4">
-              <el-input v-model="ruleForm.income" placeholder="$12345" type="number" @change="change()">
+              <el-input
+                v-model="ruleForm.income"
+                placeholder="$12345"
+                type="number"
+                :disabled="isLoadingCreate"
+                @change="change()"
+              >
                 <template #prepend>$</template>
               </el-input>
             </el-form-item>
