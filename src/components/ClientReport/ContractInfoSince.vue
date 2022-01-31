@@ -3,12 +3,12 @@
     <div class="flex justify-between text-sm">
       <div>
         <span class="pr-2">Contract Years:</span>
-        <span>2010</span>
+        <span>{{ clientReport.contractYear }}</span>
       </div>
-      <div>
+      <!-- <div>
         <span class="pr-2">Lifetime Income:</span>
         <span>2015</span>
-      </div>
+      </div> -->
     </div>
 
     <table class="w-full table-auto border-collapse border rounded-md text-xs">
@@ -25,11 +25,21 @@
         <th class="border border-input-border w-1/10 py-1" scope="col">Average Growth</th>
       </tr>
       <tr>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">50</td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">30</td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">100</td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">80</td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">80</td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+          {{ currencyFormat(clientReportSince.totalPremiums) }}
+        </td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+          {{ currencyFormat(clientReportSince.bonusReceived) }}
+        </td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+          {{ currencyFormat(clientReportSince.interestCredited) }}
+        </td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+          {{ currencyFormat(clientReportSince.totalWithdrawals) }}
+        </td>
+        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+          {{ currencyFormat(clientReportSince.averageGrowth) }}
+        </td>
       </tr>
     </table>
   </div>
@@ -37,9 +47,23 @@
 
 <script>
 import { currencyFormat } from '@/utils/currencyFormat'
+import { ClientReport } from '@/dto/ClientReport/ClientReport'
+import { ClientReportSince } from '@/dto/ClientReport/ClientReportSince'
 
 export default {
   name: 'ContractInfoSince',
+  props: {
+    clientReport: {
+      type: ClientReport,
+      require: true,
+      default: () => {},
+    },
+    clientReportSince: {
+      type: ClientReportSince,
+      require: true,
+      default: () => {},
+    },
+  },
   setup() {
     return {
       currencyFormat,

@@ -1,10 +1,10 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function fetchClientReports(id) {
+function fetchClientReportsAll(id) {
   return fetcher({
-    url: `/client_reports/${id}`,
+    url: `/client_reports/all/${id}`,
     options: { method: 'GET' },
   })
 }
 
-export { fetchClientReports }
+export { fetchClientReportsAll }

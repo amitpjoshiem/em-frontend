@@ -51,6 +51,7 @@ export const useFetchActivities = () => {
 
   const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, isLoading } =
     useInfiniteQuery(['activity', queryKeySuffix], fetchActivities, {
+      cacheTime: 0,
       getNextPageParam: () => [
         'activity',
         {

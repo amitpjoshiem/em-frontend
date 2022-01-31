@@ -5,7 +5,9 @@
         <span class="w-9 h-9 rounded-md flex justify-center items-center bg-activity">
           <InlineSvg :src="IconCurrentYear" />
         </span>
-        <span class="ml-4 text-main text-title font-semibold">Contract {{ contract.contract_number }}</span>
+        <router-link :to="{ name: 'contract-info', params: { id: contract.id } }">
+          <span class="ml-4 text-main text-title font-semibold">Contract {{ contract.contract_number }}</span>
+        </router-link>
       </div>
       <span class="text-xs text-gray03">issue date: {{ getIssueDate }}</span>
     </div>
@@ -17,12 +19,12 @@
 
     <div class="border border-t-0 border-color-grey flex justify-between px-4 py-2">
       <span class="text-main text-sm">Beginning Balance</span>
-      <span class="text-main text-sm font-semibold">---</span>
+      <span class="text-main text-sm font-semibold">{{ currencyFormat(contract.current_year.beginning_balance) }}</span>
     </div>
 
     <div class="border border-t-0 border-color-grey flex justify-between px-4 py-2">
       <span class="text-main text-sm">Contract Value</span>
-      <span class="text-main text-sm font-semibold">{{ currencyFormat(contract.contract_value) }}</span>
+      <span class="text-main text-sm font-semibold">{{ currencyFormat(contract.current_year.current_value) }}</span>
     </div>
     <div class="border border-t-0 border-color-grey flex justify-end px-4 py-2">
       <el-button size="small" @click="moreAction">More info</el-button>
@@ -38,7 +40,7 @@ import dayjs from 'dayjs'
 import { useRouter } from 'vue-router'
 
 export default {
-  name: 'CurrentYear',
+  name: 'ContractItem',
 
   props: {
     contract: {
@@ -52,11 +54,10 @@ export default {
     const router = useRouter()
 
     const getIssueDate = computed(() => {
-      return dayjs(props.contract.issue_at).format('MM/DD/YYYY')
+      return dayjs(props.contract.origination_date).format('MM/DD/YYYY')
     })
 
     const moreAction = () => {
-      console.log('moreAction')
       router.push({ name: 'contract-info', params: { id: props.contract.id } })
     }
 
