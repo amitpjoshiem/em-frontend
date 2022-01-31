@@ -24,5 +24,11 @@ export async function useSockets() {
     store.dispatch('notifications/newNotifications', {
       value: ctx.data,
     })
+
+    if (ctx.data.need_update !== null) {
+      store.commit('globalComponents/setNeedUpdateContent', {
+        value: ctx.data.need_update,
+      })
+    }
   })
 }
