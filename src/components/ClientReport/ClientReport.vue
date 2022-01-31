@@ -27,11 +27,13 @@
       </div>
       <TotalInfo />
     </template>
-    <template v-else>
-      <div class="text-center text-main mt-5">
-        <span>No client reports available</span>
+
+    <div v-else class="flex flex-col items-center justify-center mt-10">
+      <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+        <InlineSvg :src="IconEmptyUsers" />
       </div>
-    </template>
+      <p class="text-gray03 font-semibold text-xss mt-3">No client reports available</p>
+    </div>
   </div>
   <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
@@ -42,6 +44,7 @@ import ContractItem from '@/components/ClientReport/ContractItem.vue'
 import TotalInfo from '@/components/ClientReport/TotalInfo.vue'
 import { useClientReportsAll } from '@/api/use-fetch-client-reports-all.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
+import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
   name: 'ClientReport',
@@ -66,6 +69,7 @@ export default {
       isLoadingProspectDetails,
       isErrorProspectDetails,
       member,
+      IconEmptyUsers,
       ...toRefs(state),
     }
   },
