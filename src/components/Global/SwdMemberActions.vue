@@ -46,7 +46,7 @@ function getClientStepHash(user) {
       return 'prospect@step-3'
     case user.type === 'prospect' && user.step === 'assets_consolidation':
       return 'prospect@step-4'
-    case user.type === 'prospect' && user.step === 'stress_test':
+    case user.type === 'prospect' && user.step === 'member_report':
       return 'prospect@step-5'
     default:
       return 'onboarding'
