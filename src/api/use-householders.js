@@ -12,16 +12,19 @@ export const useHouseholders = () => {
     return store.state.dashboard.houseHolderType
   })
 
+  const orderBy = computed(() => store.state.globalComponents.sortMembers.orderBy)
   const limit = computed(() => store.state.globalComponents.itemsPerPage.values.dashboard)
 
   const reactiveType = ref(houseHolderType)
   const reactiveLimit = ref(limit)
+  const reactiveOrderBy = ref(orderBy)
 
   const queryKey = reactive([
     'householders',
     {
       reactiveType,
       reactiveLimit,
+      reactiveOrderBy,
     },
   ])
 
