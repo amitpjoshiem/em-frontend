@@ -22,6 +22,7 @@ const actions = {
     commit('setNewNotifications', value)
   },
 }
+
 export default {
   namespaced: true,
   state,

@@ -20,6 +20,8 @@ import { useFetchExcelDocuments } from '@/api/use-fetch-excel-documents.js'
 import DocumentExportItem from '@/components/NewProspect/AssetsConsolidations/DocumentExportItem.vue'
 import { useRoute } from 'vue-router'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
+import { watchEffect } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'DocumentExport',
@@ -28,8 +30,15 @@ export default {
   },
   setup() {
     const route = useRoute()
+    const store = useStore()
 
-    const { isLoading, isError, isFetching, data: document } = useFetchExcelDocuments(route.params.id)
+    const { isLoading, isError, isFetching, data: document, refetch } = useFetchExcelDocuments(route.params.id)
+
+    watchEffect(() => {
+      if (store.state.globalComponents.needUpdateContent.value === 'assets_consolidation_excel_export') {
+        refetch.value()
+      }
+    })
 
     return {
       isLoading,
@@ -37,6 +46,7 @@ export default {
       document,
       isFetching,
       IconEmptyUsers,
+      refetch,
     }
   },
 }

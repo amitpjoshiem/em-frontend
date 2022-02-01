@@ -13,12 +13,24 @@
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Member</div>
         <el-form-item class="w-4/12 mr-1">
-          <el-input v-model="ruleForm.current_member" placeholder="$12345" type="number" @change="change()">
+          <el-input
+            v-model="ruleForm.current_member"
+            placeholder="$12345"
+            type="number"
+            :disabled="isLoadingCreate"
+            @change="change()"
+          >
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
-          <el-input v-model="ruleForm.future_member" placeholder="$12345" type="number" @change="change()">
+          <el-input
+            v-model="ruleForm.future_member"
+            placeholder="$12345"
+            type="number"
+            :disabled="isLoadingCreate"
+            @change="change()"
+          >
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
@@ -27,12 +39,24 @@
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Spouse</div>
         <el-form-item class="w-4/12 mr-1">
-          <el-input v-model="ruleForm.current_spouse" placeholder="$12345" type="number" @change="change()">
+          <el-input
+            v-model="ruleForm.current_spouse"
+            placeholder="$12345"
+            type="number"
+            :disabled="isLoadingCreate"
+            @change="change()"
+          >
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
-          <el-input v-model="ruleForm.future_spouse" placeholder="$12345" type="number" @change="change()">
+          <el-input
+            v-model="ruleForm.future_spouse"
+            placeholder="$12345"
+            type="number"
+            :disabled="isLoadingCreate"
+            @change="change()"
+          >
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
@@ -41,12 +65,24 @@
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Pensions</div>
         <el-form-item class="w-4/12 mr-1">
-          <el-input v-model="ruleForm.current_pensions" placeholder="$12345" type="number" @change="change()">
+          <el-input
+            v-model="ruleForm.current_pensions"
+            placeholder="$12345"
+            type="number"
+            :disabled="isLoadingCreate"
+            @change="change()"
+          >
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
-          <el-input v-model="ruleForm.future_pensions" placeholder="$12345" type="number" @change="change()">
+          <el-input
+            v-model="ruleForm.future_pensions"
+            placeholder="$12345"
+            type="number"
+            :disabled="isLoadingCreate"
+            @change="change()"
+          >
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
@@ -55,12 +91,24 @@
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Rental income</div>
         <el-form-item class="w-4/12 mr-1">
-          <el-input v-model="ruleForm.current_rental_income" placeholder="$12345" type="number" @change="change()">
+          <el-input
+            v-model="ruleForm.current_rental_income"
+            placeholder="$12345"
+            type="number"
+            :disabled="isLoadingCreate"
+            @change="change()"
+          >
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
-          <el-input v-model="ruleForm.future_rental_income" placeholder="$12345" type="number" @change="change()">
+          <el-input
+            v-model="ruleForm.future_rental_income"
+            placeholder="$12345"
+            type="number"
+            :disabled="isLoadingCreate"
+            @change="change()"
+          >
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
@@ -69,12 +117,24 @@
       <div class="flex justify-center items-center px-3 border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Investments</div>
         <el-form-item class="w-4/12 mr-1">
-          <el-input v-model="ruleForm.current_investment" placeholder="$12345" type="number" @change="change()">
+          <el-input
+            v-model="ruleForm.current_investment"
+            placeholder="$12345"
+            type="number"
+            :disabled="isLoadingCreate"
+            @change="change()"
+          >
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
-          <el-input v-model="ruleForm.future_investment" placeholder="$12345" type="number" @change="change()">
+          <el-input
+            v-model="ruleForm.future_investment"
+            placeholder="$12345"
+            type="number"
+            :disabled="isLoadingCreate"
+            @change="change()"
+          >
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
@@ -90,7 +150,7 @@
       <div class="flex justify-center items-center border-b border-r border-l border-color-grey py-4 px-3">
         <div class="w-8/12 text-main text-xss mr-2.5">Tax</div>
         <el-form-item class="w-4/12">
-          <el-input v-model="ruleForm.tax" placeholder="$12345" @change="change()">
+          <el-input v-model="ruleForm.tax" placeholder="$12345" :disabled="isLoadingCreate" @change="change()">
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
@@ -99,7 +159,7 @@
       <div class="flex justify-center items-center border-b border-r border-l border-color-grey py-4 px-3">
         <div class="w-8/12 text-main text-xss mr-2.5">IRA</div>
         <el-form-item class="w-4/12">
-          <el-input v-model="ruleForm.ira_first" placeholder="$12345" @change="change()">
+          <el-input v-model="ruleForm.ira_first" placeholder="$12345" :disabled="isLoadingCreate" @change="change()">
             <template #prepend>$</template>
           </el-input>
         </el-form-item>
@@ -108,7 +168,7 @@
       <div class="flex justify-center items-center border-b border-r border-l border-color-grey py-4 px-3">
         <div class="w-8/12 text-main text-xss mr-2.5">IRA</div>
         <el-form-item class="w-4/12">
-          <el-input v-model="ruleForm.ira_second" placeholder="$12345" @change="change()">
+          <el-input v-model="ruleForm.ira_second" placeholder="$12345" :disabled="isLoadingCreate" @change="change()">
             <template #prepend>$</template>
           </el-input>
         </el-form-item>

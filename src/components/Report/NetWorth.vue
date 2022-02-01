@@ -8,7 +8,13 @@
             <div class="bg-dark-blue-charts w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Liquid</div>
             <el-form-item class="w-5/12">
-              <el-input v-model="ruleForm.liquid.amount" placeholder="$12345" type="number" @change="change()">
+              <el-input
+                v-model="ruleForm.liquid.amount"
+                placeholder="$12345"
+                type="number"
+                :disabled="isLoadingCreate"
+                @change="change()"
+              >
                 <template #prepend>$</template>
               </el-input>
             </el-form-item>
@@ -23,7 +29,13 @@
             <div class="bg-activity w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Market</div>
             <el-form-item class="w-5/12">
-              <el-input v-model="ruleForm.market.amount" placeholder="$12345" type="number" @change="change()">
+              <el-input
+                v-model="ruleForm.market.amount"
+                placeholder="$12345"
+                type="number"
+                :disabled="isLoadingCreate"
+                @change="change()"
+              >
                 <template #prepend>$</template>
               </el-input>
             </el-form-item>
@@ -38,7 +50,13 @@
             <div class="bg-color-error w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Income safe</div>
             <el-form-item class="w-5/12">
-              <el-input v-model="ruleForm.income_safe.amount" placeholder="$12345" type="number" @change="change()">
+              <el-input
+                v-model="ruleForm.income_safe.amount"
+                placeholder="$12345"
+                type="number"
+                :disabled="isLoadingCreate"
+                @change="change()"
+              >
                 <template #prepend>$</template>
               </el-input>
             </el-form-item>
