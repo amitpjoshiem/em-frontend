@@ -359,11 +359,13 @@ function setInitValue(ruleForm, member) {
   if (member?.value?.data) {
     Object.assign(ruleForm, member.value.data)
   }
-  ruleForm.birthday = dayjs(ruleForm.birthday).format('MM/DD/YYYY')
+
+  if (ruleForm.birthday) ruleForm.birthday = dayjs(ruleForm.birthday).format('MM/DD/YYYY')
+
   if (ruleForm.retirement_date !== null) ruleForm.retirement_date = dayjs(ruleForm.retirement_date).format('MM/DD/YYYY')
-  ruleForm.spouse.birthday = dayjs(ruleForm.spouse.birthday).format('MM/DD/YYYY')
-  if (ruleForm.spouse.retirement_date !== null)
-    ruleForm.spouse.retirement_date = dayjs(ruleForm.spouse.retirement_date).format('MM/DD/YYYY')
+
+  if (ruleForm.spouse.birthday) ruleForm.spouse.birthday = dayjs(ruleForm.spouse.birthday).format('MM/DD/YYYY')
+
   if (ruleForm.employment_history && !ruleForm.employment_history.length) {
     ruleForm.employment_history.push({
       company_name: '',
@@ -371,12 +373,53 @@ function setInitValue(ruleForm, member) {
       years: '',
     })
   }
+
   if (ruleForm.spouse.employment_history && !ruleForm.spouse.employment_history.length) {
     ruleForm.spouse.employment_history.push({
       company_name: '',
       occupation: '',
       years: '',
     })
+  }
+
+  if (ruleForm.married === null) {
+    ruleForm.married = true
+    ruleForm.spouse = {
+      name: '',
+      email: '',
+      birthday: '',
+      retired: false,
+      retirement_date: '',
+      phone: '',
+      employment_history: [
+        {
+          company_name: '',
+          occupation: '',
+          years: '',
+        },
+      ],
+    }
+  }
+
+  if (!ruleForm.house.type) {
+    ruleForm.house = {
+      type: 'own',
+      market_value: '',
+      total_debt: '',
+      remaining_mortgage_amount: '',
+      monthly_payment: '',
+      total_monthly_expenses: '',
+    }
+  }
+
+  if (!ruleForm.other.risk) {
+    ruleForm.other = {
+      risk: 'conservative',
+      questions: '',
+      retirement: '',
+      retirement_money: '',
+      work_with_advisor: true,
+    }
   }
 }
 
