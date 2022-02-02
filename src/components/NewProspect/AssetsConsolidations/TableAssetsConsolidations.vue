@@ -151,7 +151,8 @@ export default {
 
     watchEffect(() => {
       if (isLoading.value === false) {
-        Object.assign(state, assetsData.value)
+        // Object.assign(state, assetsData.value)
+        Object.assign(state, JSON.parse(JSON.stringify(assetsData.value)))
       }
     })
 
