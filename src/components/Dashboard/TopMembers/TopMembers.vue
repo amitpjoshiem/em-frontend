@@ -6,7 +6,7 @@
         <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
           <InlineSvg :src="IconEmptyUsers" />
         </div>
-        <p class="text-gray03 font-semibold text-xss mt-3">No recently added prospects</p>
+        <p class="text-gray03 font-semibold text-xss mt-3">No recently added opportunity</p>
       </div>
     </div>
     <el-skeleton v-else :rows="4" animated class="p-5" />

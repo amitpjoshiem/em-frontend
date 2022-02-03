@@ -5,7 +5,7 @@
       <InlineSvg v-else-if="up === null" :src="IconUpRiskEmpty" class="h-5" />
       <InlineSvg v-else :src="IconDownRisk" class="h-5" />
       <div>
-        <span class="text-small text-gray03">Total Income: </span>
+        <span class="text-small text-gray03">Total Income opportunity: </span>
         <span class="text-sm font-medium">{{ currencyFormat(total) }}</span>
       </div>
       <div class="flex items-center justify-center h-4.5 rounded-md" :class="getPercentClass">

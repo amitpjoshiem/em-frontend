@@ -191,7 +191,7 @@
       <div class="px-16 mt-7 border-b">
         <span class="text-main text-xl font-semibold">Employment history</span>
         <div class="my-5">
-          <span class="text-gray03 text-xs uppercase">Contact prospect</span>
+          <span class="text-gray03 text-xs uppercase">Contact opportunity</span>
         </div>
 
         <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index">
@@ -313,7 +313,7 @@
             <el-radio label="aggressive">Aggressive</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="Does the prospect have any specific questions to discuss?" prop="questions">
+        <el-form-item label="Does the opportunity have any specific questions to discuss?" prop="questions">
           <el-input v-model="ruleForm.other.questions" type="textarea" />
         </el-form-item>
         <el-form-item label="Goal for retiretment" prop="retirement">
@@ -323,7 +323,7 @@
           <el-input v-model="ruleForm.other.retirement_money" type="textarea" />
         </el-form-item>
 
-        <el-form-item label="Does the prospect currently work with the advisor?">
+        <el-form-item label="Does the opportunity currently work with the advisor?">
           <el-radio-group v-model="ruleForm.other.work_with_advisor">
             <el-radio :label="true">Yes</el-radio>
             <el-radio :label="false">No</el-radio>
@@ -539,7 +539,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: isUpdateMember.value ? 'Prospect update successfully' : 'Prospect created successfully',
+              message: isUpdateMember.value ? 'Opportunity update successfully' : 'Opportunity created successfully',
             })
             store.commit('newProspect/setStep', step.value + 1)
             router.push({

@@ -7,7 +7,7 @@
     header-cell-class-name="header-class"
     header-row-class-name="header-row-class"
     :default-sort="getDefaultSort"
-    empty-text="No recently added prospects"
+    empty-text="No recently added opportunity"
     @sort-change="change"
   >
     <el-table-column prop="name" label="Name" min-width="240" sortable>
