@@ -34,7 +34,7 @@
         <span class="px-2">
           <InlineSvg :src="IconPlus" />
         </span>
-        <div class="pr-2">Add new</div>
+        <div class="pr-2">Add new opportunity</div>
       </div>
 
       <div class="border-l border-color-grey h-16" />

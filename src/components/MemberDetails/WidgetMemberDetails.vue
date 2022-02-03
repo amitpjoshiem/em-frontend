@@ -14,7 +14,7 @@
             {{ user.name }}
           </router-link>
           <span class="text-small text-activity-item font-medium uppercase">
-            {{ user.type }}
+            {{ getUserType }}
           </span>
         </div>
       </div>
@@ -80,6 +80,7 @@ import { useRoute } from 'vue-router'
 import { convertToClient } from '@/api/vueQuery/convert-to-client'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
+import { computed } from 'vue-demi'
 
 export default {
   name: 'WidgetMemberDetails',
@@ -91,7 +92,7 @@ export default {
     },
   },
   emits: ['updateMemberInfo'],
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const route = useRoute()
     const memberId = route.params.id
 
@@ -115,6 +116,11 @@ export default {
       }
     }
 
+    const getUserType = computed(() => {
+      if (props.user.type === 'prospect') return 'Opportunity'
+      return props.user.type
+    })
+
     return {
       IconProspectAge,
       IconTotal,
@@ -126,6 +132,7 @@ export default {
       isFetching,
       data,
       error,
+      getUserType,
     }
   },
 }

@@ -7,12 +7,13 @@
     }"
   >
     <span>
-      {{ userType }}
+      {{ title }}
     </span>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
 export default {
   name: 'SwdTypeUserLabel',
   props: {
@@ -21,6 +22,16 @@ export default {
       require: true,
       default: 'prospect',
     },
+  },
+  setup(props) {
+    const title = computed(() => {
+      if (props.userType === 'prospect') return 'Opportunity'
+      return props.userType
+    })
+
+    return {
+      title,
+    }
   },
 }
 </script>

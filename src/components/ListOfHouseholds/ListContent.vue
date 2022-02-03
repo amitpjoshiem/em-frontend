@@ -14,7 +14,7 @@
           class="mr-5 text-gray03 text-smm cursor-pointer"
           :class="{ active: getActiveTab === 'prospects' }"
         >
-          Prospects
+          Opportunities
         </router-link>
         <router-link
           :to="{ name: 'clients' }"
