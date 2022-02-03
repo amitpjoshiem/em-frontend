@@ -25,7 +25,7 @@ export default {
         command: 'clients',
       },
       {
-        title: 'Prospect',
+        title: 'Opportunity',
         command: 'prospect',
       },
     ]

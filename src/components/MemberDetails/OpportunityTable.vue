@@ -20,7 +20,7 @@
             <span class="px-2">
               <InlineSvg :src="IconPlus" />
             </span>
-            <div class="pr-2">Add opportunity</div>
+            <div class="pr-2">Add child opportunity</div>
           </div>
         </router-link>
       </div>

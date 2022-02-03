@@ -79,7 +79,7 @@ export default {
     const { mutateAsync: updateMember } = useMutation(updateMembers)
 
     const getTitle = computed(() => {
-      if (data.value && data.value.type === 'prospect') return 'Prospect details'
+      if (data.value && data.value.type === 'prospect') return 'Opportunity details'
       return 'Client details'
     })
 

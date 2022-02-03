@@ -44,7 +44,7 @@ export default {
     const { isLoading: isLoadingProspectDetails, isError, data: member, updateMemberInfo, other } = useProspectDetails()
 
     const getTitle = computed(() => {
-      if (member.value && member.value.type === 'prospect') return 'Prospect details'
+      if (member.value && member.value.type === 'prospect') return 'Opportunity details'
       return 'Client details'
     })
 
