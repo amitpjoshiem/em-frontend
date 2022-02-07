@@ -5,7 +5,7 @@
         <SwdAvatar :link="getAvatarUrl" />
         <div class="flex flex-col ml-2">
           <span class="text-sm text-main font-medium">{{ member.data?.name }}</span>
-          <span class="text-small text-activity-item font-medium uppercase"> {{ member.data?.type }} </span>
+          <span class="text-small text-activity-item font-medium uppercase"> {{ getTitle }} </span>
         </div>
       </div>
     </div>
@@ -45,11 +45,17 @@ export default {
       return ''
     })
 
+    const getTitle = computed(() => {
+      if (props.member.data.type === 'prospect') return 'Opportunity'
+      return 'Client'
+    })
+
     return {
       getAvatarUrl,
       IconRedRisk,
       IconOpenSafety,
       IconBlueCash,
+      getTitle,
     }
   },
 }

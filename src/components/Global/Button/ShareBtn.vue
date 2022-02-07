@@ -36,7 +36,7 @@ export default {
     const { response: blueReportPdf, error, fetching, getBlueReport } = useDownloadBlueReport(id)
     const {
       response: clientReportPdf,
-      error: erroeClientReport,
+      error: errorClientReport,
       fetching: fetchingClientReport,
       getClientReport,
     } = useDownloadClientReport(id)
@@ -106,7 +106,7 @@ export default {
       isError,
       member,
       clientReportPdf,
-      erroeClientReport,
+      errorClientReport,
       fetchingClientReport,
       getClientReport,
     }
