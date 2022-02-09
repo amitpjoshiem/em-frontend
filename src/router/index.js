@@ -227,6 +227,12 @@ const routes = [
       },
 
       {
+        path: 'error',
+        name: 'error',
+        component: () => import(/* webpackChunkName: "Logout" */ '../views/ErrorPage.vue'),
+      },
+
+      {
         path: '',
         redirect: () => {
           return { name: 'dashboard' }
