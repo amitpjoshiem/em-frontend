@@ -5,7 +5,7 @@
         <BackButton text="Back" @click="back" />
       </div>
       <div class="w-6/12 text-center">
-        <span class="text-title text-main font-semibold">Erorr info</span>
+        <span class="text-title text-main font-semibold">Warning</span>
       </div>
     </div>
     <div class="flex flex-col justify-center mt-5 items-center">
