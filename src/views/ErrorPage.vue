@@ -33,7 +33,7 @@ export default {
 
     const back = () => {
       if (type === 'salesforce') {
-        router.push({ name: 'partners' })
+        router.replace({ name: 'partners' })
       } else {
         router.replace({ name: 'dashboard' })
       }
