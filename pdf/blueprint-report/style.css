@@ -1,0 +1,60 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  -webkit-print-color-adjust: exact;
+}
+
+@page {
+  size: A4 landscape;
+
+}
+
+html, body {
+  width:      29.7cm;
+  height:     21cm;
+}
+
+.page {
+  position:   relative;
+  top:        1cm;
+  left:       1cm;
+  width:      125%;
+  height:     19cm;
+  page-break-after: always
+}
+
+.bg-widget-bg{
+  background-color: #F2F5FA
+}
+
+.text-gray03{
+  color: #AAB5CF;
+}
+
+.text-gray{
+  color: #2E2F38;
+}
+
+.bg-color-light-blue{
+  background-color: #E9F8FF;
+}
+
+.bg-dark-blue-charts{
+  background-color: #53576A;
+}
+
+.bg-activity {
+  background-color: #66B6FF;
+}
+
+.bg-color-error{
+  background-color: #FF92A5;
+}
+
+.border-color-grey {
+  border-color: #EBF0FA;
+}
