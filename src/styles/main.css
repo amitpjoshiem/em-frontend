@@ -274,3 +274,7 @@
 .el-timeline-item__tail {
   margin-top: 15px;
 }
+
+.el-form-item{
+  margin-bottom: 0;
+}
