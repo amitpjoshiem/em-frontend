@@ -33,29 +33,41 @@
       </div>
     </div>
 
-    <div class="flex justify-between">
-      <div class="flex items-center">
-        <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
-          <InlineSvg :src="IconTotal" />
-        </span>
-        <span class="ml-2 text-xs text-gray03">Total net worth:</span>
+    <el-form ref="form" :model="ruleForm" status-icon size="small">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
+            <InlineSvg :src="IconTotal" />
+          </span>
+          <span class="ml-2 text-xs text-gray03">Total net worth:</span>
+        </div>
+        <el-form-item class="w-5/12">
+          <el-input
+            v-model="ruleForm.total_net_worth"
+            placeholder="$12345"
+            type="number"
+            size="small"
+            @change="change()"
+          >
+            <template #prepend>$</template>
+          </el-input>
+        </el-form-item>
       </div>
-      <div class="text-sm">
-        <span class="text-main font-semibold">$900,000</span>
-      </div>
-    </div>
 
-    <div class="flex justify-between pt-3">
-      <div class="flex items-center">
-        <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
-          <InlineSvg :src="IconGoal" />
-        </span>
-        <span class="ml-2 text-xs text-gray03">Goal:</span>
+      <div class="flex justify-between pt-3">
+        <div class="flex items-center">
+          <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
+            <InlineSvg :src="IconGoal" />
+          </span>
+          <span class="ml-2 text-xs text-gray03">Goal:</span>
+        </div>
+        <el-form-item class="w-5/12">
+          <el-input v-model="ruleForm.goal" placeholder="$12345" type="number" size="small" @change="change()">
+            <template #prepend>$</template>
+          </el-input>
+        </el-form-item>
       </div>
-      <div class="text-sm">
-        <span class="text-main font-semibold">$1,200,000</span>
-      </div>
-    </div>
+    </el-form>
 
     <div v-if="user.type === 'prospect'" class="flex justify-between pt-5">
       <Button small-btn-activity text-semi-bold text-btn="Convert to client" @click="convert" />
@@ -80,7 +92,8 @@ import { useRoute } from 'vue-router'
 import { convertToClient } from '@/api/vueQuery/convert-to-client'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
-import { computed } from 'vue-demi'
+import { computed, reactive, onMounted } from 'vue'
+import { updateMembers } from '@/api/vueQuery/update-members'
 
 export default {
   name: 'WidgetMemberDetails',
@@ -96,7 +109,19 @@ export default {
     const route = useRoute()
     const memberId = route.params.id
 
+    const ruleForm = reactive({
+      total_net_worth: '',
+      goal: '',
+    })
+
+    const { mutateAsync: updateMember } = useMutation(updateMembers)
+
     const { isLoading, isFetching, data, error, mutateAsync: convertClient } = useMutation(convertToClient)
+
+    onMounted(() => {
+      ruleForm.total_net_worth = props.user.total_net_worth
+      ruleForm.goal = props.user.goal
+    })
 
     const convert = async () => {
       const res = await convertToClient(memberId)
@@ -121,6 +146,18 @@ export default {
       return props.user.type
     })
 
+    const change = async () => {
+      const res = await updateMember({ form: ruleForm, id: memberId })
+
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Opportunity update successfully',
+        })
+      }
+    }
+
     return {
       IconProspectAge,
       IconTotal,
@@ -133,6 +170,8 @@ export default {
       data,
       error,
       getUserType,
+      ruleForm,
+      change,
     }
   },
 }
