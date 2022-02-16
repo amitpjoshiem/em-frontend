@@ -32,7 +32,7 @@ import { computed, onMounted } from 'vue'
 import { useFetchMember } from '@/api/use-fetch-member'
 
 export default {
-  name: 'MemberReport',
+  name: 'BlueprintReport',
   components: {
     TotalExpenses,
     NetWorth,

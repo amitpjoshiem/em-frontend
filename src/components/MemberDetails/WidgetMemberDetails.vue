@@ -72,7 +72,7 @@
     <div v-if="user.type === 'prospect'" class="flex justify-between pt-5">
       <Button small-btn-activity text-semi-bold text-btn="Convert to client" @click="convert" />
 
-      <router-link :to="{ name: 'member-report', params: { id: user.id } }" class="pl-2.5 font-medium">
+      <router-link :to="{ name: 'blueprint-report', params: { id: user.id } }" class="pl-2.5 font-medium">
         <Button small-btn-gray text-semi-bold text-btn="Blueprint report" />
       </router-link>
     </div>
