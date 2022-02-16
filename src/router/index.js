@@ -163,6 +163,14 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "AssetAccounts" */ '../components/AssetAccounts/AssetAccounts.vue'),
       },
+
+      {
+        path: 'opportunity-contact/:id',
+        name: 'opportunity-contact',
+        component: () =>
+          import(/* webpackChunkName: "AssetAccounts" */ '../components/OpportunityContact/OpportunityContact.vue'),
+      },
+
       {
         path: 'asset-allocation-details/:id',
         name: 'asset-allocation-details',
