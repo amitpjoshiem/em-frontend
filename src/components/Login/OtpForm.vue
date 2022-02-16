@@ -16,10 +16,10 @@
         </h1>
         <h1 v-if="otpTypePhone" class="text-center text-gray03 pt-2.5 text-sm">Please check your SMS.</h1>
         <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
-          <el-form-item label="OTP" prop="code" class="py-3">
+          <el-form-item label="OTP" prop="code">
             <el-input v-model="ruleForm.code" type="number" placeholder="Enter otp code" />
           </el-form-item>
-          <el-form-item>
+          <el-form-item class="my-6">
             <Button
               :default-primary="!fetching"
               full
