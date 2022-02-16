@@ -14,7 +14,7 @@
           <el-form-item label="E-mail" prop="email" class="py-3">
             <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" />
           </el-form-item>
-          <el-form-item>
+          <el-form-item class="my-6">
             <Button :default-primary="!fetching" full text-btn="Continue" :disabled="fetching" type="submit" />
           </el-form-item>
         </el-form>
