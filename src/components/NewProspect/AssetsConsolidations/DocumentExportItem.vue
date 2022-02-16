@@ -19,7 +19,7 @@
       download
       class="el-button el-button--primary el-button--mini is-plain"
     >
-      download
+      Download
     </a>
     <el-button v-if="item.status === 'error'" type="danger" size="small" plain disabled>error</el-button>
   </div>

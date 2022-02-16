@@ -82,14 +82,41 @@ const routes = [
         component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
       },
       {
+        path: 'export-client-report/:id',
+        name: 'export-client-report',
+        component: () =>
+          import(/* webpackChunkName: "clientreport" */ '../components/Documents/ClientReport/ExportClientReports.vue'),
+        children: [
+          {
+            path: 'all',
+            name: 'all-client-report',
+            component: () =>
+              import(
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportAll.vue'
+              ),
+          },
+          {
+            path: 'pdf',
+            name: 'pdf-client-report',
+            component: () =>
+              import(
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportPdf.vue'
+              ),
+          },
+          {
+            path: 'excel',
+            name: 'excel-client-report',
+            component: () =>
+              import(
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportExcel.vue'
+              ),
+          },
+        ],
+      },
+      {
         path: 'contract-info/:id',
         name: 'contract-info',
         component: () => import(/* webpackChunkName: "ContractInfo" */ '../components/ClientReport/ContractInfo.vue'),
-      },
-      {
-        path: 'client-report/:id',
-        name: 'clientreport',
-        component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
       },
       {
         path: 'list-of-households',
