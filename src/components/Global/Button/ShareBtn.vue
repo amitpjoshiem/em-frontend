@@ -1,7 +1,20 @@
 <template>
   <SwdDropDown class="ml-2" :options="actionsOptions" @select="handleSelect">
     <template #titleDropDown>
-      <span class="cursor-pointer bg-white rounded flex justify-center items-center border border-color-grey px-1 py-1">
+      <span
+        class="
+          cursor-pointer
+          bg-white
+          rounded
+          flex
+          justify-center
+          items-center
+          border border-color-grey
+          pr-[7px]
+          pl-[6px]
+          py-[6px]
+        "
+      >
         <InlineSvg :src="IconShare" />
       </span>
     </template>
