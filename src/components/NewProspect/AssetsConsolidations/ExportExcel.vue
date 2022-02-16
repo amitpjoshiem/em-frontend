@@ -3,7 +3,13 @@
   <el-dialog v-model="state.dialogVisible" title="Export to Excel" width="40%" :before-close="closeDialog">
     <div class="flex flex-col items-center">
       <InlineSvg :src="IconSuccesChanged" />
-      <div class="pt-8">Export to Excel success</div>
+      <div class="pt-8">Export to Excel success.</div>
+      <div class="pt-2">
+        <span>You can find the file created in the</span>
+        <router-link :to="{ name: 'document-export', params: { id: memberId } }" class="text-activity">
+          List of documents.
+        </router-link>
+      </div>
     </div>
     <template #footer>
       <span class="dialog-footer">
@@ -48,7 +54,7 @@ export default {
       state,
       closeDialog,
       IconSuccesChanged,
-
+      memberId,
       create,
       isLoading,
       isError,
