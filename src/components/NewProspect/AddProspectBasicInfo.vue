@@ -382,6 +382,10 @@ function setInitValue(ruleForm, member) {
     })
   }
 
+  if (ruleForm.spouse.retired === null) {
+    ruleForm.spouse.retired = false
+  }
+
   if (ruleForm.married === null) {
     ruleForm.married = true
     ruleForm.spouse = {
