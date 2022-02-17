@@ -4,21 +4,21 @@
     <div class="flex p-5 justify-between">
       <div class="flex">
         <router-link
-          :to="{ name: 'all-report' }"
+          :to="{ name: 'all-report', query: { type: getCurrentQuery } }"
           class="mr-5 text-gray03 text-smm cursor-pointer"
           :class="{ active: getActiveTab === 'all-report' }"
         >
           ALL
         </router-link>
         <router-link
-          :to="{ name: 'pdf-report' }"
+          :to="{ name: 'pdf-report', query: { type: getCurrentQuery } }"
           class="mr-5 text-gray03 text-smm cursor-pointer"
           :class="{ active: getActiveTab === 'pdf-report' }"
         >
           PDF
         </router-link>
         <router-link
-          :to="{ name: 'excel-report' }"
+          :to="{ name: 'excel-report', query: { type: getCurrentQuery } }"
           class="text-gray03 text-smm cursor-pointer"
           :class="{ active: getActiveTab === 'excel-report' }"
         >
@@ -44,8 +44,13 @@ export default {
       return route.name
     })
 
+    const getCurrentQuery = computed(() => {
+      return route.query.type
+    })
+
     return {
       getActiveTab,
+      getCurrentQuery,
     }
   },
 }

@@ -8,7 +8,7 @@
           </template>
           <ItemDocuments
             :id="item.id"
-            :contracts="item.contracts"
+            :contracts="item.contracts ? item.contracts : []"
             :status="item.status"
             :link="item.link"
             :file-name="item.filename"

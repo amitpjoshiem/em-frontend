@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between">
     <div class="text-main w-7/12">
-      <div class="flex">
+      <div v-if="getContracts.length" class="flex">
         <div>Contract:</div>
         <div class="ml-2">
           {{ getContracts }}
@@ -32,9 +32,9 @@ export default {
   name: 'ItemDocuments',
   props: {
     contracts: {
-      type: Object,
+      type: Array,
       require: true,
-      default: () => {},
+      default: () => [],
     },
     status: {
       type: String,

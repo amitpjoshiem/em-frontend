@@ -1,14 +1,14 @@
 <template>
-  <div v-if="!isFetching" class="p-5">
-    <template v-if="documents.length">
+  <div v-if="!isFetchingClient && !isFetchingBlueprint" class="p-5">
+    <template v-if="getDocuments.length">
       <el-collapse>
-        <el-collapse-item v-for="(item, index) in documents" :key="index" :name="index">
+        <el-collapse-item v-for="(item, index) in getDocuments" :key="index" :name="index">
           <template #title>
             <ItemHeader :file-name="item.filename" :created-at="item.created_at" :type="item.type" />
           </template>
           <ItemDocuments
             :id="item.id"
-            :contracts="item.contracts"
+            :contracts="item.contracts ? item.contracts : []"
             :status="item.status"
             :link="item.link"
             :file-name="item.filename"
@@ -23,6 +23,8 @@
 
 <script>
 import { useFetchExportDocumentsClient } from '@/api/use-fetch-export-documents-client.js'
+import { useFetchExportDocumentsBlueprint } from '@/api/use-fetch-export-documents-blueprint.js'
+import { onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import ItemHeader from '@/components/Documents/ClientReport/ItemHeader.vue'
 import ItemDocuments from '@/components/Documents/ClientReport/ItemDocuments.vue'
@@ -37,19 +39,53 @@ export default {
     const route = useRoute()
 
     const {
-      isLoading,
-      isError,
-      isFetching,
-      data: documents,
-      refetch,
-    } = useFetchExportDocumentsClient({ id: route.params.id, type: 'excel' })
+      isLoading: isLoadingClient,
+      isError: isErrorClient,
+      isFetching: isFetchingClient,
+      data: documentsClient,
+      refetch: refetchClientReports,
+    } = useFetchExportDocumentsClient({ id: route.params.id, type: 'excel' }, { enabled: false })
+
+    const {
+      isLoading: isLoadingBlueprint,
+      isError: isErrorBlueprint,
+      isFetching: isFetchingBlueprint,
+      data: documentsBlueprint,
+      refetch: refetchClientBlueprint,
+    } = useFetchExportDocumentsBlueprint({ id: route.params.id, type: 'excel' }, { enabled: false })
+
+    onMounted(() => {
+      if (route.query.type === 'client') {
+        refetchClientReports.value()
+        return
+      }
+      if (route.query.type === 'blueprint') {
+        refetchClientBlueprint.value()
+        return
+      }
+    })
+
+    const getDocuments = computed(() => {
+      if (route.query.type === 'client') {
+        return documentsClient.value
+      }
+      return documentsBlueprint.value
+    })
 
     return {
-      isLoading,
-      isError,
-      isFetching,
-      documents,
-      refetch,
+      isLoadingClient,
+      isErrorClient,
+      isFetchingClient,
+      documentsClient,
+      refetchClientReports,
+
+      isLoadingBlueprint,
+      isErrorBlueprint,
+      isFetchingBlueprint,
+      documentsBlueprint,
+      refetchClientBlueprint,
+
+      getDocuments,
     }
   },
 }
