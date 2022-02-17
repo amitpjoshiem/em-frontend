@@ -1,6 +1,6 @@
 <template>
-  <SwdSubHeader title="Blueprint report" class="p-5" />
   <div v-if="!isLoading">
+    <SwdSubHeader :title="getTitle" class="p-5" />
     <div class="p-5">
       <div class="border rounded-md border-input-border p-5 mb-10">
         <ContractInfoYear :client-report="clientReport" :client-report-year="clientReportYear.value" />
@@ -24,7 +24,7 @@
 <script>
 import { useClientReport } from '@/api/use-fetch-client-report.js'
 import { useRoute } from 'vue-router'
-
+import { computed } from 'vue'
 import ContractInfoYear from './ContractInfoYear.vue'
 import ContractInfoSince from './ContractInfoSince.vue'
 export default {
@@ -44,12 +44,17 @@ export default {
       clientReportSince,
     } = useClientReport(route.params.id)
 
+    const getTitle = computed(() => {
+      return 'Contract ' + clientReport.value.contractNumber
+    })
+
     return {
       isLoading,
       isError,
       clientReport,
       clientReportYear,
       clientReportSince,
+      getTitle,
     }
   },
 }
