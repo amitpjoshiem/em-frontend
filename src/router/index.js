@@ -82,14 +82,14 @@ const routes = [
         component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
       },
       {
-        path: 'export-client-report/:id',
-        name: 'export-client-report',
+        path: 'export-report/:id',
+        name: 'export-report',
         component: () =>
           import(/* webpackChunkName: "clientreport" */ '../components/Documents/ClientReport/ExportClientReports.vue'),
         children: [
           {
             path: 'all',
-            name: 'all-client-report',
+            name: 'all-report',
             component: () =>
               import(
                 /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportAll.vue'
@@ -97,7 +97,7 @@ const routes = [
           },
           {
             path: 'pdf',
-            name: 'pdf-client-report',
+            name: 'pdf-report',
             component: () =>
               import(
                 /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportPdf.vue'
@@ -105,7 +105,7 @@ const routes = [
           },
           {
             path: 'excel',
-            name: 'excel-client-report',
+            name: 'excel-report',
             component: () =>
               import(
                 /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportExcel.vue'

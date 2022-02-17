@@ -4,23 +4,23 @@
     <div class="flex p-5 justify-between">
       <div class="flex">
         <router-link
-          :to="{ name: 'all-client-report' }"
+          :to="{ name: 'all-report' }"
           class="mr-5 text-gray03 text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'all-client-report' }"
+          :class="{ active: getActiveTab === 'all-report' }"
         >
           ALL
         </router-link>
         <router-link
-          :to="{ name: 'pdf-client-report' }"
+          :to="{ name: 'pdf-report' }"
           class="mr-5 text-gray03 text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'pdf-client-report' }"
+          :class="{ active: getActiveTab === 'pdf-report' }"
         >
           PDF
         </router-link>
         <router-link
-          :to="{ name: 'excel-client-report' }"
+          :to="{ name: 'excel-report' }"
           class="text-gray03 text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'excel-client-report' }"
+          :class="{ active: getActiveTab === 'excel-report' }"
         >
           EXCEL
         </router-link>

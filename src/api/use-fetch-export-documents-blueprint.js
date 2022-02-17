@@ -1,19 +1,19 @@
 import { useQuery } from 'vue-query'
 import { reactive, ref } from 'vue'
-import { fetchExportDocumentsClient } from './vueQuery/fetch-export-documents-client'
+import { fetchExportDocumentsBlueprint } from './vueQuery/fetch-export-documents-blueprint'
 
-export const useFetchExportDocumentsClient = ({ id, type }, options = {}) => {
+export const useFetchExportDocumentsBlueprint = ({ id, type }, options = {}) => {
   const reactiveType = ref(type)
 
   const queryKey = reactive([
-    ['exportDocumentsClient', id],
+    ['exportDocumentsBlueprint', id],
     {
       reactiveType,
     },
   ])
 
   const query = useQuery(queryKey, {
-    queryFn: fetchExportDocumentsClient,
+    queryFn: fetchExportDocumentsBlueprint,
     select: ({ data }) => {
       return data
     },

@@ -23,7 +23,6 @@
 
 <script>
 import IconShare from '@/assets/svg/icon-share.svg'
-// import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { useDownloadBlueReport } from '@/api/use-download-blue-report'
 import { useDownloadClientReport } from '@/api/use-download-client-report'
@@ -34,7 +33,9 @@ import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 
 import { generatePdfClientReports } from '@/api/vueQuery/generate-pdf-client-reports'
+import { generatePdfBlueReports } from '@/api/vueQuery/generate-pdf-blue-reports'
 import { generateExcelClientReports } from '@/api/vueQuery/generate-excel-client-reports'
+import { generateExcelBlueReports } from '@/api/vueQuery/generate-excel-blue-reports'
 
 export default {
   name: 'ShareBtn',
@@ -47,7 +48,6 @@ export default {
   },
 
   setup(props) {
-    // const store = useStore()
     const route = useRoute()
     const router = useRouter()
 
@@ -64,7 +64,11 @@ export default {
 
     const { mutateAsync: genPdfClientReports } = useMutation(generatePdfClientReports)
 
+    const { mutateAsync: genPdfBlueReports } = useMutation(generatePdfBlueReports)
+
     const { mutateAsync: genExcelClientReports } = useMutation(generateExcelClientReports)
+
+    const { mutateAsync: genExcelBlueReports } = useMutation(generateExcelBlueReports)
 
     const actionsOptions = [
       {
@@ -88,15 +92,13 @@ export default {
     }
 
     const generatePdf = async () => {
-      console.log('props.pdfRegion - ', props.pdfRegion)
       let res = []
       if (props.pdfRegion === 'client-report') {
         res = await genPdfClientReports({ id: memberId })
       }
 
       if (props.pdfRegion === 'blue-report') {
-        console.log('===')
-        // res = await genPdfClientReports({ id: memberId })
+        res = await genPdfBlueReports({ id: memberId })
       }
 
       if (!('error' in res)) {
@@ -113,6 +115,9 @@ export default {
       if (props.pdfRegion === 'client-report') {
         res = await genExcelClientReports({ id: memberId })
       }
+      if (props.pdfRegion === 'blue-report') {
+        res = await genExcelBlueReports({ id: memberId })
+      }
 
       if (!('error' in res)) {
         useAlert({
@@ -124,7 +129,10 @@ export default {
     }
 
     const allDocuments = () => {
-      if (props.pdfRegion === 'client-report') router.push({ name: 'all-client-report', params: { id: memberId } })
+      if (props.pdfRegion === 'client-report')
+        router.push({ name: 'all-report', params: { id: memberId }, query: { type: 'client' } })
+      if (props.pdfRegion === 'blue-report')
+        router.push({ name: 'all-report', params: { id: memberId }, query: { type: 'blueprint' } })
     }
 
     const handleSelect = (command) => {
