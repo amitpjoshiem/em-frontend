@@ -9,17 +9,8 @@
           <ItemDocuments :contracts="item.contracts" :status="item.status" :link="item.link" />
         </el-collapse-item>
       </el-collapse>
-
-      <el-collapse v-if="documents">
-        <el-collapse-item v-for="(item, index) in documents" :key="index" :name="index">
-          <template #title>
-            <ItemHeader :file-name="item.filename" :created-at="item.created_at" :type="item.type" />
-          </template>
-          <ItemDocuments :contracts="item.contracts" :status="item.status" :link="item.link" />
-        </el-collapse-item>
-      </el-collapse>
     </template>
-    <div>no documents</div>
+    <div v-else>no documents</div>
   </div>
   <el-skeleton v-else :rows="5" animated class="p-5" />
 </template>

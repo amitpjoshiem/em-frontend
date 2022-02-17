@@ -59,6 +59,14 @@ export default {
       return props.contracts.map((item) => item.contract_number)
     })
 
+    // const share = () => {
+    //   store.commit('globalComponents/setShowModal', {
+    //     destination: 'shareFileEmailDialog',
+    //     value: true,
+    //   })
+    //   store.commit('globalComponents/setPdfRegion', props.pdfRegion)
+    // }
+
     return {
       getContracts,
     }

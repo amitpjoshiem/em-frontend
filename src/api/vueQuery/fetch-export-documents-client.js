@@ -1,9 +1,7 @@
 import { fetcher } from '@/api/fetcher/fetcher'
-import { useRoute } from 'vue-router'
 
 function fetchExportDocumentsClient({ queryKey }) {
-  const route = useRoute()
-  const id = route.params.id
+  const id = queryKey[0][1]
   const typeRaw = queryKey[1].reactiveType
   let search = undefined
 

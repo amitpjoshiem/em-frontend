@@ -34,6 +34,7 @@ import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 
 import { generatePdfClientReports } from '@/api/vueQuery/generate-pdf-client-reports'
+import { generateExcelClientReports } from '@/api/vueQuery/generate-excel-client-reports'
 
 export default {
   name: 'ShareBtn',
@@ -61,13 +62,9 @@ export default {
       getClientReport,
     } = useDownloadClientReport(memberId)
 
-    const {
-      mutateAsync: genPdfClientReports,
-      isLoading,
-      isFetching,
-      data,
-      refetch,
-    } = useMutation(generatePdfClientReports)
+    const { mutateAsync: genPdfClientReports } = useMutation(generatePdfClientReports)
+
+    const { mutateAsync: genExcelClientReports } = useMutation(generateExcelClientReports)
 
     const actionsOptions = [
       {
@@ -125,21 +122,39 @@ export default {
     }
 
     const generatePdf = async () => {
+      console.log('props.pdfRegion - ', props.pdfRegion)
+      let res = []
       if (props.pdfRegion === 'client-report') {
-        const res = await genPdfClientReports({ id: memberId })
-        if (!('error' in res)) {
-          useAlert({
-            title: 'Success',
-            type: 'success',
-            message: 'Generate successfully',
-          })
-        }
-        console.log('generatePdf')
+        res = await genPdfClientReports({ id: memberId })
+      }
+
+      if (props.pdfRegion === 'blue-report') {
+        console.log('===')
+        // res = await genPdfClientReports({ id: memberId })
+      }
+
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Generate successfully',
+        })
       }
     }
 
-    const generateExcel = () => {
-      console.log('generateExcel')
+    const generateExcel = async () => {
+      let res = []
+      if (props.pdfRegion === 'client-report') {
+        res = await genExcelClientReports({ id: memberId })
+      }
+
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Generate successfully',
+        })
+      }
     }
 
     const allDocuments = () => {
@@ -175,12 +190,6 @@ export default {
       errorClientReport,
       fetchingClientReport,
       getClientReport,
-
-      generatePdfClientReports,
-      isLoading,
-      isFetching,
-      data,
-      refetch,
     }
   },
 }
