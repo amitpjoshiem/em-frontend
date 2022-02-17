@@ -6,7 +6,13 @@
           <template #title>
             <ItemHeader :file-name="item.filename" :created-at="item.created_at" :type="item.type" />
           </template>
-          <ItemDocuments :contracts="item.contracts" :status="item.status" :link="item.link" />
+          <ItemDocuments
+            :id="item.id"
+            :contracts="item.contracts"
+            :status="item.status"
+            :link="item.link"
+            :file-name="item.filename"
+          />
         </el-collapse-item>
       </el-collapse>
     </template>

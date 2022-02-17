@@ -88,6 +88,7 @@ export default defineComponent({
 
     const statusModal = computed(() => store.state.globalComponents.dialog.showDialog.shareFileEmailDialog)
     const pdfRegion = computed(() => store.state.globalComponents.pdfRegion)
+    const docIdShare = computed(() => store.state.globalComponents.docIdShare)
 
     const state = reactive({
       dynamicTags: [],
@@ -124,7 +125,7 @@ export default defineComponent({
       }
 
       if (pdfRegion.value === 'client-report') {
-        resSendReport = await sendClientReportEmail({ data, member_id: route.params.id })
+        resSendReport = await sendClientReportEmail({ data, doc_id: docIdShare.value })
       }
 
       if (!('error' in resSendReport)) {

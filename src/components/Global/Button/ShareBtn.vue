@@ -79,46 +79,12 @@ export default {
         title: 'All documents',
         command: 'all_documents',
       },
-      // {
-      //   title: 'Download as PDF',
-      //   command: 'download',
-      // },
-      // {
-      //   title: 'Share as PDF',
-      //   command: 'share',
-      // },
     ]
-
-    // const downloadPdf = async () => {
-    //   let blob = null
-    //   let res = null
-    //   if (props.pdfRegion === 'blue-report') {
-    //     await getBlueReport()
-    //     res = await fetch(blueReportPdf.value.data.link)
-    //   }
-
-    //   if (props.pdfRegion === 'client-report') {
-    //     await getClientReport()
-    //     res = await fetch(clientReportPdf.value.data.link)
-    //   }
-
-    //   blob = await res.blob()
-    //   const url = window.URL.createObjectURL(blob)
-    //   const link = document.createElement('a')
-    //   link.href = url
-    //   link.setAttribute('download', member.value.name + '.pdf')
-    //   link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }))
-    //   setTimeout(function () {
-    //     link.remove()
-    //   }, 100)
-    // }
 
     const actionsMap = {
       generate_pdf: () => generatePdf(),
       generate_excel: () => generateExcel(),
       all_documents: () => allDocuments(),
-      // download: () => downloadPdf(),
-      // share: () => share(),
     }
 
     const generatePdf = async () => {
@@ -158,17 +124,8 @@ export default {
     }
 
     const allDocuments = () => {
-      console.log('allDocuments()')
       if (props.pdfRegion === 'client-report') router.push({ name: 'all-client-report', params: { id: memberId } })
     }
-
-    // const share = () => {
-    //   store.commit('globalComponents/setShowModal', {
-    //     destination: 'shareFileEmailDialog',
-    //     value: true,
-    //   })
-    //   store.commit('globalComponents/setPdfRegion', props.pdfRegion)
-    // }
 
     const handleSelect = (command) => {
       const actionHandler = actionsMap[command]
