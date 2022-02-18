@@ -194,7 +194,7 @@
           <span class="text-gray03 text-xs uppercase">Contact opportunity</span>
         </div>
 
-        <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index">
+        <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-6">
           <el-form-item
             :prop="'employment_history.' + index + '.company_name'"
             label="Company name"
@@ -237,7 +237,7 @@
             </el-form-item>
           </template>
 
-          <div class="w-5 pt-9 ml-3 cursor-pointer w-3/24">
+          <div class="w-5 pt-7 ml-3 cursor-pointer w-3/24">
             <InlineSvg v-if="index === ruleForm.employment_history.length - 1" :src="IconAdd" @click="addEmployment" />
             <InlineSvg v-else :src="IconDelete" @click="removeEmployment(index)" />
           </div>
@@ -290,7 +290,7 @@
               </el-form-item>
             </template>
 
-            <div class="w-5 pt-9 ml-3 cursor-pointer w-3/24">
+            <div class="w-5 pt-7 ml-3 cursor-pointer w-3/24">
               <InlineSvg
                 v-if="index === ruleForm.spouse.employment_history.length - 1"
                 :src="IconAdd"
