@@ -27,7 +27,7 @@ import { useRouter } from 'vue-router'
 import { useDownloadBlueReport } from '@/api/use-download-blue-report'
 import { useDownloadClientReport } from '@/api/use-download-client-report'
 import { useRoute } from 'vue-router'
-import { useProspectDetails } from '@/api/use-prospect-details.js'
+// import { useProspectDetails } from '@/api/use-prospect-details.js'
 
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
@@ -45,15 +45,25 @@ export default {
       require: true,
       default: '',
     },
+    clientId: {
+      type: String,
+      require: false,
+      default: '',
+    },
+    contracts: {
+      type: String,
+      require: false,
+      default: '',
+    },
   },
 
   setup(props) {
     const route = useRoute()
     const router = useRouter()
 
-    const memberId = route.params.id
+    const memberId = props.clientId ? props.clientId : route.params.id
 
-    const { isLoading: isLoadingProspectDetails, isError, data: member } = useProspectDetails()
+    // const { isLoading: isLoadingProspectDetails, isError, data: member } = useProspectDetails()
     const { response: blueReportPdf, error, fetching, getBlueReport } = useDownloadBlueReport(memberId)
     const {
       response: clientReportPdf,
@@ -93,12 +103,14 @@ export default {
 
     const generatePdf = async () => {
       let res = []
+      const data = {}
+      if (props.contracts) data.contracts = [props.contracts]
       if (props.pdfRegion === 'client-report') {
-        res = await genPdfClientReports({ id: memberId })
+        res = await genPdfClientReports({ id: memberId, data })
       }
 
       if (props.pdfRegion === 'blue-report') {
-        res = await genPdfBlueReports({ id: memberId })
+        res = await genPdfBlueReports({ id: memberId, data })
       }
 
       if (!('error' in res)) {
@@ -112,11 +124,14 @@ export default {
 
     const generateExcel = async () => {
       let res = []
+      const data = {}
+      if (props.contracts) data.contracts = [props.contracts]
+
       if (props.pdfRegion === 'client-report') {
-        res = await genExcelClientReports({ id: memberId })
+        res = await genExcelClientReports({ id: memberId, data })
       }
       if (props.pdfRegion === 'blue-report') {
-        res = await genExcelBlueReports({ id: memberId })
+        res = await genExcelBlueReports({ id: memberId, data })
       }
 
       if (!('error' in res)) {
@@ -148,9 +163,9 @@ export default {
       error,
       fetching,
       getBlueReport,
-      isLoadingProspectDetails,
-      isError,
-      member,
+      // isLoadingProspectDetails,
+      // isError,
+      // member,
       clientReportPdf,
       errorClientReport,
       fetchingClientReport,
