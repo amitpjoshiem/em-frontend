@@ -27,15 +27,12 @@ import { useRouter } from 'vue-router'
 import { useDownloadBlueReport } from '@/api/use-download-blue-report'
 import { useDownloadClientReport } from '@/api/use-download-client-report'
 import { useRoute } from 'vue-router'
-// import { useProspectDetails } from '@/api/use-prospect-details.js'
-
 import { useMutation } from 'vue-query'
-import { useAlert } from '@/utils/use-alert'
-
 import { generatePdfClientReports } from '@/api/vueQuery/generate-pdf-client-reports'
 import { generatePdfBlueReports } from '@/api/vueQuery/generate-pdf-blue-reports'
 import { generateExcelClientReports } from '@/api/vueQuery/generate-excel-client-reports'
 import { generateExcelBlueReports } from '@/api/vueQuery/generate-excel-blue-reports'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ShareBtn',
@@ -60,10 +57,10 @@ export default {
   setup(props) {
     const route = useRoute()
     const router = useRouter()
+    const store = useStore()
 
     const memberId = props.clientId ? props.clientId : route.params.id
 
-    // const { isLoading: isLoadingProspectDetails, isError, data: member } = useProspectDetails()
     const { response: blueReportPdf, error, fetching, getBlueReport } = useDownloadBlueReport(memberId)
     const {
       response: clientReportPdf,
@@ -113,13 +110,7 @@ export default {
         res = await genPdfBlueReports({ id: memberId, data })
       }
 
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Generate successfully',
-        })
-      }
+      if (!('error' in res)) succesExport()
     }
 
     const generateExcel = async () => {
@@ -134,13 +125,17 @@ export default {
         res = await genExcelBlueReports({ id: memberId, data })
       }
 
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Generate successfully',
-        })
-      }
+      if (!('error' in res)) succesExport()
+    }
+
+    const succesExport = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'exportSucces',
+        value: true,
+      })
+
+      store.commit('globalComponents/setPdfRegion', props.pdfRegion)
+      store.commit('globalComponents/setMemberId', memberId)
     }
 
     const allDocuments = () => {
@@ -163,9 +158,6 @@ export default {
       error,
       fetching,
       getBlueReport,
-      // isLoadingProspectDetails,
-      // isError,
-      // member,
       clientReportPdf,
       errorClientReport,
       fetchingClientReport,

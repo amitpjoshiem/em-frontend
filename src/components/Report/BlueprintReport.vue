@@ -1,23 +1,21 @@
 <template>
+  <SwdSubHeader title="Blueprint report" class="p-5" with-share-btn region="blue-report" />
   <div class="p-5">
-    <SwdSubHeader title="Blueprint report" class="p-5" with-share-btn region="blue-report" />
-    <div>
-      <div class="flex" data-pdf-region="blue-report">
-        <div class="w-7/12">
-          <div v-if="!fetchingMember" class="flex">
-            <WidgetReport :member="member" />
-            <IncomeGoal />
-          </div>
-          <el-skeleton v-else :rows="3" animated class="p-5" />
-          <NetWorth />
-          <Concerns />
+    <div class="flex" data-pdf-region="blue-report">
+      <div class="w-7/12">
+        <div v-if="!fetchingMember" class="flex">
+          <WidgetReport :member="member" />
+          <IncomeGoal />
         </div>
-        <MonthlyIncome />
+        <el-skeleton v-else :rows="3" animated class="p-5" />
+        <NetWorth />
+        <Concerns />
       </div>
-      <NotesMember :notes="member.data?.notes" />
+      <MonthlyIncome />
     </div>
-    <el-skeleton v-show="fetchingMember" :rows="10" animated class="p-5" />
+    <NotesMember :notes="member.data?.notes" />
   </div>
+  <el-skeleton v-show="fetchingMember" :rows="10" animated class="p-5" />
 </template>
 
 <script>
