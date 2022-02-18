@@ -92,7 +92,6 @@ const mutations = {
   },
 
   setDocIdShare(state, value) {
-    console.log('value - ', value)
     state.docIdShare = value
   },
 
