@@ -6,7 +6,7 @@
       class="border-color-grey px-10 pb-7"
     >
       <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
-        <div class="flex">
+        <div class="flex mb-5">
           <el-form-item label="Opportunity owner" prop="opportunity_owner" class="w-6/12 pr-5">
             <el-input v-model="ruleForm.opportunity_owner" placeholder="Enter prospect’s name" :disabled="true" />
           </el-form-item>
@@ -26,7 +26,7 @@
             />
           </el-form-item>
         </div>
-        <div class="flex">
+        <div class="flex mb-5">
           <el-form-item label="Opportunity name" prop="opportunity_name" class="w-6/12 pr-5">
             <el-input v-model="ruleForm.opportunity_name" placeholder="Enter opportunity name" />
           </el-form-item>
@@ -35,7 +35,7 @@
           </el-form-item>
         </div>
 
-        <div class="flex">
+        <div class="flex mb-5">
           <el-form-item label="Type" prop="type" class="w-6/12 pr-3">
             <el-select v-model="ruleForm.type" placeholder="Type" class="w-full">
               <el-option v-for="item in initOpportunity.data.init.type_list" :key="item" :label="item" :value="item">
