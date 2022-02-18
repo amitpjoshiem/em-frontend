@@ -49,12 +49,14 @@ const state = () => ({
       prewievPdf: false,
       moreOtherInfo: false,
       changePhone: false,
+      exportSucces: false,
     },
   },
   sortMembers: {
     orderBy: 'created_at',
     sortedBy: 'descending',
   },
+  memberId: null,
   pdfRegion: '',
   showDialogReloadPage: false,
   needUpdateContent: null,
@@ -97,6 +99,10 @@ const mutations = {
 
   setNeedUpdateContent(state, value) {
     state.needUpdateContent = value
+  },
+
+  setMemberId(state, value) {
+    state.memberId = value
   },
 }
 

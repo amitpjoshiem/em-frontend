@@ -40,10 +40,10 @@ import { currencyFormat } from '@/utils/currencyFormat'
 import { computed } from 'vue'
 import dayjs from 'dayjs'
 import { useRouter, useRoute } from 'vue-router'
-import { useAlert } from '@/utils/use-alert'
 import { useMutation } from 'vue-query'
 import { generatePdfClientReports } from '@/api/vueQuery/generate-pdf-client-reports'
 import { generateExcelClientReports } from '@/api/vueQuery/generate-excel-client-reports'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ContractItem',
@@ -59,6 +59,7 @@ export default {
   setup(props) {
     const router = useRouter()
     const route = useRoute()
+    const store = useStore()
 
     const memberId = route.params.id
 
@@ -80,11 +81,7 @@ export default {
       const res = await genPdfClientReports({ id: memberId, data })
 
       if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Generate successfully',
-        })
+        succesExport()
       }
     }
 
@@ -94,12 +91,18 @@ export default {
       }
       const res = await genExcelClientReports({ id: memberId, data })
       if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Generate successfully',
-        })
+        succesExport()
       }
+    }
+
+    const succesExport = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'exportSucces',
+        value: true,
+      })
+
+      store.commit('globalComponents/setPdfRegion', 'client-report')
+      store.commit('globalComponents/setMemberId', memberId)
     }
 
     return {
