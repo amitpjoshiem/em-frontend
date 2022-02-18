@@ -38,9 +38,9 @@ const rules = {
 }
 
 function validateNumber(rule, value, callback) {
-  if (!value) {
-    callback(new Error('The field cannot be empty'))
-  }
+  // if (!value) {
+  //   callback(new Error('The field cannot be empty'))
+  // }
   if (isNaN(value)) {
     callback(new Error('Data is not a number'))
   } else {

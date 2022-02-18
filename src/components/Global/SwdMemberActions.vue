@@ -104,7 +104,7 @@ export default {
         }),
       'blueprint-report': () =>
         router.push({
-          name: 'member-report',
+          name: 'blueprint-report',
           params: { id: props.user.id },
         }),
       'client-report': () => router.push({ name: 'clientreport', params: { id: props.user.id } }),

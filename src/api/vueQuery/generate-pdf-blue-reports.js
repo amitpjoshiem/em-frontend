@@ -1,11 +1,11 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function sendClientReport({ data, doc_id }) {
+function generatePdfBlueReports({ id, data }) {
   return fetcher({
-    url: `/client_reports/share/${doc_id}`,
+    url: `/blueprint/pdf/${id}`,
     data,
     options: { method: 'POST' },
   })
 }
 
-export { sendClientReport }
+export { generatePdfBlueReports }

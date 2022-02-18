@@ -94,7 +94,7 @@ export default {
           type: 'success',
           message: 'Opportunity update successfully',
         })
-        router.push({ name: 'member-report', params: { id: route.params.id } })
+        router.push({ name: 'blueprint-report', params: { id: route.params.id } })
       }
     }
 

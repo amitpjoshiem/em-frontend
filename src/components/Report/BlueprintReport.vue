@@ -4,10 +4,11 @@
     <div>
       <div class="flex" data-pdf-region="blue-report">
         <div class="w-7/12">
-          <div class="flex">
+          <div v-if="!fetchingMember" class="flex">
             <WidgetReport :member="member" />
             <TotalExpenses />
           </div>
+          <el-skeleton v-else :rows="3" animated class="p-5" />
           <NetWorth />
           <Concerns />
         </div>
@@ -32,7 +33,7 @@ import { computed, onMounted } from 'vue'
 import { useFetchMember } from '@/api/use-fetch-member'
 
 export default {
-  name: 'MemberReport',
+  name: 'BlueprintReport',
   components: {
     TotalExpenses,
     NetWorth,

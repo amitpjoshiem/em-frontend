@@ -1,6 +1,16 @@
 <template>
-  <SwdSubHeader title="Blueprint report" class="p-5" />
   <div v-if="!isLoading">
+    <div class="p-5 flex">
+      <div class="w-3/12">
+        <BackButton text="Back" @click="$router.go(-1)" />
+      </div>
+      <div class="w-6/12 text-center">
+        <span class="text-title text-main font-semibold">{{ getTitle }}</span>
+      </div>
+      <div class="w-3/12 flex justify-end">
+        <ShareBtn pdf-region="client-report" :client-id="clientReport.member_id" :contracts="contractId" />
+      </div>
+    </div>
     <div class="p-5">
       <div class="border rounded-md border-input-border p-5 mb-10">
         <ContractInfoYear :client-report="clientReport" :client-report-year="clientReportYear.value" />
@@ -24,7 +34,7 @@
 <script>
 import { useClientReport } from '@/api/use-fetch-client-report.js'
 import { useRoute } from 'vue-router'
-
+import { computed } from 'vue'
 import ContractInfoYear from './ContractInfoYear.vue'
 import ContractInfoSince from './ContractInfoSince.vue'
 export default {
@@ -36,13 +46,13 @@ export default {
   setup() {
     const route = useRoute()
 
-    const {
-      isLoading,
-      isError,
-      data: clientReport,
-      clientReportYear,
-      clientReportSince,
-    } = useClientReport(route.params.id)
+    const contractId = route.params.id
+
+    const { isLoading, isError, data: clientReport, clientReportYear, clientReportSince } = useClientReport(contractId)
+
+    const getTitle = computed(() => {
+      return 'Contract ' + clientReport.value.contractNumber
+    })
 
     return {
       isLoading,
@@ -50,6 +60,8 @@ export default {
       clientReport,
       clientReportYear,
       clientReportSince,
+      getTitle,
+      contractId,
     }
   },
 }
