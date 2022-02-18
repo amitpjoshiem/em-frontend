@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isFetchingClient && !isFetchingBlueprint" class="p-5">
-    <template v-if="getDocuments.length">
+    <template v-if="getDocuments && getDocuments.length">
       <el-collapse>
         <el-collapse-item v-for="(item, index) in getDocuments" :key="index" :name="index">
           <template #title>
@@ -16,7 +16,12 @@
         </el-collapse-item>
       </el-collapse>
     </template>
-    <div v-else>no documents</div>
+    <div v-else class="text-gray03 flex items-center flex-col mt-5">
+      <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+        <InlineSvg :src="IconEmptyUsers" />
+      </div>
+      <p>No recently added documents</p>
+    </div>
   </div>
   <el-skeleton v-else :rows="5" animated class="p-5" />
 </template>
@@ -28,6 +33,7 @@ import { useRoute } from 'vue-router'
 import ItemHeader from '@/components/Documents/ClientReport/ItemHeader.vue'
 import ItemDocuments from '@/components/Documents/ClientReport/ItemDocuments.vue'
 import { onMounted, computed } from 'vue'
+import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
   name: 'ClientReportAll',
@@ -86,6 +92,7 @@ export default {
       refetchClientBlueprint,
 
       getDocuments,
+      IconEmptyUsers,
     }
   },
 }
