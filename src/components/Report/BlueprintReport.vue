@@ -6,7 +6,7 @@
         <div class="w-7/12">
           <div v-if="!fetchingMember" class="flex">
             <WidgetReport :member="member" />
-            <TotalExpenses />
+            <IncomeGoal />
           </div>
           <el-skeleton v-else :rows="3" animated class="p-5" />
           <NetWorth />
@@ -22,7 +22,7 @@
 
 <script>
 import WidgetReport from '@/components/Report/WidgetReport.vue'
-import TotalExpenses from '@/components/Report/TotalExpenses.vue'
+import IncomeGoal from '@/components/Report/IncomeGoal.vue'
 import NetWorth from '@/components/Report/NetWorth.vue'
 import Concerns from '@/components/Report/Concerns.vue'
 import MonthlyIncome from '@/components/Report/MonthlyIncome.vue'
@@ -35,7 +35,7 @@ import { useFetchMember } from '@/api/use-fetch-member'
 export default {
   name: 'BlueprintReport',
   components: {
-    TotalExpenses,
+    IncomeGoal,
     NetWorth,
     WidgetReport,
     Concerns,
