@@ -1,6 +1,6 @@
 <template>
-  <div class="p-5">
-    <SwdSubHeader title="New opportunity" />
+  <SwdSubHeader title="New opportunity" class="p-5" />
+  <div v-if="statusSfAcc && statusSfAcc.auth && !isLoadingStatusSfAcc" class="p-5">
     <div
       v-if="!isLoadingInitOpportunity && !isLoadingProspectDetails && !isLoadingUserProfile"
       class="border-color-grey px-10 pb-7"
@@ -59,6 +59,13 @@
     </div>
     <el-skeleton v-else :rows="11" animated class="p-5" />
   </div>
+  <div v-else class="flex flex-col text-main text-xs justify-center items-center">
+    <span>Your SalesForce account isn’t authorized.</span>
+    <span class="py-5"
+      >Please check your Partners Settings Make Partner Settings clickable link to the Partner screen</span
+    >
+    <el-button type="primary" class="w-[150px]" size="small" @click="goPartnerSettings">Partner Settings</el-button>
+  </div>
 </template>
 
 <script>
@@ -66,6 +73,7 @@ import { reactive, watch, ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useOpportunityInit } from '@/api/use-opportunity-init.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
+import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { createOpportunity } from '@/api/vueQuery/create-opportunity'
 import { useMutation } from 'vue-query'
@@ -101,6 +109,8 @@ export default {
     const { isLoading: isLoadingInitOpportunity, isErrorLoadingInit, data: initOpportunity } = useOpportunityInit()
 
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: userProfile } = useUserProfile()
+
+    const { isLoading: isLoadingStatusSfAcc, isError: isErrorStatusSfAcc, data: statusSfAcc } = useSalesForceAuth()
 
     watch(
       prospectDetails,
@@ -146,6 +156,10 @@ export default {
       return dayjs(new Date()).format('MM/DD/YYYY')
     })
 
+    const goPartnerSettings = () => {
+      router.push({ name: 'partners' })
+    }
+
     return {
       isError,
       isErrorProspectDetails,
@@ -164,6 +178,10 @@ export default {
       rules,
       getPlaceholder,
       disabledSave,
+      isLoadingStatusSfAcc,
+      isErrorStatusSfAcc,
+      statusSfAcc,
+      goPartnerSettings,
     }
   },
 }
