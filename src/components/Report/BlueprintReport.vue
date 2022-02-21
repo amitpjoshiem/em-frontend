@@ -4,8 +4,8 @@
     <div class="flex" data-pdf-region="blue-report">
       <div class="w-7/12">
         <div v-if="!fetchingMember" class="flex">
-          <WidgetReport :member="member" />
-          <IncomeGoal />
+          <WidgetReport :member="member.data" />
+          <IncomeGoal :member="member.data" />
         </div>
         <el-skeleton v-else :rows="3" animated class="p-5" />
         <NetWorth />

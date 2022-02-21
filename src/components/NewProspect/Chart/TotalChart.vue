@@ -34,15 +34,15 @@ export default {
       data: {
         datasets: [
           {
-            backgroundColor: ['#FF92A5', '#53576A'],
-            data: [45, 10],
+            backgroundColor: props.goal ? ['#FF92A5', '#53576A'] : ['#D3D3D3'],
+            data: [0, props.goal],
           },
         ],
       },
       options: {
         elements: {
           center: {
-            text: props.goal !== null ? currencyFormat(props.goal) : '',
+            text: props.goal !== null ? currencyFormat(props.goal) : '---',
             size: 12,
           },
         },

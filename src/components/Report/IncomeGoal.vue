@@ -5,7 +5,6 @@
   </div>
 </template>
 <script>
-import { useProspectDetails } from '@/api/use-prospect-details.js'
 import TotalChart from '@/components/NewProspect/Chart/TotalChart.vue'
 
 export default {
@@ -13,15 +12,13 @@ export default {
   components: {
     TotalChart,
   },
-  setup() {
-    const { isLoading, isError, data: member, other } = useProspectDetails()
-
-    return {
-      isLoading,
-      isError,
-      member,
-      other,
-    }
+  props: {
+    member: {
+      type: Object,
+      require: false,
+      default: () => {},
+    },
   },
+  setup() {},
 }
 </script>

@@ -4,7 +4,7 @@
       <div class="flex p-5">
         <SwdAvatar :link="getAvatarUrl" />
         <div class="flex flex-col ml-2">
-          <span class="text-sm text-main font-medium">{{ member.data?.name }}</span>
+          <span class="text-sm text-main font-medium">{{ member.name }}</span>
           <span class="text-small text-activity-item font-medium uppercase"> {{ getTitle }} </span>
         </div>
       </div>
@@ -41,12 +41,12 @@ export default {
   },
   setup(props) {
     const getAvatarUrl = computed(() => {
-      if (props.member.data?.avatar?.url) return props.member.data.avatar.url
+      if (props.member.avatar?.url) return props.member.avatar.url
       return ''
     })
 
     const getTitle = computed(() => {
-      if (props.member.data.type === 'prospect') return 'Opportunity'
+      if (props.member.type === 'prospect') return 'Opportunity'
       return 'Client'
     })
 
