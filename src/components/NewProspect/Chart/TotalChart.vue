@@ -35,7 +35,7 @@ export default {
         datasets: [
           {
             backgroundColor: props.goal ? ['#FF92A5', '#53576A'] : ['#D3D3D3'],
-            data: [0, props.goal],
+            data: [0, props.goal ? props.goal : 1],
           },
         ],
       },
