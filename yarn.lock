@@ -11416,6 +11416,13 @@ vue-cropperjs@^5.0.0:
   dependencies:
     cropperjs "^1.5.6"
 
+vue-currency-input@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/vue-currency-input/-/vue-currency-input-2.4.0.tgz#46b532be856d4ecdd23286d4389109d042e401a7"
+  integrity sha512-eZhMZfjm9zaVGMW5eQfbQ5S0TM48QIAvKjzoAnjguPycPRwXq3QyWGvewnDqTQyKrYeFkkVgCh6Z6BF9pQRvqQ==
+  dependencies:
+    vue-demi "^0.12.1"
+
 vue-demi@*:
   version "0.11.4"
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.11.4.tgz#6101992fe4724cf5634018a16e953f3052e94e2a"
@@ -11425,6 +11432,11 @@ vue-demi@^0.10.1:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.10.1.tgz#229b81395510f02f4ee255344557a12cc0120930"
   integrity sha512-L6Oi+BvmMv6YXvqv5rJNCFHEKSVu7llpWWJczqmAQYOdmPPw5PNYoz1KKS//Fxhi+4QP64dsPjtmvnYGo1jemA==
+
+vue-demi@^0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.1.tgz#f7e18efbecffd11ab069d1472d7a06e319b4174c"
+  integrity sha512-QL3ny+wX8c6Xm1/EZylbgzdoDolye+VpCXRhI2hug9dJTP3OUJ3lmiKN3CsVV3mOJKwFi0nsstbgob0vG7aoIw==
 
 vue-eslint-parser@^7.6.0:
   version "7.6.0"

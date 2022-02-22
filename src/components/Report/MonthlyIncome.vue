@@ -13,7 +13,7 @@
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Member</div>
         <el-form-item class="w-4/12 mr-1">
-          <el-input
+          <!-- <el-input
             v-model="ruleForm.current_member"
             placeholder="$12345"
             type="number"
@@ -21,10 +21,18 @@
             @change="change()"
           >
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.current_member"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
-          <el-input
+          <!-- <el-input
             v-model="ruleForm.future_member"
             placeholder="$12345"
             type="number"
@@ -32,14 +40,22 @@
             @change="change()"
           >
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.future_member"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
       </div>
       <!-- Spouse -->
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Spouse</div>
         <el-form-item class="w-4/12 mr-1">
-          <el-input
+          <!-- <el-input
             v-model="ruleForm.current_spouse"
             placeholder="$12345"
             type="number"
@@ -47,10 +63,18 @@
             @change="change()"
           >
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.current_spouse"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
-          <el-input
+          <!-- <el-input
             v-model="ruleForm.future_spouse"
             placeholder="$12345"
             type="number"
@@ -58,14 +82,22 @@
             @change="change()"
           >
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.future_spouse"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
       </div>
       <!-- Pensions -->
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Pensions</div>
         <el-form-item class="w-4/12 mr-1">
-          <el-input
+          <!-- <el-input
             v-model="ruleForm.current_pensions"
             placeholder="$12345"
             type="number"
@@ -73,10 +105,18 @@
             @change="change()"
           >
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.current_pensions"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
-          <el-input
+          <!-- <el-input
             v-model="ruleForm.future_pensions"
             placeholder="$12345"
             type="number"
@@ -84,14 +124,22 @@
             @change="change()"
           >
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.future_pensions"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
       </div>
       <!-- Rental income -->
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Rental income</div>
         <el-form-item class="w-4/12 mr-1">
-          <el-input
+          <!-- <el-input
             v-model="ruleForm.current_rental_income"
             placeholder="$12345"
             type="number"
@@ -99,10 +147,18 @@
             @change="change()"
           >
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.current_rental_income"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
-          <el-input
+          <!-- <el-input
             v-model="ruleForm.future_rental_income"
             placeholder="$12345"
             type="number"
@@ -110,14 +166,22 @@
             @change="change()"
           >
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.future_rental_income"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
       </div>
       <!-- Investments -->
       <div class="flex justify-center items-center px-3 border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Investments</div>
         <el-form-item class="w-4/12 mr-1">
-          <el-input
+          <!-- <el-input
             v-model="ruleForm.current_investment"
             placeholder="$12345"
             type="number"
@@ -125,10 +189,18 @@
             @change="change()"
           >
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.current_investment"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
-          <el-input
+          <!-- <el-input
             v-model="ruleForm.future_investment"
             placeholder="$12345"
             type="number"
@@ -136,7 +208,15 @@
             @change="change()"
           >
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.future_investment"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
       </div>
 
@@ -150,27 +230,51 @@
       <div class="flex justify-center items-center border-b border-r border-l border-color-grey py-4 px-3">
         <div class="w-8/12 text-main text-xss mr-2.5">Tax</div>
         <el-form-item class="w-4/12">
-          <el-input v-model="ruleForm.tax" placeholder="$12345" :disabled="isLoadingCreate" @change="change()">
+          <!-- <el-input v-model="ruleForm.tax" placeholder="$12345" :disabled="isLoadingCreate" @change="change()">
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.tax"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
       </div>
       <!-- IRA -->
       <div class="flex justify-center items-center border-b border-r border-l border-color-grey py-4 px-3">
         <div class="w-8/12 text-main text-xss mr-2.5">IRA</div>
         <el-form-item class="w-4/12">
-          <el-input v-model="ruleForm.ira_first" placeholder="$12345" :disabled="isLoadingCreate" @change="change()">
+          <!-- <el-input v-model="ruleForm.ira_first" placeholder="$12345" :disabled="isLoadingCreate" @change="change()">
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.ira_first"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
       </div>
       <!-- IRA SECOND-->
       <div class="flex justify-center items-center border-b border-r border-l border-color-grey py-4 px-3">
         <div class="w-8/12 text-main text-xss mr-2.5">IRA</div>
         <el-form-item class="w-4/12">
-          <el-input v-model="ruleForm.ira_second" placeholder="$12345" :disabled="isLoadingCreate" @change="change()">
+          <!-- <el-input v-model="ruleForm.ira_second" placeholder="$12345" :disabled="isLoadingCreate" @change="change()">
             <template #prepend>$</template>
-          </el-input>
+          </el-input> -->
+          <SwdCurrencyInput
+            v-model="ruleForm.ira_second"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingCreate"
+            placeholder="$12345"
+            @blur="change()"
+          />
         </el-form-item>
       </div>
     </el-form>
@@ -201,6 +305,12 @@ export default {
     const route = useRoute()
     const queryClient = useQueryClient()
     const id = route.params.id
+
+    const optionsCurrencyInput = {
+      currency: 'USD',
+      locale: 'en-US',
+      currencyDisplay: 'hidden',
+    }
 
     const { isLoading, isFetching, isFetched, isError, data: monthlyIncome } = useFetchMonthlyIncomeAnalysis(id)
 
@@ -242,6 +352,7 @@ export default {
       dataCreate,
       isFetching,
       isFetched,
+      optionsCurrencyInput,
     }
   },
 }
