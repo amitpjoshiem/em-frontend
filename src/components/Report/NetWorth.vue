@@ -8,7 +8,7 @@
             <div class="bg-dark-blue-charts w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Liquid</div>
             <el-form-item class="w-5/12">
-              <el-input
+              <!-- <el-input
                 v-model="ruleForm.liquid.amount"
                 placeholder="$12345"
                 type="number"
@@ -16,7 +16,15 @@
                 @change="change()"
               >
                 <template #prepend>$</template>
-              </el-input>
+              </el-input> -->
+              <SwdCurrencyInput
+                v-model="ruleForm.liquid.amount"
+                :options="optionsCurrencyInput"
+                prepend
+                :disabled="isLoadingCreate"
+                placeholder="$12345"
+                @blur="change()"
+              />
             </el-form-item>
             <div class="text-main text-xss font-semibold w-2/12 pl-2">
               <SwdSpinner v-if="isFetching" />
@@ -29,7 +37,7 @@
             <div class="bg-activity w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Market</div>
             <el-form-item class="w-5/12">
-              <el-input
+              <!-- <el-input
                 v-model="ruleForm.market.amount"
                 placeholder="$12345"
                 type="number"
@@ -37,7 +45,15 @@
                 @change="change()"
               >
                 <template #prepend>$</template>
-              </el-input>
+              </el-input> -->
+              <SwdCurrencyInput
+                v-model="ruleForm.market.amount"
+                :options="optionsCurrencyInput"
+                prepend
+                :disabled="isLoadingCreate"
+                placeholder="$12345"
+                @blur="change()"
+              />
             </el-form-item>
             <div class="text-main text-xss font-semibold w-2/12 pl-2">
               <SwdSpinner v-if="isFetching" />
@@ -50,7 +66,7 @@
             <div class="bg-color-error w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Income safe</div>
             <el-form-item class="w-5/12">
-              <el-input
+              <!-- <el-input
                 v-model="ruleForm.income_safe.amount"
                 placeholder="$12345"
                 type="number"
@@ -58,7 +74,15 @@
                 @change="change()"
               >
                 <template #prepend>$</template>
-              </el-input>
+              </el-input> -->
+              <SwdCurrencyInput
+                v-model="ruleForm.income_safe.amount"
+                :options="optionsCurrencyInput"
+                prepend
+                :disabled="isLoadingCreate"
+                placeholder="$12345"
+                @blur="change()"
+              />
             </el-form-item>
             <div class="text-main text-xss font-semibold w-2/12 pl-2">
               <SwdSpinner v-if="isFetching" />
@@ -114,8 +138,14 @@ export default {
     const form = ref(null)
     const queryClient = useQueryClient()
     const route = useRoute()
-
     const memberId = route.params.id
+
+    const optionsCurrencyInput = {
+      currency: 'USD',
+      locale: 'en-US',
+      currencyDisplay: 'hidden',
+      precision: 2,
+    }
 
     const { isLoading, isFetching, isFetched, isError, data: netWorth } = useFetchNetWorth(memberId)
 
@@ -151,9 +181,9 @@ export default {
 
     const change = async () => {
       const data = {
-        market: ruleForm.market.amount,
-        liquid: ruleForm.liquid.amount,
-        income_safe: ruleForm.income_safe.amount,
+        market: ruleForm.market.amount === null ? '' : ruleForm.market.amount.toString(),
+        liquid: ruleForm.liquid.amount === null ? '' : ruleForm.liquid.amount.toString(),
+        income_safe: ruleForm.income_safe.amount === null ? '' : ruleForm.income_safe.amount.toString(),
       }
       const res = await create({ id: memberId, data })
       if (!('error' in res)) {
@@ -171,13 +201,13 @@ export default {
       isLoading,
       isError,
       isFetched,
-
       create,
       isLoadingCreate,
       isErrorCreate,
       isFetchingCreate,
       dataCreate,
       percentFormat,
+      optionsCurrencyInput,
     }
   },
 }
