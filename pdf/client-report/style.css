@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  margin: 0;
+  -webkit-print-color-adjust: exact;
+}
+
+@page {
+  size: A4 landscape;
+
+}
+
+html, body {
+  width:      29.7cm;
+  height:     21cm;
+}
+
+.page {
+  position:   relative;
+  top:        1cm;
+  left:       1cm;
+  width:      125%;
+  height:     19cm;
+  page-break-after: always
+}
+
+.content .page:not(:first-child) .title-page{
+  display: none;
+}
+
+.content .page:not(:last-child) .total-info{
+  display: none;
+}
+
+.color-current-year{
+  background-color: #E9F8FF;
+}
+
+.color-since{
+  background-color: #FFEFEA;
+}

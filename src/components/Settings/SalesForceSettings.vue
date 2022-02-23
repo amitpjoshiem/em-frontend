@@ -7,10 +7,9 @@
   </div>
 </template>
 <script>
-import { reactive, toRefs } from 'vue'
-import { useSalesForceAuth } from '@/api/use-salesforce-auth.js'
+import { reactive, toRefs, watch } from 'vue'
 import { useLogoutSalesForce } from '@/api/use-logout-salesforce.js'
-import { onMounted, watch } from 'vue'
+import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
 
 export default {
   name: 'SalesForceSettings',
@@ -20,33 +19,33 @@ export default {
       loading: false,
     })
 
-    const { response, error, fetching, getSalesForceAuth } = useSalesForceAuth()
-    const { logoutSalesForceAuth } = useLogoutSalesForce()
+    const {
+      isLoading: isLoadingStatusSfAcc,
+      isError: isErrorStatusSfAcc,
+      data: statusSfAcc,
+      refetch,
+    } = useSalesForceAuth()
 
-    onMounted(() => {
-      getSalesForceAuth()
-    })
+    const { logoutSalesForceAuth } = useLogoutSalesForce()
 
     const beforeChange = () => {
       status.loading = true
       if (!status.value) {
         return new Promise((resolve) => {
-          window.open(response.value.link, '_blank')
+          window.open(statusSfAcc.value.link, '_blank')
           status.loading = false
           return resolve(true)
         })
       } else {
         return new Promise((resolve) => {
-          return getSalesForceAuth().then(() => {
-            logoutSalesForceAuth()
-            status.loading = false
-            return resolve(true)
-          })
+          logoutSalesForceAuth()
+          status.loading = false
+          return resolve(true)
         })
       }
     }
 
-    watch(response, (newValue) => {
+    watch(statusSfAcc, (newValue) => {
       if (newValue) {
         status.value = newValue.auth
       }
@@ -55,10 +54,11 @@ export default {
     return {
       ...toRefs(status),
       beforeChange,
-      response,
-      error,
-      fetching,
-      getSalesForceAuth,
+
+      isLoadingStatusSfAcc,
+      isErrorStatusSfAcc,
+      statusSfAcc,
+      refetch,
     }
   },
 }

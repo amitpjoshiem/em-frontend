@@ -14,27 +14,35 @@
 <script>
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import { chartWithTextCenter } from '@/utils/chartWithText'
+import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
   name: 'TotalChart',
   components: {
     Vue3ChartJs,
   },
-  setup() {
+  props: {
+    goal: {
+      type: String,
+      require: true,
+      default: '',
+    },
+  },
+  setup(props) {
     const doughnutChart = {
       type: 'doughnut',
       data: {
         datasets: [
           {
-            backgroundColor: ['#FF92A5', '#53576A'],
-            data: [45, 10],
+            backgroundColor: props.goal ? ['#FF92A5', '#53576A'] : ['#D3D3D3'],
+            data: [0, props.goal ? props.goal : 1],
           },
         ],
       },
       options: {
         elements: {
           center: {
-            text: 'Income Goal $5000',
+            text: props.goal !== null ? currencyFormat(props.goal) : '---',
             size: 12,
           },
         },

@@ -72,24 +72,51 @@ const routes = [
           ),
       },
       {
-        path: 'member-report/:id',
-        name: 'member-report',
-        component: () => import(/* webpackChunkName: "MemberReport" */ '../components/Report/MemberReport.vue'),
+        path: 'blueprint-report/:id',
+        name: 'blueprint-report',
+        component: () => import(/* webpackChunkName: "BlueprintReport" */ '../components/Report/BlueprintReport.vue'),
       },
       {
         path: 'client-report/:id',
         name: 'clientreport',
         component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
+      },
+      {
+        path: 'export-report/:id',
+        name: 'export-report',
+        component: () =>
+          import(/* webpackChunkName: "clientreport" */ '../components/Documents/ClientReport/ExportClientReports.vue'),
+        children: [
+          {
+            path: 'all',
+            name: 'all-report',
+            component: () =>
+              import(
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportAll.vue'
+              ),
+          },
+          {
+            path: 'pdf',
+            name: 'pdf-report',
+            component: () =>
+              import(
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportPdf.vue'
+              ),
+          },
+          {
+            path: 'excel',
+            name: 'excel-report',
+            component: () =>
+              import(
+                /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportExcel.vue'
+              ),
+          },
+        ],
       },
       {
         path: 'contract-info/:id',
         name: 'contract-info',
         component: () => import(/* webpackChunkName: "ContractInfo" */ '../components/ClientReport/ContractInfo.vue'),
-      },
-      {
-        path: 'client-report/:id',
-        name: 'clientreport',
-        component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
       },
       {
         path: 'list-of-households',
@@ -163,6 +190,14 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "AssetAccounts" */ '../components/AssetAccounts/AssetAccounts.vue'),
       },
+
+      {
+        path: 'opportunity-contact/:id',
+        name: 'opportunity-contact',
+        component: () =>
+          import(/* webpackChunkName: "AssetAccounts" */ '../components/OpportunityContact/OpportunityContact.vue'),
+      },
+
       {
         path: 'asset-allocation-details/:id',
         name: 'asset-allocation-details',
@@ -224,6 +259,12 @@ const routes = [
         path: 'logout',
         name: 'logout',
         component: () => import(/* webpackChunkName: "Logout" */ '../views/Logout.vue'),
+      },
+
+      {
+        path: 'error',
+        name: 'error',
+        component: () => import(/* webpackChunkName: "Logout" */ '../views/ErrorPage.vue'),
       },
 
       {

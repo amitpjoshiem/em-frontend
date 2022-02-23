@@ -27,7 +27,9 @@
       <span class="text-main text-sm font-semibold">{{ currencyFormat(contract.current_year.current_value) }}</span>
     </div>
     <div class="border border-t-0 border-color-grey flex justify-end px-4 py-2">
-      <el-button size="small" @click="moreAction">More info</el-button>
+      <el-button size="small" type="primary" plain @click="genPdf">Generate PDF</el-button>
+      <el-button size="small" type="success" plain @click="genExcel">Generate EXCEL</el-button>
+      <el-button size="small" type="info" plain @click="moreAction">More info</el-button>
     </div>
   </div>
 </template>
@@ -37,7 +39,11 @@ import IconCurrentYear from '@/assets/svg/icon-current-year.svg'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { computed } from 'vue'
 import dayjs from 'dayjs'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { useMutation } from 'vue-query'
+import { generatePdfClientReports } from '@/api/vueQuery/generate-pdf-client-reports'
+import { generateExcelClientReports } from '@/api/vueQuery/generate-excel-client-reports'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ContractItem',
@@ -52,6 +58,13 @@ export default {
 
   setup(props) {
     const router = useRouter()
+    const route = useRoute()
+    const store = useStore()
+
+    const memberId = route.params.id
+
+    const { mutateAsync: genPdfClientReports } = useMutation(generatePdfClientReports)
+    const { mutateAsync: genExcelClientReports } = useMutation(generateExcelClientReports)
 
     const getIssueDate = computed(() => {
       return dayjs(props.contract.origination_date).format('MM/DD/YYYY')
@@ -61,11 +74,44 @@ export default {
       router.push({ name: 'contract-info', params: { id: props.contract.id } })
     }
 
+    const genPdf = async () => {
+      const data = {
+        contracts: props.contract.id,
+      }
+      const res = await genPdfClientReports({ id: memberId, data })
+
+      if (!('error' in res)) {
+        succesExport()
+      }
+    }
+
+    const genExcel = async () => {
+      const data = {
+        contracts: props.contract.id,
+      }
+      const res = await genExcelClientReports({ id: memberId, data })
+      if (!('error' in res)) {
+        succesExport()
+      }
+    }
+
+    const succesExport = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'exportSucces',
+        value: true,
+      })
+
+      store.commit('globalComponents/setPdfRegion', 'client-report')
+      store.commit('globalComponents/setMemberId', memberId)
+    }
+
     return {
       IconCurrentYear,
       currencyFormat,
       getIssueDate,
       moreAction,
+      genPdf,
+      genExcel,
     }
   },
 }

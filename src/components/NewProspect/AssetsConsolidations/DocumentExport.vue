@@ -35,7 +35,7 @@ export default {
     const { isLoading, isError, isFetching, data: document, refetch } = useFetchExcelDocuments(route.params.id)
 
     watchEffect(() => {
-      if (store.state.globalComponents.needUpdateContent.value === 'assets_consolidation_excel_export') {
+      if (store.state.globalComponents.needUpdateContent === 'assets_consolidation_excel_export') {
         refetch.value()
       }
     })

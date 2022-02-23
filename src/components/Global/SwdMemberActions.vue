@@ -21,16 +21,17 @@ const allAvailibleOptions = {
   3: { title: 'Client Report', command: 'client-report' },
   4: { title: 'Onboarding', command: 'onboarding' },
   5: { title: 'Assets Accounts', command: 'assets-accounts' },
+  6: { title: 'Contact', command: 'opportunity-contact' },
 }
 
 const optionsPerStepAndType = {
-  client: [1, 3, 5],
-  'prospect@step-0': [4, 5],
-  'prospect@step-1': [1, 4, 5],
-  'prospect@step-2': [1, 4, 5],
-  'prospect@step-3': [1, 4, 5],
-  'prospect@step-4': [1, 4, 5],
-  'prospect@step-5': [1, 4, 5],
+  client: [1, 3, 5, 6],
+  'prospect@step-0': [4, 5, 6],
+  'prospect@step-1': [1, 4, 5, 6],
+  'prospect@step-2': [1, 4, 5, 6],
+  'prospect@step-3': [1, 4, 5, 6],
+  'prospect@step-4': [1, 4, 5, 6],
+  'prospect@step-5': [1, 4, 5, 6],
   onboarding: [4],
 }
 
@@ -103,7 +104,7 @@ export default {
         }),
       'blueprint-report': () =>
         router.push({
-          name: 'member-report',
+          name: 'blueprint-report',
           params: { id: props.user.id },
         }),
       'client-report': () => router.push({ name: 'clientreport', params: { id: props.user.id } }),
@@ -113,6 +114,7 @@ export default {
           params: { id: props.user.id, step: props.user.step },
         }),
       'assets-accounts': () => router.push({ name: 'asset-accounts', params: { id: props.user.id } }),
+      'opportunity-contact': () => router.push({ name: 'opportunity-contact', params: { id: props.user.id } }),
     }
 
     return {

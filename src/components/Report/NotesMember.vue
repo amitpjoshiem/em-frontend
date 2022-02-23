@@ -6,7 +6,7 @@
         <el-input v-model="ruleForm.notes" type="textarea" :rows="5" :autosize="false" />
       </el-form-item>
     </el-form>
-    <div class="flex justify-end">
+    <div class="flex justify-end mt-5">
       <el-button type="primary" @click="submitForm('ruleForm')">Save</el-button>
     </div>
   </div>

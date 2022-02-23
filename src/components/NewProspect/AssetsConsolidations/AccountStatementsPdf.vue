@@ -20,7 +20,7 @@
       </template>
     </SwdUpload>
   </div>
-  <el-skeleton v-else :rows="10" animated class="p-5" />
+  <el-skeleton v-else :rows="5" animated class="p-5" />
   <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
 </template>
 

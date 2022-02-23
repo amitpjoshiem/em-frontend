@@ -21,6 +21,8 @@ class MemberDetailsUser {
     step,
     avatar,
     notes,
+    total_net_worth,
+    goal,
   }) {
     this.id = id
     this.type = type
@@ -42,6 +44,8 @@ class MemberDetailsUser {
     this.step = step
     this.avatar = avatar
     this.notes = notes
+    this.total_net_worth = total_net_worth
+    this.goal = goal
   }
 
   get retirementDateFormatted() {

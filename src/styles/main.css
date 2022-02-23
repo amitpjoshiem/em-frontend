@@ -88,7 +88,7 @@
 
 .el-form-item__label {
   line-height: normal;
-  padding-bottom: 8px;
+  /* padding-bottom: 8px; */
   color: #424450;
   font-size: 13px;
   font-weight: 600;
@@ -273,4 +273,17 @@
 
 .el-timeline-item__tail {
   margin-top: 15px;
+}
+
+.el-form-item{
+  margin-bottom: 0;
+}
+
+.el-range-editor--small.el-input__inner{
+  height: 28px;
+}
+
+.el-collapse-item__header{
+  height: 80px;
+  line-height: normal;
 }

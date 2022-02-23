@@ -1,27 +1,26 @@
 <template>
+  <SwdSubHeader title="Blueprint report" class="p-5" with-share-btn region="blue-report" />
   <div class="p-5">
-    <SwdSubHeader title="Blueprint report" class="p-5" with-share-btn region="blue-report" />
-    <div>
-      <div class="flex" data-pdf-region="blue-report">
-        <div class="w-7/12">
-          <div class="flex">
-            <WidgetReport :member="member" />
-            <TotalExpenses />
-          </div>
-          <NetWorth />
-          <Concerns />
+    <div class="flex" data-pdf-region="blue-report">
+      <div class="w-7/12">
+        <div v-if="!fetchingMember" class="flex">
+          <WidgetReport :member="member.data" />
+          <IncomeGoal :member="member.data" />
         </div>
-        <MonthlyIncome />
+        <el-skeleton v-else :rows="3" animated class="p-5" />
+        <NetWorth />
+        <Concerns />
       </div>
-      <NotesMember :notes="member.data?.notes" />
+      <MonthlyIncome />
     </div>
-    <el-skeleton v-show="fetchingMember" :rows="10" animated class="p-5" />
+    <NotesMember :notes="member.data?.notes" />
   </div>
+  <el-skeleton v-show="fetchingMember" :rows="10" animated class="p-5" />
 </template>
 
 <script>
 import WidgetReport from '@/components/Report/WidgetReport.vue'
-import TotalExpenses from '@/components/Report/TotalExpenses.vue'
+import IncomeGoal from '@/components/Report/IncomeGoal.vue'
 import NetWorth from '@/components/Report/NetWorth.vue'
 import Concerns from '@/components/Report/Concerns.vue'
 import MonthlyIncome from '@/components/Report/MonthlyIncome.vue'
@@ -32,9 +31,9 @@ import { computed, onMounted } from 'vue'
 import { useFetchMember } from '@/api/use-fetch-member'
 
 export default {
-  name: 'MemberReport',
+  name: 'BlueprintReport',
   components: {
-    TotalExpenses,
+    IncomeGoal,
     NetWorth,
     WidgetReport,
     Concerns,

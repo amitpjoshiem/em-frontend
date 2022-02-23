@@ -1,7 +1,20 @@
 <template>
   <SwdDropDown class="ml-2" :options="actionsOptions" @select="handleSelect">
     <template #titleDropDown>
-      <span class="cursor-pointer bg-white rounded flex justify-center items-center border border-color-grey px-1 py-1">
+      <span
+        class="
+          cursor-pointer
+          bg-white
+          rounded
+          flex
+          justify-center
+          items-center
+          border border-color-grey
+          pr-[7px]
+          pl-[6px]
+          py-[6px]
+        "
+      >
         <InlineSvg :src="IconShare" />
       </span>
     </template>
@@ -10,11 +23,16 @@
 
 <script>
 import IconShare from '@/assets/svg/icon-share.svg'
-import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { useDownloadBlueReport } from '@/api/use-download-blue-report'
 import { useDownloadClientReport } from '@/api/use-download-client-report'
 import { useRoute } from 'vue-router'
-import { useProspectDetails } from '@/api/use-prospect-details.js'
+import { useMutation } from 'vue-query'
+import { generatePdfClientReports } from '@/api/vueQuery/generate-pdf-client-reports'
+import { generatePdfBlueReports } from '@/api/vueQuery/generate-pdf-blue-reports'
+import { generateExcelClientReports } from '@/api/vueQuery/generate-excel-client-reports'
+import { generateExcelBlueReports } from '@/api/vueQuery/generate-excel-blue-reports'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ShareBtn',
@@ -24,69 +42,107 @@ export default {
       require: true,
       default: '',
     },
+    clientId: {
+      type: String,
+      require: false,
+      default: '',
+    },
+    contracts: {
+      type: String,
+      require: false,
+      default: '',
+    },
   },
 
   setup(props) {
-    const store = useStore()
     const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
 
-    const id = route.params.id
+    const memberId = props.clientId ? props.clientId : route.params.id
 
-    const { isLoading: isLoadingProspectDetails, isError, data: member } = useProspectDetails()
-    const { response: blueReportPdf, error, fetching, getBlueReport } = useDownloadBlueReport(id)
+    const { response: blueReportPdf, error, fetching, getBlueReport } = useDownloadBlueReport(memberId)
     const {
       response: clientReportPdf,
       error: errorClientReport,
       fetching: fetchingClientReport,
       getClientReport,
-    } = useDownloadClientReport(id)
+    } = useDownloadClientReport(memberId)
+
+    const { mutateAsync: genPdfClientReports } = useMutation(generatePdfClientReports)
+
+    const { mutateAsync: genPdfBlueReports } = useMutation(generatePdfBlueReports)
+
+    const { mutateAsync: genExcelClientReports } = useMutation(generateExcelClientReports)
+
+    const { mutateAsync: genExcelBlueReports } = useMutation(generateExcelBlueReports)
 
     const actionsOptions = [
       {
-        title: 'Download as PDF',
-        command: 'download',
+        title: 'Generate PDF',
+        command: 'generate_pdf',
       },
       {
-        title: 'Share as PDF',
-        command: 'share',
+        title: 'Generate EXCEL',
+        command: 'generate_excel',
+      },
+      {
+        title: 'All documents',
+        command: 'all_documents',
       },
     ]
 
-    const downloadPdf = async () => {
-      let blob = null
-      let res = null
-      if (props.pdfRegion === 'blue-report') {
-        await getBlueReport()
-        res = await fetch(blueReportPdf.value.data.link)
+    const actionsMap = {
+      generate_pdf: () => generatePdf(),
+      generate_excel: () => generateExcel(),
+      all_documents: () => allDocuments(),
+    }
+
+    const generatePdf = async () => {
+      let res = []
+      const data = {}
+      if (props.contracts) data.contracts = [props.contracts]
+      if (props.pdfRegion === 'client-report') {
+        res = await genPdfClientReports({ id: memberId, data })
       }
+
+      if (props.pdfRegion === 'blue-report') {
+        res = await genPdfBlueReports({ id: memberId, data })
+      }
+
+      if (!('error' in res)) succesExport()
+    }
+
+    const generateExcel = async () => {
+      let res = []
+      const data = {}
+      if (props.contracts) data.contracts = [props.contracts]
 
       if (props.pdfRegion === 'client-report') {
-        await getClientReport()
-        res = await fetch(clientReportPdf.value.data.link)
+        res = await genExcelClientReports({ id: memberId, data })
+      }
+      if (props.pdfRegion === 'blue-report') {
+        res = await genExcelBlueReports({ id: memberId, data })
       }
 
-      blob = await res.blob()
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', member.value.name + '.pdf')
-      link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }))
-      setTimeout(function () {
-        link.remove()
-      }, 100)
+      if (!('error' in res)) succesExport()
     }
 
-    const actionsMap = {
-      download: () => downloadPdf(),
-      share: () => share(),
-    }
-
-    const share = () => {
+    const succesExport = () => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'shareFileEmailDialog',
+        destination: 'exportSucces',
         value: true,
       })
+
       store.commit('globalComponents/setPdfRegion', props.pdfRegion)
+      store.commit('globalComponents/setMemberId', memberId)
+    }
+
+    const allDocuments = () => {
+      if (props.pdfRegion === 'client-report')
+        router.push({ name: 'all-report', params: { id: memberId }, query: { type: 'client' } })
+      if (props.pdfRegion === 'blue-report')
+        router.push({ name: 'all-report', params: { id: memberId }, query: { type: 'blueprint' } })
     }
 
     const handleSelect = (command) => {
@@ -102,9 +158,6 @@ export default {
       error,
       fetching,
       getBlueReport,
-      isLoadingProspectDetails,
-      isError,
-      member,
       clientReportPdf,
       errorClientReport,
       fetchingClientReport,
