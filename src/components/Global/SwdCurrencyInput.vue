@@ -1,7 +1,8 @@
 <template>
-  <el-input ref="inputRef" :model-value="formattedValue">
-    <template v-if="prepend" #prepend>$</template>
-  </el-input>
+  <div class="el-input el-input--small el-input-group el-input-group--prepend" :class="{ 'is-disabled': disabled }">
+    <div v-if="prepend" class="el-input-group__prepend">$</div>
+    <input ref="inputRef" type="text" class="el-input__inner" :disabled="disabled" />
+  </div>
 </template>
 
 <script>
@@ -20,6 +21,11 @@ export default {
       default: () => {},
     },
     prepend: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    disabled: {
       type: Boolean,
       require: false,
       default: false,
