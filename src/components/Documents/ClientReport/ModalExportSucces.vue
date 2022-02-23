@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="state.dialogVisible" title="Export report" width="40%" :before-close="closeDialog">
+  <el-dialog v-model="state.dialogVisible" title="Export report" width="45%" :before-close="closeDialog">
     <div class="flex flex-col items-center">
       <InlineSvg :src="IconSuccesChanged" />
       <div class="pt-8">Export success.</div>
