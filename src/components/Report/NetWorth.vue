@@ -8,22 +8,13 @@
             <div class="bg-dark-blue-charts w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Liquid</div>
             <el-form-item class="w-5/12">
-              <!-- <el-input
-                v-model="ruleForm.liquid.amount"
-                placeholder="$12345"
-                type="number"
-                :disabled="isLoadingCreate"
-                @change="change()"
-              >
-                <template #prepend>$</template>
-              </el-input> -->
               <SwdCurrencyInput
                 v-model="ruleForm.liquid.amount"
                 :options="optionsCurrencyInput"
                 prepend
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
-                @blur="change()"
+                @change="change()"
               />
             </el-form-item>
             <div class="text-main text-xss font-semibold w-2/12 pl-2">
@@ -37,22 +28,13 @@
             <div class="bg-activity w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Market</div>
             <el-form-item class="w-5/12">
-              <!-- <el-input
-                v-model="ruleForm.market.amount"
-                placeholder="$12345"
-                type="number"
-                :disabled="isLoadingCreate"
-                @change="change()"
-              >
-                <template #prepend>$</template>
-              </el-input> -->
               <SwdCurrencyInput
                 v-model="ruleForm.market.amount"
                 :options="optionsCurrencyInput"
                 prepend
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
-                @blur="change()"
+                @change="change()"
               />
             </el-form-item>
             <div class="text-main text-xss font-semibold w-2/12 pl-2">
@@ -66,22 +48,13 @@
             <div class="bg-color-error w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Income safe</div>
             <el-form-item class="w-5/12">
-              <!-- <el-input
-                v-model="ruleForm.income_safe.amount"
-                placeholder="$12345"
-                type="number"
-                :disabled="isLoadingCreate"
-                @change="change()"
-              >
-                <template #prepend>$</template>
-              </el-input> -->
               <SwdCurrencyInput
                 v-model="ruleForm.income_safe.amount"
                 :options="optionsCurrencyInput"
                 prepend
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
-                @blur="change()"
+                @change="change()"
               />
             </el-form-item>
             <div class="text-main text-xss font-semibold w-2/12 pl-2">
@@ -180,6 +153,7 @@ export default {
     })
 
     const change = async () => {
+      // TODO: temporary solution
       const data = {
         market: ruleForm.market.amount === null ? '' : ruleForm.market.amount.toString(),
         liquid: ruleForm.liquid.amount === null ? '' : ruleForm.liquid.amount.toString(),
