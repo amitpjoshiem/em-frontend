@@ -1,7 +1,7 @@
 <template>
   <div class="border rounded-lg p-5">
     <div class="text-main text-smm font-semibold mb-5">Your Activity</div>
-    <div class="infinite-list-wrapper" style="overflow: auto">
+    <div v-if="!isLoading" class="infinite-list-wrapper" style="overflow: auto">
       <ul
         v-if="status === 'success' && !isLoading"
         v-infinite-scroll="load"
@@ -33,6 +33,9 @@
         </div>
         <span class="text-gray03 font-semibold text-xss mt-5">No recently activity</span>
       </div>
+    </div>
+    <div v-else class="flex items-center justify-center h-6">
+      <SwdSpinner />
     </div>
   </div>
 </template>
