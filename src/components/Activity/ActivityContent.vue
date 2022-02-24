@@ -11,25 +11,18 @@
         <div v-for="(activ, index) in activities.pages" :key="index">
           <div v-if="activ.data !== undefined">
             <el-timeline v-for="elem in activ.data" :key="elem.day">
-              <div class="mb-6 text-gray03 font-semibold">
-                <TitleDayActivity :day="elem.day" />
-              </div>
-              <el-timeline-item
-                v-for="item in elem.events"
-                :key="item.timestamp"
-                center
-                :timestamp="item.timestamp"
-                placement="top"
-                color="#66B6FF"
-              >
-                <div v-html="item.content" />
+              <el-timeline-item :timestamp="elem.date" placement="top" color="#66B9FF">
+                <el-card>
+                  <h4 v-html="elem.content" />
+                  <p>{{ elem.time }}</p>
+                </el-card>
               </el-timeline-item>
             </el-timeline>
           </div>
         </div>
       </ul>
-      <div v-if="loading" class="text-center">
-        <span>Loading...</span>
+      <div v-if="loading && hasMore" class="flex items-center justify-center h-6">
+        <SwdSpinner />
       </div>
       <div
         v-if="!loading && !isLoading && !activities.pages[0].data.length"
@@ -45,16 +38,22 @@
 </template>
 <script>
 import { useFetchActivities } from '@/api/use-fetch-activities.js'
-import TitleDayActivity from './TitleDayActivity.vue'
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
+import { computed } from 'vue'
 
 export default {
   name: 'ActivityContent',
-  components: {
-    TitleDayActivity,
-  },
+
   setup() {
     const { data: activities, error, status, load, disabled, loading, isLoading } = useFetchActivities()
+
+    const hasMore = computed(() => {
+      const lastPage = activities.value.pages.length - 1
+      const current_page = activities.value.pages[lastPage].meta.pagination.current_page
+      const total_pages = activities.value.pages[lastPage].meta.pagination.total_pages
+      return current_page < total_pages
+    })
+
     return {
       activities,
       error,
@@ -64,6 +63,7 @@ export default {
       disabled,
       IconLastActivityEmpty,
       isLoading,
+      hasMore,
     }
   },
 }
