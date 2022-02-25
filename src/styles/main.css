@@ -292,6 +292,10 @@
   line-height: normal;
 }
 
-.el-card__body h4 p a{
+/* .el-card__body h4 p a{
   color: #66B6FF;
+} */
+
+.activity-link {
+  color: #66b6ff;
 }
