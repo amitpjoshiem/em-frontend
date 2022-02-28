@@ -48,6 +48,7 @@
             prepend
             :disabled="isLoadingUpdate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -67,6 +68,7 @@
             prepend
             :disabled="isLoadingUpdate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -164,6 +166,7 @@ export default {
     })
 
     const change = async () => {
+      // TODO: temporary solution
       const data = {
         total_net_worth: ruleForm.total_net_worth === null ? '' : ruleForm.total_net_worth.toString(),
         goal: ruleForm.goal === null ? '' : ruleForm.goal.toString(),

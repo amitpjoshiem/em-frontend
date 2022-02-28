@@ -28,6 +28,7 @@
                 prepend
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
+                size="small"
                 @change="change()"
               />
             </el-form-item>
@@ -38,6 +39,7 @@
                 prepend
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
+                size="small"
                 @change="change()"
               />
             </el-form-item>
@@ -48,6 +50,7 @@
                 prepend
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
+                size="small"
                 @change="change()"
               />
             </el-form-item>
@@ -106,6 +109,7 @@ export default {
     })
 
     const change = async () => {
+      // TODO: temporary solution
       const data = {
         growth: ruleForm.growth === null ? '' : ruleForm.growth.toString(),
         income: ruleForm.income === null ? '' : ruleForm.income.toString(),

@@ -14,6 +14,7 @@
                 prepend
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
+                size="small"
                 @change="change()"
               />
             </el-form-item>
@@ -34,6 +35,7 @@
                 prepend
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
+                size="small"
                 @change="change()"
               />
             </el-form-item>
@@ -53,6 +55,7 @@
                 :options="optionsCurrencyInput"
                 prepend
                 :disabled="isLoadingCreate"
+                size="small"
                 placeholder="$12345"
                 @change="change()"
               />

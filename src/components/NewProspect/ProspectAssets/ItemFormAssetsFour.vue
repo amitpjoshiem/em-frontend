@@ -2,39 +2,39 @@
   <div class="flex items-center mb-5">
     <div class="w-2/12 text-main font-semibold text-xss">{{ title }}</div>
     <el-form-item class="w-5/24 pr-2.5 mb-0" :prop="propMember">
-      <el-input
-        :disabled="disabled"
+      <SwdCurrencyInput
         :model-value="member"
-        inputmode="numeric"
+        :disabled="disabled"
+        :options="optionsCurrencyInput"
         @input="handleChangeMember"
-        @blur="blurHandler(propMember)"
+        @change="blurHandler(propMember)"
       />
     </el-form-item>
     <el-form-item v-if="isMarried" class="w-5/24 pr-2.5 mb-0" :prop="propSpouse">
-      <el-input
-        :disabled="disabled"
+      <SwdCurrencyInput
         :model-value="spouse"
-        inputmode="numeric"
+        :disabled="disabled"
+        :options="optionsCurrencyInput"
         @input="handleChangeSpouse"
-        @blur="blurHandler(propSpouse)"
+        @change="blurHandler(propSpouse)"
       />
     </el-form-item>
     <el-form-item class="w-5/24 mb-0" :prop="propOnq" :class="{ 'pr-2.5': !isMarried, 'pl-2.5': isMarried }">
-      <el-input
-        :disabled="disabled"
+      <SwdCurrencyInput
         :model-value="onq"
-        inputmode="numeric"
+        :disabled="disabled"
+        :options="optionsCurrencyInput"
         @input="handleChangeOnq"
-        @blur="blurHandler(propOnq)"
+        @change="blurHandler(propOnq)"
       />
     </el-form-item>
     <el-form-item class="w-5/24 pl-2.5 mb-0" :prop="propBalance">
-      <el-input
-        :disabled="disabled"
+      <SwdCurrencyInput
         :model-value="balance"
-        inputmode="numeric"
+        :disabled="disabled"
+        :options="optionsCurrencyInput"
         @input="handleChangeBalance"
-        @blur="blurHandler(propBalance)"
+        @change="blurHandler(propBalance)"
       />
     </el-form-item>
   </div>
@@ -100,21 +100,28 @@ export default {
     },
   },
   emits: ['update:member', 'update:spouse', 'update:onq', 'update:balance', 'blur'],
-  setup(props, { emit }) {
+  setup(_, { emit }) {
+    const optionsCurrencyInput = {
+      currency: 'USD',
+      locale: 'en-US',
+      currencyDisplay: 'hidden',
+      precision: 2,
+    }
+
     const handleChangeMember = (e) => {
-      emit('update:member', e)
+      emit('update:member', e.target.value)
     }
 
     const handleChangeSpouse = (e) => {
-      emit('update:spouse', e)
+      emit('update:spouse', e.target.value)
     }
 
     const handleChangeOnq = (e) => {
-      emit('update:onq', e)
+      emit('update:onq', e.target.value)
     }
 
     const handleChangeBalance = (e) => {
-      emit('update:balance', e)
+      emit('update:balance', e.target.value)
     }
     const blurHandler = (e) => {
       emit('blur', e)
@@ -126,6 +133,7 @@ export default {
       handleChangeOnq,
       handleChangeBalance,
       blurHandler,
+      optionsCurrencyInput,
     }
   },
 }

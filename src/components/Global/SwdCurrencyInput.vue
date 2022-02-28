@@ -1,7 +1,11 @@
 <template>
   <div
-    class="el-input el-input-group el-input-group--prepend"
-    :class="{ 'is-disabled': disabled, 'el-input--small': size === 'small' }"
+    class="el-input"
+    :class="{
+      'is-disabled': disabled,
+      'el-input--small': size === 'small',
+      'el-input-group el-input-group--prepend': prepend,
+    }"
   >
     <div v-if="prepend" class="el-input-group__prepend">$</div>
     <input ref="inputRef" type="text" class="el-input__inner" :disabled="disabled" :placeholder="placeholder" />
@@ -14,7 +18,7 @@ export default {
   name: 'SwdCurrencyInput',
   props: {
     modelValue: {
-      type: [Number, String],
+      type: [Number, String, Object],
       require: false,
       default: '',
     },
@@ -36,7 +40,7 @@ export default {
     size: {
       type: String,
       require: false,
-      default: 'small',
+      default: 'default',
     },
     placeholder: {
       type: String,
