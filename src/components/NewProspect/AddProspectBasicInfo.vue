@@ -3,9 +3,9 @@
     <div v-if="isShowForm">
       <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
         <!-- GENERAL -->
-        <div class="border-b px-16">
+        <div class="border-b px-16 pb-5">
           <span class="text-main text-xl font-semibold">General</span>
-          <div class="flex pt-5">
+          <div class="flex py-5">
             <el-form-item label="Retired?" class="mr-20">
               <el-radio-group v-model="ruleForm.retired">
                 <el-radio :label="true">Yes</el-radio>
@@ -79,10 +79,10 @@
         <!-- GENERAL -->
 
         <!-- Spouse -->
-        <div v-if="ruleForm.married" class="px-16 mt-7 border-b">
+        <div v-if="ruleForm.married" class="px-16 border-b py-5">
           <span class="text-main text-xl font-semibold">Spouse</span>
-          <div class="mt-5">
-            <el-form-item label="Retired?" class="mr-20">
+          <div class="my-5">
+            <el-form-item label="Retired?">
               <el-radio-group v-model="ruleForm.spouse.retired">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
@@ -135,7 +135,7 @@
         <!-- Spouse -->
 
         <!-- Housing Information -->
-        <div class="px-16 mt-7 border-b">
+        <div class="px-16 my-5 border-b">
           <span class="text-main text-xl font-semibold">Housing Information</span>
           <div class="flex pt-5">
             <el-form-item label="Type" class="w-5/12">
@@ -315,9 +315,9 @@
           </div>
         </div>
 
-        <div class="px-16 mt-7">
+        <div class="px-16 my-5">
           <span class="text-main text-xl font-semibold">Other</span>
-          <el-form-item label="Risk tolerance?" class="mt-6">
+          <el-form-item label="Risk tolerance?" class="my-5">
             <el-radio-group v-model="ruleForm.other.risk">
               <el-radio label="conservative">Conservative</el-radio>
               <el-radio label="moderately_conservative"> Moderately Conservative </el-radio>
