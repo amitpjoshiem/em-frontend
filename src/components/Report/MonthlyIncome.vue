@@ -19,6 +19,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -29,6 +30,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -43,6 +45,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -53,6 +56,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -67,6 +71,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -77,6 +82,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -91,6 +97,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -101,6 +108,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -115,6 +123,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -125,6 +134,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -146,6 +156,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -160,6 +171,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>
@@ -174,6 +186,7 @@
             prepend
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            size="small"
             @change="change()"
           />
         </el-form-item>

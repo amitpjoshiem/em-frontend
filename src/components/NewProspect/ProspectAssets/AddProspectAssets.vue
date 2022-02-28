@@ -25,6 +25,7 @@
             prop-spouse="income.spouse.salary"
             title="Salary"
             :is-married="isMarried"
+            :disabled="isLoadingUpdate"
             @blur="validateMemberAssetFieldAndUpdate"
           />
 
@@ -36,6 +37,7 @@
             prop-spouse="income.spouse.social_security"
             title="Social Security"
             :is-married="isMarried"
+            :disabled="isLoadingUpdate"
             @blur="validateMemberAssetFieldAndUpdate"
           />
 
@@ -47,6 +49,7 @@
             prop-spouse="income.spouse.pension"
             title="Pension"
             :is-married="isMarried"
+            :disabled="isLoadingUpdate"
             @blur="validateMemberAssetFieldAndUpdate"
           />
 
@@ -58,6 +61,7 @@
             prop-spouse="income.spouse.rental_income"
             title="Rental income"
             :is-married="isMarried"
+            :disabled="isLoadingUpdate"
             @blur="validateMemberAssetFieldAndUpdate"
           />
 
@@ -69,6 +73,7 @@
             prop-spouse="income.spouse.rmds"
             title="RMD’s"
             :is-married="isMarried"
+            :disabled="isLoadingUpdate"
             @blur="validateMemberAssetFieldAndUpdate"
           />
 
@@ -80,6 +85,7 @@
             prop-spouse="income.spouse.interest_dividends"
             title="Interest/Dividents"
             :is-married="isMarried"
+            :disabled="isLoadingUpdate"
             @blur="validateMemberAssetFieldAndUpdate"
           />
 
@@ -91,6 +97,7 @@
             prop-spouse="income.spouse.other"
             title="Other"
             :is-married="isMarried"
+            :disabled="isLoadingUpdate"
             @blur="validateMemberAssetFieldAndUpdate"
           />
         </div>
@@ -118,6 +125,7 @@
           prop-balance="liquid_assets.balance.cash_checking_savings_mm"
           title="Cash/Checking/ Savings/MM"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -133,6 +141,7 @@
           prop-balance="liquid_assets.balance.cds"
           title="CD’s"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -148,6 +157,7 @@
           prop-balance="liquid_assets.balance.first_401k_ira_59"
           title="401k/IRA (if over 59)"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -163,6 +173,7 @@
           prop-balance="liquid_assets.balance.first_401k_ira"
           title="401k/IRA"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -178,6 +189,7 @@
           prop-balance="liquid_assets.balance.second_401k_ira"
           title="401k/IRA"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -193,6 +205,7 @@
           prop-balance="liquid_assets.balance.stocks_bonds_mf"
           title="Stocks/Bonds/MF"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -208,6 +221,7 @@
           prop-balance="liquid_assets.balance.cash_value_life_insurance"
           title="Cash value life insurance"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -223,6 +237,7 @@
           prop-balance="liquid_assets.balance.fa_va_not_subject_to_penalty"
           title="FA/VA not suject to penalty"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -238,6 +253,7 @@
           prop-balance="liquid_assets.balance.gift_inheritance"
           title="Gift/Inheritance"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -253,6 +269,7 @@
           prop-balance="liquid_assets.balance.lump_sum_pension"
           title="Lump sum pension"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -268,6 +285,7 @@
           prop-balance="liquid_assets.balance.other_liquid_assets"
           title="Other liquid assets"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -277,13 +295,13 @@
           v-model:spouse="ruleForm.liquid_assets.spouse.total"
           v-model:onq="ruleForm.liquid_assets.o_nq.total"
           v-model:balance="ruleForm.liquid_assets.balance.total"
-          disabled
           prop-member="liquid_assets.member.total"
           prop-spouse="liquid_assets.spouse.total"
           prop-onq="liquid_assets.o_nq.total"
           prop-balance="liquid_assets.balance.total"
           title="Total"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
       </div>
@@ -310,6 +328,7 @@
           prop-balance="non_liquid_assets.balance.value_of_home"
           title="Value of home"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -325,6 +344,7 @@
           prop-balance="non_liquid_assets.balance.first_401k_ira_59"
           title="401k/IRA (if over 59)"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -340,6 +360,7 @@
           prop-balance="non_liquid_assets.balance.first_401k_ira"
           title="401k/IRA"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -355,6 +376,7 @@
           prop-balance="non_liquid_assets.balance.second_401k_ira"
           title="401k/IRA"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -370,6 +392,7 @@
           prop-balance="non_liquid_assets.balance.fa_va_subject_to_penalty"
           title="FA/VA suject to penalty"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -385,6 +408,7 @@
           prop-balance="non_liquid_assets.balance.other"
           title="Other"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
 
@@ -394,13 +418,13 @@
           v-model:spouse="ruleForm.non_liquid_assets.spouse.total"
           v-model:onq="ruleForm.non_liquid_assets.o_nq.total"
           v-model:balance="ruleForm.non_liquid_assets.balance.total"
-          disabled
           prop-member="non_liquid_assets.member.total"
           prop-spouse="non_liquid_assets.spouse.total"
           prop-onq="non_liquid_assets.o_nq.total"
           prop-balance="non_liquid_assets.balance.total"
           title="Total"
           :is-married="isMarried"
+          :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
       </div>
@@ -461,7 +485,7 @@ export default {
 
     const { mutateAsync: create, isLoading, isError, isFetching, data, error } = useMutation(createAssetsIncome)
 
-    const { mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
+    const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
 
     const {
       response: member,
@@ -713,6 +737,7 @@ export default {
       updateOrCreateMemberAssets,
       form,
       validateMemberAssetFieldAndUpdate,
+      isLoadingUpdate,
     }
   },
 }
