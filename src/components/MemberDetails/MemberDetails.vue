@@ -3,7 +3,11 @@
     <SwdSubHeader :title="getTitle" />
     <div v-if="!isLoadingProspectDetails" class="flex my-5">
       <div class="w-8/24 mr-5">
-        <WidgetMemberDetails :user="member" @updateMemberInfo="updateMemberInfo" />
+        <WidgetMemberDetails
+          :user="member"
+          :is-loading-prospect-details="isLoadingProspectDetails"
+          @updateMemberInfo="updateMemberInfo"
+        />
         <InfoSalesforceStatus />
       </div>
       <AssetsAllocation class="w-10/24" />

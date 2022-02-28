@@ -42,15 +42,14 @@
           <span class="ml-2 text-xs text-gray03">Total net worth:</span>
         </div>
         <el-form-item class="w-5/12">
-          <el-input
+          <SwdCurrencyInput
             v-model="ruleForm.total_net_worth"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingUpdate"
             placeholder="$12345"
-            type="number"
-            size="small"
             @change="change()"
-          >
-            <template #prepend>$</template>
-          </el-input>
+          />
         </el-form-item>
       </div>
 
@@ -62,9 +61,14 @@
           <span class="ml-2 text-xs text-gray03">Goal:</span>
         </div>
         <el-form-item class="w-5/12">
-          <el-input v-model="ruleForm.goal" placeholder="$12345" type="number" size="small" @change="change()">
-            <template #prepend>$</template>
-          </el-input>
+          <SwdCurrencyInput
+            v-model="ruleForm.goal"
+            :options="optionsCurrencyInput"
+            prepend
+            :disabled="isLoadingUpdate"
+            placeholder="$12345"
+            @change="change()"
+          />
         </el-form-item>
       </div>
     </el-form>
@@ -92,7 +96,7 @@ import { useRoute } from 'vue-router'
 import { convertToClient } from '@/api/vueQuery/convert-to-client'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
-import { computed, reactive, onMounted } from 'vue'
+import { computed, reactive, watchEffect } from 'vue'
 import { updateMembers } from '@/api/vueQuery/update-members'
 
 export default {
@@ -103,24 +107,37 @@ export default {
       require: true,
       default: () => {},
     },
+    isLoadingProspectDetails: {
+      type: Boolean,
+      require: true,
+      default: true,
+    },
   },
   emits: ['updateMemberInfo'],
   setup(props, { emit }) {
     const route = useRoute()
     const memberId = route.params.id
 
+    const optionsCurrencyInput = {
+      currency: 'USD',
+      locale: 'en-US',
+      currencyDisplay: 'hidden',
+      precision: 2,
+    }
+
     const ruleForm = reactive({
       total_net_worth: '',
       goal: '',
     })
 
-    const { mutateAsync: updateMember } = useMutation(updateMembers)
+    const { isLoading: isLoadingUpdate, mutateAsync: updateMember } = useMutation(updateMembers)
 
     const { isLoading, isFetching, data, error, mutateAsync: convertClient } = useMutation(convertToClient)
 
-    onMounted(() => {
-      ruleForm.total_net_worth = props.user.total_net_worth
-      ruleForm.goal = props.user.goal
+    watchEffect(() => {
+      if (props.isLoadingProspectDetails === false) {
+        Object.assign(ruleForm, props.user)
+      }
     })
 
     const convert = async () => {
@@ -147,7 +164,11 @@ export default {
     })
 
     const change = async () => {
-      const res = await updateMember({ form: ruleForm, id: memberId })
+      const data = {
+        total_net_worth: ruleForm.total_net_worth === null ? '' : ruleForm.total_net_worth.toString(),
+        goal: ruleForm.goal === null ? '' : ruleForm.goal.toString(),
+      }
+      const res = await updateMember({ form: data, id: memberId })
 
       if (!('error' in res)) {
         useAlert({
@@ -172,6 +193,8 @@ export default {
       getUserType,
       ruleForm,
       change,
+      optionsCurrencyInput,
+      isLoadingUpdate,
     }
   },
 }
