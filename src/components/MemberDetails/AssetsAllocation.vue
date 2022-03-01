@@ -22,37 +22,37 @@
         <div class="flex flex-col justify-center text-main text-xs font-medium">
           <el-form ref="form" :model="ruleForm" status-icon size="small">
             <el-form-item>
-              <el-input
+              <SwdCurrencyInput
                 v-model="ruleForm.liquidity"
-                placeholder="$12345"
-                type="number"
+                :options="optionsCurrencyInput"
+                prepend
                 :disabled="isLoadingCreate"
+                placeholder="$12345"
+                size="small"
                 @change="change()"
-              >
-                <template #prepend>$</template>
-              </el-input>
+              />
             </el-form-item>
             <el-form-item class="mt-4">
-              <el-input
+              <SwdCurrencyInput
                 v-model="ruleForm.growth"
-                placeholder="$12345"
-                type="number"
+                :options="optionsCurrencyInput"
+                prepend
                 :disabled="isLoadingCreate"
+                placeholder="$12345"
+                size="small"
                 @change="change()"
-              >
-                <template #prepend>$</template>
-              </el-input>
+              />
             </el-form-item>
             <el-form-item class="mt-4">
-              <el-input
+              <SwdCurrencyInput
                 v-model="ruleForm.income"
-                placeholder="$12345"
-                type="number"
+                :options="optionsCurrencyInput"
+                prepend
                 :disabled="isLoadingCreate"
+                placeholder="$12345"
+                size="small"
                 @change="change()"
-              >
-                <template #prepend>$</template>
-              </el-input>
+              />
             </el-form-item>
           </el-form>
         </div>
@@ -84,6 +84,13 @@ export default {
     const memberId = route.params.id
     const queryClient = useQueryClient()
 
+    const optionsCurrencyInput = {
+      currency: 'USD',
+      locale: 'en-US',
+      currencyDisplay: 'hidden',
+      precision: 2,
+    }
+
     const { isLoading, isFetching, isError, data: assetsData } = useFetchMemberDetailsAssets(memberId)
 
     const {
@@ -102,7 +109,13 @@ export default {
     })
 
     const change = async () => {
-      const res = await create({ id: memberId, data: ruleForm })
+      // TODO: temporary solution
+      const data = {
+        growth: ruleForm.growth === null ? '' : ruleForm.growth.toString(),
+        income: ruleForm.income === null ? '' : ruleForm.income.toString(),
+        liquidity: ruleForm.liquidity === null ? '' : ruleForm.liquidity.toString(),
+      }
+      const res = await create({ id: memberId, data })
       if (!('error' in res)) {
         queryClient.invalidateQueries(['member/assetAllocation'])
         Object.assign(ruleForm, res.data)
@@ -131,6 +144,7 @@ export default {
       isErrorCreate,
       isFetchingCreate,
       dataCreate,
+      optionsCurrencyInput,
     }
   },
 }

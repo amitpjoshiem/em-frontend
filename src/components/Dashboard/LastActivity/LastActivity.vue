@@ -7,16 +7,14 @@
       <router-link :to="{ name: 'activity' }" class="text-smm text-main hover:text-activity">Last Activity</router-link>
     </div>
     <template v-if="activity.data.length">
-      <div v-for="item in activity.data" :key="item.day" class="flex flex-col text-xs">
-        <div v-for="elem in item.events" :key="elem.timestamp" class="active-item">
-          <div class="flex items-center">
-            <div class="h-[9px] w-[9px] rounded-full mb-[2px] mr-[8px] bg-activity" />
-            <div class="text-activity-item font-medium">
-              <DateListActivity :day="item.day" :timestamp="elem.timestamp" />
-            </div>
+      <div v-for="elem in activity.data" :key="elem.times" class="active-item flex flex-col text-xs">
+        <div class="flex items-center">
+          <div class="h-[9px] w-[9px] rounded-full mb-[2px] mr-[8px] bg-activity" />
+          <div class="text-activity-item font-medium">
+            <DateListActivity :day="elem.date" :timestamp="elem.timestamp" />
           </div>
-          <div class="pt-px text-main" v-html="elem.content" />
         </div>
+        <div class="pt-px text-main" v-html="elem.content" />
       </div>
     </template>
 
@@ -58,7 +56,7 @@ export default {
 .active-item:not(:first-of-type) {
   margin-left: -20px;
   margin-right: -20px;
-  padding: 15px 20px;
+  padding: 10px 20px;
 }
 .active-item:first-of-type {
   padding-bottom: 15px;
