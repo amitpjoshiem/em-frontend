@@ -6,6 +6,15 @@ import { MemberLastEmployment } from '@/dto/Member/MemberLastEmployment'
 import { SpouseLastEmployment } from '@/dto/Member/SpouseLastEmployment'
 import SwdStubForText from '@/components/Global/SwdStubForText.vue'
 
+import { useRouter, useRoute } from 'vue-router'
+
+jest.mock('vue-router', () => ({
+  useRoute: jest.fn(),
+  useRouter: jest.fn(() => ({
+    push: () => {},
+  })),
+}))
+
 let wrapper = null
 
 describe('MemberBasicInformationEmployment.vue', () => {
@@ -17,6 +26,7 @@ describe('MemberBasicInformationEmployment.vue', () => {
         components: {
           SwdStubForText,
         },
+        stubs: ['router-link', 'router-view'],
       },
       props: {
         prospect: new MemberDetailsUser({
