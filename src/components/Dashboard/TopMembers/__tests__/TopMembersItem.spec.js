@@ -47,7 +47,7 @@ describe('TopMembersItem.vue', () => {
 
   test('content testing member type prospect', async () => {
     await wrapper.setProps({ member: { type: 'prospect' } })
-    expect(wrapper.find('[data-testid="top-members-type"]').find('span').text()).toBe('prospect')
+    expect(wrapper.find('[data-testid="top-members-type"]').find('span').text()).toBe('Opportunity')
   })
 
   test('content testing member stage', () => {

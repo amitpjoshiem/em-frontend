@@ -5,6 +5,15 @@ import SwdStubForText from '@/components/Global/SwdStubForText.vue'
 import { MemberDetailsUser } from '@/dto/Member/MemberDetailsUser'
 import { MemberDetailsSpouse } from '@/dto/Member/MemberDetailsSpouse'
 
+import { useRouter, useRoute } from 'vue-router'
+
+jest.mock('vue-router', () => ({
+  useRoute: jest.fn(),
+  useRouter: jest.fn(() => ({
+    push: () => {},
+  })),
+}))
+
 let wrapper = null
 
 describe('MemberBasicInformationGeneral.vue', () => {
@@ -16,6 +25,7 @@ describe('MemberBasicInformationGeneral.vue', () => {
         components: {
           SwdStubForText,
         },
+        stubs: ['router-link', 'router-view'],
       },
       props: {
         prospect: new MemberDetailsUser({
