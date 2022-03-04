@@ -7,7 +7,7 @@
     </template>
     <template #contentDialog>
       <el-form v-if="data.isShowForm" ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
-        <el-form-item label="Current password" prop="current_password">
+        <el-form-item label="Current password" prop="current_password" class="mb-4">
           <el-input
             v-model="ruleForm.current_password"
             type="password"
@@ -16,7 +16,7 @@
           />
         </el-form-item>
 
-        <el-form-item label="Password" prop="password">
+        <el-form-item label="Password" prop="password" class="mb-4">
           <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
         </el-form-item>
 
