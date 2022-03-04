@@ -100,6 +100,7 @@ import { useFetchAllContacts } from '@/api/use-fetch-all-contacts.js'
 import { useRoute } from 'vue-router'
 import { Edit, Delete, InfoFilled } from '@element-plus/icons-vue'
 import { updateContacts } from '@/api/vueQuery/update-contacts'
+import { deleteContacts } from '@/api/vueQuery/delete-contacts'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { useStore } from 'vuex'
@@ -118,8 +119,8 @@ export default {
     const memberId = route.params.id
 
     const { isLoading, isError, isFetching, data: contacts, isFetched, refetch } = useFetchAllContacts(memberId)
-
     const { mutateAsync: updateContact, isLoading: loadingUpdateContact } = useMutation(updateContacts)
+    const { mutateAsync: deleteContact, isLoading: loadingDeleteContact } = useMutation(deleteContacts)
 
     const state = reactive([])
 
@@ -147,8 +148,16 @@ export default {
       store.commit('globalComponents/setContact', contact)
     }
 
-    const removeContact = (id) => {
-      console.log('removeContact', id)
+    const removeContact = async (id) => {
+      const res = await deleteContact(id)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Delete successfully',
+        })
+        queryClient.invalidateQueries(['contactsAll', memberId])
+      }
     }
 
     const changeSpouse = async (id) => {
@@ -185,6 +194,9 @@ export default {
       editContact,
       removeContact,
       changeSpouse,
+
+      deleteContact,
+      loadingDeleteContact,
 
       Edit,
       Delete,
