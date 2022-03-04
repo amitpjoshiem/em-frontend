@@ -91,6 +91,7 @@
     </div>
     <el-skeleton v-else :rows="10" animated />
   </div>
+  <ModalContact />
 </template>
 
 <script>
@@ -101,12 +102,18 @@ import { Edit, Delete, InfoFilled } from '@element-plus/icons-vue'
 import { updateContacts } from '@/api/vueQuery/update-contacts'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
+import { useStore } from 'vuex'
+import ModalContact from './ModalContact'
 
 export default {
   name: 'OpportunityContact',
+  components: {
+    ModalContact,
+  },
 
   setup() {
     const route = useRoute()
+    const store = useStore()
     const queryClient = useQueryClient()
     const memberId = route.params.id
 
@@ -114,7 +121,7 @@ export default {
 
     const { mutateAsync: updateContact, isLoading: loadingUpdateContact } = useMutation(updateContacts)
 
-    const state = reactive({})
+    const state = reactive([])
 
     watchEffect(() => {
       if (!isLoading.value) {
@@ -123,11 +130,21 @@ export default {
     })
 
     const addContact = () => {
-      console.log('addContact')
+      store.commit('globalComponents/setShowModal', {
+        destination: 'modalContact',
+        value: true,
+      })
     }
 
     const editContact = (id) => {
-      console.log('editContact', id)
+      store.commit('globalComponents/setShowModal', {
+        destination: 'modalContact',
+        value: true,
+      })
+
+      const contact = state.find((item) => item.id === id)
+
+      store.commit('globalComponents/setContact', contact)
     }
 
     const removeContact = (id) => {

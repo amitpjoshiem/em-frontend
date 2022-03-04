@@ -299,3 +299,11 @@
 .activity-link {
   color: #66b6ff;
 }
+
+.el-form--label-top .el-form-item .el-form-item__label{
+  margin-bottom: 0;
+}
+
+.el-form--default.el-form--label-top .el-form-item .el-form-item__label {
+  margin-bottom: 0;
+}
