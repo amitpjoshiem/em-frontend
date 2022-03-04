@@ -1,7 +1,7 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="Opportunity contacts" />
-    <div class="flex justify-end py-5">
+    <div class="flex justify-end pb-5">
       <el-button type="primary" @click="addContact">Add contact</el-button>
     </div>
     <div v-if="!isLoading">
