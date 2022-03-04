@@ -104,7 +104,7 @@ import { deleteContacts } from '@/api/vueQuery/delete-contacts'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { useStore } from 'vuex'
-import ModalContact from './ModalContact'
+import ModalContact from '@/components/OpportunityContact/ModalContact.vue'
 
 export default {
   name: 'OpportunityContact',
