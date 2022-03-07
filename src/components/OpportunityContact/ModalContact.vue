@@ -34,6 +34,15 @@
           value-format="MM/DD/YYYY"
         />
       </el-form-item>
+      <el-form-item v-if="contact.retired" label="Retirement date" class="w-full mb-4">
+        <el-date-picker
+          v-model="contact.retirement_date"
+          type="date"
+          :placeholder="getPlaceholder"
+          format="MM/DD/YYYY"
+          value-format="MM/DD/YYYY"
+        />
+      </el-form-item>
       <el-form-item label="Email" class="w-full mb-4" prop="email">
         <el-input v-model="contact.email" placeholder="Enter email" />
       </el-form-item>
@@ -70,6 +79,7 @@ function setInitValue(contact, data) {
   contact.name = data.name
   contact.phone = data.phone
   contact.retired = data.retired !== null ? data.retired : false
+  contact.retirement_date = data.retirement_date
 }
 
 function resetInitValue(contact) {
@@ -79,10 +89,11 @@ function resetInitValue(contact) {
   contact.name = ''
   contact.phone = ''
   contact.retired = false
+  contact.retirement_date = ''
 }
 
 export default {
-  name: 'ModalMemberDetailsOther',
+  name: 'ModalContact',
   directives: { maska },
 
   setup() {
