@@ -89,7 +89,7 @@ dayjs.updateLocale('en', {
 
 Sentry.init({
   app,
-  dsn: 'https://eaebde97ebfd4d078a6a37d6f26caf33@sentry.uinno.dev//4',
+  dsn: 'https://c35f75fb2a1f4674b8fa122fb415b584@o1149395.ingest.sentry.io/6247228',
   // eslint-disable-next-line no-undef
   environment: process.env.VUE_APP_ENV,
   integrations: [
