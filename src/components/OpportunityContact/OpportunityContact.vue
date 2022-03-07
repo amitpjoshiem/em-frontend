@@ -5,89 +5,97 @@
       <el-button type="primary" @click="addContact">Add contact</el-button>
     </div>
     <div v-if="!isLoading">
-      <el-card v-for="item in state" :key="item.id" class="box-card mb-5">
-        <div class="flex">
-          <div class="w-2/12 flex items-center justify-center">
-            <SwdAvatar size="large" />
-          </div>
-          <div class="flex flex-col w-5/12">
-            <div class="mb-1">
-              <span class="text-xss text-gray03 font-semibold pr-2">Name:</span>
-              <SwdStubForText :text="item.name" plug="&mdash;" class="text-sm text-main inline-block" />
+      <template v-if="state.length">
+        <el-card v-for="item in state" :key="item.id" class="box-card mb-5">
+          <div class="flex">
+            <div class="w-2/12 flex items-center justify-center">
+              <SwdAvatar size="large" />
             </div>
-            <div class="mb-1">
-              <span class="text-xss text-gray03 font-semibold pr-2">Email:</span>
-              <span class="text-sm text-main">{{ item.email }}</span>
+            <div class="flex flex-col w-5/12">
+              <div class="mb-1">
+                <span class="text-xss text-gray03 font-semibold pr-2">Name:</span>
+                <SwdStubForText :text="item.name" plug="&mdash;" class="text-sm text-main inline-block" />
+              </div>
+              <div class="mb-1">
+                <span class="text-xss text-gray03 font-semibold pr-2">Email:</span>
+                <span class="text-sm text-main">{{ item.email }}</span>
+              </div>
+              <div class="mb-1">
+                <span class="text-xss text-gray03 font-semibold pr-2">Birthday:</span>
+                <SwdStubForText :text="item.birthday" plug="&mdash;" class="text-sm text-main inline-block" />
+              </div>
+              <div class="mb-1">
+                <span class="text-xss text-gray03 font-semibold pr-2">Age:</span>
+                <SwdStubForText :text="item.age" plug="&mdash;" class="text-sm text-main inline-block" />
+              </div>
+              <div>
+                <span
+                  v-if="!item.retired"
+                  data-testid="type-member-basic-information-spouse-not-retired"
+                  class="text-border-green text-xxs font-semibold bg-light-green rounded pr-2 pl-1 py-1"
+                >
+                  Not Retired
+                </span>
+                <span
+                  v-if="item.retired"
+                  data-testid="type-member-basic-information-spouse-retired"
+                  class="text-xxs text-orange-badge font-semibold bg-orange-bg rounded pr-2 pl-1 py-1"
+                >
+                  Retired
+                </span>
+              </div>
             </div>
-            <div class="mb-1">
-              <span class="text-xss text-gray03 font-semibold pr-2">Birthday:</span>
-              <SwdStubForText :text="item.birthday" plug="&mdash;" class="text-sm text-main inline-block" />
+            <div class="flex flex-col w-4/12">
+              <div class="mb-1">
+                <span class="text-xss text-gray03 font-semibold pr-2">Retirement date:</span>
+                <SwdStubForText :text="item.retirement_date" plug="&mdash;" class="text-sm text-main inline-block" />
+              </div>
+              <div class="mb-1">
+                <span class="text-xss text-gray03 font-semibold pr-2">Phone:</span>
+                <SwdStubForText :text="item.phone" plug="&mdash;" class="text-sm text-main inline-block" />
+              </div>
+              <div class="mb-1">
+                <span class="text-xss text-gray03 font-semibold pr-2">Created:</span>
+                <SwdStubForText :text="item.created_at" plug="&mdash;" class="text-sm text-main inline-block" />
+              </div>
+              <div class="mb-1">
+                <span class="text-xss text-gray03 font-semibold pr-2">Updated</span>
+                <SwdStubForText :text="item.updated_at" plug="&mdash;" class="text-sm text-main inline-block" />
+              </div>
+              <div>
+                <el-checkbox
+                  v-model="item.is_spouse"
+                  label="Spouse"
+                  size="small"
+                  :disabled="loadingUpdateContact || isFetching"
+                  @change="changeSpouse(item.id)"
+                />
+              </div>
             </div>
-            <div class="mb-1">
-              <span class="text-xss text-gray03 font-semibold pr-2">Age:</span>
-              <SwdStubForText :text="item.age" plug="&mdash;" class="text-sm text-main inline-block" />
-            </div>
-            <div>
-              <span
-                v-if="!item.retired"
-                data-testid="type-member-basic-information-spouse-not-retired"
-                class="text-border-green text-xxs font-semibold bg-light-green rounded pr-2 pl-1 py-1"
+            <div class="w-1/12 flex flex-col items-center justify-center">
+              <el-button type="primary" :icon="Edit" circle @click="editContact(item.id)" />
+              <el-popconfirm
+                confirm-button-text="OK"
+                cancel-button-text="No, Thanks"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="Are you sure to delete this?"
+                @confirm="removeContact(item.id)"
               >
-                Not Retired
-              </span>
-              <span
-                v-if="item.retired"
-                data-testid="type-member-basic-information-spouse-retired"
-                class="text-xxs text-orange-badge font-semibold bg-orange-bg rounded pr-2 pl-1 py-1"
-              >
-                Retired
-              </span>
+                <template #reference>
+                  <el-button type="danger" :icon="Delete" circle />
+                </template>
+              </el-popconfirm>
             </div>
           </div>
-          <div class="flex flex-col w-4/12">
-            <div class="mb-1">
-              <span class="text-xss text-gray03 font-semibold pr-2">Retirement date:</span>
-              <SwdStubForText :text="item.retirement_date" plug="&mdash;" class="text-sm text-main inline-block" />
-            </div>
-            <div class="mb-1">
-              <span class="text-xss text-gray03 font-semibold pr-2">Phone:</span>
-              <SwdStubForText :text="item.phone" plug="&mdash;" class="text-sm text-main inline-block" />
-            </div>
-            <div class="mb-1">
-              <span class="text-xss text-gray03 font-semibold pr-2">Created:</span>
-              <SwdStubForText :text="item.created_at" plug="&mdash;" class="text-sm text-main inline-block" />
-            </div>
-            <div class="mb-1">
-              <span class="text-xss text-gray03 font-semibold pr-2">Updated</span>
-              <SwdStubForText :text="item.updated_at" plug="&mdash;" class="text-sm text-main inline-block" />
-            </div>
-            <div>
-              <el-checkbox
-                v-model="item.is_spouse"
-                label="Spouse"
-                size="small"
-                :disabled="loadingUpdateContact || isFetching"
-                @change="changeSpouse(item.id)"
-              />
-            </div>
-          </div>
-          <div class="w-1/12 flex flex-col items-center justify-center">
-            <el-button type="primary" :icon="Edit" circle @click="editContact(item.id)" />
-            <el-popconfirm
-              confirm-button-text="OK"
-              cancel-button-text="No, Thanks"
-              :icon="InfoFilled"
-              icon-color="red"
-              title="Are you sure to delete this?"
-              @confirm="removeContact(item.id)"
-            >
-              <template #reference>
-                <el-button type="danger" :icon="Delete" circle />
-              </template>
-            </el-popconfirm>
-          </div>
+        </el-card>
+      </template>
+      <div v-else class="text-gray03 flex items-center flex-col mt-5">
+        <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+          <InlineSvg :src="IconEmptyUsers" />
         </div>
-      </el-card>
+        <p>No recently added contacts</p>
+      </div>
     </div>
     <el-skeleton v-else :rows="10" animated />
   </div>
@@ -105,6 +113,7 @@ import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { useStore } from 'vuex'
 import ModalContact from '@/components/OpportunityContact/ModalContact.vue'
+import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
   name: 'OpportunityContact',
@@ -201,6 +210,8 @@ export default {
       Edit,
       Delete,
       InfoFilled,
+
+      IconEmptyUsers,
     }
   },
 }
