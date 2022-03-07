@@ -34,6 +34,11 @@ const routes = [
               ),
           },
           {
+            path: 'newstep/:id?',
+            name: 'newstep',
+            component: () => import(/* webpackChunkName: "NewProspect" */ '../components/NewProspect/NewStep.vue'),
+          },
+          {
             path: 'assets-acount/:id?',
             name: 'assetsacount',
             component: () =>

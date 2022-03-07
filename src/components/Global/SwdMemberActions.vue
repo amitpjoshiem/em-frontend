@@ -60,6 +60,8 @@ function routerForStep(step) {
       return 'basic-information'
     case step === 'basic':
       return 'assets-information'
+    case step === 'newstep':
+      return 'newstep'
     case step === 'assets_income':
       return 'assetsacount'
     case step === 'assets_accounts':
