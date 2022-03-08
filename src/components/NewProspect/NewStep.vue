@@ -1,40 +1,40 @@
 <template>
   <div class="flex pb-2 mt-8">
-    <div class="w-6/12" />
-    <div class="w-3/12 text-gray03 text-xs">ESSENTIAL</div>
-    <div class="w-3/12 text-gray03 text-xs pl-2.5">DISCRETIONARY</div>
+    <div class="w-8/12" />
+    <div class="w-2/12 text-gray03 text-xs">ESSENTIAL</div>
+    <div class="w-2/12 text-gray03 text-xs pl-2.5">DISCRETIONARY</div>
   </div>
   <!-- HOUSING -->
   <el-card shadow="never" class="mb-5">
     <div class="flex mb-4">
-      <div class="w-2/12 flex items-center text-sm font-semibold">Housing</div>
-      <div class="w-4/12 text-main text-xss flex items-center">Mortgage/Rent/Fees</div>
-      <SwdCurrencyInput class="w-3/12 mr-2" />
-      <SwdCurrencyInput class="w-3/12 ml-2" />
+      <div class="w-3/12 flex items-center text-sm font-semibold">Housing</div>
+      <div class="w-5/12 text-main text-xss flex items-center">Mortgage/Rent/Fees</div>
+      <SwdCurrencyInput class="w-2/12 mr-2" />
+      <SwdCurrencyInput class="w-2/12 ml-2" />
     </div>
     <div class="flex mb-4">
-      <div class="w-2/12" />
-      <div class="w-4/12 text-main text-xss flex items-center">Property Taxes & Insurance</div>
-      <SwdCurrencyInput class="w-3/12 mr-2" />
-      <SwdCurrencyInput class="w-3/12 ml-2" />
+      <div class="w-3/12" />
+      <div class="w-5/12 text-main text-xss flex items-center">Property Taxes & Insurance</div>
+      <SwdCurrencyInput class="w-2/12 mr-2" />
+      <SwdCurrencyInput class="w-2/12 ml-2" />
     </div>
     <div class="flex mb-4">
-      <div class="w-2/12" />
-      <div class="w-4/12 text-main text-xss flex items-center">Utilities</div>
-      <SwdCurrencyInput class="w-3/12 mr-2" />
-      <SwdCurrencyInput class="w-3/12 ml-2" />
+      <div class="w-3/12" />
+      <div class="w-5/12 text-main text-xss flex items-center">Utilities</div>
+      <SwdCurrencyInput class="w-2/12 mr-2" />
+      <SwdCurrencyInput class="w-2/12 ml-2" />
     </div>
     <div class="flex mb-4">
-      <div class="w-2/12" />
-      <div class="w-4/12 text-main text-xss flex items-center">Household Improvement</div>
-      <SwdCurrencyInput class="w-3/12 mr-2" />
-      <SwdCurrencyInput class="w-3/12 ml-2" />
+      <div class="w-3/12" />
+      <div class="w-5/12 text-main text-xss flex items-center">Household Improvement</div>
+      <SwdCurrencyInput class="w-2/12 mr-2" />
+      <SwdCurrencyInput class="w-2/12 ml-2" />
     </div>
     <div class="flex mb-4">
-      <div class="w-2/12" />
-      <div class="w-4/12 text-main text-xss flex items-center">Household Maintenance</div>
-      <SwdCurrencyInput class="w-3/12 mr-2" />
-      <SwdCurrencyInput class="w-3/12 ml-2" />
+      <div class="w-3/12" />
+      <div class="w-5/12 text-main text-xss flex items-center">Household Maintenance</div>
+      <SwdCurrencyInput class="w-2/12 mr-2" />
+      <SwdCurrencyInput class="w-2/12 ml-2" />
     </div>
   </el-card>
 
