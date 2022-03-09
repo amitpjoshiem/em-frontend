@@ -32,7 +32,7 @@ const optionsPerStepAndType = {
   'prospect@step-3': [1, 4, 5, 6],
   'prospect@step-4': [1, 4, 5, 6],
   'prospect@step-5': [1, 4, 5, 6],
-  onboarding: [4],
+  onboarding: [4, 6],
 }
 
 function getClientStepHash(user) {
