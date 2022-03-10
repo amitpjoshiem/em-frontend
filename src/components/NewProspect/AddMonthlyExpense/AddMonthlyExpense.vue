@@ -562,7 +562,7 @@
         <div class="w-3/12">TOTAL MONTHLY EXPENSES</div>
         <div class="w-2/12">
           <SwdSpinner v-if="isLoadingCreate || isFetching" />
-          <span v-else>{{ currencyFormat(data.total) }}</span>
+          <span v-else>{{ currencyFormat(ruleForm.total) }}</span>
         </div>
       </div>
 
