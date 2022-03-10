@@ -5,8 +5,8 @@ import router from './router'
 import store from './store'
 import dayjs from 'dayjs'
 
-// import * as Sentry from '@sentry/vue'
-// import { Integrations } from '@sentry/tracing'
+import * as Sentry from '@sentry/vue'
+import { Integrations } from '@sentry/tracing'
 
 import calendar from 'dayjs/plugin/calendar'
 import updateLocale from 'dayjs/plugin/updateLocale'
@@ -34,6 +34,7 @@ import SwdSelectFilter from '@/components/Global/SwdSelectFilter.vue'
 import SwdSpinner from '@/components/Global/SwdSpinner.vue'
 import SwdOpportunityItemActions from '@/components/Global/SwdOpportunityItemActions.vue'
 import SwdCurrencyInput from '@/components/Global/SwdCurrencyInput.vue'
+import SwdInputNumber from '@/components/Global/SwdInputNumber.vue'
 
 import ElementPlus from 'element-plus'
 
@@ -66,6 +67,7 @@ const components = [
   SwdSpinner,
   SwdOpportunityItemActions,
   SwdCurrencyInput,
+  SwdInputNumber,
 ]
 
 components.forEach((component) => {
@@ -87,18 +89,18 @@ dayjs.updateLocale('en', {
   },
 })
 
-// Sentry.init({
-//   app,
-//   dsn: 'https://c35f75fb2a1f4674b8fa122fb415b584@o1149395.ingest.sentry.io/6247228',
-//   // eslint-disable-next-line no-undef
-//   environment: process.env.VUE_APP_ENV,
-//   integrations: [
-//     new Integrations.BrowserTracing({
-//       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-//       tracingOrigins: ['https://dev.app.swdgroup.net/', 'https://stage.app.swdgroup.net/', /^\//],
-//     }),
-//   ],
-//   tracesSampleRate: 1.0,
-// })
+Sentry.init({
+  app,
+  dsn: 'https://c35f75fb2a1f4674b8fa122fb415b584@o1149395.ingest.sentry.io/6247228',
+  // eslint-disable-next-line no-undef
+  environment: process.env.VUE_APP_ENV,
+  integrations: [
+    new Integrations.BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+      tracingOrigins: ['https://dev.app.swdgroup.net/', 'https://stage.app.swdgroup.net/', /^\//],
+    }),
+  ],
+  tracesSampleRate: 1.0,
+})
 
 app.mount('#app')
