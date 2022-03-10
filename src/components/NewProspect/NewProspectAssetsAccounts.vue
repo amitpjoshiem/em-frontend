@@ -64,7 +64,7 @@ export default {
     const { mutateAsync: assetsConfirm } = useMutation(fetchAssetsAccountsConfirm)
 
     onMounted(() => {
-      store.commit('newProspect/setStep', 3)
+      store.commit('newProspect/setStep', 4)
       scrollTop()
     })
 

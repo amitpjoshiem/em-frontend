@@ -46,7 +46,7 @@ export default {
     } = useYodleeStatus(route.params.id)
 
     onMounted(() => {
-      store.commit('newProspect/setStep', 4)
+      store.commit('newProspect/setStep', 5)
       scrollTop()
     })
 
@@ -67,7 +67,7 @@ export default {
 
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - 1)
-      router.push({ name: 'assetsacount', params: { id: route.params.id } })
+      router.push({ name: 'assets-account', params: { id: route.params.id } })
     }
 
     return {

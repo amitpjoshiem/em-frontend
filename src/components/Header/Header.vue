@@ -81,7 +81,7 @@ export default {
 
     const newProspect = () => {
       if (
-        ['basic-information', 'assets-information', 'assetsacount', 'assetsconsolidations', 'stresstest'].includes(
+        ['basic-information', 'assets-information', 'assets-account', 'assetsconsolidations', 'stresstest'].includes(
           route.name
         )
       ) {

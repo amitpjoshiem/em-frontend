@@ -227,7 +227,7 @@ export default {
     const route = useRoute()
 
     onMounted(() => {
-      store.commit('newProspect/setStep', 5)
+      store.commit('newProspect/setStep', 6)
       scrollTop()
     })
 

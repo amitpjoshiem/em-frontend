@@ -43,12 +43,14 @@ function getClientStepHash(user) {
       return 'prospect@step-1'
     case user.type === 'prospect' && user.step === 'assets_income':
       return 'prospect@step-2'
-    case user.type === 'prospect' && user.step === 'assets_accounts':
+    case user.type === 'prospect' && user.step === 'monthly-expense':
       return 'prospect@step-3'
-    case user.type === 'prospect' && user.step === 'assets_consolidation':
+    case user.type === 'prospect' && user.step === 'assets_accounts':
       return 'prospect@step-4'
-    case user.type === 'prospect' && user.step === 'member_report':
+    case user.type === 'prospect' && user.step === 'assets_consolidation':
       return 'prospect@step-5'
+    case user.type === 'prospect' && user.step === 'member_report':
+      return 'prospect@step-6'
     default:
       return 'onboarding'
   }
@@ -61,7 +63,9 @@ function routerForStep(step) {
     case step === 'basic':
       return 'assets-information'
     case step === 'assets_income':
-      return 'assetsacount'
+      return 'monthly-expense'
+    case step === 'monthly_expense':
+      return 'assets-account'
     case step === 'assets_accounts':
       return 'assetsconsolidations'
     case step === 'assets_consolidation':

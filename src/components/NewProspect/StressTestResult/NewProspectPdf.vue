@@ -73,7 +73,7 @@ export default {
     const { mutateAsync: stressTestConfirm } = useMutation(fetchStressTestConfirm)
 
     onMounted(() => {
-      store.commit('newProspect/setStep', 5)
+      store.commit('newProspect/setStep', 6)
       scrollTop()
     })
 
