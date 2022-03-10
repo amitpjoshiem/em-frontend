@@ -432,7 +432,7 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button type="primary" @click="submitForm('ruleForm')"> Go to the assets accounts </el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">Go to the monthly expense</el-button>
       </div>
     </el-form>
   </div>

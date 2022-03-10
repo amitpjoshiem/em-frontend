@@ -27,7 +27,7 @@
           'font-medium text-main': step > 2,
         }"
       >
-        3. New step
+        3. Monthly Expense
       </router-link>
       <router-link
         :to="{ name: 'assetsacount', params: { id: memberId } }"

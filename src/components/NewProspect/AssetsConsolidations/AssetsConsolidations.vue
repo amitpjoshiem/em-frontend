@@ -46,7 +46,7 @@ export default {
     } = useYodleeStatus(route.params.id)
 
     onMounted(() => {
-      store.commit('newProspect/setStep', 4)
+      store.commit('newProspect/setStep', 5)
       scrollTop()
     })
 
