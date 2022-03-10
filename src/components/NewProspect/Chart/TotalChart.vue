@@ -23,9 +23,9 @@ export default {
   },
   props: {
     goal: {
-      type: String,
+      type: Number,
       require: true,
-      default: '',
+      default: null,
     },
   },
   setup(props) {
@@ -42,7 +42,7 @@ export default {
       options: {
         elements: {
           center: {
-            text: props.goal !== null ? currencyFormat(props.goal) : '---',
+            text: props.goal ? currencyFormat(props.goal) : '---',
             size: 12,
           },
         },

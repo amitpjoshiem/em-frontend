@@ -118,9 +118,9 @@ const rules = {
         validator: validateNumber,
         trigger: 'blur',
         required: true,
-        transform(value) {
-          return value.trim()
-        },
+        // transform(value) {
+        //   return value.trim()
+        // },
       },
     ],
     total_debt: [
@@ -128,9 +128,9 @@ const rules = {
         validator: validateNumber,
         trigger: 'blur',
         required: true,
-        transform(value) {
-          return value.trim()
-        },
+        // transform(value) {
+        //   return value.trim()
+        // },
       },
     ],
     remaining_mortgage_amount: [
@@ -138,9 +138,9 @@ const rules = {
         validator: validateNumber,
         trigger: 'blur',
         required: true,
-        transform(value) {
-          return value.trim()
-        },
+        // transform(value) {
+        //   return value.trim()
+        // },
       },
     ],
     monthly_payment: [
@@ -148,9 +148,9 @@ const rules = {
         validator: validateNumber,
         trigger: 'blur',
         required: true,
-        transform(value) {
-          return value.trim()
-        },
+        // transform(value) {
+        //   return value.trim()
+        // },
       },
     ],
     total_monthly_expenses: [
@@ -158,9 +158,9 @@ const rules = {
         validator: validateNumber,
         trigger: 'blur',
         required: true,
-        transform(value) {
-          return value.trim()
-        },
+        // transform(value) {
+        //   return value.trim()
+        // },
       },
     ],
   },
@@ -173,9 +173,9 @@ const rules = {
           required: false,
           message: 'The field cannot be empty',
           trigger: 'blur',
-          transform(value) {
-            return value.trim()
-          },
+          // transform(value) {
+          //   return value.trim()
+          // },
         },
       ],
       occupation: [

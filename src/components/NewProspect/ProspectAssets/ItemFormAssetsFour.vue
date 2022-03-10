@@ -2,7 +2,7 @@
   <div class="flex items-center mb-5">
     <div class="w-2/12 text-main font-semibold text-xss">{{ title }}</div>
     <el-form-item class="w-5/24 pr-2.5 mb-0" :prop="propMember">
-      <SwdCurrencyInput
+      <SwdInputNumber
         :model-value="member"
         :disabled="disabled"
         :options="optionsCurrencyInput"
@@ -11,7 +11,7 @@
       />
     </el-form-item>
     <el-form-item v-if="isMarried" class="w-5/24 pr-2.5 mb-0" :prop="propSpouse">
-      <SwdCurrencyInput
+      <SwdInputNumber
         :model-value="spouse"
         :disabled="disabled"
         :options="optionsCurrencyInput"
@@ -20,7 +20,7 @@
       />
     </el-form-item>
     <el-form-item class="w-5/24 mb-0" :prop="propOnq" :class="{ 'pr-2.5': !isMarried, 'pl-2.5': isMarried }">
-      <SwdCurrencyInput
+      <SwdInputNumber
         :model-value="onq"
         :disabled="disabled"
         :options="optionsCurrencyInput"
@@ -29,7 +29,7 @@
       />
     </el-form-item>
     <el-form-item class="w-5/24 pl-2.5 mb-0" :prop="propBalance">
-      <SwdCurrencyInput
+      <SwdInputNumber
         :model-value="balance"
         :disabled="disabled"
         :options="optionsCurrencyInput"

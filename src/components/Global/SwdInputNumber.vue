@@ -1,5 +1,5 @@
 <template>
-  <!-- <div
+  <div
     class="el-input"
     :class="{
       'is-disabled': disabled,
@@ -16,19 +16,16 @@
       :placeholder="placeholder"
       :prop="prop"
     />
-  </div> -->
-  <el-input ref="inputRef" :model-value="formattedValue" :placeholder="placeholder" :size="size">
-    <template v-if="prepend" #prepend>$</template>
-  </el-input>
+  </div>
 </template>
 
 <script>
 import { useCurrencyInput } from 'vue-currency-input'
 export default {
-  name: 'SwdCurrencyInput',
+  name: 'SwdInputNumber',
   props: {
     modelValue: {
-      type: [Number],
+      type: [Number, String],
       require: false,
       default: null,
     },

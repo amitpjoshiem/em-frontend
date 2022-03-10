@@ -1,5 +1,8 @@
 <template>
-  <div class="w-5/12 border border-color-grey rounded-lg ml-2 mr-5 p-5 flex flex-col items-center justify-center">
+  <div
+    v-if="member"
+    class="w-5/12 border border-color-grey rounded-lg ml-2 mr-5 p-5 flex flex-col items-center justify-center"
+  >
     <div>Income Goal</div>
     <TotalChart :goal="member.goal" />
   </div>

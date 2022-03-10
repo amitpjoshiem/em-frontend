@@ -151,7 +151,11 @@
               prop="house.market_value"
               class="w-5/12 pr-5"
             >
-              <el-input v-model="ruleForm.house.market_value" placeholder="$123000" inputmode="numeric" />
+              <SwdCurrencyInput
+                v-model="ruleForm.house.market_value"
+                :options="optionsCurrencyInput"
+                placeholder="$12345"
+              />
             </el-form-item>
           </div>
           <div class="flex mt-5">
@@ -161,7 +165,11 @@
               prop="house.total_debt"
               class="w-5/12 pr-5"
             >
-              <el-input v-model="ruleForm.house.total_debt" placeholder="$123000" inputmode="numeric" />
+              <SwdCurrencyInput
+                v-model="ruleForm.house.total_debt"
+                :options="optionsCurrencyInput"
+                placeholder="$12345"
+              />
             </el-form-item>
             <el-form-item
               v-if="ruleForm.house.type !== 'rent'"
@@ -169,7 +177,11 @@
               prop="house.remaining_mortgage_amount"
               class="w-5/12 pr-5"
             >
-              <el-input v-model="ruleForm.house.remaining_mortgage_amount" placeholder="$123000" inputmode="numeric" />
+              <SwdCurrencyInput
+                v-model="ruleForm.house.remaining_mortgage_amount"
+                :options="optionsCurrencyInput"
+                placeholder="$12345"
+              />
             </el-form-item>
           </div>
           <div class="flex mb-5">
@@ -179,7 +191,11 @@
               prop="house.monthly_payment"
               class="w-5/12 pr-5"
             >
-              <el-input v-model="ruleForm.house.monthly_payment" placeholder="$123000" inputmode="numeric" />
+              <SwdCurrencyInput
+                v-model="ruleForm.house.monthly_payment"
+                :options="optionsCurrencyInput"
+                placeholder="$12345"
+              />
             </el-form-item>
             <el-form-item
               v-if="ruleForm.house.type === 'rent'"
@@ -187,7 +203,11 @@
               prop="house.total_monthly_expenses"
               class="w-5/12 pr-5"
             >
-              <el-input v-model="ruleForm.house.total_monthly_expenses" placeholder="$123000" inputmode="numeric" />
+              <SwdCurrencyInput
+                v-model="ruleForm.house.total_monthly_expenses"
+                :options="optionsCurrencyInput"
+                placeholder="$12345"
+              />
             </el-form-item>
           </div>
         </div>
@@ -431,11 +451,11 @@ function setInitValue(ruleForm, member) {
   if (!ruleForm.house.type) {
     ruleForm.house = {
       type: 'own',
-      market_value: '',
-      total_debt: '',
-      remaining_mortgage_amount: '',
-      monthly_payment: '',
-      total_monthly_expenses: '',
+      market_value: null,
+      total_debt: null,
+      remaining_mortgage_amount: null,
+      monthly_payment: null,
+      total_monthly_expenses: null,
     }
   }
 
@@ -518,11 +538,11 @@ export default {
       },
       house: {
         type: 'own',
-        market_value: '',
-        total_debt: '',
-        remaining_mortgage_amount: '',
-        monthly_payment: '',
-        total_monthly_expenses: '',
+        market_value: null,
+        total_debt: null,
+        remaining_mortgage_amount: null,
+        monthly_payment: null,
+        total_monthly_expenses: null,
       },
       employment_history: [
         {
@@ -539,6 +559,13 @@ export default {
         work_with_advisor: true,
       },
     })
+
+    const optionsCurrencyInput = {
+      currency: 'USD',
+      locale: 'en-US',
+      currencyDisplay: 'hidden',
+      precision: 2,
+    }
 
     onMounted(async () => {
       store.commit('newProspect/setStep', 1)
@@ -706,6 +733,7 @@ export default {
       isShowForm,
       fetchingStatusSfAcc,
       goPartnerSettings,
+      optionsCurrencyInput,
     }
   },
 }

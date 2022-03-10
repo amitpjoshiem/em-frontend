@@ -109,13 +109,7 @@ export default {
     })
 
     const change = async () => {
-      // TODO: temporary solution
-      const data = {
-        growth: ruleForm.growth === null ? '' : ruleForm.growth.toString(),
-        income: ruleForm.income === null ? '' : ruleForm.income.toString(),
-        liquidity: ruleForm.liquidity === null ? '' : ruleForm.liquidity.toString(),
-      }
-      const res = await create({ id: memberId, data })
+      const res = await create({ id: memberId, ruleForm })
       if (!('error' in res)) {
         queryClient.invalidateQueries(['member/assetAllocation'])
         Object.assign(ruleForm, res.data)
