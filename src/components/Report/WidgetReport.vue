@@ -1,5 +1,5 @@
 <template>
-  <div class="w-7/12 bg-widget-bg rounded-lg">
+  <div v-if="member" class="w-7/12 bg-widget-bg rounded-lg">
     <div class="border-b">
       <div class="flex p-5">
         <SwdAvatar :link="getAvatarUrl" />

@@ -1,5 +1,5 @@
 <template>
-  <div
+  <!-- <div
     class="el-input"
     :class="{
       'is-disabled': disabled,
@@ -8,8 +8,18 @@
     }"
   >
     <div v-if="prepend" class="el-input-group__prepend">$</div>
-    <input ref="inputRef" type="text" class="el-input__inner" :disabled="disabled" :placeholder="placeholder" />
-  </div>
+    <input
+      ref="inputRef"
+      type="text"
+      class="el-input__inner"
+      :disabled="disabled"
+      :placeholder="placeholder"
+      :prop="prop"
+    />
+  </div> -->
+  <el-input ref="inputRef" :model-value="formattedValue" :placeholder="placeholder" :size="size">
+    <template v-if="prepend" #prepend>$</template>
+  </el-input>
 </template>
 
 <script>
@@ -18,9 +28,9 @@ export default {
   name: 'SwdCurrencyInput',
   props: {
     modelValue: {
-      type: [Number, String, Object],
+      type: [Number],
       require: false,
-      default: '',
+      default: null,
     },
     options: {
       type: Object,
@@ -46,6 +56,11 @@ export default {
       type: String,
       require: false,
       default: '$12345',
+    },
+    prop: {
+      type: String,
+      require: false,
+      default: '',
     },
   },
   setup(props) {

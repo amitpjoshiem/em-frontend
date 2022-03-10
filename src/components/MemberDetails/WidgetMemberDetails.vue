@@ -166,12 +166,7 @@ export default {
     })
 
     const change = async () => {
-      // TODO: temporary solution
-      const data = {
-        total_net_worth: ruleForm.total_net_worth === null ? '' : ruleForm.total_net_worth.toString(),
-        goal: ruleForm.goal === null ? '' : ruleForm.goal.toString(),
-      }
-      const res = await updateMember({ form: data, id: memberId })
+      const res = await updateMember({ form: ruleForm, id: memberId })
 
       if (!('error' in res)) {
         useAlert({
