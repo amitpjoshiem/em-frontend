@@ -43,7 +43,7 @@ function getClientStepHash(user) {
       return 'prospect@step-1'
     case user.type === 'prospect' && user.step === 'assets_income':
       return 'prospect@step-2'
-    case user.type === 'prospect' && user.step === 'monthly-expense':
+    case user.type === 'prospect' && user.step === 'monthly_expense':
       return 'prospect@step-3'
     case user.type === 'prospect' && user.step === 'assets_accounts':
       return 'prospect@step-4'
