@@ -65,7 +65,7 @@ function routerForStep(step) {
     case step === 'assets_income':
       return 'monthly-expense'
     case step === 'monthly_expense':
-      return 'assetsacount'
+      return 'assets-account'
     case step === 'assets_accounts':
       return 'assetsconsolidations'
     case step === 'assets_consolidation':

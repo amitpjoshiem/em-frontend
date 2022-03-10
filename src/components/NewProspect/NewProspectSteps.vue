@@ -30,7 +30,7 @@
         3. Monthly Expense
       </router-link>
       <router-link
-        :to="{ name: 'assetsacount', params: { id: memberId } }"
+        :to="{ name: 'assets-account', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
           'disabled-link': !memberId,

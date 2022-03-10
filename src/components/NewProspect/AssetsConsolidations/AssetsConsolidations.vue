@@ -67,7 +67,7 @@ export default {
 
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - 1)
-      router.push({ name: 'assetsacount', params: { id: route.params.id } })
+      router.push({ name: 'assets-account', params: { id: route.params.id } })
     }
 
     return {

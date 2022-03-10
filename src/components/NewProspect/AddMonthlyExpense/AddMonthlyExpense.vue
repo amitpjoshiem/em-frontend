@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isFetching">
+  <div v-if="!isLoading">
     <div class="flex pb-2 mt-8">
       <div class="w-8/12" />
       <div class="w-2/12 text-gray03 text-xs">ESSENTIAL</div>
@@ -548,20 +548,29 @@
         <div class="flex mb-4">
           <div class="w-3/12" />
           <div class="w-5/12 text-main text-xss flex items-center">SUBTOTAL</div>
-          <SwdCurrencyInput class="w-2/12 mr-2" disabled />
-          <SwdCurrencyInput class="w-2/12 ml-2" disabled />
+          <div class="w-2/12 mr-2 text-sm font-semibold">
+            <SwdSpinner v-if="isLoadingCreate || isFetching" />
+            <span v-else>{{ currencyFormat(ruleForm.subtotal.essential) }}</span>
+          </div>
+          <div class="w-2/12 ml-2 text-sm font-semibold">
+            <SwdSpinner v-if="isLoadingCreate || isFetching" />
+            <span v-else>{{ currencyFormat(ruleForm.subtotal.discretionary) }}</span>
+          </div>
         </div>
       </el-card>
       <div class="flex justify-end text-sm font-semibold mb-5">
         <div class="w-3/12">TOTAL MONTHLY EXPENSES</div>
-        <div class="w-2/12">$123456789</div>
+        <div class="w-2/12">
+          <SwdSpinner v-if="isLoadingCreate || isFetching" />
+          <span v-else>{{ currencyFormat(data.total) }}</span>
+        </div>
       </div>
 
       <div class="flex justify-end my-10">
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button type="primary" @click="submitForm('ruleForm')"> Go to the assets accounts </el-button>
+        <el-button type="primary" @click="nextStep"> Go to the assets accounts </el-button>
       </div>
     </el-form>
   </div>
@@ -574,7 +583,9 @@ import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { useFetchMonthlyExpense } from '@/api/use-fetch-monthly-expense.js'
 import { createMonthlyExpenses } from '@/api/vueQuery/create-monthly-expenses'
-import { useMutation, useQueryClient } from 'vue-query'
+import { useMutation } from 'vue-query'
+import { currencyFormat } from '@/utils/currencyFormat'
+import { useAlert } from '@/utils/use-alert'
 
 function setInitValue(ruleForm, monthlyExpense) {
   if (monthlyExpense) {
@@ -589,10 +600,8 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const form = ref()
-    const queryClient = useQueryClient()
 
     const step = computed(() => store.state.newProspect.step)
-    // const isUpdateMember = computed(() => !!route.params.id)
     let memberId
 
     const { isLoading, isError, isFetching, data, refetch } = useFetchMonthlyExpense(
@@ -721,6 +730,7 @@ export default {
         essential: null,
         discretionary: null,
       },
+      total: null,
     })
 
     onMounted(async () => {
@@ -754,8 +764,22 @@ export default {
       const res = await create({ id: memberId, data: ruleForm })
 
       if (!('error' in res)) {
-        queryClient.invalidateQueries(['monthly-expense', memberId])
+        setInitValue(ruleForm, res.data)
       }
+    }
+
+    const nextStep = () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Opportunity update successfully',
+      })
+      store.commit('newProspect/setStep', step.value + 1)
+      router.push({
+        name: 'assets-account',
+        params: { id: memberId },
+      })
+      console.log('nextStep')
     }
 
     return {
@@ -777,6 +801,9 @@ export default {
       isFetchingCreate,
       dataCreate,
       errorCreate,
+
+      currencyFormat,
+      nextStep,
     }
   },
 }
