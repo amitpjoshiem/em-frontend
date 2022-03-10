@@ -1,22 +1,4 @@
 <template>
-  <!-- <div
-    class="el-input"
-    :class="{
-      'is-disabled': disabled,
-      'el-input--small': size === 'small',
-      'el-input-group el-input-group--prepend': prepend,
-    }"
-  >
-    <div v-if="prepend" class="el-input-group__prepend">$</div>
-    <input
-      ref="inputRef"
-      type="text"
-      class="el-input__inner"
-      :disabled="disabled"
-      :placeholder="placeholder"
-      :prop="prop"
-    />
-  </div> -->
   <el-input ref="inputRef" :model-value="formattedValue" :placeholder="placeholder" :size="size">
     <template v-if="prepend" #prepend>$</template>
   </el-input>
