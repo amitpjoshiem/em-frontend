@@ -19,7 +19,7 @@
         2. Assets &amp; Income
       </router-link>
       <router-link
-        :to="{ name: 'newstep', params: { id: memberId } }"
+        :to="{ name: 'monthly-expense', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
           'disabled-link': !memberId,

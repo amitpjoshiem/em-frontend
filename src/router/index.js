@@ -34,9 +34,12 @@ const routes = [
               ),
           },
           {
-            path: 'newstep/:id?',
-            name: 'newstep',
-            component: () => import(/* webpackChunkName: "NewProspect" */ '../components/NewProspect/NewStep.vue'),
+            path: 'monthly-expense/:id?',
+            name: 'monthly-expense',
+            component: () =>
+              import(
+                /* webpackChunkName: "NewProspect" */ '../components/NewProspect/AddMonthlyExpense/AddMonthlyExpense.vue'
+              ),
           },
           {
             path: 'assets-acount/:id?',

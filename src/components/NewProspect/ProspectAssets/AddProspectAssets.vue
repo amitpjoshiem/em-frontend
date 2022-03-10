@@ -703,7 +703,7 @@ export default {
         })
         store.commit('newProspect/setStep', step.value + 1)
         router.push({
-          name: 'assetsacount',
+          name: 'monthly-expense',
           params: { id: memberId },
         })
       } else {
