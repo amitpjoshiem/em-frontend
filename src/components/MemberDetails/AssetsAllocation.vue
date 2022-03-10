@@ -29,7 +29,7 @@
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
                 size="small"
-                @change="change()"
+                @blur="change()"
               />
             </el-form-item>
             <el-form-item class="mt-4">
@@ -40,7 +40,7 @@
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
                 size="small"
-                @change="change()"
+                @blur="change()"
               />
             </el-form-item>
             <el-form-item class="mt-4">
@@ -51,7 +51,7 @@
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
                 size="small"
-                @change="change()"
+                @blur="change()"
               />
             </el-form-item>
           </el-form>
@@ -102,14 +102,14 @@ export default {
     } = useMutation(createMemberDetailsAssets)
 
     const ruleForm = reactive({
-      growth: '',
-      income: '',
-      liquidity: '',
+      growth: null,
+      income: null,
+      liquidity: null,
       total: 0,
     })
 
     const change = async () => {
-      const res = await create({ id: memberId, ruleForm })
+      const res = await create({ id: memberId, data: ruleForm })
       if (!('error' in res)) {
         queryClient.invalidateQueries(['member/assetAllocation'])
         Object.assign(ruleForm, res.data)
