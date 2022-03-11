@@ -779,7 +779,6 @@ export default {
         name: 'assets-account',
         params: { id: memberId },
       })
-      console.log('nextStep')
     }
 
     return {
