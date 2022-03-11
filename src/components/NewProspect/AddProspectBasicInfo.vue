@@ -365,7 +365,13 @@
         </div>
 
         <div class="flex justify-end my-10">
-          <el-button type="primary" @click="submitForm('ruleForm')"> Go to the assets &amp; income </el-button>
+          <el-button
+            type="primary"
+            :disabled="isLoadingCreateMember || isLoadingUpdateMember"
+            @click="submitForm('ruleForm')"
+          >
+            Go to the assets &amp; income
+          </el-button>
         </div>
       </el-form>
     </div>
@@ -490,7 +496,7 @@ export default {
 
     const {
       mutateAsync: createMember,
-      isLoading,
+      isLoading: isLoadingCreateMember,
       isError,
       isFetching,
       data,
@@ -498,7 +504,7 @@ export default {
       refetch,
     } = useMutation(createMembers)
 
-    const { mutateAsync: updateMember } = useMutation(updateMembers)
+    const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
     const {
       response: member,
@@ -711,7 +717,8 @@ export default {
       addEmployment,
       addEmploymentSpouse,
       removeEmploymentSpouse,
-      isLoading,
+      isLoadingCreateMember,
+      isLoadingUpdateMember,
       isError,
       isFetching,
       data,
