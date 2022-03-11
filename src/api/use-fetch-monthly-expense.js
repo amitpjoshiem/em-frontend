@@ -6,6 +6,7 @@ export const useFetchMonthlyExpense = ({ id }, options = {}) => {
   const queryKey = reactive([['monthly-expense', id]])
 
   const query = useQuery(queryKey, {
+    cacheTime: 0,
     queryFn: fetchMonthlyExpense,
     select: ({ data }) => {
       return data
