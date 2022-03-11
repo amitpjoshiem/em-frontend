@@ -20,7 +20,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
@@ -31,7 +31,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
       </div>
@@ -46,7 +46,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
@@ -57,7 +57,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
       </div>
@@ -72,7 +72,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
@@ -83,7 +83,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
       </div>
@@ -98,7 +98,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
@@ -109,7 +109,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
       </div>
@@ -124,7 +124,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
         <el-form-item class="w-4/12 ml-1">
@@ -135,7 +135,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
       </div>
@@ -157,7 +157,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
       </div>
@@ -172,7 +172,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
       </div>
@@ -187,7 +187,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
       </div>
@@ -245,24 +245,7 @@ export default {
     })
 
     const change = async () => {
-      // TODO: temporary solution
-      const data = {
-        current_investment: ruleForm.current_investment.toString(),
-        current_member: ruleForm.current_member.toString(),
-        current_pensions: ruleForm.current_pensions.toString(),
-        current_rental_income: ruleForm.current_rental_income.toString(),
-        current_spouse: ruleForm.current_spouse.toString(),
-        future_investment: ruleForm.future_investment.toString(),
-        future_member: ruleForm.future_member.toString(),
-        future_pensions: ruleForm.future_pensions.toString(),
-        future_rental_income: ruleForm.future_rental_income.toString(),
-        future_spouse: ruleForm.future_spouse.toString(),
-        ira_first: ruleForm.ira_first.toString(),
-        ira_second: ruleForm.ira_second.toString(),
-        tax: ruleForm.tax.toString(),
-      }
-
-      const res = await create({ id, data })
+      const res = await create({ id, data: ruleForm })
       if (!('error' in res)) {
         queryClient.invalidateQueries(['blueprint/incomeAnalysis'])
       }

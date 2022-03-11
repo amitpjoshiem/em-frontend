@@ -7,31 +7,34 @@
     <div class="text-xs pt-3">
       <div class="border-input-border border rounded-md p-2 w-full my-2">
         <p class="text-gray03 mb-[2px]">Risk level:</p>
-        <p class="font-semibold">{{ other.value.risk }}</p>
+        <p class="font-semibold" data-testid="widjet-other-risk">{{ other.value.risk }}</p>
       </div>
       <div class="border-input-border border rounded-md p-2 w-full mb-2 flex flex-col">
         <span class="text-gray03 mb-[2px]">Goal for retirement:</span>
-        <span class="font-semibold">{{ getText(other.value.retirement) }}</span>
+        <span class="font-semibold" data-testid="widjet-other-retirement">{{ getText(other.value.retirement) }}</span>
       </div>
       <div class="border-input-border border rounded-md p-2 w-full">
         <p class="text-gray03 mb-[2px]">Goal for retirement money:</p>
-        <p class="font-semibold whitespace-nowrap overflow-hidden overflow-ellipsis">
+        <p
+          class="font-semibold whitespace-nowrap overflow-hidden overflow-ellipsis"
+          data-testid="widjet-other-retirement-money"
+        >
           {{ getText(other.value.retirementMoney) }}
         </p>
       </div>
     </div>
   </div>
-  <MemberDetailsOther :other="other" />
+  <ModalMemberDetailsOther :other="other" />
 </template>
 
 <script>
-import MemberDetailsOther from './MemberDetailsOther.vue'
+import ModalMemberDetailsOther from './ModalMemberDetailsOther.vue'
 import { useStore } from 'vuex'
 
 export default {
   name: 'WidgetOther',
   components: {
-    MemberDetailsOther,
+    ModalMemberDetailsOther,
   },
   props: {
     other: {

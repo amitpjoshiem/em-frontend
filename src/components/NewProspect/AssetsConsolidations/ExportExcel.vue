@@ -1,6 +1,6 @@
 <template>
   <el-button size="small" type="success" plain @click="exportExcel">Export to Excel</el-button>
-  <el-dialog v-model="state.dialogVisible" title="Export to Excel" width="40%" :before-close="closeDialog">
+  <el-dialog v-model="state.dialogVisible" title="Export to Excel" width="45%" :before-close="closeDialog">
     <div class="flex flex-col items-center">
       <InlineSvg :src="IconSuccesChanged" />
       <div class="pt-8">Export to Excel success.</div>

@@ -19,7 +19,7 @@
         2. Assets &amp; Income
       </router-link>
       <router-link
-        :to="{ name: 'assetsacount', params: { id: memberId } }"
+        :to="{ name: 'monthly-expense', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
           'disabled-link': !memberId,
@@ -27,10 +27,10 @@
           'font-medium text-main': step > 2,
         }"
       >
-        3. Assets Accounts
+        3. Expenses
       </router-link>
       <router-link
-        :to="{ name: 'assetsconsolidations', params: { id: memberId } }"
+        :to="{ name: 'assets-account', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
           'disabled-link': !memberId,
@@ -38,10 +38,10 @@
           'font-medium text-main': step > 3,
         }"
       >
-        4. Assets Consolidations
+        4. Assets Accounts
       </router-link>
       <router-link
-        :to="{ name: 'stresstest', params: { id: memberId } }"
+        :to="{ name: 'assetsconsolidations', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
           'disabled-link': !memberId,
@@ -49,7 +49,18 @@
           'font-medium text-main': step > 4,
         }"
       >
-        5. Stress Test
+        5. Assets Consolidations
+      </router-link>
+      <router-link
+        :to="{ name: 'stresstest', params: { id: memberId } }"
+        class="w-1/5 text-center text-xs"
+        :class="{
+          'disabled-link': !memberId,
+          'text-title-gray': step < 6,
+          'font-medium text-main': step > 5,
+        }"
+      >
+        6. Stress Test
       </router-link>
     </div>
     <div class="flex items-center pb-7">
@@ -73,6 +84,10 @@
 
       <!-- STEP 5 -->
       <div :class="{ 'cycle-default': step < 5, 'cycle-active': step > 5, 'cycle-next': step === 5 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 6, 'bg-activity': step >= 6 }" />
+
+      <!-- STEP 6 -->
+      <div :class="{ 'cycle-default': step < 6, 'cycle-active': step > 6, 'cycle-next': step === 6 }" />
     </div>
   </div>
 </template>

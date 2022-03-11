@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
+    "@element-plus/icons-vue": "^1.0.0",
     "@j-t-mcc/vue3-chartjs": "1.2.0",
     "@sentry/tracing": "^6.15.0",
     "@sentry/vue": "^6.15.0",

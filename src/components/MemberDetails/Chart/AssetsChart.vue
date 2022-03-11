@@ -53,8 +53,8 @@ export default {
       data: {
         datasets: [
           {
-            backgroundColor: props.values.total !== '0' ? ['#53576A', '#66B6FF', '#FF92A5'] : ['#D3D3D3'],
-            data: props.values.total !== '0' ? [props.values.liquidity, props.values.growth, props.values.income] : [1],
+            backgroundColor: props.values.total ? ['#53576A', '#66B6FF', '#FF92A5'] : ['#D3D3D3'],
+            data: props.values.total ? [props.values.liquidity, props.values.growth, props.values.income] : [1],
           },
         ],
       },

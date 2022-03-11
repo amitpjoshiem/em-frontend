@@ -7,16 +7,16 @@ let wrapper = null
 describe('SwdTypeUserLabel.vue', () => {
   wrapper = mount(SwdTypeUserLabel, {
     props: {
-      userType: 'prospect',
+      userType: 'opportunity',
     },
   })
 
   test('renders SwdTypeUserLabel prospect', () => {
-    expect(wrapper.props().userType).toBe('prospect')
+    expect(wrapper.props().userType).toBe('opportunity')
   })
 
   test('renders SwdTypeUserLabel prospect type', () => {
-    expect(wrapper.find('div').text()).toBe('prospect')
+    expect(wrapper.find('div').text()).toBe('opportunity')
   })
 
   test('renders SwdTypeUserLabel client type', async () => {

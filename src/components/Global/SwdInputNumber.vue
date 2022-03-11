@@ -1,16 +1,31 @@
 <template>
-  <el-input ref="inputRef" :model-value="formattedValue" :placeholder="placeholder" :size="size" :disabled="disabled">
-    <template v-if="prepend" #prepend>$</template>
-  </el-input>
+  <div
+    class="el-input"
+    :class="{
+      'is-disabled': disabled,
+      'el-input--small': size === 'small',
+      'el-input-group el-input-group--prepend': prepend,
+    }"
+  >
+    <div v-if="prepend" class="el-input-group__prepend">$</div>
+    <input
+      ref="inputRef"
+      type="text"
+      class="el-input__inner"
+      :disabled="disabled"
+      :placeholder="placeholder"
+      :prop="prop"
+    />
+  </div>
 </template>
 
 <script>
 import { useCurrencyInput } from 'vue-currency-input'
 export default {
-  name: 'SwdCurrencyInput',
+  name: 'SwdInputNumber',
   props: {
     modelValue: {
-      type: [Number],
+      type: [Number, String],
       require: false,
       default: null,
     },

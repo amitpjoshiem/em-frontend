@@ -34,6 +34,7 @@ import SwdSelectFilter from '@/components/Global/SwdSelectFilter.vue'
 import SwdSpinner from '@/components/Global/SwdSpinner.vue'
 import SwdOpportunityItemActions from '@/components/Global/SwdOpportunityItemActions.vue'
 import SwdCurrencyInput from '@/components/Global/SwdCurrencyInput.vue'
+import SwdInputNumber from '@/components/Global/SwdInputNumber.vue'
 
 import ElementPlus from 'element-plus'
 
@@ -66,6 +67,7 @@ const components = [
   SwdSpinner,
   SwdOpportunityItemActions,
   SwdCurrencyInput,
+  SwdInputNumber,
 ]
 
 components.forEach((component) => {

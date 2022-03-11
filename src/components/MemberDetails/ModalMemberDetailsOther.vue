@@ -34,7 +34,7 @@
 import { useStore } from 'vuex'
 import { reactive, watchEffect } from 'vue'
 export default {
-  name: 'MemberDetailsOther',
+  name: 'ModalMemberDetailsOther',
   props: {
     other: {
       type: Object,

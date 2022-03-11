@@ -50,6 +50,7 @@ const state = () => ({
       moreOtherInfo: false,
       changePhone: false,
       exportSucces: false,
+      modalContact: false,
     },
   },
   sortMembers: {
@@ -61,6 +62,7 @@ const state = () => ({
   showDialogReloadPage: false,
   needUpdateContent: null,
   docIdShare: null,
+  contact: null,
 })
 
 const mutations = {
@@ -103,6 +105,10 @@ const mutations = {
 
   setMemberId(state, value) {
     state.memberId = value
+  },
+
+  setContact(state, value) {
+    state.contact = value
   },
 }
 

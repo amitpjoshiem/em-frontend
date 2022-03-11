@@ -82,7 +82,7 @@ export default {
           break
         case 3:
           router.push({
-            name: 'assetsacount',
+            name: 'assets-account',
             params: { id: route.params.id ? route.params.id : '' },
           })
           break

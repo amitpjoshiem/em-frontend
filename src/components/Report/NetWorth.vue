@@ -15,7 +15,7 @@
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
                 size="small"
-                @change="change()"
+                @blur="change()"
               />
             </el-form-item>
             <div class="text-main text-xss font-semibold w-2/12 pl-2">
@@ -36,7 +36,7 @@
                 :disabled="isLoadingCreate"
                 placeholder="$12345"
                 size="small"
-                @change="change()"
+                @blur="change()"
               />
             </el-form-item>
             <div class="text-main text-xss font-semibold w-2/12 pl-2">
@@ -57,7 +57,7 @@
                 :disabled="isLoadingCreate"
                 size="small"
                 placeholder="$12345"
-                @change="change()"
+                @blur="change()"
               />
             </el-form-item>
             <div class="text-main text-xss font-semibold w-2/12 pl-2">
@@ -89,19 +89,13 @@ import { useFetchNetWorth } from '@/api/use-fetch-net-worth.js'
 import { createNetWorth } from '@/api/vueQuery/create-net-worth'
 
 function setInitValue(ruleForm, data) {
-  ruleForm.market.amount = data.market.amount !== null ? data.market.amount : ''
-  ruleForm.liquid.amount = data.liquid.amount !== null ? data.liquid.amount : ''
-  ruleForm.income_safe.amount = data.income_safe.amount !== null ? data.income_safe.amount : ''
-  ruleForm.market.percent = data.market.percent !== null ? data.market.percent : ''
-  ruleForm.liquid.percent = data.liquid.percent !== null ? data.liquid.percent : ''
-  ruleForm.income_safe.percent = data.income_safe.percent !== null ? data.income_safe.percent : ''
+  ruleForm.market.amount = data.market.amount
+  ruleForm.liquid.amount = data.liquid.amount
+  ruleForm.income_safe.amount = data.income_safe.amount
+  ruleForm.market.percent = data.market.percent
+  ruleForm.liquid.percent = data.liquid.percent
+  ruleForm.income_safe.percent = data.income_safe.percent
   ruleForm.total = data.total
-}
-
-function setPercentageValue(ruleForm, data) {
-  ruleForm.market.percent = data.market.percent !== null ? data.market.percent : ''
-  ruleForm.liquid.percent = data.liquid.percent !== null ? data.liquid.percent : ''
-  ruleForm.income_safe.percent = data.income_safe.percent !== null ? data.income_safe.percent : ''
 }
 
 export default {
@@ -156,16 +150,14 @@ export default {
     })
 
     const change = async () => {
-      // TODO: temporary solution
       const data = {
-        market: ruleForm.market.amount === null ? '' : ruleForm.market.amount.toString(),
-        liquid: ruleForm.liquid.amount === null ? '' : ruleForm.liquid.amount.toString(),
-        income_safe: ruleForm.income_safe.amount === null ? '' : ruleForm.income_safe.amount.toString(),
+        market: ruleForm.market.amount,
+        liquid: ruleForm.liquid.amount,
+        income_safe: ruleForm.income_safe.amount,
       }
       const res = await create({ id: memberId, data })
       if (!('error' in res)) {
         queryClient.invalidateQueries(['blueprint/netWorth'])
-        setPercentageValue(ruleForm, netWorth.value.data)
       }
     }
 

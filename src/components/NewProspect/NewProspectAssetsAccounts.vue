@@ -64,7 +64,7 @@ export default {
     const { mutateAsync: assetsConfirm } = useMutation(fetchAssetsAccountsConfirm)
 
     onMounted(() => {
-      store.commit('newProspect/setStep', 3)
+      store.commit('newProspect/setStep', 4)
       scrollTop()
     })
 
@@ -86,7 +86,7 @@ export default {
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - 1)
       router.push({
-        name: 'assets-information',
+        name: 'monthly-expense',
         params: { id: route.params.id },
       })
     }
