@@ -27,7 +27,7 @@
           'font-medium text-main': step > 2,
         }"
       >
-        3. Exspenses
+        3. Expenses
       </router-link>
       <router-link
         :to="{ name: 'assets-account', params: { id: memberId } }"
