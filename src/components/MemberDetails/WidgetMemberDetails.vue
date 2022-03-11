@@ -49,7 +49,7 @@
             :disabled="isLoadingUpdate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
       </div>
@@ -69,7 +69,7 @@
             :disabled="isLoadingUpdate"
             placeholder="$12345"
             size="small"
-            @change="change()"
+            @blur="change()"
           />
         </el-form-item>
       </div>
