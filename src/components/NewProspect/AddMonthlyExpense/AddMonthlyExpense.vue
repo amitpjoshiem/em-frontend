@@ -18,7 +18,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             class="w-2/12 mr-2"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.mortgage_rent_fees.discretionary"
@@ -26,7 +26,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             class="w-2/12 ml-2"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -38,7 +38,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.property_taxes_and_insurance.discretionary"
@@ -46,7 +46,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -58,7 +58,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.utilities.discretionary"
@@ -66,7 +66,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -78,7 +78,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.household_improvement.discretionary"
@@ -86,7 +86,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -98,7 +98,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.household_maintenance.discretionary"
@@ -106,7 +106,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
       </el-card>
@@ -122,7 +122,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.at_home.discretionary"
@@ -130,7 +130,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -142,7 +142,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.dining_out.discretionary"
@@ -150,7 +150,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -162,7 +162,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.vehicle_purchases_payments.discretionary"
@@ -170,7 +170,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -182,7 +182,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.auto_insurance_and_taxes.discretionary"
@@ -190,7 +190,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -202,7 +202,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.fuel_and_maintenance.discretionary"
@@ -210,7 +210,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -222,7 +222,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.public_transportation.discretionary"
@@ -230,7 +230,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
       </el-card>
@@ -246,7 +246,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.health_insurance.discretionary"
@@ -254,7 +254,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -266,7 +266,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.medicare_medigap.discretionary"
@@ -274,7 +274,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -286,7 +286,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.copays_uncovered_medical_services.discretionary"
@@ -294,7 +294,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -306,7 +306,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.drugs_and_medical_supplies.discretionary"
@@ -314,7 +314,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
       </el-card>
@@ -330,7 +330,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.life_other.discretionary"
@@ -338,7 +338,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -350,7 +350,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.long_term_care.discretionary"
@@ -358,7 +358,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -370,7 +370,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.clothing.discretionary"
@@ -378,7 +378,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -390,7 +390,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.product_and_services.discretionary"
@@ -398,7 +398,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
       </el-card>
@@ -414,7 +414,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.entertainment.discretionary"
@@ -422,7 +422,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -434,7 +434,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.travel.discretionary"
@@ -442,7 +442,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -454,7 +454,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.hobbies.discretionary"
@@ -462,7 +462,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -474,7 +474,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.family_care_education.discretionary"
@@ -482,7 +482,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -494,7 +494,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.income_taxes.discretionary"
@@ -502,7 +502,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -514,7 +514,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.charitable_contributions.discretionary"
@@ -522,7 +522,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -534,7 +534,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
           <SwdCurrencyInput
             v-model="ruleForm.other.discretionary"
@@ -542,7 +542,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @change="change()"
+            @blur="change()"
           />
         </div>
         <div class="flex mb-4">
@@ -731,6 +731,10 @@ export default {
         discretionary: null,
       },
       total: null,
+      subtotal: {
+        essential: null,
+        discretionary: null,
+      },
     })
 
     onMounted(async () => {

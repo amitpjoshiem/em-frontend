@@ -1,5 +1,5 @@
 <template>
-  <el-input ref="inputRef" :model-value="formattedValue" :placeholder="placeholder" :size="size">
+  <el-input ref="inputRef" :model-value="formattedValue" :placeholder="placeholder" :size="size" :disabled="disabled">
     <template v-if="prepend" #prepend>$</template>
   </el-input>
 </template>
