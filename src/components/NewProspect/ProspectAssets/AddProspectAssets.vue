@@ -290,19 +290,13 @@
         />
 
         <!-- Total -->
-        <ItemFormAssetsFour
-          v-model:member="ruleForm.liquid_assets.member.total"
-          v-model:spouse="ruleForm.liquid_assets.spouse.total"
-          v-model:onq="ruleForm.liquid_assets.o_nq.total"
-          v-model:balance="ruleForm.liquid_assets.balance.total"
-          prop-member="liquid_assets.member.total"
-          prop-spouse="liquid_assets.spouse.total"
-          prop-onq="liquid_assets.o_nq.total"
-          prop-balance="liquid_assets.balance.total"
-          title="Total"
+        <WidgetTotal
+          :member="ruleForm.liquid_assets.member.total"
+          :spouse="ruleForm.liquid_assets.spouse.total"
+          :o-nq="ruleForm.liquid_assets.o_nq.total"
+          :balance="ruleForm.liquid_assets.balance.total"
+          :is-loading-update="isLoadingUpdate"
           :is-married="isMarried"
-          :disabled="isLoadingUpdate"
-          @blur="validateMemberAssetFieldAndUpdate"
         />
       </div>
 
@@ -411,21 +405,13 @@
           :disabled="isLoadingUpdate"
           @blur="validateMemberAssetFieldAndUpdate"
         />
-
-        <!-- Total -->
-        <ItemFormAssetsFour
-          v-model:member="ruleForm.non_liquid_assets.member.total"
-          v-model:spouse="ruleForm.non_liquid_assets.spouse.total"
-          v-model:onq="ruleForm.non_liquid_assets.o_nq.total"
-          v-model:balance="ruleForm.non_liquid_assets.balance.total"
-          prop-member="non_liquid_assets.member.total"
-          prop-spouse="non_liquid_assets.spouse.total"
-          prop-onq="non_liquid_assets.o_nq.total"
-          prop-balance="non_liquid_assets.balance.total"
-          title="Total"
+        <WidgetTotal
+          :member="ruleForm.non_liquid_assets.member.total"
+          :spouse="ruleForm.non_liquid_assets.spouse.total"
+          :o-nq="ruleForm.non_liquid_assets.o_nq.total"
+          :balance="ruleForm.non_liquid_assets.balance.total"
+          :is-loading-update="isLoadingUpdate"
           :is-married="isMarried"
-          :disabled="isLoadingUpdate"
-          @blur="validateMemberAssetFieldAndUpdate"
         />
       </div>
       <div class="flex justify-end my-10">
@@ -457,6 +443,7 @@ import ItemFormAssetsTwo from '@/components/NewProspect/ProspectAssets/ItemFormA
 import ItemFormAssetsFour from '@/components/NewProspect/ProspectAssets/ItemFormAssetsFour.vue'
 import { setValueByPath } from '@/utils/setValueByPath'
 import { getByPath } from '../../../utils/getByPath'
+import WidgetTotal from '@/components/NewProspect/ProspectAssets/WidgetTotal.vue'
 
 function setInitValue(ruleForm, memberAssets) {
   if (memberAssets?.data) {
@@ -464,11 +451,23 @@ function setInitValue(ruleForm, memberAssets) {
   }
 }
 
+function setTotal(ruleForm, data) {
+  ruleForm.liquid_assets.member.total = data.liquid_assets.member.total
+  ruleForm.liquid_assets.spouse.total = data.liquid_assets.spouse.total
+  ruleForm.liquid_assets.o_nq.total = data.liquid_assets.o_nq.total
+  ruleForm.liquid_assets.balance.total = data.liquid_assets.balance.total
+  ruleForm.non_liquid_assets.member.total = data.non_liquid_assets.member.total
+  ruleForm.non_liquid_assets.spouse.total = data.non_liquid_assets.spouse.total
+  ruleForm.non_liquid_assets.o_nq.total = data.non_liquid_assets.o_nq.total
+  ruleForm.non_liquid_assets.balance.total = data.non_liquid_assets.balance.total
+}
+
 export default {
   name: 'AddProspectAssets',
   components: {
     ItemFormAssetsTwo,
     ItemFormAssetsFour,
+    WidgetTotal,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -689,6 +688,7 @@ export default {
       }
       queryClient.invalidateQueries(['MemberAssets', memberId])
 
+      setTotal(ruleForm, res.data)
       return res
     }
 
