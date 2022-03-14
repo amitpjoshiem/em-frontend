@@ -122,9 +122,9 @@ import { currencyFormat } from '@/utils/currencyFormat'
 import { useRoute, useRouter } from 'vue-router'
 import { useMutation, useQueryClient } from 'vue-query'
 import IconDelete from '@/assets/svg/icon-delete.svg'
-import HeaderTable from '@/components/NewProspect/AssetsConsolidations/HeaderTable.vue'
-import TotalTable from '@/components/NewProspect/AssetsConsolidations/TotalTable.vue'
-import ExportExcel from '@/components/NewProspect/AssetsConsolidations/ExportExcel.vue'
+import HeaderTable from '@/components/AssetsConsolidations/HeaderTable.vue'
+import TotalTable from '@/components/AssetsConsolidations/TotalTable.vue'
+import ExportExcel from '@/components/AssetsConsolidations/Export/ExportExcel.vue'
 
 export default {
   name: 'TableAssetsConsolidations',

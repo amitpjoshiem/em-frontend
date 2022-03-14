@@ -88,7 +88,7 @@ export default {
           break
         case 4:
           router.push({
-            name: 'assetsconsolidations',
+            name: 'add-assets-consolidations',
             params: { id: route.params.id ? route.params.id : '' },
           })
           break

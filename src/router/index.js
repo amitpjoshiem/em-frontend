@@ -14,6 +14,125 @@ const routes = [
         name: 'dashboard',
         component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
       },
+
+      {
+        path: 'document-export/:id',
+        name: 'document-export',
+        component: () =>
+          import(
+            /* webpackChunkName: "DocumentExport" */ '../components/AssetsConsolidations/Export/DocumentExport.vue'
+          ),
+      },
+
+      {
+        path: 'blueprint-report/:id',
+        name: 'blueprint-report',
+        component: () => import(/* webpackChunkName: "BlueprintReport" */ '../components/Report/BlueprintReport.vue'),
+      },
+
+      {
+        path: 'client-report/:id',
+        name: 'clientreport',
+        component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
+      },
+
+      {
+        path: 'contract-info/:id',
+        name: 'contract-info',
+        component: () => import(/* webpackChunkName: "ContractInfo" */ '../components/ClientReport/ContractInfo.vue'),
+      },
+
+      {
+        path: 'activity',
+        name: 'activity',
+        component: () => import(/* webpackChunkName: "Activity" */ '../views/Activity.vue'),
+      },
+
+      {
+        path: 'pipeline',
+        name: 'pipeline',
+        component: () => import(/* webpackChunkName: "PipeLine" */ '../views/PipeLine.vue'),
+      },
+
+      {
+        path: 'member-details/:id',
+        name: 'member-details',
+        component: () =>
+          import(/* webpackChunkName: "MemberDetails" */ '../components/MemberDetails/MemberDetails.vue'),
+      },
+
+      {
+        path: 'past-stress-test/:id',
+        name: 'past-stress-test',
+        component: () =>
+          import(
+            /* webpackChunkName: "PastStressTestResults" */ '../components/MemberDetails/PastStressTestResults.vue'
+          ),
+      },
+
+      {
+        path: 'asset-allocation-details/:id',
+        name: 'asset-allocation-details',
+        component: () =>
+          import(/* webpackChunkName: "AssetAllocation" */ '../components/AssetAllocation/AssetAllocationDetails.vue'),
+      },
+
+      {
+        path: 'asset-accounts/:id',
+        name: 'asset-accounts',
+        component: () =>
+          import(/* webpackChunkName: "AssetAccounts" */ '../components/AssetAccounts/AssetAccounts.vue'),
+      },
+
+      {
+        path: 'assets-consolidations/:id',
+        name: 'assets-consolidations',
+        component: () =>
+          import(
+            /* webpackChunkName: "AssetsConsolidations" */ '../components/AssetsConsolidations/AssetsConsolidations.vue'
+          ),
+      },
+
+      {
+        path: 'opportunity-contact/:id',
+        name: 'opportunity-contact',
+        component: () =>
+          import(
+            /* webpackChunkName: "PpportunityContact" */ '../components/OpportunityContact/OpportunityContact.vue'
+          ),
+      },
+
+      {
+        path: 'asset-allocation-details/:id',
+        name: 'asset-allocation-details',
+        component: () =>
+          import(
+            /* webpackChunkName: "AssetAllocationDtails" */ '../components/AssetAllocation/AssetAllocationDetails.vue'
+          ),
+      },
+
+      {
+        path: 'member-basic-information/:id',
+        name: 'member-basic-information',
+        component: () =>
+          import(
+            /* webpackChunkName: "MemberDetails" */ '../components/MemberBasicInformation/MemberBasicInformation.vue'
+          ),
+      },
+
+      {
+        path: 'prospect-employment/:id',
+        name: 'prospect-employment',
+        component: () =>
+          import(/* webpackChunkName: "ProspectEmployment" */ '../components/EmploymentHistory/EmploymentHistory.vue'),
+      },
+
+      {
+        path: 'add-opportunity/:id',
+        name: 'add-opportunity',
+        component: () => import(/* webpackChunkName: "Opportunity" */ '../components/Opportunity/AddOpportunity.vue'),
+      },
+
       {
         path: 'new-prospect',
         name: 'newprospect',
@@ -48,11 +167,11 @@ const routes = [
               import(/* webpackChunkName: "NewProspect" */ '../components/NewProspect/NewProspectAssetsAccounts.vue'),
           },
           {
-            path: 'assets-consolidations/:id?',
-            name: 'assetsconsolidations',
+            path: 'add-assets-consolidations/:id?',
+            name: 'add-assets-consolidations',
             component: () =>
               import(
-                /* webpackChunkName: "NewProspect" */ '../components/NewProspect/AssetsConsolidations/AssetsConsolidations.vue'
+                /* webpackChunkName: "NewProspect" */ '../components/NewProspect/AddAssetsConsolidations/AddAssetsConsolidations.vue'
               ),
           },
           {
@@ -71,61 +190,36 @@ const routes = [
           },
         ],
       },
-      {
-        path: 'document-export/:id',
-        name: 'document-export',
-        component: () =>
-          import(
-            /* webpackChunkName: "DocumentExport" */ '../components/NewProspect/AssetsConsolidations/DocumentExport.vue'
-          ),
-      },
-      {
-        path: 'blueprint-report/:id',
-        name: 'blueprint-report',
-        component: () => import(/* webpackChunkName: "BlueprintReport" */ '../components/Report/BlueprintReport.vue'),
-      },
-      {
-        path: 'client-report/:id',
-        name: 'clientreport',
-        component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
-      },
+
       {
         path: 'export-report/:id',
         name: 'export-report',
         component: () =>
-          import(/* webpackChunkName: "clientreport" */ '../components/Documents/ClientReport/ExportClientReports.vue'),
+          import(/* webpackChunkName: "ExportReport" */ '../components/Documents/ClientReport/ExportClientReports.vue'),
         children: [
           {
             path: 'all',
             name: 'all-report',
             component: () =>
-              import(
-                /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportAll.vue'
-              ),
+              import(/* webpackChunkName: "ExportReport" */ '../components/Documents/ClientReport/ClientReportAll.vue'),
           },
           {
             path: 'pdf',
             name: 'pdf-report',
             component: () =>
-              import(
-                /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportPdf.vue'
-              ),
+              import(/* webpackChunkName: "ExportReport" */ '../components/Documents/ClientReport/ClientReportPdf.vue'),
           },
           {
             path: 'excel',
             name: 'excel-report',
             component: () =>
               import(
-                /* webpackChunkName: "ListOfHouseholds" */ '../components/Documents/ClientReport/ClientReportExcel.vue'
+                /* webpackChunkName: "ExportReport" */ '../components/Documents/ClientReport/ClientReportExcel.vue'
               ),
           },
         ],
       },
-      {
-        path: 'contract-info/:id',
-        name: 'contract-info',
-        component: () => import(/* webpackChunkName: "ContractInfo" */ '../components/ClientReport/ContractInfo.vue'),
-      },
+
       {
         path: 'list-of-households',
         name: 'list-of-households',
@@ -150,88 +244,6 @@ const routes = [
               import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListClients.vue'),
           },
         ],
-      },
-
-      {
-        path: 'activity',
-        name: 'activity',
-        component: () => import(/* webpackChunkName: "Activity" */ '../views/Activity.vue'),
-      },
-      {
-        path: 'pipeline',
-        name: 'pipeline',
-        component: () => import(/* webpackChunkName: "Activity" */ '../views/PipeLine.vue'),
-      },
-
-      {
-        path: 'member-details/:id',
-        name: 'member-details',
-        component: () =>
-          import(/* webpackChunkName: "MemberDetails" */ '../components/MemberDetails/MemberDetails.vue'),
-      },
-
-      {
-        path: 'past-stress-test/:id',
-        name: 'past-stress-test',
-        component: () =>
-          import(
-            /* webpackChunkName: "PastStressTestResults" */ '../components/MemberDetails/PastStressTestResults.vue'
-          ),
-      },
-
-      {
-        path: 'asset-allocation-details/:id',
-        name: 'asset-allocation-details',
-        component: () =>
-          import(/* webpackChunkName: "AssetAllocation" */ '../components/AssetAllocation/AssetAllocationDetails.vue'),
-      },
-      {
-        path: 'asset-allocation-details/:id',
-        name: 'asset-allocation-details',
-        component: () =>
-          import(/* webpackChunkName: "AssetAllocation" */ '../components/AssetAllocation/AssetAllocationDetails.vue'),
-      },
-
-      {
-        path: 'asset-accounts/:id',
-        name: 'asset-accounts',
-        component: () =>
-          import(/* webpackChunkName: "AssetAccounts" */ '../components/AssetAccounts/AssetAccounts.vue'),
-      },
-
-      {
-        path: 'opportunity-contact/:id',
-        name: 'opportunity-contact',
-        component: () =>
-          import(/* webpackChunkName: "AssetAccounts" */ '../components/OpportunityContact/OpportunityContact.vue'),
-      },
-
-      {
-        path: 'asset-allocation-details/:id',
-        name: 'asset-allocation-details',
-        component: () =>
-          import(/* webpackChunkName: "MemberDetails" */ '../components/AssetAllocation/AssetAllocationDetails.vue'),
-      },
-
-      {
-        path: 'member-basic-information/:id',
-        name: 'member-basic-information',
-        component: () =>
-          import(
-            /* webpackChunkName: "MemberDetails" */ '../components/MemberBasicInformation/MemberBasicInformation.vue'
-          ),
-      },
-      {
-        path: 'prospect-employment/:id',
-        name: 'prospect-employment',
-        component: () =>
-          import(/* webpackChunkName: "MemberDetails" */ '../components/EmploymentHistory/EmploymentHistory.vue'),
-      },
-
-      {
-        path: 'add-opportunity/:id',
-        name: 'add-opportunity',
-        component: () => import(/* webpackChunkName: "Opportunity" */ '../components/Opportunity/AddOpportunity.vue'),
       },
 
       {
@@ -272,7 +284,7 @@ const routes = [
       {
         path: 'error',
         name: 'error',
-        component: () => import(/* webpackChunkName: "Logout" */ '../views/ErrorPage.vue'),
+        component: () => import(/* webpackChunkName: "Error" */ '../views/ErrorPage.vue'),
       },
 
       {

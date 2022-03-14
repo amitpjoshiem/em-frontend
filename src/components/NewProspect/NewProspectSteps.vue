@@ -41,7 +41,7 @@
         4. Assets Accounts
       </router-link>
       <router-link
-        :to="{ name: 'assetsconsolidations', params: { id: memberId } }"
+        :to="{ name: 'add-assets-consolidations', params: { id: memberId } }"
         class="w-1/5 text-center text-xs"
         :class="{
           'disabled-link': !memberId,

@@ -79,7 +79,7 @@ export default {
           message: 'Opportunity update successfully',
         })
         store.commit('newProspect/setStep', step.value + 1)
-        router.push({ name: 'assetsconsolidations', params: { id: route.params.id } })
+        router.push({ name: 'add-assets-consolidations', params: { id: route.params.id } })
       }
     }
 

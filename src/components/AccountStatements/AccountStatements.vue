@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import AccountStatementsPdf from '@/components/NewProspect/AssetsConsolidations/AccountStatementsPdf.vue'
+import AccountStatementsPdf from '@/components/AccountStatements/AccountStatementsPdf.vue'
 export default {
   name: 'AccountStatements',
   components: {
