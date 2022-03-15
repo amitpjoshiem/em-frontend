@@ -224,13 +224,8 @@ export default {
     })
 
     const change = async ({ indexTable, index, value = 0, title = '', field = '' }) => {
-      console.log('indexTable - ', indexTable)
-      console.log('index - ', index)
       const row = state[indexTable].assets_consolidations[index]
       const rowId = state[indexTable].assets_consolidations[index].id
-
-      console.log('row - ', row)
-      console.log('rowId - ', rowId)
 
       const valueNum = Number(value)
       if (valueNum < 0 || valueNum > 100) {
@@ -285,7 +280,6 @@ export default {
     }
 
     const addTable = async () => {
-      console.log('addTable')
       const res = await createAssetsConsolidationTable(memberId)
       if (!('error' in res)) {
         queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
