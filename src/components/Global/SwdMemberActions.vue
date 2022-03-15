@@ -33,6 +33,7 @@ const optionsPerStepAndType = {
   'prospect@step-3': [1, 4, 5, 6, 7],
   'prospect@step-4': [1, 4, 5, 6, 7],
   'prospect@step-5': [1, 4, 5, 6, 7],
+  'prospect@step-6': [1, 4, 5, 6, 7],
   onboarding: [4, 7],
 }
 
