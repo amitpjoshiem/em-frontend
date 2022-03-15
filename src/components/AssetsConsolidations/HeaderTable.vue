@@ -21,18 +21,26 @@
       Total cost <br />
       in $
     </div>
-    <div class="w-1/24 title" />
+    <div v-if="isAddLine" class="w-1/24 title" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'HeaderTableAssetsConsolidations',
+  props: {
+    isAddLine: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+  },
 }
 </script>
 
 <style scoped>
 .title {
-  @apply border-r border-b border-title-gray text-small text-gray03 flex items-center justify-center uppercase text-center last:border-r-0;
+  @apply text-small text-gray03 flex items-center justify-center uppercase text-center;
+  @apply border-r border-b border-t border-title-gray first:border-l;
 }
 </style>

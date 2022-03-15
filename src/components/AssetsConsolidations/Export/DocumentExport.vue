@@ -17,7 +17,7 @@
 </template>
 <script>
 import { useFetchExcelDocuments } from '@/api/use-fetch-excel-documents.js'
-import DocumentExportItem from '@/components/NewProspect/AssetsConsolidations/DocumentExportItem.vue'
+import DocumentExportItem from '@/components/AssetsConsolidations/Export/DocumentExportItem.vue'
 import { useRoute } from 'vue-router'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 import { watchEffect } from 'vue'
