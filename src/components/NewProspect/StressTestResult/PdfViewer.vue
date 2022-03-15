@@ -43,12 +43,12 @@ export default {
   },
   methods: {
     handle_pdf_link: function (params) {
-      var page = document.getElementById(String(params.pageNumber))
+      let page = document.getElementById(String(params.pageNumber))
       page.scrollIntoView()
     },
 
     getPdf() {
-      var self = this
+      let self = this
       self.pdfdata = pdfvuer.createLoadingTask(self.src)
       self.pdfdata.then((pdf) => {
         self.numPages = pdf.numPages
@@ -57,7 +57,7 @@ export default {
         }
 
         function changePage() {
-          var i = 1,
+          let i = 1,
             count = Number(pdf.numPages)
           do {
             if (

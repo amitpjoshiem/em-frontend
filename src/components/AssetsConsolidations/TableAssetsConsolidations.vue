@@ -240,7 +240,7 @@ export default {
       isLoadingUpdate.value = true
       const res = await updateAssetsConsolidation({ form: row, id: rowId })
       if (!('error' in res)) {
-        for (var key in errors) {
+        for (let key in errors) {
           delete errors[key]
         }
         queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
