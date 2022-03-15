@@ -83,6 +83,7 @@ export default {
 
 <style scoped>
 .total {
-  @apply border-r border-title-gray bg-color-grey text-xs font-medium text-main flex items-center justify-center text-center last:border-r-0 last:bg-white;
+  @apply bg-color-grey text-xs font-medium text-main flex items-center justify-center text-center last:bg-white;
+  @apply border-title-gray border-b border-r first:border-l;
 }
 </style>

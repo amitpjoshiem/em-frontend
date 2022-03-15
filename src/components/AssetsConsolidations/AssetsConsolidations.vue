@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SwdSubHeader title="AssetsConsolidations" />
+    <SwdSubHeader title="Assets Consolidations" />
     <TableAssetsConsolidations />
   </div>
 </template>

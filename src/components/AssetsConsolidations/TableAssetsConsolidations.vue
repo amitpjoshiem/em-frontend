@@ -1,6 +1,7 @@
 <template>
-  <div class="border box-border color-light-gray rounded-lg">
-    <div class="flex justify-between items-center p-5">
+  <div>
+    <!-- <div class="border box-border color-light-gray rounded-lg"> -->
+    <div class="flex justify-between items-center pb-5">
       <div class="text-smm font-medium text-main">Asset Consolidations</div>
       <div class="flex">
         <ExportExcel />
@@ -10,7 +11,7 @@
 
     <div v-if="!isLoading">
       <div v-for="(table, indexTable) in state" :key="table.id" class="mb-14">
-        <HeaderTable />
+        <HeaderTable :is-add-line="true" />
         <div v-for="(item, index) in table.assets_consolidations" :key="index" class="flex h-10">
           <template v-if="state[indexTable].assets_consolidations[index].id !== 'total'">
             <div class="w-6/24 item">
@@ -156,11 +157,12 @@
           />
         </div>
       </div>
-      <div class="mt-10 flex justify-end m-10">
+      <div class="flex justify-end mb-10">
         <el-button type="primary" @click="addTable">Add table</el-button>
       </div>
 
       <div class="mb-10">
+        <HeaderTable />
         <TotalTable v-for="(item, index) in total.value.assets_consolidations" :key="index" :total="item" />
       </div>
       <!-- <TotalTable :total="total" :is-fetching="isDisabledForm" @addTableLine="addTableLine" /> -->
@@ -307,7 +309,8 @@ export default {
 
 <style scoped>
 .item {
-  @apply border-r border-b border-title-gray text-xs text-text-light-gray flex items-center justify-center uppercase text-center last:border-r-0;
+  @apply text-xs text-text-light-gray flex items-center justify-center uppercase text-center;
+  @apply border-title-gray border-b border-r first:border-l;
 }
 </style>
 
