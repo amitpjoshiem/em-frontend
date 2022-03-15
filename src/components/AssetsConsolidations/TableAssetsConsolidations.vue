@@ -9,103 +9,123 @@
     </div>
 
     <div v-if="!isLoading">
-      <HeaderTable />
-      <div v-for="(item, index) in state" :key="index" class="flex h-10">
-        <div class="w-6/24 item">
-          <el-input v-model="state[index].name" size="small" :disabled="isDisabledForm" @change="change(index)" />
-        </div>
-        <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
-        <div class="w-3/24 item amount">
-          <el-input
-            v-model="state[index].amount"
-            size="small"
-            type="number"
-            :disabled="isDisabledForm"
-            @change="change(index)"
-            @focus="focusInput('amount', index)"
-            @blur="blurInput"
-          >
-            <template v-if="focusElem === 'amount' + index" #prepend>$</template>
-          </el-input>
-        </div>
-        <div class="w-2/24 item" :class="{ invalidate: errors['management_expense_' + index] }">
-          <el-input
-            v-model="state[index].management_expense"
-            :disabled="isDisabledForm"
-            size="small"
-            type="number"
-            @change="change(index, $event, 'management_expense', 'Management Expense')"
-            @focus="focusInput('management_expense', index)"
-            @blur="blurInput"
-          >
-            <template v-if="focusElem === 'management_expense' + index" #prepend>%</template>
-          </el-input>
-        </div>
-        <div class="w-2/24 item" :class="{ invalidate: errors['turnover_' + index] }">
-          <el-input
-            v-model="state[index].turnover"
-            :disabled="isDisabledForm"
-            size="small"
-            type="number"
-            @change="change(index, $event, 'turnover', 'Turnover')"
-            @focus="focusInput('turnover', index)"
-            @blur="blurInput"
-          >
-            <template v-if="focusElem === 'turnover' + index" #prepend>%</template>
-          </el-input>
-        </div>
-        <div class="w-2/24 item" :class="{ invalidate: errors['trading_cost_' + index] }">
-          <el-input
-            v-model="state[index].trading_cost"
-            :disabled="isDisabledForm"
-            size="small"
-            type="number"
-            @change="change(index, $event, 'trading_cost', 'Trading costs')"
-            @focus="focusInput('trading_cost', index)"
-            @blur="blurInput"
-          >
-            <template v-if="focusElem === 'trading_cost' + index" #prepend>%</template>
-          </el-input>
-        </div>
-        <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + index] }">
-          <el-input
-            v-model="state[index].wrap_fee"
-            :disabled="isDisabledForm"
-            size="small"
-            type="number"
-            @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
-            @focus="focusInput('wrap_fee', index)"
-            @blur="blurInput"
-          >
-            <template v-if="focusElem === 'wrap_fee' + index" #prepend>%</template>
-          </el-input>
-        </div>
-        <div class="w-2/24 item">
-          <span>{{ item.total_cost_percent }}%</span>
-        </div>
-        <div class="w-3/24 item">
-          {{ currencyFormat(item.total_cost) }}
-        </div>
-        <div class="w-1/24 item">
-          <div class="w-[15px] h-[15px] cursor-pointer">
-            <el-popconfirm
-              confirm-button-text="Yes"
-              cancel-button-text="No"
-              icon="el-icon-info"
-              icon-color="red"
-              title="Are you sure to delete this?"
-              @confirm="confirmEvent(item.id, index)"
-            >
-              <template #reference>
-                <span>
-                  <InlineSvg :src="IconDelete" />
-                </span>
-              </template>
-            </el-popconfirm>
-          </div>
+      <!-- <HeaderTable /> -->
+      <div v-for="(table, indexTable) in state" :key="table.id" class="mb-14">
+        <HeaderTable />
+        <div v-for="(item, index) in table.assets_consolidations" :key="index" class="flex h-10">
+          <template v-if="state[indexTable].assets_consolidations[index].id !== 'total'">
+            <div class="w-6/24 item">
+              <el-input
+                v-model="state[indexTable].assets_consolidations[index].name"
+                size="small"
+                :disabled="isDisabledForm"
+                @change="change(index)"
+              />
+            </div>
+            <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
+            <div class="w-3/24 item amount">
+              <el-input
+                v-model="state[indexTable].assets_consolidations[index].amount"
+                size="small"
+                type="number"
+                :disabled="isDisabledForm"
+                @change="change(index)"
+                @focus="focusInput('amount', index)"
+                @blur="blurInput"
+              >
+                <template v-if="focusElem === 'amount' + index" #prepend>$</template>
+              </el-input>
+            </div>
+            <div class="w-2/24 item" :class="{ invalidate: errors['management_expense_' + index] }">
+              <el-input
+                v-model="state[indexTable].assets_consolidations[index].management_expense"
+                :disabled="isDisabledForm"
+                size="small"
+                type="number"
+                @change="change(index, $event, 'management_expense', 'Management Expense')"
+                @focus="focusInput('management_expense', index)"
+                @blur="blurInput"
+              >
+                <template v-if="focusElem === 'management_expense' + index" #prepend>%</template>
+              </el-input>
+            </div>
+            <div class="w-2/24 item" :class="{ invalidate: errors['turnover_' + index] }">
+              <el-input
+                v-model="state[indexTable].assets_consolidations[index].turnover"
+                :disabled="isDisabledForm"
+                size="small"
+                type="number"
+                @change="change(index, $event, 'turnover', 'Turnover')"
+                @focus="focusInput('turnover', index)"
+                @blur="blurInput"
+              >
+                <template v-if="focusElem === 'turnover' + index" #prepend>%</template>
+              </el-input>
+            </div>
+            <div class="w-2/24 item" :class="{ invalidate: errors['trading_cost_' + index] }">
+              <el-input
+                v-model="state[indexTable].assets_consolidations[index].trading_cost"
+                :disabled="isDisabledForm"
+                size="small"
+                type="number"
+                @change="change(index, $event, 'trading_cost', 'Trading costs')"
+                @focus="focusInput('trading_cost', index)"
+                @blur="blurInput"
+              >
+                <template v-if="focusElem === 'trading_cost' + index" #prepend>%</template>
+              </el-input>
+            </div>
+            <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + index] }">
+              <el-input
+                v-model="state[indexTable].assets_consolidations[index].wrap_fee"
+                :disabled="isDisabledForm"
+                size="small"
+                type="number"
+                @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
+                @focus="focusInput('wrap_fee', index)"
+                @blur="blurInput"
+              >
+                <template v-if="focusElem === 'wrap_fee' + index" #prepend>%</template>
+              </el-input>
+            </div>
+            <div class="w-2/24 item">
+              <span>{{ item.total_cost_percent }}%</span>
+            </div>
+            <div class="w-3/24 item">
+              {{ currencyFormat(item.total_cost) }}
+            </div>
+            <div class="w-1/24 item">
+              <div class="w-[15px] h-[15px] cursor-pointer">
+                <el-popconfirm
+                  confirm-button-text="Yes"
+                  cancel-button-text="No"
+                  icon="el-icon-info"
+                  icon-color="red"
+                  title="Are you sure to delete this?"
+                  @confirm="confirmEvent(item.id, index)"
+                >
+                  <template #reference>
+                    <span>
+                      <InlineSvg :src="IconDelete" />
+                    </span>
+                  </template>
+                </el-popconfirm>
+              </div>
+            </div>
+          </template>
+          <TotalTable
+            v-else
+            :total="state[indexTable].assets_consolidations[index]"
+            :is-fetching="isDisabledForm"
+            @addTableLine="addTableLine(state[indexTable].table)"
+          />
         </div>
       </div>
-      <TotalTable :total="total" :is-fetching="isDisabledForm" @addTableLine="addTableLine" />
+      <div class="mt-10 flex justify-end m-10">
+        <el-button type="primary" @click="addTable">Add table</el-button>
+      </div>
+
+      <!-- <TotalTable :total="total" :is-fetching="isDisabledForm" @addTableLine="addTableLine" /> -->
     </div>
     <el-skeleton v-else :rows="10" animated class="p-5" />
   </div>
@@ -114,10 +134,11 @@
 <script>
 import { reactive, watchEffect, ref, computed } from 'vue'
 import { useAsetsConsolidationsMember } from '@/api/use-assets-consolidations-member.js'
-import { updateMemberAssetsConsolidation } from '@/api/vueQuery/update-member-assets-consolidation'
-import { createMemberAssetsConsolidation } from '@/api/vueQuery/create-member-assets-consolidation'
+// import { updateMemberAssetsConsolidation } from '@/api/vueQuery/update-member-assets-consolidation'
+import { createAssetsConsolidationRows } from '@/api/vueQuery/create-assets-consolidations-rows'
+import { createAssetsConsolidationTables } from '@/api/vueQuery/create-assets-consolidations-tables'
 import { deleteMemberAssetsConsolidation } from '@/api/vueQuery/delete-member-assets-consolidation'
-import { useAlert } from '@/utils/use-alert'
+// import { useAlert } from '@/utils/use-alert'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useRoute, useRouter } from 'vue-router'
 import { useMutation, useQueryClient } from 'vue-query'
@@ -142,8 +163,11 @@ export default {
     const focusElem = ref(null)
 
     const { isLoading, isFetching, isError, data: assetsData, total } = useAsetsConsolidationsMember(memberId)
-    const { mutateAsync: updateAssetsConsolidation } = useMutation(updateMemberAssetsConsolidation)
-    const { mutateAsync: createAssetsConsolidation } = useMutation(createMemberAssetsConsolidation)
+    // const { mutateAsync: updateAssetsConsolidation } = useMutation(updateMemberAssetsConsolidation)
+
+    const { mutateAsync: createAssetsConsolidationRow } = useMutation(createAssetsConsolidationRows)
+    const { mutateAsync: createAssetsConsolidationTable } = useMutation(createAssetsConsolidationTables)
+
     const { mutateAsync: deleteAssetsConsolidation } = useMutation(deleteMemberAssetsConsolidation)
 
     const state = reactive([])
@@ -155,31 +179,32 @@ export default {
       }
     })
 
-    const change = async (index, value = 0, field = '', title = '') => {
-      const valueNum = Number(value)
-      if (valueNum < 0 || valueNum > 100) {
-        errors[field + '_' + index] = true
-        useAlert({
-          type: 'error',
-          title: 'Error',
-          message: `The ${title} must be between 0 and 100.`,
-        })
-        return
-      }
-
-      isLoadingUpdate.value = true
-      const res = await updateAssetsConsolidation({ form: state[index], id: state[index].id })
-      if (!('error' in res)) {
-        for (var key in errors) {
-          delete errors[key]
-        }
-        queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
-      }
-      isLoadingUpdate.value = false
+    // const change = async (index, value = 0, field = '', title = '') => {
+    const change = async (index) => {
+      console.log('index - ', index)
+      // const valueNum = Number(value)
+      // if (valueNum < 0 || valueNum > 100) {
+      //   errors[field + '_' + index] = true
+      //   useAlert({
+      //     type: 'error',
+      //     title: 'Error',
+      //     message: `The ${title} must be between 0 and 100.`,
+      //   })
+      //   return
+      // }
+      // isLoadingUpdate.value = true
+      // const res = await updateAssetsConsolidation({ form: state[index], id: state[index].id })
+      // if (!('error' in res)) {
+      //   for (var key in errors) {
+      //     delete errors[key]
+      //   }
+      //   queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
+      // }
+      // isLoadingUpdate.value = false
     }
 
-    const addTableLine = async () => {
-      const res = await createAssetsConsolidation(memberId)
+    const addTableLine = async (tableId) => {
+      const res = await createAssetsConsolidationRow({ memberId, tableId })
       if (!('error' in res)) {
         queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
       }
@@ -209,6 +234,14 @@ export default {
       router.push({ name: 'document-export', params: { id: memberId } })
     }
 
+    const addTable = async () => {
+      console.log('addTable')
+      const res = await createAssetsConsolidationTable(memberId)
+      if (!('error' in res)) {
+        queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
+      }
+    }
+
     return {
       state,
       change,
@@ -229,6 +262,7 @@ export default {
       focusElem,
       blurInput,
       moreDocuments,
+      addTable,
     }
   },
 }

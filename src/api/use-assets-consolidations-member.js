@@ -13,12 +13,12 @@ export const useAsetsConsolidationsMember = (id) => {
     },
     {
       select: (data) => {
-        total.value = data.data.find((item) => {
-          return item.id === 'total'
+        total.value = data.data.filter((item) => {
+          return item.table === 'total'
         })
 
         return data.data.filter((item) => {
-          return new AssetsConsolidation(item).id !== 'total'
+          if (item.table !== 'total') return new AssetsConsolidation(item)
         })
       },
     }
