@@ -34,7 +34,7 @@ export default {
     const chartRef = ref(null)
 
     const getTotal = computed(() => {
-      if (props.values.total > 100000) return currencyCompact(props.values.total)
+      if (props.values.total > 1000000) return currencyCompact(props.values.total)
       return currencyFormat(props.values.total, 0, 0)
     })
 
