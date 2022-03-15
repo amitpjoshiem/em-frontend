@@ -1,8 +1,7 @@
 <template>
   <div>
-    <!-- <div class="border box-border color-light-gray rounded-lg"> -->
-    <div class="flex justify-between items-center pb-5">
-      <div class="text-smm font-medium text-main">Asset Consolidations</div>
+    <div class="flex items-center pb-5" :class="{ 'justify-end': !isShowTitle, 'justify-between': isShowTitle }">
+      <div v-if="isShowTitle" class="text-smm font-medium text-main">Asset Consolidations</div>
       <div class="flex">
         <ExportExcel />
         <el-button size="small" class="ml-2" @click="moreDocuments">More documents</el-button>
@@ -29,7 +28,7 @@
                 size="small"
                 type="number"
                 :disabled="isDisabledForm"
-                @change="change(indexTable, index)"
+                @change="change({ indexTable, index })"
                 @focus="focusInput('amount', indexTable, index)"
                 @blur="blurInput"
               >
@@ -157,15 +156,15 @@
           />
         </div>
       </div>
-      <div class="flex justify-end mb-10">
-        <el-button type="primary" @click="addTable">Add table</el-button>
-      </div>
 
       <div class="mb-10">
         <HeaderTable />
         <TotalTable v-for="(item, index) in total.value.assets_consolidations" :key="index" :total="item" />
       </div>
-      <!-- <TotalTable :total="total" :is-fetching="isDisabledForm" @addTableLine="addTableLine" /> -->
+
+      <div class="flex justify-end mb-10">
+        <el-button type="primary" @click="addTable">Add table</el-button>
+      </div>
     </div>
     <el-skeleton v-else :rows="10" animated class="p-5" />
   </div>
@@ -194,6 +193,13 @@ export default {
     TotalTable,
     ExportExcel,
   },
+  props: {
+    isShowTitle: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -218,8 +224,13 @@ export default {
     })
 
     const change = async ({ indexTable, index, value = 0, title = '', field = '' }) => {
+      console.log('indexTable - ', indexTable)
+      console.log('index - ', index)
       const row = state[indexTable].assets_consolidations[index]
       const rowId = state[indexTable].assets_consolidations[index].id
+
+      console.log('row - ', row)
+      console.log('rowId - ', rowId)
 
       const valueNum = Number(value)
       if (valueNum < 0 || valueNum > 100) {
