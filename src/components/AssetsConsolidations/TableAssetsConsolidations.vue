@@ -9,7 +9,6 @@
     </div>
 
     <div v-if="!isLoading">
-      <!-- <HeaderTable /> -->
       <div v-for="(table, indexTable) in state" :key="table.id" class="mb-14">
         <HeaderTable />
         <div v-for="(item, index) in table.assets_consolidations" :key="index" class="flex h-10">
@@ -152,6 +151,7 @@
             v-else
             :total="state[indexTable].assets_consolidations[index]"
             :is-fetching="isDisabledForm"
+            :is-add-line="true"
             @addTableLine="addTableLine(state[indexTable].table)"
           />
         </div>
@@ -160,6 +160,9 @@
         <el-button type="primary" @click="addTable">Add table</el-button>
       </div>
 
+      <div class="mb-10">
+        <TotalTable v-for="(item, index) in total.value.assets_consolidations" :key="index" :total="item" />
+      </div>
       <!-- <TotalTable :total="total" :is-fetching="isDisabledForm" @addTableLine="addTableLine" /> -->
     </div>
     <el-skeleton v-else :rows="10" animated class="p-5" />

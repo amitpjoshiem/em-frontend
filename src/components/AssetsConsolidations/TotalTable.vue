@@ -33,7 +33,7 @@
       <SwdSpinner v-if="isFetching" />
       <span v-else>{{ currencyFormat(total.total_cost) }}</span>
     </div>
-    <div class="w-1/24 total">
+    <div v-if="isAddLine" class="w-1/24 total">
       <div class="w-[15px] h-[15px] cursor-pointer">
         <InlineSvg :src="IconAdd" @click="addLine" />
       </div>
@@ -58,6 +58,11 @@ export default {
     isFetching: {
       type: Boolean,
       require: true,
+      default: false,
+    },
+    isAddLine: {
+      type: Boolean,
+      require: false,
       default: false,
     },
   },

@@ -13,9 +13,7 @@ export const useAsetsConsolidationsMember = (id) => {
     },
     {
       select: (data) => {
-        total.value = data.data.filter((item) => {
-          return item.table === 'total'
-        })
+        total.value = data.data.find((item) => item.table === 'total')
 
         return data.data.filter((item) => {
           if (item.table !== 'total') return new AssetsConsolidation(item)
