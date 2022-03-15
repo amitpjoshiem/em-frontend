@@ -30,10 +30,10 @@
                 type="number"
                 :disabled="isDisabledForm"
                 @change="change(indexTable, index)"
-                @focus="focusInput('amount', index)"
+                @focus="focusInput('amount', indexTable, index)"
                 @blur="blurInput"
               >
-                <template v-if="focusElem === 'amount' + index" #prepend>$</template>
+                <template v-if="focusElem === 'amount' + indexTable + index" #prepend>$</template>
               </el-input>
             </div>
 
@@ -52,10 +52,10 @@
                     field: 'management_expense',
                   })
                 "
-                @focus="focusInput('management_expense', index)"
+                @focus="focusInput('management_expense', indexTable, index)"
                 @blur="blurInput"
               >
-                <template v-if="focusElem === 'management_expense' + index" #prepend>%</template>
+                <template v-if="focusElem === 'management_expense' + indexTable + index" #prepend>%</template>
               </el-input>
             </div>
 
@@ -74,10 +74,10 @@
                     field: 'turnover',
                   })
                 "
-                @focus="focusInput('turnover', index)"
+                @focus="focusInput('turnover', indexTable, index)"
                 @blur="blurInput"
               >
-                <template v-if="focusElem === 'turnover' + index" #prepend>%</template>
+                <template v-if="focusElem === 'turnover' + indexTable + index" #prepend>%</template>
               </el-input>
             </div>
 
@@ -96,10 +96,10 @@
                     field: 'trading_cost',
                   })
                 "
-                @focus="focusInput('trading_cost', index)"
+                @focus="focusInput('trading_cost', indexTable, index)"
                 @blur="blurInput"
               >
-                <template v-if="focusElem === 'trading_cost' + index" #prepend>%</template>
+                <template v-if="focusElem === 'trading_cost' + indexTable + index" #prepend>%</template>
               </el-input>
             </div>
             <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + indexTable + index] }">
@@ -117,10 +117,10 @@
                     field: 'wrap_fee',
                   })
                 "
-                @focus="focusInput('wrap_fee', index)"
+                @focus="focusInput('wrap_fee', indexTable, index)"
                 @blur="blurInput"
               >
-                <template v-if="focusElem === 'wrap_fee' + index" #prepend>%</template>
+                <template v-if="focusElem === 'wrap_fee' + indexTable + index" #prepend>%</template>
               </el-input>
             </div>
             <div class="w-2/24 item">
@@ -256,8 +256,8 @@ export default {
       return isLoadingUpdate.value || isFetching.value
     })
 
-    const focusInput = (name, index) => {
-      focusElem.value = name + index
+    const focusInput = (name, indexTable, index) => {
+      focusElem.value = name + indexTable + index
     }
 
     const blurInput = () => {
