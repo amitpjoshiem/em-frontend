@@ -19,7 +19,7 @@
                 v-model="state[indexTable].assets_consolidations[index].name"
                 size="small"
                 :disabled="isDisabledForm"
-                @change="change(index)"
+                @change="change({ indexTable, index })"
               />
             </div>
             <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
@@ -29,59 +29,94 @@
                 size="small"
                 type="number"
                 :disabled="isDisabledForm"
-                @change="change(index)"
+                @change="change(indexTable, index)"
                 @focus="focusInput('amount', index)"
                 @blur="blurInput"
               >
                 <template v-if="focusElem === 'amount' + index" #prepend>$</template>
               </el-input>
             </div>
-            <div class="w-2/24 item" :class="{ invalidate: errors['management_expense_' + index] }">
+
+            <div class="w-2/24 item" :class="{ invalidate: errors['management_expense_' + indexTable + index] }">
               <el-input
                 v-model="state[indexTable].assets_consolidations[index].management_expense"
                 :disabled="isDisabledForm"
                 size="small"
                 type="number"
-                @change="change(index, $event, 'management_expense', 'Management Expense')"
+                @change="
+                  change({
+                    indexTable,
+                    index,
+                    value: state[indexTable].assets_consolidations[index].management_expense,
+                    title: 'Management Expense',
+                    field: 'management_expense',
+                  })
+                "
                 @focus="focusInput('management_expense', index)"
                 @blur="blurInput"
               >
                 <template v-if="focusElem === 'management_expense' + index" #prepend>%</template>
               </el-input>
             </div>
-            <div class="w-2/24 item" :class="{ invalidate: errors['turnover_' + index] }">
+
+            <div class="w-2/24 item" :class="{ invalidate: errors['turnover_' + indexTable + index] }">
               <el-input
                 v-model="state[indexTable].assets_consolidations[index].turnover"
                 :disabled="isDisabledForm"
                 size="small"
                 type="number"
-                @change="change(index, $event, 'turnover', 'Turnover')"
+                @change="
+                  change({
+                    indexTable,
+                    index,
+                    value: state[indexTable].assets_consolidations[index].turnover,
+                    title: 'Turnover',
+                    field: 'turnover',
+                  })
+                "
                 @focus="focusInput('turnover', index)"
                 @blur="blurInput"
               >
                 <template v-if="focusElem === 'turnover' + index" #prepend>%</template>
               </el-input>
             </div>
-            <div class="w-2/24 item" :class="{ invalidate: errors['trading_cost_' + index] }">
+
+            <div class="w-2/24 item" :class="{ invalidate: errors['trading_cost_' + indexTable + index] }">
               <el-input
                 v-model="state[indexTable].assets_consolidations[index].trading_cost"
                 :disabled="isDisabledForm"
                 size="small"
                 type="number"
-                @change="change(index, $event, 'trading_cost', 'Trading costs')"
+                @change="
+                  change({
+                    indexTable,
+                    index,
+                    value: state[indexTable].assets_consolidations[index].trading_cost,
+                    title: 'Trading cost',
+                    field: 'trading_cost',
+                  })
+                "
                 @focus="focusInput('trading_cost', index)"
                 @blur="blurInput"
               >
                 <template v-if="focusElem === 'trading_cost' + index" #prepend>%</template>
               </el-input>
             </div>
-            <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + index] }">
+            <div class="w-2/24 item" :class="{ invalidate: errors['wrap_fee_' + indexTable + index] }">
               <el-input
                 v-model="state[indexTable].assets_consolidations[index].wrap_fee"
                 :disabled="isDisabledForm"
                 size="small"
                 type="number"
-                @change="change(index, $event, 'wrap_fee', 'Wrap fee')"
+                @change="
+                  change({
+                    indexTable,
+                    index,
+                    value: state[indexTable].assets_consolidations[index].wrap_fee,
+                    title: 'Wrap Fee',
+                    field: 'wrap_fee',
+                  })
+                "
                 @focus="focusInput('wrap_fee', index)"
                 @blur="blurInput"
               >
@@ -134,11 +169,11 @@
 <script>
 import { reactive, watchEffect, ref, computed } from 'vue'
 import { useAsetsConsolidationsMember } from '@/api/use-assets-consolidations-member.js'
-// import { updateMemberAssetsConsolidation } from '@/api/vueQuery/update-member-assets-consolidation'
+import { updateMemberAssetsConsolidation } from '@/api/vueQuery/update-member-assets-consolidation'
 import { createAssetsConsolidationRows } from '@/api/vueQuery/create-assets-consolidations-rows'
 import { createAssetsConsolidationTables } from '@/api/vueQuery/create-assets-consolidations-tables'
 import { deleteMemberAssetsConsolidation } from '@/api/vueQuery/delete-member-assets-consolidation'
-// import { useAlert } from '@/utils/use-alert'
+import { useAlert } from '@/utils/use-alert'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useRoute, useRouter } from 'vue-router'
 import { useMutation, useQueryClient } from 'vue-query'
@@ -163,11 +198,9 @@ export default {
     const focusElem = ref(null)
 
     const { isLoading, isFetching, isError, data: assetsData, total } = useAsetsConsolidationsMember(memberId)
-    // const { mutateAsync: updateAssetsConsolidation } = useMutation(updateMemberAssetsConsolidation)
-
+    const { mutateAsync: updateAssetsConsolidation } = useMutation(updateMemberAssetsConsolidation)
     const { mutateAsync: createAssetsConsolidationRow } = useMutation(createAssetsConsolidationRows)
     const { mutateAsync: createAssetsConsolidationTable } = useMutation(createAssetsConsolidationTables)
-
     const { mutateAsync: deleteAssetsConsolidation } = useMutation(deleteMemberAssetsConsolidation)
 
     const state = reactive([])
@@ -179,28 +212,29 @@ export default {
       }
     })
 
-    // const change = async (index, value = 0, field = '', title = '') => {
-    const change = async (index) => {
-      console.log('index - ', index)
-      // const valueNum = Number(value)
-      // if (valueNum < 0 || valueNum > 100) {
-      //   errors[field + '_' + index] = true
-      //   useAlert({
-      //     type: 'error',
-      //     title: 'Error',
-      //     message: `The ${title} must be between 0 and 100.`,
-      //   })
-      //   return
-      // }
-      // isLoadingUpdate.value = true
-      // const res = await updateAssetsConsolidation({ form: state[index], id: state[index].id })
-      // if (!('error' in res)) {
-      //   for (var key in errors) {
-      //     delete errors[key]
-      //   }
-      //   queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
-      // }
-      // isLoadingUpdate.value = false
+    const change = async ({ indexTable, index, value = 0, title = '', field = '' }) => {
+      const row = state[indexTable].assets_consolidations[index]
+      const rowId = state[indexTable].assets_consolidations[index].id
+
+      const valueNum = Number(value)
+      if (valueNum < 0 || valueNum > 100) {
+        errors[field + '_' + indexTable + index] = true
+        useAlert({
+          type: 'error',
+          title: 'Error',
+          message: `The ${title} must be between 0 and 100.`,
+        })
+        return
+      }
+      isLoadingUpdate.value = true
+      const res = await updateAssetsConsolidation({ form: row, id: rowId })
+      if (!('error' in res)) {
+        for (var key in errors) {
+          delete errors[key]
+        }
+        queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
+      }
+      isLoadingUpdate.value = false
     }
 
     const addTableLine = async (tableId) => {
