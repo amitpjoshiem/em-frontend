@@ -14,8 +14,9 @@
 <script>
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import { chartWithTextCenter } from '@/utils/chartWithText'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { currencyFormat } from '@/utils/currencyFormat'
+import { currencyCompact } from '@/utils/currencyCompactFormat'
 
 export default {
   name: 'AssetsChart',
@@ -32,6 +33,11 @@ export default {
   setup(props) {
     const chartRef = ref(null)
 
+    const getTotal = computed(() => {
+      if (props.values.total > 100000) return currencyCompact(props.values.total)
+      return currencyFormat(props.values.total, 0, 0)
+    })
+
     watch(
       () => props.values.total,
       () => {
@@ -41,7 +47,7 @@ export default {
             data: [props.values.liquidity, props.values.growth, props.values.income],
           },
         ]
-        doughnutChart.options.elements.center.text = 'Total ' + currencyFormat(props.values.total)
+        doughnutChart.options.elements.center.text = 'Total ' + getTotal.value
         chartRef.value.update()
       },
       { deep: true }
@@ -61,7 +67,7 @@ export default {
       options: {
         elements: {
           center: {
-            text: 'Total ' + currencyFormat(props.values.total),
+            text: 'Total ' + getTotal.value,
             size: 12,
           },
         },
@@ -73,6 +79,8 @@ export default {
       doughnutChart,
       chartRef,
       currencyFormat,
+      getTotal,
+      currencyCompact,
     }
   },
 }
