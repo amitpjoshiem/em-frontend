@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoadingStatusSfAcc">
+  <div v-if="!isLoadingStatusSfAcc && !isFetchingMember">
     <div v-if="isShowForm">
       <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
         <!-- GENERAL -->
@@ -387,7 +387,7 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted, computed, watch } from 'vue'
+import { reactive, ref, onMounted, computed, watch, watchEffect } from 'vue'
 import { createMembers } from '@/api/vueQuery/create-members'
 import { updateMembers } from '@/api/vueQuery/update-members'
 import { useMutation } from 'vue-query'
@@ -396,7 +396,6 @@ import { useStore } from 'vuex'
 import { useAlert } from '@/utils/use-alert'
 import { rules, employmentHistoryRule } from '@/validationRules/basicRules.js'
 import { maska } from 'maska'
-import { useFetchMember } from '@/api/use-fetch-member'
 import { scrollTop } from '@/utils/scrollTop'
 import { initialBasicInformation } from '@/components/NewProspect/initialState/basicInformation'
 import dayjs from 'dayjs'
@@ -404,74 +403,62 @@ import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
 
+import { useFetchExportDocumentsClient } from '@/api/use-fetch-member-new-step.js'
+
 function setInitValue(ruleForm, member) {
-  if (member?.value?.data) {
-    Object.assign(ruleForm, member.value.data)
-  }
+  if (member?.value?.id) {
+    Object.assign(ruleForm, JSON.parse(JSON.stringify(member.value)))
 
-  if (ruleForm.birthday) ruleForm.birthday = dayjs(ruleForm.birthday).format('MM/DD/YYYY')
-
-  if (ruleForm.retirement_date !== null) ruleForm.retirement_date = dayjs(ruleForm.retirement_date).format('MM/DD/YYYY')
-
-  if (ruleForm.spouse.birthday) ruleForm.spouse.birthday = dayjs(ruleForm.spouse.birthday).format('MM/DD/YYYY')
-
-  if (ruleForm.employment_history && !ruleForm.employment_history.length) {
-    ruleForm.employment_history.push({
-      company_name: '',
-      occupation: '',
-      years: '',
-    })
-  }
-
-  if (ruleForm.spouse.employment_history && !ruleForm.spouse.employment_history.length) {
-    ruleForm.spouse.employment_history.push({
-      company_name: '',
-      occupation: '',
-      years: '',
-    })
-  }
-
-  if (ruleForm.spouse.retired === null) {
-    ruleForm.spouse.retired = false
-  }
-
-  if (ruleForm.married === null) {
-    ruleForm.married = true
-    ruleForm.spouse = {
-      name: '',
-      email: '',
-      birthday: '',
-      retired: false,
-      retirement_date: '',
-      phone: '',
-      employment_history: [
-        {
-          company_name: '',
-          occupation: '',
-          years: '',
-        },
-      ],
+    if (ruleForm.birthday) ruleForm.birthday = dayjs(ruleForm.birthday).format('MM/DD/YYYY')
+    if (ruleForm.retirement_date !== null)
+      ruleForm.retirement_date = dayjs(ruleForm.retirement_date).format('MM/DD/YYYY')
+    if (ruleForm.employment_history && !ruleForm.employment_history.length) {
+      ruleForm.employment_history.push({
+        company_name: '',
+        occupation: '',
+        years: '',
+      })
     }
-  }
 
-  if (!ruleForm.house.type) {
-    ruleForm.house = {
-      type: 'own',
-      market_value: null,
-      total_debt: null,
-      remaining_mortgage_amount: null,
-      monthly_payment: null,
-      total_monthly_expenses: null,
+    if (member.value.step === 'default') {
+      ruleForm.married = true
+      ruleForm.spouse = {
+        name: '',
+        email: '',
+        birthday: '',
+        retired: false,
+        retirement_date: '',
+        phone: '',
+        employment_history: [
+          {
+            company_name: '',
+            occupation: '',
+            years: '',
+          },
+        ],
+      }
     }
-  }
 
-  if (!ruleForm.other.risk) {
-    ruleForm.other = {
-      risk: 'conservative',
-      questions: '',
-      retirement: '',
-      retirement_money: '',
-      work_with_advisor: true,
+    if (member.value.married) ruleForm.spouse.birthday = dayjs(ruleForm.spouse.birthday).format('MM/DD/YYYY')
+
+    if (!ruleForm.house.type) {
+      ruleForm.house = {
+        type: 'own',
+        market_value: null,
+        total_debt: null,
+        remaining_mortgage_amount: null,
+        monthly_payment: null,
+        total_monthly_expenses: null,
+      }
+    }
+    if (!ruleForm.other.risk) {
+      ruleForm.other = {
+        risk: 'conservative',
+        questions: '',
+        retirement: '',
+        retirement_money: '',
+        work_with_advisor: true,
+      }
     }
   }
 }
@@ -507,11 +494,12 @@ export default {
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
     const {
-      response: member,
-      error: errorMember,
-      fetching: fetchingMember,
-      getMember,
-    } = useFetchMember(route.params.id)
+      isLoading: isLoadingMember,
+      isError: isErrorMember,
+      isFetching: isFetchingMember,
+      data: member,
+      refetch: refetchMember,
+    } = useFetchExportDocumentsClient({ id: route.params.id }, { enabled: false })
 
     let memberId
 
@@ -578,7 +566,12 @@ export default {
       scrollTop()
       if (route.params.id) {
         memberId = route.params.id
-        await getMember()
+        refetchMember.value()
+      }
+    })
+
+    watchEffect(() => {
+      if (isFetchingMember.value === false) {
         setInitValue(ruleForm, member)
       }
     })
@@ -724,9 +717,6 @@ export default {
       data,
       error,
       refetch,
-      member,
-      errorMember,
-      fetchingMember,
       isUpdateMember,
       IconAdd,
       IconDelete,
@@ -741,6 +731,12 @@ export default {
       fetchingStatusSfAcc,
       goPartnerSettings,
       optionsCurrencyInput,
+
+      isLoadingMember,
+      isErrorMember,
+      isFetchingMember,
+      member,
+      refetchMember,
     }
   },
 }
