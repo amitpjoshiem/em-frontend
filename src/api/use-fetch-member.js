@@ -1,21 +1,19 @@
-import { useFetch } from '@/api/use-fetch'
+import { useQuery } from 'vue-query'
+import { reactive } from 'vue'
+import { fetchMemberNewStep } from './vueQuery/fetch-member-new-step'
 
-const useFetchMember = (id) => {
-  const { response, error, fetching, fetchData } = useFetch(`/members/${id}`, {
-    method: 'GET',
+export const useFetchMember = ({ id }, options = {}) => {
+  const queryKey = reactive([['memberNewStep', id]])
+
+  const query = useQuery(queryKey, {
+    queryFn: fetchMemberNewStep,
+    select: ({ data }) => {
+      return data
+    },
+    ...options,
   })
 
-  const getMember = async (body) => {
-    await fetchData({ body })
-    if (error.value !== null) return
-  }
-
   return {
-    response,
-    error,
-    fetching,
-    getMember,
+    ...query,
   }
 }
-
-export { useFetchMember }

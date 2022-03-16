@@ -12,8 +12,7 @@
 <script>
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { computed, onMounted } from 'vue'
-import { useFetchMember } from '@/api/use-fetch-member'
+import { computed } from 'vue'
 
 export default {
   name: 'NewProspectHeader',
@@ -22,23 +21,12 @@ export default {
     const store = useStore()
     const route = useRoute()
 
-    const {
-      response: member,
-      error: errorMember,
-      fetching: fetchingMember,
-      getMember,
-    } = useFetchMember(route.params.id)
-
     const step = computed(() => store.state.newProspect.step)
 
     const next = () => {
       store.commit('newProspect/setStep', step.value + 1)
       goPage()
     }
-
-    onMounted(async () => {
-      if (route.params.id) await getMember()
-    })
 
     const back = () => {
       if (step.value === 1) {
@@ -56,10 +44,12 @@ export default {
         case 2:
           return 'Assets & Income'
         case 3:
-          return 'Assets Acounts'
+          return 'Expenses'
         case 4:
-          return 'Assets Consolidations'
+          return 'Assets Acounts'
         case 5:
+          return 'Assets Consolidations'
+        case 6:
           return 'Stress Test'
         default:
           return 'Header title'
@@ -82,20 +72,26 @@ export default {
           break
         case 3:
           router.push({
-            name: 'assets-account',
+            name: 'monthly-expense',
             params: { id: route.params.id ? route.params.id : '' },
           })
           break
         case 4:
           router.push({
-            name: 'add-assets-consolidations',
+            name: 'assets-account',
             params: { id: route.params.id ? route.params.id : '' },
           })
           break
         case 5:
-          router.push({ name: 'stresstest', params: { id: route.params.id ? route.params.id : '' } })
+          router.push({
+            name: 'add-assets-consolidations',
+            params: { id: route.params.id ? route.params.id : '' },
+          })
           break
         case 6:
+          router.push({ name: 'stresstest', params: { id: route.params.id ? route.params.id : '' } })
+          break
+        case 7:
           router.push({ name: 'blueprint-report', params: { id: route.params.id ? route.params.id : '' } })
           break
         default:
@@ -108,10 +104,6 @@ export default {
       back,
       headerTitle,
       goPage,
-      member,
-      errorMember,
-      fetchingMember,
-      getMember,
     }
   },
 }
