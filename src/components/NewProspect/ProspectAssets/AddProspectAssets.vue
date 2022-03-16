@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!fetchingMember && !isMemberAssetsLoading">
+  <div v-if="!isFetchingMember && !isMemberAssetsLoading">
     <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules">
       <!-- Current income -->
       <div class="border-b px-16 pb-7">
@@ -445,8 +445,9 @@ import { setValueByPath } from '@/utils/setValueByPath'
 import { getByPath } from '../../../utils/getByPath'
 import WidgetTotal from '@/components/NewProspect/ProspectAssets/WidgetTotal.vue'
 
-function setInitValue(ruleForm, memberAssets) {
+function setInitValue({ ruleForm, memberAssets, id }) {
   if (memberAssets?.data) {
+    ruleForm.member_id = id
     Object.assign(ruleForm, JSON.parse(JSON.stringify(memberAssets.data)))
   }
 }
@@ -478,20 +479,12 @@ export default {
     const step = computed(() => store.state.newProspect.step)
     const isUpdateMember = computed(() => !!route.params.id)
 
-    let memberId
+    const memberId = route.params.id
 
     const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
-
     const { mutateAsync: create, isLoading, isError, isFetching, data, error } = useMutation(createAssetsIncome)
-
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
-
-    const {
-      response: member,
-      error: errorMember,
-      fetching: fetchingMember,
-      getMember,
-    } = useFetchMember(route.params.id)
+    const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id }, { enabled: false })
 
     const ruleForm = reactive({
       income: {
@@ -617,16 +610,11 @@ export default {
     onMounted(async () => {
       store.commit('newProspect/setStep', 2)
       scrollTop()
-      if (route.params.id) {
-        memberId = route.params.id
-        ruleForm.member_id = memberId
-        await getMember()
-      }
     })
 
     watchEffect(() => {
       if (isMemberAssetsLoading.value === false) {
-        setInitValue(ruleForm, memberAssets.value)
+        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
       }
     })
 
@@ -731,13 +719,13 @@ export default {
       isMemberAssetsLoading,
       memberId,
       isMarried,
-      member,
-      errorMember,
-      fetchingMember,
       updateOrCreateMemberAssets,
       form,
       validateMemberAssetFieldAndUpdate,
       isLoadingUpdate,
+
+      isFetchingMember,
+      member,
     }
   },
 }

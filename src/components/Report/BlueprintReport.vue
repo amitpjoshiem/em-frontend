@@ -1,21 +1,20 @@
 <template>
   <SwdSubHeader title="Blueprint report" class="p-5" with-share-btn region="blue-report" />
-  <div class="p-5">
+  <div v-if="!isLoadingMember" class="p-5">
     <div class="flex" data-pdf-region="blue-report">
       <div class="w-7/12">
-        <div v-if="!fetchingMember" class="flex">
-          <WidgetReport :member="member.data" />
-          <IncomeGoal :member="member.data" />
+        <div class="flex">
+          <WidgetReport :member="member" />
+          <IncomeGoal :member="member" />
         </div>
-        <el-skeleton v-else :rows="3" animated class="p-5" />
         <NetWorth />
         <Concerns />
       </div>
       <MonthlyIncome />
     </div>
-    <NotesMember :notes="member.data?.notes" />
+    <NotesMember :notes="member.notes" />
   </div>
-  <el-skeleton v-show="fetchingMember" :rows="10" animated class="p-5" />
+  <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
 
 <script>
@@ -27,7 +26,7 @@ import MonthlyIncome from '@/components/Report/MonthlyIncome.vue'
 import NotesMember from '@/components/Report/NotesMember.vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useFetchMember } from '@/api/use-fetch-member'
 
 export default {
@@ -46,6 +45,8 @@ export default {
     const route = useRoute()
     const store = useStore()
 
+    const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: route.params.id })
+
     const step = computed(() => store.state.newProspect.step)
 
     const back = () => {
@@ -53,22 +54,10 @@ export default {
       router.push({ name: 'stresstest' })
     }
 
-    onMounted(async () => {
-      await getMember()
-    })
-
-    const {
-      response: member,
-      error: errorMember,
-      fetching: fetchingMember,
-      getMember,
-    } = useFetchMember(route.params.id)
-
     return {
       back,
       member,
-      errorMember,
-      fetchingMember,
+      isLoadingMember,
     }
   },
 }
