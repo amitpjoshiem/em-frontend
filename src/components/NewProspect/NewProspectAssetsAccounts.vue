@@ -7,9 +7,12 @@
           text-btn="Link an account"
           witch-icon
           icon-type="lock"
+          :disabled="fetchingSendLink"
           default-link-btn
+          :is-show-spinner="fetchingSendLink"
           @click="sendLinkYodlee"
-        />
+        >
+        </Button>
         <div class="mt-3 text-sm">
           Account connection is optional. You can skip this step and go to Assets Consolidations
         </div>
@@ -20,7 +23,6 @@
       <div class="pr-3">
         <Button default-gray-btn text-btn="Back" @click="backStep" />
       </div>
-
       <div>
         <Button default-blue-btn text-btn="Go to the Assets Consolidations" @click="saveStep" />
       </div>
