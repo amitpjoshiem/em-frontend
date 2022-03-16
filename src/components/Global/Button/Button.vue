@@ -20,6 +20,7 @@
     <InlineSvg v-if="witchIcon && iconType === 'lock'" :src="IconLock" class="mr-2" />
     <InlineSvg v-if="witchIcon && iconType === 'upload'" :src="IconUpload" class="mr-2" />
     <span :class="{ 'px-3': wideBtn }">{{ textBtn }}</span>
+    <SwdSpinner v-if="isShowSpinner" class="inline-block" />
   </button>
 </template>
 
@@ -111,6 +112,10 @@ export default {
       default: false,
     },
     wideBtn: {
+      type: Boolean,
+      default: false,
+    },
+    isShowSpinner: {
       type: Boolean,
       default: false,
     },

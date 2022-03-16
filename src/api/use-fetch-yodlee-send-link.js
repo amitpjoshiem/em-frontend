@@ -12,7 +12,7 @@ const useFetchYodleeSendLink = (id) => {
       useAlert({
         title: 'Error',
         type: 'error',
-        message: 'Link wasn’t sent',
+        message: error.value,
       })
       return
     }

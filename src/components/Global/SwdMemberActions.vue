@@ -21,7 +21,8 @@ const allAvailibleOptions = {
   3: { title: 'Client Report', command: 'client-report' },
   4: { title: 'Onboarding', command: 'onboarding' },
   5: { title: 'Assets Accounts', command: 'assets-accounts' },
-  6: { title: 'Contacts', command: 'opportunity-contact' },
+  6: { title: 'Assets Consolidations', command: 'assets-consolidations' },
+  7: { title: 'Contacts', command: 'opportunity-contact' },
 }
 
 const optionsPerStepAndType = {
@@ -68,7 +69,7 @@ function routerForStep(step) {
     case step === 'monthly_expense':
       return 'assets-account'
     case step === 'assets_accounts':
-      return 'assetsconsolidations'
+      return 'add-assets-consolidations'
     case step === 'assets_consolidation':
       return 'stresstest'
     default:
@@ -119,6 +120,7 @@ export default {
           params: { id: props.user.id, step: props.user.step },
         }),
       'assets-accounts': () => router.push({ name: 'asset-accounts', params: { id: props.user.id } }),
+      'assets-consolidations': () => router.push({ name: 'assets-consolidations', params: { id: props.user.id } }),
       'opportunity-contact': () => router.push({ name: 'opportunity-contact', params: { id: props.user.id } }),
     }
 

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <TableAssetsConsolidations />
+    <div class="border box-border border-color-grey rounded-lg p-5">
+      <TableAssetsConsolidations :is-show-title="true" />
+    </div>
     <AccountStatements v-if="!isFetchingYodleeStatus && !yodleeStatus.yodlee_created" class="mt-5" />
     <div class="flex justify-end my-6">
       <div class="pr-3">
@@ -22,11 +24,11 @@ import { fetchAssetsConsolidationsConfirm } from '@/api/vueQuery/fetch-assets-co
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 
-import TableAssetsConsolidations from '@/components/NewProspect/AssetsConsolidations/TableAssetsConsolidations.vue'
-import AccountStatements from '@/components/NewProspect/AssetsConsolidations/AccountStatements.vue'
+import TableAssetsConsolidations from '@/components/AssetsConsolidations/TableAssetsConsolidations.vue'
+import AccountStatements from '@/components/AccountStatements/AccountStatements.vue'
 
 export default {
-  name: 'AssetsConsolidations',
+  name: 'AddAssetsConsolidations',
   components: {
     TableAssetsConsolidations,
     AccountStatements,
