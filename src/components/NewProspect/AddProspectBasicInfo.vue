@@ -402,8 +402,7 @@ import dayjs from 'dayjs'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
-
-import { useFetchExportDocumentsClient } from '@/api/use-fetch-member-new-step.js'
+import { useFetchMember } from '@/api/use-fetch-member.js'
 
 function setInitValue(ruleForm, member) {
   if (member?.value?.id) {
@@ -494,12 +493,10 @@ export default {
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
     const {
-      isLoading: isLoadingMember,
-      isError: isErrorMember,
       isFetching: isFetchingMember,
       data: member,
       refetch: refetchMember,
-    } = useFetchExportDocumentsClient({ id: route.params.id }, { enabled: false })
+    } = useFetchMember({ id: route.params.id }, { enabled: false })
 
     let memberId
 
@@ -731,9 +728,6 @@ export default {
       fetchingStatusSfAcc,
       goPartnerSettings,
       optionsCurrencyInput,
-
-      isLoadingMember,
-      isErrorMember,
       isFetchingMember,
       member,
       refetchMember,
