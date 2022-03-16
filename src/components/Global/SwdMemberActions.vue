@@ -25,15 +25,15 @@ const allAvailibleOptions = {
 }
 
 const optionsPerStepAndType = {
-  client: [1, 3, 5, 6],
-  'prospect@step-0': [4, 5, 6],
-  'prospect@step-1': [1, 4, 5, 6],
-  'prospect@step-2': [1, 4, 5, 6],
-  'prospect@step-3': [1, 4, 5, 6],
-  'prospect@step-4': [1, 4, 5, 6],
-  'prospect@step-5': [1, 4, 5, 6],
-  'prospect@step-6': [1, 4, 5, 6],
-  onboarding: [4, 6],
+  client: [1, 3, 5, 6, 7],
+  'prospect@step-0': [4, 5, 6, 7],
+  'prospect@step-1': [1, 4, 5, 6, 7],
+  'prospect@step-2': [1, 4, 5, 6, 7],
+  'prospect@step-3': [1, 4, 5, 6, 7],
+  'prospect@step-4': [1, 4, 5, 6, 7],
+  'prospect@step-5': [1, 4, 5, 6, 7],
+  'prospect@step-6': [1, 4, 5, 6, 7],
+  onboarding: [4, 7],
 }
 
 function getClientStepHash(user) {
