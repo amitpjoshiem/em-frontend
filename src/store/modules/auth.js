@@ -2,6 +2,7 @@ const state = () => ({
   isAuth: false,
   sendFormForgotPass: false,
   otpType: '',
+  role: '',
 })
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
 
   setOtpType(state, value) {
     state.otpType = value
+  },
+  setRole(state, value) {
+    state.role = value
   },
 }
 

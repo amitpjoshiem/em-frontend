@@ -7,9 +7,13 @@ import notifications from './modules/notifications'
 
 import createPersistedState from 'vuex-persistedstate'
 
-const dataState = createPersistedState({
+const dataStateAuth = createPersistedState({
   paths: ['auth.isAuth'],
   key: 'auth',
+})
+const dataStateRole = createPersistedState({
+  paths: ['auth.role'],
+  key: 'role',
 })
 
 export default createStore({
@@ -20,5 +24,5 @@ export default createStore({
     globalComponents,
     notifications,
   },
-  plugins: [dataState],
+  plugins: [dataStateAuth, dataStateRole],
 })

@@ -65,6 +65,8 @@ export default defineComponent({
     }
 
     watch(hideModal, (newValue, oldValue) => {
+      console.log('=====', store.state.globalComponents.dialog.showDialog[props.destinationDialog])
+      console.log('props.destinationDialog - ', props.destinationDialog)
       if (newValue !== oldValue && newValue === false) {
         dialogVisible.value = false
       }

@@ -27,7 +27,7 @@
               placeholder="Please input password"
             />
           </el-form-item>
-          <el-form-item>
+          <el-form-item class="my-6">
             <Button
               :default-primary="!fetchingCreate && !fetchingReset"
               full

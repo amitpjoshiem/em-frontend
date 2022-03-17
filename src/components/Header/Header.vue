@@ -2,19 +2,39 @@
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
     <SwdRemoteSearch />
     <div class="flex items-center justify-end">
+      <el-dropdown class="mr-4 cursor-pointer" trigger="click" @command="handleCommand">
+        <el-button type="info" plain>
+          Test event
+          <el-icon class="el-icon--right">
+            <arrow-down />
+          </el-icon>
+        </el-button>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="sendTestNotifications">test send notifications</el-dropdown-item>
+            <el-dropdown-item command="sendTestSentry">test sentry</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
       <div
-        v-if="showContent.testNotificationsBtn"
-        class="border border-input-border p-1 mr-2 cursor-pointer rounded-md"
-        @click="getNotificationTest()"
+        class="
+          h-9
+          bg-color-grey
+          rounded-md
+          border-input-border border
+          flex
+          items-center
+          justify-center
+          text-primary text-xss
+          cursor-pointer
+          mr-5
+        "
+        @click="newLead"
       >
-        <span class="text-xss">test send notifications</span>
-      </div>
-      <div
-        v-if="showContent.testSentryBtn"
-        class="border border-input-border p-1 mr-2 cursor-pointer rounded-md"
-        @click="throwError()"
-      >
-        <span class="text-xss">test sentry</span>
+        <span class="px-2">
+          <InlineSvg :src="IconPlus" />
+        </span>
+        <div class="pr-2">Add new lead</div>
       </div>
       <div
         class="
@@ -49,6 +69,7 @@
       </div>
     </div>
   </div>
+  <NewLeadModal />
 </template>
 
 <script>
@@ -61,6 +82,9 @@ import { useUserProfile } from '@/api/use-user-profile.js'
 import { useNotificationTest } from '@/api/use-notification-test'
 import HeaderNotificationsBlock from '@/components/Header/HeaderNotificationsBlock.vue'
 import { useShowContentEnv } from '@/utils/use-show-content-env'
+import { ArrowDown } from '@element-plus/icons-vue'
+import { useStore } from 'vuex'
+import NewLeadModal from '@/components/Leads/NewLeadModal.vue'
 
 export default {
   name: 'Header',
@@ -68,10 +92,13 @@ export default {
     UserAction,
     SwdRemoteSearch,
     HeaderNotificationsBlock,
+    ArrowDown,
+    NewLeadModal,
   },
   setup() {
     const route = useRoute()
     const router = useRouter()
+    const store = useStore()
 
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
 
@@ -103,8 +130,21 @@ export default {
       }
     }
 
+    const newLead = () => {
+      console.log('newLead')
+      store.commit('globalComponents/setShowModal', {
+        destination: 'newLead',
+        value: true,
+      })
+    }
+
     const throwError = () => {
       throw new Error('Sentry Error')
+    }
+
+    const handleCommand = (command) => {
+      if (command === 'sendTestNotifications') getNotificationTest()
+      if (command === 'sendTestSentry') throwError()
     }
 
     return {
@@ -114,12 +154,12 @@ export default {
       isErrorUserProfile,
       user,
       isFetched,
-      getNotificationTest,
       response,
       error,
       fetching,
       showContent,
-      throwError,
+      newLead,
+      handleCommand,
     }
   },
 }
