@@ -27,8 +27,8 @@
           </el-form-item>
         </div>
         <div class="flex mb-5">
-          <el-form-item label="Opportunity name" prop="opportunity_name" class="w-6/12 pr-5">
-            <el-input v-model="ruleForm.opportunity_name" placeholder="Enter opportunity name" />
+          <el-form-item label="Opportunity name" prop="name" class="w-6/12 pr-5">
+            <el-input v-model="ruleForm.name" placeholder="Enter opportunity name" />
           </el-form-item>
           <el-form-item label="Account name" prop="account_name" class="w-6/12 pr-5">
             <el-input v-model="ruleForm.account_name" placeholder="Enter account name" :disabled="true" />
