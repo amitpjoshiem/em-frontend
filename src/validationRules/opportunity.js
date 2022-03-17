@@ -6,14 +6,14 @@ const rules = {
   //     trigger: 'change',
   //   },
   // ],
-  // close_date: [
-  //   {
-  //     type: 'date',
-  //     required: true,
-  //     message: 'Please pick a date',
-  //     trigger: 'change',
-  //   },
-  // ],
+  close_date: [
+    {
+      type: 'date',
+      required: true,
+      message: 'Please pick a date',
+      trigger: 'change',
+    },
+  ],
   opportunity_name: [
     {
       required: true,
