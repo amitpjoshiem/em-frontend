@@ -4,6 +4,7 @@
       <span class="pr-2">({{ isRole }})</span>
       <span class=""> Welcome, {{ userProfile.firstName }} {{ userProfile.lastName }} </span>
       <span v-if="userProfile.position" class="pl-2">({{ userProfile.position }})</span>
+      <!-- <span v-if="$can('create', 'Post')">test</span> -->
     </div>
     <el-skeleton v-else :rows="0" animated />
   </div>
@@ -13,10 +14,13 @@ import { useUserProfile } from '@/api/use-user-profile.js'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 
+// import { useAbility } from '@casl/vue'
+
 export default {
   name: 'PipeLine',
   setup() {
     const store = useStore()
+    // const { can } = useAbility()
 
     const isRole = computed(() => {
       return store.state.auth.role
@@ -29,6 +33,7 @@ export default {
       isError,
       userProfile,
       isRole,
+      // can,
     }
   },
 }

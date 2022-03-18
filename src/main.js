@@ -5,6 +5,9 @@ import router from './router'
 import store from './store'
 import dayjs from 'dayjs'
 
+import { abilitiesPlugin } from '@casl/vue'
+import ability from './services/ability'
+
 import * as Sentry from '@sentry/vue'
 import { Integrations } from '@sentry/tracing'
 
@@ -45,6 +48,13 @@ const app = createApp(App)
 app.use(router)
 app.use(store)
 app.use(ElementPlus)
+app.use(
+  (abilitiesPlugin,
+  ability,
+  {
+    useGlobalProperties: true,
+  })
+)
 
 // Global Component
 const components = [
