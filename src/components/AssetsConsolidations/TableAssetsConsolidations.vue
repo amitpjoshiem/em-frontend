@@ -10,6 +10,27 @@
 
     <div v-if="!isLoading">
       <div v-for="(table, indexTable) in state" :key="table.id" class="mb-14">
+        <el-form ref="form" :model="ruleForm" status-icon label-position="top" class="mb-3">
+          <div class="flex justify-between">
+            <el-form-item label="Account Name" prop="table_name" class="w-3/12">
+              <el-input
+                v-model="state[indexTable].name"
+                placeholder="Enter Account Name"
+                size="small"
+                @change="changeInput({ id: table.table, value: state[indexTable].name, field: 'name' })"
+              />
+            </el-form-item>
+            <el-form-item label="WRAP FEE" prop="wrap_fee" class="w-3/24" type="number" :disabled="isDisabledForm">
+              <el-input
+                v-model="state[indexTable].wrap_fee"
+                placeholder="Enter WRAP FEE"
+                type="number"
+                size="small"
+                @change="changeInput({ id: table.table, value: state[indexTable].wrap_fee, field: 'wrap_fee' })"
+              />
+            </el-form-item>
+          </div>
+        </el-form>
         <HeaderTable :is-add-line="true" />
         <div v-for="(item, index) in table.assets_consolidations" :key="index" class="flex h-10">
           <template v-if="state[indexTable].assets_consolidations[index].id !== 'total'">
@@ -167,6 +188,7 @@
       </div>
     </div>
     <el-skeleton v-else :rows="10" animated class="p-5" />
+    <ModalNewTable />
   </div>
 </template>
 
@@ -174,8 +196,8 @@
 import { reactive, watchEffect, ref, computed } from 'vue'
 import { useAsetsConsolidationsMember } from '@/api/use-assets-consolidations-member.js'
 import { updateMemberAssetsConsolidation } from '@/api/vueQuery/update-member-assets-consolidation'
+import { putMemberAssetsConsolidation } from '@/api/vueQuery/put-member-assets-consolidation'
 import { createAssetsConsolidationRows } from '@/api/vueQuery/create-assets-consolidations-rows'
-import { createAssetsConsolidationTables } from '@/api/vueQuery/create-assets-consolidations-tables'
 import { deleteMemberAssetsConsolidation } from '@/api/vueQuery/delete-member-assets-consolidation'
 import { useAlert } from '@/utils/use-alert'
 import { currencyFormat } from '@/utils/currencyFormat'
@@ -185,6 +207,8 @@ import IconDelete from '@/assets/svg/icon-delete.svg'
 import HeaderTable from '@/components/AssetsConsolidations/HeaderTable.vue'
 import TotalTable from '@/components/AssetsConsolidations/TotalTable.vue'
 import ExportExcel from '@/components/AssetsConsolidations/Export/ExportExcel.vue'
+import { useStore } from 'vuex'
+import ModalNewTable from './ModalNewTable.vue'
 
 export default {
   name: 'TableAssetsConsolidations',
@@ -192,6 +216,7 @@ export default {
     HeaderTable,
     TotalTable,
     ExportExcel,
+    ModalNewTable,
   },
   props: {
     isShowTitle: {
@@ -207,15 +232,22 @@ export default {
     const memberId = route.params.id
     const isLoadingUpdate = ref(false)
     const focusElem = ref(null)
+    const form = ref(null)
+    const store = useStore()
 
     const { isLoading, isFetching, isError, data: assetsData, total } = useAsetsConsolidationsMember(memberId)
     const { mutateAsync: updateAssetsConsolidation } = useMutation(updateMemberAssetsConsolidation)
+    const { mutateAsync: putAssetsConsolidation } = useMutation(putMemberAssetsConsolidation)
     const { mutateAsync: createAssetsConsolidationRow } = useMutation(createAssetsConsolidationRows)
-    const { mutateAsync: createAssetsConsolidationTable } = useMutation(createAssetsConsolidationTables)
     const { mutateAsync: deleteAssetsConsolidation } = useMutation(deleteMemberAssetsConsolidation)
 
     const state = reactive([])
     const errors = reactive({})
+
+    const ruleForm = reactive({
+      name: '',
+      wrap_fee: '',
+    })
 
     watchEffect(() => {
       if (isLoading.value === false) {
@@ -279,11 +311,24 @@ export default {
       router.push({ name: 'document-export', params: { id: memberId } })
     }
 
-    const addTable = async () => {
-      const res = await createAssetsConsolidationTable(memberId)
+    const addTable = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'modalNewTable',
+        value: true,
+      })
+    }
+
+    const changeInput = async ({ id, value, field }) => {
+      isLoadingUpdate.value = true
+      const data = {
+        id,
+        [field]: value,
+      }
+      const res = await putAssetsConsolidation({ form: data, id })
       if (!('error' in res)) {
         queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
       }
+      isLoadingUpdate.value = false
     }
 
     return {
@@ -307,6 +352,9 @@ export default {
       blurInput,
       moreDocuments,
       addTable,
+      form,
+      ruleForm,
+      changeInput,
     }
   },
 }
