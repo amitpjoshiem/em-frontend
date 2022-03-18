@@ -11,7 +11,7 @@
 import { useUserProfile } from '@/api/use-user-profile.js'
 
 export default {
-  name: 'PipeLine',
+  name: 'HeaderDashboard',
   setup() {
     const { isLoading, isError, data: userProfile } = useUserProfile()
 
