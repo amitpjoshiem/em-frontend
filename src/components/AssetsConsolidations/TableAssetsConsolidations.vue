@@ -319,6 +319,9 @@ export default {
     }
 
     const changeInput = async ({ id, value, field }) => {
+      if (field === 'name' && !value.length) {
+        return
+      }
       isLoadingUpdate.value = true
       const data = {
         id,
