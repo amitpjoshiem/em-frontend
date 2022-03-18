@@ -23,7 +23,7 @@
             <el-form-item label="WRAP FEE" prop="wrap_fee" class="w-3/24" type="number" :disabled="isDisabledForm">
               <el-input
                 v-model="state[indexTable].wrap_fee"
-                placeholder="Enter WRAP FEE"
+                placeholder="WRAP FEE"
                 type="number"
                 size="small"
                 @change="changeInput({ id: table.table, value: state[indexTable].wrap_fee, field: 'wrap_fee' })"
