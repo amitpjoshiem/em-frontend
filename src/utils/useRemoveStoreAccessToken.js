@@ -10,6 +10,7 @@ export function useRemoveStoreAccessToken() {
     removeFromStorage(localStorage, 'access_token')
     removeFromStorage(localStorage, 'otp-type')
     removeFromStorage(localStorage, 'refresh_token_expired')
+    removeFromStorage(localStorage, 'role')
     store.commit('auth/setAuthUser', false)
     router.push({ name: 'home' })
   }

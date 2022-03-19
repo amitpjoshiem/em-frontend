@@ -51,6 +51,7 @@ export default {
   name: 'OtpForm',
   setup() {
     const store = useStore()
+
     const { response, error, fetching, otpAuth } = useOtp()
     const { isLoading, isError, data, refetch: refetchOtpCode } = useResendOtp({ enabled: false })
 
@@ -72,9 +73,9 @@ export default {
     })
 
     const submit = async () => {
-      form.value.validate((valid) => {
+      form.value.validate(async (valid) => {
         if (valid) {
-          otpAuth(ruleForm)
+          await otpAuth(ruleForm)
         } else {
           return false
         }
