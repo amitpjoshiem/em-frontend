@@ -94,7 +94,7 @@
         <!-- GENERAL -->
 
         <!-- Spouse -->
-        <div v-if="ruleForm.married">
+        <div v-if="ruleForm.married" class="border-b pb-8">
           <div class="text-main text-xl font-semibold my-5">Spouse</div>
           <el-form-item label="Retired?" class="mb-4">
             <el-radio-group v-model="ruleForm.spouse.retired">
@@ -150,21 +150,21 @@
         <!-- Spouse -->
 
         <!-- Housing Information -->
-        <div class="px-16 my-5 border-b">
-          <span class="text-main text-xl font-semibold">Housing Information</span>
-          <div class="flex pt-5">
-            <el-form-item label="Type" class="w-5/12">
-              <el-radio-group v-model="ruleForm.house.type">
-                <el-radio label="own">Own</el-radio>
-                <el-radio label="rent">Rent</el-radio>
-                <el-radio label="family">Live with family</el-radio>
-              </el-radio-group>
-            </el-form-item>
+        <div class="pb-8 border-b">
+          <div class="text-main text-xl font-semibold my-5">Housing Information</div>
+          <el-form-item label="Type" class="mb-4">
+            <el-radio-group v-model="ruleForm.house.type">
+              <el-radio label="own">Own</el-radio>
+              <el-radio label="rent">Rent</el-radio>
+              <el-radio label="family">Live with family</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <div class="sm:flex sm:flex-wrap">
             <el-form-item
               v-if="ruleForm.house.type !== 'rent'"
               label="Market value"
               prop="house.market_value"
-              class="w-5/12 pr-5"
+              class="mb-4 sm:w-4/12"
             >
               <SwdCurrencyInput
                 v-model="ruleForm.house.market_value"
@@ -172,13 +172,11 @@
                 placeholder="$12345"
               />
             </el-form-item>
-          </div>
-          <div class="flex mt-5">
             <el-form-item
               v-if="ruleForm.house.type !== 'rent'"
               label="Total debt"
               prop="house.total_debt"
-              class="w-5/12 pr-5"
+              class="mb-4 sm:w-4/12 sm:px-2"
             >
               <SwdCurrencyInput
                 v-model="ruleForm.house.total_debt"
@@ -188,23 +186,17 @@
             </el-form-item>
             <el-form-item
               v-if="ruleForm.house.type !== 'rent'"
-              label="Remaining mortgage amount"
+              label="Remaining mortgage"
               prop="house.remaining_mortgage_amount"
-              class="w-5/12 pr-5"
+              class="mb-4 sm:w-4/12"
             >
-              <SwdCurrencyInput
-                v-model="ruleForm.house.remaining_mortgage_amount"
-                :options="optionsCurrencyInput"
-                placeholder="$12345"
-              />
+              <SwdCurrencyInput v-model="ruleForm.house.remaining_mortgage_amount" :options="optionsCurrencyInput" />
             </el-form-item>
-          </div>
-          <div class="flex mb-5">
             <el-form-item
               v-if="ruleForm.house.type === 'rent'"
               label="Monthly payment"
               prop="house.monthly_payment"
-              class="w-5/12 pr-5"
+              class="mb-4 sm:w-4/12"
             >
               <SwdCurrencyInput
                 v-model="ruleForm.house.monthly_payment"
@@ -216,7 +208,7 @@
               v-if="ruleForm.house.type === 'rent'"
               label="Total monthly expences"
               prop="house.total_monthly_expenses"
-              class="w-5/12 pr-5"
+              class="mb-4 sm:w-4/12"
             >
               <SwdCurrencyInput
                 v-model="ruleForm.house.total_monthly_expenses"
