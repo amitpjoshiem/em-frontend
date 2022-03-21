@@ -408,7 +408,7 @@ function setInitValue(ruleForm, member) {
   if (member?.value?.id) {
     Object.assign(ruleForm, JSON.parse(JSON.stringify(member.value)))
 
-    if (ruleForm.birthday) ruleForm.birthday = dayjs(ruleForm.birthday).format('MM/DD/YYYY')
+    if (member.value.birthday) ruleForm.birthday = dayjs(member.value.birthday).format('MM/DD/YYYY')
     if (ruleForm.retirement_date !== null)
       ruleForm.retirement_date = dayjs(ruleForm.retirement_date).format('MM/DD/YYYY')
     if (ruleForm.employment_history && !ruleForm.employment_history.length) {
@@ -438,7 +438,7 @@ function setInitValue(ruleForm, member) {
       }
     }
 
-    if (member.value.married) ruleForm.spouse.birthday = dayjs(ruleForm.spouse.birthday).format('MM/DD/YYYY')
+    if (member.value.married) ruleForm.spouse.birthday = dayjs(member.value.spouse.birthday).format('MM/DD/YYYY')
 
     if (!ruleForm.house.type) {
       ruleForm.house = {
