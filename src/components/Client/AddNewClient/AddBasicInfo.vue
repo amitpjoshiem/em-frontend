@@ -80,7 +80,12 @@
                 <el-input v-model="ruleForm.state" placeholder="Enter prospect’s state" />
               </el-form-item>
 
-              <el-form-item label="ZIP" prop="zip" class="sm:w-6/12 sm:pr-2 lg:w-3/12 lg:px-2 mb-4">
+              <el-form-item
+                label="ZIP"
+                prop="zip"
+                class="sm:w-6/12 lg:w-3/12 mb-4"
+                :class="{ 'sm:pr-2 lg:px-2': ruleForm.retired }"
+              >
                 <el-input v-model="ruleForm.zip" placeholder="000000" inputmode="numeric" />
               </el-form-item>
             </div>
@@ -89,21 +94,19 @@
         <!-- GENERAL -->
 
         <!-- Spouse -->
-        <div v-if="ruleForm.married" class="px-16 border-b py-5">
-          <span class="text-main text-xl font-semibold">Spouse</span>
-          <div class="my-5">
-            <el-form-item label="Retired?">
-              <el-radio-group v-model="ruleForm.spouse.retired">
-                <el-radio :label="true">Yes</el-radio>
-                <el-radio :label="false">No</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </div>
-          <div class="flex">
-            <el-form-item label="Name" prop="spouse.name" class="w-9/12 pr-5">
+        <div v-if="ruleForm.married">
+          <div class="text-main text-xl font-semibold my-5">Spouse</div>
+          <el-form-item label="Retired?" class="mb-4">
+            <el-radio-group v-model="ruleForm.spouse.retired">
+              <el-radio :label="true">Yes</el-radio>
+              <el-radio :label="false">No</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <div class="sm:flex sm:flex-wrap">
+            <el-form-item label="Name" prop="spouse.name" class="sm:w-8/12 sm:pr-2 lg:w-6/12 lg:pr-2 mb-4">
               <el-input v-model="ruleForm.spouse.name" placeholder="Enter spouse’s name" />
             </el-form-item>
-            <el-form-item prop="spouse.birthday" label="Date of birth" class="w-3/12">
+            <el-form-item prop="spouse.birthday" label="Date of birth" class="sm:w-4/12 sm:pl-2 lg:w-3/12 lg:px-2 mb-4">
               <el-date-picker
                 v-model="ruleForm.spouse.birthday"
                 type="date"
@@ -112,25 +115,14 @@
                 value-format="MM/DD/YYYY"
               />
             </el-form-item>
-          </div>
-          <div class="flex my-5">
-            <el-form-item label="E-mail" prop="spouse.email" class="w-5/12">
+            <el-form-item label="E-mail" prop="spouse.email" class="sm:w-6/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
               <el-input v-model.email="ruleForm.spouse.email" placeholder="Enter spouse’s e-mail" />
-            </el-form-item>
-
-            <el-form-item label="Phone" prop="spouse.phone" class="w-5/12 px-5">
-              <el-input
-                v-model="ruleForm.spouse.phone"
-                v-maska="'(###) ###-####'"
-                placeholder="Enter spouse’s phone number"
-                inputmode="numeric"
-              />
             </el-form-item>
             <el-form-item
               v-if="ruleForm.spouse.retired"
               prop="spouse.retirement_date"
               label="Retirement date"
-              class="w-2/12"
+              class="sm:w-6/12 sm:pl-2 lg:w-3/12 mb-4 lg:pl-0 lg:pr-2"
             >
               <el-date-picker
                 v-model="ruleForm.spouse.retirement_date"
@@ -138,6 +130,19 @@
                 :placeholder="getPlaceholder"
                 format="MM/DD/YYYY"
                 value-format="MM/DD/YYYY"
+              />
+            </el-form-item>
+            <el-form-item
+              label="Phone"
+              prop="spouse.phone"
+              class="sm:w-6/12 lg:w-3/12 mb-4"
+              :class="{ 'sm:pr-2 lg:px-2': ruleForm.retired }"
+            >
+              <el-input
+                v-model="ruleForm.spouse.phone"
+                v-maska="'(###) ###-####'"
+                placeholder="Enter spouse’s phone number"
+                inputmode="numeric"
               />
             </el-form-item>
           </div>
@@ -519,7 +524,7 @@ export default {
         name: '',
         email: '',
         birthday: '',
-        retired: false,
+        retired: true,
         retirement_date: '',
         phone: '',
         employment_history: [
