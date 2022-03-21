@@ -30,7 +30,7 @@
         Expenses
       </router-link>
     </div>
-    <div class="flex items-center pb-2">
+    <div class="flex items-center pb-4">
       <!-- STEP 1 -->
       <div class="cycle-active" />
       <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step >= 1 }" />
