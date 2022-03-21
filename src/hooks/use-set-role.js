@@ -16,7 +16,9 @@ export function useSetRole() {
       store.commit('auth/setRole', init.value.roles[0])
       setUpdateAbility()
       store.commit('auth/setAuthUser', true)
-      router.push({ name: 'dashboard' })
+      // router.push({ name: '/' })
+      // router.push({ name: 'dashboard' })
+      router.push({ path: '/' })
     }
   }
   return { setRole }

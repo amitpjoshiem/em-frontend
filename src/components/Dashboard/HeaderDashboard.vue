@@ -4,8 +4,8 @@
       <span class="pr-2">({{ isRole }})</span>
       <span class=""> Welcome, {{ userProfile.firstName }} {{ userProfile.lastName }} </span>
       <span v-if="userProfile.position" class="pl-2">({{ userProfile.position }})</span>
-      <span v-if="$can('advisor', 'all')">test - advisor</span>
-      <span v-if="$can('client', 'all')">test - client</span>
+      <!-- <span v-if="$can('advisor', 'all')">test - advisor</span>
+      <span v-if="$can('client', 'all')">test - client</span> -->
     </div>
     <el-skeleton v-else :rows="0" animated />
   </div>

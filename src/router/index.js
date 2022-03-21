@@ -1,13 +1,67 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
-import Home from '@/layouts/Home.vue'
+import AdvisorHome from '@/layouts/AdvisorHome.vue'
+import ClientHome from '@/layouts/ClientHome.vue'
 import Login from '@/layouts/Login.vue'
+import ability from '../services/ability'
+import { computed } from 'vue'
+
+const role = computed(() => store.state.auth.role)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home,
+    path: '/client',
+    name: 'client-home',
+    component: ClientHome,
+    children: [
+      {
+        path: 'client-dashboard',
+        name: 'client-dashboard',
+        component: () => import(/* webpackChunkName: "ClientDashboard" */ '../views/ClientDashboard.vue'),
+      },
+      {
+        path: 'completed-financial',
+        name: 'completed-financial',
+        component: () =>
+          import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/CompletedFinancial.vue'),
+      },
+      {
+        path: 'investment-retirement',
+        name: 'investment-retirement',
+        component: () =>
+          import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/InvestmentAndRetirement.vue'),
+      },
+      {
+        path: 'life-insurance',
+        name: 'life-insurance',
+        component: () => import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/LifeInsurance.vue'),
+      },
+      {
+        path: 'social-security',
+        name: 'social-security',
+        component: () => import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/SocialSecurity.vue'),
+      },
+      {
+        path: 'list-stock',
+        name: 'list-stock',
+        component: () => import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/ListOfStock.vue'),
+      },
+      {
+        path: '',
+        redirect: () => {
+          return { name: 'client-dashboard' }
+        },
+      },
+    ],
+  },
+
+  {
+    path: '/advisor',
+    name: 'advisor-home',
+    component: AdvisorHome,
+    meta: {
+      resource: 'advisor',
+    },
     children: [
       {
         path: 'dashboard',
@@ -295,6 +349,7 @@ const routes = [
       },
     ],
   },
+
   {
     path: '/login',
     name: 'login',
@@ -330,6 +385,19 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: '/404',
+    name: '404',
+    component: () => import(/* webpackChunkName: "404" */ '../views/404.vue'),
+  },
+
+  {
+    path: '',
+    redirect: () => {
+      return { name: role.value === 'advisor' ? 'dashboard' : 'client-dashboard' }
+    },
+  },
 ]
 
 const router = createRouter({
@@ -341,9 +409,19 @@ router.beforeEach(async (to) => {
   if (to.meta.publicRoute) {
     return true
   }
+
+  const canNavigate = to.matched.some((route) => {
+    return ability.can(route.meta.resource)
+  })
+
   if (!store.state.auth.isAuth) {
     return '/login'
   }
+
+  if (!canNavigate && to.meta.resource) {
+    return '/404'
+  }
+
   return true
 })
 

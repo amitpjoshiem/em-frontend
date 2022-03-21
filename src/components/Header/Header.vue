@@ -1,66 +1,72 @@
 <template>
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
-    <SwdRemoteSearch />
-    <div class="flex items-center justify-end">
-      <el-dropdown class="mr-4 cursor-pointer" trigger="click" @command="handleCommand">
-        <el-button type="info" plain>
-          Test event
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
-        </el-button>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item command="sendTestNotifications">test send notifications</el-dropdown-item>
-            <el-dropdown-item command="sendTestSentry">test sentry</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-      <div
-        class="
-          h-9
-          bg-color-grey
-          rounded-md
-          border-input-border border
-          flex
-          items-center
-          justify-center
-          text-primary text-xss
-          cursor-pointer
-          mr-5
-        "
-        @click="newLead"
-      >
-        <span class="px-2">
-          <InlineSvg :src="IconPlus" />
-        </span>
-        <div class="pr-2">Add new lead</div>
-      </div>
-      <div
-        class="
-          h-9
-          bg-color-grey
-          rounded-md
-          border-input-border border
-          flex
-          items-center
-          justify-center
-          text-primary text-xss
-          cursor-pointer
-          mr-5
-        "
-        @click="newProspect"
-      >
-        <span class="px-2">
-          <InlineSvg :src="IconPlus" />
-        </span>
-        <div class="pr-2">Add new opportunity</div>
-      </div>
+    <div class="flex items-center justify-between w-21/24">
+      <template v-if="$can('advisor', 'all')">
+        <SwdRemoteSearch />
+        <div class="flex items-center justify-end">
+          <el-dropdown class="mr-4 cursor-pointer" trigger="click" @command="handleCommand">
+            <el-button type="info" plain>
+              Test event
+              <el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="sendTestNotifications">test send notifications</el-dropdown-item>
+                <el-dropdown-item command="sendTestSentry">test sentry</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <div
+            class="
+              h-9
+              bg-color-grey
+              rounded-md
+              border-input-border border
+              flex
+              items-center
+              justify-center
+              text-primary text-xss
+              cursor-pointer
+              mr-5
+            "
+            @click="newLead"
+          >
+            <span class="px-2">
+              <InlineSvg :src="IconPlus" />
+            </span>
+            <div class="pr-2">Add new lead</div>
+          </div>
+          <div
+            class="
+              h-9
+              bg-color-grey
+              rounded-md
+              border-input-border border
+              flex
+              items-center
+              justify-center
+              text-primary text-xss
+              cursor-pointer
+              mr-5
+            "
+            @click="newProspect"
+          >
+            <span class="px-2">
+              <InlineSvg :src="IconPlus" />
+            </span>
+            <div class="pr-2">Add new opportunity</div>
+          </div>
 
-      <div class="border-l border-color-grey h-16" />
-      <HeaderNotificationsBlock />
+          <div class="border-l border-color-grey h-16" />
+          <HeaderNotificationsBlock />
+          <div class="border-l border-color-grey h-16" />
+        </div>
+      </template>
+    </div>
 
-      <div class="border-l border-color-grey h-16" />
+    <div class="w-3/24 flex items-center justify-end">
       <div class="flex items-center justify-center pl-5 cursor-pointer">
         <router-link :to="{ name: 'profile' }">
           <SwdAvatar v-if="!isLoadingUserProfile" :link="user.avatar.url" />
