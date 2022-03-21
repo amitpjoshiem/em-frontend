@@ -5,7 +5,7 @@
       <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
         <!-- GENERAL -->
         <div class="border-b pb-5">
-          <span class="text-main text-xl font-semibold">General</span>
+          <div class="text-main text-xl font-semibold mb-5">General</div>
           <div>
             <div class="flex justify-between w-full sm:justify-start">
               <el-form-item label="Retired?" class="sm:mr-10">
@@ -208,7 +208,7 @@
               v-if="ruleForm.house.type === 'rent'"
               label="Total monthly expences"
               prop="house.total_monthly_expenses"
-              class="mb-4 sm:w-4/12"
+              class="mb-4 sm:w-4/12 sm:pl-2"
             >
               <SwdCurrencyInput
                 v-model="ruleForm.house.total_monthly_expenses"
@@ -220,7 +220,7 @@
         </div>
         <!-- Housing Information -->
 
-        <div class="px-16 mt-7 border-b">
+        <div class="pb-8 mt-5 border-b">
           <span class="text-main text-xl font-semibold">Employment history</span>
           <div class="my-5">
             <span class="text-gray03 text-xs uppercase">Contact opportunity</span>
@@ -404,63 +404,34 @@ import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 
-function setInitValue(ruleForm, member) {
-  if (member?.value?.id) {
-    Object.assign(ruleForm, JSON.parse(JSON.stringify(member.value)))
+// function setInitValue(ruleForm, member) {
+//   if (member?.value?.id) {
+//     ruleForm.retired = member.value.retired
+//     ruleForm.married = member.value.married
+//     ruleForm.name = member.value.name
+//     if (member.value.birthday) ruleForm.birthday = dayjs(member.value.birthday).format('MM/DD/YYYY')
+//     if (member.value.retirement_date) ruleForm.birthday = dayjs(member.value.retirement_date).format('MM/DD/YYYY')
+//     ruleForm.email = member.value.email
+//     ruleForm.address = member.value.address
+//     ruleForm.city = member.value.city
+//     ruleForm.state = member.value.state
+//     ruleForm.zip = member.value.zip
+//     ruleForm.phone = member.value.phone
 
-    if (ruleForm.birthday) ruleForm.birthday = dayjs(ruleForm.birthday).format('MM/DD/YYYY')
-    if (ruleForm.retirement_date !== null)
-      ruleForm.retirement_date = dayjs(ruleForm.retirement_date).format('MM/DD/YYYY')
-    if (ruleForm.employment_history && !ruleForm.employment_history.length) {
-      ruleForm.employment_history.push({
-        company_name: '',
-        occupation: '',
-        years: '',
-      })
-    }
+//     if (member.value.employment_history.length)
+//       Object.assign(ruleForm.employment_history, JSON.parse(JSON.stringify(member.value.employment_history)))
 
-    if (member.value.step === 'default') {
-      ruleForm.married = true
-      ruleForm.spouse = {
-        name: '',
-        email: '',
-        birthday: '',
-        retired: true,
-        retirement_date: '',
-        phone: '',
-        employment_history: [
-          {
-            company_name: '',
-            occupation: '',
-            years: '',
-          },
-        ],
-      }
-    }
+//     if (member.value.married) {
+//       Object.assign(ruleForm.spouse, JSON.parse(JSON.stringify(member.value.spouse)))
+//       ruleForm.spouse.birthday = dayjs(member.value.spouse.birthday).format('MM/DD/YYYY')
+//       ruleForm.spouse.retirement_date = dayjs(member.value.spouse.retirement_date).format('MM/DD/YYYY')
+//     }
 
-    if (member.value.married) ruleForm.spouse.birthday = dayjs(ruleForm.spouse.birthday).format('MM/DD/YYYY')
+//     if (member.value.house.type) Object.assign(ruleForm.house, JSON.parse(JSON.stringify(member.value.house)))
 
-    if (!ruleForm.house.type) {
-      ruleForm.house = {
-        type: 'own',
-        market_value: null,
-        total_debt: null,
-        remaining_mortgage_amount: null,
-        monthly_payment: null,
-        total_monthly_expenses: null,
-      }
-    }
-    if (!ruleForm.other.risk) {
-      ruleForm.other = {
-        risk: 'conservative',
-        questions: '',
-        retirement: '',
-        retirement_money: '',
-        work_with_advisor: true,
-      }
-    }
-  }
-}
+//     if (member.value.other.id) Object.assign(ruleForm.other, JSON.parse(JSON.stringify(member.value.other)))
+//   }
+// }
 
 export default {
   name: 'AddProspectBasicInfo',
@@ -569,7 +540,7 @@ export default {
 
     watchEffect(() => {
       if (isFetchingMember.value === false) {
-        setInitValue(ruleForm, member)
+        // setInitValue(ruleForm, member)
       }
     })
 
