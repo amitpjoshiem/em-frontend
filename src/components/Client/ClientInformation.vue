@@ -14,7 +14,7 @@
     </div>
 
     <router-link
-      :to="{ name: 'completed-financial' }"
+      :to="{ name: 'client-basic-information' }"
       class="flex items-center border border-input-border rounded-md p-5 mb-10"
     >
       <el-icon :size="25" class="mr-5">

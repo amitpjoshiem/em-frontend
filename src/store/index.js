@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import auth from './modules/auth'
 import dashboard from './modules/dashboard'
 import newProspect from './modules/newProspect'
+import newClient from './modules/newClient'
 import globalComponents from './modules/globalComponents'
 import notifications from './modules/notifications'
 
@@ -21,6 +22,7 @@ export default createStore({
     auth,
     dashboard,
     newProspect,
+    newClient,
     globalComponents,
     notifications,
   },

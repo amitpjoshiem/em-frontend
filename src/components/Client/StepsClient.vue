@@ -53,7 +53,7 @@ export default {
   setup() {
     const store = useStore()
     const route = useRoute()
-    const step = computed(() => store.state.newProspect.step)
+    const step = computed(() => store.state.newClient.step)
 
     const memberId = computed(() => {
       if (route.params.id) return route.params.id

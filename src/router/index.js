@@ -24,6 +24,16 @@ const routes = [
         name: 'completed-financial',
         component: () =>
           import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/CompletedFinancial.vue'),
+        children: [
+          {
+            path: 'basic/:id?',
+            name: 'client-basic-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "NewClientBasicInformation" */ '../components/Client/AddNewClient/AddBasicInfo.vue'
+              ),
+          },
+        ],
       },
       {
         path: 'investment-retirement',
