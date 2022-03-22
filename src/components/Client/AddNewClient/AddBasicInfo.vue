@@ -24,7 +24,7 @@
 
             <div class="sm:flex sm:flex-wrap">
               <el-form-item label="Name" prop="name" class="sm:w-8/12 sm:pr-2 lg:w-6/12 lg:pr-2 mb-4">
-                <el-input v-model="ruleForm.name" placeholder="Enter prospect’s name" />
+                <el-input v-model="ruleForm.name" placeholder="Enter name" />
               </el-form-item>
               <el-form-item prop="birthday" label="Date of birth" class="sm:w-4/12 sm:pl-2 lg:w-3/12 lg:px-2 mb-4">
                 <el-date-picker
@@ -36,15 +36,15 @@
                 />
               </el-form-item>
 
-              <el-form-item label="E-mail" prop="email" class="sm:w-6/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
-                <el-input v-model.email="ruleForm.email" placeholder="Enter prospect’s e-mail" />
+              <el-form-item label="E-mail" prop="email" class="sm:w-8/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
+                <el-input v-model.email="ruleForm.email" placeholder="Enter e-mail" />
               </el-form-item>
 
               <el-form-item
                 v-if="ruleForm.retired"
                 prop="retirement_date"
                 label="Retirement date"
-                class="sm:w-6/12 sm:pl-2 lg:w-3/12 mb-4 lg:pl-0 lg:pr-2"
+                class="sm:w-4/12 sm:pl-2 lg:w-3/12 mb-4 lg:pl-0 lg:pr-2"
               >
                 <el-date-picker
                   v-model="ruleForm.retirement_date"
@@ -61,23 +61,19 @@
                 class="sm:w-6/12 lg:w-3/12 mb-4"
                 :class="{ 'sm:pr-2 lg:px-2': ruleForm.retired }"
               >
-                <el-input
-                  v-model="ruleForm.phone"
-                  v-maska="'(###) ###-####'"
-                  placeholder="Enter prospect’s phone number"
-                />
+                <el-input v-model="ruleForm.phone" v-maska="'(###) ###-####'" placeholder="Enter phone number" />
               </el-form-item>
 
               <el-form-item label="Address" prop="address" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pr-2 mb-4">
-                <el-input v-model="ruleForm.address" placeholder="Enter prospect’s address" />
+                <el-input v-model="ruleForm.address" placeholder="Enter address" />
               </el-form-item>
 
               <el-form-item label="City" prop="city" class="sm:w-6/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
-                <el-input v-model="ruleForm.city" placeholder="Enter prospect’s city" />
+                <el-input v-model="ruleForm.city" placeholder="Enter city" />
               </el-form-item>
 
               <el-form-item label="State" prop="state" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pl-0 lg:pr-2 mb-4">
-                <el-input v-model="ruleForm.state" placeholder="Enter prospect’s state" />
+                <el-input v-model="ruleForm.state" placeholder="Enter state" />
               </el-form-item>
 
               <el-form-item
@@ -220,127 +216,148 @@
         </div>
         <!-- Housing Information -->
 
+        <!-- Employment history -->
         <div class="pb-8 mt-5 border-b">
           <span class="text-main text-xl font-semibold">Employment history</span>
-          <div class="my-5">
-            <span class="text-gray03 text-xs uppercase">Contact opportunity</span>
-          </div>
+          <div class="text-gray03 text-xs uppercase my-2">Contact opportunity</div>
 
-          <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-6">
-            <el-form-item
-              :prop="'employment_history.' + index + '.company_name'"
-              label="Company name"
-              class="w-7/24 mr-4"
-            >
-              <el-input
-                v-model="eh.company_name"
-                placeholder="Enter company name"
-                @change="changeCompanyNameMember(index)"
-              />
-            </el-form-item>
-
-            <template v-if="!!ruleForm.employment_history[index].company_name.trim().length">
+          <div v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-2">
+            <div class="sm:flex sm:flex-wrap">
               <el-form-item
+                :prop="'employment_history.' + index + '.company_name'"
+                label="Company name"
+                class="sm:w-4/12 mb-4"
+              >
+                <el-input
+                  v-model="eh.company_name"
+                  placeholder="Enter company name"
+                  @change="changeCompanyNameMember(index)"
+                />
+              </el-form-item>
+
+              <el-form-item
+                v-if="!!ruleForm.employment_history[index].company_name.trim().length"
+                class="sm:w-4/12 mb-4"
                 :prop="'employment_history.' + index + '.occupation'"
                 label="Occupation"
-                class="w-7/24 mr-4"
               >
                 <el-input v-model="eh.occupation" placeholder="Company occupation" />
               </el-form-item>
               <el-form-item
-                v-if="ruleForm.employment_history[index].company_name.length"
+                v-if="!!ruleForm.employment_history[index].company_name.trim().length"
+                class="sm:w-4/12 mb-4"
                 :prop="'employment_history.' + index + '.years'"
                 label="Years"
-                class="w-7/24 mr-4"
               >
                 <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
               </el-form-item>
-            </template>
 
-            <template v-else>
-              <el-form-item label="Occupation" class="w-7/24 mr-4">
+              <el-form-item
+                v-if="!ruleForm.employment_history[index].company_name.trim().length"
+                label="Occupation"
+                class="sm:w-4/12 mb-4 sm:px-2"
+              >
                 <el-input
                   placeholder="Company occupation"
                   :disabled="!ruleForm.employment_history[index].company_name.trim().length"
                 />
               </el-form-item>
-              <el-form-item label="Years" class="w-7/24 mr-4">
+              <el-form-item
+                v-if="!ruleForm.employment_history[index].company_name.trim().length"
+                label="Years"
+                class="sm:w-4/12 mb-4"
+              >
                 <el-input
                   placeholder="00"
                   inputmode="numeric"
                   :disabled="!ruleForm.employment_history[index].company_name.trim().length"
                 />
               </el-form-item>
-            </template>
-
-            <div class="w-5 pt-7 ml-3 cursor-pointer w-3/24">
-              <InlineSvg
-                v-if="index === ruleForm.employment_history.length - 1"
-                :src="IconAdd"
-                @click="addEmployment"
-              />
-              <InlineSvg v-else :src="IconDelete" @click="removeEmployment(index)" />
             </div>
-          </el-form-item>
+            <div class="flex justify-end mt-4">
+              <el-button
+                v-if="index === ruleForm.employment_history.length - 1"
+                type="primary"
+                plain
+                @click="addEmployment"
+              >
+                Add job
+              </el-button>
+              <el-button v-else type="danger" plain @click="removeEmployment(index)">Remove job</el-button>
+            </div>
+          </div>
 
           <div v-if="ruleForm.married" class="mt-5">
-            <div class="my-5">
-              <span class="text-gray03 text-xs uppercase">Spouse</span>
-            </div>
+            <div class="text-gray03 text-xs uppercase my-2">Spouse</div>
 
-            <el-form-item v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-10">
-              <el-form-item
-                :prop="'spouse.employment_history.' + index + '.company_name'"
-                label="Company name"
-                class="w-7/24 mr-4"
-              >
-                <el-input
-                  v-model="eh.company_name"
-                  placeholder="Enter company name"
-                  @change="changeCompanyNameSpouse(index)"
-                />
-              </el-form-item>
-
-              <template v-if="ruleForm.spouse.employment_history[index].company_name.trim().length">
+            <div v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-2">
+              <div class="sm:flex sm:flex-wrap">
                 <el-form-item
+                  :prop="'spouse.employment_history.' + index + '.company_name'"
+                  label="Company name"
+                  class="sm:w-4/12 mb-4"
+                >
+                  <el-input
+                    v-model="eh.company_name"
+                    placeholder="Enter company name"
+                    @change="changeCompanyNameSpouse(index)"
+                  />
+                </el-form-item>
+
+                <el-form-item
+                  v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                  class="sm:w-4/12 mb-4"
                   :prop="'spouse.employment_history.' + index + '.occupation'"
                   label="Occupation"
-                  class="w-7/24 mr-4"
                 >
                   <el-input v-model="eh.occupation" placeholder="Company occupation" />
                 </el-form-item>
-                <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-7/24 mr-4">
+                <el-form-item
+                  v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                  class="sm:w-4/12 mb-4"
+                  :prop="'spouse.employment_history.' + index + '.years'"
+                  label="Years"
+                >
                   <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
                 </el-form-item>
-              </template>
 
-              <template v-else>
-                <el-form-item label="Occupation" class="w-7/24 mr-4">
+                <el-form-item
+                  v-if="!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                  label="Occupation"
+                  class="sm:w-4/12 mb-4 sm:px-2"
+                >
                   <el-input
                     placeholder="Company occupation"
                     :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
                   />
                 </el-form-item>
-                <el-form-item label="Years" class="w-7/24 mr-4">
+                <el-form-item
+                  v-if="!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                  label="Years"
+                  class="sm:w-4/12 mb-4"
+                >
                   <el-input
                     placeholder="00"
                     inputmode="numeric"
                     :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
                   />
                 </el-form-item>
-              </template>
-
-              <div class="w-5 pt-7 ml-3 cursor-pointer w-3/24">
-                <InlineSvg
-                  v-if="index === ruleForm.spouse.employment_history.length - 1"
-                  :src="IconAdd"
-                  @click="addEmploymentSpouse"
-                />
-                <InlineSvg v-else :src="IconDelete" @click="removeEmploymentSpouse(index)" />
               </div>
-            </el-form-item>
+              <div class="flex justify-end mt-4">
+                <el-button
+                  v-if="index === ruleForm.spouse.employment_history.length - 1"
+                  type="primary"
+                  plain
+                  @click="addEmploymentSpouse"
+                >
+                  Add job
+                </el-button>
+                <el-button v-else type="danger" plain @click="removeEmploymentSpouse(index)">Remove job</el-button>
+              </div>
+            </div>
           </div>
         </div>
+        <!-- Employment history -->
 
         <div class="px-16 my-5">
           <span class="text-main text-xl font-semibold">Other</span>
