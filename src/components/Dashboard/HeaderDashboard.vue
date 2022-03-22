@@ -16,7 +16,7 @@ import { useStore } from 'vuex'
 import { computed } from 'vue'
 
 export default {
-  name: 'PipeLine',
+  name: 'HeaderDashboard',
   setup() {
     const store = useStore()
 

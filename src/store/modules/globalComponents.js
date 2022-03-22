@@ -52,6 +52,7 @@ const state = () => ({
       exportSucces: false,
       modalContact: false,
       newLead: false,
+      modalNewTable: false,
     },
   },
   sortMembers: {

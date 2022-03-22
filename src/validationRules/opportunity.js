@@ -1,11 +1,4 @@
 const rules = {
-  // stage: [
-  //   {
-  //     required: true,
-  //     message: 'Please select stage',
-  //     trigger: 'change',
-  //   },
-  // ],
   close_date: [
     {
       type: 'date',
@@ -14,7 +7,7 @@ const rules = {
       trigger: 'change',
     },
   ],
-  opportunity_name: [
+  name: [
     {
       required: true,
       message: 'Please input opportunity name',
@@ -22,13 +15,6 @@ const rules = {
     },
     { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
-  // type: [
-  //   {
-  //     required: true,
-  //     message: 'Please select type',
-  //     trigger: 'change',
-  //   },
-  // ],
   amount: [
     {
       validator: validateNumber,
@@ -38,9 +24,6 @@ const rules = {
 }
 
 function validateNumber(rule, value, callback) {
-  // if (!value) {
-  //   callback(new Error('The field cannot be empty'))
-  // }
   if (isNaN(value)) {
     callback(new Error('Data is not a number'))
   } else {

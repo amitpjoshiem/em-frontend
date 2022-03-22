@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-10 w-full">
-    <div class="w-6/24 total">Total</div>
+    <div class="w-6/24 total">{{ total.name ? total.name[0].toUpperCase() + total.name.slice(1) : 'Total' }}</div>
     <div class="w-2/24 total">
       <SwdSpinner v-if="isFetching" />
       <span v-else>{{ percentFormat(total.percent_of_holdings / 100, 2, 2) }}</span>
