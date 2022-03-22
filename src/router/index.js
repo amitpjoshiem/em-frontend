@@ -33,6 +33,14 @@ const routes = [
                 /* webpackChunkName: "NewClientBasicInformation" */ '../components/Client/AddNewClient/AddBasicInfo.vue'
               ),
           },
+          {
+            path: 'assets/:id?',
+            name: 'client-assets-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "NewClientAssetsInformation" */ '../components/Client/AddNewClient/Assets/AddAssets.vue'
+              ),
+          },
         ],
       },
       {

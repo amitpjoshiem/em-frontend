@@ -1,5 +1,6 @@
 <template>
-  <div class="p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
+  <div class="p-5">
+    <!-- <div class="p-5 lg:max-w-5xl lg:my-0 lg:mx-auto"> -->
     <SwdSubHeader title="Completed Financial" />
     <StepsClient />
     <router-view />

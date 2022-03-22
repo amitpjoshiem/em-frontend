@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isFetchingMember" class="sm:p-5">
       <!-- <div v-if="isShowForm"> -->
       <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
@@ -413,12 +413,12 @@
 
 <script>
 import { reactive, ref, onMounted, computed, watch, watchEffect } from 'vue'
-import { createMembers } from '@/api/vueQuery/create-members'
-import { updateMembers } from '@/api/vueQuery/update-members'
-import { useMutation } from 'vue-query'
+// import { createMembers } from '@/api/vueQuery/create-members'
+// import { updateMembers } from '@/api/vueQuery/update-members'
+// import { useMutation } from 'vue-query'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { useAlert } from '@/utils/use-alert'
+// import { useAlert } from '@/utils/use-alert'
 import { rules, employmentHistoryRule } from '@/validationRules/basicRules.js'
 import { maska } from 'maska'
 import { scrollTop } from '@/utils/scrollTop'
@@ -476,17 +476,17 @@ export default {
       data: statusSfAcc,
     } = useSalesForceAuth()
 
-    const {
-      mutateAsync: createMember,
-      isLoading: isLoadingCreateMember,
-      isError,
-      isFetching,
-      data,
-      error,
-      refetch,
-    } = useMutation(createMembers)
+    // const {
+    //   mutateAsync: createMember,
+    //   isLoading: isLoadingCreateMember,
+    //   isError,
+    //   isFetching,
+    //   data,
+    //   error,
+    //   refetch,
+    // } = useMutation(createMembers)
 
-    const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
+    // const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
     const {
       isFetching: isFetchingMember,
@@ -494,7 +494,7 @@ export default {
       refetch: refetchMember,
     } = useFetchMember({ id: route.params.id }, { enabled: false })
 
-    let memberId
+    // let memberId
 
     const ruleForm = reactive({
       retired: true,
@@ -558,7 +558,7 @@ export default {
       store.commit('newClient/setStep', 1)
       scrollTop()
       if (route.params.id) {
-        memberId = route.params.id
+        // memberId = route.params.id
         // refetchMember.value()
       }
     })
@@ -580,30 +580,34 @@ export default {
     })
 
     const submitForm = async () => {
-      form.value.validate(async (valid) => {
-        if (valid) {
-          let res
-          if (isUpdateMember.value) {
-            res = await updateMember({ form: ruleForm, id: memberId })
-          } else {
-            res = await createMember(ruleForm)
-          }
-          if (!('error' in res)) {
-            useAlert({
-              title: 'Success',
-              type: 'success',
-              message: isUpdateMember.value ? 'Opportunity update successfully' : 'Opportunity created successfully',
-            })
-            store.commit('newClient/setStep', step.value + 1)
-            router.push({
-              name: 'assets-information',
-              params: { id: res.data.id },
-            })
-          }
-        } else {
-          return false
-        }
+      store.commit('newClient/setStep', step.value + 1)
+      router.push({
+        name: 'client-assets-information',
       })
+      // form.value.validate(async (valid) => {
+      //   if (valid) {
+      //     let res
+      //     if (isUpdateMember.value) {
+      //       res = await updateMember({ form: ruleForm, id: memberId })
+      //     } else {
+      //       res = await createMember(ruleForm)
+      //     }
+      //     if (!('error' in res)) {
+      //       useAlert({
+      //         title: 'Success',
+      //         type: 'success',
+      //         message: isUpdateMember.value ? 'Opportunity update successfully' : 'Opportunity created successfully',
+      //       })
+      //       store.commit('newClient/setStep', step.value + 1)
+      //       router.push({
+      //         name: 'assets-information',
+      //         params: { id: res.data.id },
+      //       })
+      //     }
+      //   } else {
+      //     return false
+      //   }
+      // })
     }
 
     const removeEmployment = (index) => {
@@ -703,13 +707,13 @@ export default {
       addEmployment,
       addEmploymentSpouse,
       removeEmploymentSpouse,
-      isLoadingCreateMember,
-      isLoadingUpdateMember,
-      isError,
-      isFetching,
-      data,
-      error,
-      refetch,
+      // isLoadingCreateMember,
+      // isLoadingUpdateMember,
+      // isError,
+      // isFetching,
+      // data,
+      // error,
+      // refetch,
       isUpdateMember,
       IconAdd,
       IconDelete,

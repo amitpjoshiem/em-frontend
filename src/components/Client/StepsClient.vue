@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-widget-bg rounded-lg px-5 mb-5">
+  <div class="bg-widget-bg rounded-lg px-5 mb-5 lg:max-w-5xl lg:mx-auto">
     <div class="flex w-full pt-2">
       <router-link
         :to="{ name: 'basic-information', params: { id: memberId } }"
