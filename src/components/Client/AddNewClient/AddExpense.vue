@@ -1,26 +1,26 @@
 <template>
   <div v-if="!isLoading">
-    <div class="hidden pb-2 mt-8 sm:flex">
-      <div class="sm:w-8/12" />
-      <div class="sm:w-2/12 text-gray03 text-xs">ESSENTIAL</div>
-      <div class="sm:w-2/12 text-gray03 text-xs">DISCRETIONARY</div>
+    <div class="hidden pb-2 mt-8 md:flex">
+      <div class="md:w-8/12" />
+      <div class="md:w-2/12 text-gray03 text-xs">ESSENTIAL</div>
+      <div class="md:w-2/12 text-gray03 text-xs">DISCRETIONARY</div>
     </div>
     <el-form ref="form" :model="ruleForm" status-icon>
       <el-card shadow="never" class="mb-5">
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <!-- HOUSING -->
-          <div class="sm:w-3/12 flex items-center text-sm font-semibold">Housing</div>
-          <div class="flex pb-2 mt-5 sm:hidden">
+          <div class="md:w-3/12 flex items-center text-sm font-semibold">Housing</div>
+          <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
           </div>
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Mortgage/Rent/Fees</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Mortgage/Rent/Fees</div>
           <SwdCurrencyInput
             v-model="ruleForm.housing.mortgage_rent_fees.essential"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -28,16 +28,16 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Property Taxes & Insurance</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Property Taxes & Insurance</div>
           <SwdCurrencyInput
             v-model="ruleForm.housing.property_taxes_and_insurance.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -45,19 +45,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.property_taxes_and_insurance.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Utilities</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Utilities</div>
           <SwdCurrencyInput
             v-model="ruleForm.housing.utilities.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -65,19 +65,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.utilities.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Household Improvement</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Household Improvement</div>
           <SwdCurrencyInput
             v-model="ruleForm.housing.household_improvement.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -85,19 +85,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.household_improvement.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Household Maintenance</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Household Maintenance</div>
           <SwdCurrencyInput
             v-model="ruleForm.housing.household_maintenance.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -105,7 +105,7 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.household_maintenance.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -116,16 +116,16 @@
 
       <!-- FOOD TRANSPORTATION -->
       <el-card shadow="never" class="mb-5">
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12 flex items-center text-sm font-semibold">Food</div>
-          <div class="flex pb-2 mt-5 sm:hidden">
+          <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
           </div>
-          <div class="sm:w-5/12 text-main text-xss flex items-center">At Home</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">At Home</div>
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.at_home.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -133,19 +133,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.at_home.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Dining Out</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Dining Out</div>
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.dining_out.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -153,19 +153,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.dining_out.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12 flex items-center text-sm font-semibold">Transportation</div>
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Vehicle Purchases/Payments</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Vehicle Purchases/Payments</div>
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.vehicle_purchases_payments.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -173,19 +173,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.vehicle_purchases_payments.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Auto Insurance and Taxes</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Auto Insurance and Taxes</div>
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.auto_insurance_and_taxes.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -193,19 +193,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.auto_insurance_and_taxes.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Fuel & Maintenance</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Fuel & Maintenance</div>
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.fuel_and_maintenance.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -213,19 +213,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.fuel_and_maintenance.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Public Transportation</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Public Transportation</div>
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.public_transportation.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -233,7 +233,7 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.public_transportation.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -244,16 +244,16 @@
 
       <!-- HEALTHCARE -->
       <el-card shadow="never" class="mb-5">
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12 flex items-center text-sm font-semibold">Healthcare</div>
-          <div class="flex pb-2 mt-5 sm:hidden">
+          <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
           </div>
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Health Insurance</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Health Insurance</div>
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.health_insurance.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -261,19 +261,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.health_insurance.discretionary"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Medicare/Medigap</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Medicare/Medigap</div>
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.medicare_medigap.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -281,19 +281,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.medicare_medigap.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Copays/Uncovered Medical Services</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Copays/Uncovered Medical Services</div>
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.copays_uncovered_medical_services.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -301,19 +301,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.copays_uncovered_medical_services.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Drugs & Medical Supplies</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Drugs & Medical Supplies</div>
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.drugs_and_medical_supplies.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -321,7 +321,7 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.drugs_and_medical_supplies.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -332,16 +332,16 @@
 
       <!-- PERSONAL -->
       <el-card shadow="never" class="mb-5">
-        <div class="sm:flex mb-4">
-          <div class="sm:w-3/12 flex items-center text-sm font-semibold">Personal Insurance</div>
-          <div class="flex pb-2 mt-5 sm:hidden">
+        <div class="md:flex mb-4">
+          <div class="md:w-3/12 flex items-center text-sm font-semibold">Personal Insurance</div>
+          <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
           </div>
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Life/Other</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Life/Other</div>
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.life_other.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -349,19 +349,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.life_other.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Long-Term Care</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Long-Term Care</div>
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.long_term_care.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -369,23 +369,23 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.long_term_care.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
-          <div class="sm:w-3/12 flex items-center text-sm font-semibold">Personal Care</div>
-          <div class="flex pb-2 mt-5 sm:hidden">
+        <div class="md:flex mb-4">
+          <div class="md:w-3/12 flex items-center text-sm font-semibold">Personal Care</div>
+          <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
           </div>
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Clothing</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Clothing</div>
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.clothing.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -393,19 +393,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.clothing.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Products & Services</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Products & Services</div>
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.product_and_services.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -413,7 +413,7 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.product_and_services.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -424,16 +424,16 @@
 
       <!-- OTHER -->
       <el-card shadow="never" class="mb-5">
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="flex pb-2 mt-5 sm:hidden">
+          <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
           </div>
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Entertainment</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Entertainment</div>
           <SwdCurrencyInput
             v-model="ruleForm.entertainment.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -441,19 +441,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.entertainment.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Travel</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Travel</div>
           <SwdCurrencyInput
             v-model="ruleForm.travel.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -461,19 +461,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.travel.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Hobbies</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Hobbies</div>
           <SwdCurrencyInput
             v-model="ruleForm.hobbies.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -481,19 +481,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.hobbies.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Family Care/Education</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Family Care/Education</div>
           <SwdCurrencyInput
             v-model="ruleForm.family_care_education.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -501,19 +501,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.family_care_education.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Income Taxes</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Income Taxes</div>
           <SwdCurrencyInput
             v-model="ruleForm.income_taxes.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -521,19 +521,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.income_taxes.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Charitable Contributions</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Charitable Contributions</div>
           <SwdCurrencyInput
             v-model="ruleForm.charitable_contributions.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -541,19 +541,19 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.charitable_contributions.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">Other</div>
+          <div class="md:w-5/12 text-main text-xss flex items-center">Other</div>
           <SwdCurrencyInput
             v-model="ruleForm.other.essential"
-            class="w-6/12 sm:w-2/12 pr-2"
+            class="w-6/12 md:w-2/12 pr-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
@@ -561,28 +561,28 @@
           />
           <SwdCurrencyInput
             v-model="ruleForm.other.discretionary"
-            class="w-6/12 sm:w-2/12 pl-2"
+            class="w-6/12 md:w-2/12 pl-2"
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
             @blur="change()"
           />
         </div>
-        <div class="sm:flex mb-4">
+        <div class="md:flex mb-4">
           <div class="w-3/12" />
-          <div class="sm:w-5/12 text-main text-xss flex items-center">SUBTOTAL</div>
-          <div class="w-6/12 sm:w-2/12 text-sm font-semibold inline-flex">
+          <div class="md:w-5/12 text-main text-xss flex items-center">SUBTOTAL</div>
+          <div class="w-6/12 md:w-2/12 text-sm font-semibold inline-flex">
             <SwdSpinner v-if="isLoadingCreate || isFetching" />
             <span v-else>{{ currencyFormat(ruleForm.subtotal.essential) }}</span>
           </div>
-          <div class="w-6/12 sm:w-2/12 text-sm font-semibold inline-flex">
+          <div class="w-6/12 md:w-2/12 text-sm font-semibold inline-flex">
             <SwdSpinner v-if="isLoadingCreate || isFetching" />
             <span v-else>{{ currencyFormat(ruleForm.subtotal.discretionary) }}</span>
           </div>
         </div>
       </el-card>
-      <div class="sm:flex sm:justify-end text-sm font-semibold mb-5">
-        <div class="sm:w-3/12">TOTAL MONTHLY EXPENSES</div>
+      <div class="md:flex md:justify-end text-sm font-semibold mb-5">
+        <div class="md:w-3/12">TOTAL MONTHLY EXPENSES</div>
         <div class="w-2/12">
           <SwdSpinner v-if="isLoadingCreate || isFetching" />
           <span v-else>{{ currencyFormat(ruleForm.total) }}</span>
