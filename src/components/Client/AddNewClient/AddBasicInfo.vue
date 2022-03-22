@@ -373,17 +373,21 @@
               </div>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="Does the opportunity have any specific questions to discuss?" prop="questions">
+          <el-form-item
+            label="Does the opportunity have any specific questions to discuss?"
+            prop="questions"
+            class="mb-4"
+          >
             <el-input v-model="ruleForm.other.questions" type="textarea" />
           </el-form-item>
-          <el-form-item label="Goal for retiretment" prop="retirement">
+          <el-form-item label="Goal for retiretment" prop="retirement" class="mb-4">
             <el-input v-model="ruleForm.other.retirement" type="textarea" />
           </el-form-item>
-          <el-form-item label="Goal for retiretment money" prop="retirement_money">
+          <el-form-item label="Goal for retiretment money" prop="retirement_money" class="mb-4">
             <el-input v-model="ruleForm.other.retirement_money" type="textarea" />
           </el-form-item>
 
-          <el-form-item label="Does the opportunity currently work with the advisor?">
+          <el-form-item label="Does the opportunity currently work with the advisor?" class="mb-4">
             <el-radio-group v-model="ruleForm.other.work_with_advisor">
               <el-radio :label="true">Yes</el-radio>
               <el-radio :label="false">No</el-radio>

@@ -1,12 +1,8 @@
 <template>
-  <div class="p-5">
+  <div class="p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
     <SwdSubHeader title="Completed Financial" />
     <StepsClient />
     <router-view />
-    <div class="flex justify-end p-5">
-      <el-button v-if="active !== 3" @click="next">Next step</el-button>
-      <el-button v-if="active === 3" type="primary" plain>Save</el-button>
-    </div>
   </div>
 </template>
 
