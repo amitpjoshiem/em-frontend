@@ -356,12 +356,6 @@ const routes = [
       },
 
       {
-        path: 'logout',
-        name: 'logout',
-        component: () => import(/* webpackChunkName: "Logout" */ '../views/Logout.vue'),
-      },
-
-      {
         path: 'error',
         name: 'error',
         component: () => import(/* webpackChunkName: "Error" */ '../views/ErrorPage.vue'),
@@ -413,9 +407,15 @@ const routes = [
   },
 
   {
-    path: '/404',
-    name: '404',
-    component: () => import(/* webpackChunkName: "404" */ '../views/404.vue'),
+    path: '/403',
+    name: '403',
+    component: () => import(/* webpackChunkName: "forbidden" */ '../views/Forbidden.vue'),
+  },
+
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import(/* webpackChunkName: "Logout" */ '../views/Logout.vue'),
   },
 
   {
@@ -445,7 +445,7 @@ router.beforeEach(async (to) => {
   }
 
   if (!canNavigate && to.meta.resource) {
-    return '/404'
+    return '/403'
   }
 
   return true
