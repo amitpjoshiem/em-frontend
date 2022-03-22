@@ -1,6 +1,7 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
-    <div v-if="!isFetchingMember && !isMemberAssetsLoading">
+    <div v-if="!isFetchingMember">
+      <!-- <div v-if="!isFetchingMember && !isMemberAssetsLoading"> -->
       <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules">
         <!-- Current income -->
         <div class="border-b pb-7">
@@ -434,12 +435,12 @@ import { useMutation } from 'vue-query'
 // import { useMutation, useQueryClient } from 'vue-query'
 
 import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
-import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
+// import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member'
 
-import { setValueByPath } from '@/utils/setValueByPath'
-import { getByPath } from '@/utils/getByPath'
+// import { setValueByPath } from '@/utils/setValueByPath'
+// import { getByPath } from '@/utils/getByPath'
 import { scrollTop } from '@/utils/scrollTop'
 // import { useAlert } from '@/utils/use-alert'
 
@@ -486,7 +487,7 @@ export default {
 
     const memberId = route.params.id
 
-    const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
+    // const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
     const { mutateAsync: create, isLoading, isError, isFetching, data, error } = useMutation(createAssetsIncome)
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id }, { enabled: false })
@@ -618,9 +619,9 @@ export default {
     })
 
     watchEffect(() => {
-      if (isMemberAssetsLoading.value === false) {
-        // setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
-      }
+      // if (isMemberAssetsLoading.value === false) {
+      // setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
+      // }
     })
 
     const resetState = () => {
@@ -645,33 +646,34 @@ export default {
       // return false
     })
 
-    const validateMemberAssetField = async (field, cb) => {
-      form.value.validateField(field, async (error) => {
-        if (!error) {
-          cb()
-        }
-      })
-    }
+    // const validateMemberAssetField = async (field, cb) => {
+    //   form.value.validateField(field, async (error) => {
+    //     if (!error) {
+    //       cb()
+    //     }
+    //   })
+    // }
 
     const validateMemberAssetFieldAndUpdate = (field) => {
-      validateMemberAssetField(field, updateSingleField.bind(null, field))
+      console.log(field)
+      // validateMemberAssetField(field, updateSingleField.bind(null, field))
     }
 
-    const updateSingleField = async (field) => {
-      const patchObject = {}
+    // const updateSingleField = async (field) => {
+    //   const patchObject = {}
 
-      const newValue = getByPath(ruleForm, field)
-      const oldValue = getByPath(memberAssets.value.data, field)
+    //   const newValue = getByPath(ruleForm, field)
+    //   const oldValue = getByPath(memberAssets.value.data, field)
 
-      if (Number(newValue) === Number(oldValue)) {
-        return
-      }
+    //   if (Number(newValue) === Number(oldValue)) {
+    //     return
+    //   }
 
-      setValueByPath(patchObject, field, newValue)
-      setValueByPath(patchObject, 'member_id', memberId)
+    //   setValueByPath(patchObject, field, newValue)
+    //   setValueByPath(patchObject, 'member_id', memberId)
 
-      updateOrCreateMemberAssets(patchObject)
-    }
+    //   updateOrCreateMemberAssets(patchObject)
+    // }
 
     const updateOrCreateMemberAssets = async (patchObject = ruleForm) => {
       let res
@@ -726,8 +728,8 @@ export default {
       submitForm,
       rules,
       isUpdateMember,
-      memberAssets,
-      isMemberAssetsLoading,
+      // memberAssets,
+      // isMemberAssetsLoading,
       memberId,
       isMarried,
       updateOrCreateMemberAssets,
