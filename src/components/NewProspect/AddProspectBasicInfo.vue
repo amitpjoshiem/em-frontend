@@ -430,56 +430,6 @@ function setInitValue(ruleForm, member) {
     if (member.value.house.type) Object.assign(ruleForm.house, JSON.parse(JSON.stringify(member.value.house)))
 
     if (member.value.other.id) Object.assign(ruleForm.other, JSON.parse(JSON.stringify(member.value.other)))
-
-    // Object.assign(ruleForm, JSON.parse(JSON.stringify(member.value)))
-    // if (member.value.birthday) ruleForm.birthday = dayjs(member.value.birthday).format('MM/DD/YYYY')
-    // if (ruleForm.retirement_date !== null)
-    //   ruleForm.retirement_date = dayjs(ruleForm.retirement_date).format('MM/DD/YYYY')
-    // if (ruleForm.employment_history && !ruleForm.employment_history.length) {
-    //   ruleForm.employment_history.push({
-    //     company_name: '',
-    //     occupation: '',
-    //     years: '',
-    //   })
-    // }
-    // if (member.value.step === 'default') {
-    //   ruleForm.married = true
-    //   ruleForm.spouse = {
-    //     name: '',
-    //     email: '',
-    //     birthday: '',
-    //     retired: false,
-    //     retirement_date: '',
-    //     phone: '',
-    //     employment_history: [
-    //       {
-    //         company_name: '',
-    //         occupation: '',
-    //         years: '',
-    //       },
-    //     ],
-    //   }
-    // }
-    // if (member.value.married) ruleForm.spouse.birthday = dayjs(member.value.spouse.birthday).format('MM/DD/YYYY')
-    // if (!ruleForm.house.type) {
-    //   ruleForm.house = {
-    //     type: 'own',
-    //     market_value: null,
-    //     total_debt: null,
-    //     remaining_mortgage_amount: null,
-    //     monthly_payment: null,
-    //     total_monthly_expenses: null,
-    //   }
-    // }
-    // if (!ruleForm.other.risk) {
-    //   ruleForm.other = {
-    //     risk: 'conservative',
-    //     questions: '',
-    //     retirement: '',
-    //     retirement_money: '',
-    //     work_with_advisor: true,
-    //   }
-    // }
   }
 }
 
