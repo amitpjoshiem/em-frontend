@@ -688,6 +688,9 @@ export default {
 
     const submitForm = async () => {
       store.commit('newClient/setStep', step.value + 1)
+      router.push({
+        name: 'client-expense-information',
+      })
       // const res = await updateOrCreateMemberAssets()
 
       // if (!('error' in res)) {

@@ -41,6 +41,14 @@ const routes = [
                 /* webpackChunkName: "NewClientAssetsInformation" */ '../components/Client/AddNewClient/Assets/AddAssets.vue'
               ),
           },
+          {
+            path: 'expense/:id?',
+            name: 'client-expense-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "NewClienExpenseInformation" */ '../components/Client/AddNewClient/AddExpense.vue'
+              ),
+          },
         ],
       },
       {
