@@ -13,11 +13,6 @@
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
             </el-form-item>
-            <!-- <div class="flex pb-2 mt-8">
-              <div class="w-6/12 text-gray03 text-xs text-center pr-2.5">OWNER</div>
-              <div v-if="isMarried" class="w-6/12 text-gray03 text-xs text-center pl-2.5">SPOUSE</div>
-            </div> -->
-
             <!-- Salary -->
             <ItemFormAssetsTwo
               v-model:member="ruleForm.income.member.salary"
@@ -106,13 +101,6 @@
 
         <div class="border-b py-6">
           <span class="text-main text-xl font-semibold mb-2">Liquid assets</span>
-          <!-- <div class="flex pb-2 mt-8">
-          <div class="w-3/12 text-gray03 text-xs text-center">OWNER</div>
-          <div v-if="isMarried" class="w-3/12 text-gray03 text-xs text-center">SPOUSE</div>
-          <div class="w-3/12 text-gray03 text-xs pl-2.5 text-center">O/NQ</div>
-          <div class="w-3/12 text-gray03 text-xs pl-2.5 text-center">BALANCE</div>
-        </div> -->
-
           <!-- Cash/Checking/ Savings/MM -->
           <ItemFormAssetsFour
             v-model:member="ruleForm.liquid_assets.member.cash_checking_savings_mm"
@@ -302,14 +290,6 @@
 
         <div class="border-b py-6">
           <span class="text-main text-xl font-semibold mb-2">Non-liquid assets</span>
-          <!-- <div class="flex pb-2 mt-8">
-            <div class="w-4/24" />
-            <div class="w-5/24 text-gray03 text-xs">OWNER</div>
-            <div v-if="isMarried" class="w-5/24 text-gray03 text-xs">SPOUSE</div>
-            <div class="w-5/24 text-gray03 text-xs pl-2.5">O/NQ</div>
-            <div class="w-5/24 text-gray03 text-xs pl-2.5">BALANCE</div>
-          </div> -->
-
           <!-- Value of home -->
           <ItemFormAssetsFour
             v-model:member="ruleForm.non_liquid_assets.member.value_of_home"
