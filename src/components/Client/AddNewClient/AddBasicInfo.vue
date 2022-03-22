@@ -359,15 +359,18 @@
         </div>
         <!-- Employment history -->
 
-        <div class="px-16 my-5">
+        <!-- Other -->
+        <div class="my-5">
           <span class="text-main text-xl font-semibold">Other</span>
           <el-form-item label="Risk tolerance?" class="my-5">
             <el-radio-group v-model="ruleForm.other.risk">
-              <el-radio label="conservative">Conservative</el-radio>
-              <el-radio label="moderately_conservative"> Moderately Conservative </el-radio>
-              <el-radio label="moderate">Moderate</el-radio>
-              <el-radio label="moderately_aggressive"> Moderately Aggressive </el-radio>
-              <el-radio label="aggressive">Aggressive</el-radio>
+              <div class="flex flex-col sm:flex-row sm:flex-wrap">
+                <el-radio label="conservative" class="sm:w-3/12">Conservative</el-radio>
+                <el-radio label="moderate" class="sm:w-3/12">Moderate</el-radio>
+                <el-radio label="moderately_conservative" class="sm:w-3/12"> Moderately Conservative </el-radio>
+                <el-radio label="aggressive" class="sm:w-3/12">Aggressive</el-radio>
+                <el-radio label="moderately_aggressive" class="sm:w-3/12"> Moderately Aggressive </el-radio>
+              </div>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="Does the opportunity have any specific questions to discuss?" prop="questions">
@@ -387,6 +390,7 @@
             </el-radio-group>
           </el-form-item>
         </div>
+        <!-- Other -->
 
         <div class="flex justify-end my-10">
           <el-button
