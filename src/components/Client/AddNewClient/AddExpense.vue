@@ -593,7 +593,7 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button type="primary" @click="nextStep"> Go to the assets accounts </el-button>
+        <el-button type="primary" @click="nextStep"> Save </el-button>
       </div>
     </el-form>
   </div>
@@ -624,7 +624,7 @@ export default {
     const route = useRoute()
     const form = ref()
 
-    const step = computed(() => store.state.newProspect.step)
+    const step = computed(() => store.state.newClient.step)
     let memberId
 
     const { isLoading, isError, isFetching, data, refetch } = useFetchMonthlyExpense(
@@ -761,7 +761,7 @@ export default {
     })
 
     onMounted(async () => {
-      store.commit('newProspect/setStep', 3)
+      store.commit('newClient/setStep', 3)
       scrollTop()
       if (route.params.id) {
         memberId = route.params.id
@@ -783,8 +783,8 @@ export default {
     }
 
     const backStep = () => {
-      store.commit('newProspect/setStep', step.value - null)
-      router.push({ name: 'basic-information', params: { id: memberId } })
+      store.commit('newClient/setStep', step.value - 1)
+      router.push({ name: 'client-assets-information', params: { id: memberId } })
     }
 
     const change = async () => {
@@ -801,10 +801,10 @@ export default {
         type: 'success',
         message: 'Opportunity update successfully',
       })
-      store.commit('newProspect/setStep', step.value + 1)
+      store.commit('newClient/setStep', step.value + 1)
       router.push({
-        name: 'assets-account',
-        params: { id: memberId },
+        name: 'client-dashboard',
+        // params: { id: memberId },
       })
     }
 

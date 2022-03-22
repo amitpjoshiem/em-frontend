@@ -481,7 +481,7 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const form = ref()
-    const step = computed(() => store.state.newProspect.step)
+    const step = computed(() => store.state.newClient.step)
     const isUpdateMember = computed(() => !!route.params.id)
 
     const memberId = route.params.id
@@ -635,7 +635,8 @@ export default {
 
     const backStep = () => {
       store.commit('newClient/setStep', step.value - 1)
-      router.push({ name: 'basic-information', params: { id: memberId } })
+      router.push({ name: 'client-basic-information' })
+      // router.push({ name: 'basic-information', params: { id: memberId } })
     }
 
     const isMarried = computed(() => {

@@ -397,13 +397,8 @@
         <!-- Other -->
 
         <div class="flex justify-end my-10">
-          <el-button
-            type="primary"
-            :disabled="isLoadingCreateMember || isLoadingUpdateMember"
-            @click="submitForm('ruleForm')"
-          >
-            Go to the assets &amp; income
-          </el-button>
+          <!-- :disabled="isLoadingCreateMember || isLoadingUpdateMember" -->
+          <el-button type="primary" @click="submitForm('ruleForm')"> Go to the assets &amp; income </el-button>
         </div>
       </el-form>
     </div>
@@ -466,7 +461,7 @@ export default {
     const store = useStore()
     const form = ref(null)
     const route = useRoute()
-    const step = computed(() => store.state.newProspect.step)
+    const step = computed(() => store.state.newClient.step)
     const isUpdateMember = computed(() => !!route.params.id)
 
     const {
@@ -580,6 +575,7 @@ export default {
     })
 
     const submitForm = async () => {
+      console.log('====')
       store.commit('newClient/setStep', step.value + 1)
       router.push({
         name: 'client-assets-information',

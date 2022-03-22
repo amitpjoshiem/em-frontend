@@ -2,16 +2,15 @@
   <div class="bg-widget-bg rounded-lg px-5 mb-5 lg:max-w-5xl lg:mx-auto">
     <div class="flex w-full pt-2">
       <router-link
-        :to="{ name: 'basic-information', params: { id: memberId } }"
+        :to="{ name: 'client-basic-information', params: { id: memberId } }"
         class="w-4/12 text-center text-xs font-medium text-main"
       >
         Basic
       </router-link>
       <router-link
-        :to="{ name: 'assets-information', params: { id: memberId } }"
+        :to="{ name: 'client-assets-information', params: { id: memberId } }"
         class="w-4/12 text-center text-xs ml-4"
         :class="{
-          'disabled-link': !memberId,
           'text-title-gray': step < 2,
           'font-medium text-main': step > 1,
         }"
@@ -19,10 +18,9 @@
         Assets &amp; Income
       </router-link>
       <router-link
-        :to="{ name: 'monthly-expense', params: { id: memberId } }"
+        :to="{ name: 'client-expense-information', params: { id: memberId } }"
         class="w-4/12 text-center text-xs"
         :class="{
-          'disabled-link': !memberId,
           'text-title-gray': step < 3,
           'font-medium text-main': step > 2,
         }"
