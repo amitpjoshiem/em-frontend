@@ -25,7 +25,7 @@ export default {
 
     const back = () => {
       if (step.value === 1) {
-        router.push({ name: 'dashboard' })
+        router.push({ name: 'client-dashboard' })
       } else {
         store.commit('newClient/setStep', step.value - 1)
         goPage()
