@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import AdvisorHome from '@/layouts/AdvisorHome.vue'
 import ClientHome from '@/layouts/ClientHome.vue'
+import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
 import ability from '../services/ability'
 import { computed } from 'vue'
@@ -327,35 +328,6 @@ const routes = [
       },
 
       {
-        path: 'settings-app',
-        name: 'settings-app',
-        component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/SettingsApp.vue'),
-        children: [
-          {
-            path: 'profile',
-            name: 'profile',
-            component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/ProfileSettings.vue'),
-          },
-          {
-            path: 'information',
-            name: 'information',
-            component: () =>
-              import(/* webpackChunkName: "Settings" */ '../components/Settings/InformationSettings.vue'),
-          },
-          {
-            path: 'partners',
-            name: 'partners',
-            component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Partners.vue'),
-          },
-          {
-            path: 'settings',
-            name: 'settings',
-            component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Settings.vue'),
-          },
-        ],
-      },
-
-      {
         path: 'error',
         name: 'error',
         component: () => import(/* webpackChunkName: "Error" */ '../views/ErrorPage.vue'),
@@ -366,6 +338,40 @@ const routes = [
         redirect: () => {
           return { name: 'dashboard' }
         },
+      },
+    ],
+  },
+
+  {
+    path: '/settings-app',
+    name: 'settings-app',
+    component: Settings,
+    children: [
+      {
+        path: 'profile',
+        name: 'profile',
+        component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/ProfileSettings.vue'),
+      },
+      {
+        path: 'information',
+        name: 'information',
+        meta: {
+          resource: 'advisor',
+        },
+        component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/InformationSettings.vue'),
+      },
+      {
+        path: 'partners',
+        name: 'partners',
+        meta: {
+          resource: 'advisor',
+        },
+        component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Partners.vue'),
+      },
+      {
+        path: 'settings',
+        name: 'settings',
+        component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Settings.vue'),
       },
     ],
   },

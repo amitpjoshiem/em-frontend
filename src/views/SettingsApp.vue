@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <SettingsHeader />
-    <router-view />
-  </div>
+  <SettingsHeader />
+  <router-view />
 </template>
 
 <script>

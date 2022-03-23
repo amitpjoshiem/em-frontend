@@ -6,13 +6,13 @@
       </div>
     </router-link>
 
-    <router-link :to="{ name: 'information' }">
+    <router-link v-if="$can('advisor', 'all')" :to="{ name: 'information' }">
       <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'information' }">
         Information
       </div>
     </router-link>
 
-    <router-link :to="{ name: 'partners' }">
+    <router-link v-if="$can('advisor', 'all')" :to="{ name: 'partners' }">
       <div class="p-5 text-sm text-gray03 cursor-pointer" :class="{ active: getActiveTab === 'partners' }">
         Partners
       </div>
