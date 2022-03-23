@@ -608,7 +608,7 @@ import { useFetchMonthlyExpense } from '@/api/use-fetch-monthly-expense.js'
 import { createMonthlyExpenses } from '@/api/vueQuery/create-monthly-expenses'
 import { useMutation } from 'vue-query'
 import { currencyFormat } from '@/utils/currencyFormat'
-import { useAlert } from '@/utils/use-alert'
+// import { useAlert } from '@/utils/use-alert'
 
 function setInitValue(ruleForm, monthlyExpense) {
   if (monthlyExpense) {
@@ -796,11 +796,11 @@ export default {
     }
 
     const nextStep = () => {
-      useAlert({
-        title: 'Success',
-        type: 'success',
-        message: 'Opportunity update successfully',
-      })
+      // useAlert({
+      //   title: 'Success',
+      //   type: 'success',
+      //   message: 'Opportunity update successfully',
+      // })
       store.commit('newClient/setStep', step.value + 1)
       router.push({
         name: 'client-dashboard',

@@ -575,7 +575,6 @@ export default {
     })
 
     const submitForm = async () => {
-      console.log('====')
       store.commit('newClient/setStep', step.value + 1)
       router.push({
         name: 'client-assets-information',

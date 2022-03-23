@@ -137,7 +137,6 @@ export default {
     }
 
     const newLead = () => {
-      console.log('newLead')
       store.commit('globalComponents/setShowModal', {
         destination: 'newLead',
         value: true,

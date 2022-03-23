@@ -58,7 +58,6 @@ export default {
       form.value.validate(async (valid) => {
         if (valid) {
           const res = await fetchSendLink(ruleForm)
-          console.log('---', res)
           if (!('error' in res)) {
             useAlert({
               title: 'Success',
