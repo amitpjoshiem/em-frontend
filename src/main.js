@@ -5,6 +5,9 @@ import router from './router'
 import store from './store'
 import dayjs from 'dayjs'
 
+import { abilitiesPlugin } from '@casl/vue'
+import ability from './services/ability'
+
 import * as Sentry from '@sentry/vue'
 import { Integrations } from '@sentry/tracing'
 
@@ -41,10 +44,6 @@ import ElementPlus from 'element-plus'
 import './styles/index.css'
 
 const app = createApp(App)
-
-app.use(router)
-app.use(store)
-app.use(ElementPlus)
 
 // Global Component
 const components = [
@@ -87,6 +86,14 @@ dayjs.updateLocale('en', {
     lastWeek: 'D MMM YYYY',
     sameElse: 'D MMM YYYY',
   },
+})
+
+app.use(router)
+app.use(store)
+app.use(ElementPlus)
+
+app.use(abilitiesPlugin, ability, {
+  useGlobalProperties: true,
 })
 
 Sentry.init({

@@ -19,7 +19,7 @@
               placeholder="Please input password"
             />
           </el-form-item>
-          <el-form-item label="Confirm" prop="password_confirmation">
+          <el-form-item label="Confirm" prop="password_confirmation" class="mt-2">
             <el-input
               v-model="ruleForm.password_confirmation"
               type="password"
@@ -27,7 +27,7 @@
               placeholder="Please input password"
             />
           </el-form-item>
-          <el-form-item>
+          <el-form-item class="my-6">
             <Button
               :default-primary="!fetchingCreate && !fetchingReset"
               full

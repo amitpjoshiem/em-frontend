@@ -1,9 +1,9 @@
 <template>
-  <aside class="bg-primary min-h-screen flex flex-col w-[68px]">
-    <router-link :to="{ name: isAuth ? 'dashboard' : 'login' }" class="fixed">
+  <aside class="bg-primary min-h-screen flex-col w-[68px] sm:flex hidden">
+    <div class="fixed cursor-pointer" @click="goHome">
       <InlineSvg :src="IconLogo" />
-    </router-link>
-    <div v-if="isAuth" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
+    </div>
+    <div v-if="isAuth && $can('advisor', 'all')" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
       <router-link
         :to="{ name: 'dashboard' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
@@ -45,7 +45,7 @@
 <script>
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import IconList from '@/assets/svg/icon-list.svg'
 import IconListActive from '@/assets/svg/list-sidebar-active.svg'
@@ -63,6 +63,7 @@ export default {
   setup() {
     const store = useStore()
     const route = useRoute()
+    const router = useRouter()
 
     const isAuth = computed(() => {
       return store.state.auth.isAuth
@@ -75,6 +76,14 @@ export default {
     const getActiveListOfHouseholds = computed(() => {
       return getRouteName.value === 'all' || getRouteName.value === 'clients' || getRouteName.value === 'prospects'
     })
+
+    const goHome = () => {
+      if (isAuth.value) {
+        router.push({ path: '/' })
+      } else {
+        router.push({ name: 'login' })
+      }
+    }
 
     return {
       IconList,
@@ -91,6 +100,7 @@ export default {
       IconPipeLine,
       IconLogo,
       IconAssetsActive,
+      goHome,
     }
   },
 }

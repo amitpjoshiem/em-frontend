@@ -1,13 +1,93 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
-import Home from '@/layouts/Home.vue'
+import AdvisorHome from '@/layouts/AdvisorHome.vue'
+import ClientHome from '@/layouts/ClientHome.vue'
 import Login from '@/layouts/Login.vue'
+import ability from '../services/ability'
+import { computed } from 'vue'
+
+const role = computed(() => store.state.auth.role)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home,
+    path: '/client',
+    name: 'client-home',
+    component: ClientHome,
+    children: [
+      {
+        path: 'client-dashboard',
+        name: 'client-dashboard',
+        component: () => import(/* webpackChunkName: "ClientDashboard" */ '../views/ClientDashboard.vue'),
+      },
+      {
+        path: 'completed-financial',
+        name: 'completed-financial',
+        component: () =>
+          import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/CompletedFinancial.vue'),
+        children: [
+          {
+            path: 'basic/:id?',
+            name: 'client-basic-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "NewClientBasicInformation" */ '../components/Client/AddNewClient/AddBasicInfo.vue'
+              ),
+          },
+          {
+            path: 'assets/:id?',
+            name: 'client-assets-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "NewClientAssetsInformation" */ '../components/Client/AddNewClient/Assets/AddAssets.vue'
+              ),
+          },
+          {
+            path: 'expense/:id?',
+            name: 'client-expense-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "NewClienExpenseInformation" */ '../components/Client/AddNewClient/AddExpense.vue'
+              ),
+          },
+        ],
+      },
+      {
+        path: 'investment-retirement',
+        name: 'investment-retirement',
+        component: () =>
+          import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/InvestmentAndRetirement.vue'),
+      },
+      {
+        path: 'life-insurance',
+        name: 'life-insurance',
+        component: () => import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/LifeInsurance.vue'),
+      },
+      {
+        path: 'social-security',
+        name: 'social-security',
+        component: () => import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/SocialSecurity.vue'),
+      },
+      {
+        path: 'list-stock',
+        name: 'list-stock',
+        component: () => import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/ListOfStock.vue'),
+      },
+      {
+        path: '',
+        redirect: () => {
+          return { name: 'client-dashboard' }
+        },
+      },
+    ],
+  },
+
+  {
+    path: '/advisor',
+    name: 'advisor-home',
+    component: AdvisorHome,
+    meta: {
+      resource: 'advisor',
+    },
     children: [
       {
         path: 'dashboard',
@@ -276,12 +356,6 @@ const routes = [
       },
 
       {
-        path: 'logout',
-        name: 'logout',
-        component: () => import(/* webpackChunkName: "Logout" */ '../views/Logout.vue'),
-      },
-
-      {
         path: 'error',
         name: 'error',
         component: () => import(/* webpackChunkName: "Error" */ '../views/ErrorPage.vue'),
@@ -295,6 +369,7 @@ const routes = [
       },
     ],
   },
+
   {
     path: '/login',
     name: 'login',
@@ -330,6 +405,25 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: '/403',
+    name: '403',
+    component: () => import(/* webpackChunkName: "forbidden" */ '../views/Forbidden.vue'),
+  },
+
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import(/* webpackChunkName: "Logout" */ '../views/Logout.vue'),
+  },
+
+  {
+    path: '',
+    redirect: () => {
+      return { name: role.value === 'advisor' ? 'dashboard' : 'client-dashboard' }
+    },
+  },
 ]
 
 const router = createRouter({
@@ -341,9 +435,19 @@ router.beforeEach(async (to) => {
   if (to.meta.publicRoute) {
     return true
   }
+
+  const canNavigate = to.matched.some((route) => {
+    return ability.can(route.meta.resource)
+  })
+
   if (!store.state.auth.isAuth) {
     return '/login'
   }
+
+  if (!canNavigate && to.meta.resource) {
+    return '/403'
+  }
+
   return true
 })
 
