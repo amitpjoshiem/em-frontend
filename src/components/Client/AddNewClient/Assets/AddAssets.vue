@@ -411,18 +411,17 @@ import { watchEffect, ref, computed, reactive, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
-import { useMutation } from 'vue-query'
-// import { useMutation, useQueryClient } from 'vue-query'
+import { useMutation, useQueryClient } from 'vue-query'
 
 import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
-// import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
+import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member'
 
-// import { setValueByPath } from '@/utils/setValueByPath'
-// import { getByPath } from '@/utils/getByPath'
+import { setValueByPath } from '@/utils/setValueByPath'
+import { getByPath } from '@/utils/getByPath'
 import { scrollTop } from '@/utils/scrollTop'
-// import { useAlert } from '@/utils/use-alert'
+import { useAlert } from '@/utils/use-alert'
 
 import WidgetTotal from '@/components/Client/AddNewClient/Assets/WidgetTotal.vue'
 import ItemFormAssetsTwo from '@/components/Client/AddNewClient/Assets/ItemFormAssetsTwo.vue'
@@ -431,23 +430,23 @@ import { initialAssetsInformation } from '@/components/Client/AddNewClient/Asset
 
 import { rules } from '@/validationRules/assetsRules.js'
 
-// function setInitValue({ ruleForm, memberAssets, id }) {
-//   if (memberAssets?.data) {
-//     ruleForm.member_id = id
-//     Object.assign(ruleForm, JSON.parse(JSON.stringify(memberAssets.data)))
-//   }
-// }
+function setInitValue({ ruleForm, memberAssets, id }) {
+  if (memberAssets?.data) {
+    ruleForm.member_id = id
+    Object.assign(ruleForm, JSON.parse(JSON.stringify(memberAssets.data)))
+  }
+}
 
-// function setTotal(ruleForm, data) {
-//   ruleForm.liquid_assets.member.total = data.liquid_assets.member.total
-//   ruleForm.liquid_assets.spouse.total = data.liquid_assets.spouse.total
-//   ruleForm.liquid_assets.o_nq.total = data.liquid_assets.o_nq.total
-//   ruleForm.liquid_assets.balance.total = data.liquid_assets.balance.total
-//   ruleForm.non_liquid_assets.member.total = data.non_liquid_assets.member.total
-//   ruleForm.non_liquid_assets.spouse.total = data.non_liquid_assets.spouse.total
-//   ruleForm.non_liquid_assets.o_nq.total = data.non_liquid_assets.o_nq.total
-//   ruleForm.non_liquid_assets.balance.total = data.non_liquid_assets.balance.total
-// }
+function setTotal(ruleForm, data) {
+  ruleForm.liquid_assets.member.total = data.liquid_assets.member.total
+  ruleForm.liquid_assets.spouse.total = data.liquid_assets.spouse.total
+  ruleForm.liquid_assets.o_nq.total = data.liquid_assets.o_nq.total
+  ruleForm.liquid_assets.balance.total = data.liquid_assets.balance.total
+  ruleForm.non_liquid_assets.member.total = data.non_liquid_assets.member.total
+  ruleForm.non_liquid_assets.spouse.total = data.non_liquid_assets.spouse.total
+  ruleForm.non_liquid_assets.o_nq.total = data.non_liquid_assets.o_nq.total
+  ruleForm.non_liquid_assets.balance.total = data.non_liquid_assets.balance.total
+}
 
 export default {
   name: 'AddAssets',
@@ -457,7 +456,7 @@ export default {
     WidgetTotal,
   },
   setup() {
-    // const queryClient = useQueryClient()
+    const queryClient = useQueryClient()
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
@@ -467,7 +466,7 @@ export default {
 
     const memberId = route.params.id
 
-    // const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
+    const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
     const { mutateAsync: create, isLoading, isError, isFetching, data, error } = useMutation(createAssetsIncome)
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id }, { enabled: false })
@@ -599,9 +598,9 @@ export default {
     })
 
     watchEffect(() => {
-      // if (isMemberAssetsLoading.value === false) {
-      // setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
-      // }
+      if (isMemberAssetsLoading.value === false) {
+        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
+      }
     })
 
     const resetState = () => {
@@ -617,43 +616,40 @@ export default {
     const backStep = () => {
       store.commit('newClient/setStep', step.value - 1)
       router.push({ name: 'client-basic-information' })
-      // router.push({ name: 'basic-information', params: { id: memberId } })
     }
 
     const isMarried = computed(() => {
+      if (member?.value?.data) return member.value.data.married
       return false
-      // if (member?.value?.data) return member.value.data.married
-      // return false
     })
 
-    // const validateMemberAssetField = async (field, cb) => {
-    //   form.value.validateField(field, async (error) => {
-    //     if (!error) {
-    //       cb()
-    //     }
-    //   })
-    // }
-
-    const validateMemberAssetFieldAndUpdate = (field) => {
-      console.log(field)
-      // validateMemberAssetField(field, updateSingleField.bind(null, field))
+    const validateMemberAssetField = async (field, cb) => {
+      form.value.validateField(field, async (error) => {
+        if (!error) {
+          cb()
+        }
+      })
     }
 
-    // const updateSingleField = async (field) => {
-    //   const patchObject = {}
+    const validateMemberAssetFieldAndUpdate = (field) => {
+      validateMemberAssetField(field, updateSingleField.bind(null, field))
+    }
 
-    //   const newValue = getByPath(ruleForm, field)
-    //   const oldValue = getByPath(memberAssets.value.data, field)
+    const updateSingleField = async (field) => {
+      const patchObject = {}
 
-    //   if (Number(newValue) === Number(oldValue)) {
-    //     return
-    //   }
+      const newValue = getByPath(ruleForm, field)
+      const oldValue = getByPath(memberAssets.value.data, field)
 
-    //   setValueByPath(patchObject, field, newValue)
-    //   setValueByPath(patchObject, 'member_id', memberId)
+      if (Number(newValue) === Number(oldValue)) {
+        return
+      }
 
-    //   updateOrCreateMemberAssets(patchObject)
-    // }
+      setValueByPath(patchObject, field, newValue)
+      setValueByPath(patchObject, 'member_id', memberId)
+
+      updateOrCreateMemberAssets(patchObject)
+    }
 
     const updateOrCreateMemberAssets = async (patchObject = ruleForm) => {
       let res
@@ -663,37 +659,33 @@ export default {
       } else {
         res = await create(patchObject)
       }
-      // queryClient.invalidateQueries(['MemberAssets', memberId])
+      queryClient.invalidateQueries(['MemberAssets', memberId])
 
-      // setTotal(ruleForm, res.data)
+      setTotal(ruleForm, res.data)
       return res
     }
 
     const submitForm = async () => {
-      store.commit('newClient/setStep', step.value + 1)
-      router.push({
-        name: 'client-expense-information',
-      })
-      // const res = await updateOrCreateMemberAssets()
+      const res = await updateOrCreateMemberAssets()
 
-      // if (!('error' in res)) {
-      //   useAlert({
-      //     title: 'Success',
-      //     type: 'success',
-      //     message: 'Opportunity update successfully',
-      //   })
-      //   store.commit('newClient/setStep', step.value + 1)
-      //   router.push({
-      //     name: 'monthly-expense',
-      //     params: { id: memberId },
-      //   })
-      // } else {
-      //   useAlert({
-      //     title: 'Error',
-      //     type: 'error',
-      //     message: res.error.message,
-      //   })
-      // }
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Information update successfully',
+        })
+        store.commit('newClient/setStep', step.value + 1)
+        router.push({
+          name: 'client-expense-information',
+          params: { id: memberId },
+        })
+      } else {
+        useAlert({
+          title: 'Error',
+          type: 'error',
+          message: res.error.message,
+        })
+      }
     }
 
     return {
@@ -708,8 +700,8 @@ export default {
       submitForm,
       rules,
       isUpdateMember,
-      // memberAssets,
-      // isMemberAssetsLoading,
+      memberAssets,
+      isMemberAssetsLoading,
       memberId,
       isMarried,
       updateOrCreateMemberAssets,

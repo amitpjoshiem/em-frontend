@@ -606,9 +606,10 @@ import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { useFetchMonthlyExpense } from '@/api/use-fetch-monthly-expense.js'
 import { createMonthlyExpenses } from '@/api/vueQuery/create-monthly-expenses'
+import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { useMutation } from 'vue-query'
 import { currencyFormat } from '@/utils/currencyFormat'
-// import { useAlert } from '@/utils/use-alert'
+import { useAlert } from '@/utils/use-alert'
 
 function setInitValue(ruleForm, monthlyExpense) {
   if (monthlyExpense) {
@@ -639,6 +640,14 @@ export default {
       data: dataCreate,
       error: errorCreate,
     } = useMutation(createMonthlyExpenses)
+
+    const {
+      mutateAsync: updateSteps,
+      isLoading: isLoadingUpdateSteps,
+      isError: isErrorUpdateSteps,
+      isFetching: isFetchingUpdateSteps,
+      data: updateStepsData,
+    } = useMutation(updateStepsClients)
 
     const ruleForm = reactive({
       housing: {
@@ -795,16 +804,18 @@ export default {
       }
     }
 
-    const nextStep = () => {
-      // useAlert({
-      //   title: 'Success',
-      //   type: 'success',
-      //   message: 'Opportunity update successfully',
-      // })
+    const nextStep = async () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Information update successfully',
+      })
+      await updateSteps({ completed_financial_fact_finder: true })
+
       store.commit('newClient/setStep', step.value + 1)
       router.push({
         name: 'client-dashboard',
-        // params: { id: memberId },
+        params: { id: memberId },
       })
     }
 
@@ -830,6 +841,12 @@ export default {
 
       currencyFormat,
       nextStep,
+
+      updateSteps,
+      isLoadingUpdateSteps,
+      isErrorUpdateSteps,
+      isFetchingUpdateSteps,
+      updateStepsData,
     }
   },
 }

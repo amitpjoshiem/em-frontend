@@ -1,7 +1,6 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isFetchingMember" class="sm:p-5">
-      <!-- <div v-if="isShowForm"> -->
       <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
         <!-- GENERAL -->
         <div class="border-b pb-5">
@@ -219,7 +218,7 @@
         <!-- Employment history -->
         <div class="pb-8 mt-5 border-b">
           <span class="text-main text-xl font-semibold">Employment history</span>
-          <div class="text-gray03 text-xs uppercase my-2">Contact opportunity</div>
+          <div class="text-gray03 text-xs uppercase my-2">Contact</div>
 
           <div v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-2">
             <div class="sm:flex sm:flex-wrap">
@@ -231,7 +230,7 @@
                 <el-input
                   v-model="eh.company_name"
                   placeholder="Enter company name"
-                  @change="changeCompanyNameMember(index)"
+                  @change="changeCompanyNameMember({ ruleForm, index })"
                 />
               </el-form-item>
 
@@ -279,11 +278,13 @@
                 v-if="index === ruleForm.employment_history.length - 1"
                 type="primary"
                 plain
-                @click="addEmployment"
+                @click="addEmployment(ruleForm)"
               >
                 Add job
               </el-button>
-              <el-button v-else type="danger" plain @click="removeEmployment(index)">Remove job</el-button>
+              <el-button v-else type="danger" plain @click="removeEmployment({ ruleForm, index })"
+                >Remove job</el-button
+              >
             </div>
           </div>
 
@@ -300,7 +301,7 @@
                   <el-input
                     v-model="eh.company_name"
                     placeholder="Enter company name"
-                    @change="changeCompanyNameSpouse(index)"
+                    @change="changeCompanyNameSpouse({ ruleForm, index })"
                   />
                 </el-form-item>
 
@@ -348,11 +349,13 @@
                   v-if="index === ruleForm.spouse.employment_history.length - 1"
                   type="primary"
                   plain
-                  @click="addEmploymentSpouse"
+                  @click="addEmploymentSpouse(ruleForm)"
                 >
                   Add job
                 </el-button>
-                <el-button v-else type="danger" plain @click="removeEmploymentSpouse(index)">Remove job</el-button>
+                <el-button v-else type="danger" plain @click="removeEmploymentSpouse({ ruleForm, index })"
+                  >Remove job</el-button
+                >
               </div>
             </div>
           </div>
@@ -397,8 +400,9 @@
         <!-- Other -->
 
         <div class="flex justify-end my-10">
-          <!-- :disabled="isLoadingCreateMember || isLoadingUpdateMember" -->
-          <el-button type="primary" @click="submitForm('ruleForm')"> Go to the assets &amp; income </el-button>
+          <el-button type="primary" :disabled="isLoadingUpdateMember" @click="submitForm('ruleForm')">
+            Go to the assets &amp; income
+          </el-button>
         </div>
       </el-form>
     </div>
@@ -407,51 +411,19 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted, computed, watch, watchEffect } from 'vue'
-// import { createMembers } from '@/api/vueQuery/create-members'
-// import { updateMembers } from '@/api/vueQuery/update-members'
-// import { useMutation } from 'vue-query'
+import { reactive, ref, onMounted, computed, watchEffect } from 'vue'
+import { updateMembers } from '@/api/vueQuery/update-members'
+import { useMutation } from 'vue-query'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-// import { useAlert } from '@/utils/use-alert'
-import { rules, employmentHistoryRule } from '@/validationRules/basicRules.js'
+import { useAlert } from '@/utils/use-alert'
+import { rules } from '@/validationRules/basicRules.js'
 import { maska } from 'maska'
 import { scrollTop } from '@/utils/scrollTop'
-import { initialBasicInformation } from '@/components/NewProspect/initialState/basicInformation'
-import dayjs from 'dayjs'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
-import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
 import { useFetchMember } from '@/api/use-fetch-member.js'
-
-// function setInitValue(ruleForm, member) {
-//   if (member?.value?.id) {
-//     ruleForm.retired = member.value.retired
-//     ruleForm.married = member.value.married
-//     ruleForm.name = member.value.name
-//     if (member.value.birthday) ruleForm.birthday = dayjs(member.value.birthday).format('MM/DD/YYYY')
-//     if (member.value.retirement_date) ruleForm.birthday = dayjs(member.value.retirement_date).format('MM/DD/YYYY')
-//     ruleForm.email = member.value.email
-//     ruleForm.address = member.value.address
-//     ruleForm.city = member.value.city
-//     ruleForm.state = member.value.state
-//     ruleForm.zip = member.value.zip
-//     ruleForm.phone = member.value.phone
-
-//     if (member.value.employment_history.length)
-//       Object.assign(ruleForm.employment_history, JSON.parse(JSON.stringify(member.value.employment_history)))
-
-//     if (member.value.married) {
-//       Object.assign(ruleForm.spouse, JSON.parse(JSON.stringify(member.value.spouse)))
-//       ruleForm.spouse.birthday = dayjs(member.value.spouse.birthday).format('MM/DD/YYYY')
-//       ruleForm.spouse.retirement_date = dayjs(member.value.spouse.retirement_date).format('MM/DD/YYYY')
-//     }
-
-//     if (member.value.house.type) Object.assign(ruleForm.house, JSON.parse(JSON.stringify(member.value.house)))
-
-//     if (member.value.other.id) Object.assign(ruleForm.other, JSON.parse(JSON.stringify(member.value.other)))
-//   }
-// }
+import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 
 export default {
   name: 'AddProspectBasicInfo',
@@ -462,26 +434,8 @@ export default {
     const form = ref(null)
     const route = useRoute()
     const step = computed(() => store.state.newClient.step)
-    const isUpdateMember = computed(() => !!route.params.id)
 
-    const {
-      isLoading: isLoadingStatusSfAcc,
-      fetching: fetchingStatusSfAcc,
-      isError: isErrorStatusSfAcc,
-      data: statusSfAcc,
-    } = useSalesForceAuth()
-
-    // const {
-    //   mutateAsync: createMember,
-    //   isLoading: isLoadingCreateMember,
-    //   isError,
-    //   isFetching,
-    //   data,
-    //   error,
-    //   refetch,
-    // } = useMutation(createMembers)
-
-    // const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
+    const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
     const {
       isFetching: isFetchingMember,
@@ -489,11 +443,21 @@ export default {
       refetch: refetchMember,
     } = useFetchMember({ id: route.params.id }, { enabled: false })
 
-    // let memberId
+    const {
+      setInitValue,
+      addEmployment,
+      addEmploymentSpouse,
+      removeEmployment,
+      changeCompanyNameMember,
+      changeCompanyNameSpouse,
+      removeEmploymentSpouse,
+      getPlaceholder,
+      optionsCurrencyInput,
+    } = useBasicInfoHooks()
 
     const ruleForm = reactive({
-      retired: true,
-      married: true,
+      retired: false,
+      married: false,
       name: '',
       birthday: '',
       retirement_date: '',
@@ -507,7 +471,7 @@ export default {
         name: '',
         email: '',
         birthday: '',
-        retired: true,
+        retired: false,
         retirement_date: '',
         phone: '',
         employment_history: [
@@ -542,108 +506,39 @@ export default {
       },
     })
 
-    const optionsCurrencyInput = {
-      currency: 'USD',
-      locale: 'en-US',
-      currencyDisplay: 'hidden',
-      precision: 2,
-    }
-
     onMounted(async () => {
       store.commit('newClient/setStep', 1)
       scrollTop()
       if (route.params.id) {
-        // memberId = route.params.id
-        // refetchMember.value()
+        refetchMember.value()
       }
     })
 
     watchEffect(() => {
-      if (isFetchingMember.value === false) {
-        // setInitValue(ruleForm, member)
-      }
-    })
-
-    const resetState = () => {
-      Object.assign(ruleForm, initialBasicInformation)
-    }
-
-    watch(isUpdateMember, (newValue, oldValue) => {
-      if (newValue !== oldValue && newValue === false) {
-        resetState()
-      }
+      if (isFetchingMember.value === false) setInitValue(ruleForm, member)
     })
 
     const submitForm = async () => {
-      store.commit('newClient/setStep', step.value + 1)
-      router.push({
-        name: 'client-assets-information',
+      form.value.validate(async (valid) => {
+        if (valid) {
+          const res = await updateMember({ form: ruleForm, id: route.params.id })
+          if (!('error' in res)) {
+            useAlert({
+              title: 'Success',
+              type: 'success',
+              message: 'Information update successfully',
+            })
+            store.commit('newClient/setStep', step.value + 1)
+            router.push({
+              name: 'client-assets-information',
+              params: { id: route.params.id },
+            })
+          }
+        } else {
+          return false
+        }
       })
-      // form.value.validate(async (valid) => {
-      //   if (valid) {
-      //     let res
-      //     if (isUpdateMember.value) {
-      //       res = await updateMember({ form: ruleForm, id: memberId })
-      //     } else {
-      //       res = await createMember(ruleForm)
-      //     }
-      //     if (!('error' in res)) {
-      //       useAlert({
-      //         title: 'Success',
-      //         type: 'success',
-      //         message: isUpdateMember.value ? 'Opportunity update successfully' : 'Opportunity created successfully',
-      //       })
-      //       store.commit('newClient/setStep', step.value + 1)
-      //       router.push({
-      //         name: 'assets-information',
-      //         params: { id: res.data.id },
-      //       })
-      //     }
-      //   } else {
-      //     return false
-      //   }
-      // })
     }
-
-    const removeEmployment = (index) => {
-      ruleForm.employment_history.splice(index, 1)
-    }
-
-    const removeEmploymentSpouse = (index) => {
-      ruleForm.spouse.employment_history.splice(index, 1)
-    }
-
-    const addEmployment = () => {
-      const length = ruleForm.employment_history.length
-      ruleForm.employment_history.push({
-        company_name: '',
-        occupation: '',
-        years: '',
-      })
-      rules.employment_history[length] = {
-        company_name: [employmentHistoryRule.company_name],
-        occupation: [employmentHistoryRule.occupation],
-        years: [employmentHistoryRule.years],
-      }
-    }
-
-    const addEmploymentSpouse = () => {
-      const length = ruleForm.spouse.employment_history.length
-      ruleForm.spouse.employment_history.push({
-        company_name: '',
-        occupation: '',
-        years: '',
-      })
-      rules.spouse.employment_history[length] = {
-        company_name: [employmentHistoryRule.company_name],
-        occupation: [employmentHistoryRule.occupation],
-        years: [employmentHistoryRule.years],
-      }
-    }
-
-    const getPlaceholder = computed(() => {
-      return dayjs(new Date()).format('MM/DD/YYYY')
-    })
 
     const changeMarried = () => {
       if (ruleForm.married && !ruleForm.spouse.length) {
@@ -665,34 +560,6 @@ export default {
       }
     }
 
-    const changeCompanyNameMember = (index) => {
-      if (ruleForm.employment_history[index].company_name.trim().length) {
-        rules.employment_history[index].occupation[0].required = true
-        rules.employment_history[index].years[0].required = true
-      } else {
-        rules.employment_history[index].occupation[0].required = false
-        rules.employment_history[index].years[0].required = false
-      }
-    }
-
-    const changeCompanyNameSpouse = (index) => {
-      if (ruleForm.spouse.employment_history[index].company_name.length) {
-        rules.spouse.employment_history[index].occupation[0].required = true
-        rules.spouse.employment_history[index].years[0].required = true
-      } else {
-        rules.spouse.employment_history[index].occupation[0].required = false
-        rules.spouse.employment_history[index].years[0].required = false
-      }
-    }
-
-    // const isShowForm = computed(() => {
-    //   return statusSfAcc.value.auth || (!statusSfAcc.value.auth && route.params.id)
-    // })
-
-    const goPartnerSettings = () => {
-      router.push({ name: 'partners' })
-    }
-
     return {
       ruleForm,
       rules,
@@ -702,26 +569,13 @@ export default {
       addEmployment,
       addEmploymentSpouse,
       removeEmploymentSpouse,
-      // isLoadingCreateMember,
-      // isLoadingUpdateMember,
-      // isError,
-      // isFetching,
-      // data,
-      // error,
-      // refetch,
-      isUpdateMember,
+      isLoadingUpdateMember,
       IconAdd,
       IconDelete,
       getPlaceholder,
       changeMarried,
       changeCompanyNameMember,
       changeCompanyNameSpouse,
-      isLoadingStatusSfAcc,
-      isErrorStatusSfAcc,
-      statusSfAcc,
-      // isShowForm,
-      fetchingStatusSfAcc,
-      goPartnerSettings,
       optionsCurrencyInput,
       isFetchingMember,
       member,
