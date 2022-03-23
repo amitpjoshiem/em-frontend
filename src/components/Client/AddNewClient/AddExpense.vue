@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading">
+  <div v-if="!isLoading" class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div class="hidden pb-2 mt-8 md:flex">
       <div class="md:w-8/12" />
       <div class="md:w-2/12 text-gray03 text-xs">ESSENTIAL</div>

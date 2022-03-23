@@ -1,7 +1,6 @@
 <template>
   <div class="p-5">
-    <!-- <div class="p-5 lg:max-w-5xl lg:my-0 lg:mx-auto"> -->
-    <SwdSubHeader title="Completed Financial" />
+    <NewClientHeader />
     <StepsClient />
     <router-view />
   </div>
@@ -9,10 +8,12 @@
 
 <script>
 import StepsClient from './StepsClient.vue'
+import NewClientHeader from './AddNewClient/NewClientHeader.vue'
 export default {
   name: 'CompletedFinancial',
   components: {
     StepsClient,
+    NewClientHeader,
   },
   setup() {
     return {}
