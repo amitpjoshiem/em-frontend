@@ -90,6 +90,26 @@ export function useBasicInfoHooks() {
     }
   }
 
+  const changeMarried = (ruleForm) => {
+    if (ruleForm.married && !ruleForm.spouse.length) {
+      ruleForm.spouse = {
+        name: '',
+        email: '',
+        birthday: '',
+        retired: false,
+        retirement_date: '',
+        phone: '',
+        employment_history: [
+          {
+            company_name: '',
+            occupation: '',
+            years: '',
+          },
+        ],
+      }
+    }
+  }
+
   const resetState = (ruleForm) => {
     Object.assign(ruleForm, initialBasicInformation)
   }
@@ -114,6 +134,7 @@ export function useBasicInfoHooks() {
     changeCompanyNameSpouse,
     removeEmploymentSpouse,
     resetState,
+    changeMarried,
     getPlaceholder,
     optionsCurrencyInput,
   }

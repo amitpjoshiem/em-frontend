@@ -14,7 +14,7 @@
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="Married?">
-                <el-radio-group v-model="ruleForm.married" @change="changeMarried">
+                <el-radio-group v-model="ruleForm.married" @change="changeMarried(ruleForm)">
                   <el-radio :label="true">Yes</el-radio>
                   <el-radio :label="false">No</el-radio>
                 </el-radio-group>
@@ -453,6 +453,7 @@ export default {
       removeEmploymentSpouse,
       getPlaceholder,
       optionsCurrencyInput,
+      changeMarried,
     } = useBasicInfoHooks()
 
     const ruleForm = reactive({
@@ -538,26 +539,6 @@ export default {
           return false
         }
       })
-    }
-
-    const changeMarried = () => {
-      if (ruleForm.married && !ruleForm.spouse.length) {
-        ruleForm.spouse = {
-          name: '',
-          email: '',
-          birthday: '',
-          retired: false,
-          retirement_date: '',
-          phone: '',
-          employment_history: [
-            {
-              company_name: '',
-              occupation: '',
-              years: '',
-            },
-          ],
-        }
-      }
     }
 
     return {
