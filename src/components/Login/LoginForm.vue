@@ -60,10 +60,10 @@ export default {
 
     const { response, error, fetching, login } = useLogin()
 
-    const submit = () => {
-      form.value.validate((valid) => {
+    const submit = async () => {
+      form.value.validate(async (valid) => {
         if (valid) {
-          login(ruleForm)
+          await login(ruleForm)
         } else {
           return false
         }

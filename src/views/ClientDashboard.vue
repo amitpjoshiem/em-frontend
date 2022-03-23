@@ -1,18 +1,18 @@
 <template>
   <div class="px-5">
-    <HeaderDashboard />
+    <HeaderDashboardClient />
     <ClientInformation />
   </div>
 </template>
 
 <script>
-import HeaderDashboard from '@/components/Dashboard/HeaderDashboard.vue'
+import HeaderDashboardClient from '@/components/Client/HeaderDashboardClient.vue'
 import ClientInformation from '@/components/Client/ClientInformation.vue'
 
 export default {
   name: 'ClientDashboard',
   components: {
-    HeaderDashboard,
+    HeaderDashboardClient,
     ClientInformation,
   },
 }
