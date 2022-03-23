@@ -1,5 +1,5 @@
 <template>
-  <div class="h-20 flex items-center">
+  <div class="flex items-center">
     <div v-if="!isLoading" class="flex pt-5 pb-5 text-2xl font-medium">
       <span class="pr-2">({{ isRole }})</span>
       <span class=""> Welcome, {{ userProfile.firstName }} {{ userProfile.lastName }} </span>

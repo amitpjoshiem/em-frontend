@@ -7,7 +7,7 @@
           In order to conducta proper analysis and make your visit productive, we ask that you providethe items listed
           below
         </span>
-        <span class="text-base my-10">
+        <span class="text-base my-5 sm:my-10">
           These items are essential for performing our fiduciary duty and providing the most appropiate financial advice
         </span>
       </div>
@@ -15,49 +15,54 @@
 
     <router-link
       :to="{ name: 'client-basic-information' }"
-      class="flex items-center border border-input-border rounded-md p-5 mb-10"
+      class="flex items-center border border-input-border rounded-md p-5 mb-4 sm:mb-10"
     >
       <el-icon :size="25" class="mr-5">
         <circle-check-filled color="green" />
       </el-icon>
-      <span>Completed Financial Fact Finder</span>
+      <span class="text-xs sm:text-base">Completed Financial Fact Finder</span>
     </router-link>
 
     <router-link
       :to="{ name: 'investment-retirement' }"
-      class="flex items-center border border-input-border rounded-md p-5 mb-10"
+      class="flex items-center border border-input-border rounded-md p-5 mb-4 sm:mb-10"
     >
       <el-icon :size="25" class="mr-5">
         <circle-check-filled color="gray" />
       </el-icon>
-      <span>Investment and Retirement Accounts (most recent statements)</span>
+      <span class="text-xs sm:text-base">Investment and Retirement Accounts (most recent statements)</span>
     </router-link>
 
     <router-link
       :to="{ name: 'life-insurance' }"
-      class="flex items-center border border-input-border rounded-md p-5 mb-10"
+      class="flex items-center border border-input-border rounded-md p-5 mb-4 sm:mb-10"
     >
       <el-icon :size="25" class="mr-5">
         <circle-check-filled color="gray" />
       </el-icon>
-      <span>Life Insurance, Annuity, and Long Term Care Policies (most recent statements)</span>
+      <span class="text-xs sm:text-base"
+        >Life Insurance, Annuity, and Long Term Care Policies (most recent statements)</span
+      >
     </router-link>
 
     <router-link
       :to="{ name: 'social-security' }"
-      class="flex items-center border border-input-border rounded-md p-5 mb-10"
+      class="flex items-center border border-input-border rounded-md p-5 mb-4 sm:mb-10"
     >
       <el-icon :size="25" class="mr-5">
         <circle-check-filled color="gray" />
       </el-icon>
-      <span>Social Security Information/Statement(s)</span>
+      <span class="text-xs sm:text-base">Social Security Information/Statement(s)</span>
     </router-link>
 
-    <router-link :to="{ name: 'list-stock' }" class="flex items-center border border-input-border rounded-md p-5 mb-10">
+    <router-link
+      :to="{ name: 'list-stock' }"
+      class="flex items-center border border-input-border rounded-md p-5 mb-4 sm:mb-10"
+    >
       <el-icon :size="25" class="mr-5">
         <circle-check-filled color="gray" />
       </el-icon>
-      <span>List of Stock Certificates or Bonds</span>
+      <span class="text-xs sm:text-base">List of Stock Certificates or Bonds</span>
     </router-link>
 
     <div class="flex justify-end">
