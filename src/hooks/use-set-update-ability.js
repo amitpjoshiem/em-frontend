@@ -1,7 +1,7 @@
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import ability from '../services/ability'
 import { AbilityBuilder, Ability } from '@casl/ability'
+import ability from '../services/ability'
 
 export function useSetUpdateAbility() {
   const store = useStore()
