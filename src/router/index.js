@@ -427,7 +427,7 @@ const routes = [
   {
     path: '',
     redirect: () => {
-      return { name: role.value === 'advisor' ? 'dashboard' : 'client-dashboard' }
+      return { name: role.value === 'advisor' || role.value === 'admin' ? 'dashboard' : 'client-dashboard' }
     },
   },
 ]
