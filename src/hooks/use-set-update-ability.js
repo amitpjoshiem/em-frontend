@@ -10,7 +10,7 @@ export function useSetUpdateAbility() {
   const setUpdateAbility = () => {
     const { can, rules } = new AbilityBuilder(Ability)
 
-    if (role.value === 'advisor') {
+    if (role.value === 'advisor' || role.value === 'admin') {
       can('advisor', 'all')
       can('advisor', 'update')
       can('advisor', 'read')
