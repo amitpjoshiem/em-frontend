@@ -601,20 +601,19 @@
 </template>
 <script>
 import { onMounted, computed, reactive, ref, watchEffect } from 'vue'
-import { scrollTop } from '@/utils/scrollTop'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
+
 import { useFetchMonthlyExpense } from '@/api/use-fetch-monthly-expense.js'
 import { createMonthlyExpenses } from '@/api/vueQuery/create-monthly-expenses'
+import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { useMutation } from 'vue-query'
-import { currencyFormat } from '@/utils/currencyFormat'
-// import { useAlert } from '@/utils/use-alert'
 
-function setInitValue(ruleForm, monthlyExpense) {
-  if (monthlyExpense) {
-    Object.assign(ruleForm, JSON.parse(JSON.stringify(monthlyExpense)))
-  }
-}
+import { currencyFormat } from '@/utils/currencyFormat'
+import { useAlert } from '@/utils/use-alert'
+import { scrollTop } from '@/utils/scrollTop'
+
+import { useExpenseInfoHooks } from '@/hooks/use-expense-info-hooks'
 
 export default {
   name: 'AddExpense',
@@ -627,18 +626,12 @@ export default {
     const step = computed(() => store.state.newClient.step)
     let memberId
 
-    const { isLoading, isError, isFetching, data, refetch } = useFetchMonthlyExpense(
-      { id: route.params.id },
-      { enabled: false }
-    )
-    const {
-      mutateAsync: create,
-      isLoading: isLoadingCreate,
-      isError: isErrorCreate,
-      isFetching: isFetchingCreate,
-      data: dataCreate,
-      error: errorCreate,
-    } = useMutation(createMonthlyExpenses)
+    const { isLoading, isFetching, data, refetch } = useFetchMonthlyExpense({ id: route.params.id }, { enabled: false })
+    const { mutateAsync: create, isLoading: isLoadingCreate } = useMutation(createMonthlyExpenses)
+
+    const { mutateAsync: updateSteps } = useMutation(updateStepsClients)
+
+    const { setInitValue, optionsCurrencyInput } = useExpenseInfoHooks()
 
     const ruleForm = reactive({
       housing: {
@@ -775,13 +768,6 @@ export default {
       }
     })
 
-    const optionsCurrencyInput = {
-      currency: 'USD',
-      locale: 'en-US',
-      currencyDisplay: 'hidden',
-      precision: 2,
-    }
-
     const backStep = () => {
       store.commit('newClient/setStep', step.value - 1)
       router.push({ name: 'client-assets-information', params: { id: memberId } })
@@ -795,16 +781,18 @@ export default {
       }
     }
 
-    const nextStep = () => {
-      // useAlert({
-      //   title: 'Success',
-      //   type: 'success',
-      //   message: 'Opportunity update successfully',
-      // })
+    const nextStep = async () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Information update successfully',
+      })
+      await updateSteps({ completed_financial_fact_finder: true })
+
       store.commit('newClient/setStep', step.value + 1)
       router.push({
         name: 'client-dashboard',
-        // params: { id: memberId },
+        params: { id: memberId },
       })
     }
 
@@ -816,17 +804,10 @@ export default {
       change,
 
       isLoading,
-      isError,
       isFetching,
       data,
-      refetch,
 
-      create,
       isLoadingCreate,
-      isErrorCreate,
-      isFetchingCreate,
-      dataCreate,
-      errorCreate,
 
       currencyFormat,
       nextStep,

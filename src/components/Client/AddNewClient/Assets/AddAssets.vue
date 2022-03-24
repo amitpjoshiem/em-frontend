@@ -1,7 +1,6 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
-    <div v-if="!isFetchingMember">
-      <!-- <div v-if="!isFetchingMember && !isMemberAssetsLoading"> -->
+    <div v-if="!isFetchingMember && !isMemberAssetsLoading">
       <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules">
         <!-- Current income -->
         <div class="border-b pb-7">
@@ -22,7 +21,7 @@
               title="Salary"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- Social Security -->
@@ -34,7 +33,7 @@
               title="Social Security"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- Pension -->
@@ -46,7 +45,7 @@
               title="Pension"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- Rental income -->
@@ -58,7 +57,7 @@
               title="Rental income"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- RMD’s -->
@@ -70,7 +69,7 @@
               title="RMD’s"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- Interest/Dividents -->
@@ -82,7 +81,7 @@
               title="Interest/Dividents"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- Other -->
@@ -94,7 +93,7 @@
               title="Other"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
           </div>
         </div>
@@ -114,7 +113,7 @@
             title="Cash/Checking/ Savings/MM"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- CD’s -->
@@ -130,7 +129,7 @@
             title="CD’s"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA (if over 59) -->
@@ -146,7 +145,7 @@
             title="401k/IRA (if over 59)"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA -->
@@ -162,7 +161,7 @@
             title="401k/IRA"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA -->
@@ -178,7 +177,7 @@
             title="401k/IRA"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Stocks/Bonds/MF -->
@@ -194,7 +193,7 @@
             title="Stocks/Bonds/MF"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Stocks/Bonds/MF -->
@@ -210,7 +209,7 @@
             title="Cash value life insurance"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- FA/VA not suject to penalty -->
@@ -226,7 +225,7 @@
             title="FA/VA not suject to penalty"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Gift/Inheritance -->
@@ -242,7 +241,7 @@
             title="Gift/Inheritance"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Lump sum pension -->
@@ -258,7 +257,7 @@
             title="Lump sum pension"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Other liquid assets -->
@@ -274,7 +273,7 @@
             title="Other liquid assets"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Total -->
@@ -303,7 +302,7 @@
             title="Value of home"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA (if over 59) -->
@@ -319,7 +318,7 @@
             title="401k/IRA (if over 59)"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA -->
@@ -335,7 +334,7 @@
             title="401k/IRA"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA -->
@@ -351,7 +350,7 @@
             title="401k/IRA"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- FA/VA suject to penalty -->
@@ -367,7 +366,7 @@
             title="FA/VA suject to penalty"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Other -->
@@ -383,7 +382,7 @@
             title="Other"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
           <WidgetTotal
             :member="ruleForm.non_liquid_assets.member.total"
@@ -407,47 +406,26 @@
 </template>
 
 <script>
-import { watchEffect, ref, computed, reactive, onMounted, watch } from 'vue'
+import { watchEffect, ref, computed, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
-import { useMutation } from 'vue-query'
-// import { useMutation, useQueryClient } from 'vue-query'
+import { useMutation, useQueryClient } from 'vue-query'
 
-import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
-// import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
+import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member'
 
-// import { setValueByPath } from '@/utils/setValueByPath'
-// import { getByPath } from '@/utils/getByPath'
 import { scrollTop } from '@/utils/scrollTop'
-// import { useAlert } from '@/utils/use-alert'
+import { useAlert } from '@/utils/use-alert'
 
 import WidgetTotal from '@/components/Client/AddNewClient/Assets/WidgetTotal.vue'
 import ItemFormAssetsTwo from '@/components/Client/AddNewClient/Assets/ItemFormAssetsTwo.vue'
 import ItemFormAssetsFour from '@/components/Client/AddNewClient/Assets/ItemFormAssetsFour.vue'
-import { initialAssetsInformation } from '@/components/Client/AddNewClient/Assets/assetsInformation'
+
+import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 
 import { rules } from '@/validationRules/assetsRules.js'
-
-// function setInitValue({ ruleForm, memberAssets, id }) {
-//   if (memberAssets?.data) {
-//     ruleForm.member_id = id
-//     Object.assign(ruleForm, JSON.parse(JSON.stringify(memberAssets.data)))
-//   }
-// }
-
-// function setTotal(ruleForm, data) {
-//   ruleForm.liquid_assets.member.total = data.liquid_assets.member.total
-//   ruleForm.liquid_assets.spouse.total = data.liquid_assets.spouse.total
-//   ruleForm.liquid_assets.o_nq.total = data.liquid_assets.o_nq.total
-//   ruleForm.liquid_assets.balance.total = data.liquid_assets.balance.total
-//   ruleForm.non_liquid_assets.member.total = data.non_liquid_assets.member.total
-//   ruleForm.non_liquid_assets.spouse.total = data.non_liquid_assets.spouse.total
-//   ruleForm.non_liquid_assets.o_nq.total = data.non_liquid_assets.o_nq.total
-//   ruleForm.non_liquid_assets.balance.total = data.non_liquid_assets.balance.total
-// }
 
 export default {
   name: 'AddAssets',
@@ -457,20 +435,20 @@ export default {
     WidgetTotal,
   },
   setup() {
-    // const queryClient = useQueryClient()
+    const queryClient = useQueryClient()
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
     const form = ref()
     const step = computed(() => store.state.newClient.step)
-    const isUpdateMember = computed(() => !!route.params.id)
 
     const memberId = route.params.id
 
-    // const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
-    const { mutateAsync: create, isLoading, isError, isFetching, data, error } = useMutation(createAssetsIncome)
+    const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id }, { enabled: false })
+
+    const { setInitValue, setTotal, isMarried } = useAssetsInfoHooks(member)
 
     const ruleForm = reactive({
       income: {
@@ -599,126 +577,49 @@ export default {
     })
 
     watchEffect(() => {
-      // if (isMemberAssetsLoading.value === false) {
-      // setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
-      // }
-    })
-
-    const resetState = () => {
-      Object.assign(ruleForm, initialAssetsInformation)
-    }
-
-    watch(isUpdateMember, (newValue, oldValue) => {
-      if (newValue !== oldValue && newValue === false) {
-        resetState()
+      if (isMemberAssetsLoading.value === false) {
+        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
       }
     })
 
     const backStep = () => {
       store.commit('newClient/setStep', step.value - 1)
       router.push({ name: 'client-basic-information' })
-      // router.push({ name: 'basic-information', params: { id: memberId } })
     }
 
-    const isMarried = computed(() => {
-      return false
-      // if (member?.value?.data) return member.value.data.married
-      // return false
-    })
+    const change = async () => {
+      const res = await updateMemberAssets(ruleForm)
+      queryClient.invalidateQueries(['MemberAssets', memberId])
 
-    // const validateMemberAssetField = async (field, cb) => {
-    //   form.value.validateField(field, async (error) => {
-    //     if (!error) {
-    //       cb()
-    //     }
-    //   })
-    // }
-
-    const validateMemberAssetFieldAndUpdate = (field) => {
-      console.log(field)
-      // validateMemberAssetField(field, updateSingleField.bind(null, field))
-    }
-
-    // const updateSingleField = async (field) => {
-    //   const patchObject = {}
-
-    //   const newValue = getByPath(ruleForm, field)
-    //   const oldValue = getByPath(memberAssets.value.data, field)
-
-    //   if (Number(newValue) === Number(oldValue)) {
-    //     return
-    //   }
-
-    //   setValueByPath(patchObject, field, newValue)
-    //   setValueByPath(patchObject, 'member_id', memberId)
-
-    //   updateOrCreateMemberAssets(patchObject)
-    // }
-
-    const updateOrCreateMemberAssets = async (patchObject = ruleForm) => {
-      let res
-
-      if (isUpdateMember.value) {
-        res = await updateMemberAssets(patchObject)
-      } else {
-        res = await create(patchObject)
-      }
-      // queryClient.invalidateQueries(['MemberAssets', memberId])
-
-      // setTotal(ruleForm, res.data)
-      return res
+      setTotal(ruleForm, res.data)
+      // return res
     }
 
     const submitForm = async () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Information update successfully',
+      })
       store.commit('newClient/setStep', step.value + 1)
       router.push({
         name: 'client-expense-information',
+        params: { id: memberId },
       })
-      // const res = await updateOrCreateMemberAssets()
-
-      // if (!('error' in res)) {
-      //   useAlert({
-      //     title: 'Success',
-      //     type: 'success',
-      //     message: 'Opportunity update successfully',
-      //   })
-      //   store.commit('newClient/setStep', step.value + 1)
-      //   router.push({
-      //     name: 'monthly-expense',
-      //     params: { id: memberId },
-      //   })
-      // } else {
-      //   useAlert({
-      //     title: 'Error',
-      //     type: 'error',
-      //     message: res.error.message,
-      //   })
-      // }
     }
 
     return {
       ruleForm,
       backStep,
-      create,
-      isLoading,
-      isError,
-      isFetching,
-      data,
-      error,
       submitForm,
       rules,
-      isUpdateMember,
-      // memberAssets,
-      // isMemberAssetsLoading,
-      memberId,
+      isMemberAssetsLoading,
       isMarried,
-      updateOrCreateMemberAssets,
       form,
-      validateMemberAssetFieldAndUpdate,
       isLoadingUpdate,
-
       isFetchingMember,
       member,
+      change,
     }
   },
 }

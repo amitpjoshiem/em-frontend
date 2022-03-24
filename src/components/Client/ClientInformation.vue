@@ -2,7 +2,7 @@
   <div v-if="isLoadingInfo">
     <el-skeleton :rows="15" animated />
   </div>
-  <div v-else-if="isError">An error has occurred: {{ error }}</div>
+  <div v-else-if="isErrorInfo">An error has occurred: {{ error }}</div>
   <div v-else-if="clientsInfo" class="p-5 mb-20">
     <div class="flex flex-col items-center">
       <img src="../../assets/img/swd-logo-blue.png" alt="excel" class="w-[150px]" />
@@ -18,7 +18,7 @@
     </div>
 
     <router-link
-      :to="{ name: 'client-basic-information' }"
+      :to="{ name: 'client-basic-information', params: { id: clientsInfo.member_id } }"
       class="flex items-center border border-input-border rounded-md p-5 mb-4 sm:mb-10"
     >
       <el-icon :size="25" class="mr-5">
