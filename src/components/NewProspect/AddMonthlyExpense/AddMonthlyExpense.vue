@@ -578,20 +578,18 @@
 </template>
 <script>
 import { onMounted, computed, reactive, ref, watchEffect } from 'vue'
-import { scrollTop } from '@/utils/scrollTop'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
+
 import { useFetchMonthlyExpense } from '@/api/use-fetch-monthly-expense.js'
 import { createMonthlyExpenses } from '@/api/vueQuery/create-monthly-expenses'
 import { useMutation } from 'vue-query'
+
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useAlert } from '@/utils/use-alert'
+import { scrollTop } from '@/utils/scrollTop'
 
-function setInitValue(ruleForm, monthlyExpense) {
-  if (monthlyExpense) {
-    Object.assign(ruleForm, JSON.parse(JSON.stringify(monthlyExpense)))
-  }
-}
+import { useExpenseInfoHooks } from '@/hooks/use-expense-info-hooks'
 
 export default {
   name: 'AddMonthlyExpense',
@@ -604,18 +602,10 @@ export default {
     const step = computed(() => store.state.newProspect.step)
     let memberId
 
-    const { isLoading, isError, isFetching, data, refetch } = useFetchMonthlyExpense(
-      { id: route.params.id },
-      { enabled: false }
-    )
-    const {
-      mutateAsync: create,
-      isLoading: isLoadingCreate,
-      isError: isErrorCreate,
-      isFetching: isFetchingCreate,
-      data: dataCreate,
-      error: errorCreate,
-    } = useMutation(createMonthlyExpenses)
+    const { isLoading, isFetching, data, refetch } = useFetchMonthlyExpense({ id: route.params.id }, { enabled: false })
+    const { mutateAsync: create, isLoading: isLoadingCreate } = useMutation(createMonthlyExpenses)
+
+    const { setInitValue, optionsCurrencyInput } = useExpenseInfoHooks()
 
     const ruleForm = reactive({
       housing: {
@@ -752,13 +742,6 @@ export default {
       }
     })
 
-    const optionsCurrencyInput = {
-      currency: 'USD',
-      locale: 'en-US',
-      currencyDisplay: 'hidden',
-      precision: 2,
-    }
-
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - null)
       router.push({ name: 'basic-information', params: { id: memberId } })
@@ -793,17 +776,10 @@ export default {
       change,
 
       isLoading,
-      isError,
       isFetching,
       data,
-      refetch,
 
-      create,
       isLoadingCreate,
-      isErrorCreate,
-      isFetchingCreate,
-      dataCreate,
-      errorCreate,
 
       currencyFormat,
       nextStep,
