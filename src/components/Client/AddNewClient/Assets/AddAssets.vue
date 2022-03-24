@@ -21,7 +21,7 @@
               title="Salary"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- Social Security -->
@@ -33,7 +33,7 @@
               title="Social Security"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- Pension -->
@@ -45,7 +45,7 @@
               title="Pension"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- Rental income -->
@@ -57,7 +57,7 @@
               title="Rental income"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- RMD’s -->
@@ -69,7 +69,7 @@
               title="RMD’s"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- Interest/Dividents -->
@@ -81,7 +81,7 @@
               title="Interest/Dividents"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
 
             <!-- Other -->
@@ -93,7 +93,7 @@
               title="Other"
               :is-married="isMarried"
               :disabled="isLoadingUpdate"
-              @blur="validateMemberAssetFieldAndUpdate"
+              @blur="change"
             />
           </div>
         </div>
@@ -113,7 +113,7 @@
             title="Cash/Checking/ Savings/MM"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- CD’s -->
@@ -129,7 +129,7 @@
             title="CD’s"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA (if over 59) -->
@@ -145,7 +145,7 @@
             title="401k/IRA (if over 59)"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA -->
@@ -161,7 +161,7 @@
             title="401k/IRA"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA -->
@@ -177,7 +177,7 @@
             title="401k/IRA"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Stocks/Bonds/MF -->
@@ -193,7 +193,7 @@
             title="Stocks/Bonds/MF"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Stocks/Bonds/MF -->
@@ -209,7 +209,7 @@
             title="Cash value life insurance"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- FA/VA not suject to penalty -->
@@ -225,7 +225,7 @@
             title="FA/VA not suject to penalty"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Gift/Inheritance -->
@@ -241,7 +241,7 @@
             title="Gift/Inheritance"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Lump sum pension -->
@@ -257,7 +257,7 @@
             title="Lump sum pension"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Other liquid assets -->
@@ -273,7 +273,7 @@
             title="Other liquid assets"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Total -->
@@ -302,7 +302,7 @@
             title="Value of home"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA (if over 59) -->
@@ -318,7 +318,7 @@
             title="401k/IRA (if over 59)"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA -->
@@ -334,7 +334,7 @@
             title="401k/IRA"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- 401k/IRA -->
@@ -350,7 +350,7 @@
             title="401k/IRA"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- FA/VA suject to penalty -->
@@ -366,7 +366,7 @@
             title="FA/VA suject to penalty"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
 
           <!-- Other -->
@@ -382,7 +382,7 @@
             title="Other"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
-            @blur="validateMemberAssetFieldAndUpdate"
+            @blur="change"
           />
           <WidgetTotal
             :member="ruleForm.non_liquid_assets.member.total"
@@ -417,8 +417,6 @@ import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member'
 
-import { setValueByPath } from '@/utils/setValueByPath'
-import { getByPath } from '@/utils/getByPath'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 
@@ -591,36 +589,8 @@ export default {
       router.push({ name: 'client-basic-information' })
     }
 
-    const validateMemberAssetFieldAndUpdate = (field) => {
-      validateMemberAssetField(field, updateSingleField.bind(null, field))
-    }
-
-    const validateMemberAssetField = async (field, cb) => {
-      form.value.validateField(field, async (error) => {
-        if (!error) {
-          cb()
-        }
-      })
-    }
-
-    const updateSingleField = async (field) => {
-      const patchObject = {}
-
-      const newValue = getByPath(ruleForm, field)
-      const oldValue = getByPath(memberAssets.value.data, field)
-
-      if (Number(newValue) === Number(oldValue)) {
-        return
-      }
-
-      setValueByPath(patchObject, field, newValue)
-      setValueByPath(patchObject, 'member_id', memberId)
-
-      updateAssets(patchObject)
-    }
-
-    const updateAssets = async (patchObject = ruleForm) => {
-      const res = await updateMemberAssets(patchObject)
+    const change = async () => {
+      const res = await updateMemberAssets(ruleForm)
       queryClient.invalidateQueries(['MemberAssets', memberId])
 
       setTotal(ruleForm, res.data)
@@ -655,11 +625,10 @@ export default {
       isMemberAssetsLoading,
       isMarried,
       form,
-      validateMemberAssetFieldAndUpdate,
       isLoadingUpdate,
-
       isFetchingMember,
       member,
+      change,
     }
   },
 }
