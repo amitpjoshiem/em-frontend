@@ -412,7 +412,6 @@ import { useStore } from 'vuex'
 
 import { useMutation, useQueryClient } from 'vue-query'
 
-import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member'
@@ -446,7 +445,6 @@ export default {
     const memberId = route.params.id
 
     const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
-    const { mutateAsync: create, isLoading, isError, isFetching, data, error } = useMutation(createAssetsIncome)
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id }, { enabled: false })
 
@@ -594,7 +592,7 @@ export default {
       queryClient.invalidateQueries(['MemberAssets', memberId])
 
       setTotal(ruleForm, res.data)
-      return res
+      // return res
     }
 
     const submitForm = async () => {
@@ -613,15 +611,8 @@ export default {
     return {
       ruleForm,
       backStep,
-      create,
-      isLoading,
-      isError,
-      isFetching,
-      data,
-      error,
       submitForm,
       rules,
-      memberAssets,
       isMemberAssetsLoading,
       isMarried,
       form,
