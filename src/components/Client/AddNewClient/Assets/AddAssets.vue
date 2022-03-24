@@ -1,7 +1,6 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
-    <div v-if="!isFetchingMember">
-      <!-- <div v-if="!isFetchingMember && !isMemberAssetsLoading"> -->
+    <div v-if="!isFetchingMember && !isMemberAssetsLoading">
       <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules">
         <!-- Current income -->
         <div class="border-b pb-7">
@@ -407,7 +406,7 @@
 </template>
 
 <script>
-import { watchEffect, ref, computed, reactive, onMounted, watch } from 'vue'
+import { watchEffect, ref, computed, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -426,27 +425,10 @@ import { useAlert } from '@/utils/use-alert'
 import WidgetTotal from '@/components/Client/AddNewClient/Assets/WidgetTotal.vue'
 import ItemFormAssetsTwo from '@/components/Client/AddNewClient/Assets/ItemFormAssetsTwo.vue'
 import ItemFormAssetsFour from '@/components/Client/AddNewClient/Assets/ItemFormAssetsFour.vue'
-import { initialAssetsInformation } from '@/components/Client/AddNewClient/Assets/assetsInformation'
+
+import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 
 import { rules } from '@/validationRules/assetsRules.js'
-
-function setInitValue({ ruleForm, memberAssets, id }) {
-  if (memberAssets?.data) {
-    ruleForm.member_id = id
-    Object.assign(ruleForm, JSON.parse(JSON.stringify(memberAssets.data)))
-  }
-}
-
-function setTotal(ruleForm, data) {
-  ruleForm.liquid_assets.member.total = data.liquid_assets.member.total
-  ruleForm.liquid_assets.spouse.total = data.liquid_assets.spouse.total
-  ruleForm.liquid_assets.o_nq.total = data.liquid_assets.o_nq.total
-  ruleForm.liquid_assets.balance.total = data.liquid_assets.balance.total
-  ruleForm.non_liquid_assets.member.total = data.non_liquid_assets.member.total
-  ruleForm.non_liquid_assets.spouse.total = data.non_liquid_assets.spouse.total
-  ruleForm.non_liquid_assets.o_nq.total = data.non_liquid_assets.o_nq.total
-  ruleForm.non_liquid_assets.balance.total = data.non_liquid_assets.balance.total
-}
 
 export default {
   name: 'AddAssets',
@@ -462,7 +444,6 @@ export default {
     const route = useRoute()
     const form = ref()
     const step = computed(() => store.state.newClient.step)
-    const isUpdateMember = computed(() => !!route.params.id)
 
     const memberId = route.params.id
 
@@ -470,6 +451,8 @@ export default {
     const { mutateAsync: create, isLoading, isError, isFetching, data, error } = useMutation(createAssetsIncome)
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id }, { enabled: false })
+
+    const { setInitValue, setTotal, isMarried } = useAssetsInfoHooks(member)
 
     const ruleForm = reactive({
       income: {
@@ -603,25 +586,14 @@ export default {
       }
     })
 
-    const resetState = () => {
-      Object.assign(ruleForm, initialAssetsInformation)
-    }
-
-    watch(isUpdateMember, (newValue, oldValue) => {
-      if (newValue !== oldValue && newValue === false) {
-        resetState()
-      }
-    })
-
     const backStep = () => {
       store.commit('newClient/setStep', step.value - 1)
       router.push({ name: 'client-basic-information' })
     }
 
-    const isMarried = computed(() => {
-      if (member?.value?.data) return member.value.data.married
-      return false
-    })
+    const validateMemberAssetFieldAndUpdate = (field) => {
+      validateMemberAssetField(field, updateSingleField.bind(null, field))
+    }
 
     const validateMemberAssetField = async (field, cb) => {
       form.value.validateField(field, async (error) => {
@@ -629,10 +601,6 @@ export default {
           cb()
         }
       })
-    }
-
-    const validateMemberAssetFieldAndUpdate = (field) => {
-      validateMemberAssetField(field, updateSingleField.bind(null, field))
     }
 
     const updateSingleField = async (field) => {
@@ -648,17 +616,11 @@ export default {
       setValueByPath(patchObject, field, newValue)
       setValueByPath(patchObject, 'member_id', memberId)
 
-      updateOrCreateMemberAssets(patchObject)
+      updateAssets(patchObject)
     }
 
-    const updateOrCreateMemberAssets = async (patchObject = ruleForm) => {
-      let res
-
-      if (isUpdateMember.value) {
-        res = await updateMemberAssets(patchObject)
-      } else {
-        res = await create(patchObject)
-      }
+    const updateAssets = async (patchObject = ruleForm) => {
+      const res = await updateMemberAssets(patchObject)
       queryClient.invalidateQueries(['MemberAssets', memberId])
 
       setTotal(ruleForm, res.data)
@@ -666,26 +628,16 @@ export default {
     }
 
     const submitForm = async () => {
-      const res = await updateOrCreateMemberAssets()
-
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Information update successfully',
-        })
-        store.commit('newClient/setStep', step.value + 1)
-        router.push({
-          name: 'client-expense-information',
-          params: { id: memberId },
-        })
-      } else {
-        useAlert({
-          title: 'Error',
-          type: 'error',
-          message: res.error.message,
-        })
-      }
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Information update successfully',
+      })
+      store.commit('newClient/setStep', step.value + 1)
+      router.push({
+        name: 'client-expense-information',
+        params: { id: memberId },
+      })
     }
 
     return {
@@ -699,12 +651,9 @@ export default {
       error,
       submitForm,
       rules,
-      isUpdateMember,
       memberAssets,
       isMemberAssetsLoading,
-      memberId,
       isMarried,
-      updateOrCreateMemberAssets,
       form,
       validateMemberAssetFieldAndUpdate,
       isLoadingUpdate,
