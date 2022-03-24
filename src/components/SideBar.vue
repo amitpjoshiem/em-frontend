@@ -38,6 +38,14 @@
         <InlineSvg v-if="getRouteName === 'pipeline'" :src="IconActivityPipeLine" />
         <InlineSvg v-else :src="IconPipeLine" />
       </router-link>
+      <router-link
+        :to="{ name: 'pipeline' }"
+        class="item flex justify-center items-center cursor-pointer w-full h-14"
+        :class="{ active: getRouteName === 'pipeline' }"
+      >
+        <InlineSvg v-if="getRouteName === 'pipeline'" :src="IconActivityPipeLine" />
+        <InlineSvg v-else :src="IconLeads" />
+      </router-link>
     </div>
   </aside>
 </template>
@@ -58,6 +66,8 @@ import IconActivityGray from '@/assets/svg/icon-activity-gray.svg'
 import IconActivityPipeLine from '@/assets/svg/icon-pipeline-activ.svg'
 import IconPipeLine from '@/assets/svg/icon-pipeline.svg'
 import IconLogo from '@/assets/svg/icon-logo.svg'
+import IconLeads from '@/assets/svg/icon-leads.svg'
+import IconLeadsActive from '@/assets/svg/icon-leads-active.svg'
 
 export default {
   setup() {
@@ -100,6 +110,8 @@ export default {
       IconPipeLine,
       IconLogo,
       IconAssetsActive,
+      IconLeads,
+      IconLeadsActive,
       goHome,
     }
   },
