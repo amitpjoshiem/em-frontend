@@ -11,6 +11,7 @@
     :on-change="($event) => $emit('upload-change', $event)"
     :auto-upload="autoUpload"
     list-type="picture"
+    :disabled="disabled"
   >
     <slot name="main" />
     <template v-if="showFileBlock" #file="{ file }">
@@ -76,6 +77,11 @@ export default {
       default: false,
     },
     showFileBlock: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    disabled: {
       type: Boolean,
       required: false,
       default: false,

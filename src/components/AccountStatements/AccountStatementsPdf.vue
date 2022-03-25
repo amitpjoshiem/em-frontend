@@ -33,9 +33,8 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { createAssetsConsolidationDocs } from '@/api/vueQuery/create-assets-consolidation-docs'
 import { useFetchAssetsConsolidationDocs } from '@/api/use-fetch-assets-consolidation-docs'
-import { useMutation } from 'vue-query'
+import { useMutation, useQueryClient } from 'vue-query'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
-import { useQueryClient } from 'vue-query'
 import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 
 export default {
