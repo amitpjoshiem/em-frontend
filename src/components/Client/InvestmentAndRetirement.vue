@@ -27,9 +27,7 @@
           <template #main>
             <div class="flex my-5">
               <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
-              <!-- <div class="el-upload__tip">PDF files only</div> -->
             </div>
-            <!-- <div v-if="!data.documents.length" class="text-gray03 pb-5">No documents uploaded</div> -->
           </template>
         </SwdUpload>
       </div>
