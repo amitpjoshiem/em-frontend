@@ -3,7 +3,12 @@
     <SwdSubHeader title="Investment And Retirement" />
     <div v-if="!isLoading">
       <div class="mb-5">
-        <el-checkbox v-model="state.availabilityDocuments" label="I want to skip and submit" size="large" />
+        <el-checkbox
+          v-model="state.availabilityDocuments"
+          label="I want to skip and submit"
+          size="large"
+          @change="changeStatus"
+        />
       </div>
 
       <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-input-border rounded-md">
@@ -14,6 +19,7 @@
           :auto-upload="true"
           :show-file-block="true"
           :disabled="state.availabilityDocuments"
+          :is-prewiev="false"
           @upload-success="handleSuccess"
           @upload-mounted="bindRef"
           @remove-media="removeMedia"
@@ -34,7 +40,8 @@
         <p>No recently added documents</p>
       </div>
       <div class="flex justify-end">
-        <el-button type="primary" plain :disabled="disabledSaveBtn" @click="saveStep">Save</el-button>
+        <el-button type="primary" plain @click="backStep">Back</el-button>
+        <el-button type="success" plain :disabled="disabledSaveBtn" @click="saveStep">Save</el-button>
       </div>
     </div>
     <el-skeleton v-else :rows="15" animated />
@@ -118,7 +125,7 @@ export default {
 
     const statusStep = computed(() => {
       if (state.availabilityDocuments) return 'no_documents'
-      if (data.documents.length) return 'completed'
+      if (data.value.documents?.length) return 'completed'
       return 'not_completed'
     })
 
@@ -139,6 +146,17 @@ export default {
           name: 'client-dashboard',
         })
       }
+    }
+
+    const backStep = () => {
+      router.push({ name: 'client-dashboard' })
+    }
+
+    const changeStatus = async () => {
+      let status = 'not_completed'
+      if (data.value.documents?.length && state.availabilityDocuments === 'false') status = 'no_documents'
+      if (data.value.documents?.length && state.availabilityDocuments === 'true') status = 'completed'
+      await updateSteps({ investment_and_retirement_accounts: status })
     }
 
     return {
@@ -162,6 +180,9 @@ export default {
 
       saveStep,
       disabledSaveBtn,
+
+      changeStatus,
+      backStep,
     }
   },
 }

@@ -28,7 +28,14 @@
           </div>
         </div>
         <div>
-          <el-button type="primary" size="small" plain class="mr-5" @click="handlePictureCardPreview(file)">
+          <el-button
+            v-if="isPrewiev"
+            type="primary"
+            size="small"
+            plain
+            class="mr-5"
+            @click="handlePictureCardPreview(file)"
+          >
             Prewiev
           </el-button>
           <el-popconfirm
@@ -85,6 +92,11 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    isPrewiev: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   emits: ['upload-success', 'upload-before', 'upload-change', 'upload-mounted', 'open-prewiev', 'remove-media'],

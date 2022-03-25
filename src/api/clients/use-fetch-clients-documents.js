@@ -18,6 +18,7 @@ export const useFetchClientDocuments = ({ collection }, options = {}) => {
   ])
 
   const query = useQuery(queryKey, {
+    cacheTime: 0,
     queryFn: fetchClientsDocuments,
     select: ({ data }) => {
       return data
