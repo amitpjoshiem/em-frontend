@@ -17,7 +17,7 @@ import { useStore } from 'vuex'
 import { usePaginationData } from '@/utils/use-pagination-data.js'
 
 export default {
-  name: 'ListAll',
+  name: 'ListLeads',
   components: {
     UsersListTable,
   },
@@ -29,7 +29,7 @@ export default {
     const rows = computed(() => Number(store.state.globalComponents.itemsPerPage.values.listOfHouseholds))
 
     const { isLoading, isError, data, pagination } = useListHouseholders({
-      type: 'client,prospect',
+      type: 'lead',
       page: paginationData,
     })
 

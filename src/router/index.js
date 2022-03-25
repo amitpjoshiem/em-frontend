@@ -136,6 +136,19 @@ const routes = [
       },
 
       {
+        path: 'leads',
+        name: 'leads',
+        component: () => import(/* webpackChunkName: "Leads" */ '../views/Leads.vue'),
+        children: [
+          {
+            path: 'list-leads',
+            name: 'list-leads',
+            component: () => import(/* webpackChunkName: "ListOfLeads" */ '../components/ListOfLeads/ListLeads.vue'),
+          },
+        ],
+      },
+
+      {
         path: 'member-details/:id',
         name: 'member-details',
         component: () =>
@@ -313,10 +326,10 @@ const routes = [
               import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'),
           },
           {
-            path: 'prospects',
-            name: 'prospects',
+            path: 'opportunities',
+            name: 'opportunities',
             component: () =>
-              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListProspects.vue'),
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListOpportunities.vue'),
           },
           {
             path: 'clients',
