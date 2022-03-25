@@ -136,6 +136,19 @@ const routes = [
       },
 
       {
+        path: 'leads',
+        name: 'leads',
+        component: () => import(/* webpackChunkName: "Leads" */ '../views/Leads.vue'),
+        children: [
+          {
+            path: 'list-leads',
+            name: 'list-leads',
+            component: () => import(/* webpackChunkName: "ListOfLeads" */ '../components/ListOfLeads/ListLeads.vue'),
+          },
+        ],
+      },
+
+      {
         path: 'member-details/:id',
         name: 'member-details',
         component: () =>

@@ -1,7 +1,7 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="List of Households" />
-    <ListContent />
+    <ListContent :visible-tab="['all', 'opportunities', 'clients']" />
   </div>
 </template>
 

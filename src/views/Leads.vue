@@ -1,17 +1,16 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="List of Leads" />
-    <div>List of Leads</div>
-    <!-- <PipeLineContent /> -->
+    <ListContent :visible-tab="['leads']" />
   </div>
 </template>
-<script>
-// import PipeLineContent from '@/components/PipeLine/PipeLineContent.vue'
 
+<script>
+import ListContent from '@/components/ListOfHouseholds/ListContent.vue'
 export default {
-  name: 'PipeLine',
+  name: 'ListOfLeads',
   components: {
-    // PipeLineContent,
+    ListContent,
   },
 }
 </script>

@@ -3,6 +3,7 @@
     <div class="flex p-5 justify-between">
       <div class="flex">
         <router-link
+          v-if="visibleTab.includes('all')"
           :to="{ name: 'all' }"
           class="mr-5 text-gray03 text-smm cursor-pointer"
           :class="{ active: getActiveTab === 'all' }"
@@ -10,6 +11,7 @@
           All Households
         </router-link>
         <router-link
+          v-if="visibleTab.includes('opportunities')"
           :to="{ name: 'prospects' }"
           class="mr-5 text-gray03 text-smm cursor-pointer"
           :class="{ active: getActiveTab === 'prospects' }"
@@ -17,34 +19,24 @@
           Opportunities
         </router-link>
         <router-link
+          v-if="visibleTab.includes('clients')"
           :to="{ name: 'clients' }"
-          class="text-gray03 text-smm cursor-pointer"
+          class="mr-5 text-gray03 text-smm cursor-pointer"
           :class="{ active: getActiveTab === 'clients' }"
         >
           Clients
         </router-link>
+        <router-link
+          v-if="visibleTab.includes('leads')"
+          :to="{ name: 'list-leads' }"
+          class="text-gray03 text-smm cursor-pointer"
+          :class="{ active: getActiveTab === 'list-leads' }"
+        >
+          Leads
+        </router-link>
       </div>
       <div class="flex">
         <SwdItemsPerPage :destination="'listOfHouseholds'" />
-        <!-- <SwdDropDown class="ml-2.5" :options="actionsOptions">
-          <template #titleDropDown>
-            <span
-              class="
-                cursor-pointer
-                bg-white
-                rounded
-                flex
-                justify-center
-                items-center
-                py-2
-                px-3
-                border border-color-grey
-              "
-            >
-              <InlineSvg :src="IconAction" />
-            </span>
-          </template>
-        </SwdDropDown> -->
       </div>
     </div>
     <router-view />
@@ -59,6 +51,13 @@ import { useRoute } from 'vue-router'
 
 export default {
   name: 'ListContent',
+  props: {
+    visibleTab: {
+      type: Array,
+      require: true,
+      default: () => [],
+    },
+  },
   setup() {
     const route = useRoute()
 
@@ -66,20 +65,8 @@ export default {
       return route.name
     })
 
-    // const actionsOptions = [
-    //   {
-    //     title: 'Item 1',
-    //     command: 'item-1',
-    //   },
-    //   {
-    //     title: 'Item 2',
-    //     command: 'item2',
-    //   },
-    // ]
-
     return {
       getActiveTab,
-      // actionsOptions,
       IconAction,
     }
   },

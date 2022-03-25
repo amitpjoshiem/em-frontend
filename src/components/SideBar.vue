@@ -39,11 +39,11 @@
         <InlineSvg v-else :src="IconPipeLine" />
       </router-link>
       <router-link
-        :to="{ name: 'leads' }"
+        :to="{ name: 'list-leads' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'leads' }"
       >
-        <InlineSvg v-if="getRouteName === 'leads'" :src="IconLeadsActive" />
+        <InlineSvg v-if="getRouteName === 'list-leads'" :src="IconLeadsActive" />
         <InlineSvg v-else :src="IconLeads" />
       </router-link>
     </div>
