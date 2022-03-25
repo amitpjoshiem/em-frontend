@@ -12,9 +12,9 @@
         </router-link>
         <router-link
           v-if="visibleTab.includes('opportunities')"
-          :to="{ name: 'prospects' }"
+          :to="{ name: 'opportunities' }"
           class="mr-5 text-gray03 text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'prospects' }"
+          :class="{ active: getActiveTab === 'opportunities' }"
         >
           Opportunities
         </router-link>

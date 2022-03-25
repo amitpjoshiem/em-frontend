@@ -326,10 +326,10 @@ const routes = [
               import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'),
           },
           {
-            path: 'prospects',
-            name: 'prospects',
+            path: 'opportunities',
+            name: 'opportunities',
             component: () =>
-              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListProspects.vue'),
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListOpportunities.vue'),
           },
           {
             path: 'clients',
