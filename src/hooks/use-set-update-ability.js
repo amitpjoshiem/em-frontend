@@ -1,7 +1,7 @@
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import ability from '../services/ability'
 import { AbilityBuilder, Ability } from '@casl/ability'
+import ability from '../services/ability'
 
 export function useSetUpdateAbility() {
   const store = useStore()
@@ -10,7 +10,7 @@ export function useSetUpdateAbility() {
   const setUpdateAbility = () => {
     const { can, rules } = new AbilityBuilder(Ability)
 
-    if (role.value === 'advisor') {
+    if (role.value === 'admin' || role.value === 'advisor') {
       can('advisor', 'all')
       can('advisor', 'update')
       can('advisor', 'read')
