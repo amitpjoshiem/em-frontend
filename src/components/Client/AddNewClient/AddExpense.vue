@@ -782,18 +782,19 @@ export default {
     }
 
     const nextStep = async () => {
-      useAlert({
-        title: 'Success',
-        type: 'success',
-        message: 'Information update successfully',
-      })
-      await updateSteps({ completed_financial_fact_finder: true })
-
-      store.commit('newClient/setStep', step.value + 1)
-      router.push({
-        name: 'client-dashboard',
-        params: { id: memberId },
-      })
+      const res = await updateSteps({ completed_financial_fact_finder: 'completed' })
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Information update successfully',
+        })
+        store.commit('newClient/setStep', step.value + 1)
+        router.push({
+          name: 'client-dashboard',
+          params: { id: memberId },
+        })
+      }
     }
 
     return {
