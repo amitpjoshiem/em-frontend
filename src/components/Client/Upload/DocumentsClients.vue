@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SwdSubHeader title="Investment And Retirement" />
+    <SwdSubHeader :title="getTitle" />
     <div v-if="!isLoading">
       <div class="mb-5">
         <el-checkbox
@@ -13,7 +13,7 @@
 
       <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-input-border rounded-md">
         <SwdUpload
-          :upload-data="{ collection: 'investment_and_retirement_accounts' }"
+          :upload-data="{ collection }"
           :file-list="data.documents"
           :show-file-list="true"
           :auto-upload="true"
@@ -53,34 +53,36 @@ import { useRouter } from 'vue-router'
 
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 
-// import { useMutation, useQueryClient } from 'vue-query'
-
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
+import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
-import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
+
+import { useGetTile } from './hooks/use-get-title-hook'
 
 import { useAlert } from '@/utils/use-alert'
 
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
-  name: 'InvestmentAndRetirement',
+  name: 'DocumentsClients',
   components: {
     SwdUpload,
   },
-  setup() {
-    // const queryClient = useQueryClient()
+  setup(_, { attrs }) {
     const router = useRouter()
 
-    const collection = 'investment_and_retirement_accounts'
+    const collection = attrs.context
 
     const { isLoading, isFetching, isError, refetch, data } = useFetchClientDocuments({
       collection,
     })
+
     const { mutateAsync: updateSteps } = useMutation(updateStepsClients)
     const { mutateAsync: deleteDocument } = useMutation(deleteMedia)
-    const { mutateAsync: uploadDoc, isLoading: isLoadingUpload, error } = useMutation(uploadClientsDocs)
+    const { mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
+
+    const { getTitle } = useGetTile(collection)
 
     const upload = ref(null)
 
@@ -104,23 +106,6 @@ export default {
       upload.value = ref.value
     }
 
-    const removeMedia = async (media) => {
-      const res = await deleteDocument(media)
-      if (!('error' in res)) {
-        refetch.value()
-        // queryClient.invalidateQueries(['clientsDocuments', collection])
-      }
-    }
-
-    const handleSuccess = async (res) => {
-      const data = { uuids: [res.data.uuid] }
-      const response = await uploadDoc({ collection, data })
-      if (!('error' in response)) {
-        refetch.value()
-        // queryClient.invalidateQueries(['clientsDocuments', collection])
-      }
-    }
-
     const statusStep = computed(() => {
       if (state.availabilityDocuments) return 'no_documents'
       if (data.value.documents?.length) return 'completed'
@@ -132,8 +117,7 @@ export default {
     })
 
     const saveStep = async () => {
-      console.log('statusStep - ', statusStep.value)
-      const res = await updateSteps({ investment_and_retirement_accounts: statusStep.value })
+      const res = await updateSteps({ [collection]: statusStep.value })
       if (!('error' in res)) {
         useAlert({
           title: 'Success',
@@ -157,30 +141,41 @@ export default {
       await updateSteps({ investment_and_retirement_accounts: status })
     }
 
+    const removeMedia = async (media) => {
+      const res = await deleteDocument(media)
+      if (!('error' in res)) {
+        refetch.value()
+        // queryClient.invalidateQueries(['clientsDocuments', collection])
+      }
+    }
+    const handleSuccess = async (res) => {
+      const data = { uuids: [res.data.uuid] }
+      const response = await uploadDoc({ collection, data })
+      if (!('error' in response)) {
+        refetch.value()
+        // queryClient.invalidateQueries(['clientsDocuments', collection])
+      }
+    }
+
     return {
       state,
-      removeMedia,
       assetsConsolidationDocs,
       bindRef,
-      handleSuccess,
       isLoading,
       isFetching,
       isError,
       refetch,
       data,
       IconEmptyUsers,
-
-      uploadDoc,
-      isLoadingUpload,
-      error,
-
-      deleteDocument,
-
       saveStep,
       disabledSaveBtn,
-
       changeStatus,
       backStep,
+      collection,
+      getTitle,
+
+      removeMedia,
+      handleSuccess,
     }
   },
 }

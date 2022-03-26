@@ -55,23 +55,30 @@ const routes = [
       {
         path: 'investment-retirement',
         name: 'investment-retirement',
+        props: { context: 'investment_and_retirement_accounts' },
         component: () =>
-          import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/InvestmentAndRetirement.vue'),
+          import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
       },
       {
         path: 'life-insurance',
         name: 'life-insurance',
-        component: () => import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/LifeInsurance.vue'),
+        props: { context: 'life_insurance_annuity_and_long_terms_care_policies' },
+        component: () =>
+          import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
       },
       {
         path: 'social-security',
         name: 'social-security',
-        component: () => import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/SocialSecurity.vue'),
+        props: { context: 'social_security_information' },
+        component: () =>
+          import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
       },
       {
         path: 'list-stock',
         name: 'list-stock',
-        component: () => import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/ListOfStock.vue'),
+        props: { context: 'list_of_stock_certificates_or_bonds' },
+        component: () =>
+          import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
       },
       {
         path: '',
