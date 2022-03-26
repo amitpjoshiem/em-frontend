@@ -15,41 +15,43 @@
   >
     <slot name="main" />
     <template v-if="showFileBlock" #file="{ file }">
-      <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
-      <div class="flex justify-between items-center mt-[10px] ml-3">
-        <div class="flex flex-col">
-          <div>
-            <span class="text-gray03">File name: </span>
-            <span class="font-semibold text-main">{{ file.name }}</span>
+      <div v-if="file.status !== 'uploading' && file.status !== 'ready'">
+        <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+        <div class="flex justify-between items-center mt-[10px] ml-3">
+          <div class="flex flex-col">
+            <div>
+              <span class="text-gray03">File name: </span>
+              <span class="font-semibold text-main">{{ file.name }}</span>
+            </div>
+            <div>
+              <span class="text-gray03">Created at: </span>
+              <span class="font-semibold text-main">{{ file.created_at ? file.created_at : 'a few minutes ago' }}</span>
+            </div>
           </div>
           <div>
-            <span class="text-gray03">Created at: </span>
-            <span class="font-semibold text-main">{{ file.created_at ? file.created_at : 'a few minutes ago' }}</span>
+            <el-button
+              v-if="isPrewiev"
+              type="primary"
+              size="small"
+              plain
+              class="mr-5"
+              @click="handlePictureCardPreview(file)"
+            >
+              Prewiev
+            </el-button>
+            <el-popconfirm
+              confirm-button-text="Yes"
+              cancel-button-text="No"
+              icon="el-icon-info"
+              icon-color="red"
+              title="Are you sure to delete this?"
+              @confirm="handleRemove(file.id)"
+            >
+              <template #reference>
+                <el-button type="danger" size="small" plain>Remove</el-button>
+              </template>
+            </el-popconfirm>
           </div>
-        </div>
-        <div>
-          <el-button
-            v-if="isPrewiev"
-            type="primary"
-            size="small"
-            plain
-            class="mr-5"
-            @click="handlePictureCardPreview(file)"
-          >
-            Prewiev
-          </el-button>
-          <el-popconfirm
-            confirm-button-text="Yes"
-            cancel-button-text="No"
-            icon="el-icon-info"
-            icon-color="red"
-            title="Are you sure to delete this?"
-            @confirm="handleRemove(file.id)"
-          >
-            <template #reference>
-              <el-button type="danger" size="small" plain>Remove</el-button>
-            </template>
-          </el-popconfirm>
         </div>
       </div>
     </template>
