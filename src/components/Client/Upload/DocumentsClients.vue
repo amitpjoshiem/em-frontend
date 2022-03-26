@@ -136,9 +136,15 @@ export default {
 
     const changeStatus = async () => {
       let status = 'not_completed'
-      if (data.value.documents?.length && state.availabilityDocuments === 'false') status = 'no_documents'
-      if (data.value.documents?.length && state.availabilityDocuments === 'true') status = 'completed'
-      await updateSteps({ investment_and_retirement_accounts: status })
+
+      if (state.availabilityDocuments) {
+        status = 'no_documents'
+      }
+      if (!state.availabilityDocuments && data.value.documents.length) {
+        status = 'completed'
+      }
+
+      await updateSteps({ [collection]: status })
     }
 
     const removeMedia = async (media) => {
