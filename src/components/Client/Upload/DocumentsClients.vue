@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SwdSubHeader title="Investment And Retirement" />
+    <SwdSubHeader :title="getTitle" />
     <div v-if="!isLoading">
       <div class="mb-5">
         <el-checkbox
@@ -13,7 +13,7 @@
 
       <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-input-border rounded-md">
         <SwdUpload
-          :upload-data="{ collection: 'investment_and_retirement_accounts' }"
+          :upload-data="{ collection }"
           :file-list="data.documents"
           :show-file-list="true"
           :auto-upload="true"
@@ -53,34 +53,37 @@ import { useRouter } from 'vue-router'
 
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 
-// import { useMutation, useQueryClient } from 'vue-query'
-
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
+
+import { useGetTile } from './hooks/use-get-title-hook'
 
 import { useAlert } from '@/utils/use-alert'
 
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
-  name: 'InvestmentAndRetirement',
+  name: 'DocumentsClients',
   components: {
     SwdUpload,
   },
-  setup() {
+  setup(_, { attrs }) {
     // const queryClient = useQueryClient()
     const router = useRouter()
 
-    const collection = 'investment_and_retirement_accounts'
+    const collection = attrs.context
 
     const { isLoading, isFetching, isError, refetch, data } = useFetchClientDocuments({
       collection,
     })
+
     const { mutateAsync: updateSteps } = useMutation(updateStepsClients)
     const { mutateAsync: deleteDocument } = useMutation(deleteMedia)
     const { mutateAsync: uploadDoc, isLoading: isLoadingUpload, error } = useMutation(uploadClientsDocs)
+
+    const { getTitle } = useGetTile(collection)
 
     const upload = ref(null)
 
@@ -132,8 +135,7 @@ export default {
     })
 
     const saveStep = async () => {
-      console.log('statusStep - ', statusStep.value)
-      const res = await updateSteps({ investment_and_retirement_accounts: statusStep.value })
+      const res = await updateSteps({ [collection]: statusStep.value })
       if (!('error' in res)) {
         useAlert({
           title: 'Success',
@@ -181,6 +183,9 @@ export default {
 
       changeStatus,
       backStep,
+      collection,
+
+      getTitle,
     }
   },
 }
