@@ -72,14 +72,21 @@
     </router-link>
 
     <div class="flex justify-end">
-      <el-button type="primary" plain disabled>Send information</el-button>
+      <el-button type="primary" plain :disabled="getDisabledBtn" @click="send">Send information</el-button>
     </div>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
 import { CircleCheckFilled } from '@element-plus/icons-vue'
+
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
+import { sendAllInformation } from '@/api/vueQuery/clients/fetch-send-all-information'
+
+import { useMutation } from 'vue-query'
+
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'ClientInformation',
@@ -94,11 +101,33 @@ export default {
       data: clientsInfo,
     } = useFetchClietsInfo()
 
+    const { mutateAsync: sendInformation } = useMutation(sendAllInformation)
+
+    const getDisabledBtn = computed(() => {
+      const values = Object.values(clientsInfo.value.steps).find((item) => item === false)
+      if (values === undefined) return false
+      return true
+    })
+
+    const send = async () => {
+      const res = sendInformation()
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Information send successfully',
+        })
+      }
+    }
+
     return {
       isLoadingInfo,
       fetchingInfo,
       isErrorInfo,
       clientsInfo,
+
+      getDisabledBtn,
+      send,
     }
   },
 }
