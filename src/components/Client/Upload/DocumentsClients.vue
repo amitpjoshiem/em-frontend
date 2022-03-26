@@ -12,24 +12,20 @@
       </div>
 
       <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-input-border rounded-md">
-        <SwdUpload
+        <UploadClients
           :upload-data="{ collection }"
+          :collection="collection"
           :file-list="data.documents"
-          :show-file-list="true"
-          :auto-upload="true"
-          :show-file-block="true"
           :disabled="state.availabilityDocuments"
-          :is-prewiev="false"
-          @upload-success="handleSuccess"
           @upload-mounted="bindRef"
-          @remove-media="removeMedia"
+          @handle-refetch="refetch"
         >
           <template #main>
             <div class="flex my-5">
               <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
             </div>
           </template>
-        </SwdUpload>
+        </UploadClients>
       </div>
       <div v-else class="min-h-[175px] mb-5 text-gray03 flex flex-col items-center justify-center">
         <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
@@ -51,11 +47,9 @@ import { computed, reactive, ref, watchEffect } from 'vue'
 import { useMutation } from 'vue-query'
 import { useRouter } from 'vue-router'
 
-import SwdUpload from '@/components/Global/SwdUpload.vue'
+import UploadClients from '../UploadClients.vue'
 
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
-import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
-import { deleteMedia } from '@/api/vueQuery/delete-media'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 
 import { useGetTile } from './hooks/use-get-title-hook'
@@ -67,10 +61,9 @@ import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 export default {
   name: 'DocumentsClients',
   components: {
-    SwdUpload,
+    UploadClients,
   },
   setup(_, { attrs }) {
-    // const queryClient = useQueryClient()
     const router = useRouter()
 
     const collection = attrs.context
@@ -80,8 +73,6 @@ export default {
     })
 
     const { mutateAsync: updateSteps } = useMutation(updateStepsClients)
-    const { mutateAsync: deleteDocument } = useMutation(deleteMedia)
-    const { mutateAsync: uploadDoc, isLoading: isLoadingUpload, error } = useMutation(uploadClientsDocs)
 
     const { getTitle } = useGetTile(collection)
 
@@ -105,23 +96,6 @@ export default {
 
     const bindRef = (ref) => {
       upload.value = ref.value
-    }
-
-    const removeMedia = async (media) => {
-      const res = await deleteDocument(media)
-      if (!('error' in res)) {
-        refetch.value()
-        // queryClient.invalidateQueries(['clientsDocuments', collection])
-      }
-    }
-
-    const handleSuccess = async (res) => {
-      const data = { uuids: [res.data.uuid] }
-      const response = await uploadDoc({ collection, data })
-      if (!('error' in response)) {
-        refetch.value()
-        // queryClient.invalidateQueries(['clientsDocuments', collection])
-      }
     }
 
     const statusStep = computed(() => {
@@ -161,30 +135,19 @@ export default {
 
     return {
       state,
-      removeMedia,
       assetsConsolidationDocs,
       bindRef,
-      handleSuccess,
       isLoading,
       isFetching,
       isError,
       refetch,
       data,
       IconEmptyUsers,
-
-      uploadDoc,
-      isLoadingUpload,
-      error,
-
-      deleteDocument,
-
       saveStep,
       disabledSaveBtn,
-
       changeStatus,
       backStep,
       collection,
-
       getTitle,
     }
   },
