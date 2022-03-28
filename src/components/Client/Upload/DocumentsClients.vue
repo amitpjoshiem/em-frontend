@@ -94,10 +94,6 @@ export default {
       availabilityDocuments: false,
     })
 
-    const assetsConsolidationDocs = reactive({
-      data: [],
-    })
-
     watchEffect(() => {
       if (isFetching.value === false && data.value.status === 'no_documents') state.availabilityDocuments = true
     })
@@ -165,7 +161,6 @@ export default {
 
     return {
       state,
-      assetsConsolidationDocs,
       bindRef,
       isLoading,
       isFetching,
