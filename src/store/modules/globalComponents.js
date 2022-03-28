@@ -53,6 +53,7 @@ const state = () => ({
       modalContact: false,
       newLead: false,
       modalNewTable: false,
+      modalSucces: false,
     },
   },
   sortMembers: {
