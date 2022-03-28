@@ -83,25 +83,29 @@
       <el-button type="primary" plain :disabled="getDisabledBtn" @click="send">Send information</el-button>
     </div>
   </div>
+  <SwdModalSucces
+    text="Thank you for entering all the details. The advisor will receive the information and will contact you."
+  />
 </template>
 
 <script>
 import { computed } from 'vue'
+import { useStore } from 'vuex'
 import { CircleCheckFilled } from '@element-plus/icons-vue'
-
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { sendAllInformation } from '@/api/vueQuery/clients/fetch-send-all-information'
-
 import { useMutation } from 'vue-query'
-
-import { useAlert } from '@/utils/use-alert'
+import SwdModalSucces from '@/components/Global/SwdModalSucces.vue'
 
 export default {
   name: 'ClientInformation',
   components: {
     CircleCheckFilled,
+    SwdModalSucces,
   },
   setup() {
+    const store = useStore()
+
     const {
       isLoading: isLoadingInfo,
       fetching: fetchingInfo,
@@ -120,10 +124,9 @@ export default {
     const send = async () => {
       const res = sendInformation()
       if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Information send successfully',
+        store.commit('globalComponents/setShowModal', {
+          destination: 'modalSucces',
+          value: true,
         })
       }
     }
