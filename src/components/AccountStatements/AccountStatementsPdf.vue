@@ -7,6 +7,7 @@
       :auto-upload="true"
       :show-file-block="true"
       @upload-success="handleSuccess"
+      @upload-change="handleChange"
       @upload-mounted="bindRef"
       @open-prewiev="openPrewiev"
       @remove-media="removeMedia"
@@ -16,7 +17,9 @@
           <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
           <div class="el-upload__tip">PDF files only</div>
         </div>
-        <div v-if="!assetsConsolidationDocs.data.length" class="text-gray03 pb-5">No documents uploaded</div>
+        <div v-if="!assetsConsolidationDocs.data.length && !inChangeFile" class="text-gray03 pb-5">
+          No documents uploaded
+        </div>
       </template>
     </SwdUpload>
   </div>
@@ -49,6 +52,7 @@ export default {
     const route = useRoute()
     const upload = ref(null)
     const queryClient = useQueryClient()
+    const inChangeFile = ref(false)
     const id = route.params.id
 
     const { isLoading, isFetching, isError, data: assetsConsolidationDocs } = useFetchAssetsConsolidationDocs(id)
@@ -66,8 +70,14 @@ export default {
       const data = { uuids: [res.data.uuid] }
       const response = await createDoc({ id, data })
       if (!('error' in response)) {
+        inChangeFile.value = false
         queryClient.invalidateQueries(['assetsConsolidationDocs', id])
       }
+    }
+
+    const handleChange = (e) => {
+      inChangeFile.value = true
+      console.log(e)
     }
 
     const bindRef = (ref) => {
@@ -108,6 +118,8 @@ export default {
       assetsConsolidationDocs,
       openPrewiev,
       removeMedia,
+      handleChange,
+      inChangeFile,
     }
   },
 }

@@ -12,6 +12,7 @@
     :auto-upload="autoUpload"
     list-type="picture"
     :disabled="disabled"
+    @on-change="($event) => $emit('upload-change', $event)"
   >
     <slot name="main" />
     <template v-if="showFileBlock" #file="{ file }">
@@ -101,7 +102,15 @@ export default {
       default: true,
     },
   },
-  emits: ['upload-success', 'upload-before', 'upload-change', 'upload-mounted', 'open-prewiev', 'remove-media'],
+  emits: [
+    'upload-success',
+    'upload-change',
+    'upload-before',
+    'upload-change',
+    'upload-mounted',
+    'open-prewiev',
+    'remove-media',
+  ],
   setup(props, { emit }) {
     const innerRef = ref(null)
     const uploadRefFn = () => props.uploadRef
