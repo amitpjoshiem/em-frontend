@@ -4,7 +4,7 @@
       <BackButton text="Back" @click="$router.go(-1)" />
     </div>
     <div class="w-6/12 text-center">
-      <span class="text-title text-main font-semibold">{{ title }}</span>
+      <span class="sm:text-title text-main font-semibold">{{ title }}</span>
     </div>
     <div class="w-3/12 text-right">
       <ShareBtn v-if="withShareBtn" :pdf-region="region" />

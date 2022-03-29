@@ -18,7 +18,7 @@
     <template v-if="showFileBlock" #file="{ file }">
       <div v-if="file.status !== 'uploading' && file.status !== 'ready'">
         <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
-        <div class="flex justify-between items-center mt-[10px] ml-3">
+        <div class="sm:flex sm:justify-between sm:items-center sm:mt-[10px] sm:ml-3">
           <div class="flex flex-col">
             <div>
               <span class="text-gray03">File name: </span>
