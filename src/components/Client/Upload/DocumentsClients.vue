@@ -48,7 +48,7 @@
 
 <script>
 import { computed, reactive, ref, watchEffect } from 'vue'
-import { useMutation } from 'vue-query'
+import { useMutation, useQueryClient } from 'vue-query'
 import { useRouter } from 'vue-router'
 
 import SwdUpload from '@/components/Global/SwdUpload.vue'
@@ -71,6 +71,7 @@ export default {
   },
   setup(_, { attrs }) {
     const router = useRouter()
+    const queryClient = useQueryClient()
 
     const collection = attrs.context
 
@@ -146,16 +147,14 @@ export default {
     const removeMedia = async (media) => {
       const res = await deleteDocument(media)
       if (!('error' in res)) {
-        refetch.value()
-        // queryClient.invalidateQueries(['clientsDocuments', collection])
+        queryClient.invalidateQueries(['clientsDocuments', collection])
       }
     }
     const handleSuccess = async (res) => {
       const data = { uuids: [res.data.uuid] }
       const response = await uploadDoc({ collection, data })
       if (!('error' in response)) {
-        refetch.value()
-        // queryClient.invalidateQueries(['clientsDocuments', collection])
+        queryClient.invalidateQueries(['clientsDocuments', collection])
       }
     }
 
