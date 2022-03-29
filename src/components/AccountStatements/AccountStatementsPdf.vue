@@ -31,7 +31,7 @@
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { reactive, ref, watchEffect } from 'vue'
+import { reactive, ref, watchEffect, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { createAssetsConsolidationDocs } from '@/api/vueQuery/create-assets-consolidation-docs'
@@ -75,9 +75,8 @@ export default {
       }
     }
 
-    const handleChange = (e) => {
+    const handleChange = () => {
       inChangeFile.value = true
-      console.log(e)
     }
 
     const bindRef = (ref) => {
@@ -104,6 +103,10 @@ export default {
       }
     }
 
+    const isShowNoDocuments = computed(() => {
+      return !assetsConsolidationDocs.data.length && !inChangeFile.value && !isFetching.value
+    })
+
     return {
       IconDownRisk,
       IconUpRisk,
@@ -119,7 +122,7 @@ export default {
       openPrewiev,
       removeMedia,
       handleChange,
-      inChangeFile,
+      isShowNoDocuments,
     }
   },
 }

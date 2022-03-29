@@ -6,6 +6,7 @@
       :show-file-list="true"
       :auto-upload="true"
       :show-file-block="true"
+      @upload-change="handleChange"
       @upload-success="handleSuccess"
       @upload-mounted="bindRef"
       @open-prewiev="openPrewiev"
@@ -16,7 +17,7 @@
           <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
           <div class="el-upload__tip">PDF files only</div>
         </div>
-        <div v-if="!stressTestDocument.data.length" class="text-gray03 pb5">No documents uploaded</div>
+        <div v-if="isShowNoDocuments" class="text-gray03 pb5">No documents uploaded</div>
       </template>
     </SwdUpload>
     <div v-if="showNavBtn" class="flex justify-end my-6">
@@ -64,6 +65,7 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const upload = ref(null)
+    const inChangeFile = ref(false)
     const queryClient = useQueryClient()
     const id = route.params.id
 
@@ -107,6 +109,7 @@ export default {
       const data = { uuids: [res.data.uuid] }
       const response = await create({ id, data })
       if (!('error' in response)) {
+        inChangeFile.value = false
         queryClient.invalidateQueries(['stressTest', id])
       }
     }
@@ -135,6 +138,14 @@ export default {
       }
     }
 
+    const handleChange = () => {
+      inChangeFile.value = true
+    }
+
+    const isShowNoDocuments = computed(() => {
+      return !stressTestDocument.value.data.length && !inChangeFile.value && !isFetching.value
+    })
+
     return {
       IconDownRisk,
       IconUpRisk,
@@ -151,6 +162,8 @@ export default {
       stressTestDocument,
       openPrewiev,
       removeMedia,
+      handleChange,
+      isShowNoDocuments,
     }
   },
 }
