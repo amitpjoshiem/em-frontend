@@ -20,11 +20,11 @@
             :auto-upload="true"
             :show-file-block="true"
             :disabled="state.availabilityDocuments"
-            :is-prewiev="false"
             @upload-change="handleChange"
             @upload-success="handleSuccess"
             @upload-mounted="bindRef"
             @remove-media="removeMedia"
+            @open-prewiev="openPrewiev"
           >
             <template #main>
               <div class="flex my-5">
@@ -49,14 +49,17 @@
     </div>
     <el-skeleton v-else :rows="15" animated />
   </div>
+  <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
 </template>
 
 <script>
 import { computed, reactive, ref, watchEffect } from 'vue'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 import SwdUpload from '@/components/Global/SwdUpload.vue'
+import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
@@ -73,9 +76,11 @@ export default {
   name: 'DocumentsClients',
   components: {
     SwdUpload,
+    PrewiewPdfModal,
   },
   setup(_, { attrs }) {
     const router = useRouter()
+    const store = useStore()
     const queryClient = useQueryClient()
 
     const collection = attrs.context
@@ -103,6 +108,7 @@ export default {
 
     watchEffect(() => {
       if (isFetching.value === false && data.value.status === 'no_documents') state.availabilityDocuments = true
+      state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
     })
 
     const bindRef = (ref) => {
@@ -173,6 +179,15 @@ export default {
       return !data.value.documents?.length && !inChangeFile.value && !isFetching.value
     })
 
+    const openPrewiev = (pdfUrl) => {
+      state.dialogVisible = true
+      state.previewUrl = pdfUrl
+      store.commit('globalComponents/setShowModal', {
+        destination: 'prewievPdf',
+        value: true,
+      })
+    }
+
     return {
       state,
       bindRef,
@@ -192,6 +207,7 @@ export default {
       removeMedia,
       handleSuccess,
       isShowNoDocuments,
+      openPrewiev,
     }
   },
 }

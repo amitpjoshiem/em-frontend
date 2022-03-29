@@ -31,7 +31,7 @@
           </div>
           <div>
             <el-button
-              v-if="isPrewiev"
+              v-if="file.name.toString().slice(-4) === '.PDF' || file.name.toString().slice(-4) === '.pdf'"
               type="primary"
               size="small"
               plain

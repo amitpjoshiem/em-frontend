@@ -1,5 +1,13 @@
 <template>
   <div id="pdfvuer">
+    <div class="flex items-center justify-center w-full">
+      <div
+        v-if="loading"
+        style="border-top-color: transparent"
+        class="w-20 h-20 border-4 border-color-link border-solid rounded-full animate-spin"
+      />
+    </div>
+
     <pdf
       v-for="i in numPages"
       :id="i"
@@ -10,6 +18,7 @@
       style="width: 100%; margin: 20px auto"
       :annotation="true"
       @link-clicked="handle_pdf_link"
+      @loading="getLoading"
     >
     </pdf>
   </div>
@@ -36,15 +45,23 @@ export default {
       pdfdata: undefined,
       errors: [],
       scale: 'page-width',
+      loading: true,
     }
   },
+
   mounted() {
     this.getPdf()
   },
+
   methods: {
     handle_pdf_link: function (params) {
       let page = document.getElementById(String(params.pageNumber))
       page.scrollIntoView()
+    },
+
+    getLoading(e) {
+      console.log('eeeeee - ', e)
+      if (!e) this.loading = false
     },
 
     getPdf() {
