@@ -1,7 +1,7 @@
 <template>
   <div class="h-20 flex items-center">
     <div v-if="!isLoading" class="flex pt-5 pb-5 text-2xl font-medium">
-      <span class="pr-2">({{ isRole }})</span>
+      <span v-if="showContent.showRole" class="pr-2">({{ isRole }})</span>
       <span class=""> Welcome, {{ userProfile.firstName }} {{ userProfile.lastName }} </span>
       <span v-if="userProfile.position" class="pl-2">({{ userProfile.position }})</span>
     </div>
@@ -12,11 +12,14 @@
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
+import { useShowContentEnv } from '@/hooks/use-show-content-env'
 
 export default {
   name: 'HeaderDashboard',
   setup() {
     const store = useStore()
+
+    const { showContent } = useShowContentEnv()
 
     const isRole = computed(() => {
       return store.state.auth.role
@@ -29,6 +32,7 @@ export default {
       isError,
       userProfile,
       isRole,
+      showContent,
     }
   },
 }
