@@ -584,7 +584,7 @@ export default {
 
     const backStep = () => {
       store.commit('newClient/setStep', step.value - 1)
-      router.push({ name: 'client-basic-information' })
+      router.push({ name: 'client-basic-information', params: { id: memberId } })
     }
 
     const change = async () => {
@@ -592,7 +592,6 @@ export default {
       queryClient.invalidateQueries(['MemberAssets', memberId])
 
       setTotal(ruleForm, res.data)
-      // return res
     }
 
     const submitForm = async () => {
