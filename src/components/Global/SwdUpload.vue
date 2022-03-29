@@ -49,7 +49,7 @@
               @confirm="handleRemove(file.id)"
             >
               <template #reference>
-                <el-button type="danger" size="small" plain>Remove</el-button>
+                <el-button type="danger" size="small" plain :loading="idFileRemove === file.id">Remove</el-button>
               </template>
             </el-popconfirm>
           </div>
@@ -113,6 +113,7 @@ export default {
   ],
   setup(props, { emit }) {
     const innerRef = ref(null)
+    const idFileRemove = ref(null)
     const uploadRefFn = () => props.uploadRef
     const headers = computed(() => {
       const token = tokenStorage.getByKey('access_token')
@@ -135,6 +136,7 @@ export default {
     }
 
     const handleRemove = (id) => {
+      idFileRemove.value = id
       emit('remove-media', id)
     }
 
@@ -145,6 +147,7 @@ export default {
       getUrlMedia,
       handlePictureCardPreview,
       handleRemove,
+      idFileRemove,
     }
   },
 }
