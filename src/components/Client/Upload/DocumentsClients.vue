@@ -12,24 +12,29 @@
       </div>
 
       <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-input-border rounded-md">
-        <SwdUpload
-          :upload-data="{ collection }"
-          :file-list="data.documents"
-          :show-file-list="true"
-          :auto-upload="true"
-          :show-file-block="true"
-          :disabled="state.availabilityDocuments"
-          :is-prewiev="false"
-          @upload-success="handleSuccess"
-          @upload-mounted="bindRef"
-          @remove-media="removeMedia"
-        >
-          <template #main>
-            <div class="flex my-5">
-              <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
-            </div>
-          </template>
-        </SwdUpload>
+        <div v-if="!isFetching">
+          <SwdUpload
+            :upload-data="{ collection }"
+            :file-list="data.documents"
+            :show-file-list="true"
+            :auto-upload="true"
+            :show-file-block="true"
+            :disabled="state.availabilityDocuments"
+            :is-prewiev="false"
+            @upload-change="handleChange"
+            @upload-success="handleSuccess"
+            @upload-mounted="bindRef"
+            @remove-media="removeMedia"
+          >
+            <template #main>
+              <div class="flex my-5">
+                <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
+              </div>
+              <div v-if="isShowNoDocuments" class="text-gray03 pb-5">No documents uploaded</div>
+            </template>
+          </SwdUpload>
+        </div>
+        <el-skeleton v-else :rows="5" animated class="p-5" />
       </div>
       <div v-else class="min-h-[175px] mb-5 text-gray03 flex flex-col items-center justify-center">
         <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
@@ -86,6 +91,7 @@ export default {
     const { getTitle } = useGetTile(collection)
 
     const upload = ref(null)
+    const inChangeFile = ref(false)
 
     const state = reactive({
       file: '',
@@ -154,9 +160,18 @@ export default {
       const data = { uuids: [res.data.uuid] }
       const response = await uploadDoc({ collection, data })
       if (!('error' in response)) {
+        inChangeFile.value = false
         queryClient.invalidateQueries(['clientsDocuments', collection])
       }
     }
+
+    const handleChange = () => {
+      inChangeFile.value = true
+    }
+
+    const isShowNoDocuments = computed(() => {
+      return !data.value.documents?.length && !inChangeFile.value && !isFetching.value
+    })
 
     return {
       state,
@@ -173,9 +188,10 @@ export default {
       backStep,
       collection,
       getTitle,
-
+      handleChange,
       removeMedia,
       handleSuccess,
+      isShowNoDocuments,
     }
   },
 }
