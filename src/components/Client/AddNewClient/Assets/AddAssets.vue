@@ -277,7 +277,7 @@
           />
 
           <!-- Total -->
-          <WidgetTotal
+          <WidgetClientTotal
             :member="ruleForm.liquid_assets.member.total"
             :spouse="ruleForm.liquid_assets.spouse.total"
             :o-nq="ruleForm.liquid_assets.o_nq.total"
@@ -384,7 +384,7 @@
             :disabled="isLoadingUpdate"
             @blur="change"
           />
-          <WidgetTotal
+          <WidgetClientTotal
             :member="ruleForm.non_liquid_assets.member.total"
             :spouse="ruleForm.non_liquid_assets.spouse.total"
             :o-nq="ruleForm.non_liquid_assets.o_nq.total"
@@ -419,7 +419,7 @@ import { useFetchMember } from '@/api/use-fetch-member'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 
-import WidgetTotal from '@/components/Client/AddNewClient/Assets/WidgetTotal.vue'
+import WidgetClientTotal from '@/components/Client/AddNewClient/Assets/WidgetClientTotal.vue'
 import ItemFormAssetsTwo from '@/components/Client/AddNewClient/Assets/ItemFormAssetsTwo.vue'
 import ItemFormAssetsFour from '@/components/Client/AddNewClient/Assets/ItemFormAssetsFour.vue'
 
@@ -432,7 +432,7 @@ export default {
   components: {
     ItemFormAssetsTwo,
     ItemFormAssetsFour,
-    WidgetTotal,
+    WidgetClientTotal,
   },
   setup() {
     const queryClient = useQueryClient()
