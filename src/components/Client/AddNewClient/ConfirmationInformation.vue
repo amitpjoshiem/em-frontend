@@ -93,7 +93,7 @@
               >Yes, I want a Free Consultation & Copy of Matt`s Book
             </el-radio>
             <el-radio label="want_consultation">Yes, I want a Free Consultation </el-radio>
-            <el-radio label="dont_want_consultation">No, I want a Free Consultation </el-radio>
+            <el-radio label="dont_want_consultation">No, I don't want a Free Consultation </el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="My Biggest Financial Concern Is:" class="mb-4">
@@ -224,7 +224,7 @@ import { useAlert } from '@/utils/use-alert'
 import { useConfirmationInfoHooks } from '@/hooks/use-confirmation-info-hooks'
 
 export default {
-  name: 'FinalInformation',
+  name: 'ConfirmationInformation',
   setup() {
     const route = useRoute()
     const store = useStore()
