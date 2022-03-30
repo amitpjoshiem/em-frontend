@@ -40,6 +40,8 @@ export default {
           return 'Assets & Income'
         case 3:
           return 'Expenses'
+        case 4:
+          return 'Confirmation'
         default:
           return 'Header title'
       }

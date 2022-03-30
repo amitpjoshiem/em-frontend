@@ -217,9 +217,10 @@ import { useMutation } from 'vue-query'
 
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { reactive, ref, computed, watchEffect } from 'vue'
+import { reactive, ref, computed, watchEffect, onMounted } from 'vue'
 
 import { useAlert } from '@/utils/use-alert'
+import { scrollTop } from '@/utils/scrollTop'
 
 import { useConfirmationInfoHooks } from '@/hooks/use-confirmation-info-hooks'
 
@@ -280,6 +281,11 @@ export default {
     })
 
     const step = computed(() => store.state.newClient.step)
+
+    onMounted(async () => {
+      store.commit('newClient/setStep', 4)
+      scrollTop()
+    })
 
     watchEffect(() => {
       if (isFetchingConfirmation.value === false) setInitValueConfirmInfo(ruleForm, confirmationData.value)

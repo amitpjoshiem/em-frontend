@@ -27,6 +27,16 @@
       >
         Expenses
       </router-link>
+      <router-link
+        :to="{ name: 'confirmation-step', params: { id: memberId } }"
+        class="w-4/12 text-center text-xs"
+        :class="{
+          'text-title-gray': step < 3,
+          'font-medium text-main': step > 2,
+        }"
+      >
+        Confirmation
+      </router-link>
     </div>
     <div class="flex items-center pb-4">
       <!-- STEP 1 -->
@@ -38,6 +48,10 @@
       <!-- STEP 2 -->
       <div :class="{ 'cycle-default': step < 2, 'cycle-active': step > 2, 'cycle-next': step === 2 }" />
       <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 3, 'bg-activity': step >= 3 }" />
+
+      <!-- STEP 3 -->
+      <div :class="{ 'cycle-default': step < 3, 'cycle-active': step > 3, 'cycle-next': step === 3 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 4, 'bg-activity': step >= 4 }" />
     </div>
   </div>
 </template>
