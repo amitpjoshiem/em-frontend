@@ -53,10 +53,10 @@ const routes = [
         ],
       },
       {
-        path: 'final-step/:id?',
-        name: 'client-final-step',
+        path: 'confirmation-step/:id?',
+        name: 'confirmation-step',
         component: () =>
-          import(/* webpackChunkName: "FinalStep" */ '../components/Client/AddNewClient/FinalInformation.vue'),
+          import(/* webpackChunkName: "FinalStep" */ '../components/Client/AddNewClient/ConfirmationInformation.vue'),
       },
       {
         path: 'investment-retirement',
