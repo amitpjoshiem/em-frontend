@@ -25,7 +25,10 @@ export function useBasicInfoHooks() {
       if (member.value.married) {
         Object.assign(ruleForm.spouse, JSON.parse(JSON.stringify(member.value.spouse)))
         ruleForm.spouse.birthday = dayjs(member.value.spouse.birthday).format('MM/DD/YYYY')
-        ruleForm.spouse.retirement_date = dayjs(member.value.spouse.retirement_date).format('MM/DD/YYYY')
+        ruleForm.spouse.retirement_date =
+          member.value.spouse.retirement_date !== null
+            ? dayjs(member.value.spouse.retirement_date).format('MM/DD/YYYY')
+            : ''
       }
 
       if (member.value.house.type) Object.assign(ruleForm.house, JSON.parse(JSON.stringify(member.value.house)))
