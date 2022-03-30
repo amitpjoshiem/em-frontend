@@ -125,6 +125,13 @@
           <el-checkbox label="Dormant Accounts" class="w-full sm:w-4/12 lg:w-3/12 mr-0" @change="changeCurrently()" />
         </el-form-item>
       </el-card>
+
+      <div class="flex justify-end my-10">
+        <div class="pr-3">
+          <Button default-gray-btn text-btn="Back" @click="backStep" />
+        </div>
+        <el-button type="primary" @click="nextStep">Save</el-button>
+      </div>
     </el-form>
 
     <!-- <div>
@@ -136,13 +143,22 @@
 
 <script>
 import { useFetchMember } from '@/api/use-fetch-member.js'
-import { useRoute } from 'vue-router'
-import { reactive, ref } from 'vue'
+import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
+
+import { useMutation } from 'vue-query'
+
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { reactive, ref, computed } from 'vue'
+
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'FinalInformation',
   setup() {
     const route = useRoute()
+    const store = useStore()
+    const router = useRouter()
     const form = ref(null)
 
     const {
@@ -151,6 +167,8 @@ export default {
       refetch: refetchMember,
     } = useFetchMember({ id: route.params.id })
 
+    const { mutateAsync: updateSteps } = useMutation(updateStepsClients)
+
     const ruleForm = reactive({
       wttv: true,
       amount_retirement: '150k',
@@ -158,8 +176,31 @@ export default {
       biggest_financial: '',
     })
 
+    const step = computed(() => store.state.newClient.step)
+
     const changeCurrently = () => {
       console.log('changeCurrently')
+    }
+
+    const backStep = () => {
+      store.commit('newClient/setStep', step.value - 1)
+      router.push({ name: 'client-expense-information', params: { id: route.params.id } })
+    }
+
+    const nextStep = async () => {
+      const res = await updateSteps({ completed_financial_fact_finder: 'completed' })
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Information update successfully',
+        })
+
+        router.push({
+          name: 'client-dashboard',
+          params: { id: route.params.id },
+        })
+      }
     }
 
     return {
@@ -169,6 +210,8 @@ export default {
       member,
       refetchMember,
       changeCurrently,
+      backStep,
+      nextStep,
     }
   },
 }

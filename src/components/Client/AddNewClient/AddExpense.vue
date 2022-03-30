@@ -606,7 +606,6 @@ import { useRouter, useRoute } from 'vue-router'
 
 import { useFetchMonthlyExpense } from '@/api/use-fetch-monthly-expense.js'
 import { createMonthlyExpenses } from '@/api/vueQuery/create-monthly-expenses'
-import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { useMutation } from 'vue-query'
 
 import { currencyFormat } from '@/utils/currencyFormat'
@@ -628,8 +627,6 @@ export default {
 
     const { isLoading, isFetching, data, refetch } = useFetchMonthlyExpense({ id: route.params.id }, { enabled: false })
     const { mutateAsync: create, isLoading: isLoadingCreate } = useMutation(createMonthlyExpenses)
-
-    const { mutateAsync: updateSteps } = useMutation(updateStepsClients)
 
     const { setInitValue, optionsCurrencyInput } = useExpenseInfoHooks()
 
@@ -782,23 +779,16 @@ export default {
     }
 
     const nextStep = async () => {
-      const res = await updateSteps({ completed_financial_fact_finder: 'completed' })
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Information update successfully',
-        })
-        store.commit('newClient/setStep', step.value + 1)
-        router.push({
-          name: 'client-final-step',
-          params: { id: memberId },
-        })
-        // router.push({
-        //   name: 'client-dashboard',
-        //   params: { id: memberId },
-        // })
-      }
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Information update successfully',
+      })
+      store.commit('newClient/setStep', step.value + 1)
+      router.push({
+        name: 'client-final-step',
+        params: { id: memberId },
+      })
     }
 
     return {
