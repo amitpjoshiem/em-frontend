@@ -5,7 +5,7 @@
       <div class="md:w-2/12 text-gray03 text-xs">ESSENTIAL</div>
       <div class="md:w-2/12 text-gray03 text-xs">DISCRETIONARY</div>
     </div>
-    <el-form ref="form" :model="ruleForm" status-icon>
+    <el-form ref="form" :model="ruleForm">
       <el-card shadow="never" class="mb-5">
         <div class="md:flex mb-4">
           <!-- HOUSING -->
@@ -593,7 +593,7 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button type="primary" @click="nextStep"> Save </el-button>
+        <el-button type="primary" @click="nextStep"> Next </el-button>
       </div>
     </el-form>
   </div>
@@ -606,7 +606,6 @@ import { useRouter, useRoute } from 'vue-router'
 
 import { useFetchMonthlyExpense } from '@/api/use-fetch-monthly-expense.js'
 import { createMonthlyExpenses } from '@/api/vueQuery/create-monthly-expenses'
-import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { useMutation } from 'vue-query'
 
 import { currencyFormat } from '@/utils/currencyFormat'
@@ -628,8 +627,6 @@ export default {
 
     const { isLoading, isFetching, data, refetch } = useFetchMonthlyExpense({ id: route.params.id }, { enabled: false })
     const { mutateAsync: create, isLoading: isLoadingCreate } = useMutation(createMonthlyExpenses)
-
-    const { mutateAsync: updateSteps } = useMutation(updateStepsClients)
 
     const { setInitValue, optionsCurrencyInput } = useExpenseInfoHooks()
 
@@ -782,19 +779,16 @@ export default {
     }
 
     const nextStep = async () => {
-      const res = await updateSteps({ completed_financial_fact_finder: 'completed' })
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Information update successfully',
-        })
-        store.commit('newClient/setStep', step.value + 1)
-        router.push({
-          name: 'client-dashboard',
-          params: { id: memberId },
-        })
-      }
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Information update successfully',
+      })
+      store.commit('newClient/setStep', step.value + 1)
+      router.push({
+        name: 'confirmation-step',
+        params: { id: memberId },
+      })
     }
 
     return {

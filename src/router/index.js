@@ -53,6 +53,12 @@ const routes = [
         ],
       },
       {
+        path: 'confirmation-step/:id?',
+        name: 'confirmation-step',
+        component: () =>
+          import(/* webpackChunkName: "FinalStep" */ '../components/Client/AddNewClient/ConfirmationInformation.vue'),
+      },
+      {
         path: 'investment-retirement',
         name: 'investment-retirement',
         props: { context: 'investment_and_retirement_accounts' },
