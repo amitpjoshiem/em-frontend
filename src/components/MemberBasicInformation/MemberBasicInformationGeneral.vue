@@ -7,37 +7,11 @@
       </div>
       <div class="w-9/24">
         <span class="text-xs text-gray03 font-semibold mr-1">OWNER</span>
-        <span
-          v-if="!prospect.retired"
-          data-testid="type-member-basic-information-prospect-not-retired"
-          class="text-border-green text-xxs font-semibold bg-light-green rounded pr-2 pl-1 py-1"
-        >
-          Not Retired
-        </span>
-        <span
-          v-else
-          class="text-xxs text-orange-badge font-semibold bg-orange-bg rounded pr-2 pl-1 py-1"
-          data-testid="type-member-basic-information-prospect-retired"
-        >
-          Retired
-        </span>
+        <SwdRetiredLabel :retired="prospect.retired" />
       </div>
       <div class="w-9/24">
         <span class="text-xs text-gray03 font-semibold mr-1">SPOUSE</span>
-        <span
-          v-if="prospect.married && !spouse.retired"
-          data-testid="type-member-basic-information-spouse-not-retired"
-          class="text-border-green text-xxs font-semibold bg-light-green rounded pr-2 pl-1 py-1"
-        >
-          Not Retired
-        </span>
-        <span
-          v-if="prospect.married && spouse.retired"
-          data-testid="type-member-basic-information-spouse-retired"
-          class="text-xxs text-orange-badge font-semibold bg-orange-bg rounded pr-2 pl-1 py-1"
-        >
-          Retired
-        </span>
+        <SwdRetiredLabel v-if="prospect.married" :retired="spouse.retired" />
       </div>
     </div>
 

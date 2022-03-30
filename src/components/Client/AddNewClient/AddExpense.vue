@@ -5,7 +5,7 @@
       <div class="md:w-2/12 text-gray03 text-xs">ESSENTIAL</div>
       <div class="md:w-2/12 text-gray03 text-xs">DISCRETIONARY</div>
     </div>
-    <el-form ref="form" :model="ruleForm" status-icon>
+    <el-form ref="form" :model="ruleForm">
       <el-card shadow="never" class="mb-5">
         <div class="md:flex mb-4">
           <!-- HOUSING -->
@@ -593,7 +593,7 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button type="primary" @click="nextStep"> Save </el-button>
+        <el-button type="primary" @click="nextStep"> Next </el-button>
       </div>
     </el-form>
   </div>
@@ -791,9 +791,13 @@ export default {
         })
         store.commit('newClient/setStep', step.value + 1)
         router.push({
-          name: 'client-dashboard',
+          name: 'client-final-step',
           params: { id: memberId },
         })
+        // router.push({
+        //   name: 'client-dashboard',
+        //   params: { id: memberId },
+        // })
       }
     }
 

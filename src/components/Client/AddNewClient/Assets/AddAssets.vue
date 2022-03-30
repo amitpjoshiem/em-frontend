@@ -1,7 +1,7 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isFetchingMember && !isMemberAssetsLoading">
-      <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules">
+      <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
         <!-- Current income -->
         <div class="border-b pb-7">
           <span class="text-main text-xl font-semibold">Current income</span>

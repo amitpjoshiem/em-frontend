@@ -1,7 +1,7 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isFetchingMember" class="sm:p-5">
-      <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
+      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top">
         <!-- GENERAL -->
         <div class="border-b pb-5">
           <div class="text-main text-xl font-semibold mb-5">General</div>
