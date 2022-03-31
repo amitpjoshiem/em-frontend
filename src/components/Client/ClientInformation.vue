@@ -80,7 +80,9 @@
     </router-link>
 
     <div class="flex justify-end">
-      <el-button type="primary" plain :disabled="getDisabledBtn" @click="send">Send information</el-button>
+      <el-button type="primary" plain :disabled="getDisabledBtn" :loading="isLoadingSendInformation" @click="send">
+        Send information
+      </el-button>
     </div>
   </div>
   <SwdModalSucces
@@ -113,9 +115,10 @@ export default {
       data: clientsInfo,
     } = useFetchClietsInfo()
 
-    const { mutateAsync: sendInformation } = useMutation(sendAllInformation)
+    const { isLoading: isLoadingSendInformation, mutateAsync: sendInformation } = useMutation(sendAllInformation)
 
     const getDisabledBtn = computed(() => {
+      if (isLoadingSendInformation.value) return true
       const values = Object.values(clientsInfo.value.steps).find((item) => item === false)
       if (values === undefined) return false
       return true
@@ -136,7 +139,7 @@ export default {
       fetchingInfo,
       isErrorInfo,
       clientsInfo,
-
+      isLoadingSendInformation,
       getDisabledBtn,
       send,
     }

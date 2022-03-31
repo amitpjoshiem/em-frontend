@@ -1,55 +1,68 @@
 <template>
-  <div class="p-5">
-    <SwdSubHeader :title="getTitle" />
-    <div v-if="!isLoading">
-      <div class="mb-5">
-        <el-checkbox
-          v-model="state.availabilityDocuments"
-          label="I want to skip and submit"
-          size="large"
-          @change="changeStatus"
-        />
-      </div>
+  <div>
+    <div class="p-5">
+      <SwdSubHeader :title="getTitle" />
+      <div v-if="!isLoading">
+        <div class="mb-5">
+          <el-checkbox
+            v-model="state.availabilityDocuments"
+            label="I want to skip and submit"
+            size="large"
+            @change="changeStatus"
+          />
+        </div>
 
-      <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-input-border rounded-md">
-        <div v-if="!isFetching">
-          <SwdUpload
-            :upload-data="{ collection }"
-            :file-list="data.documents"
-            :show-file-list="true"
-            :auto-upload="true"
-            :show-file-block="true"
-            :disabled="state.availabilityDocuments"
-            @upload-change="handleChange"
-            @upload-success="handleSuccess"
-            @upload-mounted="bindRef"
-            @remove-media="removeMedia"
-            @open-prewiev="openPrewiev"
+        <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-input-border rounded-md">
+          <div v-if="!isFetching">
+            <SwdUpload
+              :upload-data="{ collection }"
+              :file-list="data.documents"
+              :show-file-list="true"
+              :auto-upload="true"
+              :show-file-block="true"
+              :disabled="state.availabilityDocuments"
+              @upload-change="handleChange"
+              @upload-success="handleSuccess"
+              @upload-mounted="bindRef"
+              @remove-media="removeMedia"
+              @open-prewiev="openPrewiev"
+            >
+              <template #main>
+                <div class="flex my-5">
+                  <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
+                </div>
+                <div v-if="isShowNoDocuments" class="text-gray03 pb-5">No documents uploaded</div>
+              </template>
+            </SwdUpload>
+          </div>
+          <el-skeleton v-else :rows="5" animated class="p-5" />
+        </div>
+        <div v-else class="min-h-[175px] mb-5 text-gray03 flex flex-col items-center justify-center">
+          <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+            <InlineSvg :src="IconEmptyUsers" />
+          </div>
+          <p>No recently added documents</p>
+        </div>
+        <div class="flex justify-end">
+          <el-button type="primary" plain class="w-[86px]" :disabled="isLoadingUpdateSteps" @click="backStep">
+            Back
+          </el-button>
+          <el-button
+            type="success"
+            plain
+            :disabled="disabledSaveBtn"
+            :loading="isLoadingUpdateSteps"
+            class="w-[86px]"
+            @click="saveStep"
           >
-            <template #main>
-              <div class="flex my-5">
-                <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
-              </div>
-              <div v-if="isShowNoDocuments" class="text-gray03 pb-5">No documents uploaded</div>
-            </template>
-          </SwdUpload>
+            Save
+          </el-button>
         </div>
-        <el-skeleton v-else :rows="5" animated class="p-5" />
       </div>
-      <div v-else class="min-h-[175px] mb-5 text-gray03 flex flex-col items-center justify-center">
-        <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
-          <InlineSvg :src="IconEmptyUsers" />
-        </div>
-        <p>No recently added documents</p>
-      </div>
-      <div class="flex justify-end">
-        <el-button type="primary" plain @click="backStep">Back</el-button>
-        <el-button type="success" plain :disabled="disabledSaveBtn" @click="saveStep">Save</el-button>
-      </div>
+      <el-skeleton v-else :rows="15" animated />
     </div>
-    <el-skeleton v-else :rows="15" animated />
+    <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
   </div>
-  <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
 </template>
 
 <script>
@@ -89,7 +102,7 @@ export default {
       collection,
     })
 
-    const { mutateAsync: updateSteps } = useMutation(updateStepsClients)
+    const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
     const { mutateAsync: deleteDocument } = useMutation(deleteMedia)
     const { mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
@@ -122,6 +135,7 @@ export default {
     })
 
     const disabledSaveBtn = computed(() => {
+      if (isLoadingUpdateSteps.value) return true
       return !(state.availabilityDocuments || data.value.documents.length)
     })
 
@@ -208,6 +222,7 @@ export default {
       handleSuccess,
       isShowNoDocuments,
       openPrewiev,
+      isLoadingUpdateSteps,
     }
   },
 }
