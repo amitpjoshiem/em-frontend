@@ -44,7 +44,7 @@
           <p>No recently added documents</p>
         </div>
         <div class="flex justify-end">
-          <el-button type="primary" plain class="w-[86px]" :disabled="isLoadingUpdateSteps" @click="backStep">
+          <el-button type="primary" plain class="w-20" :disabled="isLoadingUpdateSteps" @click="backStep">
             Back
           </el-button>
           <el-button
@@ -52,7 +52,7 @@
             plain
             :disabled="disabledSaveBtn"
             :loading="isLoadingUpdateSteps"
-            class="w-[86px]"
+            class="w-20"
             @click="saveStep"
           >
             Save

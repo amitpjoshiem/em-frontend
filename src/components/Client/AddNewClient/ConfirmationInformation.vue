@@ -201,7 +201,7 @@
         <el-button
           type="primary"
           :disabled="isDisabledSaveBtn"
-          class="w-[86px]"
+          class="w-20"
           :loading="isDisabledSaveBtn"
           @click="saveConfirmation"
         >
