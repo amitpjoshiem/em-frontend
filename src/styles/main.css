@@ -307,3 +307,7 @@
 .el-form--default.el-form--label-top .el-form-item .el-form-item__label {
   margin-bottom: 0;
 }
+
+.item-notification:not(:last-child){
+  margin-bottom: 10px;
+}

@@ -1,6 +1,5 @@
 <template>
-  <SwdSubHeader title="Confirmation Information" class="p-5" />
-  <div v-if="!isFetchingMember && !isFetchingConfirmation" class="p-5">
+  <div v-if="!isFetchingMember && !isFetchingConfirmation">
     <el-form ref="form" :model="ruleForm" label-position="top">
       <el-card class="mb-4 w-full sm:p-5">
         <div>
@@ -199,7 +198,15 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button type="primary" @click="saveConfirmation">Save</el-button>
+        <el-button
+          type="primary"
+          :disabled="isDisabledSaveBtn"
+          class="w-[86px]"
+          :loading="isDisabledSaveBtn"
+          @click="saveConfirmation"
+        >
+          Save
+        </el-button>
       </div>
     </el-form>
   </div>
@@ -232,19 +239,11 @@ export default {
     const router = useRouter()
     const form = ref(null)
 
-    const {
-      isFetching: isFetchingMember,
-      data: member,
-      refetch: refetchMember,
-    } = useFetchMember({ id: route.params.id })
+    const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id })
 
-    const {
-      isFetching: isFetchingConfirmation,
-      data: confirmationData,
-      refetch: refetchConfirmation,
-    } = useFetchClietsConfirmation()
+    const { isFetching: isFetchingConfirmation, data: confirmationData } = useFetchClietsConfirmation()
 
-    const { mutateAsync: updateSteps } = useMutation(updateStepsClients)
+    const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
     const { isLoading: isLoadingUpdateConfirmation, mutateAsync: updateCinfirmationInfo } =
       useMutation(updateConfirmation)
@@ -328,24 +327,22 @@ export default {
       }
     }
 
+    const isDisabledSaveBtn = computed(() => {
+      return isLoadingUpdateSteps.value || isLoadingUpdateMember.value || isLoadingUpdateConfirmation.value
+    })
+
     return {
       ruleForm,
       form,
       isFetchingMember,
       member,
-      refetchMember,
       backStep,
       saveConfirmation,
-
       isFetchingConfirmation,
-      confirmationData,
-      refetchConfirmation,
-
+      isLoadingUpdateSteps,
       isLoadingUpdateMember,
-      updateMember,
-
-      updateCinfirmationInfo,
       isLoadingUpdateConfirmation,
+      isDisabledSaveBtn,
     }
   },
 }
