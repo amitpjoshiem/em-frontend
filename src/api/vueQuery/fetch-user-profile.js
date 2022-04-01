@@ -1,9 +1,14 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function fetchUserProfile() {
+function fetchUserProfile({ queryKey }) {
+  const searchParams = {}
+  const filter = queryKey[1].reactiveFilter ? queryKey[1].reactiveFilter : ''
+
+  if (filter) searchParams.filter = filter
+
   return fetcher({
     url: `/users/profile`,
-    options: { method: 'GET' },
+    options: { method: 'GET', searchParams },
   })
 }
 
