@@ -31,7 +31,7 @@
           </div>
           <div>
             <el-button
-              v-if="file.name.toString().slice(-4) === '.PDF' || file.name.toString().slice(-4) === '.pdf'"
+              v-if="file.extension === 'PDF'"
               type="primary"
               size="small"
               plain
@@ -95,11 +95,6 @@ export default {
       type: Boolean,
       required: false,
       default: false,
-    },
-    isPrewiev: {
-      type: Boolean,
-      required: false,
-      default: true,
     },
   },
   emits: [
