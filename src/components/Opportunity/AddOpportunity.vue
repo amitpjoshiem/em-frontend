@@ -89,10 +89,12 @@ export default {
       amount: '',
     })
 
+    const userFilter = 'last_name;first_name'
+
     const { mutateAsync: addOpportunity } = useMutation(createOpportunity)
     const { isLoading: isLoadingProspectDetails, data: prospectDetails } = useProspectDetails(id)
     const { isLoading: isLoadingInitOpportunity, data: initOpportunity } = useOpportunityInit()
-    const { isLoading: isLoadingUserProfile, data: userProfile } = useUserProfile()
+    const { isLoading: isLoadingUserProfile, data: userProfile } = useUserProfile(userFilter)
     const { isLoading: isLoadingStatusSfAcc, data: statusSfAcc } = useSalesForceAuth()
 
     watchEffect(() => {
