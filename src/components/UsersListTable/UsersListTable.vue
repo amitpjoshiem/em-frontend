@@ -16,13 +16,19 @@
       </template>
     </el-table-column>
 
-    <el-table-column prop="created_at" label="createdAt" min-width="110" sortable>
+    <el-table-column v-if="isLead" label="E-mail" min-width="195">
+      <template #default="scope">
+        {{ scope.row.email }}
+      </template>
+    </el-table-column>
+
+    <el-table-column prop="created_at" label="createdAt" min-width="110">
       <template #default="scope">
         <span class="text-xss">{{ scope.row.createdAtFormatted }}</span>
       </template>
     </el-table-column>
 
-    <el-table-column label="Type" min-width="110">
+    <el-table-column v-if="!isLead" label="Type" min-width="110">
       <template #default="scope">
         <SwdTypeUserLabel :user-type="scope.row.type" class="text-xss" />
       </template>
@@ -40,7 +46,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column label="net worth" min-width="85">
+    <el-table-column v-if="!isLead" label="net worth" min-width="85">
       <SwdStubForText text="" plug="&mdash;" class="text-xss text-main font-semibold" />
     </el-table-column>
 
@@ -75,6 +81,11 @@ export default {
       require: true,
       default: () => [],
     },
+    isLead: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
   },
   setup() {
     const store = useStore()
@@ -99,12 +110,6 @@ export default {
       change,
       getDefaultSort,
     }
-  },
-
-  computed: {
-    getHeadlines() {
-      return ['householder Name', 'Created on', 'type', 'Onboarding', 'location', 'net worth']
-    },
   },
 }
 </script>
