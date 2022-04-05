@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:w-[960px]">
+  <div>
     <div v-if="!isLoadingExpense">
       <div class="flex justify-end mb-4">
         <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
@@ -12,7 +12,7 @@
         </div>
         <div>
           <!-- HOUSING -->
-          <el-card shadow="never" class="mb-5">
+          <el-card class="mb-5">
             <div class="md:flex mb-4">
               <div class="w-3/12 flex items-center text-sm font-semibold">Housing</div>
               <div class="flex pb-2 mt-5 md:hidden">
@@ -61,7 +61,7 @@
           </el-card>
 
           <!-- FOOD TRANSPORTATION -->
-          <el-card shadow="never" class="mb-5">
+          <el-card class="mb-5">
             <div class="md:flex mb-4">
               <div class="w-3/12 flex items-center text-sm font-semibold">Food</div>
               <div class="flex pb-2 mt-5 md:hidden">
@@ -135,7 +135,7 @@
           </el-card>
 
           <!-- HEALTHCARE -->
-          <el-card shadow="never" class="mb-5">
+          <el-card class="mb-5">
             <div class="md:flex mb-4">
               <div class="w-3/12 flex items-center text-sm font-semibold">Healthcare</div>
               <div class="flex pb-2 mt-5 md:hidden">
@@ -181,7 +181,7 @@
           </el-card>
 
           <!-- PERSONAL -->
-          <el-card shadow="never" class="mb-5">
+          <el-card class="mb-5">
             <div class="md:flex mb-4">
               <div class="md:w-3/12 flex items-center text-sm font-semibold">Personal Insurance</div>
               <div class="flex pb-2 mt-5 md:hidden">
@@ -225,7 +225,7 @@
           </el-card>
 
           <!-- OTHER -->
-          <el-card shadow="never" class="mb-5">
+          <el-card class="mb-5">
             <div class="md:flex mb-4">
               <div class="w-3/12" />
               <div class="flex pb-2 mt-5 md:hidden">

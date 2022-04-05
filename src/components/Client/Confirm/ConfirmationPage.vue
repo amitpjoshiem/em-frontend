@@ -1,5 +1,5 @@
 <template>
-  <div class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
+  <div class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto lg:w-[960px]">
     <SwdSubHeader title="Confirmation Information" class="mt-2" />
     <el-collapse v-model="activeNames" accordion>
       <el-collapse-item title="Basic" name="basic">
@@ -13,6 +13,31 @@
       <el-collapse-item title="Expense" name="expense">
         <ConfirmationExpense v-if="activeNames === 'expense'" />
       </el-collapse-item>
+
+      <el-collapse-item title="Investment and Retirement Accounts (most recent statements)" name="investment">
+        <ListDocumentsClient v-if="activeNames === 'investment'" doc-collections="investment_and_retirement_accounts" />
+      </el-collapse-item>
+
+      <el-collapse-item
+        title="Life Insurance, Annuity, and Long Term Care Policies (most recent statements)"
+        name="life-insurance"
+      >
+        <ListDocumentsClient
+          v-if="activeNames === 'life-insurance'"
+          doc-collections="life_insurance_annuity_and_long_terms_care_policies"
+        />
+      </el-collapse-item>
+
+      <el-collapse-item title="Social Security Information/Statement(s)" name="social-security">
+        <ListDocumentsClient v-if="activeNames === 'social-security'" doc-collections="social_security_information" />
+      </el-collapse-item>
+
+      <el-collapse-item title="List of Stock Certificates or Bonds" name="list-stock">
+        <ListDocumentsClient
+          v-if="activeNames === 'list-stock'"
+          doc-collections="list_of_stock_certificates_or_bonds"
+        />
+      </el-collapse-item>
     </el-collapse>
   </div>
 </template>
@@ -23,6 +48,7 @@ import { ref } from 'vue'
 import ConfirmationInformation from './Basic/ConfirmationBasic.vue'
 import ConfirmationExpense from './Expense/ConfirmationExpense.vue'
 import ConfirmationAssets from './Assets/ConfirmationAssets.vue'
+import ListDocumentsClient from './ListDocuments/ListDocumentsClient'
 
 export default {
   name: 'ConfirmationPage',
@@ -30,6 +56,7 @@ export default {
     ConfirmationInformation,
     ConfirmationExpense,
     ConfirmationAssets,
+    ListDocumentsClient,
   },
   setup() {
     const activeNames = ref(['basic'])

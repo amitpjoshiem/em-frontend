@@ -72,7 +72,7 @@
     </el-card>
     <MoreInfoAbout :data="confirmationData" />
   </div>
-  <div v-else class="flex justify-center items-center lg:w-[960px]">
+  <div v-else class="flex justify-center items-center">
     <SwdSpinner large />
   </div>
 </template>

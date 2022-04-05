@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:w-[960px]">
+  <div>
     <div class="flex justify-end mb-4">
       <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
     </div>
