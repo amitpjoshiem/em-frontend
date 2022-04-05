@@ -15,7 +15,11 @@
       </el-collapse-item>
 
       <el-collapse-item title="Investment and Retirement Accounts (most recent statements)" name="investment">
-        <ListDocumentsClient v-if="activeNames === 'investment'" doc-collections="investment_and_retirement_accounts" />
+        <ListDocumentsClient
+          v-if="activeNames === 'investment'"
+          doc-collections="investment_and_retirement_accounts"
+          page="investment-retirement"
+        />
       </el-collapse-item>
 
       <el-collapse-item
@@ -25,17 +29,23 @@
         <ListDocumentsClient
           v-if="activeNames === 'life-insurance'"
           doc-collections="life_insurance_annuity_and_long_terms_care_policies"
+          page="life-insurance"
         />
       </el-collapse-item>
 
       <el-collapse-item title="Social Security Information/Statement(s)" name="social-security">
-        <ListDocumentsClient v-if="activeNames === 'social-security'" doc-collections="social_security_information" />
+        <ListDocumentsClient
+          v-if="activeNames === 'social-security'"
+          doc-collections="social_security_information"
+          page="social-security"
+        />
       </el-collapse-item>
 
       <el-collapse-item title="List of Stock Certificates or Bonds" name="list-stock">
         <ListDocumentsClient
           v-if="activeNames === 'list-stock'"
           doc-collections="list_of_stock_certificates_or_bonds"
+          page="list-stock"
         />
       </el-collapse-item>
     </el-collapse>
