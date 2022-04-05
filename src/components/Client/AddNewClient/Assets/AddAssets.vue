@@ -7,7 +7,7 @@
           <span class="text-main text-xl font-semibold">Current income</span>
           <div class="pt-5">
             <el-form-item label="Do you have a written income plan?">
-              <el-radio-group v-model="ruleForm.income.income_plan">
+              <el-radio-group v-model="ruleForm.income.income_plan" @change="change">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
