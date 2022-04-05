@@ -1,27 +1,20 @@
 <template>
-  <div class="p-2 sm:p-5">
+  <div class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
     <SwdSubHeader title="Confirmation Information" class="mt-2" />
     <el-collapse v-model="activeNames" accordion @change="handleChange">
       <el-collapse-item title="Basic" name="basic">
         <ConfirmationInformation />
       </el-collapse-item>
-      <el-collapse-item title="Feedback" name="2">
-        <div>dfdf</div>
+
+      <el-collapse-item title="Assets &amp; Income" name="assets">
+        <ConfirmationAssets v-if="activeNames === 'assets'" />
       </el-collapse-item>
+
       <el-collapse-item title="Expense" name="expense">
         <div v-if="isFetchingExpense && activeNames === 'expense'" class="flex justify-center items-center">
           <SwdSpinner large />
         </div>
         <ConfirmationExpense v-if="!isFetchingExpense && activeNames === 'expense'" :data="dataExpense" />
-      </el-collapse-item>
-      <el-collapse-item title="Controllability" name="4">
-        <div>
-          Decision making: giving advices about operations is acceptable, but do not make decisions for the users;
-        </div>
-        <div>
-          Controlled consequences: users should be granted the freedom to operate, including canceling, aborting or
-          terminating current operation.
-        </div>
       </el-collapse-item>
     </el-collapse>
   </div>
@@ -32,6 +25,8 @@ import { ref } from 'vue'
 
 import ConfirmationInformation from './ConfirmationBasic.vue'
 import ConfirmationExpense from './ConfirmationExpense.vue'
+import ConfirmationAssets from './Assets/ConfirmationAssets.vue'
+
 import { useFetchMonthlyExpense } from '@/api/use-fetch-monthly-expense.js'
 
 import { useRoute } from 'vue-router'
@@ -41,9 +36,11 @@ export default {
   components: {
     ConfirmationInformation,
     ConfirmationExpense,
+    ConfirmationAssets,
   },
   setup() {
     const route = useRoute()
+
     const activeNames = ref(['basic'])
 
     const {
@@ -54,7 +51,6 @@ export default {
     } = useFetchMonthlyExpense({ id: route.params.id }, { enabled: false })
 
     const handleChange = (val) => {
-      console.log(val)
       if (val === 'expense') {
         refetchExpense.value()
       }

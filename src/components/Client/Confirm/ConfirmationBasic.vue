@@ -174,25 +174,9 @@
           />
         </el-form-item>
       </el-card>
-      <!-- 
-      <div class="flex justify-end my-10">
-        <div class="pr-3">
-          <Button default-gray-btn text-btn="Back" @click="backStep" />
-        </div>
-        <el-button
-          type="primary"
-          :disabled="isDisabledSaveBtn"
-          class="w-20"
-          :loading="isDisabledSaveBtn"
-          @click="saveConfirmation"
-        >
-          Save
-        </el-button>
-      </div> -->
     </el-form>
   </div>
-  <el-skeleton v-else :rows="10" animated />
-  <!-- </div> -->
+  <el-skeleton v-else :rows="10" animated class="lg:w-[1024px]" />
 </template>
 
 <script>

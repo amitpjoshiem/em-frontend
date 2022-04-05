@@ -21,7 +21,7 @@ export function useAssetsInfoHooks(member) {
   }
 
   const isMarried = computed(() => {
-    if (member?.value?.data) return member.value.data.married
+    if (member.value) return member.value.married
     return false
   })
 
