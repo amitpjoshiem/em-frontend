@@ -1,17 +1,17 @@
 <template>
-  <div class="lg:w-[1024px]">
+  <div class="lg:w-[960px]">
+    <div class="flex justify-end mb-4">
+      <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
+    </div>
     <div v-if="!isFetchingMember && !isMemberAssetsLoading">
-      <!-- <div>{{ member }}</div> -->
-      <!-- Current income -->
       <div class="border-b pb-7">
         <span class="text-main text-xl font-semibold">Current income</span>
         <div class="pt-5">
-          <!-- <el-form-item label="Do you have a written income plan?">
-            <el-radio-group v-model="ruleForm.income.income_plan">
-              <el-radio :label="true">Yes</el-radio>
-              <el-radio :label="false">No</el-radio>
-            </el-radio-group>
-          </el-form-item> -->
+          <div class="flex">
+            <div>Do you have a written income plan?</div>
+            <el-tag v-if="assets.data.income.income_plan" class="ml-4" type="success">Yes</el-tag>
+            <el-tag v-else class="ml-4" type="danger">No</el-tag>
+          </div>
 
           <!-- Salary -->
           <ItemValueAssetsTwo
@@ -272,7 +272,7 @@
 
 <script>
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { useFetchMember } from '@/api/use-fetch-member'
@@ -292,12 +292,17 @@ export default {
   },
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const form = ref()
 
     const { response: assets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
     const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id })
 
     const { isMarried } = useAssetsInfoHooks(member)
+
+    const edit = () => {
+      router.push({ name: 'client-assets-information', params: { id: route.params.id } })
+    }
 
     return {
       assets,
@@ -306,6 +311,7 @@ export default {
       form,
       isFetchingMember,
       member,
+      edit,
     }
   },
 }

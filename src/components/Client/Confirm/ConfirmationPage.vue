@@ -23,7 +23,7 @@
 <script>
 import { ref } from 'vue'
 
-import ConfirmationInformation from './ConfirmationBasic.vue'
+import ConfirmationInformation from './Basic/ConfirmationBasic.vue'
 import ConfirmationExpense from './ConfirmationExpense.vue'
 import ConfirmationAssets from './Assets/ConfirmationAssets.vue'
 

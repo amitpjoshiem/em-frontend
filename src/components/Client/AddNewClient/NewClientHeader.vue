@@ -1,7 +1,7 @@
 <template>
   <div class="flex pb-5">
     <div class="w-3/12">
-      <BackButton text="Back" @click="back" />
+      <BackButton text="Back" @click="$router.go(-1)" />
     </div>
     <div class="w-6/12 text-center">
       <span class="text-sm sm:text-base text-title text-main font-medium">{{ headerTitle }}</span>
@@ -22,15 +22,6 @@ export default {
     const route = useRoute()
 
     const step = computed(() => store.state.newClient.step)
-
-    const back = () => {
-      if (step.value === 1) {
-        router.push({ name: 'client-dashboard' })
-      } else {
-        store.commit('newClient/setStep', step.value - 1)
-        goPage()
-      }
-    }
 
     const headerTitle = computed(() => {
       switch (step.value) {
@@ -73,7 +64,6 @@ export default {
     }
 
     return {
-      back,
       headerTitle,
       goPage,
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:w-[1024px]">
+  <div class="lg:w-[960px]">
     <div class="flex justify-end mb-4">
       <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
     </div>
@@ -317,6 +317,7 @@ export default {
     const edit = () => {
       router.push({ name: 'client-expense-information', params: { id: route.params.id } })
     }
+
     return {
       currencyFormat,
       edit,
