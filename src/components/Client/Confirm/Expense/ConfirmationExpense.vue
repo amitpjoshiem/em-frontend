@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!isLoadingExpense">
-      <div class="flex justify-end mb-4">
+      <div v-if="$can('client', 'all')" class="flex justify-end mb-4">
         <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
       </div>
       <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">

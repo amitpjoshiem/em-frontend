@@ -49,6 +49,9 @@
         />
       </el-collapse-item>
     </el-collapse>
+    <div class="flex justify-end mt-6 mb-4">
+      <el-button v-if="$can('advisor', 'all')" type="primary" plain>Convert to opportunity</el-button>
+    </div>
   </div>
 </template>
 
