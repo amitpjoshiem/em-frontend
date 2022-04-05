@@ -786,7 +786,7 @@ export default {
       })
       store.commit('newClient/setStep', step.value + 1)
       router.push({
-        name: 'confirmation-step',
+        name: 'confirmation-info',
         params: { id: memberId },
       })
     }

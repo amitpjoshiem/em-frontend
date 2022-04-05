@@ -50,15 +50,14 @@ const routes = [
                 /* webpackChunkName: "NewClienExpenseInformation" */ '../components/Client/AddNewClient/AddExpense.vue'
               ),
           },
-          {
-            path: 'confirmation-step/:id?',
-            name: 'confirmation-step',
-            component: () =>
-              import(
-                /* webpackChunkName: "ConfirmationInformation" */ '../components/Client/AddNewClient/ConfirmationInformation.vue'
-              ),
-          },
         ],
+      },
+
+      {
+        path: 'confirmation-page/:id?',
+        name: 'confirmation-page',
+        component: () =>
+          import(/* webpackChunkName: "ConfirmationPage" */ '../components/Client/Confirm/ConfirmationPage.vue'),
       },
 
       {

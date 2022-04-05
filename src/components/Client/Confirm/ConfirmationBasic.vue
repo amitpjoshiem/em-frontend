@@ -8,7 +8,7 @@
             <!-- CLIENT -->
             <div class="flex text-main mb-2 sm:w-6/12 xl:w-5/12">
               <div class="pr-2 text-gray-500">Name:</div>
-              <div class="text-main">{{ member.name }}</div>
+              <SwdStubForText :text="member.name" plug="&mdash;" class="text-sm text-main" />
             </div>
             <div class="flex text-main mb-2 sm:w-6/12 xl:w-4/12">
               <div class="pr-2 text-gray-500">E-mail:</div>
@@ -16,7 +16,7 @@
             </div>
             <div class="flex text-main mb-2 sm:w-6/12 xl:w-3/12">
               <span class="text-gray-500 pr-2">Age:</span>
-              <span class="">{{ member.age }}</span>
+              <SwdStubForText :text="member.age" plug="&mdash;" class="text-sm text-main" />
             </div>
             <!-- SPOUSE -->
             <template v-if="member.married">
@@ -66,27 +66,11 @@
               </div>
             </div>
           </div>
-
-          <el-form-item label="Have you watched us during the newson WTTV4 CBS or Fox59" class="mb-4">
-            <el-radio-group v-model="ruleForm.wttv4_or_fox59">
-              <el-radio :label="true">Yes</el-radio>
-              <el-radio :label="false">No</el-radio>
-            </el-radio-group>
-          </el-form-item>
-
-          <el-form-item label="I have saved the following amount for retirement" class="mb-4">
-            <el-radio-group v-model="ruleForm.amount_for_retirement">
-              <el-radio label="150000">$150,000 - $250,000</el-radio>
-              <el-radio label="250000">$250,000 - $500,000</el-radio>
-              <el-radio label="500000">$500,000 - $1,000,000</el-radio>
-              <el-radio label="1000000">$1,000,000+</el-radio>
-            </el-radio-group>
-          </el-form-item>
         </div>
       </el-card>
 
       <el-card class="mb-4 w-full sm:p-5">
-        <el-form-item class="mb-2">
+        <el-form-item class="mb-4">
           <el-radio-group v-model="ruleForm.consultation" class="flex flex-col items-start">
             <el-radio label="want_consultation_and_book"
               >Yes, I want a Free Consultation & Copy of Matt`s Book
@@ -94,9 +78,6 @@
             <el-radio label="want_consultation">Yes, I want a Free Consultation </el-radio>
             <el-radio label="dont_want_consultation">No, I don't want a Free Consultation </el-radio>
           </el-radio-group>
-        </el-form-item>
-        <el-form-item label="My Biggest Financial Concern Is:" class="mb-4">
-          <el-input v-model="ruleForm.biggest_financial_concern" type="textarea" />
         </el-form-item>
 
         <!-- I Currently Have -->
@@ -193,7 +174,7 @@
           />
         </el-form-item>
       </el-card>
-
+      <!-- 
       <div class="flex justify-end my-10">
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
@@ -207,10 +188,11 @@
         >
           Save
         </el-button>
-      </div>
+      </div> -->
     </el-form>
   </div>
   <el-skeleton v-else :rows="10" animated />
+  <!-- </div> -->
 </template>
 
 <script>
@@ -218,13 +200,12 @@ import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useFetchClietsConfirmation } from '@/api/clients/use-fetch-confirmation.js'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { updateConfirmation } from '@/api/vueQuery/clients/fetch-update-confirmation'
-import { updateMembers } from '@/api/vueQuery/update-members'
 
 import { useMutation } from 'vue-query'
 
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { reactive, ref, computed, watchEffect, onMounted } from 'vue'
+import { reactive, ref, watchEffect, onMounted } from 'vue'
 
 import { useAlert } from '@/utils/use-alert'
 import { scrollTop } from '@/utils/scrollTop'
@@ -244,17 +225,13 @@ export default {
     const { isFetching: isFetchingConfirmation, data: confirmationData } = useFetchClietsConfirmation()
 
     const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
-    const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
     const { isLoading: isLoadingUpdateConfirmation, mutateAsync: updateCinfirmationInfo } =
       useMutation(updateConfirmation)
 
     const { setInitValueMember, setInitValueConfirmInfo } = useConfirmationInfoHooks()
 
     const ruleForm = reactive({
-      wttv4_or_fox59: true,
       consultation: 'want_consultation_and_book',
-      amount_for_retirement: '150000',
-      biggest_financial_concern: '',
       currently_have: {
         cds: false,
         annuity: false,
@@ -279,7 +256,7 @@ export default {
       },
     })
 
-    const step = computed(() => store.state.newClient.step)
+    // const step = computed(() => store.state.newClient.step)
 
     onMounted(async () => {
       store.commit('newClient/setStep', 4)
@@ -291,26 +268,20 @@ export default {
       if (isFetchingMember.value === false) setInitValueMember(ruleForm, member.value)
     })
 
-    const backStep = () => {
-      store.commit('newClient/setStep', step.value - 1)
-      router.push({ name: 'client-expense-information', params: { id: route.params.id } })
-    }
+    // const backStep = () => {
+    //   store.commit('newClient/setStep', step.value - 1)
+    //   router.push({ name: 'client-expense-information', params: { id: route.params.id } })
+    // }
 
     const saveConfirmation = async () => {
-      const formMember = {
-        wttv4_or_fox59: ruleForm.wttv4_or_fox59,
-        biggest_financial_concern: ruleForm.biggest_financial_concern,
-        amount_for_retirement: ruleForm.amount_for_retirement,
-      }
       const formConfirmation = {
         currently_have: ruleForm.currently_have,
         more_info_about: ruleForm.more_info_about,
         consultation: ruleForm.consultation,
       }
-      const resUpdateMember = await updateMember({ form: formMember, id: route.params.id })
       const resUpdateConfirmation = await updateCinfirmationInfo(formConfirmation)
 
-      if (!('error' in resUpdateMember) && !('error' in resUpdateConfirmation)) {
+      if (!('error' in resUpdateConfirmation)) {
         const resUpdateSteps = await updateSteps({ completed_financial_fact_finder: 'completed' })
         if (!('error' in resUpdateSteps)) {
           useAlert({
@@ -327,22 +298,21 @@ export default {
       }
     }
 
-    const isDisabledSaveBtn = computed(() => {
-      return isLoadingUpdateSteps.value || isLoadingUpdateMember.value || isLoadingUpdateConfirmation.value
-    })
+    // const isDisabledSaveBtn = computed(() => {
+    //   return isLoadingUpdateSteps.value || isLoadingUpdateConfirmation.value
+    // })
 
     return {
       ruleForm,
       form,
       isFetchingMember,
       member,
-      backStep,
+      // backStep,
       saveConfirmation,
       isFetchingConfirmation,
       isLoadingUpdateSteps,
-      isLoadingUpdateMember,
       isLoadingUpdateConfirmation,
-      isDisabledSaveBtn,
+      // isDisabledSaveBtn,
     }
   },
 }

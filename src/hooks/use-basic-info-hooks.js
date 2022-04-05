@@ -34,6 +34,12 @@ export function useBasicInfoHooks() {
       if (member.value.house.type) Object.assign(ruleForm.house, JSON.parse(JSON.stringify(member.value.house)))
 
       if (member.value.other.id) Object.assign(ruleForm.other, JSON.parse(JSON.stringify(member.value.other)))
+
+      if (member.type === 'lead') {
+        ruleForm.amount_for_retirement = member.amount_for_retirement
+        ruleForm.biggest_financial_concern = member.biggest_financial_concern
+        ruleForm.wttv4_or_fox59 = member.wttv4_or_fox59
+      }
     }
   }
 
