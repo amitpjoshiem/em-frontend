@@ -109,8 +109,6 @@ export default {
     SwdModalSucces,
   },
   setup() {
-    // const store = useStore()
-
     const {
       isLoading: isLoadingInfo,
       fetching: fetchingInfo,
