@@ -29,6 +29,14 @@ export function useBasicInfoHooks() {
           member.value.spouse.retirement_date !== null
             ? dayjs(member.value.spouse.retirement_date).format('MM/DD/YYYY')
             : ''
+
+        if (!ruleForm.spouse.employment_history.length) {
+          ruleForm.spouse.employment_history.push({
+            company_name: '',
+            occupation: '',
+            years: '',
+          })
+        }
       }
 
       if (member.value.house.type) Object.assign(ruleForm.house, JSON.parse(JSON.stringify(member.value.house)))
