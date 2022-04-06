@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading" class="my-4">
+  <div v-if="!isLoadingClient && !isLoadingAdvisor" class="my-4">
     <el-form ref="form" :model="ruleForm" label-position="top">
       <el-form-item class="mb-4">
         <el-radio-group
@@ -152,11 +152,13 @@
 </template>
 
 <script>
-import { watchEffect, reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useMutation } from 'vue-query'
 import { updateConfirmation } from '@/api/vueQuery/clients/fetch-update-confirmation'
 import { useConfirmationInfoHooks } from '@/hooks/use-confirmation-info-hooks'
 import { useFetchClietsConfirmation } from '@/api/clients/use-fetch-confirmation.js'
+import { useFetchGetClietsConfirmation } from '@/api/use-fetch-get-clients-confirmation.js'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'MoreInfoAbout',
@@ -169,8 +171,21 @@ export default {
   },
   setup() {
     const form = ref(null)
+    const route = useRoute()
 
-    const { isLoading, isFetching: isFetchingConfirmation, data: confirmationData } = useFetchClietsConfirmation()
+    const {
+      isLoading: isLoadingClient,
+      isFetching: isFetchingConfirmationClient,
+      data: confirmationDataClient,
+      refetch: refetchClient,
+    } = useFetchClietsConfirmation({ enabled: false })
+
+    const {
+      isLoading: isLoadingAdvisor,
+      isFetching: isFetchingConfirmationAdvisor,
+      data: confirmationDataAdvisor,
+      refetch: refetchAdvisor,
+    } = useFetchGetClietsConfirmation(route.params.id, { enabled: false })
 
     const { mutateAsync: updateCinfirmationInfo } = useMutation(updateConfirmation)
 
@@ -202,9 +217,13 @@ export default {
       },
     })
 
-    watchEffect(() => {
-      if (isLoading.value === false) {
-        setInitValueConfirmInfo(ruleForm, confirmationData.value)
+    onMounted(async () => {
+      if (route.params.id) {
+        await refetchAdvisor.value()
+        setInitValueConfirmInfo(ruleForm, confirmationDataAdvisor.value)
+      } else {
+        await refetchClient.value()
+        setInitValueConfirmInfo(ruleForm, confirmationDataClient.value)
       }
     })
 
@@ -229,21 +248,39 @@ export default {
       ruleForm,
       changeConsultation,
 
-      isFetchingConfirmation,
-      confirmationData,
-      isLoading,
+      isLoadingClient,
+      isFetchingConfirmationClient,
+      confirmationDataClient,
+      refetchClient,
+
+      isLoadingAdvisor,
+      isFetchingConfirmationAdvisor,
+      confirmationDataAdvisor,
+      refetchAdvisor,
     }
   },
 }
 </script>
 
 <style>
-/* .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner {
+.el-checkbox__input.is-disabled.is-checked .el-checkbox__inner {
   background-color: #76e1bb;
   border-color: #76e1bb;
 }
 
 .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner::after {
   border-color: white;
-} */
+}
+
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: #76e1bb;
+}
+
+.el-radio__input.is-disabled.is-checked .el-radio__inner {
+  background-color: rgb(64, 158, 255);
+}
+
+.el-radio__input.is-disabled + span.el-radio__label {
+  color: #424450;
+}
 </style>

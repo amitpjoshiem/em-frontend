@@ -81,10 +81,6 @@
     </div>
     <el-skeleton v-else :rows="10" animated class="p-5" />
   </div>
-
-  <!-- <div class="p-5 mb-10">
-    <TableAssetsConsolidations />
-  </div> -->
 </template>
 <script>
 import { useYodleeStatus } from '@/api/use-yodlee-status.js'
@@ -97,13 +93,11 @@ import { useTimer } from '@/utils/useTimer'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useMutation } from 'vue-query'
 import { createYodlee } from '@/api/vueQuery/create-yodlee'
-// import TableAssetsConsolidations from '@/components/NewProspect/AssetsConsolidations/TableAssetsConsolidations.vue'
 import AccountStatements from '@/components/AccountStatements/AccountStatements.vue'
 
 export default {
   name: 'AssetAccounts',
   components: {
-    // TableAssetsConsolidations,
     AccountStatements,
   },
   setup() {
