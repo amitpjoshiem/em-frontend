@@ -70,7 +70,7 @@
         </div>
       </div>
     </el-card>
-    <MoreInfoAbout disabled />
+    <ConfirmMoreInfoAbout />
   </div>
   <div v-else class="flex justify-center items-center">
     <SwdSpinner large />
@@ -81,12 +81,12 @@
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useRoute, useRouter } from 'vue-router'
 
-import MoreInfoAbout from '../../AddNewClient/MoreInfoAbout.vue'
+import ConfirmMoreInfoAbout from './ConfirmMoreInfoAbout.vue'
 
 export default {
   name: 'ConfirmationInformation',
   components: {
-    MoreInfoAbout,
+    ConfirmMoreInfoAbout,
   },
   setup() {
     const route = useRoute()
