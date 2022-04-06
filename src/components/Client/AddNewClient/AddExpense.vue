@@ -593,7 +593,15 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button type="primary" @click="nextStep"> Next </el-button>
+        <el-button
+          type="primary"
+          :disabled="isLoadingUpdateSteps"
+          :loading="isLoadingUpdateSteps"
+          class="w-20"
+          @click="save"
+        >
+          Save
+        </el-button>
       </div>
     </el-form>
   </div>
@@ -613,6 +621,7 @@ import { useAlert } from '@/utils/use-alert'
 import { scrollTop } from '@/utils/scrollTop'
 
 import { useExpenseInfoHooks } from '@/hooks/use-expense-info-hooks'
+import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 
 export default {
   name: 'AddExpense',
@@ -627,6 +636,7 @@ export default {
 
     const { isLoading, isFetching, data, refetch } = useFetchMonthlyExpense({ id: route.params.id }, { enabled: false })
     const { mutateAsync: create, isLoading: isLoadingCreate } = useMutation(createMonthlyExpenses)
+    const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
 
     const { setInitValue, optionsCurrencyInput } = useExpenseInfoHooks()
 
@@ -778,17 +788,19 @@ export default {
       }
     }
 
-    const nextStep = async () => {
-      useAlert({
-        title: 'Success',
-        type: 'success',
-        message: 'Information update successfully',
-      })
-      store.commit('newClient/setStep', step.value + 1)
-      router.push({
-        name: 'confirmation-info',
-        params: { id: memberId },
-      })
+    const save = async () => {
+      const res = await updateSteps({ completed_financial_fact_finder: 'completed' })
+
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Information update successfully',
+        })
+        router.push({
+          name: 'client-dashboard',
+        })
+      }
     }
 
     return {
@@ -797,15 +809,13 @@ export default {
       form,
       optionsCurrencyInput,
       change,
-
       isLoading,
       isFetching,
       data,
-
       isLoadingCreate,
-
       currencyFormat,
-      nextStep,
+      save,
+      isLoadingUpdateSteps,
     }
   },
 }

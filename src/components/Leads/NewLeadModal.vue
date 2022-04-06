@@ -6,7 +6,7 @@
           <el-input v-model="ruleForm.name" placeholder="Enter first name" />
         </el-form-item>
         <el-form-item label="Email" prop="email" class="w-full">
-          <el-input v-model="ruleForm.email" placeholder="Enter last name" />
+          <el-input v-model="ruleForm.email" placeholder="Enter email" />
         </el-form-item>
         <div class="pt-5 text-right">
           <el-button class="mr-5 w-20" @click="closeDialog">Close</el-button>
