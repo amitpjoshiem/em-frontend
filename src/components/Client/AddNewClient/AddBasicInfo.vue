@@ -84,6 +84,26 @@
                 <el-input v-model="ruleForm.zip" placeholder="000000" inputmode="numeric" />
               </el-form-item>
             </div>
+
+            <el-form-item label="Have you watched us during the newson WTTV4 CBS or Fox59" class="mb-4">
+              <el-radio-group v-model="ruleForm.wttv4_or_fox59">
+                <el-radio :label="true">Yes</el-radio>
+                <el-radio :label="false">No</el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="I have saved the following amount for retirement" class="mb-4">
+              <el-radio-group v-model="ruleForm.amount_for_retirement" class="flex sm:flex-wrap w-full">
+                <el-radio label="150000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$150,000 - $250,000</el-radio>
+                <el-radio label="250000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$250,000 - $500,000</el-radio>
+                <el-radio label="500000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$500,000 - $1,000,000</el-radio>
+                <el-radio label="1000000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$1,000,000+</el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="My Biggest Financial Concern Is:" class="mb-4">
+              <el-input v-model="ruleForm.biggest_financial_concern" type="textarea" />
+            </el-form-item>
           </div>
         </div>
         <!-- GENERAL -->
@@ -362,6 +382,8 @@
         </div>
         <!-- Employment history -->
 
+        <MoreInfoAbout />
+
         <!-- Other -->
         <div class="my-5">
           <span class="text-main text-xl font-semibold">Other</span>
@@ -425,8 +447,13 @@ import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 
+import MoreInfoAbout from './MoreInfoAbout.vue'
+
 export default {
   name: 'AddProspectBasicInfo',
+  components: {
+    MoreInfoAbout,
+  },
   directives: { maska },
   setup() {
     const router = useRouter()
@@ -468,6 +495,9 @@ export default {
       state: '',
       zip: '',
       phone: '',
+      amount_for_retirement: '150000',
+      biggest_financial_concern: '',
+      wttv4_or_fox59: true,
       spouse: {
         name: '',
         email: '',

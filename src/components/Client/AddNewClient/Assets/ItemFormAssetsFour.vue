@@ -25,7 +25,7 @@
         />
       </el-form-item>
     </div>
-    <div class="flex mb-2">
+    <div class="flex my-2">
       <div class="w-6/12 text-gray03 text-xs pl-2.5 text-center">O/NQ</div>
       <div class="w-6/12 text-gray03 text-xs pl-2.5 text-center">BALANCE</div>
     </div>

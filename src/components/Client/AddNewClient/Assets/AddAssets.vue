@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
+  <div>
     <div v-if="!isFetchingMember && !isMemberAssetsLoading">
       <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
         <!-- Current income -->
@@ -7,7 +7,7 @@
           <span class="text-main text-xl font-semibold">Current income</span>
           <div class="pt-5">
             <el-form-item label="Do you have a written income plan?">
-              <el-radio-group v-model="ruleForm.income.income_plan">
+              <el-radio-group v-model="ruleForm.income.income_plan" @change="change">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
@@ -446,7 +446,7 @@ export default {
 
     const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
-    const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id }, { enabled: false })
+    const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id })
 
     const { setInitValue, setTotal, isMarried } = useAssetsInfoHooks(member)
 

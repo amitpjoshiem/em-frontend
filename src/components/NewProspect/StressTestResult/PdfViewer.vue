@@ -60,7 +60,6 @@ export default {
     },
 
     getLoading(e) {
-      console.log('eeeeee - ', e)
       if (!e) this.loading = false
     },
 

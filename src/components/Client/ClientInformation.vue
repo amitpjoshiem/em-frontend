@@ -3,7 +3,7 @@
     <el-skeleton :rows="15" animated />
   </div>
   <div v-else-if="isErrorInfo">An error has occurred: {{ error }}</div>
-  <div v-else-if="clientsInfo" class="p-5 mb-20 text-main">
+  <div v-else-if="clientsInfo" class="p-5 text-main">
     <div class="flex flex-col items-center">
       <img src="../../assets/img/swd-logo-blue.png" alt="excel" class="w-[150px]" />
       <div class="flex flex-col items-center text-center">
@@ -69,7 +69,7 @@
     </router-link>
 
     <router-link :to="{ name: 'list-stock' }" class="flex">
-      <el-card class="mb-8 w-full">
+      <el-card class="mb-4 w-full">
         <div class="flex items-center">
           <el-icon :size="25" class="mr-5">
             <circle-check-filled :color="clientsInfo.steps.list_of_stock_certificates_or_bonds ? '#4cd972' : 'gray'" />
@@ -79,11 +79,16 @@
       </el-card>
     </router-link>
 
-    <div class="flex justify-end">
-      <el-button type="primary" plain :disabled="getDisabledBtn" :loading="isLoadingSendInformation" @click="send">
-        Send information
-      </el-button>
-    </div>
+    <router-link :to="{ name: 'confirmation-page', params: { id: clientsInfo.member_id } }" class="flex">
+      <el-card class="mb-4 w-full">
+        <div class="flex items-center">
+          <el-icon :size="25" class="mr-5">
+            <document-checked color="#4cd972" />
+          </el-icon>
+          <div class="text-xs sm:text-base text-main">Confirmation Information</div>
+        </div>
+      </el-card>
+    </router-link>
   </div>
   <SwdModalSucces
     text="Thank you for entering all the details. The advisor will receive the information and will contact you."
@@ -91,23 +96,19 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import { CircleCheckFilled } from '@element-plus/icons-vue'
+import { DocumentChecked, CircleCheckFilled } from '@element-plus/icons-vue'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
-import { sendAllInformation } from '@/api/vueQuery/clients/fetch-send-all-information'
-import { useMutation } from 'vue-query'
+
 import SwdModalSucces from '@/components/Global/SwdModalSucces.vue'
 
 export default {
   name: 'ClientInformation',
   components: {
     CircleCheckFilled,
+    DocumentChecked,
     SwdModalSucces,
   },
   setup() {
-    const store = useStore()
-
     const {
       isLoading: isLoadingInfo,
       fetching: fetchingInfo,
@@ -115,33 +116,11 @@ export default {
       data: clientsInfo,
     } = useFetchClietsInfo()
 
-    const { isLoading: isLoadingSendInformation, mutateAsync: sendInformation } = useMutation(sendAllInformation)
-
-    const getDisabledBtn = computed(() => {
-      if (isLoadingSendInformation.value) return true
-      const values = Object.values(clientsInfo.value.steps).find((item) => item === false)
-      if (values === undefined) return false
-      return true
-    })
-
-    const send = async () => {
-      const res = sendInformation()
-      if (!('error' in res)) {
-        store.commit('globalComponents/setShowModal', {
-          destination: 'modalSucces',
-          value: true,
-        })
-      }
-    }
-
     return {
       isLoadingInfo,
       fetchingInfo,
       isErrorInfo,
       clientsInfo,
-      isLoadingSendInformation,
-      getDisabledBtn,
-      send,
     }
   },
 }
