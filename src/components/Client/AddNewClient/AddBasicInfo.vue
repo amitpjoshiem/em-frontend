@@ -382,6 +382,8 @@
         </div>
         <!-- Employment history -->
 
+        <MoreInfoAbout />
+
         <!-- Other -->
         <div class="my-5">
           <span class="text-main text-xl font-semibold">Other</span>
@@ -445,8 +447,13 @@ import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 
+import MoreInfoAbout from './MoreInfoAbout.vue'
+
 export default {
   name: 'AddProspectBasicInfo',
+  components: {
+    MoreInfoAbout,
+  },
   directives: { maska },
   setup() {
     const router = useRouter()

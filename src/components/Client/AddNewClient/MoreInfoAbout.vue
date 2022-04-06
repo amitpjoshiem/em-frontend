@@ -1,8 +1,13 @@
 <template>
-  <el-form ref="form" :model="ruleForm" label-position="top">
-    <el-card class="mb-4 w-full sm:p-5">
+  <div v-if="!isLoading" class="my-4">
+    <el-form ref="form" :model="ruleForm" label-position="top">
       <el-form-item class="mb-4">
-        <el-radio-group v-model="ruleForm.consultation" class="flex flex-col items-start" @change="changeConsultation">
+        <el-radio-group
+          v-model="ruleForm.consultation"
+          class="flex flex-col items-start"
+          :disabled="disabled"
+          @change="changeConsultation"
+        >
           <el-radio label="want_consultation_and_book">Yes, I want a Free Consultation & Copy of Matt`s Book </el-radio>
           <el-radio label="want_consultation">Yes, I want a Free Consultation </el-radio>
           <el-radio label="dont_want_consultation">No, I don't want a Free Consultation </el-radio>
@@ -11,53 +16,67 @@
 
       <!-- I Currently Have -->
       <el-form-item label="I Currently Have:" class="mb-4">
-        <el-checkbox v-model="ruleForm.currently_have.cds" label="CDs" class="w-full sm:w-4/12 lg:w-3/12 mr-0" />
+        <el-checkbox
+          v-model="ruleForm.currently_have.cds"
+          label="CDs"
+          class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
+          @change="handleChange()"
+        />
         <el-checkbox
           v-model="ruleForm.currently_have.bonds_or_bonds_funds"
           label="Bounds or Bound Funds"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.currently_have.ira_tsa_401_403"
           label="IRA/TSA/401(k)/403(b)"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.currently_have.annuity"
           label="An Annuity"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.currently_have.variable_annuity"
           label="A Variable Annuity"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.currently_have.long_term_care_insurance"
           label="Long Term Core Insurance"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.currently_have.life_insurance"
           label="Life Insurance"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.currently_have.mutual_funds_or_stocks"
           label="Mutual Funds or Stocks"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.currently_have.dormant_accounts"
           label="Dormant Accounts"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
       </el-form-item>
@@ -68,78 +87,90 @@
           v-model="ruleForm.more_info_about.indexed_annuities"
           label="Indexed Annuities"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.strategic_wealth_report"
           label="Strategic Wealth Reports"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.rule_of_100"
           label="The rule of 100"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.moving_my_ira"
           label="Moving me IRA"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.rolling_over_my_401_403"
           label="Roling Over My 401/403"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.retirement_income_analysis"
           label="Retirement Income Analysis"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.securing_my_money"
           label="Securing me Money"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.tax_free_accounts"
           label="Tax Free Accounts"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.my_variable_annuity"
           label="Me Variable Annuity"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          :disabled="disabled"
           @change="handleChange()"
         />
       </el-form-item>
-    </el-card>
-  </el-form>
+    </el-form>
+  </div>
 </template>
 
 <script>
-import { onMounted, reactive, ref } from 'vue'
+import { watchEffect, reactive, ref } from 'vue'
 import { useMutation } from 'vue-query'
 import { updateConfirmation } from '@/api/vueQuery/clients/fetch-update-confirmation'
 import { useConfirmationInfoHooks } from '@/hooks/use-confirmation-info-hooks'
+import { useFetchClietsConfirmation } from '@/api/clients/use-fetch-confirmation.js'
 
 export default {
   name: 'MoreInfoAbout',
   props: {
-    data: {
-      type: Object,
-      required: true,
-      default: () => {},
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
-  setup(props) {
+  setup() {
     const form = ref(null)
+
+    const { isLoading, isFetching: isFetchingConfirmation, data: confirmationData } = useFetchClietsConfirmation()
 
     const { mutateAsync: updateCinfirmationInfo } = useMutation(updateConfirmation)
 
@@ -171,8 +202,10 @@ export default {
       },
     })
 
-    onMounted(() => {
-      setInitValueConfirmInfo(ruleForm, props.data)
+    watchEffect(() => {
+      if (isLoading.value === false) {
+        setInitValueConfirmInfo(ruleForm, confirmationData.value)
+      }
     })
 
     const handleChange = async () => {
@@ -195,7 +228,22 @@ export default {
       form,
       ruleForm,
       changeConsultation,
+
+      isFetchingConfirmation,
+      confirmationData,
+      isLoading,
     }
   },
 }
 </script>
+
+<style>
+/* .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner {
+  background-color: #76e1bb;
+  border-color: #76e1bb;
+}
+
+.el-checkbox__input.is-disabled.is-checked .el-checkbox__inner::after {
+  border-color: white;
+} */
+</style>

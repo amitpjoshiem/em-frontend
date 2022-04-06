@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isFetchingMember && !isFetchingConfirmation">
+  <div v-if="!isFetchingMember">
     <div v-if="$can('client', 'all')" class="flex justify-end mb-4">
       <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
     </div>
@@ -70,7 +70,7 @@
         </div>
       </div>
     </el-card>
-    <MoreInfoAbout :data="confirmationData" />
+    <MoreInfoAbout disabled />
   </div>
   <div v-else class="flex justify-center items-center">
     <SwdSpinner large />
@@ -79,11 +79,9 @@
 
 <script>
 import { useFetchMember } from '@/api/use-fetch-member.js'
-import { useFetchClietsConfirmation } from '@/api/clients/use-fetch-confirmation.js'
-
 import { useRoute, useRouter } from 'vue-router'
 
-import MoreInfoAbout from './MoreInfoAbout.vue'
+import MoreInfoAbout from '../../AddNewClient/MoreInfoAbout.vue'
 
 export default {
   name: 'ConfirmationInformation',
@@ -96,8 +94,6 @@ export default {
 
     const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id })
 
-    const { isFetching: isFetchingConfirmation, data: confirmationData } = useFetchClietsConfirmation()
-
     const edit = () => {
       router.push({ name: 'client-basic-information', params: { id: route.params.id } })
     }
@@ -105,8 +101,6 @@ export default {
     return {
       isFetchingMember,
       member,
-      isFetchingConfirmation,
-      confirmationData,
       edit,
     }
   },
