@@ -1,11 +1,15 @@
 <template>
+  <div class="flex justify-end mb-4">
+    <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
+  </div>
   <div v-if="isLoading" class="flex justify-center items-center">
     <SwdSpinner large />
   </div>
+  <div v-else-if="data.status === 'no_documents'" class="flex">
+    <div>I want to skip and submit</div>
+    <el-tag class="ml-4" type="success">Yes</el-tag>
+  </div>
   <div v-else-if="data.documents.length">
-    <div class="flex justify-end mb-4">
-      <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
-    </div>
     <el-card v-for="item in data.documents" :key="item.id" class="mb-4">
       <div class="sm:flex sm:justify-between sm:items-center">
         <div class="flex">
