@@ -49,6 +49,9 @@
       <ConfirmMoreInfoItem title="Me Variable Annuity" :value="data.value.more_info_about.my_variable_annuity" />
     </div>
   </div>
+  <div v-else class="flex justify-center items-center">
+    <SwdSpinner large />
+  </div>
 </template>
 
 <script>

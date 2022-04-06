@@ -50,7 +50,16 @@
       </el-collapse-item>
     </el-collapse>
     <div class="flex justify-end mt-6 mb-4">
-      <el-button v-if="$can('advisor', 'all')" type="primary" plain>Convert to opportunity</el-button>
+      <el-button
+        v-if="$can('advisor', 'all')"
+        type="primary"
+        plain
+        :disabled="isLoading"
+        :loading="isLoading"
+        @click="convert"
+      >
+        Convert to opportunity
+      </el-button>
     </div>
   </div>
 </template>
@@ -63,6 +72,11 @@ import ConfirmationExpense from './Expense/ConfirmationExpense.vue'
 import ConfirmationAssets from './Assets/ConfirmationAssets.vue'
 import ListDocumentsClient from './ListDocuments/ListDocumentsClient'
 
+import { convertLeadToOpportunity } from '@/api/vueQuery/fetch-convert-lead-to-opportunity'
+import { useMutation } from 'vue-query'
+import { useRoute, useRouter } from 'vue-router'
+import { useAlert } from '@/utils/use-alert'
+
 export default {
   name: 'ConfirmationPage',
   components: {
@@ -72,10 +86,30 @@ export default {
     ListDocumentsClient,
   },
   setup() {
+    const route = useRoute()
+    const router = useRouter()
     const activeNames = ref(['basic'])
+
+    const id = route.params.id
+
+    const { mutateAsync: convertLead, isLoading } = useMutation(convertLeadToOpportunity)
+
+    const convert = async () => {
+      const res = await convertLead(id)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Convert to opportunity successfully',
+        })
+        router.push({ name: 'member-details', params: { id } })
+      }
+    }
 
     return {
       activeNames,
+      isLoading,
+      convert,
     }
   },
 }
