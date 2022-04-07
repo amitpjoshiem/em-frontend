@@ -151,6 +151,12 @@ const routes = [
       },
 
       {
+        path: 'error',
+        name: 'error',
+        component: () => import(/* webpackChunkName: "Error" */ '../views/ErrorPage.vue'),
+      },
+
+      {
         path: 'leads',
         name: 'leads',
         component: () => import(/* webpackChunkName: "Leads" */ '../views/Leads.vue'),
@@ -353,12 +359,6 @@ const routes = [
               import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListClients.vue'),
           },
         ],
-      },
-
-      {
-        path: 'error',
-        name: 'error',
-        component: () => import(/* webpackChunkName: "Error" */ '../views/ErrorPage.vue'),
       },
 
       {
