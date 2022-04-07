@@ -2,38 +2,54 @@
   <div class="border border-color-grey rounded-t-lg">
     <div class="flex p-5 justify-between">
       <div class="flex">
-        <router-link
-          v-if="visibleTab.includes('all')"
-          :to="{ name: 'all' }"
-          class="mr-5 text-gray03 text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'all' }"
-        >
-          All Households
-        </router-link>
-        <router-link
-          v-if="visibleTab.includes('opportunities')"
-          :to="{ name: 'opportunities' }"
-          class="mr-5 text-gray03 text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'opportunities' }"
-        >
-          Opportunities
-        </router-link>
-        <router-link
-          v-if="visibleTab.includes('clients')"
-          :to="{ name: 'clients' }"
-          class="mr-5 text-gray03 text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'clients' }"
-        >
-          Clients
-        </router-link>
-        <router-link
+        <el-badge :value="200" :max="99" class="mr-8" :type="getActiveTab === 'all' ? 'primary' : 'info'">
+          <router-link
+            v-if="visibleTab.includes('all')"
+            :to="{ name: 'all' }"
+            class="text-gray03 text-smm cursor-pointer"
+            :class="{ active: getActiveTab === 'all' }"
+          >
+            All Households
+          </router-link>
+        </el-badge>
+
+        <el-badge :value="12" :max="99" class="mr-8" :type="getActiveTab === 'opportunities' ? 'primary' : 'info'">
+          <router-link
+            v-if="visibleTab.includes('opportunities')"
+            :to="{ name: 'opportunities' }"
+            class="text-gray03 text-smm cursor-pointer"
+            :class="{ active: getActiveTab === 'opportunities' }"
+          >
+            Opportunities
+          </router-link>
+        </el-badge>
+
+        <el-badge :value="12" :max="99" class="mr-8" :type="getActiveTab === 'clients' ? 'primary' : 'info'">
+          <router-link
+            v-if="visibleTab.includes('clients')"
+            :to="{ name: 'clients' }"
+            class="text-gray03 text-smm cursor-pointer"
+            :class="{ active: getActiveTab === 'clients' }"
+          >
+            Clients
+          </router-link>
+        </el-badge>
+
+        <el-badge
           v-if="visibleTab.includes('leads')"
-          :to="{ name: 'list-leads' }"
-          class="text-gray03 text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'list-leads' }"
+          :value="12"
+          :max="99"
+          class="mr-6"
+          :type="getActiveTab === 'list-leads' ? 'primary' : 'info'"
         >
-          Leads
-        </router-link>
+          <router-link
+            :to="{ name: 'list-leads' }"
+            class="text-gray03 text-smm cursor-pointer"
+            :class="{ active: getActiveTab === 'list-leads' }"
+          >
+            Leads
+          </router-link>
+        </el-badge>
       </div>
       <div class="flex">
         <SwdItemsPerPage :destination="'listOfHouseholds'" />
