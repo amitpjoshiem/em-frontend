@@ -2,7 +2,7 @@
   <div class="p-5">
     <SwdSubHeader title="Opportunity contacts" />
     <div class="flex justify-end pb-5">
-      <el-button type="primary" @click="addContact">Add contact</el-button>
+      <el-button type="primary" plain @click="addContact">Add contact</el-button>
     </div>
     <div v-if="!isLoading">
       <template v-if="state.length">
@@ -73,7 +73,7 @@
               </div>
             </div>
             <div class="w-1/12 flex flex-col items-center justify-center">
-              <el-button type="primary" :icon="Edit" circle @click="editContact(item.id)" />
+              <el-button type="primary" plain :icon="Edit" circle @click="editContact(item.id)" />
               <el-popconfirm
                 confirm-button-text="OK"
                 cancel-button-text="No, Thanks"
@@ -83,7 +83,7 @@
                 @confirm="removeContact(item.id)"
               >
                 <template #reference>
-                  <el-button type="danger" :icon="Delete" circle />
+                  <el-button type="danger" :icon="Delete" circle plain />
                 </template>
               </el-popconfirm>
             </div>

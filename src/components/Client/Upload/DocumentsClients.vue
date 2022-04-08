@@ -30,7 +30,7 @@
               <div class="flex my-5">
                 <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
               </div>
-              <div v-if="isShowNoDocuments" class="text-gray03 pb-5">No documents uploaded</div>
+              <div v-if="isShowNoDocuments" class="text-gray03 text-center pb-5">No documents uploaded</div>
             </template>
           </SwdUpload>
         </div>

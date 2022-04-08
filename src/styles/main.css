@@ -205,7 +205,8 @@
 }
 
 .el-upload  {
-  width: 100%;
+  /* width: 100%; */
+  display: block;
 }
 
 .el-form-item--mini .el-form-item__label{
