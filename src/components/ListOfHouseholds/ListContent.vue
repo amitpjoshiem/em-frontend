@@ -2,9 +2,14 @@
   <div class="border border-color-grey rounded-t-lg">
     <div class="flex p-5 justify-between">
       <div class="flex">
-        <el-badge :value="200" :max="99" class="mr-8" :type="getActiveTab === 'all' ? 'primary' : 'info'">
+        <el-badge
+          v-if="visibleTab.includes('all')"
+          :value="200"
+          :max="99"
+          class="mr-8"
+          :type="getActiveTab === 'all' ? 'primary' : 'info'"
+        >
           <router-link
-            v-if="visibleTab.includes('all')"
             :to="{ name: 'all' }"
             class="text-gray03 text-smm cursor-pointer"
             :class="{ active: getActiveTab === 'all' }"
@@ -13,9 +18,14 @@
           </router-link>
         </el-badge>
 
-        <el-badge :value="12" :max="99" class="mr-8" :type="getActiveTab === 'opportunities' ? 'primary' : 'info'">
+        <el-badge
+          v-if="visibleTab.includes('opportunities')"
+          :value="12"
+          :max="99"
+          class="mr-8"
+          :type="getActiveTab === 'opportunities' ? 'primary' : 'info'"
+        >
           <router-link
-            v-if="visibleTab.includes('opportunities')"
             :to="{ name: 'opportunities' }"
             class="text-gray03 text-smm cursor-pointer"
             :class="{ active: getActiveTab === 'opportunities' }"
@@ -24,9 +34,14 @@
           </router-link>
         </el-badge>
 
-        <el-badge :value="12" :max="99" class="mr-8" :type="getActiveTab === 'clients' ? 'primary' : 'info'">
+        <el-badge
+          v-if="visibleTab.includes('clients')"
+          :value="12"
+          :max="99"
+          class="mr-8"
+          :type="getActiveTab === 'clients' ? 'primary' : 'info'"
+        >
           <router-link
-            v-if="visibleTab.includes('clients')"
             :to="{ name: 'clients' }"
             class="text-gray03 text-smm cursor-pointer"
             :class="{ active: getActiveTab === 'clients' }"
