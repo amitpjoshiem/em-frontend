@@ -84,7 +84,7 @@ export default {
     })
 
     const getActiveListOfHouseholds = computed(() => {
-      return getRouteName.value === 'all' || getRouteName.value === 'clients' || getRouteName.value === 'prospects'
+      return getRouteName.value === 'all' || getRouteName.value === 'clients' || getRouteName.value === 'opportunities'
     })
 
     const goHome = () => {

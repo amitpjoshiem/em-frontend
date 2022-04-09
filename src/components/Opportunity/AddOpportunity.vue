@@ -46,7 +46,7 @@
       </el-form>
 
       <div class="flex justify-end my-10">
-        <el-button type="primary" @click="submitForm('ruleForm')">Save11</el-button>
+        <el-button type="primary" plain @click="submitForm('ruleForm')">Save</el-button>
       </div>
     </div>
     <div v-else class="flex flex-col text-main text-xs justify-center items-center">
@@ -54,7 +54,9 @@
       <span class="py-5"
         >Please check your Partners Settings Make Partner Settings clickable link to the Partner screen</span
       >
-      <el-button type="primary" class="w-[150px]" size="small" @click="goPartnerSettings">Partner Settings</el-button>
+      <el-button type="primary" plain class="w-[150px]" size="small" @click="goPartnerSettings">
+        Partner Settings
+      </el-button>
     </div>
   </div>
   <el-skeleton v-else :rows="11" animated class="p-5" />

@@ -17,7 +17,7 @@
           <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
           <div class="el-upload__tip">PDF files only</div>
         </div>
-        <div v-if="isShowNoDocuments" class="text-gray03 pb5">No documents uploaded</div>
+        <div v-if="isShowNoDocuments" class="text-gray03 text-center pb-5">No documents uploaded</div>
       </template>
     </SwdUpload>
     <div v-if="showNavBtn" class="flex justify-end my-6">

@@ -377,10 +377,15 @@ export default {
   height: 39px;
   padding-left: 1px;
   padding-right: 1px;
+  box-shadow: none;
 }
 
 .amount .el-input-group__prepend {
   padding-left: 3px;
   padding-right: 3px;
+}
+
+.item .el-input__inner {
+  box-shadow: none;
 }
 </style>
