@@ -28,7 +28,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column prop="created_at" label="createdAt" min-width="110">
+    <el-table-column prop="created_at" label="created At" min-width="110">
       <template #default="scope">
         <span class="text-xss">{{ scope.row.createdAtFormatted }}</span>
       </template>
@@ -58,7 +58,8 @@
 
     <el-table-column min-width="55">
       <template #default="scope">
-        <SwdMemberActions :user="scope.row" class="border rounded" />
+        <SwdLeadActions v-if="scope.row.type === 'lead'" :user="scope.row" />
+        <SwdMemberActions v-else :user="scope.row" class="border rounded" />
       </template>
     </el-table-column>
   </el-table>

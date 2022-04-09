@@ -311,3 +311,7 @@
 .item-notification:not(:last-child){
   margin-bottom: 10px;
 }
+
+.el-table .el-table__cell{
+  position: inherit;
+}
