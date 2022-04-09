@@ -11,9 +11,6 @@
 <script>
 import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import { useRouter } from 'vue-router'
-import { convertLeadToOpportunity } from '@/api/vueQuery/fetch-convert-lead-to-opportunity'
-import { useAlert } from '@/utils/use-alert'
-import { useMutation } from 'vue-query'
 
 const allAvailibleOptions = {
   1: {
@@ -26,12 +23,10 @@ const allAvailibleOptions = {
   5: { title: 'Assets Accounts', command: 'assets-accounts' },
   6: { title: 'Assets Consolidations', command: 'assets-consolidations' },
   7: { title: 'Contacts', command: 'opportunity-contact' },
-  8: { title: 'Convert to opportunity', command: 'convert-opportunity' },
 }
 
 const optionsPerStepAndType = {
   client: [1, 3, 5, 6, 7],
-  lead: [8],
   'prospect@step-0': [4, 5, 6, 7],
   'prospect@step-1': [1, 4, 5, 6, 7],
   'prospect@step-2': [1, 4, 5, 6, 7],
@@ -46,8 +41,6 @@ function getClientStepHash(user) {
   switch (true) {
     case user.type === 'client':
       return 'client'
-    case user.type === 'lead':
-      return 'lead'
     case user.type === 'prospect' && user.step === 'basic':
       return 'prospect@step-1'
     case user.type === 'prospect' && user.step === 'assets_income':
@@ -104,8 +97,6 @@ export default {
     const router = useRouter()
     const actionsOptions = buildOptions(props.user)
 
-    const { mutateAsync: convertLead } = useMutation(convertLeadToOpportunity)
-
     const handleSelect = (command) => {
       const actionHandler = actionsMap[command]
       actionHandler()
@@ -131,19 +122,6 @@ export default {
       'assets-accounts': () => router.push({ name: 'asset-accounts', params: { id: props.user.id } }),
       'assets-consolidations': () => router.push({ name: 'assets-consolidations', params: { id: props.user.id } }),
       'opportunity-contact': () => router.push({ name: 'opportunity-contact', params: { id: props.user.id } }),
-      'convert-opportunity': () => convert(),
-    }
-
-    const convert = async () => {
-      const res = await convertLead(props.user.id)
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Convert to opportunity successfully',
-        })
-        router.push({ name: 'member-details', params: { id: props.user.id } })
-      }
     }
 
     return {

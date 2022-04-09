@@ -275,3 +275,7 @@
 .el-badge__content--primary{
   background-color: #66b6ff;
 }
+
+.el-table .el-table__cell{
+  position: inherit;
+}
