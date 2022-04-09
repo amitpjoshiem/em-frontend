@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-color-grey rounded-t-lg">
+  <div v-if="!isLoading" class="border border-color-grey rounded-t-lg">
     <div class="flex p-5 justify-between">
       <div class="flex">
         <el-badge
@@ -20,7 +20,7 @@
 
         <el-badge
           v-if="visibleTab.includes('opportunities')"
-          :value="12"
+          :value="data.data.count.prospect"
           :max="99"
           class="mr-8"
           :type="getActiveTab === 'opportunities' ? 'primary' : 'info'"
@@ -36,7 +36,7 @@
 
         <el-badge
           v-if="visibleTab.includes('clients')"
-          :value="12"
+          :value="data.data.count.client"
           :max="99"
           class="mr-8"
           :type="getActiveTab === 'clients' ? 'primary' : 'info'"
@@ -52,7 +52,7 @@
 
         <el-badge
           v-if="visibleTab.includes('leads')"
-          :value="12"
+          :value="data.data.count.lead"
           :max="99"
           class="mr-6"
           :type="getActiveTab === 'list-leads' ? 'primary' : 'info'"
@@ -80,6 +80,8 @@ import IconAction from '@/assets/svg/icon-action.svg'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
+import { useFetchStatsMembers } from '@/api/use-fetch-stats-members.js'
+
 export default {
   name: 'ListContent',
   props: {
@@ -92,6 +94,8 @@ export default {
   setup() {
     const route = useRoute()
 
+    const { isLoading, isError, data } = useFetchStatsMembers()
+
     const getActiveTab = computed(() => {
       return route.name
     })
@@ -99,6 +103,10 @@ export default {
     return {
       getActiveTab,
       IconAction,
+
+      isLoading,
+      isError,
+      data,
     }
   },
 }
