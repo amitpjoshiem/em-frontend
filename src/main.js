@@ -32,6 +32,7 @@ import SwdPagination from '@/components/Global/SwdPagination.vue'
 import SwdSubHeader from '@/components/SwdSubHeader.vue'
 import SwdStubForText from '@/components/Global/SwdStubForText.vue'
 import SwdMemberActions from '@/components/Global/SwdMemberActions.vue'
+import SwdLeadActions from '@/components/Global/SwdLeadActions.vue'
 import SwdNativeSelect from '@/components/Global/SwdNativeSelect.vue'
 import SwdSelectFilter from '@/components/Global/SwdSelectFilter.vue'
 import SwdSpinner from '@/components/Global/SwdSpinner.vue'
@@ -62,6 +63,7 @@ const components = [
   SwdSubHeader,
   SwdStubForText,
   SwdMemberActions,
+  SwdLeadActions,
   SwdNativeSelect,
   SwdSelectFilter,
   SwdSpinner,

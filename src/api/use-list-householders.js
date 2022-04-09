@@ -23,7 +23,7 @@ export const useListHouseholders = ({ type, page }) => {
   const reactivePage = ref(page)
 
   const queryKey = reactive([
-    'householders',
+    'householders-list',
     {
       reactiveType,
       reactiveLimit,
