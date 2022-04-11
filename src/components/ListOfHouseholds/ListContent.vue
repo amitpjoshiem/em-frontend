@@ -4,7 +4,7 @@
       <div class="flex">
         <el-badge
           v-if="visibleTab.includes('all')"
-          :value="200"
+          :value="data.data.count.all"
           :max="99"
           class="mr-8"
           :type="getActiveTab === 'all' ? 'primary' : 'info'"
