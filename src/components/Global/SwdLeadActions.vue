@@ -9,7 +9,7 @@
 
   <!-- CONVERT LEAD -->
   <el-dialog v-model="dialogVisibleConvertLead" title="Info" width="40%" lock-scroll>
-    <p class="mb-5">Are you sure to convert lead</p>
+    <p class="mb-5">Are you sure to convert lead?</p>
     <p class="font-semibold">Lead: {{ user.name }}</p>
     <p class="font-semibold">E-mail: {{ user.email }}</p>
     <template #footer>
@@ -31,7 +31,7 @@
 
   <!-- DEACTIVATED LINK -->
   <el-dialog v-model="dialogVisibleDeactivatedLink" title="Info" width="40%" lock-scroll>
-    <p class="mb-5">Are you sure to deactivated link</p>
+    <p class="mb-5">Are you sure to deactivate link?</p>
     <p class="font-semibold">Lead: {{ user.name }}</p>
     <p class="font-semibold">E-mail: {{ user.email }}</p>
     <template #footer>
@@ -53,7 +53,7 @@
 
   <!-- DEACTIVATED ACC -->
   <el-dialog v-model="dialogVisibleDeactivatedAcc" title="Info" width="40%" lock-scroll>
-    <p class="mb-5">Are you sure to deactivated account</p>
+    <p class="mb-5">Are you sure to deactivate account?</p>
     <p class="font-semibold">Lead: {{ user.name }}</p>
     <p class="font-semibold">E-mail: {{ user.email }}</p>
     <template #footer>
@@ -75,7 +75,7 @@
 
   <!-- RESTORE ACC -->
   <el-dialog v-model="dialogVisibleRestoreAcc" title="Info" width="40%" lock-scroll>
-    <p class="mb-5">Are you sure to activated account</p>
+    <p class="mb-5">Are you sure to activate account</p>
     <p class="font-semibold">Lead: {{ user.name }}</p>
     <p class="font-semibold">E-mail: {{ user.email }}</p>
     <template #footer>
@@ -139,21 +139,21 @@ export default {
 
       if (props.user.can_delete) {
         options.push({
-          title: 'Deactivated account',
+          title: 'Deactivate account',
           command: 'deactivated-account',
         })
       }
 
       if (props.user.can_restore) {
         options.push({
-          title: 'Activated account',
+          title: 'Activate account',
           command: 'restore-account',
         })
       }
 
       if (!props.user.is_activated) {
         options.push({
-          title: 'Deactivated link',
+          title: 'Deactivate link',
           command: 'deactivated-link',
         })
       }
