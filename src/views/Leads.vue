@@ -1,7 +1,7 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="List of Leads" />
-    <ListContent :visible-tab="['leads']" />
+    <ListContent :visible-tab="['all-leads', 'active-leads', 'deactivated-leads']" />
   </div>
 </template>
 

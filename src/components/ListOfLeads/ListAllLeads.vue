@@ -16,7 +16,7 @@ import { useStore } from 'vuex'
 import { usePaginationData } from '@/utils/use-pagination-data.js'
 
 export default {
-  name: 'ListLeads',
+  name: 'ListAllLeads',
   components: {
     UsersListTable,
   },

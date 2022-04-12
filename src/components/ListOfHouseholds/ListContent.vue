@@ -50,19 +50,50 @@
           </router-link>
         </el-badge>
 
+        <!-- LEADS -->
         <el-badge
-          v-if="visibleTab.includes('leads')"
-          :value="data.data.count.lead"
+          v-if="visibleTab.includes('all-leads')"
+          :value="data.data.leads.all"
           :max="99"
           class="mr-6"
-          :type="getActiveTab === 'list-leads' ? 'primary' : 'info'"
+          :type="getActiveTab === 'list-all-leads' ? 'primary' : 'info'"
         >
           <router-link
-            :to="{ name: 'list-leads' }"
+            :to="{ name: 'list-all-leads' }"
             class="text-gray03 text-smm cursor-pointer"
-            :class="{ active: getActiveTab === 'list-leads' }"
+            :class="{ active: getActiveTab === 'list-all-leads' }"
           >
-            Leads
+            All Leads
+          </router-link>
+        </el-badge>
+        <el-badge
+          v-if="visibleTab.includes('active-leads')"
+          :value="data.data.leads.active"
+          :max="99"
+          class="mr-6"
+          :type="getActiveTab === 'list-active-leads' ? 'primary' : 'info'"
+        >
+          <router-link
+            :to="{ name: 'list-active-leads' }"
+            class="text-gray03 text-smm cursor-pointer"
+            :class="{ active: getActiveTab === 'list-active-leads' }"
+          >
+            Active Leads
+          </router-link>
+        </el-badge>
+        <el-badge
+          v-if="visibleTab.includes('deactivated-leads')"
+          :value="data.data.leads.inactive"
+          :max="99"
+          class="mr-6"
+          :type="getActiveTab === 'list-deactivated-leads' ? 'primary' : 'info'"
+        >
+          <router-link
+            :to="{ name: 'list-deactivated-leads' }"
+            class="text-gray03 text-smm cursor-pointer"
+            :class="{ active: getActiveTab === 'list-deactivated-leads' }"
+          >
+            Deactivated Leads
           </router-link>
         </el-badge>
       </div>

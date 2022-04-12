@@ -5,7 +5,7 @@ import { fetchMembersList } from './vueQuery/fetch-members-list'
 import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 
-export const useListHouseholders = ({ type, page }) => {
+export const useListHouseholders = ({ type, page, status = '' }) => {
   const store = useStore()
 
   const limit = computed(() => store.state.globalComponents.itemsPerPage.values.listOfHouseholds)
@@ -21,6 +21,7 @@ export const useListHouseholders = ({ type, page }) => {
   const reactiveOrderBy = ref(orderBy)
   const reactiveSortedBy = ref(sortedBy)
   const reactivePage = ref(page)
+  const reactiveStatus = ref(status)
 
   const queryKey = reactive([
     'householders-list',
@@ -30,6 +31,7 @@ export const useListHouseholders = ({ type, page }) => {
       reactiveOrderBy,
       reactiveSortedBy,
       reactivePage,
+      reactiveStatus,
     },
   ])
 

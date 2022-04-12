@@ -222,6 +222,7 @@ export default {
           message: 'Lead deactivated successfully',
         })
         queryClient.invalidateQueries(['householders-list'])
+        queryClient.invalidateQueries(['stats-members'])
         dialogVisibleDeactivatedAcc.value = false
       }
     }
@@ -235,6 +236,7 @@ export default {
           message: 'Lead restored successfully',
         })
         queryClient.invalidateQueries(['householders-list'])
+        queryClient.invalidateQueries(['stats-members'])
         dialogVisibleRestoreAcc.value = false
       }
     }

@@ -162,9 +162,23 @@ const routes = [
         component: () => import(/* webpackChunkName: "Leads" */ '../views/Leads.vue'),
         children: [
           {
-            path: 'list-leads',
-            name: 'list-leads',
-            component: () => import(/* webpackChunkName: "ListOfLeads" */ '../components/ListOfLeads/ListLeads.vue'),
+            path: 'list-all-leads',
+            name: 'list-all-leads',
+            component: () => import(/* webpackChunkName: "ListOfLeads" */ '../components/ListOfLeads/ListAllLeads.vue'),
+          },
+          {
+            path: 'list-active-leads',
+            name: 'list-active-leads',
+            component: () =>
+              import(/* webpackChunkName: "ListActiveLeads" */ '../components/ListOfLeads/ListActiveLeads.vue'),
+          },
+          {
+            path: 'list-deactivated-leads',
+            name: 'list-deactivated-leads',
+            component: () =>
+              import(
+                /* webpackChunkName: "ListDeactivatedLeads" */ '../components/ListOfLeads/ListDeactivatedLeads.vue'
+              ),
           },
         ],
       },
