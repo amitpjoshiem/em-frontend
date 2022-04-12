@@ -53,7 +53,7 @@
         <!-- LEADS -->
         <el-badge
           v-if="visibleTab.includes('all-leads')"
-          :value="data.data.count.lead"
+          :value="data.data.leads.all"
           :max="99"
           class="mr-6"
           :type="getActiveTab === 'list-all-leads' ? 'primary' : 'info'"
@@ -68,7 +68,7 @@
         </el-badge>
         <el-badge
           v-if="visibleTab.includes('active-leads')"
-          :value="data.data.count.lead"
+          :value="data.data.leads.active"
           :max="99"
           class="mr-6"
           :type="getActiveTab === 'list-active-leads' ? 'primary' : 'info'"
@@ -83,7 +83,7 @@
         </el-badge>
         <el-badge
           v-if="visibleTab.includes('deactivated-leads')"
-          :value="data.data.count.lead"
+          :value="data.data.leads.inactive"
           :max="99"
           class="mr-6"
           :type="getActiveTab === 'list-deactivated-leads' ? 'primary' : 'info'"

@@ -29,6 +29,7 @@ export default {
 
     const { isLoading, isError, data, pagination } = useListHouseholders({
       type: 'lead',
+      status: 'active',
       page: paginationData,
     })
 
