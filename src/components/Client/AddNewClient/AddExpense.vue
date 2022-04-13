@@ -6,14 +6,20 @@
       <div class="md:w-2/12 text-gray03 text-xs">DISCRETIONARY</div>
     </div>
     <el-form ref="form" :model="ruleForm">
-      <el-card shadow="never" class="mb-5">
+      <div class="border border-input-border rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusHousing }">
+        <div class="flex items-center mb-5">
+          <InlineSvg v-show="isFocusHousing" :src="IconActive" />
+          <InlineSvg v-show="!isFocusHousing" :src="IconNotActive" />
+          <div class="flex items-center text-sm font-semibold ml-2">Housing</div>
+        </div>
+
         <div class="md:flex mb-4">
           <!-- HOUSING -->
-          <div class="md:w-3/12 flex items-center text-sm font-semibold">Housing</div>
           <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
           </div>
+          <div class="w-3/12" />
           <div class="md:w-5/12 text-main text-xss flex items-center">Mortgage/Rent/Fees</div>
           <SwdCurrencyInput
             v-model="ruleForm.housing.mortgage_rent_fees.essential"
@@ -21,7 +27,9 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             class="w-6/12 md:w-2/12 pr-2"
-            @blur="change()"
+            @change="change"
+            @focus="focus('housing')"
+            @blur="blur('housing')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.mortgage_rent_fees.discretionary"
@@ -29,7 +37,9 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             class="w-6/12 md:w-2/12 pl-2"
-            @blur="change()"
+            @change="change"
+            @focus="focus('housing')"
+            @blur="blur('housing')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -41,7 +51,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('housing')"
+            @blur="blur('housing')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.property_taxes_and_insurance.discretionary"
@@ -49,7 +61,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('housing')"
+            @blur="blur('housing')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -61,7 +75,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('housing')"
+            @blur="blur('housing')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.utilities.discretionary"
@@ -69,7 +85,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('housing')"
+            @blur="blur('housing')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -81,7 +99,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('housing')"
+            @blur="blur('housing')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.household_improvement.discretionary"
@@ -89,7 +109,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('housing')"
+            @blur="blur('housing')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -101,7 +123,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('housing')"
+            @blur="blur('housing')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.housing.household_maintenance.discretionary"
@@ -109,19 +133,29 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('housing')"
+            @blur="blur('housing')"
           />
         </div>
-      </el-card>
+      </div>
 
       <!-- FOOD TRANSPORTATION -->
-      <el-card shadow="never" class="mb-5">
+      <div
+        class="border border-input-border rounded-lg p-5 mb-5"
+        :class="{ 'border-border-blue': isFocusAtHome || isFocusTransportation }"
+      >
+        <div class="flex items-center mb-5">
+          <InlineSvg v-show="isFocusAtHome" :src="IconActive" />
+          <InlineSvg v-show="!isFocusAtHome" :src="IconNotActive" />
+          <div class="flex items-center text-sm font-semibold ml-2">Food</div>
+        </div>
         <div class="md:flex mb-4">
-          <div class="w-3/12 flex items-center text-sm font-semibold">Food</div>
           <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
           </div>
+          <div class="w-3/12" />
           <div class="md:w-5/12 text-main text-xss flex items-center">At Home</div>
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.at_home.essential"
@@ -129,7 +163,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('at-home')"
+            @blur="blur('at-home')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.at_home.discretionary"
@@ -137,7 +173,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('at-home')"
+            @blur="blur('at-home')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -149,7 +187,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('at-home')"
+            @blur="blur('at-home')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.dining_out.discretionary"
@@ -157,11 +197,20 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('at-home')"
+            @blur="blur('at-home')"
           />
         </div>
+
+        <div class="flex items-center mb-5">
+          <InlineSvg v-show="isFocusTransportation" :src="IconActive" />
+          <InlineSvg v-show="!isFocusTransportation" :src="IconNotActive" />
+          <div class="flex items-center text-sm font-semibold ml-2">Transportation</div>
+        </div>
+
         <div class="md:flex mb-4">
-          <div class="w-3/12 flex items-center text-sm font-semibold">Transportation</div>
+          <div class="w-3/12" />
           <div class="md:w-5/12 text-main text-xss flex items-center">Vehicle Purchases/Payments</div>
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.vehicle_purchases_payments.essential"
@@ -169,7 +218,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('trasportation')"
+            @blur="blur('trasportation')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.vehicle_purchases_payments.discretionary"
@@ -177,7 +228,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('trasportation')"
+            @blur="blur('trasportation')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -189,7 +242,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('trasportation')"
+            @blur="blur('trasportation')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.auto_insurance_and_taxes.discretionary"
@@ -197,7 +252,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('trasportation')"
+            @blur="blur('trasportation')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -209,7 +266,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('trasportation')"
+            @blur="blur('trasportation')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.fuel_and_maintenance.discretionary"
@@ -217,7 +276,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('trasportation')"
+            @blur="blur('trasportation')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -229,7 +290,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('trasportation')"
+            @blur="blur('trasportation')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.food_transportation.public_transportation.discretionary"
@@ -237,15 +300,23 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('trasportation')"
+            @blur="blur('trasportation')"
           />
         </div>
-      </el-card>
+      </div>
 
       <!-- HEALTHCARE -->
-      <el-card shadow="never" class="mb-5">
+      <div class="border border-input-border rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusHealthcare }">
+        <div class="flex items-center mb-5">
+          <InlineSvg v-show="isFocusHealthcare" :src="IconActive" />
+          <InlineSvg v-show="!isFocusHealthcare" :src="IconNotActive" />
+          <div class="flex items-center text-sm font-semibold ml-2">Healthcare</div>
+        </div>
         <div class="md:flex mb-4">
-          <div class="w-3/12 flex items-center text-sm font-semibold">Healthcare</div>
+          <div class="w-3/12" />
+
           <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
@@ -257,7 +328,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('healthcare')"
+            @blur="blur('healthcare')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.health_insurance.discretionary"
@@ -265,7 +338,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('healthcare')"
+            @blur="blur('healthcare')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -277,7 +352,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('healthcare')"
+            @blur="blur('healthcare')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.medicare_medigap.discretionary"
@@ -285,7 +362,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('healthcare')"
+            @blur="blur('healthcare')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -297,7 +376,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('healthcare')"
+            @blur="blur('healthcare')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.copays_uncovered_medical_services.discretionary"
@@ -305,7 +386,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('healthcare')"
+            @blur="blur('healthcare')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -317,7 +400,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('healthcare')"
+            @blur="blur('healthcare')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.healthcare.drugs_and_medical_supplies.discretionary"
@@ -325,15 +410,25 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('healthcare')"
+            @blur="blur('healthcare')"
           />
         </div>
-      </el-card>
+      </div>
 
       <!-- PERSONAL -->
-      <el-card shadow="never" class="mb-5">
+      <div
+        class="border border-input-border rounded-lg p-5 mb-5"
+        :class="{ 'border-border-blue': isFocusPersonal || isFocusPersonalCare }"
+      >
+        <div class="flex items-center mb-5">
+          <InlineSvg v-show="isFocusPersonal" :src="IconActive" />
+          <InlineSvg v-show="!isFocusPersonal" :src="IconNotActive" />
+          <div class="flex items-center text-sm font-semibold ml-2">Personal Insurance</div>
+        </div>
         <div class="md:flex mb-4">
-          <div class="md:w-3/12 flex items-center text-sm font-semibold">Personal Insurance</div>
+          <div class="w-3/12" />
           <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
@@ -345,7 +440,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('personal')"
+            @blur="blur('personal')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.life_other.discretionary"
@@ -353,7 +450,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('personal')"
+            @blur="blur('personal')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -365,7 +464,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('personal')"
+            @blur="blur('personal')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.long_term_care.discretionary"
@@ -373,11 +474,20 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('personal')"
+            @blur="blur('personal')"
           />
         </div>
+
+        <div class="flex items-center mb-5">
+          <InlineSvg v-show="isFocusPersonalCare" :src="IconActive" />
+          <InlineSvg v-show="!isFocusPersonalCare" :src="IconNotActive" />
+          <div class="flex items-center text-sm font-semibold ml-2">Personal Care</div>
+        </div>
+
         <div class="md:flex mb-4">
-          <div class="md:w-3/12 flex items-center text-sm font-semibold">Personal Care</div>
+          <div class="w-3/12" />
           <div class="flex pb-2 mt-5 md:hidden">
             <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
             <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
@@ -389,7 +499,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('personal-care')"
+            @blur="blur('personal-care')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.clothing.discretionary"
@@ -397,7 +509,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('personal-care')"
+            @blur="blur('personal-care')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -409,7 +523,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('personal-care')"
+            @blur="blur('personal-care')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.personal_insurance.product_and_services.discretionary"
@@ -417,13 +533,15 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('personal-care')"
+            @blur="blur('personal-care')"
           />
         </div>
-      </el-card>
+      </div>
 
       <!-- OTHER -->
-      <el-card shadow="never" class="mb-5">
+      <div class="border border-input-border rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusOther }">
         <div class="md:flex mb-4">
           <div class="w-3/12" />
           <div class="flex pb-2 mt-5 md:hidden">
@@ -437,7 +555,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.entertainment.discretionary"
@@ -445,7 +565,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -457,7 +579,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.travel.discretionary"
@@ -465,7 +589,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -477,7 +603,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.hobbies.discretionary"
@@ -485,7 +613,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -497,7 +627,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.family_care_education.discretionary"
@@ -505,7 +637,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -517,7 +651,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.income_taxes.discretionary"
@@ -525,7 +661,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -537,7 +675,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.charitable_contributions.discretionary"
@@ -545,7 +685,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -557,7 +699,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
           <SwdCurrencyInput
             v-model="ruleForm.other.discretionary"
@@ -565,7 +709,9 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
-            @blur="change()"
+            @change="change"
+            @focus="focus('other')"
+            @blur="blur('other')"
           />
         </div>
         <div class="md:flex mb-4">
@@ -580,7 +726,8 @@
             <span v-else>{{ currencyFormat(ruleForm.subtotal.discretionary) }}</span>
           </div>
         </div>
-      </el-card>
+      </div>
+
       <div class="md:flex md:justify-end text-sm font-semibold mb-5">
         <div class="md:w-3/12">TOTAL MONTHLY EXPENSES</div>
         <div class="w-2/12">
@@ -623,6 +770,9 @@ import { scrollTop } from '@/utils/scrollTop'
 import { useExpenseInfoHooks } from '@/hooks/use-expense-info-hooks'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 
+import IconActive from '@/assets/svg/icon-active.svg'
+import IconNotActive from '@/assets/svg/icon-not-active.svg'
+
 export default {
   name: 'AddExpense',
   setup() {
@@ -630,6 +780,13 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const form = ref()
+    const isFocusHousing = ref(false)
+    const isFocusAtHome = ref(false)
+    const isFocusTransportation = ref(false)
+    const isFocusHealthcare = ref(false)
+    const isFocusPersonal = ref(false)
+    const isFocusPersonalCare = ref(false)
+    const isFocusOther = ref(false)
 
     const step = computed(() => store.state.newClient.step)
     let memberId
@@ -803,6 +960,26 @@ export default {
       }
     }
 
+    const focus = (type) => {
+      if (type === 'housing') isFocusHousing.value = true
+      if (type === 'at-home') isFocusAtHome.value = true
+      if (type === 'trasportation') isFocusTransportation.value = true
+      if (type === 'healthcare') isFocusHealthcare.value = true
+      if (type === 'personal') isFocusPersonal.value = true
+      if (type === 'personal-care') isFocusPersonalCare.value = true
+      if (type === 'other') isFocusOther.value = true
+    }
+
+    const blur = (type) => {
+      if (type === 'housing') isFocusHousing.value = false
+      if (type === 'at-home') isFocusAtHome.value = false
+      if (type === 'trasportation') isFocusTransportation.value = false
+      if (type === 'healthcare') isFocusHealthcare.value = false
+      if (type === 'personal') isFocusPersonal.value = false
+      if (type === 'personal-care') isFocusPersonalCare.value = false
+      if (type === 'other') isFocusOther.value = false
+    }
+
     return {
       backStep,
       ruleForm,
@@ -816,6 +993,20 @@ export default {
       currencyFormat,
       save,
       isLoadingUpdateSteps,
+
+      IconActive,
+      IconNotActive,
+
+      focus,
+      blur,
+
+      isFocusHousing,
+      isFocusAtHome,
+      isFocusTransportation,
+      isFocusHealthcare,
+      isFocusPersonal,
+      isFocusPersonalCare,
+      isFocusOther,
     }
   },
 }
