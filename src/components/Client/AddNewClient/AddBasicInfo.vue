@@ -161,7 +161,7 @@
         <!-- GENERAL -->
 
         <!-- Spouse -->
-        <div v-if="ruleForm.married" class="border-b p-5">
+        <div v-if="ruleForm.married" class="p-5">
           <div class="flex items-center mb-5">
             <InlineSvg v-show="isFocusSpouse" :src="IconActive" />
             <InlineSvg v-show="!isFocusSpouse" :src="IconNotActive" />
@@ -238,259 +238,319 @@
         <!-- Spouse -->
 
         <!-- Housing Information -->
-        <div class="pb-8 border-b">
-          <div class="text-main text-xl font-semibold my-5">Housing Information</div>
-          <el-form-item label="Type" class="mb-4">
-            <el-radio-group v-model="ruleForm.house.type">
-              <el-radio label="own">Own</el-radio>
-              <el-radio label="rent">Rent</el-radio>
-              <el-radio label="family">Live with family</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <div class="sm:flex sm:flex-wrap">
-            <el-form-item
-              v-if="ruleForm.house.type !== 'rent'"
-              label="Market value"
-              prop="house.market_value"
-              class="mb-4 sm:w-4/12"
-            >
-              <SwdCurrencyInput
-                v-model="ruleForm.house.market_value"
-                :options="optionsCurrencyInput"
-                placeholder="$12345"
-              />
+        <div class="p-5">
+          <div class="flex items-center mb-5">
+            <InlineSvg v-show="isFocusHouse" :src="IconActive" />
+            <InlineSvg v-show="!isFocusHouse" :src="IconNotActive" />
+            <div class="text-main text-xl font-semibold ml-2">Housing Information</div>
+          </div>
+          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusHouse }">
+            <el-form-item label="Type" class="mb-4">
+              <el-radio-group v-model="ruleForm.house.type">
+                <el-radio label="own">Own</el-radio>
+                <el-radio label="rent">Rent</el-radio>
+                <el-radio label="family">Live with family</el-radio>
+              </el-radio-group>
             </el-form-item>
-            <el-form-item
-              v-if="ruleForm.house.type !== 'rent'"
-              label="Total debt"
-              prop="house.total_debt"
-              class="mb-4 sm:w-4/12 sm:px-2"
-            >
-              <SwdCurrencyInput
-                v-model="ruleForm.house.total_debt"
-                :options="optionsCurrencyInput"
-                placeholder="$12345"
-              />
-            </el-form-item>
-            <el-form-item
-              v-if="ruleForm.house.type !== 'rent'"
-              label="Remaining mortgage"
-              prop="house.remaining_mortgage_amount"
-              class="mb-4 sm:w-4/12"
-            >
-              <SwdCurrencyInput v-model="ruleForm.house.remaining_mortgage_amount" :options="optionsCurrencyInput" />
-            </el-form-item>
-            <el-form-item
-              v-if="ruleForm.house.type === 'rent'"
-              label="Monthly payment"
-              prop="house.monthly_payment"
-              class="mb-4 sm:w-4/12"
-            >
-              <SwdCurrencyInput
-                v-model="ruleForm.house.monthly_payment"
-                :options="optionsCurrencyInput"
-                placeholder="$12345"
-              />
-            </el-form-item>
-            <el-form-item
-              v-if="ruleForm.house.type === 'rent'"
-              label="Total monthly expences"
-              prop="house.total_monthly_expenses"
-              class="mb-4 sm:w-4/12 sm:pl-2"
-            >
-              <SwdCurrencyInput
-                v-model="ruleForm.house.total_monthly_expenses"
-                :options="optionsCurrencyInput"
-                placeholder="$12345"
-              />
-            </el-form-item>
+            <div class="sm:flex sm:flex-wrap">
+              <el-form-item
+                v-if="ruleForm.house.type !== 'rent'"
+                label="Market value"
+                prop="house.market_value"
+                class="mb-4 sm:w-4/12"
+              >
+                <SwdCurrencyInput
+                  v-model="ruleForm.house.market_value"
+                  :options="optionsCurrencyInput"
+                  placeholder="$12345"
+                  @focus="focusHouse"
+                  @blur="blurHouse"
+                />
+              </el-form-item>
+              <el-form-item
+                v-if="ruleForm.house.type !== 'rent'"
+                label="Total debt"
+                prop="house.total_debt"
+                class="mb-4 sm:w-4/12 sm:px-2"
+              >
+                <SwdCurrencyInput
+                  v-model="ruleForm.house.total_debt"
+                  :options="optionsCurrencyInput"
+                  placeholder="$12345"
+                  @focus="focusHouse"
+                  @blur="blurHouse"
+                />
+              </el-form-item>
+              <el-form-item
+                v-if="ruleForm.house.type !== 'rent'"
+                label="Remaining mortgage"
+                prop="house.remaining_mortgage_amount"
+                class="mb-4 sm:w-4/12"
+              >
+                <SwdCurrencyInput
+                  v-model="ruleForm.house.remaining_mortgage_amount"
+                  :options="optionsCurrencyInput"
+                  @focus="focusHouse"
+                  @blur="blurHouse"
+                />
+              </el-form-item>
+              <el-form-item
+                v-if="ruleForm.house.type === 'rent'"
+                label="Monthly payment"
+                prop="house.monthly_payment"
+                class="mb-4 sm:w-4/12"
+              >
+                <SwdCurrencyInput
+                  v-model="ruleForm.house.monthly_payment"
+                  :options="optionsCurrencyInput"
+                  placeholder="$12345"
+                  @focus="focusHouse"
+                  @blur="blurHouse"
+                />
+              </el-form-item>
+              <el-form-item
+                v-if="ruleForm.house.type === 'rent'"
+                label="Total monthly expences"
+                prop="house.total_monthly_expenses"
+                class="mb-4 sm:w-4/12 sm:pl-2"
+              >
+                <SwdCurrencyInput
+                  v-model="ruleForm.house.total_monthly_expenses"
+                  :options="optionsCurrencyInput"
+                  placeholder="$12345"
+                  @focus="focusHouse"
+                  @blur="blurHouse"
+                />
+              </el-form-item>
+            </div>
           </div>
         </div>
         <!-- Housing Information -->
 
         <!-- Employment history -->
-        <div class="pb-8 mt-5 border-b">
-          <span class="text-main text-xl font-semibold">Employment history</span>
-          <div class="text-gray03 text-xs uppercase my-2">Contact</div>
-
-          <div v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-2">
-            <div class="sm:flex sm:flex-wrap">
-              <el-form-item
-                :prop="'employment_history.' + index + '.company_name'"
-                label="Company name"
-                class="sm:w-4/12 mb-4"
-              >
-                <el-input
-                  v-model="eh.company_name"
-                  placeholder="Enter company name"
-                  @change="changeCompanyNameMember({ ruleForm, index })"
-                />
-              </el-form-item>
-
-              <el-form-item
-                v-if="!!ruleForm.employment_history[index].company_name.trim().length"
-                class="sm:w-4/12 mb-4"
-                :prop="'employment_history.' + index + '.occupation'"
-                label="Occupation"
-              >
-                <el-input v-model="eh.occupation" placeholder="Company occupation" />
-              </el-form-item>
-              <el-form-item
-                v-if="!!ruleForm.employment_history[index].company_name.trim().length"
-                class="sm:w-4/12 mb-4"
-                :prop="'employment_history.' + index + '.years'"
-                label="Years"
-              >
-                <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
-              </el-form-item>
-
-              <el-form-item
-                v-if="!ruleForm.employment_history[index].company_name.trim().length"
-                label="Occupation"
-                class="sm:w-4/12 mb-4 sm:px-2"
-              >
-                <el-input
-                  placeholder="Company occupation"
-                  :disabled="!ruleForm.employment_history[index].company_name.trim().length"
-                />
-              </el-form-item>
-              <el-form-item
-                v-if="!ruleForm.employment_history[index].company_name.trim().length"
-                label="Years"
-                class="sm:w-4/12 mb-4"
-              >
-                <el-input
-                  placeholder="00"
-                  inputmode="numeric"
-                  :disabled="!ruleForm.employment_history[index].company_name.trim().length"
-                />
-              </el-form-item>
-            </div>
-            <div class="flex justify-end mt-4">
-              <el-button
-                v-if="index === ruleForm.employment_history.length - 1"
-                type="primary"
-                plain
-                @click="addEmployment(ruleForm)"
-              >
-                Add job
-              </el-button>
-              <el-button v-else type="danger" plain @click="removeEmployment({ ruleForm, index })"
-                >Remove job</el-button
-              >
-            </div>
+        <div class="p-5 mt-5">
+          <div class="flex items-center mb-5">
+            <InlineSvg v-show="isFocusEmployment" :src="IconActive" />
+            <InlineSvg v-show="!isFocusEmployment" :src="IconNotActive" />
+            <div class="text-main text-xl font-semibold ml-2">Employment history</div>
           </div>
 
-          <div v-if="ruleForm.married" class="mt-5">
-            <div class="text-gray03 text-xs uppercase my-2">Spouse</div>
-
-            <div v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-2">
+          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusEmployment }">
+            <div class="text-gray03 text-xs uppercase my-2">Contact</div>
+            <div v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-2">
               <div class="sm:flex sm:flex-wrap">
                 <el-form-item
-                  :prop="'spouse.employment_history.' + index + '.company_name'"
+                  :prop="'employment_history.' + index + '.company_name'"
                   label="Company name"
                   class="sm:w-4/12 mb-4"
                 >
                   <el-input
                     v-model="eh.company_name"
                     placeholder="Enter company name"
-                    @change="changeCompanyNameSpouse({ ruleForm, index })"
+                    @change="changeCompanyNameMember({ ruleForm, index })"
+                    @focus="focusEmployment"
+                    @blur="blurEmployment"
                   />
                 </el-form-item>
 
                 <el-form-item
-                  v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
-                  class="sm:w-4/12 mb-4"
-                  :prop="'spouse.employment_history.' + index + '.occupation'"
+                  v-if="!!ruleForm.employment_history[index].company_name.trim().length"
+                  class="sm:w-4/12 sm:px-2 mb-4"
+                  :prop="'employment_history.' + index + '.occupation'"
                   label="Occupation"
                 >
-                  <el-input v-model="eh.occupation" placeholder="Company occupation" />
+                  <el-input
+                    v-model="eh.occupation"
+                    placeholder="Company occupation"
+                    @focus="focusEmployment"
+                    @blur="blurEmployment"
+                  />
                 </el-form-item>
                 <el-form-item
-                  v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                  v-if="!!ruleForm.employment_history[index].company_name.trim().length"
                   class="sm:w-4/12 mb-4"
-                  :prop="'spouse.employment_history.' + index + '.years'"
+                  :prop="'employment_history.' + index + '.years'"
                   label="Years"
                 >
-                  <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
+                  <el-input
+                    v-model="eh.years"
+                    placeholder="00"
+                    inputmode="numeric"
+                    @focus="focusEmployment"
+                    @blur="blurEmployment"
+                  />
                 </el-form-item>
 
                 <el-form-item
-                  v-if="!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                  v-if="!ruleForm.employment_history[index].company_name.trim().length"
                   label="Occupation"
                   class="sm:w-4/12 mb-4 sm:px-2"
                 >
                   <el-input
                     placeholder="Company occupation"
-                    :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                    :disabled="!ruleForm.employment_history[index].company_name.trim().length"
                   />
                 </el-form-item>
                 <el-form-item
-                  v-if="!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                  v-if="!ruleForm.employment_history[index].company_name.trim().length"
                   label="Years"
                   class="sm:w-4/12 mb-4"
                 >
                   <el-input
                     placeholder="00"
                     inputmode="numeric"
-                    :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                    :disabled="!ruleForm.employment_history[index].company_name.trim().length"
                   />
                 </el-form-item>
               </div>
               <div class="flex justify-end mt-4">
                 <el-button
-                  v-if="index === ruleForm.spouse.employment_history.length - 1"
+                  v-if="index === ruleForm.employment_history.length - 1"
                   type="primary"
                   plain
-                  @click="addEmploymentSpouse(ruleForm)"
+                  @click="addEmployment(ruleForm)"
                 >
                   Add job
                 </el-button>
-                <el-button v-else type="danger" plain @click="removeEmploymentSpouse({ ruleForm, index })"
+                <el-button v-else type="danger" plain @click="removeEmployment({ ruleForm, index })"
                   >Remove job</el-button
                 >
+              </div>
+            </div>
+
+            <div v-if="ruleForm.married" class="mt-5">
+              <div class="text-gray03 text-xs uppercase my-2">Spouse</div>
+              <div v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-2">
+                <div class="sm:flex sm:flex-wrap">
+                  <el-form-item
+                    :prop="'spouse.employment_history.' + index + '.company_name'"
+                    label="Company name"
+                    class="sm:w-4/12 mb-4"
+                  >
+                    <el-input
+                      v-model="eh.company_name"
+                      placeholder="Enter company name"
+                      @change="changeCompanyNameSpouse({ ruleForm, index })"
+                      @focus="focusEmployment"
+                      @blur="blurEmployment"
+                    />
+                  </el-form-item>
+
+                  <el-form-item
+                    v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                    class="sm:w-4/12 mb-4"
+                    :prop="'spouse.employment_history.' + index + '.occupation'"
+                    label="Occupation"
+                  >
+                    <el-input
+                      v-model="eh.occupation"
+                      placeholder="Company occupation"
+                      @focus="focusEmployment"
+                      @blur="blurEmployment"
+                    />
+                  </el-form-item>
+                  <el-form-item
+                    v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                    class="sm:w-4/12 mb-4"
+                    :prop="'spouse.employment_history.' + index + '.years'"
+                    label="Years"
+                  >
+                    <el-input
+                      v-model="eh.years"
+                      placeholder="00"
+                      inputmode="numeric"
+                      @focus="focusEmployment"
+                      @blur="blurEmployment"
+                    />
+                  </el-form-item>
+
+                  <el-form-item
+                    v-if="!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                    label="Occupation"
+                    class="sm:w-4/12 mb-4 sm:px-2"
+                  >
+                    <el-input
+                      placeholder="Company occupation"
+                      :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                    />
+                  </el-form-item>
+                  <el-form-item
+                    v-if="!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                    label="Years"
+                    class="sm:w-4/12 mb-4"
+                  >
+                    <el-input
+                      placeholder="00"
+                      inputmode="numeric"
+                      :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
+                    />
+                  </el-form-item>
+                </div>
+                <div class="flex justify-end mt-4">
+                  <el-button
+                    v-if="index === ruleForm.spouse.employment_history.length - 1"
+                    type="primary"
+                    plain
+                    @click="addEmploymentSpouse(ruleForm)"
+                  >
+                    Add job
+                  </el-button>
+                  <el-button v-else type="danger" plain @click="removeEmploymentSpouse({ ruleForm, index })"
+                    >Remove job</el-button
+                  >
+                </div>
               </div>
             </div>
           </div>
         </div>
         <!-- Employment history -->
 
-        <MoreInfoAbout />
-
         <!-- Other -->
-        <div class="my-5">
-          <span class="text-main text-xl font-semibold">Other</span>
-          <el-form-item label="Risk tolerance?" class="my-5">
-            <el-radio-group v-model="ruleForm.other.risk">
-              <div class="flex flex-col sm:flex-row sm:flex-wrap">
-                <el-radio label="conservative" class="sm:w-3/12">Conservative</el-radio>
-                <el-radio label="moderate" class="sm:w-3/12">Moderate</el-radio>
-                <el-radio label="moderately_conservative" class="sm:w-3/12"> Moderately Conservative </el-radio>
-                <el-radio label="aggressive" class="sm:w-3/12">Aggressive</el-radio>
-                <el-radio label="moderately_aggressive" class="sm:w-3/12"> Moderately Aggressive </el-radio>
-              </div>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item
-            label="Does the opportunity have any specific questions to discuss?"
-            prop="questions"
-            class="mb-4"
-          >
-            <el-input v-model="ruleForm.other.questions" type="textarea" />
-          </el-form-item>
-          <el-form-item label="Goal for retiretment" prop="retirement" class="mb-4">
-            <el-input v-model="ruleForm.other.retirement" type="textarea" />
-          </el-form-item>
-          <el-form-item label="Goal for retiretment money" prop="retirement_money" class="mb-4">
-            <el-input v-model="ruleForm.other.retirement_money" type="textarea" />
-          </el-form-item>
+        <div class="my-5 p-5">
+          <div class="flex items-center mb-5">
+            <InlineSvg v-show="isFocusOther" :src="IconActive" />
+            <InlineSvg v-show="!isFocusOther" :src="IconNotActive" />
+            <div class="text-main text-xl font-semibold ml-2">Other</div>
+          </div>
+          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusOther }">
+            <MoreInfoAbout />
+            <el-form-item label="Risk tolerance?" class="my-5">
+              <el-radio-group v-model="ruleForm.other.risk">
+                <div class="flex flex-col sm:flex-row sm:flex-wrap">
+                  <el-radio label="conservative" class="sm:w-3/12">Conservative</el-radio>
+                  <el-radio label="moderate" class="sm:w-3/12">Moderate</el-radio>
+                  <el-radio label="moderately_conservative" class="sm:w-3/12"> Moderately Conservative </el-radio>
+                  <el-radio label="aggressive" class="sm:w-3/12">Aggressive</el-radio>
+                  <el-radio label="moderately_aggressive" class="sm:w-3/12"> Moderately Aggressive </el-radio>
+                </div>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item
+              label="Does the opportunity have any specific questions to discuss?"
+              prop="questions"
+              class="mb-4"
+            >
+              <el-input v-model="ruleForm.other.questions" type="textarea" @focus="focusOther" @blur="blurOther" />
+            </el-form-item>
+            <el-form-item label="Goal for retiretment" prop="retirement" class="mb-4">
+              <el-input v-model="ruleForm.other.retirement" type="textarea" @focus="focusOther" @blur="blurOther" />
+            </el-form-item>
+            <el-form-item label="Goal for retiretment money" prop="retirement_money" class="mb-4">
+              <el-input
+                v-model="ruleForm.other.retirement_money"
+                type="textarea"
+                @focus="focusOther"
+                @blur="blurOther"
+              />
+            </el-form-item>
 
-          <el-form-item label="Does the opportunity currently work with the advisor?" class="mb-4">
-            <el-radio-group v-model="ruleForm.other.work_with_advisor">
-              <el-radio :label="true">Yes</el-radio>
-              <el-radio :label="false">No</el-radio>
-            </el-radio-group>
-          </el-form-item>
+            <el-form-item label="Does the opportunity currently work with the advisor?" class="mb-4">
+              <el-radio-group v-model="ruleForm.other.work_with_advisor">
+                <el-radio :label="true">Yes</el-radio>
+                <el-radio :label="false">No</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </div>
         </div>
         <!-- Other -->
 
@@ -540,6 +600,9 @@ export default {
 
     const isFocusGeneral = ref(false)
     const isFocusSpouse = ref(false)
+    const isFocusHouse = ref(false)
+    const isFocusEmployment = ref(false)
+    const isFocusOther = ref(false)
 
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
@@ -666,6 +729,30 @@ export default {
       isFocusSpouse.value = false
     }
 
+    const focusHouse = () => {
+      isFocusHouse.value = true
+    }
+
+    const blurHouse = () => {
+      isFocusHouse.value = false
+    }
+
+    const focusEmployment = () => {
+      isFocusEmployment.value = true
+    }
+
+    const blurEmployment = () => {
+      isFocusEmployment.value = false
+    }
+
+    const focusOther = () => {
+      isFocusOther.value = true
+    }
+
+    const blurOther = () => {
+      isFocusOther.value = false
+    }
+
     return {
       ruleForm,
       rules,
@@ -691,12 +778,21 @@ export default {
       blurGeneral,
       focusSpouse,
       blurSpouse,
+      focusHouse,
+      blurHouse,
+      focusEmployment,
+      blurEmployment,
+      focusOther,
+      blurOther,
 
       IconActive,
       IconNotActive,
 
       isFocusGeneral,
       isFocusSpouse,
+      isFocusHouse,
+      isFocusEmployment,
+      isFocusOther,
     }
   },
 }
