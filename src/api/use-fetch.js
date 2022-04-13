@@ -11,6 +11,7 @@ export const useFetch = (url, options) => {
   })
   const fetchData = async (params) => {
     state.fetching = true
+    state.error = null
     try {
       const body = JSON.stringify(params.body)
       const res = await apiClient.fetch(url, {
