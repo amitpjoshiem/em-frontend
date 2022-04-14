@@ -12,7 +12,9 @@
           :options="optionsCurrencyInput"
           :disabled="disabled"
           @input="handleChangeMember"
-          @change="blurHandler(propMember)"
+          @change="changeHandler(propMember)"
+          @focusEvent="handleFocus"
+          @blurEvent="handleBlur"
         />
       </el-form-item>
       <el-form-item v-if="isMarried" class="w-6/12 pl-2.5 mb-0" :prop="propSpouse">
@@ -21,7 +23,9 @@
           :options="optionsCurrencyInput"
           :disabled="disabled"
           @input="handleChangeSpouse"
-          @change="blurHandler(propSpouse)"
+          @change="changeHandler(propSpouse)"
+          @focusEvent="handleFocus"
+          @blurEvent="handleBlur"
         />
       </el-form-item>
     </div>
@@ -67,7 +71,7 @@ export default {
       default: false,
     },
   },
-  emits: ['update:member', 'update:spouse', 'blur'],
+  emits: ['update:member', 'update:spouse', 'blur', 'focus', 'change'],
   setup(_, { emit }) {
     const optionsCurrencyInput = {
       currency: 'USD',
@@ -76,8 +80,8 @@ export default {
       precision: 2,
     }
 
-    const blurHandler = (e) => {
-      emit('blur', e)
+    const changeHandler = (e) => {
+      emit('change', e)
     }
 
     const handleChangeMember = (e) => {
@@ -87,11 +91,23 @@ export default {
     const handleChangeSpouse = (e) => {
       emit('update:spouse', e.target.value)
     }
+
+    const handleFocus = () => {
+      emit('focus')
+    }
+
+    const handleBlur = () => {
+      emit('blur')
+    }
+
     return {
       handleChangeMember,
       handleChangeSpouse,
-      blurHandler,
+      changeHandler,
       optionsCurrencyInput,
+
+      handleFocus,
+      handleBlur,
     }
   },
 }

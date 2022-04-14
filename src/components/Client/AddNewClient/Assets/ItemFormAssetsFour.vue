@@ -12,7 +12,9 @@
           :disabled="disabled"
           :options="optionsCurrencyInput"
           @input="handleChangeMember"
-          @change="blurHandler(propMember)"
+          @change="changeHandler(propMember)"
+          @focusEvent="handleFocus"
+          @blurEvent="handleBlur"
         />
       </el-form-item>
       <el-form-item v-if="isMarried" class="w-6/12 pl-2.5" :prop="propSpouse">
@@ -21,7 +23,9 @@
           :disabled="disabled"
           :options="optionsCurrencyInput"
           @input="handleChangeSpouse"
-          @change="blurHandler(propSpouse)"
+          @change="changeHandler(propSpouse)"
+          @focusEvent="handleFocus"
+          @blurEvent="handleBlur"
         />
       </el-form-item>
     </div>
@@ -36,7 +40,9 @@
           :disabled="disabled"
           :options="optionsCurrencyInput"
           @input="handleChangeOnq"
-          @change="blurHandler(propOnq)"
+          @change="changeHandler(propOnq)"
+          @focusEvent="handleFocus"
+          @blurEvent="handleBlur"
         />
       </el-form-item>
       <el-form-item class="w-6/12 pl-2.5" :prop="propBalance">
@@ -45,7 +51,9 @@
           :disabled="disabled"
           :options="optionsCurrencyInput"
           @input="handleChangeBalance"
-          @change="blurHandler(propBalance)"
+          @change="changeHandler(propBalance)"
+          @focusEvent="handleFocus"
+          @blurEvent="handleBlur"
         />
       </el-form-item>
     </div>
@@ -111,7 +119,7 @@ export default {
       default: false,
     },
   },
-  emits: ['update:member', 'update:spouse', 'update:onq', 'update:balance', 'blur'],
+  emits: ['update:member', 'update:spouse', 'update:onq', 'update:balance', 'blur', 'focus', 'change'],
   setup(_, { emit }) {
     const optionsCurrencyInput = {
       currency: 'USD',
@@ -135,8 +143,17 @@ export default {
     const handleChangeBalance = (e) => {
       emit('update:balance', e.target.value)
     }
-    const blurHandler = (e) => {
-      emit('blur', e)
+
+    const changeHandler = (e) => {
+      emit('change', e)
+    }
+
+    const handleFocus = () => {
+      emit('focus')
+    }
+
+    const handleBlur = () => {
+      emit('blur')
     }
 
     return {
@@ -144,8 +161,11 @@ export default {
       handleChangeSpouse,
       handleChangeOnq,
       handleChangeBalance,
-      blurHandler,
+      changeHandler,
       optionsCurrencyInput,
+
+      handleFocus,
+      handleBlur,
     }
   },
 }

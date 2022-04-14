@@ -34,6 +34,7 @@ module.exports = {
         'dark-blue-charts': '#53576A',
         'light-green': '#DBF4EE',
         'color-link': '#6EBAFF',
+        'border-blue': '#66B6FF',
       },
       fontFamily: {
         sans: ['Work Sans', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],

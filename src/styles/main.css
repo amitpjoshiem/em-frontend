@@ -279,3 +279,12 @@
 .el-table .el-table__cell{
   position: inherit;
 }
+
+
+.el-textarea__inner{
+  box-shadow: none;
+}
+
+.el-textarea__inner:hover{
+  box-shadow: none;
+}

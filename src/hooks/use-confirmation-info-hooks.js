@@ -6,6 +6,7 @@ export function useConfirmationInfoHooks() {
   }
 
   const setInitValueConfirmInfo = (ruleForm, data) => {
+    if (data === undefined) return
     ruleForm.consultation = data.consultation !== null ? data.consultation : 'want_consultation_and_book'
 
     ruleForm.currently_have.cds = data.currently_have.cds ? data.currently_have.cds : false

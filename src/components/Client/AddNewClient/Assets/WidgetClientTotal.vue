@@ -2,7 +2,7 @@
   <div class="flex items-center font-semibold text-main">
     <div class="w-2/12 text-xss">Total</div>
 
-    <div class="w-5/24 el-input__inner flex flex-col items-center border-0 text-sm">
+    <div class="w-5/24 flex flex-col items-center border-0 text-sm">
       <div class="text-gray03 text-xs text-center">OWNER</div>
       <SwdSpinner v-if="isLoadingUpdate" />
       <span v-else>
@@ -10,7 +10,7 @@
       </span>
     </div>
 
-    <div v-if="isMarried" class="w-5/24 el-input__inner flex flex-col items-center border-0 text-sm">
+    <div v-if="isMarried" class="w-5/24 flex flex-col items-center border-0 text-sm">
       <div class="text-gray03 text-xs text-center">SPOUSE</div>
       <SwdSpinner v-if="isLoadingUpdate" />
       <span v-else>
@@ -18,7 +18,7 @@
       </span>
     </div>
 
-    <div class="w-5/24 el-input__inner flex flex-col items-center border-0 text-sm pl-5">
+    <div class="w-5/24 flex flex-col items-center border-0 text-sm pl-5">
       <div class="text-gray03 text-xs text-center">O/NQ</div>
       <SwdSpinner v-if="isLoadingUpdate" />
       <span v-else>
@@ -26,7 +26,7 @@
       </span>
     </div>
 
-    <div class="w-5/24 el-input__inner flex flex-col items-center border-0 text-sm pl-5">
+    <div class="w-5/24 flex flex-col items-center border-0 text-sm pl-5">
       <div class="text-gray03 text-xs text-center">BALANCE</div>
       <SwdSpinner v-if="isLoadingUpdate" />
       <span v-else>
