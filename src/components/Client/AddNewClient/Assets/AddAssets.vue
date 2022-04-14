@@ -1,12 +1,13 @@
 <template>
   <div class="p-5">
-    <div v-if="!isFetchingMember && !isMemberAssetsLoading">
+    <div v-if="!isFetchingMember && !isMemberAssetsLoading && !isLoadingInfo">
       <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
         <!-- Current income -->
         <div class="pb-10">
           <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusCurrentIncome" :src="IconActive" />
-            <InlineSvg v-show="!isFocusCurrentIncome" :src="IconNotActive" />
+            <InlineSvg v-show="isFocusCurrentIncome && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusCurrentIncome && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <span class="text-main text-xl font-semibold ml-2">Current income</span>
           </div>
           <div
@@ -123,8 +124,9 @@
 
         <div class="pb-10">
           <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusLiquidAssets" :src="IconActive" />
-            <InlineSvg v-show="!isFocusLiquidAssets" :src="IconNotActive" />
+            <InlineSvg v-show="isFocusLiquidAssets && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusLiquidAssets && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <span class="text-main text-xl font-semibold ml-2">Liquid assets</span>
           </div>
           <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusLiquidAssets }">
@@ -340,8 +342,9 @@
 
         <div>
           <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusNonLiquidAssets" :src="IconActive" />
-            <InlineSvg v-show="!isFocusNonLiquidAssets" :src="IconNotActive" />
+            <InlineSvg v-show="isFocusNonLiquidAssets && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusNonLiquidAssets && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <span class="text-main text-xl font-semibold ml-2">Non-liquid assets</span>
           </div>
           <!-- Value of home -->
@@ -488,6 +491,7 @@ import { useMutation, useQueryClient } from 'vue-query'
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member'
+import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
@@ -502,6 +506,7 @@ import { rules } from '@/validationRules/assetsRules.js'
 
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
+import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
   name: 'AddAssets',
@@ -526,6 +531,7 @@ export default {
     const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id })
+    const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
     const { setInitValue, setTotal, isMarried } = useAssetsInfoHooks(member)
 
@@ -686,6 +692,10 @@ export default {
       })
     }
 
+    const isDoneCurrentStep = computed(() => {
+      return clientsInfo.value.steps.completed_financial_fact_finder
+    })
+
     const focus = (type) => {
       if (type === 'liquidAssets') isFocusLiquidAssets.value = true
       if (type === 'nonLiquidAssets') isFocusNonLiquidAssets.value = true
@@ -713,6 +723,7 @@ export default {
 
       IconActive,
       IconNotActive,
+      IconDoneStep,
 
       focus,
       blur,
@@ -720,6 +731,10 @@ export default {
       isFocusCurrentIncome,
       isFocusLiquidAssets,
       isFocusNonLiquidAssets,
+
+      isLoadingInfo,
+
+      isDoneCurrentStep,
     }
   },
 }
