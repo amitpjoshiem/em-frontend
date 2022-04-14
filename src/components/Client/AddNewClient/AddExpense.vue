@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading" class="lg:max-w-5xl lg:my-0 lg:mx-auto">
+  <div v-if="!isLoading && !isLoadingInfo" class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div class="hidden pb-2 mt-8 md:flex">
       <div class="md:w-8/12" />
       <div class="md:w-2/12 text-gray03 text-xs">ESSENTIAL</div>
@@ -8,8 +8,10 @@
     <el-form ref="form" :model="ruleForm">
       <div class="border border-input-border rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusHousing }">
         <div class="flex items-center mb-5">
-          <InlineSvg v-show="isFocusHousing" :src="IconActive" />
-          <InlineSvg v-show="!isFocusHousing" :src="IconNotActive" />
+          <InlineSvg v-show="isFocusHousing && !isDoneCurrentStep" :src="IconActive" />
+          <InlineSvg v-show="!isFocusHousing && !isDoneCurrentStep" :src="IconNotActive" />
+          <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
+
           <div class="flex items-center text-sm font-semibold ml-2">Housing</div>
         </div>
 
@@ -146,8 +148,9 @@
         :class="{ 'border-border-blue': isFocusAtHome || isFocusTransportation }"
       >
         <div class="flex items-center mb-5">
-          <InlineSvg v-show="isFocusAtHome" :src="IconActive" />
-          <InlineSvg v-show="!isFocusAtHome" :src="IconNotActive" />
+          <InlineSvg v-show="isFocusAtHome && !isDoneCurrentStep" :src="IconActive" />
+          <InlineSvg v-show="!isFocusAtHome && !isDoneCurrentStep" :src="IconNotActive" />
+          <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
           <div class="flex items-center text-sm font-semibold ml-2">Food</div>
         </div>
         <div class="md:flex mb-4">
@@ -204,8 +207,9 @@
         </div>
 
         <div class="flex items-center mb-5">
-          <InlineSvg v-show="isFocusTransportation" :src="IconActive" />
-          <InlineSvg v-show="!isFocusTransportation" :src="IconNotActive" />
+          <InlineSvg v-show="isFocusTransportation && !isDoneCurrentStep" :src="IconActive" />
+          <InlineSvg v-show="!isFocusTransportation && !isDoneCurrentStep" :src="IconNotActive" />
+          <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
           <div class="flex items-center text-sm font-semibold ml-2">Transportation</div>
         </div>
 
@@ -310,8 +314,9 @@
       <!-- HEALTHCARE -->
       <div class="border border-input-border rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusHealthcare }">
         <div class="flex items-center mb-5">
-          <InlineSvg v-show="isFocusHealthcare" :src="IconActive" />
-          <InlineSvg v-show="!isFocusHealthcare" :src="IconNotActive" />
+          <InlineSvg v-show="isFocusHealthcare && !isDoneCurrentStep" :src="IconActive" />
+          <InlineSvg v-show="!isFocusHealthcare && !isDoneCurrentStep" :src="IconNotActive" />
+          <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
           <div class="flex items-center text-sm font-semibold ml-2">Healthcare</div>
         </div>
         <div class="md:flex mb-4">
@@ -423,8 +428,9 @@
         :class="{ 'border-border-blue': isFocusPersonal || isFocusPersonalCare }"
       >
         <div class="flex items-center mb-5">
-          <InlineSvg v-show="isFocusPersonal" :src="IconActive" />
-          <InlineSvg v-show="!isFocusPersonal" :src="IconNotActive" />
+          <InlineSvg v-show="isFocusPersonal && !isDoneCurrentStep" :src="IconActive" />
+          <InlineSvg v-show="!isFocusPersonal && !isDoneCurrentStep" :src="IconNotActive" />
+          <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
           <div class="flex items-center text-sm font-semibold ml-2">Personal Insurance</div>
         </div>
         <div class="md:flex mb-4">
@@ -481,8 +487,9 @@
         </div>
 
         <div class="flex items-center mb-5">
-          <InlineSvg v-show="isFocusPersonalCare" :src="IconActive" />
-          <InlineSvg v-show="!isFocusPersonalCare" :src="IconNotActive" />
+          <InlineSvg v-show="isFocusPersonalCare && !isDoneCurrentStep" :src="IconActive" />
+          <InlineSvg v-show="!isFocusPersonalCare && !isDoneCurrentStep" :src="IconNotActive" />
+          <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
           <div class="flex items-center text-sm font-semibold ml-2">Personal Care</div>
         </div>
 
@@ -761,6 +768,7 @@ import { useRouter, useRoute } from 'vue-router'
 
 import { useFetchMonthlyExpense } from '@/api/use-fetch-monthly-expense.js'
 import { createMonthlyExpenses } from '@/api/vueQuery/create-monthly-expenses'
+import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useMutation } from 'vue-query'
 
 import { currencyFormat } from '@/utils/currencyFormat'
@@ -772,6 +780,7 @@ import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-cl
 
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
+import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
   name: 'AddExpense',
@@ -794,6 +803,7 @@ export default {
     const { isLoading, isFetching, data, refetch } = useFetchMonthlyExpense({ id: route.params.id }, { enabled: false })
     const { mutateAsync: create, isLoading: isLoadingCreate } = useMutation(createMonthlyExpenses)
     const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
+    const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
     const { setInitValue, optionsCurrencyInput } = useExpenseInfoHooks()
 
@@ -960,6 +970,10 @@ export default {
       }
     }
 
+    const isDoneCurrentStep = computed(() => {
+      return clientsInfo.value.steps.completed_financial_fact_finder
+    })
+
     const focus = (type) => {
       if (type === 'housing') isFocusHousing.value = true
       if (type === 'at-home') isFocusAtHome.value = true
@@ -996,6 +1010,7 @@ export default {
 
       IconActive,
       IconNotActive,
+      IconDoneStep,
 
       focus,
       blur,
@@ -1007,6 +1022,9 @@ export default {
       isFocusPersonal,
       isFocusPersonalCare,
       isFocusOther,
+
+      isLoadingInfo,
+      isDoneCurrentStep,
     }
   },
 }
