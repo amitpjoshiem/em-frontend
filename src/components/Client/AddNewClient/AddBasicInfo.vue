@@ -33,8 +33,8 @@
                   <el-input
                     v-model="ruleForm.name"
                     placeholder="Enter name"
-                    @focus="focusGeneral"
-                    @blur="blurGeneral"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
                   />
                 </el-form-item>
                 <el-form-item prop="birthday" label="Date of birth" class="sm:w-4/12 sm:pl-2 lg:w-3/12 lg:px-2 mb-4">
@@ -44,8 +44,8 @@
                     :placeholder="getPlaceholder"
                     format="MM/DD/YYYY"
                     value-format="MM/DD/YYYY"
-                    @focus="focusGeneral"
-                    @blur="blurGeneral"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
                   />
                 </el-form-item>
 
@@ -53,8 +53,8 @@
                   <el-input
                     v-model.email="ruleForm.email"
                     placeholder="Enter e-mail"
-                    @focus="focusGeneral"
-                    @blur="blurGeneral"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
                   />
                 </el-form-item>
 
@@ -70,8 +70,8 @@
                     :placeholder="getPlaceholder"
                     format="MM/DD/YYYY"
                     value-format="MM/DD/YYYY"
-                    @focus="focusGeneral"
-                    @blur="blurGeneral"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
                   />
                 </el-form-item>
 
@@ -85,8 +85,8 @@
                     v-model="ruleForm.phone"
                     v-maska="'(###) ###-####'"
                     placeholder="Enter phone number"
-                    @focus="focusGeneral"
-                    @blur="blurGeneral"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
                   />
                 </el-form-item>
 
@@ -94,8 +94,8 @@
                   <el-input
                     v-model="ruleForm.address"
                     placeholder="Enter address"
-                    @focus="focusGeneral"
-                    @blur="blurGeneral"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
                   />
                 </el-form-item>
 
@@ -103,8 +103,8 @@
                   <el-input
                     v-model="ruleForm.city"
                     placeholder="Enter city"
-                    @focus="focusGeneral"
-                    @blur="blurGeneral"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
                   />
                 </el-form-item>
 
@@ -112,8 +112,8 @@
                   <el-input
                     v-model="ruleForm.state"
                     placeholder="Enter state"
-                    @focus="focusGeneral"
-                    @blur="blurGeneral"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
                   />
                 </el-form-item>
 
@@ -127,8 +127,8 @@
                     v-model="ruleForm.zip"
                     placeholder="000000"
                     inputmode="numeric"
-                    @focus="focusGeneral"
-                    @blur="blurGeneral"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
                   />
                 </el-form-item>
               </div>
@@ -153,8 +153,8 @@
                 <el-input
                   v-model="ruleForm.biggest_financial_concern"
                   type="textarea"
-                  @focus="focusGeneral"
-                  @blur="blurGeneral"
+                  @focus="focus('general')"
+                  @blur="blur('general')"
                 />
               </el-form-item>
             </div>
@@ -182,8 +182,8 @@
                 <el-input
                   v-model="ruleForm.spouse.name"
                   placeholder="Enter spouse’s name"
-                  @focus="focusSpouse"
-                  @blur="blurSpouse"
+                  @focus="focus('spouse')"
+                  @blur="blur('spouse')"
                 />
               </el-form-item>
               <el-form-item
@@ -197,8 +197,8 @@
                   :placeholder="getPlaceholder"
                   format="MM/DD/YYYY"
                   value-format="MM/DD/YYYY"
-                  @focus="focusSpouse"
-                  @blur="blurSpouse"
+                  @focus="focus('spouse')"
+                  @blur="blur('spouse')"
                 />
               </el-form-item>
               <el-form-item label="E-mail" prop="spouse.email" class="sm:w-6/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
@@ -216,8 +216,8 @@
                   :placeholder="getPlaceholder"
                   format="MM/DD/YYYY"
                   value-format="MM/DD/YYYY"
-                  @focus="focusSpouse"
-                  @blur="blurSpouse"
+                  @focus="focus('spouse')"
+                  @blur="blur('spouse')"
                 />
               </el-form-item>
               <el-form-item
@@ -231,8 +231,8 @@
                   v-maska="'(###) ###-####'"
                   placeholder="Enter spouse’s phone number"
                   inputmode="numeric"
-                  @focus="focusSpouse"
-                  @blur="blurSpouse"
+                  @focus="focus('spouse')"
+                  @blur="blur('spouse')"
                 />
               </el-form-item>
             </div>
@@ -267,8 +267,8 @@
                   v-model="ruleForm.house.market_value"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
-                  @focus="focusHouse"
-                  @blur="blurHouse"
+                  @focus="focus('house')"
+                  @blur="blur('house')"
                 />
               </el-form-item>
               <el-form-item
@@ -281,8 +281,8 @@
                   v-model="ruleForm.house.total_debt"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
-                  @focus="focusHouse"
-                  @blur="blurHouse"
+                  @focus="focus('house')"
+                  @blur="blur('house')"
                 />
               </el-form-item>
               <el-form-item
@@ -294,8 +294,8 @@
                 <SwdCurrencyInput
                   v-model="ruleForm.house.remaining_mortgage_amount"
                   :options="optionsCurrencyInput"
-                  @focus="focusHouse"
-                  @blur="blurHouse"
+                  @focus="focus('house')"
+                  @blur="blur('house')"
                 />
               </el-form-item>
               <el-form-item
@@ -308,8 +308,8 @@
                   v-model="ruleForm.house.monthly_payment"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
-                  @focus="focusHouse"
-                  @blur="blurHouse"
+                  @focus="focus('house')"
+                  @blur="blur('house')"
                 />
               </el-form-item>
               <el-form-item
@@ -322,8 +322,8 @@
                   v-model="ruleForm.house.total_monthly_expenses"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
-                  @focus="focusHouse"
-                  @blur="blurHouse"
+                  @focus="focus('house')"
+                  @blur="blur('house')"
                 />
               </el-form-item>
             </div>
@@ -353,8 +353,8 @@
                     v-model="eh.company_name"
                     placeholder="Enter company name"
                     @change="changeCompanyNameMember({ ruleForm, index })"
-                    @focus="focusEmployment"
-                    @blur="blurEmployment"
+                    @focus="focus('employment')"
+                    @blur="blur('employment')"
                   />
                 </el-form-item>
 
@@ -367,8 +367,8 @@
                   <el-input
                     v-model="eh.occupation"
                     placeholder="Company occupation"
-                    @focus="focusEmployment"
-                    @blur="blurEmployment"
+                    @focus="focus('employment')"
+                    @blur="blur('employment')"
                   />
                 </el-form-item>
                 <el-form-item
@@ -381,8 +381,8 @@
                     v-model="eh.years"
                     placeholder="00"
                     inputmode="numeric"
-                    @focus="focusEmployment"
-                    @blur="blurEmployment"
+                    @focus="focus('employment')"
+                    @blur="blur('employment')"
                   />
                 </el-form-item>
 
@@ -436,8 +436,8 @@
                       v-model="eh.company_name"
                       placeholder="Enter company name"
                       @change="changeCompanyNameSpouse({ ruleForm, index })"
-                      @focus="focusEmployment"
-                      @blur="blurEmployment"
+                      @focus="focus('employment')"
+                      @blur="blur('employment')"
                     />
                   </el-form-item>
 
@@ -450,8 +450,8 @@
                     <el-input
                       v-model="eh.occupation"
                       placeholder="Company occupation"
-                      @focus="focusEmployment"
-                      @blur="blurEmployment"
+                      @focus="focus('employment')"
+                      @blur="blur('employment')"
                     />
                   </el-form-item>
                   <el-form-item
@@ -464,8 +464,8 @@
                       v-model="eh.years"
                       placeholder="00"
                       inputmode="numeric"
-                      @focus="focusEmployment"
-                      @blur="blurEmployment"
+                      @focus="focus('employment')"
+                      @blur="blur('employment')"
                     />
                   </el-form-item>
 
@@ -536,17 +536,27 @@
               prop="questions"
               class="mb-4"
             >
-              <el-input v-model="ruleForm.other.questions" type="textarea" @focus="focusOther" @blur="blurOther" />
+              <el-input
+                v-model="ruleForm.other.questions"
+                type="textarea"
+                @focus="focus('other')"
+                @blur="blur('other')"
+              />
             </el-form-item>
             <el-form-item label="Goal for retiretment" prop="retirement" class="mb-4">
-              <el-input v-model="ruleForm.other.retirement" type="textarea" @focus="focusOther" @blur="blurOther" />
+              <el-input
+                v-model="ruleForm.other.retirement"
+                type="textarea"
+                @focus="focus('other')"
+                @blur="blur('other')"
+              />
             </el-form-item>
             <el-form-item label="Goal for retiretment money" prop="retirement_money" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement_money"
                 type="textarea"
-                @focus="focusOther"
-                @blur="blurOther"
+                @focus="focus('other')"
+                @blur="blur('other')"
               />
             </el-form-item>
 
@@ -728,44 +738,20 @@ export default {
       return clientsInfo.value.steps.completed_financial_fact_finder
     })
 
-    const focusGeneral = () => {
-      isFocusGeneral.value = true
+    const focus = (type) => {
+      if (type === 'general') isFocusGeneral.value = true
+      if (type === 'spouse') isFocusSpouse.value = true
+      if (type === 'house') isFocusHouse.value = true
+      if (type === 'employment') isFocusEmployment.value = true
+      if (type === 'other') isFocusOther.value = true
     }
 
-    const blurGeneral = () => {
-      isFocusGeneral.value = false
-    }
-
-    const focusSpouse = () => {
-      isFocusSpouse.value = true
-    }
-
-    const blurSpouse = () => {
-      isFocusSpouse.value = false
-    }
-
-    const focusHouse = () => {
-      isFocusHouse.value = true
-    }
-
-    const blurHouse = () => {
-      isFocusHouse.value = false
-    }
-
-    const focusEmployment = () => {
-      isFocusEmployment.value = true
-    }
-
-    const blurEmployment = () => {
-      isFocusEmployment.value = false
-    }
-
-    const focusOther = () => {
-      isFocusOther.value = true
-    }
-
-    const blurOther = () => {
-      isFocusOther.value = false
+    const blur = (type) => {
+      if (type === 'general') isFocusGeneral.value = false
+      if (type === 'spouse') isFocusSpouse.value = false
+      if (type === 'house') isFocusHouse.value = false
+      if (type === 'employment') isFocusEmployment.value = false
+      if (type === 'other') isFocusOther.value = false
     }
 
     return {
@@ -789,17 +775,6 @@ export default {
       member,
       refetchMember,
 
-      focusGeneral,
-      blurGeneral,
-      focusSpouse,
-      blurSpouse,
-      focusHouse,
-      blurHouse,
-      focusEmployment,
-      blurEmployment,
-      focusOther,
-      blurOther,
-
       IconActive,
       IconNotActive,
       IconDoneStep,
@@ -813,6 +788,9 @@ export default {
       isLoadingInfo,
 
       isDoneCurrentStep,
+
+      focus,
+      blur,
     }
   },
 }
