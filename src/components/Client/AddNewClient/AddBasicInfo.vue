@@ -1,12 +1,14 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
-    <div v-if="!isFetchingMember" class="sm:p-5">
+    <div v-if="!isFetchingMember && !isLoadingInfo" class="sm:p-5">
+      <div>{{ isDoneCurrentStep }}</div>
       <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top">
         <!-- GENERAL -->
         <div class="p-5">
           <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusGeneral" :src="IconActive" />
-            <InlineSvg v-show="!isFocusGeneral" :src="IconNotActive" />
+            <InlineSvg v-show="isFocusGeneral && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusGeneral && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">General</div>
           </div>
           <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusGeneral }">
@@ -163,8 +165,9 @@
         <!-- Spouse -->
         <div v-if="ruleForm.married" class="p-5">
           <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusSpouse" :src="IconActive" />
-            <InlineSvg v-show="!isFocusSpouse" :src="IconNotActive" />
+            <InlineSvg v-show="isFocusSpouse && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusSpouse && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">Spouse</div>
           </div>
           <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusSpouse }">
@@ -240,8 +243,9 @@
         <!-- Housing Information -->
         <div class="p-5">
           <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusHouse" :src="IconActive" />
-            <InlineSvg v-show="!isFocusHouse" :src="IconNotActive" />
+            <InlineSvg v-show="isFocusHouse && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusHouse && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">Housing Information</div>
           </div>
           <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusHouse }">
@@ -330,8 +334,9 @@
         <!-- Employment history -->
         <div class="p-5 mt-5">
           <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusEmployment" :src="IconActive" />
-            <InlineSvg v-show="!isFocusEmployment" :src="IconNotActive" />
+            <InlineSvg v-show="isFocusEmployment && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusEmployment && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">Employment history</div>
           </div>
 
@@ -508,8 +513,9 @@
         <!-- Other -->
         <div class="my-5 p-5">
           <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusOther" :src="IconActive" />
-            <InlineSvg v-show="!isFocusOther" :src="IconNotActive" />
+            <InlineSvg v-show="isFocusOther && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusOther && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">Other</div>
           </div>
           <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusOther }">
@@ -568,6 +574,9 @@
 <script>
 import { reactive, ref, onMounted, computed, watchEffect } from 'vue'
 import { updateMembers } from '@/api/vueQuery/update-members'
+import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
+import { useFetchMember } from '@/api/use-fetch-member.js'
+
 import { useMutation } from 'vue-query'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
@@ -577,13 +586,13 @@ import { maska } from 'maska'
 import { scrollTop } from '@/utils/scrollTop'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
-import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 
 import MoreInfoAbout from './MoreInfoAbout.vue'
 
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
+import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
   name: 'AddProspectBasicInfo',
@@ -611,6 +620,8 @@ export default {
       data: member,
       refetch: refetchMember,
     } = useFetchMember({ id: route.params.id }, { enabled: false })
+
+    const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
     const {
       setInitValue,
@@ -713,6 +724,10 @@ export default {
       })
     }
 
+    const isDoneCurrentStep = computed(() => {
+      return clientsInfo.value.steps.completed_financial_fact_finder
+    })
+
     const focusGeneral = () => {
       isFocusGeneral.value = true
     }
@@ -787,12 +802,17 @@ export default {
 
       IconActive,
       IconNotActive,
+      IconDoneStep,
 
       isFocusGeneral,
       isFocusSpouse,
       isFocusHouse,
       isFocusEmployment,
       isFocusOther,
+
+      isLoadingInfo,
+
+      isDoneCurrentStep,
     }
   },
 }
