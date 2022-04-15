@@ -103,6 +103,7 @@
     </div>
     <router-view />
   </div>
+  <el-skeleton v-else :rows="10" animated />
 </template>
 
 <script>

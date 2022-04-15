@@ -31,9 +31,17 @@
 
   <!-- DEACTIVATED LINK -->
   <el-dialog v-model="dialogVisibleDeactivatedLink" title="Info" width="40%" lock-scroll>
-    <p class="mb-5">Are you sure to deactivate link?</p>
-    <p class="font-semibold">Lead: {{ user.name }}</p>
-    <p class="font-semibold">E-mail: {{ user.email }}</p>
+    <div class="text-center">
+      <el-icon :size="80">
+        <info-filled color="#E6A23C" />
+      </el-icon>
+    </div>
+    <div class="pt-4">
+      <p>Are you sure to deactivate link?</p>
+      <p class="font-semibold">Lead: {{ user.name }}</p>
+      <p class="font-semibold">E-mail: {{ user.email }}</p>
+    </div>
+
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisibleDeactivatedLink = false">Cancel</el-button>
@@ -52,10 +60,17 @@
   </el-dialog>
 
   <!-- DEACTIVATED ACC -->
-  <el-dialog v-model="dialogVisibleDeactivatedAcc" title="Info" width="40%" lock-scroll>
-    <p class="mb-5">Are you sure to deactivate account?</p>
-    <p class="font-semibold">Lead: {{ user.name }}</p>
-    <p class="font-semibold">E-mail: {{ user.email }}</p>
+  <el-dialog v-model="dialogVisibleDeactivatedAcc" width="40%" lock-scroll title="Info">
+    <div class="text-center">
+      <el-icon :size="80">
+        <info-filled color="#E6A23C" />
+      </el-icon>
+    </div>
+    <div class="pt-4">
+      <p>Are you sure to deactivate account?</p>
+      <p class="font-semibold">Lead: {{ user.name }}</p>
+      <p class="font-semibold">E-mail: {{ user.email }}</p>
+    </div>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisibleDeactivatedAcc = false">Cancel</el-button>
@@ -75,9 +90,17 @@
 
   <!-- RESTORE ACC -->
   <el-dialog v-model="dialogVisibleRestoreAcc" title="Info" width="40%" lock-scroll>
-    <p class="mb-5">Are you sure to activate account</p>
-    <p class="font-semibold">Lead: {{ user.name }}</p>
-    <p class="font-semibold">E-mail: {{ user.email }}</p>
+    <div class="text-center">
+      <el-icon :size="80">
+        <info-filled color="#E6A23C" />
+      </el-icon>
+    </div>
+    <div class="pt-4">
+      <p>Are you sure to activate account</p>
+      <p class="font-semibold">Lead: {{ user.name }}</p>
+      <p class="font-semibold">E-mail: {{ user.email }}</p>
+    </div>
+
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisibleRestoreAcc = false">Cancel</el-button>
@@ -110,8 +133,14 @@ import { deactivatedLinkLead } from '@/api/vueQuery/fetch-deactivated-link-lead'
 
 import { useAlert } from '@/utils/use-alert'
 
+import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
+import { InfoFilled } from '@element-plus/icons-vue'
+
 export default {
   name: 'SwdLeadActions',
+  components: {
+    InfoFilled,
+  },
   props: {
     user: {
       type: Object,
@@ -274,6 +303,8 @@ export default {
       isLoadingRestoreAcc,
       isLoadingDeactivatedLink,
       isLoadingConvertLead,
+
+      IconSuccesChanged,
     }
   },
 }
