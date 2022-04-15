@@ -4,7 +4,8 @@
       <router-link :to="{ name: 'pipeline' }" class="text-smm font-medium hover:text-activity">Pipe Line</router-link>
       <SwdSelectFilter destination="pipeLine" />
     </div>
-    <div class="pt-6 flex justify-between mb-5">
+
+    <div class="pt-6 flex justify-between sm:mb-5 xl:mb-0">
       <div class="justify-between flex flex-col border border-widget-border rounded-lg pt-3 bg-white w-5/12">
         <div class="flex text-small items-center justify-between px-2.5">
           <span class="text-gray03">Total AUM</span>
