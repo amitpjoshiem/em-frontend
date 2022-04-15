@@ -1,7 +1,6 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isFetchingMember && !isLoadingInfo" class="sm:p-5">
-      <div>{{ isDoneCurrentStep }}</div>
       <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top">
         <!-- GENERAL -->
         <div class="p-5">
