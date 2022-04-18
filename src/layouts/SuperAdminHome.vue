@@ -1,25 +1,23 @@
 <template>
   <div class="flex">
-    <SwdSideBar />
+    <SuperAdminSideBar />
     <div class="flex flex-col w-full">
       <Header />
-      <SettingsApp />
+      <router-view />
     </div>
   </div>
 </template>
 
 <script>
-import SwdSideBar from '@/components/Global/SwdSideBar.vue'
+import SuperAdminSideBar from '@/components/SuperAdmin/SuperAdminSideBar.vue'
 import Header from '@/components/Header/Header.vue'
-import SettingsApp from '../views/SettingsApp.vue'
 
 export default {
-  name: 'ClientHome',
+  name: 'SuperAdminHome',
 
   components: {
-    SwdSideBar,
+    SuperAdminSideBar,
     Header,
-    SettingsApp,
   },
 }
 </script>

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import AdvisorHome from '@/layouts/AdvisorHome.vue'
 import ClientHome from '@/layouts/ClientHome.vue'
+import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
 import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
 import ability from '../services/ability'
@@ -97,12 +98,93 @@ const routes = [
     ],
   },
 
+  // SUPER-ADMIN
+  {
+    path: '/sa',
+    name: 'sa',
+    component: SuperAdminHome,
+    // meta: {
+    //   resource: 'super-admin',
+    //   action: 'all',
+    // },
+    children: [
+      {
+        path: 'sa-dashboard',
+        name: 'sa-dashboard',
+        component: () => import(/* webpackChunkName: "SuperAdminDashboard" */ '../views/SuperAdminDashboard.vue'),
+      },
+      {
+        path: 'list-of-advisors',
+        name: 'list-of-advisors',
+        component: () => import(/* webpackChunkName: "ListOfAdvisors" */ '../views/ListOfAdvisors.vue'),
+        children: [
+          {
+            path: 'all',
+            name: 'all',
+            component: () =>
+              import(/* webpackChunkName: "ListOfAdvisors" */ '../components/SuperAdmin/ListOfAdvisors/ListAll.vue'),
+          },
+        ],
+      },
+
+      {
+        path: 'sa-list-of-households',
+        name: 'sa-list-of-households',
+        props: { context: 'super-admin' },
+        component: () => import(/* webpackChunkName: "ListOfHouseholds" */ '../views/ListOfHouseholds.vue'),
+        children: [
+          {
+            path: 'all-list',
+            name: 'all-list',
+            component: () =>
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'),
+          },
+          {
+            path: 'opportunities-list',
+            name: 'opportunities-list',
+            component: () =>
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListOpportunities.vue'),
+          },
+          {
+            path: 'clients-list',
+            name: 'clients-list',
+            component: () =>
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListClients.vue'),
+          },
+        ],
+      },
+
+      {
+        path: 'sa-activity',
+        name: 'sa-activity',
+        props: { context: 'super-admin' },
+        component: () => import(/* webpackChunkName: "Activity" */ '../views/Activity.vue'),
+      },
+
+      {
+        path: 'sa-pipeline',
+        name: 'sa-pipeline',
+        props: { context: 'super-admin' },
+        component: () => import(/* webpackChunkName: "PipeLine" */ '../views/PipeLine.vue'),
+      },
+
+      {
+        path: '',
+        redirect: () => {
+          return { name: 'sa-dashboard' }
+        },
+      },
+    ],
+  },
+
+  // ADVISOR
   {
     path: '/advisor',
     name: 'advisor-home',
     component: AdvisorHome,
     meta: {
       resource: 'advisor',
+      action: 'all',
     },
     children: [
       {
@@ -469,10 +551,16 @@ const routes = [
   {
     path: '',
     redirect: () => {
-      return { name: role.value === 'advisor' || role.value === 'admin' ? 'advisor-dashboard' : 'client-dashboard' }
+      return getRedirect()
     },
   },
 ]
+
+function getRedirect() {
+  if (role.value === 'advisor') return { name: 'advisor-dashboard' }
+  if (role.value === 'client') return { name: 'client-dashboard' }
+  if (role.value === 'super-admin') return { name: 'sa-dashboard' }
+}
 
 const router = createRouter({
   history: createWebHistory(),
@@ -485,7 +573,7 @@ router.beforeEach(async (to) => {
   }
 
   const canNavigate = to.matched.some((route) => {
-    return ability.can(route.meta.resource)
+    return ability.can(route.meta.resource, route.meta.action)
   })
 
   if (!store.state.auth.isAuth) {

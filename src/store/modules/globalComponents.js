@@ -18,6 +18,8 @@ const state = () => ({
       default: '6',
       advisorDashboard: '6',
       listOfHouseholds: '6',
+      superAdminDashboard: '6',
+      superAdminListAdvisors: '6',
     },
   },
   selectFilter: {

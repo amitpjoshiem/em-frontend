@@ -2,7 +2,7 @@
   <el-autocomplete
     v-model="state"
     :fetch-suggestions="querySearchAsync"
-    placeholder="Search"
+    placeholder="Search member"
     :trigger-on-focus="false"
     minlength="3"
     @select="handleSelect"

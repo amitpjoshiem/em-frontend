@@ -7,12 +7,12 @@
           :value="data.data.count.all"
           :max="99"
           class="mr-8"
-          :type="getActiveTab === 'all' ? 'primary' : 'info'"
+          :type="getActiveTab === 'all' || getActiveTab === 'all-list' ? 'primary' : 'info'"
         >
           <router-link
-            :to="{ name: 'all' }"
+            :to="{ name: context === 'advisor' ? 'all' : 'all-list' }"
             class="text-gray03 text-smm cursor-pointer"
-            :class="{ active: getActiveTab === 'all' }"
+            :class="{ active: getActiveTab === 'all' || getActiveTab === 'all-list' }"
           >
             All Households
           </router-link>
@@ -23,12 +23,12 @@
           :value="data.data.count.prospect"
           :max="99"
           class="mr-8"
-          :type="getActiveTab === 'opportunities' ? 'primary' : 'info'"
+          :type="getActiveTab === 'opportunities' || getActiveTab === 'opportunities-list' ? 'primary' : 'info'"
         >
           <router-link
-            :to="{ name: 'opportunities' }"
+            :to="{ name: context === 'advisor' ? 'opportunities' : 'opportunities-list' }"
             class="text-gray03 text-smm cursor-pointer"
-            :class="{ active: getActiveTab === 'opportunities' }"
+            :class="{ active: getActiveTab === 'opportunities' || getActiveTab === 'opportunities-list' }"
           >
             Opportunities
           </router-link>
@@ -39,12 +39,12 @@
           :value="data.data.count.client"
           :max="99"
           class="mr-8"
-          :type="getActiveTab === 'clients' ? 'primary' : 'info'"
+          :type="getActiveTab === 'clients' || getActiveTab === 'clients-list' ? 'primary' : 'info'"
         >
           <router-link
-            :to="{ name: 'clients' }"
+            :to="{ name: context === 'advisor' ? 'clients' : 'clients-list' }"
             class="text-gray03 text-smm cursor-pointer"
-            :class="{ active: getActiveTab === 'clients' }"
+            :class="{ active: getActiveTab === 'clients' || getActiveTab === 'clients-list' }"
           >
             Clients
           </router-link>
@@ -121,6 +121,11 @@ export default {
       type: Array,
       require: true,
       default: () => [],
+    },
+    context: {
+      type: String,
+      require: false,
+      default: 'advisor',
     },
   },
   setup() {

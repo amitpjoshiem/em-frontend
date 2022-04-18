@@ -1,17 +1,16 @@
 <template>
   <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
     <div class="flex items-center justify-between w-20/24">
-      <template v-if="$can('advisor', 'all')">
-        <SwdRemoteSearch />
-        <div class="flex items-center justify-end">
-          <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" />
-          <NewLeadBtn />
-          <NewOpportunityBtn />
-          <div class="border-l border-color-grey h-16" />
-          <HeaderNotificationsBlock />
-          <div class="border-l border-color-grey h-16" />
-        </div>
-      </template>
+      <SwdRemoteSearch v-if="$can('advisor', 'all') || $can('super-admin', 'all')" />
+      <div v-if="$can('advisor', 'all')" class="flex items-center justify-end">
+        <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" />
+        <NewLeadBtn />
+        <NewOpportunityBtn />
+        <div class="border-l border-color-grey h-16" />
+        <HeaderNotificationsBlock />
+        <div class="border-l border-color-grey h-16" />
+      </div>
+      <SelectCompany v-if="$can('super-admin', 'all')" />
     </div>
 
     <div class="w-4/24 flex items-center justify-end">
@@ -34,6 +33,7 @@ import NewLeadModal from '@/components/Leads/NewLeadModal.vue'
 import NewLeadBtn from '@/components/Header/NewLeadBtn.vue'
 import NewOpportunityBtn from '@/components/Header/NewOpportunityBtn.vue'
 import TestEventBtn from '@/components/Header/TestEventBtn.vue'
+import SelectCompany from '@/components/Header/SelectCompany.vue'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useShowContentEnv } from '@/hooks/use-show-content-env'
 
@@ -47,6 +47,7 @@ export default {
     NewLeadBtn,
     NewOpportunityBtn,
     TestEventBtn,
+    SelectCompany,
   },
 
   setup() {
