@@ -106,9 +106,9 @@ const routes = [
     },
     children: [
       {
-        path: 'dashboard',
-        name: 'dashboard',
-        component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
+        path: 'advisor-dashboard',
+        name: 'advisor-dashboard',
+        component: () => import(/* webpackChunkName: "dashboard" */ '../views/AdvisorDashboard.vue'),
       },
 
       {
@@ -378,7 +378,7 @@ const routes = [
       {
         path: '',
         redirect: () => {
-          return { name: 'dashboard' }
+          return { name: 'advisor-dashboard' }
         },
       },
     ],
@@ -469,7 +469,7 @@ const routes = [
   {
     path: '',
     redirect: () => {
-      return { name: role.value === 'advisor' || role.value === 'admin' ? 'dashboard' : 'client-dashboard' }
+      return { name: role.value === 'advisor' || role.value === 'admin' ? 'advisor-dashboard' : 'client-dashboard' }
     },
   },
 ]

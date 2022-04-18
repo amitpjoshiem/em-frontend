@@ -5,11 +5,11 @@
     </div>
     <div v-if="isAuth && $can('advisor', 'all')" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
       <router-link
-        :to="{ name: 'dashboard' }"
+        :to="{ name: 'advisor-dashboard' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
-        :class="{ active: getRouteName === 'dashboard' }"
+        :class="{ active: getRouteName === 'advisor-dashboard' }"
       >
-        <InlineSvg v-if="getRouteName === 'dashboard'" :src="IconDashboardActive" />
+        <InlineSvg v-if="getRouteName === 'advisor-dashboard'" :src="IconDashboardActive" />
         <InlineSvg v-else :src="IconDashboard" />
       </router-link>
       <router-link

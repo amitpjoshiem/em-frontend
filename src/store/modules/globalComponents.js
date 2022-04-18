@@ -16,7 +16,7 @@ const state = () => ({
     ],
     values: {
       default: '6',
-      dashboard: '6',
+      advisorDashboard: '6',
       listOfHouseholds: '6',
     },
   },
