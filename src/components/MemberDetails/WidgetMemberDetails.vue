@@ -138,7 +138,8 @@ export default {
 
     watchEffect(() => {
       if (props.isLoadingProspectDetails === false) {
-        Object.assign(ruleForm, props.user)
+        ruleForm.total_net_worth = props.user.total_net_worth
+        ruleForm.goal = props.user.goal
       }
     })
 

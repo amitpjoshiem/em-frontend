@@ -4,6 +4,7 @@
     :class="{
       'text-activity border-color-blue-border bg-color-light-blue': userType === 'prospect',
       'text-orange-badge border-orange-border bg-orange-bg': userType === 'client',
+      'text-green-600 border-green-600 bg-green-200': userType === 'lead',
     }"
   >
     <span>

@@ -2,7 +2,7 @@
   <el-dialog
     v-model="state.dialogVisible"
     title="Prewiev PDF"
-    width="80%"
+    width="90%"
     custom-class="dialog-style pdf-viewer"
     :before-close="closeDialog"
   >

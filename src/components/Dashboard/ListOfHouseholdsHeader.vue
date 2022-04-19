@@ -31,7 +31,7 @@ export default {
     ]
 
     const actionsMap = {
-      all: () => store.commit('dashboard/setHouseHolderType', 'all'),
+      all: () => store.commit('dashboard/setHouseHolderType', 'client,prospect'),
       clients: () => store.commit('dashboard/setHouseHolderType', 'client'),
       prospect: () => store.commit('dashboard/setHouseHolderType', 'prospect'),
     }

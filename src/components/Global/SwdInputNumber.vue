@@ -15,6 +15,8 @@
       :disabled="disabled"
       :placeholder="placeholder"
       :prop="prop"
+      @focus="focus"
+      @blur="blur"
     />
   </div>
 </template>
@@ -60,9 +62,24 @@ export default {
       default: '',
     },
   },
-  setup(props) {
+  emits: ['focus-event', 'blur-event'],
+
+  setup(props, { emit }) {
     const { inputRef, formattedValue } = useCurrencyInput(props.options)
-    return { inputRef, formattedValue }
+
+    const focus = () => {
+      emit('focus-event')
+    }
+
+    const blur = () => {
+      emit('blur-event')
+    }
+    return {
+      inputRef,
+      formattedValue,
+      focus,
+      blur,
+    }
   },
 }
 </script>

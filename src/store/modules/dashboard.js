@@ -1,5 +1,5 @@
 const state = () => ({
-  houseHolderType: 'all',
+  houseHolderType: 'client,prospect',
 })
 
 const mutations = {

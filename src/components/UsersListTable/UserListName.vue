@@ -1,20 +1,15 @@
 <template>
   <div class="flex items-center">
     <SwdAvatar :link="getAvatarUrl" />
-    <router-link
-      :to="{
-        name: step !== 'default' ? 'member-details' : 'basic-information',
-        params: { id: id },
-      }"
-      class="pl-2.5 text-main text-xss font-semibold"
-    >
+    <div class="pl-2.5 text-main text-xss font-semibold cursor-pointer" @click="getLink">
       {{ name }}
-    </router-link>
+    </div>
   </div>
 </template>
 
 <script>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'UserListName',
@@ -34,6 +29,11 @@ export default {
       require: true,
       default: '',
     },
+    type: {
+      type: String,
+      require: true,
+      default: '',
+    },
     avatar: {
       type: [Object, Array],
       require: true,
@@ -41,13 +41,31 @@ export default {
     },
   },
   setup(props) {
+    const router = useRouter()
+
     const getAvatarUrl = computed(() => {
       if (props.avatar?.url) return props.avatar.url
       return ''
     })
 
+    const getLink = () => {
+      if (props.type === 'lead') {
+        router.push({ name: 'confirmation-page', params: { id: props.id } })
+        return
+      }
+      if (props.step === 'default') {
+        router.push({ name: 'basic-information', params: { id: props.id } })
+        return
+      }
+      if (props.step !== 'default') {
+        router.push({ name: 'member-details', params: { id: props.id } })
+        return
+      }
+    }
+
     return {
       getAvatarUrl,
+      getLink,
     }
   },
 }

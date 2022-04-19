@@ -13,7 +13,7 @@ import SideBar from '@/components/SideBar.vue'
 import Header from '@/components/Header/Header.vue'
 
 export default {
-  name: 'Home',
+  name: 'ClientHome',
 
   components: {
     SideBar,

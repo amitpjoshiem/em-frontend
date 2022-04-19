@@ -7,16 +7,19 @@
       :auto-upload="true"
       :show-file-block="true"
       @upload-success="handleSuccess"
+      @upload-change="handleChange"
       @upload-mounted="bindRef"
       @open-prewiev="openPrewiev"
       @remove-media="removeMedia"
     >
       <template #main>
-        <div class="flex my-5">
+        <div class="my-5">
           <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
           <div class="el-upload__tip">PDF files only</div>
         </div>
-        <div v-if="!assetsConsolidationDocs.data.length" class="text-gray03 pb-5">No documents uploaded</div>
+        <div v-if="!assetsConsolidationDocs.data.length && !inChangeFile" class="text-gray03 text-center pb-5">
+          No documents uploaded
+        </div>
       </template>
     </SwdUpload>
   </div>
@@ -28,14 +31,13 @@
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { reactive, ref, watchEffect } from 'vue'
+import { reactive, ref, watchEffect, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { createAssetsConsolidationDocs } from '@/api/vueQuery/create-assets-consolidation-docs'
 import { useFetchAssetsConsolidationDocs } from '@/api/use-fetch-assets-consolidation-docs'
-import { useMutation } from 'vue-query'
+import { useMutation, useQueryClient } from 'vue-query'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
-import { useQueryClient } from 'vue-query'
 import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 
 export default {
@@ -50,6 +52,7 @@ export default {
     const route = useRoute()
     const upload = ref(null)
     const queryClient = useQueryClient()
+    const inChangeFile = ref(false)
     const id = route.params.id
 
     const { isLoading, isFetching, isError, data: assetsConsolidationDocs } = useFetchAssetsConsolidationDocs(id)
@@ -67,8 +70,13 @@ export default {
       const data = { uuids: [res.data.uuid] }
       const response = await createDoc({ id, data })
       if (!('error' in response)) {
+        inChangeFile.value = false
         queryClient.invalidateQueries(['assetsConsolidationDocs', id])
       }
+    }
+
+    const handleChange = () => {
+      inChangeFile.value = true
     }
 
     const bindRef = (ref) => {
@@ -95,6 +103,10 @@ export default {
       }
     }
 
+    const isShowNoDocuments = computed(() => {
+      return !assetsConsolidationDocs.data.length && !inChangeFile.value && !isFetching.value
+    })
+
     return {
       IconDownRisk,
       IconUpRisk,
@@ -109,6 +121,9 @@ export default {
       assetsConsolidationDocs,
       openPrewiev,
       removeMedia,
+      handleChange,
+      isShowNoDocuments,
+      inChangeFile,
     }
   },
 }

@@ -24,11 +24,11 @@
         <div class="text-main text-base mr-3">{{ userFullName }}</div>
         <ChangeName />
       </div>
-      <div class="flex items-center pt-11">
+      <div v-if="$can('advisor', 'all')" class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Position</div>
         <div class="text-main text-base mr-3">{{ user.position ? user.position : 'Position not added' }}</div>
       </div>
-      <div class="flex items-center pt-11">
+      <div v-if="$can('advisor', 'all')" class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">NPN</div>
         <div class="text-main text-base mr-3">{{ user.npn ? user.npn : 'NPN not added' }}</div>
       </div>

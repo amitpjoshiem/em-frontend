@@ -2,7 +2,7 @@
   <div class="pl-24 pt-14 text-main w-10/12">
     <div class="text-xl pb-8">Settings</div>
     <el-collapse accordion>
-      <el-collapse-item title="Notifications">
+      <el-collapse-item v-if="$can('advisor', 'all')" title="Notifications">
         <NotificationsSettngs />
       </el-collapse-item>
       <el-collapse-item title="TwoFA">

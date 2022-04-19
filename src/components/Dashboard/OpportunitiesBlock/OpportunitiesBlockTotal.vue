@@ -32,6 +32,7 @@ import { currencyFormat } from '@/utils/currencyFormat'
 import { percentFormat } from '@/utils/percentFormat'
 
 export default {
+  name: 'OpportunitiesBlockTotal',
   props: {
     percent: {
       type: Number,

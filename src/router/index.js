@@ -1,13 +1,109 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
-import Home from '@/layouts/Home.vue'
+import AdvisorHome from '@/layouts/AdvisorHome.vue'
+import ClientHome from '@/layouts/ClientHome.vue'
+import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
+import ability from '../services/ability'
+import { computed } from 'vue'
+
+const role = computed(() => store.state.auth.role)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home,
+    path: '/client',
+    name: 'client-home',
+    component: ClientHome,
+    children: [
+      {
+        path: 'client-dashboard',
+        name: 'client-dashboard',
+        component: () => import(/* webpackChunkName: "ClientDashboard" */ '../views/ClientDashboard.vue'),
+      },
+      {
+        path: 'completed-financial',
+        name: 'completed-financial',
+        component: () =>
+          import(/* webpackChunkName: "CompletedFinancial" */ '../components/Client/CompletedFinancial.vue'),
+        children: [
+          {
+            path: 'basic/:id?',
+            name: 'client-basic-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "NewClientBasicInformation" */ '../components/Client/AddNewClient/AddBasicInfo.vue'
+              ),
+          },
+          {
+            path: 'assets/:id?',
+            name: 'client-assets-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "NewClientAssetsInformation" */ '../components/Client/AddNewClient/Assets/AddAssets.vue'
+              ),
+          },
+          {
+            path: 'expense/:id?',
+            name: 'client-expense-information',
+            component: () =>
+              import(
+                /* webpackChunkName: "NewClienExpenseInformation" */ '../components/Client/AddNewClient/AddExpense.vue'
+              ),
+          },
+        ],
+      },
+
+      {
+        path: 'confirmation-page/:id?',
+        name: 'confirmation-page',
+        component: () =>
+          import(/* webpackChunkName: "ConfirmationPage" */ '../components/Client/Confirm/ConfirmationPage.vue'),
+      },
+
+      {
+        path: 'investment-retirement',
+        name: 'investment-retirement',
+        props: { context: 'investment_and_retirement_accounts' },
+        component: () =>
+          import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
+      },
+      {
+        path: 'life-insurance',
+        name: 'life-insurance',
+        props: { context: 'life_insurance_annuity_and_long_terms_care_policies' },
+        component: () =>
+          import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
+      },
+      {
+        path: 'social-security',
+        name: 'social-security',
+        props: { context: 'social_security_information' },
+        component: () =>
+          import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
+      },
+      {
+        path: 'list-stock',
+        name: 'list-stock',
+        props: { context: 'list_of_stock_certificates_or_bonds' },
+        component: () =>
+          import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
+      },
+      {
+        path: '',
+        redirect: () => {
+          return { name: 'client-dashboard' }
+        },
+      },
+    ],
+  },
+
+  {
+    path: '/advisor',
+    name: 'advisor-home',
+    component: AdvisorHome,
+    meta: {
+      resource: 'advisor',
+    },
     children: [
       {
         path: 'dashboard',
@@ -52,6 +148,39 @@ const routes = [
         path: 'pipeline',
         name: 'pipeline',
         component: () => import(/* webpackChunkName: "PipeLine" */ '../views/PipeLine.vue'),
+      },
+
+      {
+        path: 'error',
+        name: 'error',
+        component: () => import(/* webpackChunkName: "Error" */ '../views/ErrorPage.vue'),
+      },
+
+      {
+        path: 'leads',
+        name: 'leads',
+        component: () => import(/* webpackChunkName: "Leads" */ '../views/Leads.vue'),
+        children: [
+          {
+            path: 'list-all-leads',
+            name: 'list-all-leads',
+            component: () => import(/* webpackChunkName: "ListOfLeads" */ '../components/ListOfLeads/ListAllLeads.vue'),
+          },
+          {
+            path: 'list-active-leads',
+            name: 'list-active-leads',
+            component: () =>
+              import(/* webpackChunkName: "ListActiveLeads" */ '../components/ListOfLeads/ListActiveLeads.vue'),
+          },
+          {
+            path: 'list-deactivated-leads',
+            name: 'list-deactivated-leads',
+            component: () =>
+              import(
+                /* webpackChunkName: "ListDeactivatedLeads" */ '../components/ListOfLeads/ListDeactivatedLeads.vue'
+              ),
+          },
+        ],
       },
 
       {
@@ -232,10 +361,10 @@ const routes = [
               import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'),
           },
           {
-            path: 'prospects',
-            name: 'prospects',
+            path: 'opportunities',
+            name: 'opportunities',
             component: () =>
-              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListProspects.vue'),
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListOpportunities.vue'),
           },
           {
             path: 'clients',
@@ -247,47 +376,6 @@ const routes = [
       },
 
       {
-        path: 'settings-app',
-        name: 'settings-app',
-        component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/SettingsApp.vue'),
-        children: [
-          {
-            path: 'profile',
-            name: 'profile',
-            component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/ProfileSettings.vue'),
-          },
-          {
-            path: 'information',
-            name: 'information',
-            component: () =>
-              import(/* webpackChunkName: "Settings" */ '../components/Settings/InformationSettings.vue'),
-          },
-          {
-            path: 'partners',
-            name: 'partners',
-            component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Partners.vue'),
-          },
-          {
-            path: 'settings',
-            name: 'settings',
-            component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Settings.vue'),
-          },
-        ],
-      },
-
-      {
-        path: 'logout',
-        name: 'logout',
-        component: () => import(/* webpackChunkName: "Logout" */ '../views/Logout.vue'),
-      },
-
-      {
-        path: 'error',
-        name: 'error',
-        component: () => import(/* webpackChunkName: "Error" */ '../views/ErrorPage.vue'),
-      },
-
-      {
         path: '',
         redirect: () => {
           return { name: 'dashboard' }
@@ -295,6 +383,41 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: '/settings-app',
+    name: 'settings-app',
+    component: Settings,
+    children: [
+      {
+        path: 'profile',
+        name: 'profile',
+        component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/ProfileSettings.vue'),
+      },
+      {
+        path: 'information',
+        name: 'information',
+        meta: {
+          resource: 'advisor',
+        },
+        component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/InformationSettings.vue'),
+      },
+      {
+        path: 'partners',
+        name: 'partners',
+        meta: {
+          resource: 'advisor',
+        },
+        component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Partners.vue'),
+      },
+      {
+        path: 'settings',
+        name: 'settings',
+        component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Settings.vue'),
+      },
+    ],
+  },
+
   {
     path: '/login',
     name: 'login',
@@ -330,6 +453,25 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: '/403',
+    name: '403',
+    component: () => import(/* webpackChunkName: "forbidden" */ '../views/Forbidden.vue'),
+  },
+
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import(/* webpackChunkName: "Logout" */ '../views/Logout.vue'),
+  },
+
+  {
+    path: '',
+    redirect: () => {
+      return { name: role.value === 'advisor' || role.value === 'admin' ? 'dashboard' : 'client-dashboard' }
+    },
+  },
 ]
 
 const router = createRouter({
@@ -341,9 +483,19 @@ router.beforeEach(async (to) => {
   if (to.meta.publicRoute) {
     return true
   }
+
+  const canNavigate = to.matched.some((route) => {
+    return ability.can(route.meta.resource)
+  })
+
   if (!store.state.auth.isAuth) {
     return '/login'
   }
+
+  if (!canNavigate && to.meta.resource) {
+    return '/403'
+  }
+
   return true
 })
 

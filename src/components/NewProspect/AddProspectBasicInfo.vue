@@ -388,50 +388,21 @@
 
 <script>
 import { reactive, ref, onMounted, computed, watch, watchEffect } from 'vue'
-import { createMembers } from '@/api/vueQuery/create-members'
-import { updateMembers } from '@/api/vueQuery/update-members'
 import { useMutation } from 'vue-query'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { useAlert } from '@/utils/use-alert'
-import { rules, employmentHistoryRule } from '@/validationRules/basicRules.js'
+import { createMembers } from '@/api/vueQuery/create-members'
+import { updateMembers } from '@/api/vueQuery/update-members'
+import { useFetchMember } from '@/api/use-fetch-member.js'
+import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
+import { rules } from '@/validationRules/basicRules.js'
 import { maska } from 'maska'
-import { scrollTop } from '@/utils/scrollTop'
-import { initialBasicInformation } from '@/components/NewProspect/initialState/basicInformation'
-import dayjs from 'dayjs'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
-import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
-import { useFetchMember } from '@/api/use-fetch-member.js'
-
-function setInitValue(ruleForm, member) {
-  if (member?.value?.id) {
-    ruleForm.retired = member.value.retired
-    ruleForm.married = member.value.married
-    ruleForm.name = member.value.name
-    if (member.value.birthday) ruleForm.birthday = dayjs(member.value.birthday).format('MM/DD/YYYY')
-    if (member.value.retirement_date) ruleForm.birthday = dayjs(member.value.retirement_date).format('MM/DD/YYYY')
-    ruleForm.email = member.value.email
-    ruleForm.address = member.value.address
-    ruleForm.city = member.value.city
-    ruleForm.state = member.value.state
-    ruleForm.zip = member.value.zip
-    ruleForm.phone = member.value.phone
-
-    if (member.value.employment_history.length)
-      Object.assign(ruleForm.employment_history, JSON.parse(JSON.stringify(member.value.employment_history)))
-
-    if (member.value.married) {
-      Object.assign(ruleForm.spouse, JSON.parse(JSON.stringify(member.value.spouse)))
-      ruleForm.spouse.birthday = dayjs(member.value.spouse.birthday).format('MM/DD/YYYY')
-      ruleForm.spouse.retirement_date = dayjs(member.value.spouse.retirement_date).format('MM/DD/YYYY')
-    }
-
-    if (member.value.house.type) Object.assign(ruleForm.house, JSON.parse(JSON.stringify(member.value.house)))
-
-    if (member.value.other.id) Object.assign(ruleForm.other, JSON.parse(JSON.stringify(member.value.other)))
-  }
-}
+import { initialBasicInformation } from '@/components/NewProspect/initialState/basicInformation'
+import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
+import { scrollTop } from '@/utils/scrollTop'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'AddProspectBasicInfo',
@@ -468,6 +439,19 @@ export default {
       data: member,
       refetch: refetchMember,
     } = useFetchMember({ id: route.params.id }, { enabled: false })
+
+    const {
+      setInitValue,
+      addEmployment,
+      addEmploymentSpouse,
+      removeEmployment,
+      changeCompanyNameMember,
+      changeCompanyNameSpouse,
+      removeEmploymentSpouse,
+      getPlaceholder,
+      optionsCurrencyInput,
+      changeMarried,
+    } = useBasicInfoHooks()
 
     let memberId
 
@@ -522,13 +506,6 @@ export default {
       },
     })
 
-    const optionsCurrencyInput = {
-      currency: 'USD',
-      locale: 'en-US',
-      currencyDisplay: 'hidden',
-      precision: 2,
-    }
-
     onMounted(async () => {
       store.commit('newProspect/setStep', 1)
       scrollTop()
@@ -579,86 +556,6 @@ export default {
           return false
         }
       })
-    }
-
-    const removeEmployment = (index) => {
-      ruleForm.employment_history.splice(index, 1)
-    }
-
-    const removeEmploymentSpouse = (index) => {
-      ruleForm.spouse.employment_history.splice(index, 1)
-    }
-
-    const addEmployment = () => {
-      const length = ruleForm.employment_history.length
-      ruleForm.employment_history.push({
-        company_name: '',
-        occupation: '',
-        years: '',
-      })
-      rules.employment_history[length] = {
-        company_name: [employmentHistoryRule.company_name],
-        occupation: [employmentHistoryRule.occupation],
-        years: [employmentHistoryRule.years],
-      }
-    }
-
-    const addEmploymentSpouse = () => {
-      const length = ruleForm.spouse.employment_history.length
-      ruleForm.spouse.employment_history.push({
-        company_name: '',
-        occupation: '',
-        years: '',
-      })
-      rules.spouse.employment_history[length] = {
-        company_name: [employmentHistoryRule.company_name],
-        occupation: [employmentHistoryRule.occupation],
-        years: [employmentHistoryRule.years],
-      }
-    }
-
-    const getPlaceholder = computed(() => {
-      return dayjs(new Date()).format('MM/DD/YYYY')
-    })
-
-    const changeMarried = () => {
-      if (ruleForm.married && !ruleForm.spouse.length) {
-        ruleForm.spouse = {
-          name: '',
-          email: '',
-          birthday: '',
-          retired: false,
-          retirement_date: '',
-          phone: '',
-          employment_history: [
-            {
-              company_name: '',
-              occupation: '',
-              years: '',
-            },
-          ],
-        }
-      }
-    }
-
-    const changeCompanyNameMember = (index) => {
-      if (ruleForm.employment_history[index].company_name.trim().length) {
-        rules.employment_history[index].occupation[0].required = true
-        rules.employment_history[index].years[0].required = true
-      } else {
-        rules.employment_history[index].occupation[0].required = false
-        rules.employment_history[index].years[0].required = false
-      }
-    }
-
-    const changeCompanyNameSpouse = (index) => {
-      if (ruleForm.spouse.employment_history[index].company_name.length) {
-        rules.spouse.employment_history[index].occupation[0].required = true
-        rules.spouse.employment_history[index].years[0].required = true
-      } else {
-        rules.spouse.employment_history[index].occupation[0].required = false
-        rules.spouse.employment_history[index].years[0].required = false
-      }
     }
 
     const isShowForm = computed(() => {

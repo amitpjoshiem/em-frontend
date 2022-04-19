@@ -14,7 +14,9 @@
           <el-input v-model="ruleForm.last_name" placeholder="Enter last name" />
         </el-form-item>
         <div class="pt-3 text-right">
-          <Button default-blue-btn text-btn="Save" @click="saveName" />
+          <el-button type="primary" plain :disabled="isLoading" :loading="isLoading" class="w-20" @click="saveName">
+            Save
+          </el-button>
         </div>
       </el-form>
       <SwdDialogSucces v-else text="The name was succesfully changed!" @closeDialog="closeDialog" />

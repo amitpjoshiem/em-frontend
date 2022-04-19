@@ -11,37 +11,48 @@
     :on-change="($event) => $emit('upload-change', $event)"
     :auto-upload="autoUpload"
     list-type="picture"
+    :disabled="disabled"
+    @on-change="($event) => $emit('upload-change', $event)"
   >
     <slot name="main" />
     <template v-if="showFileBlock" #file="{ file }">
-      <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
-      <div class="flex justify-between items-center mt-[10px] ml-3">
-        <div class="flex flex-col">
-          <div>
-            <span class="text-gray03">File name: </span>
-            <span class="font-semibold text-main">{{ file.name }}</span>
+      <div v-if="file.status !== 'uploading' && file.status !== 'ready'">
+        <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+        <div class="sm:flex sm:justify-between sm:items-center sm:mt-[10px] sm:ml-3">
+          <div class="flex flex-col">
+            <div>
+              <span class="text-gray03">File name: </span>
+              <span class="font-semibold text-main">{{ file.name }}</span>
+            </div>
+            <div>
+              <span class="text-gray03">Created at: </span>
+              <span class="font-semibold text-main">{{ file.created_at ? file.created_at : 'a few minutes ago' }}</span>
+            </div>
           </div>
           <div>
-            <span class="text-gray03">Created at: </span>
-            <span class="font-semibold text-main">{{ file.created_at ? file.created_at : 'a few minutes ago' }}</span>
+            <el-button
+              v-if="file.extension === 'PDF'"
+              type="primary"
+              size="small"
+              plain
+              class="mr-5"
+              @click="handlePictureCardPreview(file)"
+            >
+              Prewiev
+            </el-button>
+            <el-popconfirm
+              confirm-button-text="Yes"
+              cancel-button-text="No"
+              icon="el-icon-info"
+              icon-color="red"
+              title="Are you sure to delete this?"
+              @confirm="handleRemove(file.id)"
+            >
+              <template #reference>
+                <el-button type="danger" size="small" plain :loading="idFileRemove === file.id">Remove</el-button>
+              </template>
+            </el-popconfirm>
           </div>
-        </div>
-        <div>
-          <el-button type="primary" size="small" plain class="mr-5" @click="handlePictureCardPreview(file)">
-            Prewiev
-          </el-button>
-          <el-popconfirm
-            confirm-button-text="Yes"
-            cancel-button-text="No"
-            icon="el-icon-info"
-            icon-color="red"
-            title="Are you sure to delete this?"
-            @confirm="handleRemove(file.id)"
-          >
-            <template #reference>
-              <el-button type="danger" size="small" plain>Remove</el-button>
-            </template>
-          </el-popconfirm>
         </div>
       </div>
     </template>
@@ -80,10 +91,24 @@ export default {
       required: false,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
-  emits: ['upload-success', 'upload-before', 'upload-change', 'upload-mounted', 'open-prewiev', 'remove-media'],
+  emits: [
+    'upload-success',
+    'upload-change',
+    'upload-before',
+    'upload-change',
+    'upload-mounted',
+    'open-prewiev',
+    'remove-media',
+  ],
   setup(props, { emit }) {
     const innerRef = ref(null)
+    const idFileRemove = ref(null)
     const uploadRefFn = () => props.uploadRef
     const headers = computed(() => {
       const token = tokenStorage.getByKey('access_token')
@@ -106,6 +131,7 @@ export default {
     }
 
     const handleRemove = (id) => {
+      idFileRemove.value = id
       emit('remove-media', id)
     }
 
@@ -116,6 +142,7 @@ export default {
       getUrlMedia,
       handlePictureCardPreview,
       handleRemove,
+      idFileRemove,
     }
   },
 }

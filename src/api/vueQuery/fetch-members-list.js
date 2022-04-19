@@ -6,15 +6,27 @@ function fetchMembersList({ queryKey }) {
   const orderBy = queryKey[1].reactiveOrderBy ? queryKey[1].reactiveOrderBy : undefined
   const sortedBy = queryKey[1].reactiveSortedBy ? queryKey[1].reactiveSortedBy : undefined
   const page = queryKey[1].reactivePage ? queryKey[1].reactivePage.page : ''
+  const status = queryKey[1].reactiveStatus ? queryKey[1].reactiveStatus : ''
+
   let search = undefined
 
   if (typeRaw !== 'all') {
     search = `type:${typeRaw}`
   }
 
+  const searchParams = {
+    search,
+    limit,
+    page,
+    orderBy,
+    sortedBy,
+  }
+
+  if (status) searchParams.status = status
+
   return fetcher({
     url: `/members`,
-    options: { method: 'GET', searchParams: { search, limit, page, orderBy, sortedBy } },
+    options: { method: 'GET', searchParams },
   })
 }
 

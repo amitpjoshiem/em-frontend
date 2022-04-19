@@ -51,7 +51,9 @@ const state = () => ({
       changePhone: false,
       exportSucces: false,
       modalContact: false,
+      newLead: false,
       modalNewTable: false,
+      modalSucces: false,
     },
   },
   sortMembers: {
