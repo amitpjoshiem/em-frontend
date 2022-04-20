@@ -7,12 +7,12 @@
           :value="data.data.count.all"
           :max="99"
           class="mr-8"
-          :type="getActiveTab === 'list-of-advisors' ? 'primary' : 'info'"
+          :type="getActiveTab === 'all-advisors' ? 'primary' : 'info'"
         >
           <router-link
             :to="{ name: 'list-of-advisors' }"
             class="text-gray03 text-smm cursor-pointer"
-            :class="{ active: getActiveTab === 'list-of-advisors' }"
+            :class="{ active: getActiveTab === 'all-advisors' }"
           >
             All Advisors
           </router-link>

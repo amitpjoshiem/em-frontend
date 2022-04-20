@@ -39,7 +39,7 @@ export const useListAdvisors = ({ page }, options = {}) => {
     queryFn: fetchAdvisorsList,
     select: ({ data, meta }) => {
       pagination.value = meta.pagination
-      return data.houseHolder
+      return data
     },
     ...options,
   })

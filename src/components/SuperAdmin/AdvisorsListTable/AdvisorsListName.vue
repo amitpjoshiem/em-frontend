@@ -14,11 +14,6 @@ import { useRouter } from 'vue-router'
 export default {
   name: 'AdvisorsListName',
   props: {
-    step: {
-      type: String,
-      require: true,
-      default: '',
-    },
     id: {
       type: String,
       require: true,
@@ -29,38 +24,23 @@ export default {
       require: true,
       default: '',
     },
-    type: {
+    avatar: {
       type: String,
       require: true,
       default: '',
-    },
-    avatar: {
-      type: [Object, Array],
-      require: true,
-      default: () => {},
     },
   },
   setup(props) {
     const router = useRouter()
 
     const getAvatarUrl = computed(() => {
-      if (props.avatar?.url) return props.avatar.url
+      if (props.avatar) return props.avatar
       return ''
     })
 
     const getLink = () => {
-      if (props.type === 'lead') {
-        router.push({ name: 'confirmation-page', params: { id: props.id } })
-        return
-      }
-      if (props.step === 'default') {
-        router.push({ name: 'basic-information', params: { id: props.id } })
-        return
-      }
-      if (props.step !== 'default') {
-        router.push({ name: 'member-details', params: { id: props.id } })
-        return
-      }
+      console.log('getLink')
+      router.push({ name: 'confirmation-page', params: { id: props.id } })
     }
 
     return {

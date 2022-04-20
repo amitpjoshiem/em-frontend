@@ -34,8 +34,8 @@ export default {
     return {
       isLoading,
       isError,
-      data: data,
-      pagination: pagination,
+      data,
+      pagination,
       handlePaginationChange,
       rows,
     }
