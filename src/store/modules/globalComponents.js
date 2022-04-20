@@ -1,4 +1,6 @@
 const state = () => ({
+  companies: [],
+  currentCompanyId: '',
   itemsPerPage: {
     options: [
       {
@@ -114,6 +116,15 @@ const mutations = {
 
   setContact(state, value) {
     state.contact = value
+  },
+
+  setCompanies(state, value) {
+    state.companies = value
+    state.currentCompany = value[0]
+  },
+
+  setCurrentCompanyId(state, value) {
+    state.currentCompanyId = value
   },
 }
 

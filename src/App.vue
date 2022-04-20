@@ -13,6 +13,7 @@ import { useQueryProvider } from 'vue-query'
 import { VueQueryDevTools } from 'vue-query/devtools'
 import { tokenStorage } from './api/api-client/TokenStorage'
 import { useSockets } from './sockets/use-sockets'
+import { useCompanies } from './hooks/use-companies'
 import { useSetUpdateAbility } from '@/hooks/use-set-update-ability.js'
 import ModalReloadPage from '@/components/ModalReloadPage/ModalRealoadPage.vue'
 import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
@@ -37,13 +38,14 @@ export default {
     const store = useStore()
     const { setUpdateAbility } = useSetUpdateAbility()
 
-    onMounted(() => {
+    onMounted(async () => {
       const auth = JSON.parse(tokenStorage.getByKey('auth'))
       const role = JSON.parse(tokenStorage.getByKey('role'))
       const access_token = tokenStorage.getByKey('access_token')
       if (access_token !== null && auth && auth.isAuth !== null) {
         store.commit('auth/setAuthUser', true)
         useSockets()
+        await useCompanies()
       } else {
         store.commit('auth/setAuthUser', false)
       }

@@ -7,30 +7,33 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'SelectCompany',
   setup() {
-    const company = ref('company_a')
+    const store = useStore()
 
-    const options = [
-      {
-        value: 'Company A',
-        label: 'company_a',
-      },
-      {
-        value: 'Company B',
-        label: 'company_b',
-      },
-      {
-        value: 'Company C',
-        label: 'company_c',
-      },
-    ]
+    const company = ref()
+    let options = []
 
-    const changeCompany = () => {
-      console.log('changeCompany', company.value)
+    watchEffect(() => {
+      if (store.state.globalComponents.companies) {
+        options = store.state.globalComponents.companies.map((item) => {
+          return {
+            value: item.id,
+            label: item.name,
+          }
+        })
+      }
+      if (store.state.globalComponents.currentCompany) {
+        company.value = store.state.globalComponents.currentCompany.name
+      }
+    })
+
+    const changeCompany = async () => {
+      store.commit('globalComponents/setCurrentCompanyId', company.value)
     }
 
     return {

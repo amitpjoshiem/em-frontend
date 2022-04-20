@@ -86,7 +86,7 @@ export default {
     })
 
     const goAdvisors = () => {
-      router.push({ name: 'list-of-advisors' })
+      router.push({ name: 'all-advisors' })
     }
 
     const goDashboard = () => {

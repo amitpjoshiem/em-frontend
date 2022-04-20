@@ -1,16 +1,16 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="List of Advisors" />
-    <ListContent :visible-tab="['all']" />
+    <ListAdvisorsContent :visible-tab="['all']" />
   </div>
 </template>
 
 <script>
-import ListContent from '@/components/SuperAdmin/ListOfAdvisors/ListContent.vue'
+import ListAdvisorsContent from '@/components/SuperAdmin/ListOfAdvisors/ListAdvisorsContent.vue'
 export default {
   name: 'ListOfAdvisors',
   components: {
-    ListContent,
+    ListAdvisorsContent,
   },
 }
 </script>

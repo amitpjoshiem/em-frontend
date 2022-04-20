@@ -119,10 +119,12 @@ const routes = [
         component: () => import(/* webpackChunkName: "ListOfAdvisors" */ '../views/ListOfAdvisors.vue'),
         children: [
           {
-            path: 'all',
-            name: 'all',
+            path: 'all-advisors',
+            name: 'all-advisors',
             component: () =>
-              import(/* webpackChunkName: "ListOfAdvisors" */ '../components/SuperAdmin/ListOfAdvisors/ListAll.vue'),
+              import(
+                /* webpackChunkName: "ListAdvisorsAll" */ '../components/SuperAdmin/ListOfAdvisors/ListAdvisorsAll.vue'
+              ),
           },
         ],
       },

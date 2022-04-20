@@ -36,7 +36,7 @@ import { useRoute } from 'vue-router'
 import { useFetchStatsMembers } from '@/api/use-fetch-stats-members.js'
 
 export default {
-  name: 'ListContent',
+  name: 'ListAdvisorsContent',
   props: {
     visibleTab: {
       type: Array,
