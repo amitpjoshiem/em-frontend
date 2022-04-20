@@ -1,7 +1,9 @@
 <template>
-  <el-select v-model="company" placeholder="Select" @change="changeCompany">
-    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-  </el-select>
+  <div>
+    <el-select v-model="company" placeholder="Select" size="small" @change="changeCompany">
+      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+    </el-select>
+  </div>
 </template>
 
 <script>

@@ -2,7 +2,7 @@
   <SwdDropDown :options="actionsOptions" @select="handleSelect">
     <template #titleDropDown>
       <div v-if="!isLoadingUserProfile" class="flex items-center">
-        <span class="px-2 py-2">{{ getNameTitle }}</span>
+        <span class="px-2 py-2 text-xs">{{ getNameTitle }}</span>
         <InlineSvg :src="IconUserAction" />
       </div>
     </template>

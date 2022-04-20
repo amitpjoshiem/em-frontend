@@ -1,25 +1,45 @@
 <template>
-  <div class="bg-widget-bg items-center pl-7 h-16 pr-5 flex justify-between">
-    <div class="flex items-center justify-between w-20/24">
-      <SwdRemoteSearch v-if="$can('advisor', 'all') || $can('super-admin', 'all')" />
-      <div v-if="$can('advisor', 'all')" class="flex items-center justify-end">
-        <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" />
-        <NewLeadBtn />
-        <NewOpportunityBtn />
-        <div class="border-l border-color-grey h-16" />
-        <HeaderNotificationsBlock />
-        <div class="border-l border-color-grey h-16" />
-      </div>
-      <SelectCompany v-if="$can('super-admin', 'all')" />
+  <div class="bg-widget-bg items-center h-16 flex justify-between px-3">
+    <SwdRemoteSearch
+      v-if="$can('advisor', 'all') || $can('superadmin', 'all') || $can('ceo', 'all')"
+      class="sm:w-4/24"
+    />
+
+    <div v-if="$can('advisor', 'all')" class="flex items-center justify-end sm:w-14/24">
+      <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" />
+      <NewLeadBtn />
+      <NewOpportunityBtn />
     </div>
 
-    <div class="w-4/24 flex items-center justify-end">
-      <div class="flex items-center justify-center pl-5 cursor-pointer">
-        <router-link :to="{ name: 'profile' }">
-          <SwdAvatar v-if="!isLoadingUserProfile" :link="user.avatar.url" />
-        </router-link>
-        <UserAction />
-      </div>
+    <div
+      v-if="$can('superadmin', 'all') || $can('ceo', 'all')"
+      class="flex justify-between items-center text-sm sm:w-11/24"
+    >
+      <el-button :type="getRouteName === 'sa-dashboard' ? 'primary' : 'info'" size="small" plain @click="goDashboard">
+        Dashboard
+      </el-button>
+      <el-button
+        :type="getRouteName === 'list-of-advisors' ? 'primary' : 'info'"
+        size="small"
+        plain
+        @click="goAdvisors"
+      >
+        Advisors
+      </el-button>
+      <el-button type="info" plain size="small">Members</el-button>
+      <el-button type="info" plain size="small">Action</el-button>
+      <el-button type="info" plain size="small">PipeLine</el-button>
+    </div>
+
+    <SelectCompany v-if="$can('superadmin', 'all')" class="sm:w-3/24" />
+
+    <HeaderNotificationsBlock />
+
+    <div class="flex items-center justify-end cursor-pointer sm:w-4/24 xl:w-2/24">
+      <router-link :to="{ name: 'profile' }">
+        <SwdAvatar v-if="!isLoadingUserProfile" :link="user.avatar.url" />
+      </router-link>
+      <UserAction />
     </div>
   </div>
   <NewLeadModal />
@@ -37,6 +57,9 @@ import SelectCompany from '@/components/Header/SelectCompany.vue'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useShowContentEnv } from '@/hooks/use-show-content-env'
 
+import { useRouter, useRoute } from 'vue-router'
+import { computed } from 'vue'
+
 export default {
   name: 'Header',
   components: {
@@ -51,9 +74,24 @@ export default {
   },
 
   setup() {
+    const router = useRouter()
+    const route = useRoute()
+
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
 
     const { showContent } = useShowContentEnv()
+
+    const getRouteName = computed(() => {
+      return route.name
+    })
+
+    const goAdvisors = () => {
+      router.push({ name: 'list-of-advisors' })
+    }
+
+    const goDashboard = () => {
+      router.push({ name: 'sa-dashboard' })
+    }
 
     return {
       isLoadingUserProfile,
@@ -61,6 +99,9 @@ export default {
       user,
       isFetched,
       showContent,
+      goAdvisors,
+      goDashboard,
+      getRouteName,
     }
   },
 }

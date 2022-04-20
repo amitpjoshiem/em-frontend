@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <SuperAdminSideBar />
+    <SwdSideBar />
     <div class="flex flex-col w-full">
       <Header />
       <router-view />
@@ -9,14 +9,15 @@
 </template>
 
 <script>
-import SuperAdminSideBar from '@/components/SuperAdmin/SuperAdminSideBar.vue'
+import SwdSideBar from '@/components/Global/SwdSideBar.vue'
+
 import Header from '@/components/Header/Header.vue'
 
 export default {
   name: 'SuperAdminHome',
 
   components: {
-    SuperAdminSideBar,
+    SwdSideBar,
     Header,
   },
 }

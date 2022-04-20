@@ -104,7 +104,7 @@ const routes = [
     name: 'sa',
     component: SuperAdminHome,
     // meta: {
-    //   resource: 'super-admin',
+    //   resource: 'superadmin',
     //   action: 'all',
     // },
     children: [
@@ -130,7 +130,7 @@ const routes = [
       {
         path: 'sa-list-of-households',
         name: 'sa-list-of-households',
-        props: { context: 'super-admin' },
+        props: { context: 'superadmin' },
         component: () => import(/* webpackChunkName: "ListOfHouseholds" */ '../views/ListOfHouseholds.vue'),
         children: [
           {
@@ -157,14 +157,14 @@ const routes = [
       {
         path: 'sa-activity',
         name: 'sa-activity',
-        props: { context: 'super-admin' },
+        props: { context: 'superadmin' },
         component: () => import(/* webpackChunkName: "Activity" */ '../views/Activity.vue'),
       },
 
       {
         path: 'sa-pipeline',
         name: 'sa-pipeline',
-        props: { context: 'super-admin' },
+        props: { context: 'superadmin' },
         component: () => import(/* webpackChunkName: "PipeLine" */ '../views/PipeLine.vue'),
       },
 
@@ -183,8 +183,8 @@ const routes = [
     name: 'advisor-home',
     component: AdvisorHome,
     meta: {
-      resource: 'advisor',
-      action: 'all',
+      resource: [{ advisor: 'all' }, { superadmin: 'all' }],
+      // action: 'all',
     },
     children: [
       {
@@ -480,7 +480,7 @@ const routes = [
         path: 'information',
         name: 'information',
         meta: {
-          resource: 'advisor',
+          // resource: 'advisor',
         },
         component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/InformationSettings.vue'),
       },
@@ -488,7 +488,7 @@ const routes = [
         path: 'partners',
         name: 'partners',
         meta: {
-          resource: 'advisor',
+          // resource: 'advisor',
         },
         component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Partners.vue'),
       },
@@ -559,7 +559,13 @@ const routes = [
 function getRedirect() {
   if (role.value === 'advisor') return { name: 'advisor-dashboard' }
   if (role.value === 'client') return { name: 'client-dashboard' }
-  if (role.value === 'super-admin') return { name: 'sa-dashboard' }
+  if (role.value === 'superadmin') return { name: 'sa-dashboard' }
+  if (role.value === 'ceo') return { name: 'sa-dashboard' }
+}
+
+function getCanNavigate(item) {
+  const rrr = Object.entries(item)
+  return ability.can(...rrr[0])
 }
 
 const router = createRouter({
@@ -573,7 +579,7 @@ router.beforeEach(async (to) => {
   }
 
   const canNavigate = to.matched.some((route) => {
-    return ability.can(route.meta.resource, route.meta.action)
+    if (route.meta.resource) return route.meta.resource.some(getCanNavigate)
   })
 
   if (!store.state.auth.isAuth) {

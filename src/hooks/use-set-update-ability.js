@@ -22,10 +22,16 @@ export function useSetUpdateAbility() {
       can('client', 'read')
     }
 
-    if (role.value === 'super-admin') {
-      can('super-admin', 'all')
-      can('super-admin', 'update')
-      can('super-admin', 'read')
+    if (role.value === 'superadmin') {
+      can('superadmin', 'all')
+      can('superadmin', 'update')
+      can('superadmin', 'read')
+    }
+
+    if (role.value === 'ceo') {
+      can('ceo', 'all')
+      can('ceo', 'update')
+      can('ceo', 'read')
     }
 
     ability.update(rules)

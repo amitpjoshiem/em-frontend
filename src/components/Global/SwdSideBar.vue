@@ -4,7 +4,6 @@
       <InlineSvg :src="IconLogo" />
     </div>
     <div v-if="isAuth && $can('advisor', 'all')" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
-      <div class="text-red-500">GS</div>
       <router-link
         :to="{ name: 'advisor-dashboard' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
