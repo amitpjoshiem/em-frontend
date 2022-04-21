@@ -18,12 +18,7 @@
       <el-button :type="getRouteName === 'sa-dashboard' ? 'primary' : 'info'" size="small" plain @click="goDashboard">
         Dashboard
       </el-button>
-      <el-button
-        :type="getRouteName === 'list-of-advisors' ? 'primary' : 'info'"
-        size="small"
-        plain
-        @click="goAdvisors"
-      >
+      <el-button :type="getRouteName === 'all-advisors' ? 'primary' : 'info'" size="small" plain @click="goAdvisors">
         Advisors
       </el-button>
       <el-button type="info" plain size="small">Members</el-button>
@@ -86,7 +81,7 @@ export default {
     })
 
     const goAdvisors = () => {
-      router.push({ name: 'all-advisors' })
+      router.push({ name: 'all-advisors', params: { test: 'test' } })
     }
 
     const goDashboard = () => {
