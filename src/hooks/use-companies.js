@@ -9,5 +9,5 @@ export async function useCompanies() {
   await getCompanies()
 
   store.commit('globalComponents/setCompanies', response.value.data)
-  store.commit('globalComponents/setCurrentCompanyId', response.value.data[0].id)
+  store.commit('globalComponents/setCurrentCompany', response.value.data[0])
 }

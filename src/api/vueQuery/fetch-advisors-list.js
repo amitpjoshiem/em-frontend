@@ -7,15 +7,18 @@ function fetchAdvisorsList({ queryKey }) {
   const page = queryKey[1].reactivePage ? queryKey[1].reactivePage.page : ''
   const company = queryKey[1].reactiveId ? queryKey[1].reactiveId : ''
 
+  let search = undefined
+
+  if (company) {
+    search = `company.id:${company}`
+  }
+
   const searchParams = {
+    search,
     limit,
     page,
     orderBy,
     sortedBy,
-  }
-
-  if (company) {
-    searchParams['company.id'] = company
   }
 
   return fetcher({

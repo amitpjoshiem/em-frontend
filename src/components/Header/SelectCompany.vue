@@ -33,7 +33,10 @@ export default {
     })
 
     const changeCompany = async () => {
-      store.commit('globalComponents/setCurrentCompanyId', company.value)
+      const data = store.state.globalComponents.companies.find((item) => {
+        return item.id === company.value
+      })
+      store.commit('globalComponents/setCurrentCompany', data)
     }
 
     return {

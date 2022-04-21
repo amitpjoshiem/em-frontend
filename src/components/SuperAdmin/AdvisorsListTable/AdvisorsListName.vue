@@ -34,13 +34,12 @@ export default {
     const router = useRouter()
 
     const getAvatarUrl = computed(() => {
-      if (props.avatar) return props.avatar
+      if (props.user?.avatar?.url) return props.user.avatar.url
       return ''
     })
 
     const getLink = () => {
-      console.log('getLink')
-      router.push({ name: 'confirmation-page', params: { id: props.id } })
+      router.push({ name: 'advisor-dashboard' })
     }
 
     return {
