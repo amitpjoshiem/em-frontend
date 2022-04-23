@@ -12,10 +12,6 @@ const dataStateAuth = createPersistedState({
   paths: ['auth.isAuth'],
   key: 'auth',
 })
-const dataStateRole = createPersistedState({
-  paths: ['auth.role'],
-  key: 'role',
-})
 
 export default createStore({
   modules: {
@@ -26,5 +22,5 @@ export default createStore({
     globalComponents,
     notifications,
   },
-  plugins: [dataStateAuth, dataStateRole],
+  plugins: [dataStateAuth],
 })

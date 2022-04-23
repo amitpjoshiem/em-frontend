@@ -5,7 +5,7 @@ import ClientHome from '@/layouts/ClientHome.vue'
 import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
 import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
-import ability from '../services/ability'
+// import ability from '../services/ability'
 import { computed } from 'vue'
 
 const role = computed(() => store.state.auth.role)
@@ -103,10 +103,9 @@ const routes = [
     path: '/sa',
     name: 'sa',
     component: SuperAdminHome,
-    // meta: {
-    //   resource: 'superadmin',
-    //   action: 'all',
-    // },
+    meta: {
+      type: 'superadmin',
+    },
     children: [
       {
         path: 'sa-dashboard',
@@ -171,7 +170,8 @@ const routes = [
       },
 
       {
-        path: '',
+        path: '/',
+        // name: 'home',
         redirect: () => {
           return { name: 'sa-dashboard' }
         },
@@ -186,13 +186,13 @@ const routes = [
     component: AdvisorHome,
     meta: {
       resource: [{ advisor: 'all' }, { superadmin: 'all' }],
-      // action: 'all',
+      type: 'advisor',
     },
     children: [
       {
         path: 'advisor-dashboard',
         name: 'advisor-dashboard',
-        component: () => import(/* webpackChunkName: "dashboard" */ '../views/AdvisorDashboard.vue'),
+        component: () => import(/* webpackChunkName: "Dashboard" */ '../views/AdvisorDashboard.vue'),
       },
 
       {
@@ -213,7 +213,7 @@ const routes = [
       {
         path: 'client-report/:id',
         name: 'clientreport',
-        component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
+        component: () => import(/* webpackChunkName: "Clientreport" */ '../components/ClientReport/ClientReport.vue'),
       },
 
       {
@@ -481,17 +481,13 @@ const routes = [
       {
         path: 'information',
         name: 'information',
-        meta: {
-          // resource: 'advisor',
-        },
+        meta: {},
         component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/InformationSettings.vue'),
       },
       {
         path: 'partners',
         name: 'partners',
-        meta: {
-          // resource: 'advisor',
-        },
+        meta: {},
         component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Partners.vue'),
       },
       {
@@ -551,7 +547,7 @@ const routes = [
   },
 
   {
-    path: '',
+    path: '/',
     redirect: () => {
       return getRedirect()
     },
@@ -565,32 +561,40 @@ function getRedirect() {
   if (role.value === 'ceo') return { name: 'sa-dashboard' }
 }
 
-function getCanNavigate(item) {
-  const rrr = Object.entries(item)
-  return ability.can(...rrr[0])
-}
+// function getCanNavigate(item) {
+//   const rrr = Object.entries(item)
+//   return ability.can(...rrr[0])
+// }
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 })
 
+function setTypeUser(type) {
+  store.commit('globalComponents/setTypeUser', type)
+}
+
 router.beforeEach(async (to) => {
+  console.log('beforeEach')
   if (to.meta.publicRoute) {
     return true
   }
+  if (to.meta && to.meta.type) {
+    setTypeUser(to.meta.type)
+  }
 
-  const canNavigate = to.matched.some((route) => {
-    if (route.meta.resource) return route.meta.resource.some(getCanNavigate)
-  })
+  // const canNavigate = to.matched.some((route) => {
+  //   if (route.meta.resource) return route.meta.resource.some(getCanNavigate)
+  // })
 
   if (!store.state.auth.isAuth) {
     return '/login'
   }
 
-  if (!canNavigate && to.meta.resource) {
-    return '/403'
-  }
+  // if (!canNavigate && to.meta.resource) {
+  //   return '/403'
+  // }
 
   return true
 })

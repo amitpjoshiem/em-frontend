@@ -53,8 +53,8 @@ export default {
   name: 'LoginForm',
   setup() {
     const ruleForm = reactive({
-      email: '',
-      password: '',
+      email: 'superadmin@admin.com',
+      password: '111111',
     })
     const form = ref(null)
 

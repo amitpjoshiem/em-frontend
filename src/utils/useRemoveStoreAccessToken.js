@@ -11,9 +11,10 @@ export function useRemoveStoreAccessToken() {
     removeFromStorage(localStorage, 'otp-type')
     removeFromStorage(localStorage, 'refresh_token_expired')
     removeFromStorage(localStorage, 'role')
+    removeFromStorage(localStorage, 'currentCompany')
     store.commit('auth/setAuthUser', false)
     store.commit('auth/setRole', null)
-    router.push({ path: '/' })
+    router.push({ path: '/login' })
   }
 
   return removeAccessToken

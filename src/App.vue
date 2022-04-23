@@ -1,5 +1,6 @@
 <template>
-  <router-view />
+  <router-view v-if="!loading" />
+  <SwdFullScreenLoading v-else />
   <VueQueryDevTools />
   <ModalReloadPage />
   <SwdShareDialog />
@@ -7,17 +8,18 @@
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted, watchEffect, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useQueryProvider } from 'vue-query'
 import { VueQueryDevTools } from 'vue-query/devtools'
 import { tokenStorage } from './api/api-client/TokenStorage'
 import { useSockets } from './sockets/use-sockets'
-import { useCompanies } from './hooks/use-companies'
-import { useSetUpdateAbility } from '@/hooks/use-set-update-ability.js'
 import ModalReloadPage from '@/components/ModalReloadPage/ModalRealoadPage.vue'
 import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
+
+import { useSetCompanies } from '@/hooks/use-companies'
+import { useSetInit } from '@/hooks/use-set-init'
 
 export default {
   components: {
@@ -35,26 +37,39 @@ export default {
       },
     })
 
+    const loading = ref(false)
+
     const store = useStore()
-    const { setUpdateAbility } = useSetUpdateAbility()
+
+    const { setCompanies } = useSetCompanies()
+    const { setInit } = useSetInit()
 
     onMounted(async () => {
       const auth = JSON.parse(tokenStorage.getByKey('auth'))
-      const role = JSON.parse(tokenStorage.getByKey('role'))
       const access_token = tokenStorage.getByKey('access_token')
+
       if (access_token !== null && auth && auth.isAuth !== null) {
         store.commit('auth/setAuthUser', true)
         useSockets()
-        await useCompanies()
       } else {
         store.commit('auth/setAuthUser', false)
       }
-      if (role.auth.role) {
-        setUpdateAbility()
-      }
+
       const otpType = tokenStorage.getByKey('otp-type')
       store.commit('auth/setOtpType', otpType)
     })
+
+    watchEffect(async () => {
+      if (store.state.auth.isAuth) {
+        loading.value = true
+        await setInit()
+        await setCompanies()
+        loading.value = false
+      }
+    })
+    return {
+      loading,
+    }
   },
 }
 </script>

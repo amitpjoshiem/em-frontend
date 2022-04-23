@@ -19,7 +19,7 @@ export default {
     let options = []
 
     watchEffect(() => {
-      if (store.state.globalComponents.companies) {
+      if (store.state.globalComponents.companies.length) {
         options = store.state.globalComponents.companies.map((item) => {
           return {
             value: item.id,

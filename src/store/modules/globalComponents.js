@@ -1,7 +1,10 @@
 const state = () => ({
   companies: [],
   currentCompany: '',
-  userId: '',
+  ceoId: '11111',
+  superAdminId: '22222',
+  advisorId: '33333',
+  typeUser: '',
   itemsPerPage: {
     options: [
       {
@@ -127,8 +130,12 @@ const mutations = {
     state.currentCompany = value
   },
 
-  setUserId(state, value) {
-    state.userId = value
+  setAdvisorId(state, value) {
+    state.advisorId = value
+  },
+
+  setTypeUser(state, value) {
+    state.typeUser = value
   },
 }
 

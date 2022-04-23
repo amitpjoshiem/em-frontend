@@ -10,6 +10,7 @@
 <script>
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default {
   name: 'AdvisorsListName',
@@ -25,13 +26,14 @@ export default {
       default: '',
     },
     avatar: {
-      type: String,
+      type: Array,
       require: true,
-      default: '',
+      default: () => [],
     },
   },
   setup(props) {
     const router = useRouter()
+    const store = useStore()
 
     const getAvatarUrl = computed(() => {
       if (props.user?.avatar?.url) return props.user.avatar.url
@@ -39,6 +41,7 @@ export default {
     })
 
     const getLink = () => {
+      store.commit('globalComponents/setAdvisorId', props.id)
       router.push({ name: 'advisor-dashboard' })
     }
 
