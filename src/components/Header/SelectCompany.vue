@@ -27,9 +27,9 @@ export default {
           }
         })
       }
-      if (store.state.globalComponents.currentCompany) {
-        company.value = store.state.globalComponents.currentCompany.name
-      }
+      // if (store.state.globalComponents.currentCompany) {
+      //   company.value = store.state.globalComponents.currentCompany.name
+      // }
     })
 
     const changeCompany = async () => {

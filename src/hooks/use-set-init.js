@@ -1,5 +1,5 @@
 import { useFetchInit } from '@/api/use-fetch-init'
-import { useSetUpdateAbility } from '@/hooks/use-set-update-ability.js'
+import { useSetUpdateAbility } from '@/hooks/use-set-update-ability'
 import store from '@/store'
 
 export function useSetInit() {
@@ -11,8 +11,17 @@ export function useSetInit() {
     await getInit()
 
     if (!error.value) {
-      store.commit('auth/setRole', response.value.data.roles[0])
-      store.commit('globalComponents/setTypeUser', response.value.data.roles[0])
+      const typeUser = response.value.data.roles[0]
+      const role = response.value.data.roles[0]
+      const userId = response.value.data.user_id
+
+      store.commit('globalComponents/setRole', role)
+      store.commit('globalComponents/setCurrentTypeUser', typeUser)
+      store.commit('globalComponents/setCurrentCompanyId', response.value.data.company_id)
+
+      if (typeUser === 'superadmin') store.commit('globalComponents/setSuperAdminId', userId)
+      if (typeUser === 'ceo') store.commit('globalComponents/setCeoId', userId)
+      if (typeUser === 'advisor') store.commit('globalComponents/setAdvisorId', userId)
 
       setUpdateAbility()
     }

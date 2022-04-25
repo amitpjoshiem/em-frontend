@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { onMounted, watchEffect, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useQueryProvider } from 'vue-query'
 import { VueQueryDevTools } from 'vue-query/devtools'
@@ -17,9 +17,6 @@ import { useSockets } from './sockets/use-sockets'
 import ModalReloadPage from '@/components/ModalReloadPage/ModalRealoadPage.vue'
 import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
-
-import { useSetCompanies } from '@/hooks/use-companies'
-import { useSetInit } from '@/hooks/use-set-init'
 
 export default {
   components: {
@@ -41,9 +38,6 @@ export default {
 
     const store = useStore()
 
-    const { setCompanies } = useSetCompanies()
-    const { setInit } = useSetInit()
-
     onMounted(async () => {
       const auth = JSON.parse(tokenStorage.getByKey('auth'))
       const access_token = tokenStorage.getByKey('access_token')
@@ -59,14 +53,6 @@ export default {
       store.commit('auth/setOtpType', otpType)
     })
 
-    watchEffect(async () => {
-      if (store.state.auth.isAuth) {
-        loading.value = true
-        await setInit()
-        await setCompanies()
-        loading.value = false
-      }
-    })
     return {
       loading,
     }

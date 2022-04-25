@@ -1,34 +1,31 @@
-import { useStore } from 'vuex'
-import { computed } from 'vue'
 import { AbilityBuilder, Ability } from '@casl/ability'
 import ability from '../services/ability'
+import store from '@/store'
 
 export function useSetUpdateAbility() {
-  const store = useStore()
-  const role = computed(() => store.state.auth.role)
-
   const setUpdateAbility = () => {
+    const role = store.state.globalComponents.role
     const { can, rules } = new AbilityBuilder(Ability)
 
-    if (role.value === 'advisor') {
+    if (role === 'advisor') {
       can('advisor', 'all')
       can('advisor', 'update')
       can('advisor', 'read')
     }
 
-    if (role.value === 'client') {
+    if (role === 'client') {
       can('client', 'all')
       can('client', 'update')
       can('client', 'read')
     }
 
-    if (role.value === 'superadmin') {
+    if (role === 'superadmin') {
       can('superadmin', 'all')
       can('superadmin', 'update')
       can('superadmin', 'read')
     }
 
-    if (role.value === 'ceo') {
+    if (role === 'ceo') {
       can('ceo', 'all')
       can('ceo', 'update')
       can('ceo', 'read')

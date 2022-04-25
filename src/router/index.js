@@ -5,8 +5,10 @@ import ClientHome from '@/layouts/ClientHome.vue'
 import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
 import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
-// import ability from '../services/ability'
+import ability from '../services/ability'
 import { computed } from 'vue'
+
+import { useSetInit } from '@/hooks/use-set-init'
 
 const role = computed(() => store.state.auth.role)
 
@@ -104,6 +106,8 @@ const routes = [
     name: 'sa',
     component: SuperAdminHome,
     meta: {
+      resource: [{ superadmin: 'all' }],
+
       type: 'superadmin',
     },
     children: [
@@ -561,40 +565,41 @@ function getRedirect() {
   if (role.value === 'ceo') return { name: 'sa-dashboard' }
 }
 
-// function getCanNavigate(item) {
-//   const rrr = Object.entries(item)
-//   return ability.can(...rrr[0])
-// }
+function getCanNavigate(item) {
+  const rrr = Object.entries(item)
+  return ability.can(...rrr[0])
+}
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 })
 
-function setTypeUser(type) {
-  store.commit('globalComponents/setTypeUser', type)
-}
-
 router.beforeEach(async (to) => {
-  console.log('beforeEach')
   if (to.meta.publicRoute) {
     return true
   }
-  if (to.meta && to.meta.type) {
-    setTypeUser(to.meta.type)
+
+  const { setInit } = useSetInit()
+  if (store.state.auth.isAuth && !store.state.globalComponents.currentCompanyId && !store.state.globalComponents.role) {
+    await setInit()
   }
 
-  // const canNavigate = to.matched.some((route) => {
-  //   if (route.meta.resource) return route.meta.resource.some(getCanNavigate)
-  // })
+  if (to.meta && to.meta.type) {
+    store.commit('globalComponents/setCurrentTypeUser', to.meta.type)
+  }
+
+  const canNavigate = to.matched.some((route) => {
+    if (route.meta.resource) return route.meta.resource.some(getCanNavigate)
+  })
 
   if (!store.state.auth.isAuth) {
     return '/login'
   }
 
-  // if (!canNavigate && to.meta.resource) {
-  //   return '/403'
-  // }
+  if (!canNavigate && to.meta.resource) {
+    return '/403'
+  }
 
   return true
 })

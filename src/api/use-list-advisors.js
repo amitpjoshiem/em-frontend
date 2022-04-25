@@ -6,7 +6,7 @@ import { useStore } from 'vuex'
 export const useListAdvisors = ({ page }, options = {}) => {
   const store = useStore()
 
-  const reactiveId = computed(() => store.state.globalComponents.currentCompany.id)
+  const reactiveId = computed(() => store.state.globalComponents.currentCompanyId)
   const limit = computed(() => store.state.globalComponents.itemsPerPage.values.superAdminListAdvisors)
 
   const orderBy = computed(() => store.state.globalComponents.sortMembers.orderBy)
