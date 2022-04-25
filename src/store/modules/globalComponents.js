@@ -1,5 +1,6 @@
 const state = () => ({
   companies: [],
+  userId: '',
   currentCompanyId: '',
   ceoId: '',
   superAdminId: '',
@@ -149,6 +150,10 @@ const mutations = {
 
   setRole(state, value) {
     state.role = value
+  },
+
+  setUserId(state, value) {
+    state.userId = value
   },
 }
 

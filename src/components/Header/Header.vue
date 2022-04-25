@@ -21,7 +21,9 @@
       <el-button :type="getRouteName === 'all-advisors' ? 'primary' : 'info'" size="small" plain @click="goAdvisors">
         Advisors
       </el-button>
-      <el-button type="info" plain size="small">Members</el-button>
+      <el-button plain size="small" :type="getRouteName === 'all-list' ? 'primary' : 'info'" @click="goMembers">
+        Members
+      </el-button>
       <el-button plain size="small" :type="getRouteName === 'sa-activity' ? 'primary' : 'info'" @click="goActivity">
         Activity
       </el-button>
@@ -94,6 +96,10 @@ export default {
       router.push({ name: 'sa-activity' })
     }
 
+    const goMembers = () => {
+      router.push({ name: 'all-list' })
+    }
+
     return {
       isLoadingUserProfile,
       isErrorUserProfile,
@@ -103,6 +109,7 @@ export default {
       goAdvisors,
       goDashboard,
       goActivity,
+      goMembers,
       getRouteName,
     }
   },

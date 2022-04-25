@@ -1,5 +1,7 @@
 <template>
-  <div v-if="!isLoading" class="border border-color-grey rounded-t-lg">
+  <div>isLoading - {{ isLoading }}</div>
+  <div>isFetching - {{ isFetching }}</div>
+  <div v-if="!isLoading && !isFetching" class="border border-color-grey rounded-t-lg">
     <div class="flex p-5 justify-between">
       <div class="flex">
         <el-badge
@@ -131,7 +133,7 @@ export default {
   setup() {
     const route = useRoute()
 
-    const { isLoading, isError, data } = useFetchStatsMembers()
+    const { isLoading, isFetching, isError, data } = useFetchStatsMembers()
 
     const getActiveTab = computed(() => {
       return route.name
@@ -142,6 +144,7 @@ export default {
       IconAction,
 
       isLoading,
+      isFetching,
       isError,
       data,
     }

@@ -29,7 +29,7 @@ import SwdDialogSucces from '@/components/Global/SwdDialogSucces.vue'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
-import { changeUserName } from '@/api/vueQuery/change-user-name'
+import { changeUser } from '@/api/vueQuery/change-user'
 import { reactive, ref, onMounted, computed } from 'vue'
 import { rules } from '@/validationRules/changeName.js'
 
@@ -52,7 +52,7 @@ export default {
       isShowForm: true,
     })
 
-    const { mutateAsync: changeUserNameProfile, isLoading, isError, isFetching, error } = useMutation(changeUserName)
+    const { mutateAsync: changeUserNameProfile, isLoading, isError, isFetching, error } = useMutation(changeUser)
 
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, refetch } = useUserProfile()
 

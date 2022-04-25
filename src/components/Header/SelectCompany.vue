@@ -7,19 +7,28 @@
 </template>
 
 <script>
-import { ref, watchEffect } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { useFetchCompanies } from '@/api/use-fetch-companies'
+import { useMutation, useQueryClient } from 'vue-query'
+import { changeUser } from '@/api/vueQuery/change-user'
 
 export default {
   name: 'SelectCompany',
   setup() {
     const store = useStore()
+    const queryClient = useQueryClient()
 
     const company = ref()
     const options = ref([])
 
     const { isLoading, isError, data } = useFetchCompanies()
+    const {
+      mutateAsync: changeCompamy,
+      isLoadingChangeUser,
+      isError: isErrorChangeUser,
+      isFetching: isFetchingChangeUser,
+    } = useMutation(changeUser)
 
     watchEffect(() => {
       if (!isLoading.value) {
@@ -34,8 +43,23 @@ export default {
       }
     })
 
+    const userId = computed(() => {
+      return store.state.globalComponents.userId
+    })
+
     const changeCompany = async () => {
-      store.commit('globalComponents/setCurrentCompanyId', company.value)
+      const data = {
+        company_id: company.value,
+      }
+      changeCompamy({ form: data, id: userId.value })
+        .then(() => {
+          store.commit('globalComponents/setCurrentCompanyId', company.value)
+          queryClient.refetchQueries()
+          // queryClient.invalidateQueries()
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     }
 
     return {
@@ -46,6 +70,10 @@ export default {
       isLoading,
       isError,
       data,
+      changeCompamy,
+      isLoadingChangeUser,
+      isErrorChangeUser,
+      isFetchingChangeUser,
     }
   },
 }

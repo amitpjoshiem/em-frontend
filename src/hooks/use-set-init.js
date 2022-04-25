@@ -18,6 +18,7 @@ export function useSetInit() {
       store.commit('globalComponents/setRole', role)
       store.commit('globalComponents/setCurrentTypeUser', typeUser)
       store.commit('globalComponents/setCurrentCompanyId', response.value.data.company_id)
+      store.commit('globalComponents/setUserId', userId)
 
       if (typeUser === 'superadmin') store.commit('globalComponents/setSuperAdminId', userId)
       if (typeUser === 'ceo') store.commit('globalComponents/setCeoId', userId)
