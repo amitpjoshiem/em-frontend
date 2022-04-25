@@ -22,7 +22,9 @@
         Advisors
       </el-button>
       <el-button type="info" plain size="small">Members</el-button>
-      <el-button type="info" plain size="small">Action</el-button>
+      <el-button plain size="small" :type="getRouteName === 'sa-activity' ? 'primary' : 'info'" @click="goActivity">
+        Activity
+      </el-button>
       <el-button type="info" plain size="small">PipeLine</el-button>
     </div>
 
@@ -88,6 +90,10 @@ export default {
       router.push({ name: 'sa-dashboard' })
     }
 
+    const goActivity = () => {
+      router.push({ name: 'sa-activity' })
+    }
+
     return {
       isLoadingUserProfile,
       isErrorUserProfile,
@@ -96,6 +102,7 @@ export default {
       showContent,
       goAdvisors,
       goDashboard,
+      goActivity,
       getRouteName,
     }
   },
