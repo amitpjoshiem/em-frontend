@@ -1,21 +1,15 @@
-import { useFetch } from '@/api/use-fetch'
+import { useQuery } from 'vue-query'
+import { fetchCompanies } from './vueQuery/fetch-companies'
 
-const useFetchCompanies = () => {
-  const { response, error, fetching, fetchData } = useFetch(`/companies`, {
-    method: 'GET',
+export const useFetchCompanies = () => {
+  const { isLoading, isError, isFetching, data } = useQuery(['companies'], () => {
+    return fetchCompanies()
   })
 
-  const getCompanies = async (body) => {
-    await fetchData({ body })
-    if (error.value !== null) return
-  }
-
   return {
-    response,
-    error,
-    fetching,
-    getCompanies,
+    isLoading,
+    isError,
+    data,
+    isFetching,
   }
 }
-
-export { useFetchCompanies }

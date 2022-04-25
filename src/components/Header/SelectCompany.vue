@@ -9,6 +9,7 @@
 <script>
 import { ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
+import { useFetchCompanies } from '@/api/use-fetch-companies'
 
 export default {
   name: 'SelectCompany',
@@ -16,33 +17,35 @@ export default {
     const store = useStore()
 
     const company = ref()
-    let options = []
+    const options = ref([])
+
+    const { isLoading, isError, data } = useFetchCompanies()
 
     watchEffect(() => {
-      if (store.state.globalComponents.companies.length) {
-        options = store.state.globalComponents.companies.map((item) => {
+      if (!isLoading.value) {
+        options.value = data.value.data.map((item) => {
           return {
             value: item.id,
             label: item.name,
           }
         })
+        const currentCompany = data.value.data.find((item) => item.id === store.state.globalComponents.currentCompanyId)
+        company.value = currentCompany.name
       }
-      // if (store.state.globalComponents.currentCompany) {
-      //   company.value = store.state.globalComponents.currentCompany.name
-      // }
     })
 
     const changeCompany = async () => {
-      const data = store.state.globalComponents.companies.find((item) => {
-        return item.id === company.value
-      })
-      store.commit('globalComponents/setCurrentCompany', data)
+      store.commit('globalComponents/setCurrentCompanyId', company.value)
     }
 
     return {
       company,
       options,
       changeCompany,
+
+      isLoading,
+      isError,
+      data,
     }
   },
 }
