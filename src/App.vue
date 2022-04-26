@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useQueryProvider } from 'vue-query'
 import { VueQueryDevTools } from 'vue-query/devtools'
@@ -34,9 +34,11 @@ export default {
       },
     })
 
-    const loading = ref(false)
-
     const store = useStore()
+
+    const loading = computed(() => {
+      return store.state.globalComponents.isLoadingApp
+    })
 
     onMounted(async () => {
       const auth = JSON.parse(tokenStorage.getByKey('auth'))

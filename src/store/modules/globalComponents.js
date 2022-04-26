@@ -7,6 +7,7 @@ const state = () => ({
   advisorId: '',
   currentTypeUser: '',
   role: '',
+  isLoadingApp: false,
   itemsPerPage: {
     options: [
       {
@@ -154,6 +155,10 @@ const mutations = {
 
   setUserId(state, value) {
     state.userId = value
+  },
+
+  setIsLoadingApp(state, value) {
+    state.isLoadingApp = value
   },
 }
 

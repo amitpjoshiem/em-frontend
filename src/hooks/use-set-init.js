@@ -8,6 +8,8 @@ export function useSetInit() {
   const { setUpdateAbility } = useSetUpdateAbility()
 
   const setInit = async () => {
+    console.log('=====')
+    store.commit('globalComponents/setIsLoadingApp', true)
     await getInit()
 
     if (!error.value) {
@@ -25,6 +27,7 @@ export function useSetInit() {
       if (typeUser === 'advisor') store.commit('globalComponents/setAdvisorId', userId)
 
       setUpdateAbility()
+      store.commit('globalComponents/setIsLoadingApp', false)
     }
   }
   return { setInit }

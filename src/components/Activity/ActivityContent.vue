@@ -1,7 +1,16 @@
 <template>
+  <div>isFetchingNextPage - {{ isFetchingNextPage }}</div>
+  <div>isFetching - {{ isFetching }}</div>
+  <div>isLoading - {{ isLoading }}</div>
   <div class="border rounded-lg p-5">
     <div class="text-main text-smm font-semibold mb-5">Your Activity</div>
-    <div v-if="!isLoading" class="infinite-list-wrapper" style="overflow: auto">
+    <div
+      v-if="(!isFetchingNextPage && isFetching && isLoading) || (!isFetchingNextPage && isFetching && !isLoading)"
+      class="flex items-center justify-center h-6"
+    >
+      <SwdSpinner />
+    </div>
+    <div v-else class="infinite-list-wrapper" style="overflow: auto">
       <ul
         v-if="status === 'success' && !isLoading"
         v-infinite-scroll="load"
@@ -34,9 +43,6 @@
         <span class="text-gray03 font-semibold text-xss mt-5">No recently activity</span>
       </div>
     </div>
-    <div v-else class="flex items-center justify-center h-6">
-      <SwdSpinner />
-    </div>
   </div>
 </template>
 <script>
@@ -48,7 +54,17 @@ export default {
   name: 'ActivityContent',
 
   setup() {
-    const { data: activities, error, status, load, disabled, loading, isLoading } = useFetchActivities()
+    const {
+      data: activities,
+      error,
+      status,
+      load,
+      disabled,
+      loading,
+      isLoading,
+      isFetchingNextPage,
+      isFetching,
+    } = useFetchActivities()
 
     const hasMore = computed(() => {
       const lastPage = activities.value.pages.length - 1
@@ -67,6 +83,8 @@ export default {
       IconLastActivityEmpty,
       isLoading,
       hasMore,
+      isFetchingNextPage,
+      isFetching,
     }
   },
 }
