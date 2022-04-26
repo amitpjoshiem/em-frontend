@@ -6,12 +6,9 @@ import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
 import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
 import ability from '../services/ability'
-// import { computed } from 'vue'
 
 import { useSetInit } from '@/hooks/use-set-init'
 import { useSetUpdateAbility } from '@/hooks/use-set-update-ability'
-
-// const role = computed(() => store.state.globalComponents.role)
 
 const routes = [
   {

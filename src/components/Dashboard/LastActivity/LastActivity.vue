@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="!isLoading"
+    v-if="!isFetching"
     class="row-span-2 col-span-1 bg-widget-bg rounded-[10px] font-medium pl-5 pt-5 pr-5 min-h-[250px]"
   >
     <div class="pb-4">

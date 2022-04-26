@@ -51,7 +51,7 @@ export default {
 
     const changeCompany = async () => {
       const typeUser = store.state.globalComponents.currentTypeUser
-      if (typeUser !== 'superadmin' || typeUser !== 'ceo') router.push({ name: 'sa-dashboard' })
+      if (typeUser !== 'superadmin') router.push({ name: 'sa-dashboard' })
 
       const data = {
         company_id: company.value,
@@ -60,7 +60,6 @@ export default {
         .then(() => {
           store.commit('globalComponents/setCurrentCompanyId', company.value)
           queryClient.refetchQueries()
-          // queryClient.invalidateQueries()
         })
         .catch((error) => {
           console.error(error)

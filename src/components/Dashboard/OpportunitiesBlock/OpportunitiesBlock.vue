@@ -1,7 +1,7 @@
 <template>
   <div class="border border-color-grey rounded-t-xl mr-5 opportuniti-block">
     <OpportunitiesBlockHeader class="pt-5 pr-5 pl-5" />
-    <div v-if="!isLoading">
+    <div v-if="!isFetching">
       <div class="p-5">
         <OpportunitiesBlockChart :values="opportunity.data.values" />
         <OpportunitiesBlockTotal
@@ -29,10 +29,11 @@ export default {
     OpportunitiesBlockTotal,
   },
   setup() {
-    const { isLoading, isError, data: opportunity, refetch } = useDashboardOpportunities()
+    const { isLoading, isFetching, isError, data: opportunity, refetch } = useDashboardOpportunities()
 
     return {
       isLoading,
+      isFetching,
       isError,
       opportunity,
       refetch,
