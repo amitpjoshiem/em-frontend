@@ -1,21 +1,20 @@
 import { useFetch } from '@/api/use-fetch'
 import { useAlert } from '@/utils/use-alert'
-import { useRouter } from 'vue-router'
 import store from '@/store'
+import { useSetInit } from '@/hooks/use-set-init'
 
 const useOtp = () => {
   const { response, error, fetching, fetchData } = useFetch('/otps/verify', {
     method: 'POST',
   })
-
-  const router = useRouter()
+  const { setInit } = useSetInit()
 
   const otpAuth = async (body) => {
     await fetchData({ body })
     storeAccessRole()
   }
 
-  const storeAccessRole = () => {
+  const storeAccessRole = async () => {
     if (error.value !== null) {
       useAlert({
         type: 'error',
@@ -25,7 +24,7 @@ const useOtp = () => {
       return
     }
     store.commit('auth/setAuthUser', true)
-    router.push({ path: '/' })
+    await setInit()
   }
 
   return {

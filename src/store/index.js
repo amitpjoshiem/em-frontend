@@ -18,6 +18,16 @@ const dataStateAdvisorId = createPersistedState({
   key: 'advisorId',
 })
 
+const dataStateRole = createPersistedState({
+  paths: ['globalComponents.role'],
+  key: 'role',
+})
+
+const dataStateCurrentCompanyId = createPersistedState({
+  paths: ['globalComponents.currentCompanyId'],
+  key: 'currentCompanyId',
+})
+
 export default createStore({
   modules: {
     auth,
@@ -27,5 +37,5 @@ export default createStore({
     globalComponents,
     notifications,
   },
-  plugins: [dataStateAuth, dataStateAdvisorId],
+  plugins: [dataStateAuth, dataStateAdvisorId, dataStateRole, dataStateCurrentCompanyId],
 })

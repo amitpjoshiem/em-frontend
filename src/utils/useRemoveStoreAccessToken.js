@@ -10,10 +10,15 @@ export function useRemoveStoreAccessToken() {
     removeFromStorage(localStorage, 'access_token')
     removeFromStorage(localStorage, 'otp-type')
     removeFromStorage(localStorage, 'refresh_token_expired')
-    removeFromStorage(localStorage, 'role')
-    // removeFromStorage(localStorage, 'currentCompany')
+
     store.commit('auth/setAuthUser', false)
-    store.commit('auth/setRole', null)
+
+    store.commit('globalComponents/setRole', null)
+    store.commit('globalComponents/setCurrentCompanyId', null)
+    store.commit('globalComponents/setSuperAdminId', null)
+    store.commit('globalComponents/setCeoId', null)
+    store.commit('globalComponents/setAdvisorId', null)
+
     router.push({ path: '/login' })
   }
 

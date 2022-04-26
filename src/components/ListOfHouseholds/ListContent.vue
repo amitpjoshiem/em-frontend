@@ -1,6 +1,4 @@
 <template>
-  <div>isLoading - {{ isLoading }}</div>
-  <div>isFetching - {{ isFetching }}</div>
   <div v-if="!isLoading && !isFetching" class="border border-color-grey rounded-t-lg">
     <div class="flex p-5 justify-between">
       <div class="flex">

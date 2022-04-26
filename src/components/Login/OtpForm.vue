@@ -56,7 +56,7 @@ export default {
     const { isLoading, isError, data, refetch: refetchOtpCode } = useResendOtp({ enabled: false })
 
     const ruleForm = reactive({
-      code: '000000',
+      code: '',
     })
     const form = ref(null)
 

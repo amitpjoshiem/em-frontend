@@ -1,7 +1,4 @@
 <template>
-  <div>isFetchingNextPage - {{ isFetchingNextPage }}</div>
-  <div>isFetching - {{ isFetching }}</div>
-  <div>isLoading - {{ isLoading }}</div>
   <div class="border rounded-lg p-5">
     <div class="text-main text-smm font-semibold mb-5">Your Activity</div>
     <div

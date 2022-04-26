@@ -6,11 +6,12 @@ import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
 import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
 import ability from '../services/ability'
-import { computed } from 'vue'
+// import { computed } from 'vue'
 
 import { useSetInit } from '@/hooks/use-set-init'
+import { useSetUpdateAbility } from '@/hooks/use-set-update-ability'
 
-const role = computed(() => store.state.auth.role)
+// const role = computed(() => store.state.globalComponents.role)
 
 const routes = [
   {
@@ -91,12 +92,6 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
       },
-      {
-        path: '',
-        redirect: () => {
-          return { name: 'client-dashboard' }
-        },
-      },
     ],
   },
 
@@ -171,14 +166,6 @@ const routes = [
         name: 'sa-pipeline',
         props: { context: 'superadmin' },
         component: () => import(/* webpackChunkName: "PipeLine" */ '../views/PipeLine.vue'),
-      },
-
-      {
-        path: '/',
-        // name: 'home',
-        redirect: () => {
-          return { name: 'sa-dashboard' }
-        },
       },
     ],
   },
@@ -462,13 +449,6 @@ const routes = [
           },
         ],
       },
-
-      {
-        path: '',
-        redirect: () => {
-          return { name: 'advisor-dashboard' }
-        },
-      },
     ],
   },
 
@@ -559,10 +539,12 @@ const routes = [
 ]
 
 function getRedirect() {
-  if (role.value === 'advisor') return { name: 'advisor-dashboard' }
-  if (role.value === 'client') return { name: 'client-dashboard' }
-  if (role.value === 'superadmin') return { name: 'sa-dashboard' }
-  if (role.value === 'ceo') return { name: 'sa-dashboard' }
+  const role = store.state.globalComponents.role
+  if (role === 'advisor') return { name: 'advisor-dashboard' }
+  if (role === 'client') return { name: 'client-dashboard' }
+  if (role === 'superadmin') return { name: 'sa-dashboard' }
+  if (role === 'ceo') return { name: 'sa-dashboard' }
+  return { name: 'login' }
 }
 
 function getCanNavigate(item) {
@@ -581,8 +563,14 @@ router.beforeEach(async (to) => {
   }
 
   const { setInit } = useSetInit()
+  const { setUpdateAbility } = useSetUpdateAbility()
+
   if (store.state.auth.isAuth && !store.state.globalComponents.currentCompanyId && !store.state.globalComponents.role) {
     await setInit()
+  }
+
+  if (!ability.rules.length) {
+    await setUpdateAbility()
   }
 
   if (to.meta && to.meta.type) {

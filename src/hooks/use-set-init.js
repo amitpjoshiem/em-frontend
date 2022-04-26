@@ -1,14 +1,16 @@
 import { useFetchInit } from '@/api/use-fetch-init'
 import { useSetUpdateAbility } from '@/hooks/use-set-update-ability'
 import store from '@/store'
+import { useRouter } from 'vue-router'
 
 export function useSetInit() {
   const { response, error, getInit } = useFetchInit()
 
   const { setUpdateAbility } = useSetUpdateAbility()
 
+  const router = useRouter()
+
   const setInit = async () => {
-    console.log('=====')
     store.commit('globalComponents/setIsLoadingApp', true)
     await getInit()
 
@@ -26,8 +28,13 @@ export function useSetInit() {
       if (typeUser === 'ceo') store.commit('globalComponents/setCeoId', userId)
       if (typeUser === 'advisor') store.commit('globalComponents/setAdvisorId', userId)
 
-      setUpdateAbility()
-      store.commit('globalComponents/setIsLoadingApp', false)
+      await setUpdateAbility()
+
+      router.push({ path: '/' })
+
+      setTimeout(function () {
+        store.commit('globalComponents/setIsLoadingApp', false)
+      }, 1000)
     }
   }
   return { setInit }
