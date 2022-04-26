@@ -10,26 +10,27 @@
     </div>
     <div v-if="isError">An error has occurred: {{ error }}</div>
     <div>
-      <UsersListTable v-if="!isFetching" :users-list="data" />
+      <AdvisorsListTable v-if="!isFetching" :users-list="data" />
       <el-skeleton v-else :rows="rows" animated class="p-5" />
     </div>
   </div>
 </template>
 <script>
-import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
-import { useHouseholders } from '@/api/use-householders.js'
+import AdvisorsListTable from '@/components/SuperAdmin/AdvisorsListTable/AdvisorsListTable.vue'
+
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { useListAdvisors } from '@/api/use-list-advisors.js'
 
 export default {
   name: 'ListOfAdvisor',
   components: {
-    UsersListTable,
+    AdvisorsListTable,
   },
   setup() {
     const store = useStore()
 
-    const { isFetching, isLoading, isError, data, houseHolderTypeHandler } = useHouseholders()
+    const { isLoading, isFetching, isError, data } = useListAdvisors({})
 
     const rows = computed(() => Number(store.state.globalComponents.itemsPerPage.values.advisorDashboard))
 
@@ -38,7 +39,6 @@ export default {
       isLoading,
       isError,
       data,
-      houseHolderTypeHandler,
       rows,
     }
   },

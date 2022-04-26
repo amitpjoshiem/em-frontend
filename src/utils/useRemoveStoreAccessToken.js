@@ -18,6 +18,7 @@ export function useRemoveStoreAccessToken() {
     store.commit('globalComponents/setSuperAdminId', null)
     store.commit('globalComponents/setCeoId', null)
     store.commit('globalComponents/setAdvisorId', null)
+    store.commit('globalComponents/setUserId', null)
 
     router.push({ path: '/login' })
   }

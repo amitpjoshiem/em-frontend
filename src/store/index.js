@@ -18,6 +18,16 @@ const dataStateAdvisorId = createPersistedState({
   key: 'advisorId',
 })
 
+const dataStateCeoId = createPersistedState({
+  paths: ['globalComponents.ceoId'],
+  key: 'ceoId',
+})
+
+const dataStateSuperAdminId = createPersistedState({
+  paths: ['globalComponents.superAdminId'],
+  key: 'superAdminId',
+})
+
 const dataStateRole = createPersistedState({
   paths: ['globalComponents.role'],
   key: 'role',
@@ -26,6 +36,11 @@ const dataStateRole = createPersistedState({
 const dataStateCurrentCompanyId = createPersistedState({
   paths: ['globalComponents.currentCompanyId'],
   key: 'currentCompanyId',
+})
+
+const dataStateUserId = createPersistedState({
+  paths: ['globalComponents.userId'],
+  key: 'userId',
 })
 
 export default createStore({
@@ -37,5 +52,13 @@ export default createStore({
     globalComponents,
     notifications,
   },
-  plugins: [dataStateAuth, dataStateAdvisorId, dataStateRole, dataStateCurrentCompanyId],
+  plugins: [
+    dataStateAuth,
+    dataStateAdvisorId,
+    dataStateRole,
+    dataStateCurrentCompanyId,
+    dataStateUserId,
+    dataStateCeoId,
+    dataStateSuperAdminId,
+  ],
 })

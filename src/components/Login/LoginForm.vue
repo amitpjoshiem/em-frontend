@@ -54,7 +54,7 @@ export default {
   setup() {
     const ruleForm = reactive({
       email: '',
-      password: '111111',
+      password: '',
     })
     const form = ref(null)
 
