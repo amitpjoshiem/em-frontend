@@ -3,7 +3,7 @@
     <div class="fixed cursor-pointer" @click="goHome">
       <InlineSvg :src="IconLogo" />
     </div>
-    <div v-if="isAuth && $can('advisor', 'all')" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
+    <div v-if="isShowSideBar" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
       <router-link
         :to="{ name: 'advisor-dashboard' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
@@ -62,6 +62,8 @@ import { useStore } from 'vuex'
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import { useAbility } from '@casl/vue'
+
 import IconList from '@/assets/svg/icon-list.svg'
 import IconListActive from '@/assets/svg/list-sidebar-active.svg'
 import IconAssets from '@/assets/svg/icon-assets.svg'
@@ -82,9 +84,14 @@ export default {
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
+    const { can } = useAbility()
 
     const isAuth = computed(() => {
       return store.state.auth.isAuth
+    })
+
+    const userType = computed(() => {
+      return store.state.globalComponents.currentTypeUser
     })
 
     const getRouteName = computed(() => {
@@ -108,6 +115,17 @@ export default {
       }
     }
 
+    const isShowSideBar = computed(() => {
+      if (
+        isAuth.value &&
+        userType.value === 'advisor' &&
+        (can('advisor', 'all') || can('superadmin', 'all') || can('ceo', 'all'))
+      ) {
+        return true
+      }
+      return false
+    })
+
     return {
       IconList,
       IconAssets,
@@ -126,6 +144,7 @@ export default {
       IconLeads,
       IconLeadsActive,
       goHome,
+      isShowSideBar,
     }
   },
 }
