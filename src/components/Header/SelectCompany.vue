@@ -8,6 +8,7 @@
 
 <script>
 import { computed, ref, watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useFetchCompanies } from '@/api/use-fetch-companies'
 import { useMutation, useQueryClient } from 'vue-query'
@@ -17,6 +18,7 @@ export default {
   name: 'SelectCompany',
   setup() {
     const store = useStore()
+    const router = useRouter()
     const queryClient = useQueryClient()
 
     const company = ref()
@@ -48,6 +50,9 @@ export default {
     })
 
     const changeCompany = async () => {
+      const typeUser = store.state.globalComponents.currentTypeUser
+      if (typeUser !== 'superadmin' || typeUser !== 'ceo') router.push({ name: 'sa-dashboard' })
+
       const data = {
         company_id: company.value,
       }
