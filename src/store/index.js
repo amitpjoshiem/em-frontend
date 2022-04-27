@@ -24,8 +24,8 @@ const dataStateCeoId = createPersistedState({
 })
 
 const dataStateSuperAdminId = createPersistedState({
-  paths: ['globalComponents.superAdminId'],
-  key: 'superAdminId',
+  paths: ['globalComponents.adminId'],
+  key: 'adminId',
 })
 
 const dataStateRole = createPersistedState({

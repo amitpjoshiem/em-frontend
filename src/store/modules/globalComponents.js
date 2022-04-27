@@ -3,7 +3,7 @@ const state = () => ({
   userId: '',
   currentCompanyId: '',
   ceoId: '',
-  superAdminId: '',
+  adminId: '',
   advisorId: '',
   currentTypeUser: '',
   role: '',
@@ -133,8 +133,8 @@ const mutations = {
     state.currentCompanyId = value
   },
 
-  setSuperAdminId(state, value) {
-    state.superAdminId = value
+  setAdminId(state, value) {
+    state.adminId = value
   },
 
   setCeoId(state, value) {

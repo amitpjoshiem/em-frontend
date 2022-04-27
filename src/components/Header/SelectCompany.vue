@@ -51,7 +51,7 @@ export default {
 
     const changeCompany = async () => {
       const typeUser = store.state.globalComponents.currentTypeUser
-      if (typeUser !== 'superadmin') router.push({ name: 'sa-dashboard' })
+      if (typeUser !== 'ceo') router.push({ name: 'ceo-dashboard' })
 
       const data = {
         company_id: company.value,

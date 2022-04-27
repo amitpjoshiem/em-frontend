@@ -1,9 +1,7 @@
 <template>
   <div class="border border-color-grey border-b-0 rounded-large mt-5 mb-10">
     <div class="p-5 flex justify-between">
-      <router-link :to="{ name: 'list-of-advisors' }" class="cursor-pointer hover:text-activity">
-        List of Advisors
-      </router-link>
+      <span class="cursor-pointer hover:text-activity"> List of Advisors </span>
       <div class="flex items-center">
         <SwdItemsPerPage destination="superAdminDashboard" />
       </div>

@@ -19,10 +19,10 @@ export function useSetUpdateAbility() {
       can('client', 'read')
     }
 
-    if (role === 'superadmin') {
-      can('superadmin', 'all')
-      can('superadmin', 'update')
-      can('superadmin', 'read')
+    if (role === 'admin') {
+      can('admin', 'all')
+      can('admin', 'update')
+      can('admin', 'read')
     }
 
     if (role === 'ceo') {

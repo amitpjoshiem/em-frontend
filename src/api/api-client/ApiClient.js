@@ -72,7 +72,6 @@ class ApiClient {
   getCustomHeader(url) {
     const customHeader = {}
     if (!excludedRoutesCustomHeaders.includes(url)) {
-      customHeader['x-company'] = store.state.globalComponents.currentCompanyId
       const type = store.state.globalComponents.currentTypeUser
 
       if (type === 'advisor') {
@@ -83,8 +82,8 @@ class ApiClient {
         customHeader['x-user'] = store.state.globalComponents.ceoId
       }
 
-      if (type === 'superadmin') {
-        customHeader['x-user'] = store.state.globalComponents.superAdminId
+      if (type === 'admin') {
+        customHeader['x-user'] = store.state.globalComponents.adminId
       }
     }
     return customHeader

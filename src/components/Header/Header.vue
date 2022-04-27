@@ -1,9 +1,6 @@
 <template>
   <div class="bg-widget-bg items-center h-16 flex justify-between px-3">
-    <SwdRemoteSearch
-      v-if="$can('advisor', 'all') || $can('superadmin', 'all') || $can('ceo', 'all')"
-      class="sm:w-4/24"
-    />
+    <SwdRemoteSearch v-if="$can('advisor', 'all') || $can('admin', 'all') || $can('ceo', 'all')" class="sm:w-4/24" />
 
     <div v-if="$can('advisor', 'all')" class="flex items-center justify-end sm:w-14/24">
       <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" />
@@ -11,26 +8,50 @@
       <NewOpportunityBtn />
     </div>
 
-    <div
-      v-if="$can('superadmin', 'all') || $can('ceo', 'all')"
-      class="flex justify-between items-center text-sm sm:w-11/24"
-    >
-      <el-button :type="getRouteName === 'sa-dashboard' ? 'primary' : 'info'" size="small" plain @click="goDashboard">
+    <div v-if="$can('admin', 'all') || $can('ceo', 'all')" class="flex justify-between items-center text-sm sm:w-11/24">
+      <el-button
+        :type="getRouteName === 'admin-dashboard' || getRouteName === 'ceo-dashboard' ? 'primary' : 'info'"
+        size="small"
+        plain
+        @click="goDashboard"
+      >
         Dashboard
       </el-button>
-      <el-button :type="getRouteName === 'all-advisors' ? 'primary' : 'info'" size="small" plain @click="goAdvisors">
+      <el-button
+        :type="getRouteName === 'admin-all-advisors' || getRouteName === 'ceo-all-advisors' ? 'primary' : 'info'"
+        size="small"
+        plain
+        @click="goAdvisors"
+      >
         Advisors
       </el-button>
-      <el-button plain size="small" :type="getRouteName === 'all-list' ? 'primary' : 'info'" @click="goMembers">
+      <el-button
+        plain
+        size="small"
+        :type="getRouteName === 'admin-all-list' || getRouteName === 'ceo-all-list' ? 'primary' : 'info'"
+        @click="goMembers"
+      >
         Members
       </el-button>
-      <el-button plain size="small" :type="getRouteName === 'sa-activity' ? 'primary' : 'info'" @click="goActivity">
+      <el-button
+        plain
+        size="small"
+        :type="getRouteName === 'admin-activity' || getRouteName === 'ceo-activity' ? 'primary' : 'info'"
+        @click="goActivity"
+      >
         Activity
       </el-button>
-      <el-button type="info" plain size="small">PipeLine</el-button>
+      <el-button
+        plain
+        size="small"
+        :type="getRouteName === 'admin-pipeline' || getRouteName === 'ceo-pipeline' ? 'primary' : 'info'"
+        @click="goPipeLine"
+      >
+        PipeLine
+      </el-button>
     </div>
 
-    <SelectCompany v-if="$can('superadmin', 'all')" class="sm:w-3/24" />
+    <SelectCompany v-if="$can('ceo', 'all')" class="sm:w-3/24" />
 
     <HeaderNotificationsBlock />
 
@@ -56,6 +77,7 @@ import SelectCompany from '@/components/Header/SelectCompany.vue'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useShowContentEnv } from '@/hooks/use-show-content-env'
 
+import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { computed } from 'vue'
 
@@ -75,6 +97,7 @@ export default {
   setup() {
     const router = useRouter()
     const route = useRoute()
+    const store = useStore()
 
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
 
@@ -84,20 +107,33 @@ export default {
       return route.name
     })
 
+    const getRole = computed(() => {
+      return store.state.globalComponents.role
+    })
+
     const goAdvisors = () => {
-      router.push({ name: 'all-advisors', params: { test: 'test' } })
+      if (getRole.value === 'admin') router.push({ name: 'admin-all-advisors' })
+      if (getRole.value === 'ceo') router.push({ name: 'ceo-all-advisors' })
     }
 
     const goDashboard = () => {
-      router.push({ name: 'sa-dashboard' })
+      if (getRole.value === 'admin') router.push({ name: 'admin-dashboard' })
+      if (getRole.value === 'ceo') router.push({ name: 'ceo-dashboard' })
     }
 
     const goActivity = () => {
-      router.push({ name: 'sa-activity' })
+      if (getRole.value === 'admin') router.push({ name: 'admin-activity' })
+      if (getRole.value === 'ceo') router.push({ name: 'ceo-activity' })
     }
 
     const goMembers = () => {
-      router.push({ name: 'all-list' })
+      if (getRole.value === 'admin') router.push({ name: 'admin-all-list' })
+      if (getRole.value === 'ceo') router.push({ name: 'ceo-all-list' })
+    }
+
+    const goPipeLine = () => {
+      if (getRole.value === 'admin') router.push({ name: 'admin-pipeline' })
+      if (getRole.value === 'ceo') router.push({ name: 'ceo-pipeline' })
     }
 
     return {
@@ -110,6 +146,7 @@ export default {
       goDashboard,
       goActivity,
       goMembers,
+      goPipeLine,
       getRouteName,
     }
   },

@@ -119,7 +119,7 @@ export default {
       if (
         isAuth.value &&
         userType.value === 'advisor' &&
-        (can('advisor', 'all') || can('superadmin', 'all') || can('ceo', 'all'))
+        (can('advisor', 'all') || can('admin', 'all') || can('ceo', 'all'))
       ) {
         return true
       }

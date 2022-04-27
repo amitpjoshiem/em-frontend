@@ -15,7 +15,7 @@ export function useRemoveStoreAccessToken() {
 
     store.commit('globalComponents/setRole', null)
     store.commit('globalComponents/setCurrentCompanyId', null)
-    store.commit('globalComponents/setSuperAdminId', null)
+    store.commit('globalComponents/setAdminId', null)
     store.commit('globalComponents/setCeoId', null)
     store.commit('globalComponents/setAdvisorId', null)
     store.commit('globalComponents/setUserId', null)
