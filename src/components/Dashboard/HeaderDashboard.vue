@@ -22,7 +22,7 @@ export default {
     const { showContent } = useShowContentEnv()
 
     const isRole = computed(() => {
-      return store.state.auth.role
+      return store.state.globalComponents.role
     })
 
     const { isLoading, isError, data: userProfile } = useUserProfile()

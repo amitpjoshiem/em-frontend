@@ -2,13 +2,18 @@
   <el-autocomplete
     v-model="state"
     :fetch-suggestions="querySearchAsync"
-    placeholder="Search"
+    placeholder="Search member"
     :trigger-on-focus="false"
     minlength="3"
+    size="small"
     @select="handleSelect"
   >
     <template #prefix>
-      <i class="el-input__icon el-icon-search"></i>
+      <div class="flex items-center">
+        <el-icon>
+          <search />
+        </el-icon>
+      </div>
     </template>
     <template #default="{ item }">
       <div class="value">{{ item.name }}</div>
@@ -20,9 +25,13 @@
 import { defineComponent, ref } from 'vue'
 import { useSearchMembers } from '@/api/use-search-members.js'
 import { useRouter } from 'vue-router'
+import { Search } from '@element-plus/icons-vue'
 
 export default defineComponent({
   name: 'SwdRemoteSearch',
+  components: {
+    Search,
+  },
   setup() {
     const router = useRouter()
     const links = ref([])

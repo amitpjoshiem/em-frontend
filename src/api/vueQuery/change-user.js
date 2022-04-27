@@ -1,6 +1,6 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function changeUserName(data) {
+function changeUser(data) {
   const { form, id } = data
   return fetcher({
     url: `/users/` + id,
@@ -9,4 +9,4 @@ function changeUserName(data) {
   })
 }
 
-export { changeUserName }
+export { changeUser }

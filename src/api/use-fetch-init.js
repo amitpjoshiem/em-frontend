@@ -1,19 +1,21 @@
-import { useQuery } from 'vue-query'
-import { reactive } from 'vue'
-import { fetchInit } from './vueQuery/fetch-init'
+import { useFetch } from '@/api/use-fetch'
 
-export const useFetchInit = (options = {}) => {
-  const queryKey = reactive([['init']])
-
-  const query = useQuery(queryKey, {
-    queryFn: fetchInit,
-    select: ({ data }) => {
-      return data
-    },
-    ...options,
+const useFetchInit = () => {
+  const { response, error, fetching, fetchData } = useFetch(`/init`, {
+    method: 'GET',
   })
 
+  const getInit = async (body) => {
+    await fetchData({ body })
+    if (error.value !== null) return
+  }
+
   return {
-    ...query,
+    response,
+    error,
+    fetching,
+    getInit,
   }
 }
+
+export { useFetchInit }

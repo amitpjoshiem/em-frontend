@@ -100,11 +100,11 @@
 }
 
 /* Chrome, Safari, Edge, Opera */
-.el-input__inner::-webkit-outer-spin-button,
+/* .el-input__inner::-webkit-outer-spin-button,
 .el-input__inner::-webkit-inner-spin-button{
   -webkit-appearance: none;
   margin: 0;
-}
+} */
 
 /* Firefox */
 .el-input__inner[type='number'] {

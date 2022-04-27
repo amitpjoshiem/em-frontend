@@ -3,13 +3,13 @@
     <div class="fixed cursor-pointer" @click="goHome">
       <InlineSvg :src="IconLogo" />
     </div>
-    <div v-if="isAuth && $can('advisor', 'all')" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
+    <div v-if="isShowSideBar" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
       <router-link
-        :to="{ name: 'dashboard' }"
+        :to="{ name: 'advisor-dashboard' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
-        :class="{ active: getRouteName === 'dashboard' }"
+        :class="{ active: getRouteName === 'advisor-dashboard' }"
       >
-        <InlineSvg v-if="getRouteName === 'dashboard'" :src="IconDashboardActive" />
+        <InlineSvg v-if="getRouteName === 'advisor-dashboard'" :src="IconDashboardActive" />
         <InlineSvg v-else :src="IconDashboard" />
       </router-link>
       <router-link
@@ -62,6 +62,8 @@ import { useStore } from 'vuex'
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import { useAbility } from '@casl/vue'
+
 import IconList from '@/assets/svg/icon-list.svg'
 import IconListActive from '@/assets/svg/list-sidebar-active.svg'
 import IconAssets from '@/assets/svg/icon-assets.svg'
@@ -77,13 +79,19 @@ import IconLeads from '@/assets/svg/icon-leads.svg'
 import IconLeadsActive from '@/assets/svg/icon-leads-active.svg'
 
 export default {
+  name: 'SwdSideBar',
   setup() {
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
+    const { can } = useAbility()
 
     const isAuth = computed(() => {
       return store.state.auth.isAuth
+    })
+
+    const userType = computed(() => {
+      return store.state.globalComponents.currentTypeUser
     })
 
     const getRouteName = computed(() => {
@@ -91,7 +99,12 @@ export default {
     })
 
     const getActiveListOfHouseholds = computed(() => {
-      return getRouteName.value === 'all' || getRouteName.value === 'clients' || getRouteName.value === 'opportunities'
+      return (
+        getRouteName.value === 'all' ||
+        getRouteName.value === 'clients' ||
+        getRouteName.value === 'opportunities' ||
+        getRouteName.value === 'list-of-advisors'
+      )
     })
 
     const goHome = () => {
@@ -101,6 +114,17 @@ export default {
         router.push({ name: 'login' })
       }
     }
+
+    const isShowSideBar = computed(() => {
+      if (
+        isAuth.value &&
+        userType.value === 'advisor' &&
+        (can('advisor', 'all') || can('admin', 'all') || can('ceo', 'all'))
+      ) {
+        return true
+      }
+      return false
+    })
 
     return {
       IconList,
@@ -120,6 +144,7 @@ export default {
       IconLeads,
       IconLeadsActive,
       goHome,
+      isShowSideBar,
     }
   },
 }

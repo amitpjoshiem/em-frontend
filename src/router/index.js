@@ -2,12 +2,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import AdvisorHome from '@/layouts/AdvisorHome.vue'
 import ClientHome from '@/layouts/ClientHome.vue'
+import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
 import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
 import ability from '../services/ability'
-import { computed } from 'vue'
 
-const role = computed(() => store.state.auth.role)
+import { useSetInit } from '@/hooks/use-set-init'
+import { useSetUpdateAbility } from '@/hooks/use-set-update-ability'
 
 const routes = [
   {
@@ -88,27 +89,165 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
       },
+    ],
+  },
+
+  // ADMIN
+  {
+    path: '/admin',
+    name: 'admin',
+    component: SuperAdminHome,
+    meta: {
+      resource: [{ admin: 'all' }],
+      type: 'admin',
+    },
+    children: [
       {
-        path: '',
-        redirect: () => {
-          return { name: 'client-dashboard' }
-        },
+        path: 'dashboard',
+        name: 'admin-dashboard',
+        component: () => import(/* webpackChunkName: "SuperAdminDashboard" */ '../views/SuperAdminDashboard.vue'),
+      },
+      {
+        path: 'list-of-advisors',
+        name: 'admin-list-of-advisors',
+        component: () => import(/* webpackChunkName: "ListOfAdvisors" */ '../views/ListOfAdvisors.vue'),
+        children: [
+          {
+            path: 'all-advisors',
+            name: 'admin-all-advisors',
+            component: () =>
+              import(
+                /* webpackChunkName: "ListAdvisorsAll" */ '../components/SuperAdmin/ListOfAdvisors/ListAdvisorsAll.vue'
+              ),
+          },
+        ],
+      },
+
+      {
+        path: 'list-of-households',
+        name: 'admin-list-of-households',
+        component: () => import(/* webpackChunkName: "ListOfHouseholds" */ '../views/ListOfHouseholds.vue'),
+        children: [
+          {
+            path: 'all-list',
+            name: 'admin-all-list',
+            component: () =>
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'),
+          },
+          {
+            path: 'opportunities-list',
+            name: 'admin-opportunities-list',
+            component: () =>
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListOpportunities.vue'),
+          },
+          {
+            path: 'clients-list',
+            name: 'admin-clients-list',
+            component: () =>
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListClients.vue'),
+          },
+        ],
+      },
+
+      {
+        path: 'admin-activity',
+        name: 'activity',
+        component: () => import(/* webpackChunkName: "Activity" */ '../views/Activity.vue'),
+      },
+
+      {
+        path: 'admin-pipeline',
+        name: 'pipeline',
+        component: () => import(/* webpackChunkName: "PipeLine" */ '../views/PipeLine.vue'),
       },
     ],
   },
 
+  // CEO
+  {
+    path: '/ceo',
+    name: 'ceo',
+    component: SuperAdminHome,
+    meta: {
+      resource: [{ ceo: 'all' }],
+      type: 'ceo',
+    },
+    children: [
+      {
+        path: 'ceo-dashboard',
+        name: 'ceo-dashboard',
+        component: () => import(/* webpackChunkName: "SuperAdminDashboard" */ '../views/SuperAdminDashboard.vue'),
+      },
+      {
+        path: 'list-of-advisors',
+        name: 'ceo-list-of-advisors',
+        component: () => import(/* webpackChunkName: "ListOfAdvisors" */ '../views/ListOfAdvisors.vue'),
+        children: [
+          {
+            path: 'all-advisors',
+            name: 'ceo-all-advisors',
+            component: () =>
+              import(
+                /* webpackChunkName: "ListAdvisorsAll" */ '../components/SuperAdmin/ListOfAdvisors/ListAdvisorsAll.vue'
+              ),
+          },
+        ],
+      },
+
+      {
+        path: 'list-of-households',
+        name: 'ceo-list-of-households',
+        component: () => import(/* webpackChunkName: "ListOfHouseholds" */ '../views/ListOfHouseholds.vue'),
+        children: [
+          {
+            path: 'all-list',
+            name: 'ceo-all-list',
+            component: () =>
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListAll.vue'),
+          },
+          {
+            path: 'opportunities-list',
+            name: 'ceo-opportunities-list',
+            component: () =>
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListOpportunities.vue'),
+          },
+          {
+            path: 'clients-list',
+            name: 'ceo-clients-list',
+            component: () =>
+              import(/* webpackChunkName: "ListOfHouseholds" */ '../components/ListOfHouseholds/ListClients.vue'),
+          },
+        ],
+      },
+
+      {
+        path: 'activity',
+        name: 'ceo-activity',
+        component: () => import(/* webpackChunkName: "Activity" */ '../views/Activity.vue'),
+      },
+
+      {
+        path: 'pipeline',
+        name: 'ceo-pipeline',
+        component: () => import(/* webpackChunkName: "PipeLine" */ '../views/PipeLine.vue'),
+      },
+    ],
+  },
+
+  // ADVISOR
   {
     path: '/advisor',
     name: 'advisor-home',
     component: AdvisorHome,
     meta: {
-      resource: 'advisor',
+      resource: [{ advisor: 'all' }, { admin: 'all' }, { ceo: 'all' }],
+      type: 'advisor',
     },
     children: [
       {
-        path: 'dashboard',
-        name: 'dashboard',
-        component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
+        path: 'advisor-dashboard',
+        name: 'advisor-dashboard',
+        component: () => import(/* webpackChunkName: "Dashboard" */ '../views/AdvisorDashboard.vue'),
       },
 
       {
@@ -129,7 +268,7 @@ const routes = [
       {
         path: 'client-report/:id',
         name: 'clientreport',
-        component: () => import(/* webpackChunkName: "clientreport" */ '../components/ClientReport/ClientReport.vue'),
+        component: () => import(/* webpackChunkName: "Clientreport" */ '../components/ClientReport/ClientReport.vue'),
       },
 
       {
@@ -374,13 +513,6 @@ const routes = [
           },
         ],
       },
-
-      {
-        path: '',
-        redirect: () => {
-          return { name: 'dashboard' }
-        },
-      },
     ],
   },
 
@@ -397,17 +529,13 @@ const routes = [
       {
         path: 'information',
         name: 'information',
-        meta: {
-          resource: 'advisor',
-        },
+        meta: {},
         component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/InformationSettings.vue'),
       },
       {
         path: 'partners',
         name: 'partners',
-        meta: {
-          resource: 'advisor',
-        },
+        meta: {},
         component: () => import(/* webpackChunkName: "Settings" */ '../components/Settings/Partners.vue'),
       },
       {
@@ -467,12 +595,26 @@ const routes = [
   },
 
   {
-    path: '',
+    path: '/',
     redirect: () => {
-      return { name: role.value === 'advisor' || role.value === 'admin' ? 'dashboard' : 'client-dashboard' }
+      return getRedirect()
     },
   },
 ]
+
+function getRedirect() {
+  const role = store.state.globalComponents.role
+  if (role === 'advisor') return { name: 'advisor-dashboard' }
+  if (role === 'client') return { name: 'client-dashboard' }
+  if (role === 'admin') return { name: 'admin-dashboard' }
+  if (role === 'ceo') return { name: 'ceo-dashboard' }
+  return { name: 'login' }
+}
+
+function getCanNavigate(item) {
+  const rrr = Object.entries(item)
+  return ability.can(...rrr[0])
+}
 
 const router = createRouter({
   history: createWebHistory(),
@@ -484,8 +626,23 @@ router.beforeEach(async (to) => {
     return true
   }
 
+  const { setInit } = useSetInit()
+  const { setUpdateAbility } = useSetUpdateAbility()
+
+  if (store.state.auth.isAuth && !store.state.globalComponents.currentCompanyId && !store.state.globalComponents.role) {
+    await setInit()
+  }
+
+  if (!ability.rules.length) {
+    await setUpdateAbility()
+  }
+
+  if (to.meta && to.meta.type) {
+    store.commit('globalComponents/setCurrentTypeUser', to.meta.type)
+  }
+
   const canNavigate = to.matched.some((route) => {
-    return ability.can(route.meta.resource)
+    if (route.meta.resource) return route.meta.resource.some(getCanNavigate)
   })
 
   if (!store.state.auth.isAuth) {
