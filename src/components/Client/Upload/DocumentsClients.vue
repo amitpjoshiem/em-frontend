@@ -11,6 +11,12 @@
         />
       </div>
 
+      <div v-if="collection === 'social_security_information'" class="text-main text-sm mb-5">
+        You may sign up to get your
+        <a target="_blank" href="https://www.ssa.gov/" class="text-blue-400 italic">Social Security Statement online</a>
+        by clicking this link
+      </div>
+
       <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-input-border rounded-md">
         <div v-if="!isFetching">
           <SwdUpload
