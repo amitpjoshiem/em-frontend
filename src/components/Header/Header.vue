@@ -53,7 +53,9 @@
 
     <SelectCompany v-if="$can('ceo', 'all')" class="sm:w-3/24" />
 
-    <HeaderNotificationsBlock />
+    <div class="flex items-center justify-end" :class="{ 'w-full': $can('client', 'all') }">
+      <HeaderNotificationsBlock />
+    </div>
 
     <div class="flex items-center justify-end cursor-pointer sm:w-4/24 xl:w-2/24">
       <router-link :to="{ name: 'profile' }">
