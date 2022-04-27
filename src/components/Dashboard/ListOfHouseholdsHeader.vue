@@ -2,7 +2,7 @@
   <div class="p-5 flex justify-between">
     <router-link :to="{ name: 'all' }" class="cursor-pointer hover:text-activity"> List of Households </router-link>
     <div class="flex items-center">
-      <SwdItemsPerPage :destination="'dashboard'" />
+      <SwdItemsPerPage destination="advisorDashboard" />
       <SwdNativeSelect :options="actionsOptions" init-value="all" @select="handleSelect" />
     </div>
   </div>

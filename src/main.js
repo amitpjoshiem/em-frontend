@@ -40,6 +40,7 @@ import SwdOpportunityItemActions from '@/components/Global/SwdOpportunityItemAct
 import SwdCurrencyInput from '@/components/Global/SwdCurrencyInput.vue'
 import SwdInputNumber from '@/components/Global/SwdInputNumber.vue'
 import SwdRetiredLabel from '@/components/Global/SwdRetiredLabel.vue'
+import SwdFullScreenLoading from '@/components/Global/SwdFullScreenLoading.vue'
 
 import ElementPlus from 'element-plus'
 
@@ -71,6 +72,7 @@ const components = [
   SwdCurrencyInput,
   SwdInputNumber,
   SwdRetiredLabel,
+  SwdFullScreenLoading,
 ]
 
 components.forEach((component) => {

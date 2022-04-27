@@ -1,6 +1,6 @@
 <template>
   <div class="border border-color-grey rounded-xl p-5">
-    <div v-if="!isLoading">
+    <div v-if="!isFetching">
       <div class="text-smm text-main font-semibold mb-5">Assets Under Management</div>
       <AumChart :values="aum.data" class="my-4" />
     </div>
@@ -17,10 +17,11 @@ export default {
     AumChart,
   },
   setup() {
-    const { isLoading, isError, data: aum } = usePipeLineAum()
+    const { isLoading, isFetching, isError, data: aum } = usePipeLineAum()
 
     return {
       isLoading,
+      isFetching,
       isError,
       aum,
     }

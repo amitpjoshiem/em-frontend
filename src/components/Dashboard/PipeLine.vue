@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading" class="p-5 bg-widget-bg rounded-lg">
+  <div v-if="!isFetching" class="p-5 bg-widget-bg rounded-lg">
     <div class="flex justify-between items-center">
       <router-link :to="{ name: 'pipeline' }" class="text-smm font-medium hover:text-activity">Pipe Line</router-link>
       <SwdSelectFilter destination="pipeLine" />
@@ -61,7 +61,7 @@ import { useDashboardPipeLine } from '@/api/use-dashboard-pipeline.js'
 export default {
   name: 'PipeLine',
   setup() {
-    const { isLoading, isError, data: pipeLine, refetch } = useDashboardPipeLine()
+    const { isLoading, isFetching, isError, data: pipeLine, refetch } = useDashboardPipeLine()
 
     return {
       IconTotal,
@@ -69,6 +69,7 @@ export default {
       IconUpArrow,
       IconPipeLineEmpty,
       isLoading,
+      isFetching,
       isError,
       pipeLine,
       refetch,
