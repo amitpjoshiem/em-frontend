@@ -9,7 +9,7 @@
 
       <h1 class="text-center text-main font-medium text-2xl">Login</h1>
       <h1 class="text-center text-gray03 text-xss">Please enter you email and password</h1>
-      <el-form ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top" @submit.prevent="submit">
+      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
         <el-form-item label="E-mail" prop="email" class="py-3">
           <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" />
         </el-form-item>

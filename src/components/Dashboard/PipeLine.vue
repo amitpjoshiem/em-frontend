@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isFetching" class="p-5 bg-widget-bg rounded-lg">
     <div class="flex justify-between items-center">
-      <router-link :to="{ name: 'pipeline' }" class="text-smm font-medium hover:text-activity">Pipe Line</router-link>
+      <router-link :to="{ name: getLink }" class="text-smm font-medium hover:text-activity">Pipe Line</router-link>
       <SwdSelectFilter destination="pipeLine" />
     </div>
 
@@ -50,6 +50,9 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
 import IconTotal from '@/assets/svg/total.svg'
 import IconTotalGray from '@/assets/svg/total-gray.svg'
 import IconMembers from '@/assets/svg/members.svg'
@@ -61,7 +64,20 @@ import { useDashboardPipeLine } from '@/api/use-dashboard-pipeline.js'
 export default {
   name: 'PipeLine',
   setup() {
+    const store = useStore()
+
     const { isLoading, isFetching, isError, data: pipeLine, refetch } = useDashboardPipeLine()
+
+    const getCurrentTypeUser = computed(() => {
+      return store.state.globalComponents.currentTypeUser
+    })
+
+    const getLink = computed(() => {
+      if (getCurrentTypeUser.value === 'advisor') return 'pipeline'
+      if (getCurrentTypeUser.value === 'admin') return 'admin-pipeline'
+      if (getCurrentTypeUser.value === 'ceo') return 'ceo-pipeline'
+      return '/'
+    })
 
     return {
       IconTotal,
@@ -75,6 +91,8 @@ export default {
       refetch,
       currencyCompact,
       IconTotalGray,
+
+      getLink,
     }
   },
 }

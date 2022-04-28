@@ -2,7 +2,7 @@
   <div v-if="!isLoading" class="border border-color-grey rounded-t-lg">
     <div class="flex p-5 justify-between">
       <div class="flex">
-        <el-badge v-if="visibleTab.includes('all')" :value="data.data.count.all" :max="99" class="mr-8" type="primary">
+        <el-badge v-if="visibleTab.includes('all')" :value="data.data.users.all" :max="99" class="mr-8" type="primary">
           <span class="text-gray03 text-smm cursor-pointer active"> All Advisors </span>
         </el-badge>
       </div>
@@ -21,7 +21,7 @@ import IconAction from '@/assets/svg/icon-action.svg'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { useFetchStatsMembers } from '@/api/use-fetch-stats-members.js'
+import { useFetchStatsAdvisors } from '@/api/use-fetch-stats-advisors.js'
 
 export default {
   name: 'ListAdvisorsContent',
@@ -35,7 +35,7 @@ export default {
   setup() {
     const route = useRoute()
 
-    const { isLoading, isError, data } = useFetchStatsMembers()
+    const { isLoading, isError, data } = useFetchStatsAdvisors()
 
     const getActiveTab = computed(() => {
       return route.name

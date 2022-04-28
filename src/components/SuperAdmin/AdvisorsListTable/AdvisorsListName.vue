@@ -26,7 +26,7 @@ export default {
       default: '',
     },
     avatar: {
-      type: Array,
+      type: [Array, Object],
       require: true,
       default: () => [],
     },
@@ -36,7 +36,7 @@ export default {
     const store = useStore()
 
     const getAvatarUrl = computed(() => {
-      if (props.user?.avatar?.url) return props.user.avatar.url
+      if (props.avatar?.url) return props.avatar.url
       return ''
     })
 
