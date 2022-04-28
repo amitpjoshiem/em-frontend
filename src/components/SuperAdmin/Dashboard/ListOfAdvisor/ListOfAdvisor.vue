@@ -1,7 +1,9 @@
 <template>
   <div class="border border-color-grey border-b-0 rounded-large mt-5 mb-10">
     <div class="p-5 flex justify-between">
-      <span class="cursor-pointer hover:text-activity"> List of Advisors </span>
+      <router-link :to="{ name: getLink }" class="text-smm font-medium hover:text-activity">
+        List of Advisors
+      </router-link>
       <div class="flex items-center">
         <SwdItemsPerPage destination="superAdminDashboard" />
       </div>
@@ -32,12 +34,23 @@ export default {
 
     const rows = computed(() => Number(store.state.globalComponents.itemsPerPage.values.advisorDashboard))
 
+    const getCurrentTypeUser = computed(() => {
+      return store.state.globalComponents.currentTypeUser
+    })
+
+    const getLink = computed(() => {
+      if (getCurrentTypeUser.value === 'admin') return 'admin-all-advisors'
+      if (getCurrentTypeUser.value === 'ceo') return 'ceo-all-advisors'
+      return '/'
+    })
+
     return {
       isFetching,
       isLoading,
       isError,
       data,
       rows,
+      getLink,
     }
   },
 }

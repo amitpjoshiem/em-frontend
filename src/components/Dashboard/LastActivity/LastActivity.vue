@@ -4,7 +4,7 @@
     class="row-span-2 col-span-1 bg-widget-bg rounded-[10px] font-medium pl-5 pt-5 pr-5 min-h-[250px]"
   >
     <div class="pb-4">
-      <router-link :to="{ name: 'activity' }" class="text-smm text-main hover:text-activity">Last Activity</router-link>
+      <router-link :to="{ name: getLink }" class="text-smm text-main hover:text-activity">Last Activity</router-link>
     </div>
     <template v-if="activity.data.length">
       <div v-for="elem in activity.data" :key="elem.times" class="active-item flex flex-col text-xs">
@@ -28,6 +28,9 @@
   <el-skeleton v-else :rows="6" animated />
 </template>
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
 import { useDashboardLastActivity } from '@/api/use-dashboard-last-activity.js'
 import DateListActivity from '@/components/Dashboard/LastActivity/DateListActivity.vue'
@@ -39,7 +42,20 @@ export default {
     DateListActivity,
   },
   setup() {
+    const store = useStore()
+
     const { error, data: activity, isFetching, isLoading } = useDashboardLastActivity()
+
+    const getCurrentTypeUser = computed(() => {
+      return store.state.globalComponents.currentTypeUser
+    })
+
+    const getLink = computed(() => {
+      if (getCurrentTypeUser.value === 'advisor') return 'activity'
+      if (getCurrentTypeUser.value === 'admin') return 'admin-activity'
+      if (getCurrentTypeUser.value === 'ceo') return 'ceo-activity'
+      return '/'
+    })
 
     return {
       IconLastActivityEmpty,
@@ -47,6 +63,7 @@ export default {
       activity,
       isFetching,
       isLoading,
+      getLink,
     }
   },
 }

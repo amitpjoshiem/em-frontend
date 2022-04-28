@@ -12,7 +12,7 @@ const rules = {
     { min: 6, message: 'Length should be min 6', trigger: 'blur' },
   ],
   code: [
-    { required: true, message: 'Please input Activity name', trigger: 'blur' },
+    { required: true, message: 'Please input OTP code', trigger: 'blur' },
     { validator: checkOtp, trigger: 'blur' },
   ],
 }
