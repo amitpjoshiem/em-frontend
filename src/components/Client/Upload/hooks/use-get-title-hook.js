@@ -4,11 +4,11 @@ export function useGetTile(context) {
   const getTitle = computed(() => {
     switch (true) {
       case context === 'investment_and_retirement_accounts':
-        return 'Investment And Retirement'
+        return 'Upload your Investment/Retirement Statements Here'
       case context === 'life_insurance_annuity_and_long_terms_care_policies':
-        return 'Life Insurance'
+        return 'Upload your Life Insurance Statements Here'
       case context === 'social_security_information':
-        return 'Social Security Information'
+        return 'Upload your Social Security Statements Here'
       case context === 'list_of_stock_certificates_or_bonds':
         return 'List of Stock Certificates or Bonds'
       default:
