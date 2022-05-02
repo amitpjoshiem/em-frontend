@@ -1,5 +1,17 @@
 class UserProfile {
-  constructor({ id, last_name, first_name, email, avatar, position, phone, phone_verified_at, phone_status, npn }) {
+  constructor({
+    id,
+    last_name,
+    first_name,
+    email,
+    avatar,
+    position,
+    phone,
+    phone_verified_at,
+    phone_status,
+    npn,
+    company,
+  }) {
     this.id = id
     this.lastName = last_name
     this.firstName = first_name
@@ -10,6 +22,7 @@ class UserProfile {
     this.phone_verified_at = phone_verified_at
     this.phone_status = phone_status
     this.npn = npn
+    this.company = company
   }
 }
 

@@ -168,6 +168,15 @@ const routes = [
     path: '/ceo',
     name: 'ceo',
     component: SuperAdminHome,
+    beforeEnter: (to) => {
+      if (to && to.query.id) {
+        store.commit('globalComponents/setCurrentCompanyId', to.query.id)
+        let query = Object.assign({}, to)
+        delete query.id
+        router.replace()
+      }
+      return true
+    },
     meta: {
       resource: [{ ceo: 'all' }],
       type: 'ceo',

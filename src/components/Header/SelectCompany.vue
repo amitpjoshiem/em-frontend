@@ -1,9 +1,42 @@
 <template>
-  <div>
-    <el-select v-model="company" placeholder="Select" size="small" @change="changeCompany">
-      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-    </el-select>
-  </div>
+  <el-button type="success" plain size="small" class="w-[100px]" :loading="isLoading" @click="dialogVisible = true">
+    {{ getText(company) }}
+  </el-button>
+
+  <el-dialog v-model="dialogVisible" title="Select Company" width="55%">
+    <div class="flex flex-wrap">
+      <div
+        v-for="item in data.data"
+        :key="item.id"
+        class="border border-input-border p-2 m-2 rounded-lg hover:border-border-blue"
+        :class="{ 'border-border-blue': item.id === currentCompany.id }"
+      >
+        <div
+          class="py-2 text-center hover:text-border-blue text-main"
+          :class="{ 'text-border-blue': item.id === currentCompany.id }"
+        >
+          {{ item.name }}
+        </div>
+        <div class="flex flex-col">
+          <div class="text-center mb-2">
+            <el-button type="primary" plain size="small" :icon="Finished" class="w-28" @click="newTabCompany(item)">
+              Open new tab
+            </el-button>
+          </div>
+          <div class="text-center">
+            <el-button type="success" plain size="small" :icon="Link" class="w-28" @click="chooseCompany(item)">
+              Choose
+            </el-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -11,8 +44,8 @@ import { computed, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useFetchCompanies } from '@/api/use-fetch-companies'
-import { useMutation, useQueryClient } from 'vue-query'
-import { changeUser } from '@/api/vueQuery/change-user'
+import { useQueryClient } from 'vue-query'
+import { Edit, Finished, Link } from '@element-plus/icons-vue'
 
 export default {
   name: 'SelectCompany',
@@ -24,13 +57,9 @@ export default {
     const company = ref()
     const options = ref([])
 
+    const dialogVisible = ref(false)
+
     const { isLoading, isError, data } = useFetchCompanies()
-    const {
-      mutateAsync: changeCompamy,
-      isLoadingChangeUser,
-      isError: isErrorChangeUser,
-      isFetching: isFetchingChangeUser,
-    } = useMutation(changeUser)
 
     watchEffect(() => {
       if (!isLoading.value) {
@@ -40,44 +69,50 @@ export default {
             label: item.name,
           }
         })
-        const currentCompany = data.value.data.find((item) => item.id === store.state.globalComponents.currentCompanyId)
-        company.value = currentCompany.name
+        company.value = data.value.data.find((item) => item.id === store.state.globalComponents.currentCompanyId).name
       }
     })
 
-    const userId = computed(() => {
-      return store.state.globalComponents.userId
+    const currentCompany = computed(() => {
+      return data.value.data.find((item) => item.id === store.state.globalComponents.currentCompanyId)
     })
 
-    const changeCompany = async () => {
-      const typeUser = store.state.globalComponents.currentTypeUser
-      if (typeUser !== 'ceo') router.push({ name: 'ceo-dashboard' })
+    const newTabCompany = (item) => {
+      dialogVisible.value = false
+      let routeData = router.resolve({ name: 'ceo-dashboard', query: { id: item.id } })
+      window.open(routeData.href, '_blank')
+    }
 
-      const data = {
-        company_id: company.value,
-      }
-      changeCompamy({ form: data, id: userId.value })
-        .then(() => {
-          store.commit('globalComponents/setCurrentCompanyId', company.value)
-          queryClient.refetchQueries()
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+    const chooseCompany = (item) => {
+      store.commit('globalComponents/setCurrentCompanyId', item.id)
+      company.value = item.name
+      dialogVisible.value = false
+      queryClient.refetchQueries()
+    }
+
+    const getText = (text) => {
+      if (text && text.length > 10) return text.slice(0, 10) + '...'
+      return text
     }
 
     return {
       company,
       options,
-      changeCompany,
 
       isLoading,
       isError,
       data,
-      changeCompamy,
-      isLoadingChangeUser,
-      isErrorChangeUser,
-      isFetchingChangeUser,
+
+      Edit,
+      dialogVisible,
+      Finished,
+      Link,
+
+      newTabCompany,
+      chooseCompany,
+
+      getText,
+      currentCompany,
     }
   },
 }
