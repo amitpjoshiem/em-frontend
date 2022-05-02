@@ -88,6 +88,10 @@ class ApiClient {
       if (type === 'admin') {
         customHeader['x-user'] = store.state.globalComponents.adminId
       }
+
+      if (type === 'client') {
+        customHeader['x-user'] = store.state.globalComponents.clientId
+      }
     }
     return customHeader
   }

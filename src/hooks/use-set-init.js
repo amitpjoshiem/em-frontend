@@ -27,6 +27,7 @@ export function useSetInit() {
       if (typeUser === 'admin') store.commit('globalComponents/setAdminId', userId)
       if (typeUser === 'ceo') store.commit('globalComponents/setCeoId', userId)
       if (typeUser === 'advisor') store.commit('globalComponents/setAdvisorId', userId)
+      if (typeUser === 'client') store.commit('globalComponents/setClientId', userId)
 
       await setUpdateAbility()
 

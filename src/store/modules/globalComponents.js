@@ -5,6 +5,7 @@ const state = () => ({
   ceoId: '',
   adminId: '',
   advisorId: '',
+  clientId: '',
   currentTypeUser: '',
   role: '',
   isLoadingApp: false,
@@ -143,6 +144,10 @@ const mutations = {
 
   setAdvisorId(state, value) {
     state.advisorId = value
+  },
+
+  setClientId(state, value) {
+    state.clientId = value
   },
 
   setCurrentTypeUser(state, value) {
