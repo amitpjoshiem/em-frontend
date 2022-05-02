@@ -24,6 +24,10 @@
         <div class="text-main text-base mr-3">{{ userFullName }}</div>
         <ChangeName />
       </div>
+      <div class="flex items-center pt-11">
+        <div class="text-xss text-title-gray w-2/12">Default Company</div>
+        <ChangeCompany :default-company="user.company" />
+      </div>
       <div v-if="$can('advisor', 'all')" class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Position</div>
         <div class="text-main text-base mr-3">{{ user.position ? user.position : 'Position not added' }}</div>
@@ -60,6 +64,7 @@ import IconEditAvatar from '@/assets/svg/icon-edit-avatar.svg'
 import ChangePassword from '@/components/Settings/ChangePassword.vue'
 import ChangeName from '@/components/Settings/ChangeName.vue'
 // import ChangePhone from '@/components/Settings/ChangePhone.vue'
+import ChangeCompany from '@/components/Settings/ChangeCompany.vue'
 import SwdCropper from '@/components/Global/SwdCropper.vue'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 
@@ -77,6 +82,7 @@ export default {
     // ChangePhone,
     SwdCropper,
     SwdUpload,
+    ChangeCompany,
   },
   setup() {
     const { isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()

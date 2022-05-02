@@ -51,7 +51,8 @@
       </el-button>
     </div>
 
-    <SelectCompany v-if="$can('ceo', 'all')" class="sm:w-3/24" />
+    <SelectCompany v-if="$can('ceo', 'all')" />
+    <!-- <SelectCompany v-if="$can('ceo', 'all')" class="sm:w-3/24" /> -->
 
     <div class="flex items-center justify-end" :class="{ 'w-full': $can('client', 'all') }">
       <HeaderNotificationsBlock />
