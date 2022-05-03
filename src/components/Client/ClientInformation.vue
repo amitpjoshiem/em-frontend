@@ -96,7 +96,7 @@
         </div>
       </template>
 
-      <!-- <router-link :to="{ name: 'confirmation-page', params: { id: clientsInfo.member_id } }" class="flex">
+      <router-link :to="{ name: 'confirmation-page', params: { id: clientsInfo.member_id } }" class="flex">
         <el-card class="mb-4 w-full">
           <div class="flex items-center">
             <el-icon :size="25" class="mr-5">
@@ -105,7 +105,7 @@
             <div class="text-xs sm:text-base text-main">Confirmation Information</div>
           </div>
         </el-card>
-      </router-link> -->
+      </router-link>
     </div>
     <!-- <SwdModalSucces
       text="Thank you for entering all the details. The advisor will receive the information and will contact you."
@@ -114,8 +114,7 @@
 </template>
 
 <script>
-import { CircleCheckFilled } from '@element-plus/icons-vue'
-// import { DocumentChecked, CircleCheckFilled } from '@element-plus/icons-vue'
+import { DocumentChecked, CircleCheckFilled } from '@element-plus/icons-vue'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 // import SwdModalSucces from '@/components/Global/SwdModalSucces.vue'
@@ -124,7 +123,7 @@ export default {
   name: 'ClientInformation',
   components: {
     CircleCheckFilled,
-    // DocumentChecked,
+    DocumentChecked,
     // SwdModalSucces,
   },
   setup() {

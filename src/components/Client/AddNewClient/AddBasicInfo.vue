@@ -131,31 +131,6 @@
                   />
                 </el-form-item>
               </div>
-
-              <el-form-item label="Have you watched us during the newson WTTV4 CBS or Fox59" class="mb-4">
-                <el-radio-group v-model="ruleForm.wttv4_or_fox59">
-                  <el-radio :label="true">Yes</el-radio>
-                  <el-radio :label="false">No</el-radio>
-                </el-radio-group>
-              </el-form-item>
-
-              <el-form-item label="I have saved the following amount for retirement" class="mb-4">
-                <el-radio-group v-model="ruleForm.amount_for_retirement" class="flex sm:flex-wrap w-full">
-                  <el-radio label="150000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$150,000 - $250,000</el-radio>
-                  <el-radio label="250000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$250,000 - $500,000</el-radio>
-                  <el-radio label="500000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$500,000 - $1,000,000</el-radio>
-                  <el-radio label="1000000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$1,000,000+</el-radio>
-                </el-radio-group>
-              </el-form-item>
-
-              <el-form-item label="My Biggest Financial Concern Is:" class="mb-4">
-                <el-input
-                  v-model="ruleForm.biggest_financial_concern"
-                  type="textarea"
-                  @focus="focus('general')"
-                  @blur="blur('general')"
-                />
-              </el-form-item>
             </div>
           </div>
         </div>
@@ -518,7 +493,33 @@
             <div class="text-main text-xl font-semibold ml-2">Other</div>
           </div>
           <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusOther }">
-            <MoreInfoAbout />
+            <!-- <MoreInfoAbout /> -->
+
+            <el-form-item label="Have you watched us during the newson WTTV4 CBS or Fox59" class="mb-4">
+              <el-radio-group v-model="ruleForm.wttv4_or_fox59">
+                <el-radio :label="true">Yes</el-radio>
+                <el-radio :label="false">No</el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="I have saved the following amount for retirement" class="mb-4">
+              <el-radio-group v-model="ruleForm.amount_for_retirement" class="flex sm:flex-wrap w-full">
+                <el-radio label="150000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$150,000 - $250,000</el-radio>
+                <el-radio label="250000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$250,000 - $500,000</el-radio>
+                <el-radio label="500000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$500,000 - $1,000,000</el-radio>
+                <el-radio label="1000000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$1,000,000+</el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="My Biggest Financial Concern Is:" class="mb-4">
+              <el-input
+                v-model="ruleForm.biggest_financial_concern"
+                type="textarea"
+                @focus="focus('general')"
+                @blur="blur('general')"
+              />
+            </el-form-item>
+
             <el-form-item label="Risk tolerance?" class="my-5">
               <el-radio-group v-model="ruleForm.other.risk">
                 <div class="flex flex-col sm:flex-row sm:flex-wrap">
@@ -530,11 +531,7 @@
                 </div>
               </el-radio-group>
             </el-form-item>
-            <el-form-item
-              label="Does the opportunity have any specific questions to discuss?"
-              prop="questions"
-              class="mb-4"
-            >
+            <el-form-item label="Do you have any specific question to discuss?" prop="questions" class="mb-4">
               <el-input
                 v-model="ruleForm.other.questions"
                 type="textarea"
@@ -597,7 +594,7 @@ import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 
-import MoreInfoAbout from './MoreInfoAbout.vue'
+// import MoreInfoAbout from './MoreInfoAbout.vue'
 
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
@@ -606,7 +603,7 @@ import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 export default {
   name: 'AddProspectBasicInfo',
   components: {
-    MoreInfoAbout,
+    // MoreInfoAbout,
   },
   directives: { maska },
   setup() {
