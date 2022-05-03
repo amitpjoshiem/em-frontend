@@ -49,6 +49,12 @@ const dataStateUserId = createPersistedState({
   storage: window.sessionStorage,
 })
 
+const dataStateClientId = createPersistedState({
+  paths: ['globalComponents.clientId'],
+  key: 'clientId',
+  storage: window.sessionStorage,
+})
+
 export default createStore({
   modules: {
     auth,
@@ -66,5 +72,6 @@ export default createStore({
     dataStateUserId,
     dataStateCeoId,
     dataStateSuperAdminId,
+    dataStateClientId,
   ],
 })
