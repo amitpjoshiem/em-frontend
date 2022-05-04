@@ -495,11 +495,20 @@
           <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusOther }">
             <!-- <MoreInfoAbout /> -->
 
-            <el-form-item label="Have you watched us during the newson WTTV4 CBS or Fox59" class="mb-4">
-              <el-radio-group v-model="ruleForm.wttv4_or_fox59">
+            <el-form-item label="Have you watched us during the news on on any channel" class="mb-4">
+              <el-radio-group v-model="ruleForm.is_watched">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
+            </el-form-item>
+
+            <el-form-item v-if="ruleForm.is_watched" class="mb-4">
+              <el-input
+                v-model="ruleForm.other.new_channel"
+                placeholder="Enter channel"
+                @focus="focus('other')"
+                @blur="blur('other')"
+              />
             </el-form-item>
 
             <el-form-item label="I have saved the following amount for retirement" class="mb-4">
@@ -511,7 +520,7 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="My Biggest Financial Concern Is:" class="mb-4">
+            <el-form-item label="My biggest financial concern are:" class="mb-4">
               <el-input
                 v-model="ruleForm.biggest_financial_concern"
                 type="textarea"
@@ -656,7 +665,7 @@ export default {
       phone: '',
       amount_for_retirement: '150000',
       biggest_financial_concern: '',
-      wttv4_or_fox59: true,
+      is_watched: false,
       spouse: {
         name: '',
         email: '',
