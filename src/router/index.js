@@ -15,6 +15,9 @@ const routes = [
     path: '/client',
     name: 'client-home',
     component: ClientHome,
+    meta: {
+      type: 'client',
+    },
     children: [
       {
         path: 'client-dashboard',
