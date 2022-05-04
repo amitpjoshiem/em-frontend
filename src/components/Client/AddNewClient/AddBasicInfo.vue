@@ -247,12 +247,12 @@
               </el-form-item>
               <el-form-item
                 v-if="ruleForm.house.type !== 'rent'"
-                label="Total debt"
-                prop="house.total_debt"
+                label="Monthly payments"
+                prop="house.monthly_payments"
                 class="mb-4 sm:w-4/12 sm:px-2"
               >
                 <SwdCurrencyInput
-                  v-model="ruleForm.house.total_debt"
+                  v-model="ruleForm.house.monthly_payments"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
                   @focus="focus('house')"
@@ -548,7 +548,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="Goal for retiretment" prop="retirement" class="mb-4">
+            <el-form-item label="What are yout goals for Retiretment?" prop="retirement" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement"
                 type="textarea"
@@ -556,7 +556,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="Goal for retiretment money" prop="retirement_money" class="mb-4">
+            <el-form-item label="What are yout goals for retiretment money?" prop="retirement_money" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement_money"
                 type="textarea"
@@ -565,7 +565,7 @@
               />
             </el-form-item>
 
-            <el-form-item label="Does the opportunity currently work with the advisor?" class="mb-4">
+            <el-form-item label="Are you currently working with an Advisor?" class="mb-4">
               <el-radio-group v-model="ruleForm.other.work_with_advisor">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
@@ -684,7 +684,7 @@ export default {
       house: {
         type: 'own',
         market_value: null,
-        total_debt: null,
+        monthly_payments: null,
         remaining_mortgage_amount: null,
         monthly_payment: null,
         total_monthly_expenses: null,
