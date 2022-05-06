@@ -131,31 +131,6 @@
                   />
                 </el-form-item>
               </div>
-
-              <el-form-item label="Have you watched us during the newson WTTV4 CBS or Fox59" class="mb-4">
-                <el-radio-group v-model="ruleForm.wttv4_or_fox59">
-                  <el-radio :label="true">Yes</el-radio>
-                  <el-radio :label="false">No</el-radio>
-                </el-radio-group>
-              </el-form-item>
-
-              <el-form-item label="I have saved the following amount for retirement" class="mb-4">
-                <el-radio-group v-model="ruleForm.amount_for_retirement" class="flex sm:flex-wrap w-full">
-                  <el-radio label="150000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$150,000 - $250,000</el-radio>
-                  <el-radio label="250000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$250,000 - $500,000</el-radio>
-                  <el-radio label="500000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$500,000 - $1,000,000</el-radio>
-                  <el-radio label="1000000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$1,000,000+</el-radio>
-                </el-radio-group>
-              </el-form-item>
-
-              <el-form-item label="My Biggest Financial Concern Is:" class="mb-4">
-                <el-input
-                  v-model="ruleForm.biggest_financial_concern"
-                  type="textarea"
-                  @focus="focus('general')"
-                  @blur="blur('general')"
-                />
-              </el-form-item>
             </div>
           </div>
         </div>
@@ -272,12 +247,12 @@
               </el-form-item>
               <el-form-item
                 v-if="ruleForm.house.type !== 'rent'"
-                label="Total debt"
-                prop="house.total_debt"
+                label="Monthly payments"
+                prop="house.monthly_payments"
                 class="mb-4 sm:w-4/12 sm:px-2"
               >
                 <SwdCurrencyInput
-                  v-model="ruleForm.house.total_debt"
+                  v-model="ruleForm.house.monthly_payments"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
                   @focus="focus('house')"
@@ -518,7 +493,42 @@
             <div class="text-main text-xl font-semibold ml-2">Other</div>
           </div>
           <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusOther }">
-            <MoreInfoAbout />
+            <!-- <MoreInfoAbout /> -->
+
+            <el-form-item label="Have you watched us during the news on on any channel" class="mb-4">
+              <el-radio-group v-model="ruleForm.is_watched">
+                <el-radio :label="true">Yes</el-radio>
+                <el-radio :label="false">No</el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item v-if="ruleForm.is_watched" class="mb-4">
+              <el-input
+                v-model="ruleForm.other.new_channel"
+                placeholder="Enter channel"
+                @focus="focus('other')"
+                @blur="blur('other')"
+              />
+            </el-form-item>
+
+            <el-form-item label="I have saved the following amount for retirement" class="mb-4">
+              <el-radio-group v-model="ruleForm.amount_for_retirement" class="flex sm:flex-wrap w-full">
+                <el-radio label="150000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$150,000 - $250,000</el-radio>
+                <el-radio label="250000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$250,000 - $500,000</el-radio>
+                <el-radio label="500000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$500,000 - $1,000,000</el-radio>
+                <el-radio label="1000000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$1,000,000+</el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="My biggest financial concern are:" class="mb-4">
+              <el-input
+                v-model="ruleForm.biggest_financial_concern"
+                type="textarea"
+                @focus="focus('general')"
+                @blur="blur('general')"
+              />
+            </el-form-item>
+
             <el-form-item label="Risk tolerance?" class="my-5">
               <el-radio-group v-model="ruleForm.other.risk">
                 <div class="flex flex-col sm:flex-row sm:flex-wrap">
@@ -530,11 +540,7 @@
                 </div>
               </el-radio-group>
             </el-form-item>
-            <el-form-item
-              label="Does the opportunity have any specific questions to discuss?"
-              prop="questions"
-              class="mb-4"
-            >
+            <el-form-item label="Do you have any specific question to discuss?" prop="questions" class="mb-4">
               <el-input
                 v-model="ruleForm.other.questions"
                 type="textarea"
@@ -542,7 +548,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="Goal for retiretment" prop="retirement" class="mb-4">
+            <el-form-item label="What are yout goals for Retiretment?" prop="retirement" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement"
                 type="textarea"
@@ -550,7 +556,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="Goal for retiretment money" prop="retirement_money" class="mb-4">
+            <el-form-item label="What are yout goals for retiretment money?" prop="retirement_money" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement_money"
                 type="textarea"
@@ -559,7 +565,7 @@
               />
             </el-form-item>
 
-            <el-form-item label="Does the opportunity currently work with the advisor?" class="mb-4">
+            <el-form-item label="Are you currently working with an Advisor?" class="mb-4">
               <el-radio-group v-model="ruleForm.other.work_with_advisor">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
@@ -597,7 +603,7 @@ import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 
-import MoreInfoAbout from './MoreInfoAbout.vue'
+// import MoreInfoAbout from './MoreInfoAbout.vue'
 
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
@@ -606,7 +612,7 @@ import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 export default {
   name: 'AddProspectBasicInfo',
   components: {
-    MoreInfoAbout,
+    // MoreInfoAbout,
   },
   directives: { maska },
   setup() {
@@ -659,7 +665,7 @@ export default {
       phone: '',
       amount_for_retirement: '150000',
       biggest_financial_concern: '',
-      wttv4_or_fox59: true,
+      is_watched: false,
       spouse: {
         name: '',
         email: '',
@@ -678,7 +684,7 @@ export default {
       house: {
         type: 'own',
         market_value: null,
-        total_debt: null,
+        monthly_payments: null,
         remaining_mortgage_amount: null,
         monthly_payment: null,
         total_monthly_expenses: null,

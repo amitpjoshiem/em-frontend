@@ -29,13 +29,13 @@
             @blur="change"
           />
 
-          <!-- Social Security -->
+          <!-- Social Security Estimate -->
           <ItemFormAssetsTwo
             v-model:member="ruleForm.income.member.social_security"
             v-model:spouse="ruleForm.income.spouse.social_security"
             prop-member="income.member.social_security"
             prop-spouse="income.spouse.social_security"
-            title="Social Security"
+            title="Social Security Estimate"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
             @blur="change"
@@ -71,14 +71,14 @@
             v-model:spouse="ruleForm.income.spouse.rmds"
             prop-member="income.member.rmds"
             prop-spouse="income.spouse.rmds"
-            title="RMD’s"
+            title="Required Minimum Distributions"
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
             @blur="change"
           />
 
           <!-- Interest/Dividents -->
-          <ItemFormAssetsTwo
+          <!-- <ItemFormAssetsTwo
             v-model:member="ruleForm.income.member.interest_dividends"
             v-model:spouse="ruleForm.income.spouse.interest_dividends"
             prop-member="income.member.interest_dividends"
@@ -87,7 +87,7 @@
             :is-married="isMarried"
             :disabled="isLoadingUpdate"
             @blur="change"
-          />
+          /> -->
 
           <!-- Other -->
           <ItemFormAssetsTwo
@@ -109,7 +109,7 @@
           <div class="w-4/24" />
           <div class="w-5/24 text-gray03 text-xs">OWNER</div>
           <div v-if="isMarried" class="w-5/24 text-gray03 text-xs">SPOUSE</div>
-          <div class="w-5/24 text-gray03 text-xs pl-2.5">O/NQ</div>
+          <div class="w-5/24 text-gray03 text-xs pl-2.5">Insitution</div>
           <div class="w-5/24 text-gray03 text-xs pl-2.5">BALANCE</div>
         </div>
 
@@ -129,7 +129,7 @@
           @blur="change"
         />
 
-        <!-- CD’s -->
+        <!-- Certificates of Deposit -->
         <ItemFormAssetsFour
           v-model:member="ruleForm.liquid_assets.member.cds"
           v-model:spouse="ruleForm.liquid_assets.spouse.cds"
@@ -139,14 +139,14 @@
           prop-spouse="liquid_assets.spouse.cds"
           prop-onq="liquid_assets.o_nq.cds"
           prop-balance="liquid_assets.balance.cds"
-          title="CD’s"
+          title="Certificates of Deposit"
           :is-married="isMarried"
           :disabled="isLoadingUpdate"
           @blur="change"
         />
 
         <!-- 401k/IRA (if over 59) -->
-        <ItemFormAssetsFour
+        <!-- <ItemFormAssetsFour
           v-model:member="ruleForm.liquid_assets.member.first_401k_ira_59"
           v-model:spouse="ruleForm.liquid_assets.spouse.first_401k_ira_59"
           v-model:onq="ruleForm.liquid_assets.o_nq.first_401k_ira_59"
@@ -159,10 +159,10 @@
           :is-married="isMarried"
           :disabled="isLoadingUpdate"
           @blur="change"
-        />
+        /> -->
 
         <!-- 401k/IRA -->
-        <ItemFormAssetsFour
+        <!-- <ItemFormAssetsFour
           v-model:member="ruleForm.liquid_assets.member.first_401k_ira"
           v-model:spouse="ruleForm.liquid_assets.spouse.first_401k_ira"
           v-model:onq="ruleForm.liquid_assets.o_nq.first_401k_ira"
@@ -175,10 +175,10 @@
           :is-married="isMarried"
           :disabled="isLoadingUpdate"
           @blur="change"
-        />
+        /> -->
 
         <!-- 401k/IRA -->
-        <ItemFormAssetsFour
+        <!-- <ItemFormAssetsFour
           v-model:member="ruleForm.liquid_assets.member.second_401k_ira"
           v-model:spouse="ruleForm.liquid_assets.spouse.second_401k_ira"
           v-model:onq="ruleForm.liquid_assets.o_nq.second_401k_ira"
@@ -191,7 +191,7 @@
           :is-married="isMarried"
           :disabled="isLoadingUpdate"
           @blur="change"
-        />
+        /> -->
 
         <!-- Stocks/Bonds/MF -->
         <ItemFormAssetsFour
@@ -241,7 +241,7 @@
           @blur="change"
         />
 
-        <!-- Gift/Inheritance -->
+        <!-- Inheritance -->
         <ItemFormAssetsFour
           v-model:member="ruleForm.liquid_assets.member.gift_inheritance"
           v-model:spouse="ruleForm.liquid_assets.spouse.gift_inheritance"
@@ -251,7 +251,7 @@
           prop-spouse="liquid_assets.spouse.gift_inheritance"
           prop-onq="liquid_assets.o_nq.gift_inheritance"
           prop-balance="liquid_assets.balance.gift_inheritance"
-          title="Gift/Inheritance"
+          title="Inheritance"
           :is-married="isMarried"
           :disabled="isLoadingUpdate"
           @blur="change"
@@ -301,12 +301,12 @@
       </div>
 
       <div class="border-b px-16 py-6">
-        <span class="text-main text-xl font-semibold">Non-liquid assets</span>
+        <span class="text-main text-xl font-semibold">Other Assets/Investments</span>
         <div class="flex pb-2 mt-8">
           <div class="w-4/24" />
           <div class="w-5/24 text-gray03 text-xs">OWNER</div>
           <div v-if="isMarried" class="w-5/24 text-gray03 text-xs">SPOUSE</div>
-          <div class="w-5/24 text-gray03 text-xs pl-2.5">O/NQ</div>
+          <div class="w-5/24 text-gray03 text-xs pl-2.5">Insitution</div>
           <div class="w-5/24 text-gray03 text-xs pl-2.5">BALANCE</div>
         </div>
 
@@ -327,7 +327,7 @@
         />
 
         <!-- 401k/IRA (if over 59) -->
-        <ItemFormAssetsFour
+        <!-- <ItemFormAssetsFour
           v-model:member="ruleForm.non_liquid_assets.member.first_401k_ira_59"
           v-model:spouse="ruleForm.non_liquid_assets.spouse.first_401k_ira_59"
           v-model:onq="ruleForm.non_liquid_assets.o_nq.first_401k_ira_59"
@@ -340,10 +340,10 @@
           :is-married="isMarried"
           :disabled="isLoadingUpdate"
           @blur="change"
-        />
+        /> -->
 
         <!-- 401k/IRA -->
-        <ItemFormAssetsFour
+        <!-- <ItemFormAssetsFour
           v-model:member="ruleForm.non_liquid_assets.member.first_401k_ira"
           v-model:spouse="ruleForm.non_liquid_assets.spouse.first_401k_ira"
           v-model:onq="ruleForm.non_liquid_assets.o_nq.first_401k_ira"
@@ -356,10 +356,10 @@
           :is-married="isMarried"
           :disabled="isLoadingUpdate"
           @blur="change"
-        />
+        /> -->
 
         <!-- 401k/IRA -->
-        <ItemFormAssetsFour
+        <!-- <ItemFormAssetsFour
           v-model:member="ruleForm.non_liquid_assets.member.second_401k_ira"
           v-model:spouse="ruleForm.non_liquid_assets.spouse.second_401k_ira"
           v-model:onq="ruleForm.non_liquid_assets.o_nq.second_401k_ira"
@@ -372,10 +372,10 @@
           :is-married="isMarried"
           :disabled="isLoadingUpdate"
           @blur="change"
-        />
+        /> -->
 
         <!-- FA/VA suject to penalty -->
-        <ItemFormAssetsFour
+        <!-- <ItemFormAssetsFour
           v-model:member="ruleForm.non_liquid_assets.member.fa_va_subject_to_penalty"
           v-model:spouse="ruleForm.non_liquid_assets.spouse.fa_va_subject_to_penalty"
           v-model:onq="ruleForm.non_liquid_assets.o_nq.fa_va_subject_to_penalty"
@@ -388,7 +388,7 @@
           :is-married="isMarried"
           :disabled="isLoadingUpdate"
           @blur="change"
-        />
+        /> -->
 
         <!-- Other -->
         <ItemFormAssetsFour

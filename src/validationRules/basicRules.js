@@ -123,7 +123,7 @@ const rules = {
         // },
       },
     ],
-    total_debt: [
+    monthly_payments: [
       {
         validator: validateNumber,
         trigger: 'blur',

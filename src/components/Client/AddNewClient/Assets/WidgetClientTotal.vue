@@ -19,7 +19,7 @@
     </div>
 
     <div class="w-5/24 flex flex-col items-center border-0 text-sm pl-5">
-      <div class="text-gray03 text-xs text-center">O/NQ</div>
+      <div class="text-gray03 text-xs text-center">Insitution</div>
       <SwdSpinner v-if="isLoadingUpdate" />
       <span v-else>
         {{ currencyFormat(oNq) }}

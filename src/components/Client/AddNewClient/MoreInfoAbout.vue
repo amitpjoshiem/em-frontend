@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoadingClient && !isLoadingAdvisor" class="my-4">
+  <div v-if="!isLoadingClient && !isLoadingAdvisor" class="my-4 px-5">
     <el-form ref="form" :model="ruleForm" label-position="top">
       <el-form-item class="mb-4">
         <el-radio-group v-model="ruleForm.consultation" class="flex flex-col items-start" @change="changeConsultation">

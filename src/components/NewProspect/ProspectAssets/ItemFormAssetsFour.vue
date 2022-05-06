@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center mb-5">
     <div class="w-2/12 text-main font-semibold text-xss">{{ title }}</div>
-    <el-form-item class="w-5/24 pr-2.5 mb-0" :prop="propMember">
+    <el-form-item class="w-5/24 mb-0 pr-2.5" :prop="propMember">
       <SwdInputNumber
         :model-value="member"
         :disabled="disabled"
@@ -10,7 +10,7 @@
         @change="blurHandler(propMember)"
       />
     </el-form-item>
-    <el-form-item v-if="isMarried" class="w-5/24 pr-2.5 mb-0" :prop="propSpouse">
+    <el-form-item v-if="isMarried" class="w-5/24 mb-0 pr-2.5" :prop="propSpouse">
       <SwdInputNumber
         :model-value="spouse"
         :disabled="disabled"
@@ -19,7 +19,7 @@
         @change="blurHandler(propSpouse)"
       />
     </el-form-item>
-    <el-form-item class="w-5/24 mb-0" :prop="propOnq" :class="{ 'pr-2.5': !isMarried, 'pl-2.5': isMarried }">
+    <el-form-item class="w-5/24 mb-0 pr-2.5" :prop="propOnq">
       <SwdInputNumber
         :model-value="onq"
         :disabled="disabled"
@@ -28,7 +28,7 @@
         @change="blurHandler(propOnq)"
       />
     </el-form-item>
-    <el-form-item class="w-5/24 pl-2.5 mb-0" :prop="propBalance">
+    <el-form-item class="w-5/24 mb-0 pr-2.5" :prop="propBalance">
       <SwdInputNumber
         :model-value="balance"
         :disabled="disabled"
