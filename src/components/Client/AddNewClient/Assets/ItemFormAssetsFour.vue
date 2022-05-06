@@ -30,7 +30,7 @@
       </el-form-item>
     </div>
     <div class="flex my-2">
-      <div class="w-6/12 text-gray03 text-xs pl-2.5 text-center">O/NQ</div>
+      <div class="w-6/12 text-gray03 text-xs pl-2.5 text-center">Insitution</div>
       <div class="w-6/12 text-gray03 text-xs pl-2.5 text-center">BALANCE</div>
     </div>
     <div class="flex pb-2">

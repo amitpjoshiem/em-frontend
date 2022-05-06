@@ -83,13 +83,13 @@
           :is-married="isMarried"
         />
 
-        <!-- CD’s -->
+        <!-- Certificates of Deposit -->
         <ItemValueAssetsFour
           :member="assets.data.liquid_assets.member.cds"
           :spouse="assets.data.liquid_assets.spouse.cds"
           :onq="assets.data.liquid_assets.o_nq.cds"
           :balance="assets.data.liquid_assets.balance.cds"
-          title="CD’s"
+          title="Certificates of Deposit"
           :is-married="isMarried"
         />
 
@@ -153,13 +153,13 @@
           :is-married="isMarried"
         />
 
-        <!-- Gift/Inheritance -->
+        <!-- Inheritance -->
         <ItemValueAssetsFour
           :member="assets.data.liquid_assets.member.gift_inheritance"
           :spouse="assets.data.liquid_assets.spouse.gift_inheritance"
           :onq="assets.data.liquid_assets.o_nq.gift_inheritance"
           :balance="assets.data.liquid_assets.balance.gift_inheritance"
-          title="Gift/Inheritance"
+          title="Inheritance"
           :is-married="isMarried"
         />
 
@@ -194,7 +194,7 @@
       </div>
 
       <div class="border-b py-6">
-        <span class="text-main text-xl font-semibold mb-2">Non-liquid assets</span>
+        <span class="text-main text-xl font-semibold mb-2">Other Assets/Investments</span>
         <!-- Value of home -->
         <ItemValueAssetsFour
           :member="assets.data.non_liquid_assets.member.value_of_home"

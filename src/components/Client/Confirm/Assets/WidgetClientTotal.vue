@@ -16,7 +16,7 @@
     </div>
 
     <div class="w-10/24 sm:w-5/24 text-sm">
-      <div class="text-gray03 text-xs">O/NQ</div>
+      <div class="text-gray03 text-xs">Insitution</div>
       <div>
         {{ currencyFormat(oNq) }}
       </div>
