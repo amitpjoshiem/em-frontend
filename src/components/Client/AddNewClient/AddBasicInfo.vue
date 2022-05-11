@@ -248,11 +248,11 @@
               <el-form-item
                 v-if="ruleForm.house.type !== 'rent'"
                 label="Monthly payments"
-                prop="house.monthly_payments"
+                prop="house.total_debt"
                 class="mb-4 sm:w-4/12 sm:px-2"
               >
                 <SwdCurrencyInput
-                  v-model="ruleForm.house.monthly_payments"
+                  v-model="ruleForm.house.total_debt"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
                   @focus="focus('house')"
@@ -274,7 +274,7 @@
               </el-form-item>
               <el-form-item
                 v-if="ruleForm.house.type === 'rent'"
-                label="Monthly payment"
+                label="Monthly payments"
                 prop="house.monthly_payment"
                 class="mb-4 sm:w-4/12"
               >

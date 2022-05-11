@@ -111,7 +111,7 @@ export default {
 
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
 
-    const { setInitValue, setTotal } = useAssetsInfoHooks()
+    const { setInitValue } = useAssetsInfoHooks()
 
     const ruleForm = reactive({})
     const schema = reactive({})
@@ -133,13 +133,6 @@ export default {
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - 1)
       router.push({ name: 'basic-information', params: { id: memberId } })
-    }
-
-    const change = async () => {
-      const res = await updateMemberAssets(ruleForm)
-      queryClient.invalidateQueries(['MemberAssets', memberId])
-
-      setTotal(ruleForm, res.data)
     }
 
     const submitForm = async () => {
@@ -233,8 +226,6 @@ export default {
       isMemberAssetsLoading,
       form,
       isLoadingUpdate,
-      change,
-      memberAssetsSchema,
       isMemberAssetsSchemaLoading,
       addLine,
       changeInput,

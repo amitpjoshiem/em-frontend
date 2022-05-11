@@ -1,474 +1,75 @@
 <template>
   <div class="p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
-    <div v-if="!isFetchingMember && !isMemberAssetsLoading && !isLoadingInfo">
-      <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
-        <!-- Current income -->
-        <div class="pb-10">
-          <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusCurrentIncome && !isDoneCurrentStep" :src="IconActive" />
-            <InlineSvg v-show="!isFocusCurrentIncome && !isDoneCurrentStep" :src="IconNotActive" />
-            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
-            <span class="text-main text-xl font-semibold ml-2">Current income</span>
+    <div v-if="!isMemberAssetsLoading && !isLoadingInfo && !isMemberAssetsSchemaLoading">
+      <el-form ref="form" :model="ruleForm">
+        <div
+          v-for="(block, indexGroup) in schema"
+          :key="indexGroup"
+          class="border border-input-border p-5 rounded-md mb-10"
+        >
+          <span class="text-main text-xl font-semibold">{{ block.title }}</span>
+
+          <div class="flex pb-2 mt-8">
+            <div class="w-2/12"></div>
+            <div v-for="header in block.headers" :key="header + indexGroup" class="w-5/12 text-gray03 text-xs">
+              {{ header.toUpperCase() }}
+            </div>
           </div>
-          <div
-            class="border border-input-border rounded-lg p-5"
-            :class="{ 'border-border-blue': isFocusCurrentIncome }"
-          >
-            <div class="pt-5">
-              <el-form-item label="Do you have a written income plan?">
-                <el-radio-group v-model="ruleForm.income.income_plan" @change="change">
+          <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
+            <div v-if="row.label" class="w-3/12 flex items-center text-main font-semibold text-xss">
+              {{ row.label }}
+            </div>
+
+            <div v-for="item in row.elements" :key="item" class="w-full px-2 mb-0">
+              <el-form-item class="mb-4">
+                <SwdCurrencyInput
+                  v-if="item.type === 'string'"
+                  v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                  :options="optionsCurrencyInput"
+                  :disabled="item.disabled"
+                  placeholder="$12345"
+                  @blur="changeInput(item)"
+                />
+                <el-radio-group
+                  v-if="item.type === 'radio'"
+                  v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                >
                   <el-radio :label="true">Yes</el-radio>
                   <el-radio :label="false">No</el-radio>
                 </el-radio-group>
+                <el-dropdown v-if="item.type === 'dropdown'" trigger="click" size="small">
+                  <el-button>
+                    Add line
+                    <el-icon class="el-icon--right">
+                      <arrow-down />
+                    </el-icon>
+                  </el-button>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item
+                        v-for="option in item.options"
+                        :key="option"
+                        @click="
+                          addLine({
+                            model: item.model,
+                            variable: option.name,
+                            indexGroup,
+                            indexRow,
+                            label: option.label,
+                          })
+                        "
+                      >
+                        {{ option.label }}
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })"> Custom </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
               </el-form-item>
-              <!-- Salary -->
-              <ItemFormAssetsTwo
-                v-model:member="ruleForm.income.member.salary"
-                v-model:spouse="ruleForm.income.spouse.salary"
-                prop-member="income.member.salary"
-                prop-spouse="income.spouse.salary"
-                title="Salary"
-                :is-married="isMarried"
-                :disabled="isLoadingUpdate"
-                @change="change"
-                @blur="blur('currentIncome')"
-                @focus="focus('currentIncome')"
-              />
-
-              <!-- Social Security Estimate -->
-              <ItemFormAssetsTwo
-                v-model:member="ruleForm.income.member.social_security"
-                v-model:spouse="ruleForm.income.spouse.social_security"
-                prop-member="income.member.social_security"
-                prop-spouse="income.spouse.social_security"
-                title="Social Security Estimate"
-                :is-married="isMarried"
-                :disabled="isLoadingUpdate"
-                @change="change"
-                @blur="blur('currentIncome')"
-                @focus="focus('currentIncome')"
-              />
-
-              <!-- Pension -->
-              <ItemFormAssetsTwo
-                v-model:member="ruleForm.income.member.pension"
-                v-model:spouse="ruleForm.income.spouse.pension"
-                prop-member="income.member.pension"
-                prop-spouse="income.spouse.pension"
-                title="Pension"
-                :is-married="isMarried"
-                :disabled="isLoadingUpdate"
-                @change="change"
-                @blur="blur('currentIncome')"
-                @focus="focus('currentIncome')"
-              />
-
-              <!-- Rental income -->
-              <ItemFormAssetsTwo
-                v-model:member="ruleForm.income.member.rental_income"
-                v-model:spouse="ruleForm.income.spouse.rental_income"
-                prop-member="income.member.rental_income"
-                prop-spouse="income.spouse.rental_income"
-                title="Rental income"
-                :is-married="isMarried"
-                :disabled="isLoadingUpdate"
-                @change="change"
-                @blur="blur('currentIncome')"
-                @focus="focus('currentIncome')"
-              />
-
-              <!-- RMD’s -->
-              <ItemFormAssetsTwo
-                v-model:member="ruleForm.income.member.rmds"
-                v-model:spouse="ruleForm.income.spouse.rmds"
-                prop-member="income.member.rmds"
-                prop-spouse="income.spouse.rmds"
-                title="RMD’s"
-                :is-married="isMarried"
-                :disabled="isLoadingUpdate"
-                @change="change"
-                @blur="blur('currentIncome')"
-                @focus="focus('currentIncome')"
-              />
-
-              <!-- Interest/Dividents -->
-              <ItemFormAssetsTwo
-                v-model:member="ruleForm.income.member.interest_dividends"
-                v-model:spouse="ruleForm.income.spouse.interest_dividends"
-                prop-member="income.member.interest_dividends"
-                prop-spouse="income.spouse.interest_dividends"
-                title="Interest/Dividents"
-                :is-married="isMarried"
-                :disabled="isLoadingUpdate"
-                @change="change"
-                @blur="blur('currentIncome')"
-                @focus="focus('currentIncome')"
-              />
-
-              <!-- Other -->
-              <ItemFormAssetsTwo
-                v-model:member="ruleForm.income.member.other"
-                v-model:spouse="ruleForm.income.spouse.other"
-                prop-member="income.member.other"
-                prop-spouse="income.spouse.other"
-                title="Other"
-                :is-married="isMarried"
-                :disabled="isLoadingUpdate"
-                @change="change"
-                @blur="blur('currentIncome')"
-                @focus="focus('currentIncome')"
-              />
             </div>
           </div>
         </div>
 
-        <div class="pb-10">
-          <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusLiquidAssets && !isDoneCurrentStep" :src="IconActive" />
-            <InlineSvg v-show="!isFocusLiquidAssets && !isDoneCurrentStep" :src="IconNotActive" />
-            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
-            <span class="text-main text-xl font-semibold ml-2">Liquid assets</span>
-          </div>
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusLiquidAssets }">
-            <!-- Cash/Checking/ Savings/MM -->
-            <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.cash_checking_savings_mm"
-              v-model:spouse="ruleForm.liquid_assets.spouse.cash_checking_savings_mm"
-              v-model:onq="ruleForm.liquid_assets.o_nq.cash_checking_savings_mm"
-              v-model:balance="ruleForm.liquid_assets.balance.cash_checking_savings_mm"
-              prop-member="liquid_assets.member.cash_checking_savings_mm"
-              prop-spouse="liquid_assets.spouse.cash_checking_savings_mm"
-              prop-onq="liquid_assets.o_nq.cash_checking_savings_mm"
-              prop-balance="liquid_assets.balance.cash_checking_savings_mm"
-              title="Cash/Checking/ Savings/MM"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            />
-
-            <!-- Certificates of Deposit -->
-            <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.cds"
-              v-model:spouse="ruleForm.liquid_assets.spouse.cds"
-              v-model:onq="ruleForm.liquid_assets.o_nq.cds"
-              v-model:balance="ruleForm.liquid_assets.balance.cds"
-              prop-member="liquid_assets.member.cds"
-              prop-spouse="liquid_assets.spouse.cds"
-              prop-onq="liquid_assets.o_nq.cds"
-              prop-balance="liquid_assets.balance.cds"
-              title="Certificates of Deposit"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            />
-
-            <!-- 401k/IRA (if over 59) -->
-            <!-- <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.first_401k_ira_59"
-              v-model:spouse="ruleForm.liquid_assets.spouse.first_401k_ira_59"
-              v-model:onq="ruleForm.liquid_assets.o_nq.first_401k_ira_59"
-              v-model:balance="ruleForm.liquid_assets.balance.first_401k_ira_59"
-              prop-member="liquid_assets.member.first_401k_ira_59"
-              prop-spouse="liquid_assets.spouse.first_401k_ira_59"
-              prop-onq="liquid_assets.o_nq.first_401k_ira_59"
-              prop-balance="liquid_assets.balance.first_401k_ira_59"
-              title="401k/IRA (if over 59)"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            /> -->
-
-            <!-- 401k/IRA -->
-            <!-- <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.first_401k_ira"
-              v-model:spouse="ruleForm.liquid_assets.spouse.first_401k_ira"
-              v-model:onq="ruleForm.liquid_assets.o_nq.first_401k_ira"
-              v-model:balance="ruleForm.liquid_assets.balance.first_401k_ira"
-              prop-member="liquid_assets.member.first_401k_ira"
-              prop-spouse="liquid_assets.spouse.first_401k_ira"
-              prop-onq="liquid_assets.o_nq.first_401k_ira"
-              prop-balance="liquid_assets.balance.first_401k_ira"
-              title="401k/IRA"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            /> -->
-
-            <!-- 401k/IRA -->
-            <!-- <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.second_401k_ira"
-              v-model:spouse="ruleForm.liquid_assets.spouse.second_401k_ira"
-              v-model:onq="ruleForm.liquid_assets.o_nq.second_401k_ira"
-              v-model:balance="ruleForm.liquid_assets.balance.second_401k_ira"
-              prop-member="liquid_assets.member.second_401k_ira"
-              prop-spouse="liquid_assets.spouse.second_401k_ira"
-              prop-onq="liquid_assets.o_nq.second_401k_ira"
-              prop-balance="liquid_assets.balance.second_401k_ira"
-              title="401k/IRA"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            /> -->
-
-            <!-- Stocks/Bonds/MF -->
-            <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.stocks_bonds_mf"
-              v-model:spouse="ruleForm.liquid_assets.spouse.stocks_bonds_mf"
-              v-model:onq="ruleForm.liquid_assets.o_nq.stocks_bonds_mf"
-              v-model:balance="ruleForm.liquid_assets.balance.stocks_bonds_mf"
-              prop-member="liquid_assets.member.stocks_bonds_mf"
-              prop-spouse="liquid_assets.spouse.stocks_bonds_mf"
-              prop-onq="liquid_assets.o_nq.stocks_bonds_mf"
-              prop-balance="liquid_assets.balance.stocks_bonds_mf"
-              title="Stocks/Bonds/MF"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            />
-
-            <!-- Stocks/Bonds/MF -->
-            <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.cash_value_life_insurance"
-              v-model:spouse="ruleForm.liquid_assets.spouse.cash_value_life_insurance"
-              v-model:onq="ruleForm.liquid_assets.o_nq.cash_value_life_insurance"
-              v-model:balance="ruleForm.liquid_assets.balance.cash_value_life_insurance"
-              prop-member="liquid_assets.member.cash_value_life_insurance"
-              prop-spouse="liquid_assets.spouse.cash_value_life_insurance"
-              prop-onq="liquid_assets.o_nq.cash_value_life_insurance"
-              prop-balance="liquid_assets.balance.cash_value_life_insurance"
-              title="Cash value life insurance"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            />
-
-            <!-- FA/VA not suject to penalty -->
-            <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.fa_va_not_subject_to_penalty"
-              v-model:spouse="ruleForm.liquid_assets.spouse.fa_va_not_subject_to_penalty"
-              v-model:onq="ruleForm.liquid_assets.o_nq.fa_va_not_subject_to_penalty"
-              v-model:balance="ruleForm.liquid_assets.balance.fa_va_not_subject_to_penalty"
-              prop-member="liquid_assets.member.fa_va_not_subject_to_penalty"
-              prop-spouse="liquid_assets.spouse.fa_va_not_subject_to_penalty"
-              prop-onq="liquid_assets.o_nq.fa_va_not_subject_to_penalty"
-              prop-balance="liquid_assets.balance.fa_va_not_subject_to_penalty"
-              title="FA/VA not suject to penalty"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            />
-
-            <!-- Inheritance -->
-            <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.gift_inheritance"
-              v-model:spouse="ruleForm.liquid_assets.spouse.gift_inheritance"
-              v-model:onq="ruleForm.liquid_assets.o_nq.gift_inheritance"
-              v-model:balance="ruleForm.liquid_assets.balance.gift_inheritance"
-              prop-member="liquid_assets.member.gift_inheritance"
-              prop-spouse="liquid_assets.spouse.gift_inheritance"
-              prop-onq="liquid_assets.o_nq.gift_inheritance"
-              prop-balance="liquid_assets.balance.gift_inheritance"
-              title="Inheritance"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            />
-
-            <!-- Lump sum pension -->
-            <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.lump_sum_pension"
-              v-model:spouse="ruleForm.liquid_assets.spouse.lump_sum_pension"
-              v-model:onq="ruleForm.liquid_assets.o_nq.lump_sum_pension"
-              v-model:balance="ruleForm.liquid_assets.balance.lump_sum_pension"
-              prop-member="liquid_assets.member.lump_sum_pension"
-              prop-spouse="liquid_assets.spouse.lump_sum_pension"
-              prop-onq="liquid_assets.o_nq.lump_sum_pension"
-              prop-balance="liquid_assets.balance.lump_sum_pension"
-              title="Lump sum pension"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            />
-
-            <!-- Other liquid assets -->
-            <ItemFormAssetsFour
-              v-model:member="ruleForm.liquid_assets.member.other_liquid_assets"
-              v-model:spouse="ruleForm.liquid_assets.spouse.other_liquid_assets"
-              v-model:onq="ruleForm.liquid_assets.o_nq.other_liquid_assets"
-              v-model:balance="ruleForm.liquid_assets.balance.other_liquid_assets"
-              prop-member="liquid_assets.member.other_liquid_assets"
-              prop-spouse="liquid_assets.spouse.other_liquid_assets"
-              prop-onq="liquid_assets.o_nq.other_liquid_assets"
-              prop-balance="liquid_assets.balance.other_liquid_assets"
-              title="Other liquid assets"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('liquidAssets')"
-              @focus="focus('liquidAssets')"
-            />
-
-            <!-- Total -->
-            <WidgetClientTotal
-              :member="ruleForm.liquid_assets.member.total"
-              :spouse="ruleForm.liquid_assets.spouse.total"
-              :o-nq="ruleForm.liquid_assets.o_nq.total"
-              :balance="ruleForm.liquid_assets.balance.total"
-              :is-loading-update="isLoadingUpdate"
-              :is-married="isMarried"
-            />
-          </div>
-        </div>
-
-        <div>
-          <div class="flex items-center mb-5">
-            <InlineSvg v-show="isFocusNonLiquidAssets && !isDoneCurrentStep" :src="IconActive" />
-            <InlineSvg v-show="!isFocusNonLiquidAssets && !isDoneCurrentStep" :src="IconNotActive" />
-            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
-            <span class="text-main text-xl font-semibold ml-2">Other Assets/Investments</span>
-          </div>
-          <!-- Value of home -->
-          <div
-            class="border border-input-border rounded-lg p-5"
-            :class="{ 'border-border-blue': isFocusNonLiquidAssets }"
-          >
-            <ItemFormAssetsFour
-              v-model:member="ruleForm.non_liquid_assets.member.value_of_home"
-              v-model:spouse="ruleForm.non_liquid_assets.spouse.value_of_home"
-              v-model:onq="ruleForm.non_liquid_assets.o_nq.value_of_home"
-              v-model:balance="ruleForm.non_liquid_assets.balance.value_of_home"
-              prop-member="non_liquid_assets.member.value_of_home"
-              prop-spouse="non_liquid_assets.spouse.value_of_home"
-              prop-onq="non_liquid_assets.o_nq.value_of_home"
-              prop-balance="non_liquid_assets.balance.value_of_home"
-              title="Value of home"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('nonLiquidAssets')"
-              @focus="focus('nonLiquidAssets')"
-            />
-
-            <!-- 401k/IRA (if over 59) -->
-            <!-- <ItemFormAssetsFour
-              v-model:member="ruleForm.non_liquid_assets.member.first_401k_ira_59"
-              v-model:spouse="ruleForm.non_liquid_assets.spouse.first_401k_ira_59"
-              v-model:onq="ruleForm.non_liquid_assets.o_nq.first_401k_ira_59"
-              v-model:balance="ruleForm.non_liquid_assets.balance.first_401k_ira_59"
-              prop-member="non_liquid_assets.member.first_401k_ira_59"
-              prop-spouse="non_liquid_assets.spouse.first_401k_ira_59"
-              prop-onq="non_liquid_assets.o_nq.first_401k_ira_59"
-              prop-balance="non_liquid_assets.balance.first_401k_ira_59"
-              title="401k/IRA (if over 59)"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('nonLiquidAssets')"
-              @focus="focus('nonLiquidAssets')"
-            /> -->
-
-            <!-- 401k/IRA -->
-            <!-- <ItemFormAssetsFour
-              v-model:member="ruleForm.non_liquid_assets.member.first_401k_ira"
-              v-model:spouse="ruleForm.non_liquid_assets.spouse.first_401k_ira"
-              v-model:onq="ruleForm.non_liquid_assets.o_nq.first_401k_ira"
-              v-model:balance="ruleForm.non_liquid_assets.balance.first_401k_ira"
-              prop-member="non_liquid_assets.member.first_401k_ira"
-              prop-spouse="non_liquid_assets.spouse.first_401k_ira"
-              prop-onq="non_liquid_assets.o_nq.first_401k_ira"
-              prop-balance="non_liquid_assets.balance.first_401k_ira"
-              title="401k/IRA"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('nonLiquidAssets')"
-              @focus="focus('nonLiquidAssets')"
-            /> -->
-
-            <!-- 401k/IRA -->
-            <!-- <ItemFormAssetsFour
-              v-model:member="ruleForm.non_liquid_assets.member.second_401k_ira"
-              v-model:spouse="ruleForm.non_liquid_assets.spouse.second_401k_ira"
-              v-model:onq="ruleForm.non_liquid_assets.o_nq.second_401k_ira"
-              v-model:balance="ruleForm.non_liquid_assets.balance.second_401k_ira"
-              prop-member="non_liquid_assets.member.second_401k_ira"
-              prop-spouse="non_liquid_assets.spouse.second_401k_ira"
-              prop-onq="non_liquid_assets.o_nq.second_401k_ira"
-              prop-balance="non_liquid_assets.balance.second_401k_ira"
-              title="401k/IRA"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('nonLiquidAssets')"
-              @focus="focus('nonLiquidAssets')"
-            /> -->
-
-            <!-- FA/VA suject to penalty -->
-            <!-- <ItemFormAssetsFour
-              v-model:member="ruleForm.non_liquid_assets.member.fa_va_subject_to_penalty"
-              v-model:spouse="ruleForm.non_liquid_assets.spouse.fa_va_subject_to_penalty"
-              v-model:onq="ruleForm.non_liquid_assets.o_nq.fa_va_subject_to_penalty"
-              v-model:balance="ruleForm.non_liquid_assets.balance.fa_va_subject_to_penalty"
-              prop-member="non_liquid_assets.member.fa_va_subject_to_penalty"
-              prop-spouse="non_liquid_assets.spouse.fa_va_subject_to_penalty"
-              prop-onq="non_liquid_assets.o_nq.fa_va_subject_to_penalty"
-              prop-balance="non_liquid_assets.balance.fa_va_subject_to_penalty"
-              title="FA/VA suject to penalty"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('nonLiquidAssets')"
-              @focus="focus('nonLiquidAssets')"
-            /> -->
-
-            <!-- Other -->
-            <ItemFormAssetsFour
-              v-model:member="ruleForm.non_liquid_assets.member.other"
-              v-model:spouse="ruleForm.non_liquid_assets.spouse.other"
-              v-model:onq="ruleForm.non_liquid_assets.o_nq.other"
-              v-model:balance="ruleForm.non_liquid_assets.balance.other"
-              prop-member="non_liquid_assets.member.other"
-              prop-spouse="non_liquid_assets.spouse.other"
-              prop-onq="non_liquid_assets.o_nq.other"
-              prop-balance="non_liquid_assets.balance.other"
-              title="Other"
-              :is-married="isMarried"
-              :disabled="isLoadingUpdate"
-              @change="change"
-              @blur="blur('nonLiquidAssets')"
-              @focus="focus('nonLiquidAssets')"
-            />
-
-            <WidgetClientTotal
-              :member="ruleForm.non_liquid_assets.member.total"
-              :spouse="ruleForm.non_liquid_assets.spouse.total"
-              :o-nq="ruleForm.non_liquid_assets.o_nq.total"
-              :balance="ruleForm.non_liquid_assets.balance.total"
-              :is-loading-update="isLoadingUpdate"
-              :is-married="isMarried"
-            />
-          </div>
-        </div>
         <div class="flex justify-end my-10">
           <div class="pr-3">
             <Button default-gray-btn text-btn="Back" @click="backStep" />
@@ -490,15 +91,12 @@ import { useMutation, useQueryClient } from 'vue-query'
 
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
-import { useFetchMember } from '@/api/use-fetch-member'
+import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
+
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
-
-import WidgetClientTotal from '@/components/Client/AddNewClient/Assets/WidgetClientTotal.vue'
-import ItemFormAssetsTwo from '@/components/Client/AddNewClient/Assets/ItemFormAssetsTwo.vue'
-import ItemFormAssetsFour from '@/components/Client/AddNewClient/Assets/ItemFormAssetsFour.vue'
 
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 
@@ -508,12 +106,13 @@ import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
+import { ArrowDown } from '@element-plus/icons-vue'
+import { ElMessageBox } from 'element-plus'
+
 export default {
   name: 'AddAssets',
   components: {
-    ItemFormAssetsTwo,
-    ItemFormAssetsFour,
-    WidgetClientTotal,
+    ArrowDown,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -526,135 +125,19 @@ export default {
     const isFocusNonLiquidAssets = ref(false)
     const step = computed(() => store.state.newClient.step)
 
+    const ruleForm = reactive({})
+    const schema = reactive({})
+
     const memberId = route.params.id
 
-    const { response: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(route.params.id)
+    const { data: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(memberId)
+    const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(memberId)
+
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
-    const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id })
+
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
-    const { setInitValue, setTotal, isMarried } = useAssetsInfoHooks(member)
-
-    const ruleForm = reactive({
-      income: {
-        income_plan: true,
-        member: {
-          salary: '',
-          social_security: '',
-          pension: '',
-          rental_income: '',
-          rmds: '',
-          interest_dividends: '',
-          other: '',
-        },
-        spouse: {
-          salary: '',
-          social_security: '',
-          pension: '',
-          rental_income: '',
-          rmds: '',
-          interest_dividends: '',
-          other: '',
-        },
-      },
-      liquid_assets: {
-        member: {
-          gift_inheritance: '',
-          first_401k_ira_59: '',
-          cash_value_life_insurance: '',
-          total: '',
-          second_401k_ira: '',
-          cash_checking_savings_mm: '',
-          stocks_bonds_mf: '',
-          first_401k_ira: '',
-          other_liquid_assets: '',
-          cds: '',
-          lump_sum_pension: '',
-          fa_va_not_subject_to_penalty: '',
-        },
-        spouse: {
-          gift_inheritance: '',
-          first_401k_ira_59: '',
-          cash_value_life_insurance: '',
-          total: '',
-          second_401k_ira: '',
-          cash_checking_savings_mm: '',
-          stocks_bonds_mf: '',
-          first_401k_ira: '',
-          other_liquid_assets: '',
-          cds: '',
-          lump_sum_pension: '',
-          fa_va_not_subject_to_penalty: '',
-        },
-        o_nq: {
-          gift_inheritance: '',
-          first_401k_ira_59: '',
-          cash_value_life_insurance: '',
-          total: '',
-          second_401k_ira: '',
-          cash_checking_savings_mm: '',
-          stocks_bonds_mf: '',
-          first_401k_ira: '',
-          other_liquid_assets: '',
-          cds: '',
-          lump_sum_pension: '',
-          fa_va_not_subject_to_penalty: '',
-        },
-        balance: {
-          gift_inheritance: '',
-          first_401k_ira_59: '',
-          cash_value_life_insurance: '',
-          total: '',
-          second_401k_ira: '',
-          cash_checking_savings_mm: '',
-          stocks_bonds_mf: '',
-          first_401k_ira: '',
-          other_liquid_assets: '',
-          cds: '',
-          lump_sum_pension: '',
-          fa_va_not_subject_to_penalty: '',
-        },
-      },
-      non_liquid_assets: {
-        member: {
-          total: '',
-          other: '',
-          fa_va_subject_to_penalty: '',
-          second_401k_ira: '',
-          first_401k_ira: '',
-          first_401k_ira_59: '',
-          value_of_home: '',
-        },
-        spouse: {
-          total: '',
-          other: '',
-          fa_va_subject_to_penalty: '',
-          second_401k_ira: '',
-          first_401k_ira: '',
-          first_401k_ira_59: '',
-          value_of_home: '',
-        },
-        o_nq: {
-          total: '',
-          other: '',
-          fa_va_subject_to_penalty: '',
-          second_401k_ira: '',
-          first_401k_ira: '',
-          first_401k_ira_59: '',
-          value_of_home: '',
-        },
-        balance: {
-          total: '',
-          other: '',
-          fa_va_subject_to_penalty: '',
-          second_401k_ira: '',
-          first_401k_ira: '',
-          first_401k_ira_59: '',
-          value_of_home: '',
-        },
-      },
-      member_id: '',
-    })
+    const { setInitValue } = useAssetsInfoHooks()
 
     onMounted(async () => {
       store.commit('newClient/setStep', 2)
@@ -662,21 +145,18 @@ export default {
     })
 
     watchEffect(() => {
-      if (isMemberAssetsLoading.value === false) {
+      if (!isMemberAssetsLoading.value) {
         setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
+        console.log('ruleForm - ', ruleForm)
+      }
+      if (!isMemberAssetsSchemaLoading.value) {
+        Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value.data)))
       }
     })
 
     const backStep = () => {
       store.commit('newClient/setStep', step.value - 1)
       router.push({ name: 'client-basic-information', params: { id: memberId } })
-    }
-
-    const change = async () => {
-      const res = await updateMemberAssets(ruleForm)
-      queryClient.invalidateQueries(['MemberAssets', memberId])
-
-      setTotal(ruleForm, res.data)
     }
 
     const submitForm = async () => {
@@ -708,18 +188,73 @@ export default {
       if (type === 'currentIncome') isFocusCurrentIncome.value = false
     }
 
+    const addLine = ({ model, variable, indexGroup, indexRow, label }) => {
+      ruleForm[model.group][variable] = {}
+      schema[indexGroup].headers.forEach((element) => {
+        ruleForm[model.group][variable][element] = null
+      })
+
+      const elements = schema[indexGroup].headers.map((item) => {
+        return {
+          type: 'string',
+          name: item,
+          label: item,
+          disabled: false,
+          model: {
+            group: model.group,
+            model: variable,
+            item: item,
+          },
+        }
+      })
+      const dataSchema = {
+        label: label,
+        name: variable,
+        elements,
+      }
+      schema[indexGroup].rows.splice(indexRow + 1, 0, dataSchema)
+    }
+
+    const changeInput = async (item) => {
+      const data = {
+        group: item.model.group,
+        row: item.model.model,
+        element: item.model.item,
+        type: 'string',
+        value: ruleForm[item.model.group][item.model.model][item.model.item],
+      }
+      await updateMemberAssets({ data, id: memberId })
+      queryClient.invalidateQueries(['memberAssets', memberId])
+    }
+
+    const showDialog = ({ item, indexGroup, indexRow }) => {
+      ElMessageBox.prompt('Please input name', 'Custom name', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+      }).then(({ value }) => {
+        const model = item.model
+        const variable = value.toLowerCase().replace(/ /g, '_')
+        const label = value
+        addLine({ model, variable, label, indexGroup, indexRow })
+      })
+    }
+
+    const optionsCurrencyInput = {
+      currency: 'USD',
+      locale: 'en-US',
+      currencyDisplay: 'hidden',
+      precision: 2,
+    }
+
     return {
       ruleForm,
       backStep,
       submitForm,
       rules,
       isMemberAssetsLoading,
-      isMarried,
       form,
       isLoadingUpdate,
-      isFetchingMember,
-      member,
-      change,
+      // change,
 
       IconActive,
       IconNotActive,
@@ -735,6 +270,13 @@ export default {
       isLoadingInfo,
 
       isDoneCurrentStep,
+
+      schema,
+
+      optionsCurrencyInput,
+      showDialog,
+      changeInput,
+      isMemberAssetsSchemaLoading,
     }
   },
 }
