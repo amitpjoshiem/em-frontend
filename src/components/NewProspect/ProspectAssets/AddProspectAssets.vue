@@ -21,12 +21,13 @@
 
           <div v-for="item in row.elements" :key="item" class="w-full px-2 mb-0">
             <el-form-item class="mb-4">
-              <el-input
+              <SwdCurrencyInput
                 v-if="item.type === 'string'"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                placeholder="Enter value"
+                :options="optionsCurrencyInput"
                 :disabled="item.disabled"
-                @change="changeInput(item)"
+                placeholder="$12345"
+                @blur="changeInput(item)"
               />
               <el-radio-group
                 v-if="item.type === 'radio'"
@@ -77,21 +78,15 @@
 import { watchEffect, ref, computed, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-
 import { useMutation, useQueryClient } from 'vue-query'
-
 import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
-
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
-
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-
 import { ArrowDown } from '@element-plus/icons-vue'
-
 import { ElMessageBox } from 'element-plus'
 
 export default {
@@ -210,7 +205,6 @@ export default {
     }
 
     const showDialog = ({ item, indexGroup, indexRow }) => {
-      console.log('item - ', item)
       ElMessageBox.prompt('Please input name', 'Custom name', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancel',
@@ -222,28 +216,30 @@ export default {
       })
     }
 
+    const optionsCurrencyInput = {
+      currency: 'USD',
+      locale: 'en-US',
+      currencyDisplay: 'hidden',
+      precision: 2,
+    }
+
     return {
       ruleForm,
       schema,
-
       backStep,
       create,
       data,
       submitForm,
-
       isMemberAssetsLoading,
       form,
       isLoadingUpdate,
-
       change,
-
       memberAssetsSchema,
       isMemberAssetsSchemaLoading,
-
       addLine,
-
       changeInput,
       showDialog,
+      optionsCurrencyInput,
     }
   },
 }
