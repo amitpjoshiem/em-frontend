@@ -1,10 +1,10 @@
 import { useQuery } from 'vue-query'
 import { fetcher } from '@/api/fetcher/fetcher'
 
-const useFetchMemberAssets = (id) => {
-  const { data, error, isFetching, isLoading } = useQuery(['memberAssets', id], () => {
+const useFetchMemberAssetsSchema = (id) => {
+  const { data, error, isFetching, isLoading } = useQuery(['memberAssetsSchema', id], () => {
     return fetcher({
-      url: `/assets_income/data/${id}`,
+      url: `/assets_income/schema/${id}`,
       options: { method: 'GET' },
     })
   })
@@ -17,4 +17,4 @@ const useFetchMemberAssets = (id) => {
   }
 }
 
-export { useFetchMemberAssets }
+export { useFetchMemberAssetsSchema }

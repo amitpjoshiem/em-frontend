@@ -1,7 +1,6 @@
 import { initialAssetsInformation } from '@/hooks/initialState/assetsInformation'
-import { computed } from 'vue'
 
-export function useAssetsInfoHooks(member) {
+export function useAssetsInfoHooks() {
   function setInitValue({ ruleForm, memberAssets, id }) {
     if (memberAssets?.data) {
       ruleForm.member_id = id
@@ -20,11 +19,6 @@ export function useAssetsInfoHooks(member) {
     ruleForm.non_liquid_assets.balance.total = data.non_liquid_assets.balance.total
   }
 
-  const isMarried = computed(() => {
-    if (member.value) return member.value.married
-    return false
-  })
-
   const resetState = (ruleForm) => {
     Object.assign(ruleForm, initialAssetsInformation)
   }
@@ -32,7 +26,6 @@ export function useAssetsInfoHooks(member) {
   return {
     setInitValue,
     setTotal,
-    isMarried,
     resetState,
   }
 }
