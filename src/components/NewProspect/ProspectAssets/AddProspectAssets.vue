@@ -53,6 +53,7 @@
                     >
                       {{ option.label }}
                     </el-dropdown-item>
+                    <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })"> Custom </el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
               </el-dropdown>
@@ -89,9 +90,9 @@ import { useAlert } from '@/utils/use-alert'
 
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 
-import { rules } from '@/validationRules/assetsRules.js'
-
 import { ArrowDown } from '@element-plus/icons-vue'
+
+import { ElMessageBox } from 'element-plus'
 
 export default {
   name: 'AddProspectAssets',
@@ -208,6 +209,19 @@ export default {
       queryClient.invalidateQueries(['memberAssets', memberId])
     }
 
+    const showDialog = ({ item, indexGroup, indexRow }) => {
+      console.log('item - ', item)
+      ElMessageBox.prompt('Please input name', 'Custom name', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+      }).then(({ value }) => {
+        const model = item.model
+        const variable = value.toLowerCase().replace(/ /g, '_')
+        const label = value
+        addLine({ model, variable, label, indexGroup, indexRow })
+      })
+    }
+
     return {
       ruleForm,
       schema,
@@ -216,9 +230,8 @@ export default {
       create,
       data,
       submitForm,
-      rules,
+
       isMemberAssetsLoading,
-      memberId,
       form,
       isLoadingUpdate,
 
@@ -230,6 +243,7 @@ export default {
       addLine,
 
       changeInput,
+      showDialog,
     }
   },
 }
