@@ -19,7 +19,7 @@
             {{ row.label }}
           </div>
 
-          <div v-for="item in row.elements" :key="item" class="px-2 mb-0 w-2/12">
+          <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
             <el-form-item class="mb-4">
               <SwdCurrencyInput
                 v-if="item.type === 'string'"
@@ -36,9 +36,9 @@
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
-              <el-dropdown v-if="item.type === 'dropdown'" trigger="click" size="small">
+              <el-dropdown v-if="item.type === 'dropdown'" trigger="click">
                 <el-button>
-                  Add line
+                  Add field
                   <el-icon class="el-icon--right">
                     <arrow-down />
                   </el-icon>
