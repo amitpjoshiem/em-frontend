@@ -144,9 +144,9 @@
   vertical-align: bottom;
 }
 
-.el-dialog__body{
+/* .el-dialog__body{
   min-height: 200px;
-}
+} */
 
 .el-step__title {
   font-size: 14px;

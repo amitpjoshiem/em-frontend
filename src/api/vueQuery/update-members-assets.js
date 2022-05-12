@@ -1,10 +1,10 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function updateMembersAssets(data) {
+function updateMembersAssets({ data, id }) {
   return fetcher({
-    url: `/assets_income`,
+    url: `/assets_income/data/${id}`,
     data,
-    options: { method: 'PATCH' },
+    options: { method: 'POST' },
   })
 }
 
