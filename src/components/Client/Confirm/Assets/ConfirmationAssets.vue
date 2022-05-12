@@ -12,17 +12,29 @@
           </div>
         </div>
         <div v-for="row in block.rows" :key="row" class="flex">
-          <div class="w-4/12 flex items-center">
-            <div v-if="row.label" class="text-main font-semibold text-xss">
-              {{ row.label }}
+          <template v-if="isShowRow(assets.data[block.name][row.name])">
+            <div class="w-4/12 flex items-center">
+              <div v-if="row.label" class="text-main font-semibold text-xss">
+                {{ row.label }}
+              </div>
             </div>
-          </div>
 
-          <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
-            <div v-if="item.type === 'string'" class="mb-2">
-              {{ currencyFormat(assets.data[item.model.group][item.model.model][item.model.item]) }}
+            <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
+              <div v-if="item.type === 'string'" class="mb-2">
+                {{ currencyFormat(assets.data[item.model.group][item.model.model][item.model.item]) }}
+              </div>
+              <div v-if="item.type === 'radio'" class="flex">
+                <el-tag
+                  v-if="assets.data[item.model.group][item.model.model][item.model.item]"
+                  class="ml-4"
+                  type="success"
+                >
+                  Yes
+                </el-tag>
+                <el-tag v-else class="ml-4" type="danger">No</el-tag>
+              </div>
             </div>
-          </div>
+          </template>
         </div>
       </el-card>
     </div>
@@ -54,6 +66,15 @@ export default {
       router.push({ name: 'client-assets-information', params: { id: route.params.id } })
     }
 
+    const isShowRow = (row) => {
+      if (row !== undefined) {
+        return Object.values(row).some((item) => {
+          return item !== null
+        })
+      }
+      return false
+    }
+
     return {
       assets,
       isAssetsLoading,
@@ -62,6 +83,7 @@ export default {
       assetsSchema,
       isAssetsSchemaLoading,
       currencyFormat,
+      isShowRow,
     }
   },
 }
