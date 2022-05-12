@@ -38,8 +38,19 @@
             </div>
           </div>
           <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
-            <div v-if="row.label" class="w-4/12 flex items-center text-main font-semibold text-xss">
-              {{ row.label }}
+            <div class="w-4/12 flex items-center">
+              <div v-if="row.label" class="text-main font-semibold text-xss">
+                {{ row.label }}
+              </div>
+              <div v-if="row.custom" class="flex items-center ml-2 cursor-pointer">
+                <el-popconfirm title="Are you sure to delete this?" @confirm="confirmEvent({ block, row })">
+                  <template #reference>
+                    <el-icon color="red">
+                      <remove />
+                    </el-icon>
+                  </template>
+                </el-popconfirm>
+              </div>
             </div>
 
             <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
@@ -61,7 +72,7 @@
                   <el-radio :label="true">Yes</el-radio>
                   <el-radio :label="false">No</el-radio>
                 </el-radio-group>
-                <el-dropdown v-if="item.type === 'dropdown'" trigger="click" size="small">
+                <el-dropdown v-if="item.type === 'dropdown'" trigger="click">
                   <el-button>
                     Add field
                     <el-icon class="el-icon--right">
@@ -73,6 +84,7 @@
                       <el-dropdown-item
                         v-for="option in item.options"
                         :key="option"
+                        :disabled="isDisabled({ option, indexGroup })"
                         @click="
                           addLine({
                             model: item.model,
@@ -129,12 +141,17 @@ import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 import { ArrowDown } from '@element-plus/icons-vue'
+import { Remove } from '@element-plus/icons-vue'
+
 import { ElMessageBox } from 'element-plus'
+
+import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
 
 export default {
   name: 'AddAssets',
   components: {
     ArrowDown,
+    Remove,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -159,6 +176,8 @@ export default {
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
 
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
+
+    const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
 
     const { setInitValue } = useAssetsInfoHooks()
 
@@ -254,8 +273,8 @@ export default {
         value: ruleForm[item.model.group][item.model.model][item.model.item],
       }
       await updateMemberAssets({ data, id: memberId })
-      queryClient.invalidateQueries(['memberAssets', memberId])
       queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+      queryClient.invalidateQueries(['memberAssets', memberId])
     }
 
     const showDialog = ({ item, indexGroup, indexRow }) => {
@@ -275,6 +294,30 @@ export default {
       locale: 'en-US',
       currencyDisplay: 'hidden',
       precision: 2,
+    }
+
+    const isDisabled = ({ option, indexGroup }) => {
+      const elem = schema[indexGroup].rows.find((item) => {
+        return item.name === option.name
+      })
+      return !!elem
+    }
+
+    const confirmEvent = async ({ block, row }) => {
+      const data = {
+        row: row.name,
+        group: block.name,
+      }
+      const res = await deleteRow({ id: memberId, data })
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Remove success',
+        })
+        queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        queryClient.invalidateQueries(['memberAssets', memberId])
+      }
     }
 
     return {
@@ -301,6 +344,10 @@ export default {
       changeInput,
       isMemberAssetsSchemaLoading,
       blocks,
+      isDisabled,
+      confirmEvent,
+      deleteRow,
+      isLoadingDeleteRow,
     }
   },
 }

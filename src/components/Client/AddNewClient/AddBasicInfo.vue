@@ -391,9 +391,9 @@
                 >
                   Add job
                 </el-button>
-                <el-button v-else type="danger" plain @click="removeEmployment({ ruleForm, index })"
-                  >Remove job</el-button
-                >
+                <el-button v-else type="danger" plain @click="removeEmployment({ ruleForm, index })">
+                  Remove job
+                </el-button>
               </div>
             </div>
 

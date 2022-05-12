@@ -11,8 +11,19 @@
           </div>
         </div>
         <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
-          <div v-if="row.label" class="w-4/12 flex items-center text-main font-semibold text-xss">
-            {{ row.label }}
+          <div class="w-4/12 flex items-center">
+            <div v-if="row.label" class="text-main font-semibold text-xss">
+              {{ row.label }}
+            </div>
+            <div v-if="row.custom" class="flex items-center ml-2 cursor-pointer">
+              <el-popconfirm title="Are you sure to delete this?" @confirm="confirmEvent({ block, row })">
+                <template #reference>
+                  <el-icon color="red">
+                    <remove />
+                  </el-icon>
+                </template>
+              </el-popconfirm>
+            </div>
           </div>
 
           <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
@@ -44,6 +55,7 @@
                     <el-dropdown-item
                       v-for="option in item.options"
                       :key="option"
+                      :disabled="isDisabled({ option, indexGroup })"
                       @click="
                         addLine({ model: item.model, variable: option.name, indexGroup, indexRow, label: option.label })
                       "
@@ -79,16 +91,19 @@ import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
+import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 import { ArrowDown } from '@element-plus/icons-vue'
+import { Remove } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
 
 export default {
   name: 'AddProspectAssets',
   components: {
     ArrowDown,
+    Remove,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -106,6 +121,8 @@ export default {
     const { mutateAsync: create, data } = useMutation(createAssetsIncome)
 
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
+
+    const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
 
     const { setInitValue } = useAssetsInfoHooks()
 
@@ -213,6 +230,30 @@ export default {
       precision: 2,
     }
 
+    const isDisabled = ({ option, indexGroup }) => {
+      const elem = schema[indexGroup].rows.find((item) => {
+        return item.name === option.name
+      })
+      return !!elem
+    }
+
+    const confirmEvent = async ({ block, row }) => {
+      const data = {
+        row: row.name,
+        group: block.name,
+      }
+      const res = await deleteRow({ id: memberId, data })
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Remove success',
+        })
+        queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        queryClient.invalidateQueries(['memberAssets', memberId])
+      }
+    }
+
     return {
       ruleForm,
       schema,
@@ -228,6 +269,9 @@ export default {
       changeInput,
       showDialog,
       optionsCurrencyInput,
+      isDisabled,
+      confirmEvent,
+      isLoadingDeleteRow,
     }
   },
 }
