@@ -122,29 +122,20 @@
 import { watchEffect, ref, computed, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-
 import { useMutation, useQueryClient } from 'vue-query'
-
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
-
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
-
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
-
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
-
 import { ArrowDown } from '@element-plus/icons-vue'
 import { Remove } from '@element-plus/icons-vue'
-
 import { ElMessageBox } from 'element-plus'
-
 import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
 
 export default {
