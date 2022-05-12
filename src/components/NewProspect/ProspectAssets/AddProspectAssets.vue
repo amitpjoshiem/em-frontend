@@ -1,11 +1,7 @@
 <template>
   <div v-if="!isMemberAssetsLoading && !isMemberAssetsSchemaLoading">
     <el-form ref="form" :model="ruleForm">
-      <div
-        v-for="(block, indexGroup) in schema"
-        :key="indexGroup"
-        class="border border-input-border p-5 rounded-md mb-10"
-      >
+      <div v-for="(block, indexGroup) in schema" :key="indexGroup" class="p-5 mb-10">
         <span class="text-main text-xl font-semibold">{{ block.title }}</span>
 
         <div class="flex pb-2 mt-8">
@@ -25,9 +21,9 @@
                 v-if="item.type === 'string'"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
                 :options="optionsCurrencyInput"
-                :disabled="item.disabled"
+                :disabled="item.disabled || isLoadingUpdate"
                 placeholder="$12345"
-                @blur="changeInput(item)"
+                @change="changeInput(item)"
               />
               <el-radio-group
                 v-if="item.type === 'radio'"
@@ -195,6 +191,7 @@ export default {
       }
       await updateMemberAssets({ data, id: memberId })
       queryClient.invalidateQueries(['memberAssets', memberId])
+      queryClient.invalidateQueries(['memberAssetsSchema', memberId])
     }
 
     const showDialog = ({ item, indexGroup, indexRow }) => {

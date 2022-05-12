@@ -5,9 +5,31 @@
         <div
           v-for="(block, indexGroup) in schema"
           :key="indexGroup"
+          :ref="
+            (el) => {
+              if (el) blocks[indexGroup] = el
+            }
+          "
           class="border border-input-border p-5 rounded-md mb-10"
         >
-          <span class="text-main text-xl font-semibold">{{ block.title }}</span>
+          <div v-if="block.name === 'current_income'" class="flex items-center mb-5">
+            <InlineSvg v-show="isFocusCurrentIncome && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusCurrentIncome && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
+            <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
+          </div>
+          <div v-if="block.name === 'liquid_assets'" class="flex items-center mb-5">
+            <InlineSvg v-show="isFocusLiquidAssets && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusLiquidAssets && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
+            <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
+          </div>
+          <div v-if="block.name === 'other_assets_investments'" class="flex items-center mb-5">
+            <InlineSvg v-show="isFocusNonLiquidAssets && !isDoneCurrentStep" :src="IconActive" />
+            <InlineSvg v-show="!isFocusNonLiquidAssets && !isDoneCurrentStep" :src="IconNotActive" />
+            <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
+            <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
+          </div>
 
           <div class="flex pb-2 mt-8">
             <div class="w-4/12"></div>
@@ -28,7 +50,9 @@
                   :options="optionsCurrencyInput"
                   :disabled="item.disabled || isLoadingUpdate"
                   placeholder="$12345"
-                  @blur="changeInput(item)"
+                  @change="changeInput(item)"
+                  @focus="focus(item.model.group)"
+                  @blur="blur(item.model.group)"
                 />
                 <el-radio-group
                   v-if="item.type === 'radio'"
@@ -123,10 +147,11 @@ export default {
     const isFocusCurrentIncome = ref(false)
     const isFocusLiquidAssets = ref(false)
     const isFocusNonLiquidAssets = ref(false)
+    const blocks = ref([])
     const step = computed(() => store.state.newClient.step)
 
     const ruleForm = reactive({})
-    const schema = reactive({})
+    const schema = reactive([])
 
     const memberId = route.params.id
 
@@ -147,7 +172,6 @@ export default {
     watchEffect(() => {
       if (!isMemberAssetsLoading.value) {
         setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
-        console.log('ruleForm - ', ruleForm)
       }
       if (!isMemberAssetsSchemaLoading.value) {
         Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value.data)))
@@ -177,15 +201,23 @@ export default {
     })
 
     const focus = (type) => {
-      if (type === 'liquidAssets') isFocusLiquidAssets.value = true
-      if (type === 'nonLiquidAssets') isFocusNonLiquidAssets.value = true
-      if (type === 'currentIncome') isFocusCurrentIncome.value = true
+      blocks.value[indexBlock(type)].classList.add('border-border-blue')
+      if (type === 'liquid_assets') isFocusLiquidAssets.value = true
+      if (type === 'other_assets_investments') isFocusNonLiquidAssets.value = true
+      if (type === 'current_income') isFocusCurrentIncome.value = true
     }
 
     const blur = (type) => {
-      if (type === 'liquidAssets') isFocusLiquidAssets.value = false
-      if (type === 'nonLiquidAssets') isFocusNonLiquidAssets.value = false
-      if (type === 'currentIncome') isFocusCurrentIncome.value = false
+      blocks.value[indexBlock(type)].classList.remove('border-border-blue')
+      if (type === 'liquid_assets') isFocusLiquidAssets.value = false
+      if (type === 'other_assets_investments') isFocusNonLiquidAssets.value = false
+      if (type === 'current_income') isFocusCurrentIncome.value = false
+    }
+
+    const indexBlock = (type) => {
+      return schema.findIndex((elem) => {
+        return elem.name === type
+      })
     }
 
     const addLine = ({ model, variable, indexGroup, indexRow, label }) => {
@@ -225,6 +257,7 @@ export default {
       }
       await updateMemberAssets({ data, id: memberId })
       queryClient.invalidateQueries(['memberAssets', memberId])
+      queryClient.invalidateQueries(['memberAssetsSchema', memberId])
     }
 
     const showDialog = ({ item, indexGroup, indexRow }) => {
@@ -254,7 +287,6 @@ export default {
       isMemberAssetsLoading,
       form,
       isLoadingUpdate,
-      // change,
 
       IconActive,
       IconNotActive,
@@ -272,11 +304,13 @@ export default {
       isDoneCurrentStep,
 
       schema,
-
+      addLine,
       optionsCurrencyInput,
       showDialog,
       changeInput,
       isMemberAssetsSchemaLoading,
+
+      blocks,
     }
   },
 }
