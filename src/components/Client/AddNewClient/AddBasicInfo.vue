@@ -495,7 +495,10 @@
           <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusOther }">
             <!-- <MoreInfoAbout /> -->
 
-            <el-form-item label="Have you watched us during the news on on any channel" class="mb-4">
+            <el-form-item
+              label="Have you watched us during the news on any channel? (If yes, Please specify the channel)"
+              class="mb-4"
+            >
               <el-radio-group v-model="ruleForm.is_watched">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
@@ -548,7 +551,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="What are yout goals for Retiretment?" prop="retirement" class="mb-4">
+            <el-form-item label="What are your goals for Retirement?" prop="retirement" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement"
                 type="textarea"
@@ -556,7 +559,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="What are yout goals for retiretment money?" prop="retirement_money" class="mb-4">
+            <el-form-item label="What are your goals for Retirement money?" prop="retirement_money" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement_money"
                 type="textarea"
