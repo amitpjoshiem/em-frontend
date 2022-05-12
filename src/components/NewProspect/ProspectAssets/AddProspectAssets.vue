@@ -32,7 +32,7 @@
                 v-if="item.type === 'string'"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
                 :options="optionsCurrencyInput"
-                :disabled="item.disabled || isLoadingUpdate"
+                :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
                 placeholder="$12345"
                 @change="changeInput(item)"
               />
@@ -251,7 +251,6 @@ export default {
           message: 'Remove success',
         })
         queryClient.invalidateQueries(['memberAssetsSchema', memberId])
-        queryClient.invalidateQueries(['memberAssets', memberId])
       }
     }
 
