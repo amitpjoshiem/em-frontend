@@ -9,17 +9,17 @@
         <span class="text-main text-xl font-semibold">{{ block.title }}</span>
 
         <div class="flex pb-2 mt-8">
-          <div class="w-2/12"></div>
-          <div v-for="header in block.headers" :key="header + indexGroup" class="w-5/12 text-gray03 text-xs">
+          <div class="w-4/12"></div>
+          <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-gray03 text-xs">
             {{ header.toUpperCase() }}
           </div>
         </div>
         <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
-          <div v-if="row.label" class="w-3/12 flex items-center text-main font-semibold text-xss">
+          <div v-if="row.label" class="w-4/12 flex items-center text-main font-semibold text-xss">
             {{ row.label }}
           </div>
 
-          <div v-for="item in row.elements" :key="item" class="w-full px-2 mb-0">
+          <div v-for="item in row.elements" :key="item" class="px-2 mb-0 w-2/12">
             <el-form-item class="mb-4">
               <SwdCurrencyInput
                 v-if="item.type === 'string'"
