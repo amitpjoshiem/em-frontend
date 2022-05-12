@@ -259,6 +259,7 @@ export default {
       const dataSchema = {
         label: label,
         name: variable,
+        custom: 'true',
         elements,
       }
       schema[indexGroup].rows.splice(indexRow + 1, 0, dataSchema)

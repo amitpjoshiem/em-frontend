@@ -193,6 +193,7 @@ export default {
       const dataSchema = {
         label: label,
         name: variable,
+        custom: 'true',
         elements,
       }
       schema[indexGroup].rows.splice(indexRow + 1, 0, dataSchema)
@@ -207,8 +208,8 @@ export default {
         value: ruleForm[item.model.group][item.model.model][item.model.item],
       }
       await updateMemberAssets({ data, id: memberId })
-      queryClient.invalidateQueries(['memberAssets', memberId])
       queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+      queryClient.invalidateQueries(['memberAssets', memberId])
     }
 
     const showDialog = ({ item, indexGroup, indexRow }) => {
