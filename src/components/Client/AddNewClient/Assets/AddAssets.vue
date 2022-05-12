@@ -124,8 +124,6 @@ import { useAlert } from '@/utils/use-alert'
 
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 
-import { rules } from '@/validationRules/assetsRules.js'
-
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
@@ -283,33 +281,25 @@ export default {
       ruleForm,
       backStep,
       submitForm,
-      rules,
       isMemberAssetsLoading,
       form,
       isLoadingUpdate,
-
       IconActive,
       IconNotActive,
       IconDoneStep,
-
       focus,
       blur,
-
       isFocusCurrentIncome,
       isFocusLiquidAssets,
       isFocusNonLiquidAssets,
-
       isLoadingInfo,
-
       isDoneCurrentStep,
-
       schema,
       addLine,
       optionsCurrencyInput,
       showDialog,
       changeInput,
       isMemberAssetsSchemaLoading,
-
       blocks,
     }
   },
