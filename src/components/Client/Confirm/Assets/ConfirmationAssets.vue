@@ -5,6 +5,7 @@
     </div>
     <div v-if="!isAssetsLoading && !isAssetsSchemaLoading">
       <el-card v-for="(block, indexGroup) in assetsSchema.data" :key="indexGroup" class="rounded-md mb-10">
+        <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
         <div class="flex pb-2 mt-8">
           <div class="w-4/12"></div>
           <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-gray03 text-xs">
@@ -20,7 +21,7 @@
             </div>
 
             <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
-              <div v-if="item.type === 'string'" class="mb-2">
+              <div v-if="item.type === 'string'" class="mb-2 text-xss">
                 {{ currencyFormat(assets.data[item.model.group][item.model.model][item.model.item]) }}
               </div>
               <div v-if="item.type === 'radio'" class="flex">

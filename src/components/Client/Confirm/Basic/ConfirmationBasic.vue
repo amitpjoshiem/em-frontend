@@ -70,7 +70,9 @@
         </div>
       </div>
     </el-card>
-    <MoreInfoAbout />
+    <el-card>
+      <MoreInfoAbout />
+    </el-card>
   </div>
   <div v-else class="flex justify-center items-center">
     <SwdSpinner large />
