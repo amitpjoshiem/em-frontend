@@ -499,15 +499,15 @@
               label="Have you watched us during the news on any channel? (If yes, Please specify the channel)"
               class="mb-4"
             >
-              <el-radio-group v-model="ruleForm.is_watched">
+              <el-radio-group v-model="ruleForm.is_watch">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item v-if="ruleForm.is_watched" class="mb-4">
+            <el-form-item v-if="ruleForm.is_watch" class="mb-4">
               <el-input
-                v-model="ruleForm.other.new_channel"
+                v-model="ruleForm.channels"
                 placeholder="Enter channel"
                 @focus="focus('other')"
                 @blur="blur('other')"
@@ -668,7 +668,8 @@ export default {
       phone: '',
       amount_for_retirement: '150000',
       biggest_financial_concern: '',
-      is_watched: false,
+      is_watch: false,
+      channels: '',
       spouse: {
         name: '',
         email: '',
