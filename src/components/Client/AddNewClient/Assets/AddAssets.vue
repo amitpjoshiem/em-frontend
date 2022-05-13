@@ -61,9 +61,8 @@
                   :options="optionsCurrencyInput"
                   :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
                   placeholder="$12345"
-                  @change="changeInput(item)"
+                  @blur="changeInput(item)"
                   @focus="focus(item.model.group)"
-                  @blur="blur(item.model.group)"
                 />
                 <el-radio-group
                   v-if="item.type === 'radio'"
@@ -257,16 +256,19 @@ export default {
     }
 
     const changeInput = async (item) => {
-      const data = {
-        group: item.model.group,
-        row: item.model.model,
-        element: item.model.item,
-        type: 'string',
-        value: ruleForm[item.model.group][item.model.model][item.model.item],
+      blur(item.model.group)
+      if (ruleForm[item.model.group][item.model.model][item.model.item] !== null) {
+        const data = {
+          group: item.model.group,
+          row: item.model.model,
+          element: item.model.item,
+          type: 'string',
+          value: ruleForm[item.model.group][item.model.model][item.model.item],
+        }
+        await updateMemberAssets({ data, id: memberId })
+        queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        queryClient.invalidateQueries(['memberAssets', memberId])
       }
-      await updateMemberAssets({ data, id: memberId })
-      queryClient.invalidateQueries(['memberAssetsSchema', memberId])
-      queryClient.invalidateQueries(['memberAssets', memberId])
     }
 
     const showDialog = ({ item, indexGroup, indexRow }) => {
