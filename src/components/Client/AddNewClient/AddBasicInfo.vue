@@ -505,7 +505,7 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item v-if="ruleForm.is_watch" class="mb-4">
+            <el-form-item v-if="ruleForm.is_watch" class="mb-4" prop="channels" label="Channels">
               <el-input
                 v-model="ruleForm.channels"
                 placeholder="Enter channel"
