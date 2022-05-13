@@ -523,7 +523,7 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="My biggest financial concern are:" class="mb-4">
+            <el-form-item label="My biggest financial concerns are:" class="mb-4">
               <el-input
                 v-model="ruleForm.biggest_financial_concern"
                 type="textarea"

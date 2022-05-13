@@ -97,7 +97,7 @@
                       >
                         {{ option.label }}
                       </el-dropdown-item>
-                      <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })"> Custom </el-dropdown-item>
+                      <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })">Other</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -270,7 +270,7 @@ export default {
     }
 
     const showDialog = ({ item, indexGroup, indexRow }) => {
-      ElMessageBox.prompt('Please input name', 'Custom name', {
+      ElMessageBox.prompt('Please input field name', 'Other', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancel',
       }).then(({ value }) => {
