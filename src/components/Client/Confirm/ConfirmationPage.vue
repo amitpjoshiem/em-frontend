@@ -23,7 +23,7 @@
     <div class="border border-border-blue rounded-md p-5 mb-4">
       <div class="flex items-center mb-5">
         <InlineSvg :src="IconDoneStep" />
-        <div class="text-main text-xl font-semibold ml-2">Expense</div>
+        <div class="text-main text-xl font-semibold ml-2">Expenses</div>
       </div>
       <ConfirmationExpense />
     </div>
@@ -139,6 +139,11 @@ export default {
     }
 
     const submit = () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Thank you for submitting the details! The advisor will contact you nearest time.',
+      })
       router.push({ name: 'client-dashboard' })
     }
 
