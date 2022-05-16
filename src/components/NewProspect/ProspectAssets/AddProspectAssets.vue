@@ -80,6 +80,25 @@
     </el-form>
   </div>
   <el-skeleton v-else :rows="15" animated />
+  <el-dialog v-model="dialogVisible" title="Other" width="40%" lock-scroll :before-close="closeDialog">
+    <span>Field name</span>
+    <el-input v-model="fieldName" placeholder="Please input field name" :autofocus="true" />
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="cancelDialog">Cancel</el-button>
+        <el-button
+          type="primary"
+          plain
+          :disabled="isLoadingCheck"
+          :loading="isLoadingCheck"
+          class="w-20"
+          @click="confirmCreateField"
+        >
+          Create
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -88,6 +107,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
 import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
+import { checkCreateAssetsIncomeField } from '@/api/vueQuery/check-create-assets-income-field'
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
@@ -97,7 +117,6 @@ import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { Remove } from '@element-plus/icons-vue'
-import { ElMessageBox } from 'element-plus'
 
 export default {
   name: 'AddProspectAssets',
@@ -111,6 +130,9 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const form = ref()
+    const dialogVisible = ref(false)
+    const newField = ref([])
+    const fieldName = ref()
     const step = computed(() => store.state.newProspect.step)
 
     const memberId = route.params.id
@@ -121,6 +143,7 @@ export default {
     const { mutateAsync: create, data } = useMutation(createAssetsIncome)
 
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
+    const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
 
     const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
 
@@ -214,18 +237,6 @@ export default {
       }
     }
 
-    const showDialog = ({ item, indexGroup, indexRow }) => {
-      ElMessageBox.prompt('Please input name', 'Custom name', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-      }).then(({ value }) => {
-        const model = item.model
-        const variable = value.toLowerCase().replace(/ /g, '_')
-        const label = value
-        addLine({ model, variable, label, indexGroup, indexRow })
-      })
-    }
-
     const optionsCurrencyInput = {
       currency: 'USD',
       locale: 'en-US',
@@ -256,6 +267,40 @@ export default {
       }
     }
 
+    const confirmCreateField = async () => {
+      const { item, indexGroup, indexRow } = newField.value
+      const data = {
+        row: fieldName.value,
+        group: item.model.group,
+      }
+
+      const res = await checkCreateField({ memberId, data })
+
+      if (res.succes) {
+        const model = item.model
+        const variable = fieldName.value.toLowerCase().replace(/ /g, '_')
+        const label = fieldName.value
+        addLine({ model, variable, label, indexGroup, indexRow })
+        dialogVisible.value = false
+        fieldName.value = ''
+      }
+    }
+
+    const showDialog = ({ item, indexGroup, indexRow }) => {
+      newField.value = { item, indexGroup, indexRow }
+      dialogVisible.value = true
+    }
+
+    const closeDialog = () => {
+      dialogVisible.value = false
+      fieldName.value = ''
+    }
+
+    const cancelDialog = () => {
+      dialogVisible.value = false
+      fieldName.value = ''
+    }
+
     return {
       ruleForm,
       schema,
@@ -274,6 +319,12 @@ export default {
       isDisabled,
       confirmEvent,
       isLoadingDeleteRow,
+      closeDialog,
+      cancelDialog,
+      confirmCreateField,
+      isLoadingCheck,
+      dialogVisible,
+      fieldName,
     }
   },
 }

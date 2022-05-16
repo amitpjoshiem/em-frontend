@@ -14,18 +14,12 @@ export const fetcher = async ({ url, data, options }) => {
     const response = await apiClient.fetch(url, { ...options, body })
     if (!response.ok) {
       const body = await response.json()
-      throw body.errors
-      // throw new Error(body.message)
+      throw body
     }
     if (response.status === 204) return { succes: true }
     return response.json()
   } catch (error) {
     showErrorResponse(error)
-    // useAlert({
-    //   type: 'error',
-    //   title: 'Error',
-    //   message: error.message,
-    // })
     return { error }
   }
 }
