@@ -1,5 +1,6 @@
 import { fetchTransport } from './FetchTransport'
 import { tokenStorage } from './TokenStorage'
+import store from '@/store'
 
 const API_CLIENT_STATUSES = {
   auth: 'authenticated',
@@ -13,6 +14,17 @@ const config = {
   },
 }
 
+const excludedRoutesCustomHeaders = [
+  '/login',
+  '/otps/verify',
+  '/init',
+  '/companies',
+  '/logout',
+  '/otps/resend',
+  '/password/forgo',
+  '/users/profile',
+  '/refresh',
+]
 class ApiClient {
   /**
    *
@@ -57,6 +69,33 @@ class ApiClient {
     this.token = this.status === API_CLIENT_STATUSES['pending'] ? this.token : this.refreshTokenCall()
   }
 
+  getCustomHeader(url) {
+    const customHeader = {}
+    if (!excludedRoutesCustomHeaders.includes(url)) {
+      const type = store.state.globalComponents.currentTypeUser
+      const companyId = store.state.globalComponents.currentCompanyId
+
+      if (companyId) customHeader['x-company'] = companyId
+
+      if (type === 'advisor') {
+        customHeader['x-user'] = store.state.globalComponents.advisorId
+      }
+
+      if (type === 'ceo') {
+        customHeader['x-user'] = store.state.globalComponents.ceoId
+      }
+
+      if (type === 'admin') {
+        customHeader['x-user'] = store.state.globalComponents.adminId
+      }
+
+      if (type === 'client') {
+        customHeader['x-user'] = store.state.globalComponents.clientId
+      }
+    }
+    return customHeader
+  }
+
   async fetch(url, options) {
     try {
       options.headers = {
@@ -68,6 +107,7 @@ class ApiClient {
         options.headers = {
           ...options.headers,
           Authorization: `Bearer ${token}`,
+          ...this.getCustomHeader(url),
         }
       }
 

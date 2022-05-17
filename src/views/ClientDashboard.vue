@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5">
+  <div>
     <HeaderDashboardClient />
     <ClientInformation />
   </div>

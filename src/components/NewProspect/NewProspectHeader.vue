@@ -30,7 +30,7 @@ export default {
 
     const back = () => {
       if (step.value === 1) {
-        router.push({ name: 'dashboard' })
+        router.push({ name: 'advisor-dashboard' })
       } else {
         store.commit('newProspect/setStep', step.value - 1)
         goPage()
@@ -95,7 +95,7 @@ export default {
           router.push({ name: 'blueprint-report', params: { id: route.params.id ? route.params.id : '' } })
           break
         default:
-          router.push({ name: 'dashboard' })
+          router.push({ name: 'advisor-dashboard' })
       }
     }
 

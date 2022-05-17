@@ -1,20 +1,20 @@
 import { useFetch } from '@/api/use-fetch'
 import { useAlert } from '@/utils/use-alert'
-import { useSetRole } from '@/hooks/use-set-role.js'
+import store from '@/store'
+import { useSetInit } from '@/hooks/use-set-init'
 
 const useOtp = () => {
   const { response, error, fetching, fetchData } = useFetch('/otps/verify', {
     method: 'POST',
   })
-
-  const { setRole } = useSetRole()
+  const { setInit } = useSetInit()
 
   const otpAuth = async (body) => {
     await fetchData({ body })
     storeAccessRole()
   }
 
-  const storeAccessRole = () => {
+  const storeAccessRole = async () => {
     if (error.value !== null) {
       useAlert({
         type: 'error',
@@ -23,7 +23,8 @@ const useOtp = () => {
       })
       return
     }
-    setRole()
+    store.commit('auth/setAuthUser', true)
+    await setInit()
   }
 
   return {

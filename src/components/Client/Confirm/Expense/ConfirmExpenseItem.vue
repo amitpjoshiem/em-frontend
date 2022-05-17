@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-xss">
     {{ currencyFormat(item) }}
   </div>
 </template>

@@ -1,16 +1,16 @@
 <template>
-  <div v-if="!isLoadingClient && !isLoadingAdvisor" class="my-4">
+  <div v-if="!isLoadingClient && !isLoadingAdvisor" class="my-4 px-5">
     <el-form ref="form" :model="ruleForm" label-position="top">
-      <el-form-item class="mb-4">
+      <!-- <el-form-item class="mb-4">
         <el-radio-group v-model="ruleForm.consultation" class="flex flex-col items-start" @change="changeConsultation">
           <el-radio label="want_consultation_and_book">Yes, I want a Free Consultation & Copy of Matt`s Book </el-radio>
           <el-radio label="want_consultation">Yes, I want a Free Consultation </el-radio>
           <el-radio label="dont_want_consultation">No, I don't want a Free Consultation </el-radio>
         </el-radio-group>
-      </el-form-item>
+      </el-form-item> -->
 
       <!-- I Currently Have -->
-      <el-form-item label="I Currently Have:" class="mb-4">
+      <!-- <el-form-item label="I Currently Have:" class="mb-4">
         <el-checkbox
           v-model="ruleForm.currently_have.cds"
           label="CDs"
@@ -65,10 +65,10 @@
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
           @change="handleChange()"
         />
-      </el-form-item>
+      </el-form-item> -->
 
       <!-- I Want More Info About: -->
-      <el-form-item label="I Currently Have:">
+      <el-form-item label="I Want More Info About ">
         <el-checkbox
           v-model="ruleForm.more_info_about.indexed_annuities"
           label="Indexed Annuities"

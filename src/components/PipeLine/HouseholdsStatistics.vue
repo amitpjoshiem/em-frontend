@@ -1,6 +1,6 @@
 <template>
   <div class="border border-color-grey rounded-xl">
-    <div v-if="!isLoadingRetired && !isLoadingAge" class="flex">
+    <div v-if="!isFetchingRetired && !isFetchingAge" class="flex">
       <div class="w-8/12 mr-2.5 border-r">
         <div class="p-5">
           <div class="text-smm text-main font-semibold">Households Statistics</div>
@@ -26,18 +26,26 @@ export default {
     StatisticsAgeChart,
   },
   setup() {
-    const { isLoading: isLoadingAge, isError: isErrorAge, data: statisticsAge } = usePipeLineStatisticsAge()
+    const {
+      isLoading: isLoadingAge,
+      isError: isErrorAge,
+      isFetching: isFetchingAge,
+      data: statisticsAge,
+    } = usePipeLineStatisticsAge()
     const {
       isLoading: isLoadingRetired,
+      isFetching: isFetchingRetired,
       isError: isErrorRetired,
       data: statisticsRetired,
     } = usePipeLineStatisticsRetired()
 
     return {
       isLoadingAge,
+      isFetchingAge,
       isErrorAge,
       statisticsAge,
       isLoadingRetired,
+      isFetchingRetired,
       isErrorRetired,
       statisticsRetired,
     }

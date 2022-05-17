@@ -100,11 +100,11 @@
 }
 
 /* Chrome, Safari, Edge, Opera */
-.el-input__inner::-webkit-outer-spin-button,
+/* .el-input__inner::-webkit-outer-spin-button,
 .el-input__inner::-webkit-inner-spin-button{
   -webkit-appearance: none;
   margin: 0;
-}
+} */
 
 /* Firefox */
 .el-input__inner[type='number'] {
@@ -144,9 +144,9 @@
   vertical-align: bottom;
 }
 
-.el-dialog__body{
+/* .el-dialog__body{
   min-height: 200px;
-}
+} */
 
 .el-step__title {
   font-size: 14px;
@@ -287,4 +287,8 @@
 
 .el-textarea__inner:hover{
   box-shadow: none;
+}
+
+.el-dropdown-menu__item.is-disabled{
+  pointer-events: none;
 }

@@ -24,7 +24,7 @@ import TopMembers from '@/components/Dashboard/TopMembers/TopMembers.vue'
 import ListOfHouseholds from '@/components/Dashboard/ListOfHouseholds.vue'
 
 export default {
-  name: 'Dashboard',
+  name: 'AdvisorDashboard',
   components: {
     PipeLine,
     LastActivity,

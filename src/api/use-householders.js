@@ -18,7 +18,7 @@ export const useHouseholders = () => {
     if (store.state.globalComponents.sortMembers.sortedBy === 'descending') return 'desc'
     return undefined
   })
-  const limit = computed(() => store.state.globalComponents.itemsPerPage.values.dashboard)
+  const limit = computed(() => store.state.globalComponents.itemsPerPage.values.advisorDashboard)
 
   const reactiveType = ref(houseHolderType)
   const reactiveLimit = ref(limit)

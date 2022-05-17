@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <SideBar />
+    <SwdSideBar />
     <div class="flex flex-col w-full">
       <Header />
       <router-view />
@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import SideBar from '@/components/SideBar.vue'
+import SwdSideBar from '@/components/Global/SwdSideBar.vue'
 import Header from '@/components/Header/Header.vue'
 
 export default {
   name: 'AdvisorHome',
 
   components: {
-    SideBar,
+    SwdSideBar,
     Header,
   },
 }

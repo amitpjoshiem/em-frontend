@@ -1,54 +1,72 @@
 <template>
   <div class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto lg:w-[960px]">
-    <SwdSubHeader title="Confirmation Information" class="mt-2" />
-    <el-collapse v-model="activeNames" accordion>
-      <el-collapse-item title="Basic" name="basic">
-        <ConfirmationInformation />
-      </el-collapse-item>
+    <div class="flex justify-center pb-5">
+      <span class="text-sm sm:text-title text-main font-semibold">Confirmation Information</span>
+    </div>
 
-      <el-collapse-item title="Assets &amp; Income" name="assets">
-        <ConfirmationAssets v-if="activeNames === 'assets'" />
-      </el-collapse-item>
+    <div class="border border-border-blue rounded-md p-5 mb-4">
+      <div class="flex items-center mb-5">
+        <InlineSvg :src="IconDoneStep" />
+        <div class="text-main text-xl font-semibold ml-2">Basic</div>
+      </div>
+      <ConfirmationInformation />
+    </div>
 
-      <el-collapse-item title="Expense" name="expense">
-        <ConfirmationExpense v-if="activeNames === 'expense'" />
-      </el-collapse-item>
+    <div class="border border-border-blue rounded-md p-5 mb-4">
+      <div class="flex items-center mb-5">
+        <InlineSvg :src="IconDoneStep" />
+        <div class="text-main text-xl font-semibold ml-2">Assets &amp; Income</div>
+      </div>
+      <ConfirmationAssets />
+    </div>
 
-      <el-collapse-item title="Investment and Retirement Accounts (most recent statements)" name="investment">
-        <ListDocumentsClient
-          v-if="activeNames === 'investment'"
-          doc-collections="investment_and_retirement_accounts"
-          page="investment-retirement"
-        />
-      </el-collapse-item>
+    <div class="border border-border-blue rounded-md p-5 mb-4">
+      <div class="flex items-center mb-5">
+        <InlineSvg :src="IconDoneStep" />
+        <div class="text-main text-xl font-semibold ml-2">Expenses</div>
+      </div>
+      <ConfirmationExpense />
+    </div>
 
-      <el-collapse-item
-        title="Life Insurance, Annuity, and Long Term Care Policies (most recent statements)"
-        name="life-insurance"
-      >
-        <ListDocumentsClient
-          v-if="activeNames === 'life-insurance'"
-          doc-collections="life_insurance_annuity_and_long_terms_care_policies"
-          page="life-insurance"
-        />
-      </el-collapse-item>
+    <div class="border border-border-blue rounded-md p-5 mb-4">
+      <div class="flex items-center mb-5">
+        <InlineSvg :src="IconDoneStep" />
+        <div class="text-main text-xl font-semibold ml-2">
+          Investment and Retirement Accounts (most recent statements)
+        </div>
+      </div>
+      <ListDocumentsClient doc-collections="investment_and_retirement_accounts" page="investment-retirement" />
+    </div>
 
-      <el-collapse-item title="Social Security Information/Statement(s)" name="social-security">
-        <ListDocumentsClient
-          v-if="activeNames === 'social-security'"
-          doc-collections="social_security_information"
-          page="social-security"
-        />
-      </el-collapse-item>
+    <div class="border border-border-blue rounded-md p-5 mb-4">
+      <div class="flex items-center mb-5">
+        <InlineSvg :src="IconDoneStep" />
+        <div class="text-main text-xl font-semibold ml-2">
+          Life Insurance, Annuity, and Long Term Care Policies (most recent statements)
+        </div>
+      </div>
+      <ListDocumentsClient
+        doc-collections="life_insurance_annuity_and_long_terms_care_policies"
+        page="life-insurance"
+      />
+    </div>
 
-      <el-collapse-item title="List of Stock Certificates or Bonds" name="list-stock">
-        <ListDocumentsClient
-          v-if="activeNames === 'list-stock'"
-          doc-collections="list_of_stock_certificates_or_bonds"
-          page="list-stock"
-        />
-      </el-collapse-item>
-    </el-collapse>
+    <div class="border border-border-blue rounded-md p-5 mb-4">
+      <div class="flex items-center mb-5">
+        <InlineSvg :src="IconDoneStep" />
+        <div class="text-main text-xl font-semibold ml-2">Social Security Information/Statement(s)</div>
+      </div>
+      <ListDocumentsClient doc-collections="social_security_information" page="social-security" />
+    </div>
+
+    <div class="border border-border-blue rounded-md p-5 mb-4">
+      <div class="flex items-center mb-5">
+        <InlineSvg :src="IconDoneStep" />
+        <div class="text-main text-xl font-semibold ml-2">List of Stock Certificates or Bonds</div>
+      </div>
+      <ListDocumentsClient doc-collections="list_of_stock_certificates_or_bonds" page="list-stock" />
+    </div>
+
     <div class="flex justify-end mt-6 mb-4">
       <el-button
         v-if="$can('advisor', 'all')"
@@ -61,12 +79,14 @@
         Convert to opportunity
       </el-button>
     </div>
+    <div class="flex justify-end mt-6 mb-4">
+      <el-button v-if="$can('client', 'all')" type="info" plain @click="cancel"> Cancel </el-button>
+      <el-button v-if="$can('client', 'all')" type="primary" plain @click="submit"> Submit </el-button>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
-
 import ConfirmationInformation from './Basic/ConfirmationBasic.vue'
 import ConfirmationExpense from './Expense/ConfirmationExpense.vue'
 import ConfirmationAssets from './Assets/ConfirmationAssets.vue'
@@ -76,6 +96,11 @@ import { convertLeadToOpportunity } from '@/api/vueQuery/fetch-convert-lead-to-o
 import { useMutation } from 'vue-query'
 import { useRoute, useRouter } from 'vue-router'
 import { useAlert } from '@/utils/use-alert'
+import { onMounted } from 'vue'
+
+import { scrollTop } from '@/utils/scrollTop'
+
+import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
   name: 'ConfirmationPage',
@@ -88,11 +113,14 @@ export default {
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const activeNames = ref(['basic'])
 
     const id = route.params.id
 
     const { mutateAsync: convertLead, isLoading } = useMutation(convertLeadToOpportunity)
+
+    onMounted(() => {
+      scrollTop()
+    })
 
     const convert = async () => {
       const res = await convertLead(id)
@@ -106,10 +134,25 @@ export default {
       }
     }
 
+    const cancel = () => {
+      router.push({ name: 'client-dashboard' })
+    }
+
+    const submit = () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Thank you for submitting the details! The advisor will contact you nearest time.',
+      })
+      router.push({ name: 'client-dashboard' })
+    }
+
     return {
-      activeNames,
       isLoading,
       convert,
+      IconDoneStep,
+      submit,
+      cancel,
     }
   },
 }

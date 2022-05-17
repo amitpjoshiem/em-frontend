@@ -18,6 +18,8 @@ export function useBasicInfoHooks() {
       ruleForm.state = member.value.state
       ruleForm.zip = member.value.zip
       ruleForm.phone = member.value.phone
+      ruleForm.is_watch = member.value.is_watch
+      ruleForm.channels = member.value.channels
 
       if (member.value.employment_history.length)
         Object.assign(ruleForm.employment_history, JSON.parse(JSON.stringify(member.value.employment_history)))

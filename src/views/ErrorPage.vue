@@ -35,7 +35,7 @@ export default {
       if (type === 'salesforce') {
         router.replace({ name: 'partners' })
       } else {
-        router.replace({ name: 'dashboard' })
+        router.replace({ name: 'advisor-dashboard' })
       }
     }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <SideBar />
+    <SwdSideBar />
     <div class="flex flex-col w-full">
       <Header />
       <SettingsApp />
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import SideBar from '@/components/SideBar.vue'
+import SwdSideBar from '@/components/Global/SwdSideBar.vue'
 import Header from '@/components/Header/Header.vue'
 import SettingsApp from '../views/SettingsApp.vue'
 
@@ -17,7 +17,7 @@ export default {
   name: 'ClientHome',
 
   components: {
-    SideBar,
+    SwdSideBar,
     Header,
     SettingsApp,
   },

@@ -1,6 +1,9 @@
+<template>
+  <SwdFullScreenLoading />
+</template>
+
 <script>
-import { defineComponent, watch } from 'vue'
-import { ElLoading } from 'element-plus'
+import { defineComponent } from 'vue'
 import { onMounted } from 'vue'
 import { useLogout } from '@/api/authentication/use-logout'
 import { tokenStorage } from '@/api/api-client/TokenStorage'
@@ -12,15 +15,7 @@ export default defineComponent({
 
     const removeAccessToken = useRemoveStoreAccessToken()
 
-    let loadingInstance
-
     onMounted(() => {
-      loadingInstance = ElLoading.service({
-        lock: true,
-        text: 'Logout',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)',
-      })
       setTimeout(() => {
         if (tokenStorage.getByKey('refresh_token_expired')) {
           removeAccessToken()
@@ -30,14 +25,7 @@ export default defineComponent({
       }, 1000)
     })
 
-    watch(fetching, (newValue) => {
-      if (newValue === false) {
-        loadingInstance.close()
-      }
-    })
-
     return {
-      loadingInstance,
       error,
       fetching,
     }

@@ -25,7 +25,7 @@ export default {
 
     const { isFetching, isLoading, isError, data, houseHolderTypeHandler } = useHouseholders()
 
-    const rows = computed(() => Number(store.state.globalComponents.itemsPerPage.values.dashboard))
+    const rows = computed(() => Number(store.state.globalComponents.itemsPerPage.values.advisorDashboard))
 
     return {
       isFetching,

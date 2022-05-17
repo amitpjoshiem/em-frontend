@@ -23,7 +23,7 @@ const useLogin = () => {
     if (headers.value['x-otp-type']) {
       router.push({ name: 'otp' })
     } else {
-      router.push({ name: 'dashboard' })
+      router.push({ name: 'advisor-dashboard' })
     }
   }
 

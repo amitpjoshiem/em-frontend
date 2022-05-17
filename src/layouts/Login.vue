@@ -1,17 +1,17 @@
 <template>
   <div class="flex w-full">
-    <SideBar />
+    <SwdSideBar />
     <router-view />
   </div>
 </template>
 
 <script>
-import SideBar from '@/components/SideBar.vue'
+import SwdSideBar from '@/components/Global/SwdSideBar.vue'
 
 export default {
   name: 'Login',
   components: {
-    SideBar,
+    SwdSideBar,
   },
 }
 </script>

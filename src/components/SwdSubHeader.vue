@@ -1,12 +1,12 @@
 <template>
   <div class="flex pb-5">
-    <div class="w-3/12">
+    <div class="w-2/12">
       <BackButton text="Back" @click="$router.go(-1)" />
     </div>
-    <div class="w-6/12 text-center">
+    <div class="w-8/12 text-center">
       <span class="text-sm sm:text-title text-main font-semibold">{{ title }}</span>
     </div>
-    <div class="w-3/12 text-right">
+    <div class="w-2/12 text-right">
       <ShareBtn v-if="withShareBtn" :pdf-region="region" />
     </div>
   </div>

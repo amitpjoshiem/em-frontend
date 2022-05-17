@@ -159,12 +159,7 @@
             </el-form-item>
           </div>
           <div class="flex mt-5">
-            <el-form-item
-              v-if="ruleForm.house.type !== 'rent'"
-              label="Total debt"
-              prop="house.total_debt"
-              class="w-5/12 pr-5"
-            >
+            <el-form-item label="Monthly payments" prop="house.total_debt" class="w-5/12 pr-5">
               <SwdCurrencyInput
                 v-model="ruleForm.house.total_debt"
                 :options="optionsCurrencyInput"
@@ -187,7 +182,7 @@
           <div class="flex mb-5">
             <el-form-item
               v-if="ruleForm.house.type === 'rent'"
-              label="Monthly payment"
+              label="Monthly payments"
               prop="house.monthly_payment"
               class="w-5/12 pr-5"
             >
@@ -485,7 +480,7 @@ export default {
       house: {
         type: 'own',
         market_value: null,
-        total_debt: null,
+        monthly_payments: null,
         remaining_mortgage_amount: null,
         monthly_payment: null,
         total_monthly_expenses: null,

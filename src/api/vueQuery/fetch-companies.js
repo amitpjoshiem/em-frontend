@@ -1,10 +1,10 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function fetchInit() {
+function fetchCompanies() {
   return fetcher({
-    url: `/init`,
+    url: `/companies`,
     options: { method: 'GET' },
   })
 }
 
-export { fetchInit }
+export { fetchCompanies }

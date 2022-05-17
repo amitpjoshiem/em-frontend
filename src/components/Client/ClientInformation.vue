@@ -43,9 +43,7 @@
                   :color="clientsInfo.steps.investment_and_retirement_accounts ? '#4cd972' : 'gray'"
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">
-                Investment and Retirement Accounts (most recent statements)
-              </div>
+              <div class="text-xs sm:text-base text-main">Upload your Investment/Retirement Statements Here</div>
             </div>
           </el-card>
         </router-link>
@@ -58,9 +56,7 @@
                   :color="clientsInfo.steps.life_insurance_annuity_and_long_terms_care_policies ? '#4cd972' : 'gray'"
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">
-                Life Insurance, Annuity, and Long Term Care Policies (most recent statements)
-              </div>
+              <div class="text-xs sm:text-base text-main">Upload your Life Insurance Statements Here</div>
             </div>
           </el-card>
         </router-link>
@@ -71,12 +67,12 @@
               <el-icon :size="25" class="mr-5">
                 <circle-check-filled :color="clientsInfo.steps.social_security_information ? '#4cd972' : 'gray'" />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Social Security Information/Statement(s)</div>
+              <div class="text-xs sm:text-base text-main">Upload your Social Security Statements Here</div>
             </div>
           </el-card>
         </router-link>
 
-        <router-link :to="{ name: 'list-stock' }" class="flex">
+        <!-- <router-link :to="{ name: 'list-stock' }" class="flex">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
@@ -87,7 +83,7 @@
               <div class="text-xs sm:text-base text-main">List of Stock Certificates or Bonds</div>
             </div>
           </el-card>
-        </router-link>
+        </router-link> -->
       </template>
       <template v-else>
         <div class="flex flex-col items-center my-8">
@@ -111,9 +107,9 @@
         </el-card>
       </router-link>
     </div>
-    <SwdModalSucces
+    <!-- <SwdModalSucces
       text="Thank you for entering all the details. The advisor will receive the information and will contact you."
-    />
+    /> -->
   </div>
 </template>
 
@@ -121,14 +117,14 @@
 import { DocumentChecked, CircleCheckFilled } from '@element-plus/icons-vue'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
-import SwdModalSucces from '@/components/Global/SwdModalSucces.vue'
+// import SwdModalSucces from '@/components/Global/SwdModalSucces.vue'
 
 export default {
   name: 'ClientInformation',
   components: {
     CircleCheckFilled,
     DocumentChecked,
-    SwdModalSucces,
+    // SwdModalSucces,
   },
   setup() {
     const {

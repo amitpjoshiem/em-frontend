@@ -43,6 +43,19 @@ const rules = {
     },
     { trigger: 'blur' },
   ],
+
+  channels: [
+    {
+      required: true,
+      message: 'Please input channels',
+      trigger: 'blur',
+      transform(value) {
+        return value.trim()
+      },
+    },
+    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
+  ],
+
   spouse: {
     name: [
       {

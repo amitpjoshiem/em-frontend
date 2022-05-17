@@ -1,4 +1,14 @@
 const state = () => ({
+  companies: [],
+  userId: '',
+  currentCompanyId: '',
+  ceoId: '',
+  adminId: '',
+  advisorId: '',
+  clientId: '',
+  currentTypeUser: '',
+  role: '',
+  isLoadingApp: false,
   itemsPerPage: {
     options: [
       {
@@ -16,8 +26,10 @@ const state = () => ({
     ],
     values: {
       default: '6',
-      dashboard: '6',
+      advisorDashboard: '6',
       listOfHouseholds: '6',
+      superAdminDashboard: '6',
+      superAdminListAdvisors: '6',
     },
   },
   selectFilter: {
@@ -112,6 +124,46 @@ const mutations = {
 
   setContact(state, value) {
     state.contact = value
+  },
+
+  setCompanies(state, value) {
+    state.companies = value
+  },
+
+  setCurrentCompanyId(state, value) {
+    state.currentCompanyId = value
+  },
+
+  setAdminId(state, value) {
+    state.adminId = value
+  },
+
+  setCeoId(state, value) {
+    state.ceoId = value
+  },
+
+  setAdvisorId(state, value) {
+    state.advisorId = value
+  },
+
+  setClientId(state, value) {
+    state.clientId = value
+  },
+
+  setCurrentTypeUser(state, value) {
+    state.currentTypeUser = value
+  },
+
+  setRole(state, value) {
+    state.role = value
+  },
+
+  setUserId(state, value) {
+    state.userId = value
+  },
+
+  setIsLoadingApp(state, value) {
+    state.isLoadingApp = value
   },
 }
 

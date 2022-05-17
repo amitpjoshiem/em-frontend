@@ -17,7 +17,7 @@
         <h1 v-if="otpTypePhone" class="text-center text-gray03 pt-2.5 text-sm">Please check your SMS.</h1>
         <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
           <el-form-item label="OTP" prop="code">
-            <el-input v-model="ruleForm.code" type="number" placeholder="Enter otp code" />
+            <el-input v-model="ruleForm.code" placeholder="Enter otp code" />
           </el-form-item>
           <el-form-item class="my-6">
             <Button
@@ -56,7 +56,7 @@ export default {
     const { isLoading, isError, data, refetch: refetchOtpCode } = useResendOtp({ enabled: false })
 
     const ruleForm = reactive({
-      code: undefined,
+      code: '',
     })
     const form = ref(null)
 
