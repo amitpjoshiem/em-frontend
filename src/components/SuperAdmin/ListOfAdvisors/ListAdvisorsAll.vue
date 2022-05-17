@@ -23,11 +23,11 @@ export default {
   setup() {
     const store = useStore()
 
+    const { paginationData, handlePaginationChange } = usePaginationData()
+
     const { isLoading, isError, data, pagination } = useListAdvisors({
       page: paginationData,
     })
-
-    const { paginationData, handlePaginationChange } = usePaginationData()
 
     const rows = computed(() => Number(store.state.globalComponents.itemsPerPage.values.superAdminListAdvisors))
 
