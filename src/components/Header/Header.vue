@@ -1,9 +1,11 @@
 <template>
   <div class="bg-widget-bg items-center h-16 flex justify-between px-3">
-    <SwdRemoteSearch v-if="$can('advisor', 'all') || $can('admin', 'all') || $can('ceo', 'all')" class="sm:w-4/24" />
+    <SwdRemoteSearch v-if="!$can('client', 'all')" class="sm:w-4/24" />
 
-    <div v-if="$can('advisor', 'all')" class="flex items-center justify-end sm:w-14/24">
-      <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" />
+    <div class="flex items-center justify-end sm:w-14/24">
+      <template v-if="$can('advisor', 'all')">
+        <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" />
+      </template>
       <NewLeadBtn />
       <NewOpportunityBtn />
     </div>
@@ -52,12 +54,13 @@
     </div>
 
     <SelectCompany v-if="$can('ceo', 'all')" />
+    <SelectAdvisors v-if="$can('assistant', 'all')" />
 
     <div class="flex items-center justify-end" :class="{ 'w-full': $can('client', 'all') }">
       <HeaderNotificationsBlock />
     </div>
 
-    <div class="flex items-center justify-end cursor-pointer sm:w-4/24 xl:w-2/24">
+    <div class="flex items-center justify-end cursor-pointer sm:w-4/24 xl:w-2/24 ml-2">
       <router-link :to="{ name: 'profile' }">
         <SwdAvatar v-if="!isLoadingUserProfile" :link="user.avatar.url" />
       </router-link>
@@ -76,6 +79,7 @@ import NewLeadBtn from '@/components/Header/NewLeadBtn.vue'
 import NewOpportunityBtn from '@/components/Header/NewOpportunityBtn.vue'
 import TestEventBtn from '@/components/Header/TestEventBtn.vue'
 import SelectCompany from '@/components/Header/SelectCompany.vue'
+import SelectAdvisors from '@/components/Header/SelectAdvisors.vue'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useShowContentEnv } from '@/hooks/use-show-content-env'
 
@@ -94,6 +98,7 @@ export default {
     NewOpportunityBtn,
     TestEventBtn,
     SelectCompany,
+    SelectAdvisors,
   },
 
   setup() {
