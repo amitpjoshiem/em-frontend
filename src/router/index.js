@@ -153,14 +153,14 @@ const routes = [
       },
 
       {
-        path: 'admin-activity',
-        name: 'activity',
+        path: 'activity',
+        name: 'admin-activity',
         component: () => import(/* webpackChunkName: "Activity" */ '../views/Activity.vue'),
       },
 
       {
-        path: 'admin-pipeline',
-        name: 'pipeline',
+        path: 'pipeline',
+        name: 'admin-pipeline',
         component: () => import(/* webpackChunkName: "PipeLine" */ '../views/PipeLine.vue'),
       },
     ],

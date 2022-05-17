@@ -24,7 +24,7 @@
         <div class="text-main text-base mr-3">{{ userFullName }}</div>
         <ChangeName />
       </div>
-      <div class="flex items-center pt-11">
+      <div v-if="$can('ceo', 'all')" class="flex items-center pt-11">
         <div class="text-xss text-title-gray w-2/12">Default Company</div>
         <ChangeCompany :default-company="user.company" />
       </div>

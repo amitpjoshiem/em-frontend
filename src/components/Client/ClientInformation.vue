@@ -16,7 +16,7 @@
               listed below
             </span>
             <span class="text-base my-5 sm:my-10">
-              These items are essential for performing our fiduciary duty and providing the most appropiate financial
+              These items are essential for performing our fiduciary duty and providing the most appropriate financial
               advice
             </span>
           </div>
