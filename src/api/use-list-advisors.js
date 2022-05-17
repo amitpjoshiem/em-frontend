@@ -2,8 +2,9 @@ import { useQuery } from 'vue-query'
 import { fetchAdvisorsList } from './vueQuery/fetch-advisors-list'
 import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
+import { UsersListPagination } from '@/dto/UsersListPagination'
 
-export const useListAdvisors = ({ page }, options = {}) => {
+export const useListAdvisors = ({ page }) => {
   const store = useStore()
 
   const reactiveId = computed(() => store.state.globalComponents.currentCompanyId)
@@ -38,10 +39,9 @@ export const useListAdvisors = ({ page }, options = {}) => {
     cacheTime: 0,
     queryFn: fetchAdvisorsList,
     select: ({ data, meta }) => {
-      pagination.value = meta.pagination
+      pagination.value = new UsersListPagination(meta.pagination)
       return data
     },
-    ...options,
   })
 
   return {
