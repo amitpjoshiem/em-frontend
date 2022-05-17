@@ -38,15 +38,18 @@
         :value="data.value.more_info_about.strategic_wealth_report"
       />
       <ConfirmMoreInfoItem title="The rule of 100" :value="data.value.more_info_about.rule_of_100" />
-      <ConfirmMoreInfoItem title="Moving me IRA" :value="data.value.more_info_about.moving_my_ira" />
-      <ConfirmMoreInfoItem title="Roling Over My 401/403" :value="data.value.more_info_about.rolling_over_my_401_403" />
+      <ConfirmMoreInfoItem title="Moving my IRA" :value="data.value.more_info_about.moving_my_ira" />
+      <ConfirmMoreInfoItem
+        title="Rolling Over My 401/403"
+        :value="data.value.more_info_about.rolling_over_my_401_403"
+      />
       <ConfirmMoreInfoItem
         title="Retirement Income Analysis"
         :value="data.value.more_info_about.retirement_income_analysis"
       />
-      <ConfirmMoreInfoItem title="Securing me Money" :value="data.value.more_info_about.securing_my_money" />
+      <ConfirmMoreInfoItem title="Securing my Money" :value="data.value.more_info_about.securing_my_money" />
       <ConfirmMoreInfoItem title="Tax Free Accounts" :value="data.value.more_info_about.tax_free_accounts" />
-      <ConfirmMoreInfoItem title="Me Variable Annuity" :value="data.value.more_info_about.my_variable_annuity" />
+      <ConfirmMoreInfoItem title="My Variable Annuity" :value="data.value.more_info_about.my_variable_annuity" />
     </div>
   </div>
   <div v-else class="flex justify-center items-center">

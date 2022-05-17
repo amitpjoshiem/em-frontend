@@ -89,13 +89,13 @@
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.moving_my_ira"
-          label="Moving me IRA"
+          label="Moving my IRA"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.rolling_over_my_401_403"
-          label="Roling Over My 401/403"
+          label="Rolling Over My 401/403"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
           @change="handleChange()"
         />
@@ -107,7 +107,7 @@
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.securing_my_money"
-          label="Securing me Money"
+          label="Securing my Money"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
           @change="handleChange()"
         />
@@ -119,7 +119,7 @@
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.my_variable_annuity"
-          label="Me Variable Annuity"
+          label="My Variable Annuity"
           class="w-full sm:w-4/12 lg:w-3/12 mr-0"
           @change="handleChange()"
         />
