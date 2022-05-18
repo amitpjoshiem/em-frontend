@@ -21,8 +21,11 @@
             </div>
 
             <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
-              <div v-if="item.type === 'string'" class="mb-2 text-xss">
+              <div v-if="item.type === 'number'" class="mb-2 text-xss">
                 {{ currencyFormat(assets.data[item.model.group][item.model.model][item.model.item]) }}
+              </div>
+              <div v-if="item.type === 'string'" class="mb-2 text-xss">
+                {{ assets.data[item.model.group][item.model.model][item.model.item] }}
               </div>
               <div v-if="item.type === 'radio'" class="flex">
                 <el-tag
@@ -53,7 +56,7 @@ import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema
 import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
-  name: 'AddAssets',
+  name: 'ConfirmationAssets',
   components: {},
   setup() {
     const route = useRoute()
