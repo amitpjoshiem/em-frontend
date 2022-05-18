@@ -252,7 +252,7 @@ const routes = [
     name: 'advisor-home',
     component: AdvisorHome,
     meta: {
-      resource: [{ advisor: 'all' }, { admin: 'all' }, { ceo: 'all' }],
+      resource: [{ advisor: 'all' }, { admin: 'all' }, { ceo: 'all' }, { assistant: 'all' }],
       type: 'advisor',
     },
     children: [
@@ -620,6 +620,7 @@ function getRedirect() {
   if (role === 'client') return { name: 'client-dashboard' }
   if (role === 'admin') return { name: 'admin-dashboard' }
   if (role === 'ceo') return { name: 'ceo-dashboard' }
+  if (role === 'assistant') return { name: 'advisor-dashboard' }
   return { name: 'login' }
 }
 

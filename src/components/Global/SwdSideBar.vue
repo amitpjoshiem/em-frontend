@@ -116,11 +116,7 @@ export default {
     }
 
     const isShowSideBar = computed(() => {
-      if (
-        isAuth.value &&
-        userType.value === 'advisor' &&
-        (can('advisor', 'all') || can('admin', 'all') || can('ceo', 'all'))
-      ) {
+      if (isAuth.value && userType.value === 'advisor' && !can('client', 'all')) {
         return true
       }
       return false

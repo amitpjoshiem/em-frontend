@@ -1,7 +1,7 @@
 <template>
   <div
     class="
-      h-9
+      h-[30px]
       bg-color-grey
       rounded-md
       border-input-border border
