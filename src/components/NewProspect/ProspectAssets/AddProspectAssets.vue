@@ -29,11 +29,18 @@
           <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
             <el-form-item class="mb-4">
               <SwdCurrencyInput
-                v-if="item.type === 'string'"
+                v-if="item.type === 'number'"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
                 :options="optionsCurrencyInput"
                 :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
-                placeholder="$12345"
+                :placeholder="item.placeholder"
+                @blur="changeInput(item)"
+              />
+              <el-input
+                v-if="item.type === 'string'"
+                v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                :placeholder="item.placeholder"
+                :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
                 @blur="changeInput(item)"
               />
               <el-radio-group
