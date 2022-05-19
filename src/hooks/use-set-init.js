@@ -1,14 +1,13 @@
 import { useFetchInit } from '@/api/use-fetch-init'
 import { useSetUpdateAbility } from '@/hooks/use-set-update-ability'
 import store from '@/store'
-import { useRouter } from 'vue-router'
+import { useRoutRedirect } from '@/hooks/use-rout-redirect'
 
 export function useSetInit() {
   const { response, error, getInit } = useFetchInit()
 
   const { setUpdateAbility } = useSetUpdateAbility()
-
-  const router = useRouter()
+  const { routRedirect } = useRoutRedirect()
 
   const setInit = async () => {
     store.commit('globalComponents/setIsLoadingApp', true)
@@ -32,7 +31,7 @@ export function useSetInit() {
 
       await setUpdateAbility()
 
-      router.push({ path: '/' })
+      routRedirect(role)
 
       setTimeout(function () {
         store.commit('globalComponents/setIsLoadingApp', false)
