@@ -1,8 +1,8 @@
 <template>
   <div class="flex items-center">
     <SwdAvatar :link="getAvatarUrl" />
-    <div class="pl-2.5 text-main text-xss font-semibold cursor-pointer" @click="getLink">
-      {{ name }}
+    <div class="pl-2.5 text-main text-xss font-semibold cursor-pointer" @click="goUser">
+      {{ user.name }}
     </div>
   </div>
 </template>
@@ -10,62 +10,46 @@
 <script>
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default {
   name: 'UserListName',
   props: {
-    step: {
-      type: String,
-      require: true,
-      default: '',
-    },
-    id: {
-      type: String,
-      require: true,
-      default: '',
-    },
-    name: {
-      type: String,
-      require: true,
-      default: '',
-    },
-    type: {
-      type: String,
-      require: true,
-      default: '',
-    },
-    avatar: {
-      type: [Object, Array],
+    user: {
+      type: Object,
       require: true,
       default: () => {},
     },
   },
   setup(props) {
     const router = useRouter()
+    const store = useStore()
 
     const getAvatarUrl = computed(() => {
-      if (props.avatar?.url) return props.avatar.url
+      if (props.user.avatar?.url) return props.user.avatar.url
       return ''
     })
 
-    const getLink = () => {
-      if (props.type === 'lead') {
-        router.push({ name: 'confirmation-page', params: { id: props.id } })
+    const goUser = () => {
+      if (props.user.type === 'lead') {
+        store.commit('globalComponents/setClientId', props.user.client_user.id)
+
+        router.push({ name: 'confirmation-page', params: { id: props.user.id } })
         return
       }
-      if (props.step === 'default') {
-        router.push({ name: 'basic-information', params: { id: props.id } })
+      if (props.user.step === 'default') {
+        router.push({ name: 'basic-information', params: { id: props.user.id } })
         return
       }
-      if (props.step !== 'default') {
-        router.push({ name: 'member-details', params: { id: props.id } })
+      if (props.user.step !== 'default') {
+        router.push({ name: 'member-details', params: { id: props.user.id } })
         return
       }
     }
 
     return {
       getAvatarUrl,
-      getLink,
+      goUser,
     }
   },
 }

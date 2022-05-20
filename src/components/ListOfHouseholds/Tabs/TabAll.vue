@@ -42,7 +42,7 @@ export default {
       if (getCurrentTypeUser.value === 'advisor') return 'all'
       if (getCurrentTypeUser.value === 'admin') return 'admin-all-list'
       if (getCurrentTypeUser.value === 'ceo') return 'ceo-all-list'
-      return '/'
+      return '404'
     })
 
     return {

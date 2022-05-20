@@ -1,6 +1,10 @@
 <template>
   <el-badge :value="count" :max="99" class="mr-8" :type="getType ? 'primary' : 'info'">
-    <router-link :to="{ name: getLink }" class="text-gray03 text-smm cursor-pointer" :class="{ active: getType }">
+    <router-link
+      :to="{ name: 'list-deactivated-leads' }"
+      class="text-gray03 text-smm cursor-pointer"
+      :class="{ active: getType }"
+    >
       Deactivated Leads
     </router-link>
   </el-badge>
@@ -36,15 +40,9 @@ export default {
       return false
     })
 
-    const getLink = computed(() => {
-      if (getCurrentTypeUser.value === 'advisor') return 'list-deactivated-leads'
-      return '/'
-    })
-
     return {
       getActiveTab,
       getType,
-      getLink,
     }
   },
 }
