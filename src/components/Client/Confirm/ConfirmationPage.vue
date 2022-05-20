@@ -1,8 +1,6 @@
 <template>
   <div class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto lg:w-[960px]">
-    <div class="flex justify-center pb-5">
-      <span class="text-sm sm:text-title text-main font-semibold">Confirmation Information</span>
-    </div>
+    <SwdSubHeader title="Confirmation Information" :with-back-btn="!$can('client', 'all')" />
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
       <div class="flex items-center mb-5">

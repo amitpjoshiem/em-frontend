@@ -1,9 +1,9 @@
 <template>
   <div class="flex pb-5">
     <div class="w-2/12">
-      <BackButton text="Back" @click="$router.go(-1)" />
+      <BackButton v-if="withBackBtn" text="Back" @click="$router.go(-1)" />
     </div>
-    <div class="w-8/12 text-center">
+    <div class="text-center w-8/12">
       <span class="text-sm sm:text-title text-main font-semibold">{{ title }}</span>
     </div>
     <div class="w-2/12 text-right">
@@ -27,6 +27,11 @@ export default {
       type: Boolean,
       require: false,
       default: false,
+    },
+    withBackBtn: {
+      type: Boolean,
+      require: false,
+      default: true,
     },
     region: {
       type: String,
