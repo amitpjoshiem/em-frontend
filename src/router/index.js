@@ -598,7 +598,13 @@ const routes = [
   {
     path: '/403',
     name: '403',
-    component: () => import(/* webpackChunkName: "forbidden" */ '../views/Forbidden.vue'),
+    component: () => import(/* webpackChunkName: "Forbidden" */ '../views/Forbidden.vue'),
+  },
+
+  {
+    path: '/404',
+    name: '404',
+    component: () => import(/* webpackChunkName: "PageNotFound" */ '../views/PageNotFound.vue'),
   },
 
   {

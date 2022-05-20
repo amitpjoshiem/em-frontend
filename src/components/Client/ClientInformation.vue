@@ -13,11 +13,11 @@
           <div class="flex flex-col items-center text-center">
             <span class="text-lg">
               In order to conduct a proper analysis and make your visit productive, we ask that you provide the items
-              listed below
+              listed below.
             </span>
             <span class="text-base my-5 sm:my-10">
               These items are essential for performing our fiduciary duty and providing the most appropriate financial
-              advice
+              advice.
             </span>
           </div>
         </div>

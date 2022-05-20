@@ -54,7 +54,7 @@ export default {
       if (getCurrentTypeUser.value === 'advisor') return 'activity'
       if (getCurrentTypeUser.value === 'admin') return 'admin-activity'
       if (getCurrentTypeUser.value === 'ceo') return 'ceo-activity'
-      return '/'
+      return '404'
     })
 
     return {

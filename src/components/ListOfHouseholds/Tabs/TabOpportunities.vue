@@ -42,7 +42,7 @@ export default {
       if (getCurrentTypeUser.value === 'advisor') return 'opportunities'
       if (getCurrentTypeUser.value === 'admin') return 'admin-opportunities-list'
       if (getCurrentTypeUser.value === 'ceo') return 'ceo-opportunities-list'
-      return '/'
+      return '404'
     })
 
     return {
