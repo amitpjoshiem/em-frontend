@@ -5,6 +5,7 @@ import ClientHome from '@/layouts/ClientHome.vue'
 import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
 import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
+import Home from '@/layouts/Home.vue'
 import ability from '../services/ability'
 
 import { useSetInit } from '@/hooks/use-set-init'
@@ -597,7 +598,13 @@ const routes = [
   {
     path: '/403',
     name: '403',
-    component: () => import(/* webpackChunkName: "forbidden" */ '../views/Forbidden.vue'),
+    component: () => import(/* webpackChunkName: "Forbidden" */ '../views/Forbidden.vue'),
+  },
+
+  {
+    path: '/404',
+    name: '404',
+    component: () => import(/* webpackChunkName: "PageNotFound" */ '../views/PageNotFound.vue'),
   },
 
   {
@@ -608,21 +615,9 @@ const routes = [
 
   {
     path: '/',
-    redirect: () => {
-      return getRedirect()
-    },
+    component: Home,
   },
 ]
-
-function getRedirect() {
-  const role = store.state.globalComponents.role
-  if (role === 'advisor') return { name: 'advisor-dashboard' }
-  if (role === 'client') return { name: 'client-dashboard' }
-  if (role === 'admin') return { name: 'admin-dashboard' }
-  if (role === 'ceo') return { name: 'ceo-dashboard' }
-  if (role === 'assistant') return { name: 'advisor-dashboard' }
-  return { name: 'login' }
-}
 
 function getCanNavigate(item) {
   const rrr = Object.entries(item)

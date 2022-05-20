@@ -94,6 +94,10 @@ export default {
       return store.state.globalComponents.currentTypeUser
     })
 
+    const userRole = computed(() => {
+      return store.state.globalComponents.role
+    })
+
     const getRouteName = computed(() => {
       return route.name
     })
@@ -116,9 +120,8 @@ export default {
     }
 
     const isShowSideBar = computed(() => {
-      if (isAuth.value && userType.value === 'advisor' && !can('client', 'all')) {
-        return true
-      }
+      if (isAuth.value && userType.value === 'advisor' && !can('client', 'all')) return true
+      if (isAuth.value && userRole.value === 'advisor') return true
       return false
     })
 

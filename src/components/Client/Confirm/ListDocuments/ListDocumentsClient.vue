@@ -1,6 +1,8 @@
 <template>
   <div class="flex justify-end mb-4">
-    <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
+    <el-button v-if="$can('client', 'all')" type="primary" plain class="mr-10" size="small" @click="edit">
+      Edit
+    </el-button>
   </div>
   <div v-if="!isFetchingAdvisor && !isFetchingClient">
     <div v-if="data.value?.status === 'no_documents'" class="flex">

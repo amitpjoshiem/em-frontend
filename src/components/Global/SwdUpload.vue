@@ -62,6 +62,8 @@
 <script>
 import { tokenStorage } from '@/api/api-client/TokenStorage'
 import { computed, ref, onMounted, nextTick } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
   name: 'SwdUpload',
 
@@ -107,12 +109,37 @@ export default {
     'remove-media',
   ],
   setup(props, { emit }) {
+    const store = useStore()
     const innerRef = ref(null)
     const idFileRemove = ref(null)
     const uploadRefFn = () => props.uploadRef
     const headers = computed(() => {
+      const customHeader = {}
+
+      const type = store.state.globalComponents.currentTypeUser
+      const companyId = store.state.globalComponents.currentCompanyId
+
+      if (companyId) customHeader['x-company'] = companyId
+
+      if (type === 'advisor') {
+        customHeader['x-user'] = store.state.globalComponents.advisorId
+      }
+
+      if (type === 'ceo') {
+        customHeader['x-user'] = store.state.globalComponents.ceoId
+      }
+
+      if (type === 'admin') {
+        customHeader['x-user'] = store.state.globalComponents.adminId
+      }
+
+      if (type === 'client') {
+        customHeader['x-user'] = store.state.globalComponents.clientId
+      }
+
       const token = tokenStorage.getByKey('access_token')
-      return { Authorization: `Bearer ${token}` }
+
+      return { Authorization: `Bearer ${token}`, ...customHeader }
     })
 
     const getUrlMedia = computed(() => {
