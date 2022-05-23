@@ -29,6 +29,13 @@ export function useSetInit() {
       if (typeUser === 'client') store.commit('globalComponents/setClientId', userId)
       if (typeUser === 'assistant') store.commit('globalComponents/setAdvisorId', userId)
 
+      if (role === 'client') {
+        store.commit('globalComponents/setShowModal', {
+          destination: 'modalTerms',
+          value: true,
+        })
+      }
+
       await setUpdateAbility()
 
       routRedirect(role)

@@ -66,6 +66,7 @@ const state = () => ({
       newLead: false,
       modalNewTable: false,
       modalSucces: false,
+      modalTerms: false,
     },
   },
   sortMembers: {

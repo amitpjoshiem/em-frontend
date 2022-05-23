@@ -5,6 +5,7 @@
   <ModalReloadPage />
   <SwdShareDialog />
   <SwdModalExportSucces />
+  <SwdModalTerms />
 </template>
 
 <script>
@@ -16,6 +17,7 @@ import { tokenStorage } from './api/api-client/TokenStorage'
 import { useSockets } from './sockets/use-sockets'
 import ModalReloadPage from '@/components/ModalReloadPage/ModalRealoadPage.vue'
 import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
+import SwdModalTerms from '@/components/Global/SwdModalTerms.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
 
 export default {
@@ -24,6 +26,7 @@ export default {
     ModalReloadPage,
     SwdShareDialog,
     SwdModalExportSucces,
+    SwdModalTerms,
   },
   setup() {
     useQueryProvider({
