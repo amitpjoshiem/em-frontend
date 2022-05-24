@@ -9,6 +9,7 @@ const state = () => ({
   currentTypeUser: '',
   role: '',
   isLoadingApp: false,
+  termsAndConditions: null,
   itemsPerPage: {
     options: [
       {
@@ -165,6 +166,10 @@ const mutations = {
 
   setIsLoadingApp(state, value) {
     state.isLoadingApp = value
+  },
+
+  setTermsAndConditions(state, value) {
+    state.termsAndConditions = value
   },
 }
 

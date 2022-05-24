@@ -20,6 +20,7 @@ export function useRemoveStoreAccessToken() {
     store.commit('globalComponents/setAdvisorId', null)
     store.commit('globalComponents/setUserId', null)
     store.commit('globalComponents/setClientId', null)
+    store.commit('globalComponents/setTermsAndConditions', null)
 
     store.commit('globalComponents/setShowModal', {
       destination: 'modalTerms',

@@ -45,7 +45,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button plain type="danger" :loading="fetching" @click="handleDecline">Decline</el-button>
-        <el-button plain type="primary" @click="handleAccept">Accept</el-button>
+        <el-button plain type="primary" :loading="isLoadingUpdate" @click="handleAccept">Accept</el-button>
       </span>
     </template>
   </el-dialog>
@@ -54,6 +54,9 @@
 <script>
 import { defineComponent, ref, watchEffect } from 'vue'
 import { useLogout } from '@/api/authentication/use-logout'
+import { updateClients } from '@/api/vueQuery/clients/update-clients'
+import { useMutation } from 'vue-query'
+
 import { useStore } from 'vuex'
 
 export default defineComponent({
@@ -61,23 +64,25 @@ export default defineComponent({
   setup() {
     const store = useStore()
 
+    const { isLoading: isLoadingUpdate, mutateAsync: update } = useMutation(updateClients)
+
     const dialogVisible = ref(false)
 
     const { fetching, logout } = useLogout()
 
     watchEffect(() => {
-      dialogVisible.value = store.state.globalComponents.dialog.showDialog.modalTerms
+      dialogVisible.value = store.state.globalComponents.termsAndConditions === false
     })
 
     const handleDecline = () => {
       logout()
     }
 
-    const handleAccept = () => {
-      store.commit('globalComponents/setShowModal', {
-        destination: 'modalTerms',
-        value: false,
-      })
+    const handleAccept = async () => {
+      const res = await update({ terms_and_conditions: true })
+      if (!('error' in res)) {
+        store.commit('globalComponents/setTermsAndConditions', true)
+      }
     }
 
     return {
@@ -85,6 +90,8 @@ export default defineComponent({
       handleDecline,
       fetching,
       handleAccept,
+      update,
+      isLoadingUpdate,
     }
   },
 })

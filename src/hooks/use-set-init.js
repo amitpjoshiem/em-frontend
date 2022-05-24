@@ -17,6 +17,7 @@ export function useSetInit() {
       const typeUser = response.value.data.roles[0]
       const role = response.value.data.roles[0]
       const userId = response.value.data.user_id
+      const termsAndConditions = response.value.data.terms_and_conditions
 
       store.commit('globalComponents/setRole', role)
       store.commit('globalComponents/setCurrentTypeUser', typeUser)
@@ -29,11 +30,8 @@ export function useSetInit() {
       if (typeUser === 'client') store.commit('globalComponents/setClientId', userId)
       if (typeUser === 'assistant') store.commit('globalComponents/setAdvisorId', userId)
 
-      if (role === 'client') {
-        store.commit('globalComponents/setShowModal', {
-          destination: 'modalTerms',
-          value: true,
-        })
+      if (role === 'client' && !termsAndConditions) {
+        store.commit('globalComponents/setTermsAndConditions', termsAndConditions)
       }
 
       await setUpdateAbility()
