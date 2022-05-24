@@ -9,6 +9,7 @@ const state = () => ({
   currentTypeUser: '',
   role: '',
   isLoadingApp: false,
+  termsAndConditions: null,
   itemsPerPage: {
     options: [
       {
@@ -66,6 +67,7 @@ const state = () => ({
       newLead: false,
       modalNewTable: false,
       modalSucces: false,
+      modalTerms: false,
     },
   },
   sortMembers: {
@@ -164,6 +166,10 @@ const mutations = {
 
   setIsLoadingApp(state, value) {
     state.isLoadingApp = value
+  },
+
+  setTermsAndConditions(state, value) {
+    state.termsAndConditions = value
   },
 }
 

@@ -55,6 +55,12 @@ const dataStateClientId = createPersistedState({
   storage: window.sessionStorage,
 })
 
+const dataStateTerms = createPersistedState({
+  paths: ['globalComponents.termsAndConditions'],
+  key: 'termsAndConditions',
+  storage: window.sessionStorage,
+})
+
 export default createStore({
   modules: {
     auth,
@@ -73,5 +79,6 @@ export default createStore({
     dataStateCeoId,
     dataStateSuperAdminId,
     dataStateClientId,
+    dataStateTerms,
   ],
 })
