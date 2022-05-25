@@ -16,13 +16,11 @@ export default defineComponent({
     const removeAccessToken = useRemoveStoreAccessToken()
 
     onMounted(() => {
-      // setTimeout(() => {
-      if (tokenStorage.getByKey('refresh_token_expired')) {
+      if (JSON.parse(tokenStorage.getByKey('refresh_token_expired'))) {
         removeAccessToken()
       } else {
         logout()
       }
-      // }, 1000)
     })
 
     return {
