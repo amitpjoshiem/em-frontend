@@ -7,6 +7,7 @@ export function useRemoveStoreAccessToken() {
   const store = useStore()
 
   const removeAccessToken = () => {
+    console.log('removeAccessToken')
     removeFromStorage(localStorage, 'access_token')
     removeFromStorage(localStorage, 'otp-type')
     removeFromStorage(localStorage, 'refresh_token_expired')

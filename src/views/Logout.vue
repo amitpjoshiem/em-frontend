@@ -18,6 +18,7 @@ export default defineComponent({
     onMounted(() => {
       // setTimeout(() => {
       if (tokenStorage.getByKey('refresh_token_expired')) {
+        console.log('refresh_token_expired')
         removeAccessToken()
       } else {
         logout()
