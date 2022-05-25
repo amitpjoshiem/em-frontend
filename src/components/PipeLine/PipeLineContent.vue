@@ -17,6 +17,5 @@ export default {
     NumberHouseholds,
     HouseholdsStatistics,
   },
-  setup() {},
 }
 </script>

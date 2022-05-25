@@ -12,6 +12,7 @@
         <InlineSvg v-if="getRouteName === 'advisor-dashboard'" :src="IconDashboardActive" />
         <InlineSvg v-else :src="IconDashboard" />
       </router-link>
+
       <router-link
         :to="{ name: 'all' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
@@ -22,6 +23,7 @@
         <InlineSvg v-if="getActiveListOfHouseholds" :src="IconListActive" />
         <InlineSvg v-else :src="IconList" />
       </router-link>
+
       <router-link
         :to="{ name: 'activity' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
@@ -30,6 +32,7 @@
         <InlineSvg v-if="getRouteName === 'activity'" :src="IconAssetsActive" />
         <InlineSvg v-else :src="IconAssets" />
       </router-link>
+
       <router-link
         :to="{ name: 'pipeline' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
@@ -38,6 +41,7 @@
         <InlineSvg v-if="getRouteName === 'pipeline'" :src="IconActivityPipeLine" />
         <InlineSvg v-else :src="IconPipeLine" />
       </router-link>
+
       <router-link
         :to="{ name: 'list-all-leads' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
@@ -52,6 +56,15 @@
           :src="IconLeadsActive"
         />
         <InlineSvg v-else :src="IconLeads" />
+      </router-link>
+
+      <router-link
+        :to="{ name: 'logs' }"
+        class="item flex justify-center items-center cursor-pointer w-full h-14"
+        :class="{ active: getRouteName === 'logs' }"
+      >
+        <InlineSvg v-if="getRouteName === 'logs'" :src="IconLogsActive" width="20" height="20" />
+        <InlineSvg v-else :src="IconLogs" width="20" height="20" />
       </router-link>
     </div>
   </aside>
@@ -77,6 +90,8 @@ import IconPipeLine from '@/assets/svg/icon-pipeline.svg'
 import IconLogo from '@/assets/svg/icon-logo.svg'
 import IconLeads from '@/assets/svg/icon-leads.svg'
 import IconLeadsActive from '@/assets/svg/icon-leads-active.svg'
+import IconLogs from '@/assets/svg/icon-logs.svg'
+import IconLogsActive from '@/assets/svg/icon-logs-active.svg'
 
 export default {
   name: 'SwdSideBar',
@@ -142,6 +157,8 @@ export default {
       IconAssetsActive,
       IconLeads,
       IconLeadsActive,
+      IconLogs,
+      IconLogsActive,
       goHome,
       isShowSideBar,
     }

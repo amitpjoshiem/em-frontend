@@ -303,6 +303,12 @@ const routes = [
       },
 
       {
+        path: 'logs',
+        name: 'logs',
+        component: () => import(/* webpackChunkName: "Logs" */ '../views/Logs.vue'),
+      },
+
+      {
         path: 'error',
         name: 'error',
         component: () => import(/* webpackChunkName: "Error" */ '../views/ErrorPage.vue'),
