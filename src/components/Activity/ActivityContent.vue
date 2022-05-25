@@ -45,7 +45,7 @@
 <script>
 import { useFetchActivities } from '@/api/use-fetch-activities.js'
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
-import { computed } from 'vue'
+import { computed, onUnmounted } from 'vue'
 
 export default {
   name: 'ActivityContent',
@@ -68,6 +68,10 @@ export default {
       const current_page = activities.value.pages[lastPage].meta.pagination.current_page
       const total_pages = activities.value.pages[lastPage].meta.pagination.total_pages
       return current_page < total_pages
+    })
+
+    onUnmounted(() => {
+      console.log('onUnmounted')
     })
 
     return {
