@@ -1,9 +1,16 @@
 <template>
-  <el-dialog v-model="dialogVisible" title="Terms and Condition" fullscreen center :show-close="false">
+  <el-dialog
+    v-model="dialogVisible"
+    title="Terms and Conditions"
+    fullscreen
+    center
+    :show-close="false"
+    custom-class="dialog-terms"
+  >
     <div>
-      <p class="pb-2">Disclaimer</p>
+      <p class="pb-2 font-semibold">Disclaimer</p>
       <p class="pb-2">The data you provided is safe with us and solely used for IRIS platform fulfillment.</p>
-      <p class="pb-2">Terms and Conditions</p>
+      <p class="pb-2 font-semibold pt-4">Terms and Conditions</p>
       <p class="pb-2">We use your personal information collected via our application and forms for</p>
       <ol>
         <li class="pb-2">
@@ -96,3 +103,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+.dialog-terms {
+  border-radius: 0;
+}
+</style>

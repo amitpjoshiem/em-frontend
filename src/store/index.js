@@ -5,6 +5,7 @@ import newProspect from './modules/newProspect'
 import newClient from './modules/newClient'
 import globalComponents from './modules/globalComponents'
 import notifications from './modules/notifications'
+import activity from './modules/activity'
 
 import createPersistedState from 'vuex-persistedstate'
 
@@ -69,6 +70,7 @@ export default createStore({
     newClient,
     globalComponents,
     notifications,
+    activity,
   },
   plugins: [
     dataStateAuth,

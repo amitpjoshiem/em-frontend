@@ -1,19 +1,20 @@
 import { useInfiniteQuery } from 'vue-query'
 import { fetchActivities } from './vueQuery/fetch-activities'
 import { ref, computed } from 'vue'
-
-const activity = {
-  limit: 10,
-  page: 1,
-}
+import { useStore } from 'vuex'
 
 export const useFetchActivities = () => {
+  const store = useStore()
+
   const loading = ref(false)
   const disabled = computed(() => loading.value)
 
+  const limit = computed(() => store.state.activity.limit)
+  const page = computed(() => store.state.activity.page)
+
   const queryKeySuffix = {
-    reactiveLimit: activity.limit,
-    reactivePage: activity.page,
+    reactiveLimit: limit.value,
+    reactivePage: page.value,
   }
 
   const { data, error, fetchNextPage, isFetching, isFetchingNextPage, status, isLoading } = useInfiniteQuery(
@@ -24,8 +25,8 @@ export const useFetchActivities = () => {
       getNextPageParam: () => [
         'activity',
         {
-          reactiveLimit: activity.limit,
-          reactivePage: activity.page,
+          reactiveLimit: limit.value,
+          reactivePage: page.value,
         },
       ],
     }
@@ -33,7 +34,7 @@ export const useFetchActivities = () => {
 
   const load = async () => {
     loading.value = true
-    activity.page = activity.page + 1
+    store.commit('activity/setPage', page.value + 1)
 
     const lastPage = data.value.pages.length - 1
     const current_page = data.value.pages[lastPage].meta.pagination.current_page
