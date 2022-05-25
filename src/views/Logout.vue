@@ -7,7 +7,7 @@ import { defineComponent } from 'vue'
 import { onMounted } from 'vue'
 import { useLogout } from '@/api/authentication/use-logout'
 import { tokenStorage } from '@/api/api-client/TokenStorage'
-import { useRemoveStoreAccessToken } from '@/utils/useRemoveStoreAccessToken.js'
+import { useRemoveStoreAccessToken } from '@/utils/useRemoveStoreAccessToken'
 
 export default defineComponent({
   setup() {
@@ -16,13 +16,13 @@ export default defineComponent({
     const removeAccessToken = useRemoveStoreAccessToken()
 
     onMounted(() => {
-      setTimeout(() => {
-        if (tokenStorage.getByKey('refresh_token_expired')) {
-          removeAccessToken()
-        } else {
-          logout()
-        }
-      }, 1000)
+      // setTimeout(() => {
+      if (tokenStorage.getByKey('refresh_token_expired')) {
+        removeAccessToken()
+      } else {
+        logout()
+      }
+      // }, 1000)
     })
 
     return {
