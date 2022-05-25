@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 import { useQueryProvider } from 'vue-query'
 import { VueQueryDevTools } from 'vue-query/devtools'
@@ -38,6 +38,12 @@ export default {
 
     const loading = computed(() => {
       return store.state.globalComponents.isLoadingApp
+    })
+
+    onBeforeMount(() => {
+      if (JSON.parse(tokenStorage.getByKey('refresh_token_expired'))) {
+        localStorage.clear()
+      }
     })
 
     onMounted(async () => {
