@@ -55,7 +55,7 @@
     </el-scrollbar>
     <template #footer>
       <span class="dialog-footer">
-        <el-button plain type="danger" :loading="fetching" class="w-[90px]" @click="handleDecline">Decline</el-button>
+        <el-button plain type="danger" :loading="fetching" class="w-[90px]" @click="handleDecline">Cancel</el-button>
         <el-button plain type="primary" :loading="isLoadingUpdate" class="w-[90px]" @click="handleAccept">
           I Agree
         </el-button>
