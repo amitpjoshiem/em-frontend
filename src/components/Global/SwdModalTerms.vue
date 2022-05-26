@@ -9,9 +9,11 @@
     :close-on-press-escape="false"
     :close-on-click-modal="false"
   >
+    <div class="text-black pb-4">
+      <p class="pb-2 font-semibold text-lg">Disclaimer</p>
+      <p class="pb-2 text-base">The data you provided is safe with us and solely used for IRIS platform fulfillment.</p>
+    </div>
     <el-scrollbar height="400px" class="text-black pr-3">
-      <p class="pb-2 font-semibold text-base">Disclaimer</p>
-      <p class="pb-2">The data you provided is safe with us and solely used for IRIS platform fulfillment.</p>
       <p class="pb-2 font-semibold text-base pt-4">Terms and Conditions</p>
       <p class="pb-2">We use your personal information collected via our application and forms for</p>
       <ol>
