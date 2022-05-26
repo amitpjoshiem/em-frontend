@@ -292,3 +292,7 @@
 .el-dropdown-menu__item.is-disabled{
   pointer-events: none;
 }
+
+.dialog-terms .el-dialog__header .el-dialog__title{
+  font-weight: 800;
+}

@@ -2,15 +2,19 @@
   <el-dialog
     v-model="dialogVisible"
     title="Terms and Conditions"
-    fullscreen
+    width="80%"
     center
     :show-close="false"
     custom-class="dialog-terms"
+    :close-on-press-escape="false"
+    :close-on-click-modal="false"
   >
-    <div>
-      <p class="pb-2 font-semibold">Disclaimer</p>
-      <p class="pb-2">The data you provided is safe with us and solely used for IRIS platform fulfillment.</p>
-      <p class="pb-2 font-semibold pt-4">Terms and Conditions</p>
+    <div class="text-black pb-4">
+      <p class="pb-2 font-semibold text-lg">Disclaimer</p>
+      <p class="pb-2 text-base">The data you provided is safe with us and solely used for IRIS platform fulfillment.</p>
+    </div>
+    <el-scrollbar height="400px" class="text-black pr-3">
+      <p class="pb-2 font-semibold text-base pt-4">Terms and Conditions</p>
       <p class="pb-2">We use your personal information collected via our application and forms for</p>
       <ol>
         <li class="pb-2">
@@ -48,11 +52,13 @@
         </li>
         <li class="pb-2">10. Keeping your account updated.</li>
       </ol>
-    </div>
+    </el-scrollbar>
     <template #footer>
       <span class="dialog-footer">
-        <el-button plain type="danger" :loading="fetching" @click="handleDecline">Decline</el-button>
-        <el-button plain type="primary" :loading="isLoadingUpdate" @click="handleAccept">Accept</el-button>
+        <el-button plain type="danger" :loading="fetching" class="w-[90px]" @click="handleDecline">Cancel</el-button>
+        <el-button plain type="primary" :loading="isLoadingUpdate" class="w-[90px]" @click="handleAccept">
+          I Agree
+        </el-button>
       </span>
     </template>
   </el-dialog>
