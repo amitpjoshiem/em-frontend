@@ -127,10 +127,10 @@
   font-weight: normal;
 }
 
-.el-tag {
+/* .el-tag {
   margin-right: 10px;
   margin-bottom: 10px;
-}
+} */
 
 .button-new-tag {
   height: 32px;
@@ -230,7 +230,7 @@
 }
 
 .infinite-list-wrapper {
-  height: 77vh;
+  height: 78vh;
 }
 
 .el-form-item{

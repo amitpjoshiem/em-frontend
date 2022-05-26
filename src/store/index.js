@@ -6,6 +6,7 @@ import newClient from './modules/newClient'
 import globalComponents from './modules/globalComponents'
 import notifications from './modules/notifications'
 import activity from './modules/activity'
+import logs from './modules/logs'
 
 import createPersistedState from 'vuex-persistedstate'
 
@@ -71,6 +72,7 @@ export default createStore({
     globalComponents,
     notifications,
     activity,
+    logs,
   },
   plugins: [
     dataStateAuth,

@@ -18,6 +18,7 @@ export function useSetInit() {
       const role = response.value.data.roles[0]
       const userId = response.value.data.user_id
       const termsAndConditions = response.value.data.terms_and_conditions
+      const advisorId = response.value.data.advisor_id
 
       store.commit('globalComponents/setRole', role)
       store.commit('globalComponents/setCurrentTypeUser', typeUser)
@@ -28,7 +29,7 @@ export function useSetInit() {
       if (typeUser === 'ceo') store.commit('globalComponents/setCeoId', userId)
       if (typeUser === 'advisor') store.commit('globalComponents/setAdvisorId', userId)
       if (typeUser === 'client') store.commit('globalComponents/setClientId', userId)
-      if (typeUser === 'assistant') store.commit('globalComponents/setAdvisorId', userId)
+      if (typeUser === 'assistant') store.commit('globalComponents/setAdvisorId', advisorId)
 
       if (role === 'client' && !termsAndConditions) {
         store.commit('globalComponents/setTermsAndConditions', termsAndConditions)
