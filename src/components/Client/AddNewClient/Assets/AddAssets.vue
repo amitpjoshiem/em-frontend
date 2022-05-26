@@ -75,6 +75,7 @@
                 <el-radio-group
                   v-if="item.type === 'radio'"
                   v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                  @change="changeInput(item)"
                 >
                   <el-radio :label="true">Yes</el-radio>
                   <el-radio :label="false">No</el-radio>
