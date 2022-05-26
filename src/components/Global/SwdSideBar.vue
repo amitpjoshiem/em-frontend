@@ -59,6 +59,7 @@
       </router-link>
 
       <router-link
+        v-if="!$can('client', 'all')"
         :to="{ name: 'logs' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'logs' }"

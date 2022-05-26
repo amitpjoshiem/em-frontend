@@ -64,14 +64,11 @@
       <div v-if="loading && hasMore" class="flex items-center justify-center h-6">
         <SwdSpinner />
       </div>
-      <div
-        v-if="!loading && !isLoading && !logs.pages[0].data.length"
-        class="flex flex-col justify-center items-center"
-      >
+      <div v-if="!isLoading && !logs.pages[0].data.length" class="flex flex-col justify-center items-center pt-10">
         <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center">
           <InlineSvg :src="IconLastActivityEmpty" />
         </div>
-        <span class="text-gray03 font-semibold text-xss mt-5">No recently activity</span>
+        <span class="text-gray03 font-semibold text-xss mt-5">No recently added activities</span>
       </div>
     </div>
   </div>

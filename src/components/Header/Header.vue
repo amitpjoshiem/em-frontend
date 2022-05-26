@@ -2,8 +2,8 @@
   <div class="bg-widget-bg items-center h-16 flex justify-between px-3">
     <SwdRemoteSearch v-if="!$can('client', 'all')" class="sm:w-4/24" />
 
-    <div v-if="$can('advisor', 'all')" class="flex items-center justify-end sm:w-14/24">
-      <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" />
+    <div v-if="$can('advisor', 'all') || $can('assistant', 'all')" class="flex items-center justify-end sm:w-14/24">
+      <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn && !$can('assistant', 'all')" />
       <NewLeadBtn />
       <NewOpportunityBtn />
     </div>

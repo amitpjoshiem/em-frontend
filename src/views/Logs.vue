@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SwdSubHeader title="Logs" />
+    <SwdSubHeader title="Assistant Activity Log" />
     <LogsContent />
   </div>
 </template>
