@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from 'vue-query'
 import { fetchLogs } from './vueQuery/fetch-logs'
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 
 export const useFetchLogs = () => {
@@ -11,13 +11,17 @@ export const useFetchLogs = () => {
 
   const limit = computed(() => store.state.logs.limit)
   const page = computed(() => store.state.logs.page)
+  const userId = computed(() => store.state.logs.id)
 
-  const queryKeySuffix = {
+  const reactiveId = ref(userId)
+
+  const queryKeySuffix = reactive({
     reactiveLimit: limit.value,
     reactivePage: page.value,
-  }
+    reactiveId,
+  })
 
-  const { data, error, fetchNextPage, isFetching, isFetchingNextPage, status, isLoading } = useInfiniteQuery(
+  const { data, error, fetchNextPage, isFetching, isFetchingNextPage, status, isLoading, refetch } = useInfiniteQuery(
     ['logs', queryKeySuffix],
     fetchLogs,
     {
@@ -27,6 +31,7 @@ export const useFetchLogs = () => {
         {
           reactiveLimit: limit.value,
           reactivePage: page.value,
+          reactiveId: userId.value,
         },
       ],
     }
@@ -58,5 +63,7 @@ export const useFetchLogs = () => {
     load,
     disabled,
     loading,
+
+    refetch,
   }
 }
