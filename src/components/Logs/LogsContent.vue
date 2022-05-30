@@ -1,4 +1,17 @@
 <template>
+  <div class="flex pb-5">
+    <div class="w-2/12">
+      <BackButton text="Back" @click="$router.go(-1)" />
+    </div>
+    <div class="text-center w-8/12">
+      <span class="text-sm sm:text-title text-main font-semibold">Assistant Activity Log</span>
+    </div>
+    <div class="w-2/12 text-right">
+      <el-select v-model="value" placeholder="Select" size="small" @change="changeAssistent">
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
+    </div>
+  </div>
   <div class="border rounded-lg p-5">
     <div
       v-if="(!isFetchingNextPage && isFetching && isLoading) || (!isFetchingNextPage && isFetching && !isLoading)"
@@ -75,8 +88,10 @@
 </template>
 <script>
 import { useFetchLogs } from '@/api/use-fetch-logs'
+import { useFetchAssistents } from '@/api/use-fetch-assistents.js'
+
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
-import { computed, onUnmounted } from 'vue'
+import { computed, onUnmounted, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -84,6 +99,9 @@ export default {
 
   setup() {
     const store = useStore()
+
+    const value = ref('')
+    const options = ref([])
 
     const {
       data: logs,
@@ -95,7 +113,7 @@ export default {
       isLoading,
       isFetchingNextPage,
       isFetching,
-    } = useFetchLogs()
+    } = useFetchLogs(value.value)
 
     const hasMore = computed(() => {
       const lastPage = logs.value.pages.length - 1
@@ -104,9 +122,32 @@ export default {
       return current_page < total_pages
     })
 
+    const {
+      isLoading: isLoadingAssistents,
+      isError: isErrorAssistents,
+      data: assistents,
+      isFetched: isFetchedAssistents,
+    } = useFetchAssistents()
+
     onUnmounted(() => {
       store.commit('logs/setPage', 1)
+      store.commit('logs/setId', null)
     })
+
+    watchEffect(() => {
+      if (!isLoadingAssistents.value) {
+        options.value = assistents.value.data.map((item) => {
+          return {
+            value: item.id,
+            label: item.username,
+          }
+        })
+      }
+    })
+
+    const changeAssistent = async () => {
+      store.commit('logs/setId', value.value)
+    }
 
     return {
       logs,
@@ -120,6 +161,16 @@ export default {
       hasMore,
       isFetchingNextPage,
       isFetching,
+
+      isLoadingAssistents,
+      isErrorAssistents,
+      assistents,
+      isFetchedAssistents,
+
+      changeAssistent,
+
+      value,
+      options,
     }
   },
 }
