@@ -46,6 +46,7 @@
               <el-radio-group
                 v-if="item.type === 'radio'"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                @change="changeInput(item)"
               >
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
@@ -82,7 +83,7 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button type="primary" @click="submitForm('ruleForm')">Go to the monthly expense</el-button>
+        <el-button type="primary" @click="nextPage">Go to the monthly expense</el-button>
       </div>
     </el-form>
   </div>
@@ -178,27 +179,17 @@ export default {
       router.push({ name: 'basic-information', params: { id: memberId } })
     }
 
-    const submitForm = async () => {
-      const res = await create(ruleForm)
-
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Opportunity update successfully',
-        })
-        store.commit('newProspect/setStep', step.value + 1)
-        router.push({
-          name: 'monthly-expense',
-          params: { id: memberId },
-        })
-      } else {
-        useAlert({
-          title: 'Error',
-          type: 'error',
-          message: res.error.message,
-        })
-      }
+    const nextPage = async () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Opportunity update successfully',
+      })
+      store.commit('newProspect/setStep', step.value + 1)
+      router.push({
+        name: 'monthly-expense',
+        params: { id: memberId },
+      })
     }
 
     const addLine = ({ model, variable, indexGroup, indexRow, label }) => {
@@ -314,7 +305,7 @@ export default {
       backStep,
       create,
       data,
-      submitForm,
+      nextPage,
       isMemberAssetsLoading,
       form,
       isLoadingUpdate,
