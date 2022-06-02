@@ -1,6 +1,6 @@
 <template>
   <div class="flex py-5">
-    <div class="w-10/12 text-xss text-main font-medium">Enabled TwoFa</div>
+    <div class="w-10/12 text-xss text-main font-medium">Enabled 2Fa</div>
     <div class="w-2/12 flex justify-between">
       <el-switch
         v-model="statusOtp"

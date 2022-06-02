@@ -5,7 +5,7 @@
       <el-collapse-item v-if="$can('advisor', 'all')" title="Notifications">
         <NotificationsSettngs />
       </el-collapse-item>
-      <el-collapse-item title="TwoFA">
+      <el-collapse-item title="2FA">
         <OtpSettings />
       </el-collapse-item>
     </el-collapse>
