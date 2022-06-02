@@ -43,14 +43,17 @@
   </div>
 </template>
 <script>
-import { useFetchActivities } from '@/api/use-fetch-activities.js'
+import { useFetchActivities } from '@/api/use-fetch-activities'
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
-import { computed } from 'vue'
+import { computed, onUnmounted } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ActivityContent',
 
   setup() {
+    const store = useStore()
+
     const {
       data: activities,
       error,
@@ -68,6 +71,10 @@ export default {
       const current_page = activities.value.pages[lastPage].meta.pagination.current_page
       const total_pages = activities.value.pages[lastPage].meta.pagination.total_pages
       return current_page < total_pages
+    })
+
+    onUnmounted(() => {
+      store.commit('activity/setPage', 1)
     })
 
     return {

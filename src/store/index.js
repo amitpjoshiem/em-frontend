@@ -5,6 +5,8 @@ import newProspect from './modules/newProspect'
 import newClient from './modules/newClient'
 import globalComponents from './modules/globalComponents'
 import notifications from './modules/notifications'
+import activity from './modules/activity'
+import logs from './modules/logs'
 
 import createPersistedState from 'vuex-persistedstate'
 
@@ -55,6 +57,12 @@ const dataStateClientId = createPersistedState({
   storage: window.sessionStorage,
 })
 
+const dataStateTerms = createPersistedState({
+  paths: ['globalComponents.termsAndConditions'],
+  key: 'termsAndConditions',
+  storage: window.sessionStorage,
+})
+
 export default createStore({
   modules: {
     auth,
@@ -63,6 +71,8 @@ export default createStore({
     newClient,
     globalComponents,
     notifications,
+    activity,
+    logs,
   },
   plugins: [
     dataStateAuth,
@@ -73,5 +83,6 @@ export default createStore({
     dataStateCeoId,
     dataStateSuperAdminId,
     dataStateClientId,
+    dataStateTerms,
   ],
 })

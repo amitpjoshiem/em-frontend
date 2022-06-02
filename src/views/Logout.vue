@@ -7,7 +7,7 @@ import { defineComponent } from 'vue'
 import { onMounted } from 'vue'
 import { useLogout } from '@/api/authentication/use-logout'
 import { tokenStorage } from '@/api/api-client/TokenStorage'
-import { useRemoveStoreAccessToken } from '@/utils/useRemoveStoreAccessToken.js'
+import { useRemoveStoreAccessToken } from '@/utils/useRemoveStoreAccessToken'
 
 export default defineComponent({
   setup() {
