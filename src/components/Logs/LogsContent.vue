@@ -1,17 +1,12 @@
 <template>
-  <div class="flex pb-5">
-    <div class="w-2/12">
-      <BackButton text="Back" @click="$router.go(-1)" />
-    </div>
-    <div class="text-center w-8/12">
-      <span class="text-sm sm:text-title text-main font-semibold">Assistant Activity Log</span>
-    </div>
-    <div class="w-2/12 text-right">
+  <SwdSubHeader title="Assistant Activity Log">
+    <template #change-assistent>
       <el-select v-model="value" placeholder="Select" size="small" @change="changeAssistent">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
-    </div>
-  </div>
+    </template>
+  </SwdSubHeader>
+
   <div class="border rounded-lg p-5">
     <div
       v-if="(!isFetchingNextPage && isFetching && isLoading) || (!isFetchingNextPage && isFetching && !isLoading)"

@@ -6,8 +6,10 @@
     <div class="text-center w-8/12">
       <span class="text-sm sm:text-title text-main font-semibold">{{ title }}</span>
     </div>
-    <div class="w-2/12 text-right">
+    <div class="w-2/12 flex justify-end">
       <ShareBtn v-if="withShareBtn" :pdf-region="region" />
+      <SwdInfoBtn v-if="witchInfoBtn" :destination="infoBtnDestination" />
+      <slot name="change-assistent" />
     </div>
   </div>
 </template>
@@ -32,6 +34,16 @@ export default {
       type: Boolean,
       require: false,
       default: true,
+    },
+    witchInfoBtn: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    infoBtnDestination: {
+      type: String,
+      require: false,
+      default: '',
     },
     region: {
       type: String,
