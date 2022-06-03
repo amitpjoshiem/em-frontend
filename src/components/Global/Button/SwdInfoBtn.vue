@@ -1,24 +1,23 @@
 <template>
-  <el-icon>
-    <div
-      class="
-        cursor-pointer
-        bg-white
-        rounded
-        flex
-        justify-center
-        items-center
-        border border-color-grey
-        pr-[7px]
-        pl-[6px]
-        py-[6px]
-      "
-      @click="showInfo"
-    >
-      +
-      <!-- <InfoFilled color="#66B6FF" /> -->
-    </div>
-  </el-icon>
+  <div
+    class="
+      cursor-pointer
+      bg-white
+      rounded
+      flex
+      justify-center
+      items-center
+      border border-color-grey
+      pr-[7px]
+      pl-[6px]
+      py-[6px]
+    "
+    @click="showInfo"
+  >
+    <el-icon>
+      <InfoFilled color="#66B6FF" />
+    </el-icon>
+  </div>
 
   <el-dialog v-model="dialogVisible" title="Info" width="70%">
     <el-scrollbar height="400px" class="pr-4">
@@ -34,7 +33,7 @@
 </template>
 
 <script>
-// import { InfoFilled } from '@element-plus/icons-vue'
+import { InfoFilled } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import InfoMemberDetails from '@/components/Info/InfoMemberDetails.vue'
 import InfoAssetAllocationDetails from '@/components/Info/InfoAssetAllocationDetails.vue'
@@ -42,7 +41,7 @@ import InfoAssetAllocationDetails from '@/components/Info/InfoAssetAllocationDet
 export default {
   name: 'SwdInfoBtn',
   components: {
-    // InfoFilled,
+    InfoFilled,
     InfoMemberDetails,
     InfoAssetAllocationDetails,
   },
