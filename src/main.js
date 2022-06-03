@@ -21,6 +21,7 @@ import InlineSvg from 'vue-inline-svg'
 // Global Component Import
 import Button from '@/components/Global/Button/Button.vue'
 import ShareBtn from '@/components/Global/Button/ShareBtn.vue'
+import SwdInfoBtn from '@/components/Global/Button/SwdInfoBtn.vue'
 import SwdAvatar from '@/components/Global/SwdAvatar.vue'
 import SwdTypeUserLabel from '@/components/Global/SwdTypeUserLabel.vue'
 import SwdSelect from '@/components/Global/SwdSelect.vue'
@@ -73,6 +74,7 @@ const components = [
   SwdInputNumber,
   SwdRetiredLabel,
   SwdFullScreenLoading,
+  SwdInfoBtn,
 ]
 
 components.forEach((component) => {
