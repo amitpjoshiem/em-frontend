@@ -1,14 +1,6 @@
 <template>
   <div class="p-5">
-    <!-- <SwdSubHeader class="p-5" title="All documents" /> -->
-    <div class="pb-5 flex">
-      <div class="w-3/12">
-        <BackButton text="Back" @click="$router.go(-1)" />
-      </div>
-      <div class="w-6/12 text-center">
-        <span class="text-title text-main font-semibold"> All documents</span>
-      </div>
-    </div>
+    <SwdSubHeader class="p-5" title="All documents" />
     <div class="flex p-5 justify-between">
       <div class="flex">
         <router-link
