@@ -10,6 +10,7 @@ const state = () => ({
   role: '',
   isLoadingApp: false,
   termsAndConditions: null,
+  dateRangeClientReport: '',
   itemsPerPage: {
     options: [
       {
@@ -170,6 +171,10 @@ const mutations = {
 
   setTermsAndConditions(state, value) {
     state.termsAndConditions = value
+  },
+
+  setDateRangeClientReport(state, value) {
+    state.dateRangeClientReport = value
   },
 }
 
