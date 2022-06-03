@@ -1,5 +1,14 @@
 <template>
-  <SwdSubHeader :title="headerTitle" />
+  <!-- <SwdSubHeader :title="headerTitle" /> -->
+  <div class="flex pb-5">
+    <div class="w-3/12">
+      <BackButton text="Back" @click="back" />
+    </div>
+    <div class="w-6/12 text-center">
+      <span class="text-title text-main font-medium">{{ headerTitle }}</span>
+    </div>
+    <div class="w-3/12" />
+  </div>
 </template>
 <script>
 import { useRouter, useRoute } from 'vue-router'
