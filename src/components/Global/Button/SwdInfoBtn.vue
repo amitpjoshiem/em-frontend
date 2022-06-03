@@ -15,7 +15,8 @@
       "
       @click="showInfo"
     >
-      <InfoFilled color="#66B6FF" />
+      +
+      <!-- <InfoFilled color="#66B6FF" /> -->
     </div>
   </el-icon>
 
@@ -33,7 +34,7 @@
 </template>
 
 <script>
-import { InfoFilled } from '@element-plus/icons-vue'
+// import { InfoFilled } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import InfoMemberDetails from '@/components/Info/InfoMemberDetails.vue'
 import InfoAssetAllocationDetails from '@/components/Info/InfoAssetAllocationDetails.vue'
@@ -41,7 +42,7 @@ import InfoAssetAllocationDetails from '@/components/Info/InfoAssetAllocationDet
 export default {
   name: 'SwdInfoBtn',
   components: {
-    InfoFilled,
+    // InfoFilled,
     InfoMemberDetails,
     InfoAssetAllocationDetails,
   },
