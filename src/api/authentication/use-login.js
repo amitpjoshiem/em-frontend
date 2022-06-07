@@ -33,7 +33,7 @@ const useLogin = () => {
     if (otpEnabled === 'false') {
       store.commit('auth/setAuthUser', true)
       await setInit()
-      router.push({ name: 'advisor-dashboard' })
+      router.push({ path: '/' })
     }
   }
 
