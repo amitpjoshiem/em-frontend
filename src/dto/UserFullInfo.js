@@ -15,6 +15,7 @@ class UserFullInfo {
     is_activated,
     can_delete,
     can_restore,
+    owner_id,
   }) {
     this.id = id
     this.name = name
@@ -30,6 +31,7 @@ class UserFullInfo {
     this.is_activated = is_activated
     this.can_delete = can_delete
     this.can_restore = can_restore
+    this.owner_id = owner_id
   }
 
   get createdAtFormatted() {

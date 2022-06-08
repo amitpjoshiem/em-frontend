@@ -69,7 +69,6 @@ import { defineComponent, ref, watchEffect } from 'vue'
 import { useLogout } from '@/api/authentication/use-logout'
 import { updateClients } from '@/api/vueQuery/clients/update-clients'
 import { useMutation } from 'vue-query'
-
 import { useStore } from 'vuex'
 
 export default defineComponent({

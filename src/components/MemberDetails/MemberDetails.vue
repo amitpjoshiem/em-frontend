@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SwdSubHeader :title="getTitle" />
+    <SwdSubHeader :title="getTitle" witch-info-btn info-btn-destination="MemberDetails" />
     <div v-if="!isLoadingProspectDetails" class="flex my-5">
       <div class="w-8/24 mr-5">
         <WidgetMemberDetails

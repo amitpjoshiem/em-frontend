@@ -5,21 +5,21 @@
       <el-collapse-item v-if="$can('advisor', 'all')" title="Notifications">
         <NotificationsSettngs />
       </el-collapse-item>
-      <el-collapse-item title="TwoFA">
-        <TwoFA />
+      <el-collapse-item title="2FA">
+        <OtpSettings />
       </el-collapse-item>
     </el-collapse>
   </div>
 </template>
 <script>
 import NotificationsSettngs from '@/components/Settings/NotificationsSettings.vue'
-import TwoFA from '@/components/Settings//TwoFA.vue'
+import OtpSettings from '@/components/Settings/OtpSettings.vue'
 
 export default {
   name: 'Settings',
   components: {
     NotificationsSettngs,
-    TwoFA,
+    OtpSettings,
   },
 }
 </script>

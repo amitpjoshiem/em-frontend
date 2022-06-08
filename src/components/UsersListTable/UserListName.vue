@@ -30,13 +30,24 @@ export default {
       return ''
     })
 
+    const getCurrentTypeUser = computed(() => {
+      return store.state.globalComponents.currentTypeUser
+    })
+
     const goUser = () => {
       if (props.user.type === 'lead') {
         store.commit('globalComponents/setClientId', props.user.client_user.id)
-
         router.push({ name: 'confirmation-page', params: { id: props.user.id } })
         return
       }
+
+      if (getCurrentTypeUser.value === 'ceo') {
+        store.commit('globalComponents/setAdvisorId', props.user.owner_id)
+        router.push({ name: 'member-details', params: { id: props.user.id } })
+
+        return
+      }
+
       if (props.user.step === 'default') {
         router.push({ name: 'basic-information', params: { id: props.user.id } })
         return

@@ -11,19 +11,22 @@
       <div class="flex items-center w-4/12">
         <div class="mr-2">
           <el-date-picker
-            v-model="value"
+            v-model="dateRange"
+            format="MM/DD/YYYY"
+            value-format="YYYY-MM-DD"
             type="daterange"
             start-placeholder="Start date"
             end-placeholder="End date"
             size="small"
+            @change="handleChange"
           />
         </div>
       </div>
       <ShareBtn pdf-region="client-report" />
     </div>
-    <template v-if="clientReport.data.length">
+    <template v-if="clientReport.length">
       <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
-        <ContractItem v-for="item in clientReport.data" :key="item.id" :contract="item" />
+        <ContractItem v-for="item in clientReport" :key="item.id" :contract="item" />
       </div>
       <TotalInfo />
     </template>
@@ -38,11 +41,12 @@
   <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
 <script>
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { reactive, toRefs } from 'vue'
+import { useStore } from 'vuex'
 import ContractItem from '@/components/ClientReport/ContractItem.vue'
 import TotalInfo from '@/components/ClientReport/TotalInfo.vue'
-import { useClientReportsAll } from '@/api/use-fetch-client-reports-all.js'
+import { useClientReportsAll } from '@/api/use-fetch-client-reports-all'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
@@ -54,13 +58,16 @@ export default {
   },
   setup() {
     const route = useRoute()
+    const store = useStore()
 
-    const state = reactive({
-      value: '',
-    })
+    const dateRange = ref('')
 
     const { isLoading, isError, data: clientReport } = useClientReportsAll(route.params.id)
     const { isLoading: isLoadingProspectDetails, isError: isErrorProspectDetails, data: member } = useProspectDetails()
+
+    const handleChange = () => {
+      store.commit('globalComponents/setDateRangeClientReport', dateRange.value)
+    }
 
     return {
       isLoading,
@@ -70,7 +77,8 @@ export default {
       isErrorProspectDetails,
       member,
       IconEmptyUsers,
-      ...toRefs(state),
+      dateRange,
+      handleChange,
     }
   },
 }
