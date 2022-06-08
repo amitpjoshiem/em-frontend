@@ -143,16 +143,13 @@ export default {
       isFetchingClient,
       refetchClient,
       dataClient,
-
       isLoadingAdvisor,
       isFetchingAdvisor,
       refetchAdvisor,
       dataAdvisor,
-
       state,
       handlePictureCardPreview,
       edit,
-
       data,
     }
   },
