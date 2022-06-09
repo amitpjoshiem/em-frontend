@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full items-center justify-center">
+  <div class="flex flex-col w-full items-center justify-center pr-[63px]">
     <div class="form max-w-sm pt-6 pl-6 pr-6 bg-widget-bg rounded-md w-[370px]">
       <div class="flex items-center justify-center p-2">
         <div class="rounded-full h-10 w-10 flex items-center justify-center bg-lightgray03">
