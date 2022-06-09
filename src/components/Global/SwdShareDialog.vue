@@ -1,36 +1,50 @@
 <template>
   <el-dialog v-model="dialogVisible" title="Share Data To" :before-close="handleClose">
-    <div v-if="state.isShowForm">
-      <div class="my-2 font-semibold text-main">E-mail</div>
-      <el-tag v-for="tag in state.dynamicTags" :key="tag" closable :disable-transitions="false" @close="removeTag(tag)">
-        {{ tag }}
-      </el-tag>
-      <el-form v-if="state.inputVisible" @submit.prevent="handleInputConfirm">
-        <el-form-item
-          class="inline-block"
-          :error="state.emailIsNotValid ? 'Email is not valid' : ''"
-          :show-message="state.emailIsNotValid"
-        >
-          <el-input
-            ref="saveTagInput"
-            v-model="state.inputValue"
-            class="input-new-tag w-32"
-            size="small"
-            @keyup.enter="handleInputConfirm"
-            @blur="handleInputConfirm"
-          />
-        </el-form-item>
-      </el-form>
-      <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Add e-mail</el-button>
-    </div>
-    <SwdDialogSucces v-else text="E-mail has been sent successfully" @closeDialog="closeDialog" />
+    <el-tabs v-if="state.isShowForm" v-model="tabsValue" type="border-card" class="share-tabs">
+      <el-tab-pane label="Sales Force" name="SF">Sales Force</el-tab-pane>
+      <el-tab-pane label="E-mail" name="email">
+        <div>
+          <el-tag
+            v-for="tag in state.dynamicTags"
+            :key="tag"
+            closable
+            :disable-transitions="false"
+            class="mr-2"
+            @close="removeTag(tag)"
+          >
+            {{ tag }}
+          </el-tag>
+          <el-form v-if="state.inputVisible" @submit.prevent="handleInputConfirm">
+            <el-form-item
+              class="inline-block"
+              :error="state.emailIsNotValid ? 'Email is not valid' : ''"
+              :show-message="state.emailIsNotValid"
+            >
+              <el-input
+                ref="saveTagInput"
+                v-model="state.inputValue"
+                class="input-new-tag w-32"
+                size="small"
+                @keyup.enter="handleInputConfirm"
+                @blur="handleInputConfirm"
+              />
+            </el-form-item>
+          </el-form>
+          <el-button v-else size="small" @click="showInput">+ Add e-mail</el-button>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+    <SwdDialogSucces v-else :text="getDialogSuccesText" @closeDialog="closeDialog" />
     <template #footer>
       <span v-if="state.isShowForm" class="dialog-footer">
-        <el-button @click="closeDialog">Cancel</el-button>
-        <el-button type="primary" :disabled="confirmBtnDisabled" @click="confirm">
-          <el-icon v-if="loadingSendlueprintReport || loadingSendlClientReport" class="is-loading">
-            <loading />
-          </el-icon>
+        <el-button class="w-[100px]" @click="closeDialog">Cancel</el-button>
+        <el-button
+          type="primary"
+          :disabled="confirmBtnDisabled"
+          :loading="loadingSendlueprintReport || loadingSendlClientReport"
+          class="w-[100px]"
+          @click="confirm"
+        >
           Confirm
         </el-button>
       </span>
@@ -50,13 +64,11 @@ import { sendClientReport } from '@/api/vueQuery/send-client-report'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import SwdDialogSucces from '@/components/Global/SwdDialogSucces.vue'
-import { Loading } from '@element-plus/icons'
 
 export default defineComponent({
   name: 'SwdShareDialog',
 
   components: {
-    Loading,
     SwdDialogSucces,
   },
 
@@ -73,6 +85,8 @@ export default defineComponent({
     const dialogVisible = ref(false)
     const store = useStore()
     const saveTagInput = ref(null)
+
+    const tabsValue = ref('SF')
 
     const {
       mutateAsync: sendBlueprintReportEmail,
@@ -108,6 +122,7 @@ export default defineComponent({
     }
 
     const confirmBtnDisabled = computed(() => {
+      if (tabsValue.value === 'email' && !state.dynamicTags.length) return true
       return loadingSendlueprintReport.value || loadingSendlClientReport.value
     })
 
@@ -116,25 +131,36 @@ export default defineComponent({
     })
 
     const confirm = async () => {
-      let resSendReport
-      const data = {
-        emails: state.dynamicTags,
-      }
-      if (pdfRegion.value === 'blue-report') {
-        resSendReport = await sendBlueprintReportEmail({ data, member_id: route.params.id })
-      }
+      if (tabsValue.value === 'email') {
+        let resSendReport
+        const data = {
+          emails: state.dynamicTags,
+        }
+        if (pdfRegion.value === 'blue-report') {
+          resSendReport = await sendBlueprintReportEmail({ data, member_id: route.params.id })
+        }
 
-      if (pdfRegion.value === 'client-report') {
-        resSendReport = await sendClientReportEmail({ data, doc_id: docIdShare.value })
-      }
+        if (pdfRegion.value === 'client-report') {
+          resSendReport = await sendClientReportEmail({ data, doc_id: docIdShare.value })
+        }
 
-      if (!('error' in resSendReport)) {
+        if (!('error' in resSendReport)) {
+          state.isShowForm = false
+        } else {
+          useAlert({
+            title: 'Error',
+            type: 'error',
+            message: resSendReport.error.message,
+          })
+        }
+      }
+      if (tabsValue.value === 'SF') {
         state.isShowForm = false
-      } else {
+
         useAlert({
-          title: 'Error',
-          type: 'error',
-          message: resSendReport.error.message,
+          title: 'Success',
+          type: 'success',
+          message: 'Success',
         })
       }
     }
@@ -189,6 +215,11 @@ export default defineComponent({
         })
     }
 
+    const getDialogSuccesText = computed(() => {
+      if (tabsValue.value === 'email') return 'E-mail has been sent successfully'
+      return 'SF has been sent successfully'
+    })
+
     return {
       state,
       dialogVisible,
@@ -207,7 +238,15 @@ export default defineComponent({
       sendClientReportEmail,
       errorSendClientReport,
       loadingSendlClientReport,
+      tabsValue,
+      getDialogSuccesText,
     }
   },
 })
 </script>
+
+<style>
+.share-tabs > .el-tabs__content {
+  min-height: 150px;
+}
+</style>
