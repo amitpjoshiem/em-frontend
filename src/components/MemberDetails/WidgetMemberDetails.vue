@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <el-form ref="form" :model="ruleForm" status-icon size="small">
+    <el-form ref="form" :model="ruleForm" size="small">
       <div class="flex justify-between items-center">
         <div class="flex items-center">
           <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">

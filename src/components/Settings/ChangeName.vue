@@ -6,7 +6,7 @@
       </div>
     </template>
     <template #contentDialog>
-      <el-form v-if="data.isShowForm" ref="form" :model="ruleForm" status-icon :rules="rules" label-position="top">
+      <el-form v-if="data.isShowForm" ref="form" :model="ruleForm" :rules="rules" label-position="top">
         <el-form-item label="First name" prop="first_name" class="w-full mb-4">
           <el-input v-model="ruleForm.first_name" placeholder="Enter first name" />
         </el-form-item>

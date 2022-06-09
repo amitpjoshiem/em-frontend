@@ -1,6 +1,6 @@
 <template>
   <div class="border border-color-grey rounded-lg my-5 p-5">
-    <el-form ref="form" :model="ruleForm" status-icon label-position="top">
+    <el-form ref="form" :model="ruleForm" label-position="top">
       <span class="text-main text-smm font-semibold">Notes</span>
       <el-form-item class="mt-5">
         <el-input v-model="ruleForm.notes" type="textarea" :rows="5" :autosize="false" />

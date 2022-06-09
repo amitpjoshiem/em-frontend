@@ -20,7 +20,7 @@
           <div>Income</div>
         </div>
         <div class="flex flex-col justify-center text-main text-xs font-medium">
-          <el-form ref="form" :model="ruleForm" status-icon size="small">
+          <el-form ref="form" :model="ruleForm" size="small">
             <el-form-item>
               <SwdCurrencyInput
                 v-model="ruleForm.liquidity"
