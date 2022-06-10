@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <UsersListTable v-if="!isLoading" :users-list="data" />
-    <el-skeleton v-else :rows="rows" animated class="p-5" />
-    <div class="flex items-center justify-center border-color-grey py-6">
+  <div class="border border-color-grey rounded-xl">
+    <div class="p-5">List Opportunities</div>
+    <OpportunityListTable v-if="!isLoading" :users-list="data" class="min-h-[335px]" />
+    <el-skeleton v-else :rows="7" animated class="p-5" />
+    <div class="flex items-center justify-center border-color-grey my-4">
       <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
     </div>
   </div>
@@ -10,15 +11,15 @@
 
 <script>
 import { useListHouseholders } from '@/api/use-list-householders.js'
-import UsersListTable from '@/components/UsersListTable/UsersListTable.vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { usePaginationData } from '@/utils/use-pagination-data.js'
+import OpportunityListTable from '@/components/PipeLine/OpportunityListTable.vue'
 
 export default {
-  name: 'ListAll',
+  name: 'OpportunityList',
   components: {
-    UsersListTable,
+    OpportunityListTable,
   },
   setup() {
     const store = useStore()
@@ -27,8 +28,9 @@ export default {
 
     const rows = computed(() => Number(store.state.globalComponents.itemsPerPage.values.listOfHouseholds))
 
-    const { isLoading, isError, data, pagination } = useListHouseholders({
-      type: 'client,prospect',
+    const { isLoading, isError, data, pagination, salesforce } = useListHouseholders({
+      type: 'prospect',
+      include: 'salesforce',
       page: paginationData,
     })
 
@@ -37,8 +39,9 @@ export default {
       isError,
       data,
       pagination,
-      handlePaginationChange,
       rows,
+      handlePaginationChange,
+      salesforce,
     }
   },
 }
