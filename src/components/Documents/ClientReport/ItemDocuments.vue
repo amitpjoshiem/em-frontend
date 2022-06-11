@@ -86,7 +86,7 @@ export default {
         value: true,
       })
       store.commit('globalComponents/setPdfRegion', 'client-report')
-      store.commit('globalComponents/setDocIdShare', props.document.id)
+      store.commit('globalComponents/setDocShare', props.document)
     }
 
     const downloadDocuments = async () => {
