@@ -1,6 +1,6 @@
 <template>
   <div class="border border-color-grey rounded-xl">
-    <div class="p-5">List Opportunities</div>
+    <div class="p-5">Revenue Dashboard</div>
     <OpportunityListTable v-if="!isLoading" :users-list="data" class="min-h-[335px]" />
     <el-skeleton v-else :rows="7" animated class="p-5" />
     <div class="flex items-center justify-center border-color-grey my-4">
