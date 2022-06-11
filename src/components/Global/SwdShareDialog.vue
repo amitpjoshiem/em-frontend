@@ -1,7 +1,11 @@
 <template>
   <el-dialog v-model="dialogVisible" title="Share Data To" :before-close="handleClose">
     <el-tabs v-if="state.isShowForm" v-model="tabsValue" type="border-card" class="share-tabs">
-      <el-tab-pane label="Sales Force" name="SF">Sales Force</el-tab-pane>
+      <el-tab-pane label="Sales Force" name="SF">
+        Share file
+        <span class="font-semibold">{{ docShare.filename }}</span>
+        to Sales Force
+      </el-tab-pane>
       <el-tab-pane label="E-mail" name="email">
         <div>
           <el-tag
@@ -41,7 +45,7 @@
         <el-button
           type="primary"
           :disabled="confirmBtnDisabled"
-          :loading="loadingSendlueprintReport || loadingSendlClientReport"
+          :loading="loadingSendlueprintReport || loadingSendlClientReport || loadingSendlReportSalesForce"
           class="w-[100px]"
           @click="confirm"
         >
@@ -60,6 +64,7 @@ import { ElMessageBox } from 'element-plus'
 import Schema from 'async-validator'
 import { sendReport } from '@/api/vueQuery/send-report'
 import { sendBlueprintReport } from '@/api/vueQuery/send-blueprint-report'
+import { sendReportToSf } from '@/api/vueQuery/send-report-to-sf'
 import { sendClientReport } from '@/api/vueQuery/send-client-report'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
@@ -88,21 +93,16 @@ export default defineComponent({
 
     const tabsValue = ref('SF')
 
-    const {
-      mutateAsync: sendBlueprintReportEmail,
-      error: errorSendBlueprintReport,
-      isLoading: loadingSendlueprintReport,
-    } = useMutation(sendBlueprintReport)
+    const { mutateAsync: sendBlueprintReportEmail, isLoading: loadingSendlueprintReport } =
+      useMutation(sendBlueprintReport)
 
-    const {
-      mutateAsync: sendClientReportEmail,
-      error: errorSendClientReport,
-      isLoading: loadingSendlClientReport,
-    } = useMutation(sendClientReport)
+    const { mutateAsync: sendClientReportEmail, isLoading: loadingSendlClientReport } = useMutation(sendClientReport)
+
+    const { mutateAsync: sendReportSalesForce, isLoading: loadingSendlReportSalesForce } = useMutation(sendReportToSf)
 
     const statusModal = computed(() => store.state.globalComponents.dialog.showDialog.shareFileEmailDialog)
     const pdfRegion = computed(() => store.state.globalComponents.pdfRegion)
-    const docIdShare = computed(() => store.state.globalComponents.docIdShare)
+    const docShare = computed(() => store.state.globalComponents.docShare)
 
     const state = reactive({
       dynamicTags: [],
@@ -123,7 +123,7 @@ export default defineComponent({
 
     const confirmBtnDisabled = computed(() => {
       if (tabsValue.value === 'email' && !state.dynamicTags.length) return true
-      return loadingSendlueprintReport.value || loadingSendlClientReport.value
+      return loadingSendlueprintReport.value || loadingSendlClientReport.value || loadingSendlReportSalesForce.value
     })
 
     watchEffect(() => {
@@ -141,7 +141,7 @@ export default defineComponent({
         }
 
         if (pdfRegion.value === 'client-report') {
-          resSendReport = await sendClientReportEmail({ data, doc_id: docIdShare.value })
+          resSendReport = await sendClientReportEmail({ data, doc_id: docShare.value.id })
         }
 
         if (!('error' in resSendReport)) {
@@ -155,13 +155,19 @@ export default defineComponent({
         }
       }
       if (tabsValue.value === 'SF') {
-        state.isShowForm = false
+        const data = {
+          media_id: docShare.value.id,
+        }
+        const res = await sendReportSalesForce({ data, id: route.params.id })
+        if (!('error' in res)) {
+          state.isShowForm = false
 
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Success',
-        })
+          useAlert({
+            title: 'Success',
+            type: 'success',
+            message: 'Success',
+          })
+        }
       }
     }
 
@@ -233,13 +239,14 @@ export default defineComponent({
       closeDialog,
       confirmBtnDisabled,
       sendBlueprintReportEmail,
-      errorSendBlueprintReport,
       loadingSendlueprintReport,
       sendClientReportEmail,
-      errorSendClientReport,
       loadingSendlClientReport,
       tabsValue,
       getDialogSuccesText,
+      sendReportSalesForce,
+      loadingSendlReportSalesForce,
+      docShare,
     }
   },
 })
