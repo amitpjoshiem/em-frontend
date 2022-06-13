@@ -1,11 +1,9 @@
 <template>
   <div class="border border-color-grey rounded-large mt-5 mb-10">
-    <div v-if="isError">An error has occurred: {{ error }}</div>
-    <div>
-      <ListOfHouseholdsHeader />
-      <UsersListTable v-if="!isFetching" :users-list="data" />
-      <el-skeleton v-else :rows="rows" animated class="p-5" />
-    </div>
+    <ListOfHouseholdsHeader />
+    <el-skeleton v-if="isLoading" :rows="rows" animated class="p-5" />
+    <SwdErrorBlock v-else-if="isError" />
+    <UsersListTable v-else-if="data" :users-list="data" />
   </div>
 </template>
 <script>
@@ -23,17 +21,16 @@ export default {
   setup() {
     const store = useStore()
 
-    const { isFetching, isLoading, isError, data, houseHolderTypeHandler } = useHouseholders()
+    const { isLoading, isError, data, status } = useHouseholders()
 
     const rows = computed(() => Number(store.state.globalComponents.itemsPerPage.values.advisorDashboard))
 
     return {
-      isFetching,
       isLoading,
       isError,
       data,
-      houseHolderTypeHandler,
       rows,
+      status,
     }
   },
 }

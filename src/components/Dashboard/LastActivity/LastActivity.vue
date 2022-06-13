@@ -1,16 +1,17 @@
 <template>
-  <div
-    v-if="!isFetching"
-    class="row-span-2 col-span-1 bg-widget-bg rounded-[10px] font-medium pl-5 pt-5 pr-5 min-h-[250px]"
-  >
+  <div class="row-span-2 col-span-1 bg-widget-bg rounded-[10px] pl-5 pt-5 pr-5 min-h-[250px]">
     <div class="pb-4">
-      <router-link :to="{ name: getLink }" class="text-smm text-main hover:text-activity">Last Activity</router-link>
+      <router-link :to="{ name: getLink }" class="font-medium text-smm text-main hover:text-activity">
+        Last Activity
+      </router-link>
     </div>
-    <template v-if="activity.data.length">
-      <div v-for="elem in activity.data" :key="elem.times" class="active-item flex flex-col text-xs">
+    <el-skeleton v-if="isLoading" :rows="4" animated />
+    <SwdErrorBlock v-else-if="isError" />
+    <template v-else-if="activity.data">
+      <div v-for="elem in activity.data" :key="elem.times" class="font-medium active-item flex flex-col text-xs">
         <div class="flex items-center">
           <div class="h-[9px] w-[9px] rounded-full mb-[2px] mr-[8px] bg-activity" />
-          <div class="text-activity-item font-medium">
+          <div class="text-activity-item">
             <DateListActivity :day="elem.date" :timestamp="elem.timestamp" />
           </div>
         </div>
@@ -25,7 +26,6 @@
       <span class="text-gray03 font-semibold text-xss mt-5">No recently activity</span>
     </div>
   </div>
-  <el-skeleton v-else :rows="6" animated />
 </template>
 <script>
 import { computed } from 'vue'
@@ -44,7 +44,7 @@ export default {
   setup() {
     const store = useStore()
 
-    const { error, data: activity, isFetching, isLoading } = useDashboardLastActivity()
+    const { error, data: activity, isFetching, isLoading, isError } = useDashboardLastActivity()
 
     const getCurrentTypeUser = computed(() => {
       return store.state.globalComponents.currentTypeUser
@@ -64,6 +64,7 @@ export default {
       isFetching,
       isLoading,
       getLink,
+      isError,
     }
   },
 }
