@@ -1,5 +1,5 @@
 <template>
-  <el-badge :value="count" :max="99" class="mr-8" :type="getType ? 'primary' : 'info'">
+  <el-badge :value="count" :max="99" class="mr-8" :type="getType ? 'primary' : 'info'" :hidden="isLoading">
     <router-link
       :to="{ name: 'list-active-leads' }"
       class="text-gray03 text-smm cursor-pointer"
@@ -21,6 +21,11 @@ export default {
       type: Number,
       required: true,
       default: 0,
+    },
+    isLoading: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
   setup() {

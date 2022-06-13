@@ -20,6 +20,7 @@ export const fetcher = async ({ url, data, options }) => {
     return response.json()
   } catch (error) {
     showErrorResponse(error)
-    return { error }
+    throw new Error(body)
+    // return { error }
   }
 }

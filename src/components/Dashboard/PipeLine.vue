@@ -1,11 +1,12 @@
 <template>
-  <div v-if="!isFetching" class="p-5 bg-widget-bg rounded-lg">
+  <div class="p-5 bg-widget-bg rounded-lg">
     <div class="flex justify-between items-center">
       <router-link :to="{ name: getLink }" class="text-smm font-medium hover:text-activity">Pipe Line</router-link>
       <SwdSelectFilter destination="pipeLine" />
     </div>
-
-    <div class="pt-6 flex justify-between sm:mb-5 xl:mb-0">
+    <el-skeleton v-if="isLoading" :rows="4" animated />
+    <SwdErrorBlock v-else-if="isError" />
+    <div v-else-if="pipeLine" class="pt-6 flex justify-between sm:mb-5 xl:mb-0">
       <div class="justify-between flex flex-col border border-widget-border rounded-lg pt-3 bg-white w-5/12">
         <div class="flex text-small items-center justify-between px-2.5">
           <span class="text-gray03">Total AUM</span>
@@ -46,7 +47,6 @@
       </div>
     </div>
   </div>
-  <el-skeleton v-else :rows="5" animated />
 </template>
 
 <script>

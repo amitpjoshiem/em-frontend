@@ -4,7 +4,17 @@
     class="border border-color-grey box-border rounded-md mt-1 text-xxs p-2 flex justify-between items-center"
   >
     <span class="text-red-500 font-semibold">Salesforce account not connected</span>
-    <el-button type="primary" plain size="small" @click="connectSalesforce">Connect</el-button>
+    <el-button
+      type="primary"
+      plain
+      size="small"
+      :loading="isLoading"
+      :disabled="isLoading"
+      class="w-[80px]"
+      @click="connectSalesforce"
+    >
+      Connect
+    </el-button>
   </div>
 </template>
 
