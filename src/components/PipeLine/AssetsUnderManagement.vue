@@ -1,10 +1,9 @@
 <template>
   <div class="border border-color-grey rounded-xl p-5">
-    <div v-if="!isFetching">
-      <div class="text-smm text-main font-semibold mb-5">Assets Under Management</div>
-      <AumChart :values="aum.data" class="my-4" />
-    </div>
-    <el-skeleton v-else :rows="3" animated class="p-5" />
+    <div class="text-smm text-main font-semibold mb-5">Assets Under Management</div>
+    <el-skeleton v-if="isLoading" :rows="3" animated class="p-5" />
+    <SwdErrorBlock v-else-if="isError" />
+    <AumChart v-else-if="aum" :values="aum.data" class="my-4" />
   </div>
 </template>
 <script>

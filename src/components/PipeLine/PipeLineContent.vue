@@ -1,9 +1,9 @@
 <template>
-  <div class="flex mb-5">
+  <div class="flex mb-5 h-[250px]">
     <AssetsUnderManagement class="w-6/12 mr-2.5" />
     <NumberHouseholds class="w-6/12 ml-2.5" />
   </div>
-  <HouseholdsStatistics class="mb-5" />
+  <HouseholdsStatistics class="mb-5 h-[223px]" />
   <OpportunityList />
 </template>
 <script>
