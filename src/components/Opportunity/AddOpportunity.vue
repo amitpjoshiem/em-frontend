@@ -1,5 +1,5 @@
 <template>
-  <SwdSubHeader title="New opportunity" class="p-5" />
+  <SwdSubHeader title="New child opportunities" class="p-5" />
   <div v-if="!isLoadingContent" class="p-5">
     <div v-if="statusSfAcc.auth" class="border-color-grey px-10 pb-7">
       <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top">
@@ -24,36 +24,45 @@
           </el-form-item>
         </div>
         <div class="flex mb-5">
-          <el-form-item label="Opportunity name" prop="name" class="w-6/12 pr-5">
+          <el-form-item label="Opportunity name" prop="name" class="w-6/12 pr-2.5">
             <el-input v-model="ruleForm.name" placeholder="Enter opportunity name" />
           </el-form-item>
-          <el-form-item label="Account name" prop="account_name" class="w-6/12">
+          <el-form-item label="Account name" prop="account_name" class="w-6/12 pl-2.5">
             <el-input v-model="ruleForm.account_name" placeholder="Enter account name" :disabled="true" />
           </el-form-item>
         </div>
 
         <div class="flex mb-5">
-          <el-form-item label="Type" prop="type" class="w-6/12 pr-3">
+          <el-form-item label="Type" prop="type" class="w-6/12 pr-2.5">
             <el-select v-model="ruleForm.type" placeholder="Type" class="w-full">
               <el-option v-for="item in initOpportunity.data.init.type_list" :key="item" :label="item" :value="item">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Amount" prop="amount" class="w-6/12">
+          <el-form-item label="Amount" prop="amount" class="w-6/12 pl-2.5">
             <el-input v-model="ruleForm.amount" placeholder="Enter amount" />
           </el-form-item>
         </div>
       </el-form>
 
       <div class="flex justify-end my-10">
-        <el-button type="primary" plain @click="submitForm('ruleForm')">Save</el-button>
+        <el-button
+          type="primary"
+          plain
+          :loading="isLoadingAddOpportunity"
+          :disabled="isLoadingAddOpportunity"
+          class="w-[85px]"
+          @click="submitForm('ruleForm')"
+        >
+          Save
+        </el-button>
       </div>
     </div>
     <div v-else class="flex flex-col text-main text-xs justify-center items-center">
       <span>Your SalesForce account isn’t authorized.</span>
-      <span class="py-5"
-        >Please check your Partners Settings Make Partner Settings clickable link to the Partner screen</span
-      >
+      <span class="py-5">
+        Please check your Partners Settings Make Partner Settings clickable link to the Partner screen
+      </span>
       <el-button type="primary" plain class="w-[150px]" size="small" @click="goPartnerSettings">
         Partner Settings
       </el-button>
@@ -93,7 +102,7 @@ export default {
 
     const userFilter = 'last_name;first_name'
 
-    const { mutateAsync: addOpportunity } = useMutation(createOpportunity)
+    const { mutateAsync: addOpportunity, isLoadingAddOpportunity } = useMutation(createOpportunity)
     const { isLoading: isLoadingProspectDetails, data: prospectDetails } = useProspectDetails(id)
     const { isLoading: isLoadingInitOpportunity, data: initOpportunity } = useOpportunityInit()
     const { isLoading: isLoadingUserProfile, data: userProfile } = useUserProfile(userFilter)
@@ -155,6 +164,7 @@ export default {
       statusSfAcc,
       goPartnerSettings,
       isLoadingContent,
+      isLoadingAddOpportunity,
     }
   },
 }

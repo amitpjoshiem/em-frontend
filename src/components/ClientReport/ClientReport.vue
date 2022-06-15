@@ -1,30 +1,35 @@
 <template>
-  <div v-if="!isLoading && !isLoadingProspectDetails" class="p-5">
+  <div class="p-5">
     <div class="pb-5 flex">
-      <div class="w-3/12">
+      <div class="w-4/12">
         <BackButton text="Back" @click="$router.go(-1)" />
       </div>
-      <div class="w-6/12 text-center">
-        <span class="text-title text-color-link font-semibold">{{ member.name }}</span>
-        <span class="text-title text-main font-semibold"> Client report</span>
+
+      <div class="w-4/12 flex justify-center items-center">
+        <SwdSpinner v-if="isLoadingProspectDetails" class="mr-2" />
+        <span v-else class="text-title text-color-link font-semibold mr-2">{{ member.name }}</span>
+        <span class="text-title text-main font-semibold">Client report</span>
       </div>
-      <div class="flex items-center w-4/12">
-        <div class="mr-2">
-          <el-date-picker
-            v-model="dateRange"
-            format="MM/DD/YYYY"
-            value-format="YYYY-MM-DD"
-            type="daterange"
-            start-placeholder="Start date"
-            end-placeholder="End date"
-            size="small"
-            @change="handleChange"
-          />
-        </div>
+
+      <div class="flex items-center w-4/12 client-report-range">
+        <el-date-picker
+          v-model="dateRange"
+          format="MM/DD/YYYY"
+          value-format="YYYY-MM-DD"
+          type="daterange"
+          start-placeholder="Start date"
+          end-placeholder="End date"
+          size="small"
+          @change="handleChange"
+        />
+        <ShareBtn pdf-region="client-report" />
       </div>
-      <ShareBtn pdf-region="client-report" />
     </div>
-    <template v-if="clientReport.length">
+
+    <el-skeleton v-if="isLoading" :rows="10" animated class="p-5" />
+    <SwdErrorBlock v-else-if="isErrorProspectDetails" />
+
+    <template v-else-if="clientReport">
       <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
         <ContractItem v-for="item in clientReport" :key="item.id" :contract="item" />
       </div>
@@ -38,7 +43,6 @@
       <p class="text-gray03 font-semibold text-xss mt-3">No client reports available</p>
     </div>
   </div>
-  <el-skeleton v-else :rows="10" animated class="p-5" />
 </template>
 <script>
 import { ref } from 'vue'
@@ -83,3 +87,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.client-report-range .el-range-editor--small.el-input__wrapper {
+  height: 28px;
+}
+</style>

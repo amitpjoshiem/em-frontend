@@ -25,7 +25,6 @@
 }
 
 .el-input__inner {
-  height: 36px;
   border-radius: 6px;
   border-color: #D4DDEB;
   line-height: 1;
@@ -88,7 +87,6 @@
 
 .el-form-item__label {
   line-height: normal;
-  /* padding-bottom: 8px; */
   color: #424450;
   font-size: 13px;
   font-weight: 600;
@@ -98,13 +96,6 @@
   font-size: 13px;
   color: #aab5cf;
 }
-
-/* Chrome, Safari, Edge, Opera */
-/* .el-input__inner::-webkit-outer-spin-button,
-.el-input__inner::-webkit-inner-spin-button{
-  -webkit-appearance: none;
-  margin: 0;
-} */
 
 /* Firefox */
 .el-input__inner[type='number'] {
@@ -127,11 +118,6 @@
   font-weight: normal;
 }
 
-/* .el-tag {
-  margin-right: 10px;
-  margin-bottom: 10px;
-} */
-
 .button-new-tag {
   height: 32px;
   line-height: 30px;
@@ -143,10 +129,6 @@
   width: 90px;
   vertical-align: bottom;
 }
-
-/* .el-dialog__body{
-  min-height: 200px;
-} */
 
 .el-step__title {
   font-size: 14px;
@@ -217,7 +199,6 @@
   border-style: none;
   text-align: center;
   border-radius: 0;
-  height: 38px;
 }
 
 .invalidate .el-input .el-input__inner {
@@ -295,4 +276,10 @@
 
 .dialog-terms .el-dialog__header .el-dialog__title{
   font-weight: 800;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
