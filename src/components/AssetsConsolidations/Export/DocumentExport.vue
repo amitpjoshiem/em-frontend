@@ -1,7 +1,9 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="Document import" />
-    <div v-if="!isLoading">
+    <el-skeleton v-if="isLoading" :rows="10" animated />
+    <SwdErrorBlock v-else-if="isError" />
+    <div v-else-if="document">
       <template v-if="document.data.length">
         <DocumentExportItem v-for="(elem, index) in document.data" :key="index" :item="elem" />
       </template>
@@ -12,7 +14,6 @@
         <p>No recently added documents</p>
       </div>
     </div>
-    <el-skeleton v-else :rows="10" animated />
   </div>
 </template>
 <script>
