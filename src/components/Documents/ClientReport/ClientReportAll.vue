@@ -1,15 +1,15 @@
 <template>
-  <div v-if="!isFetchingClient && !isFetchingBlueprint" class="p-5">
-    <template v-if="getDocuments && getDocuments.length">
-      <el-collapse>
-        <el-collapse-item v-for="(item, index) in getDocuments" :key="index" :name="index">
-          <template #title>
-            <ItemHeader :file-name="item.filename" :created-at="item.created_at" :type="item.type" />
-          </template>
-          <ItemDocuments :document="item" :contracts="item.contracts ? item.contracts : []" />
-        </el-collapse-item>
-      </el-collapse>
-    </template>
+  <el-skeleton v-if="isLoadingClient || isLoadingBlueprint" :rows="5" animated class="p-5" />
+  <SwdErrorBlock v-else-if="isErrorClient || isErrorBlueprint" />
+  <div v-else-if="getDocuments" class="p-5">
+    <el-collapse v-if="getDocuments && getDocuments.length">
+      <el-collapse-item v-for="(item, index) in getDocuments" :key="index" :name="index">
+        <template #title>
+          <ItemHeader :file-name="item.filename" :created-at="item.created_at" :type="item.type" />
+        </template>
+        <ItemDocuments :document="item" :contracts="item.contracts ? item.contracts : []" />
+      </el-collapse-item>
+    </el-collapse>
     <div v-else class="text-gray03 flex items-center flex-col mt-5">
       <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
         <InlineSvg :src="IconEmptyUsers" />
@@ -17,7 +17,6 @@
       <p>No recently added documents</p>
     </div>
   </div>
-  <el-skeleton v-else :rows="5" animated class="p-5" />
 </template>
 
 <script>
@@ -26,8 +25,9 @@ import { useFetchExportDocumentsBlueprint } from '@/api/use-fetch-export-documen
 import { useRoute } from 'vue-router'
 import ItemHeader from '@/components/Documents/ClientReport/ItemHeader.vue'
 import ItemDocuments from '@/components/Documents/ClientReport/ItemDocuments.vue'
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, watchEffect } from 'vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ClientReportAll',
@@ -37,13 +37,14 @@ export default {
   },
   setup() {
     const route = useRoute()
+    const store = useStore()
 
     const {
       isLoading: isLoadingClient,
-      isError: isErrorClient,
       isFetching: isFetchingClient,
       data: documentsClient,
       refetch: refetchClientReports,
+      isError: isErrorClient,
     } = useFetchExportDocumentsClient({ id: route.params.id, type: 'all' }, { enabled: false })
 
     const {
@@ -70,6 +71,15 @@ export default {
         return documentsClient.value
       }
       return documentsBlueprint.value
+    })
+
+    watchEffect(() => {
+      if (store.state.globalComponents.needUpdateContent?.value === 'client_report_pdf_export') {
+        refetchClientReports.value()
+      }
+      if (store.state.globalComponents.needUpdateContent?.value === 'blueprint_doc_export') {
+        refetchClientBlueprint.value()
+      }
     })
 
     return {
