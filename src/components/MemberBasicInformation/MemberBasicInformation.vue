@@ -1,6 +1,7 @@
 <template>
-  <SwdSubHeader class="p-5" :title="getTitle" />
+  <SwdSubHeader class="p-5" title="Basic information" />
   <el-skeleton v-if="isLoading" :rows="11" animated class="p-5" />
+  <SwdErrorBlock v-else-if="isError" />
   <div v-else class="p-5">
     <div>
       <div class="flex items-center">
@@ -74,14 +75,18 @@ export default {
       uploadRef: null,
     })
 
-    const { isLoading, isError, data, house, spouse, employment, other, employmentProspect, employmentSpouse } =
-      useProspectDetails(id)
+    const {
+      isLoading,
+      isError,
+      data: prospect,
+      house,
+      spouse,
+      employment,
+      other,
+      employmentProspect,
+      employmentSpouse,
+    } = useProspectDetails(id)
     const { mutateAsync: updateMember } = useMutation(updateMembers)
-
-    const getTitle = computed(() => {
-      if (data.value && data.value.type === 'prospect') return 'Opportunity details'
-      return 'Client details'
-    })
 
     const handleAvatarSuccess = async (res) => {
       const form = { uuids: [res.data.uuid] }
@@ -120,10 +125,9 @@ export default {
       spouse,
       employment,
       other,
-      prospect: data,
+      prospect,
       employmentProspect,
       employmentSpouse,
-      getTitle,
       state,
       handleAvatarSuccess,
       beforeAvatarUpload,

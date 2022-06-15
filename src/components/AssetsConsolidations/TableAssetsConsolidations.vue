@@ -385,7 +385,7 @@ export default {
   padding-right: 3px;
 }
 
-.item .el-input__inner {
+.item .el-input__wrapper {
   box-shadow: none;
 }
 </style>
