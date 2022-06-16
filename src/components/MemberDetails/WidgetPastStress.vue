@@ -1,8 +1,10 @@
 <template>
   <div class="w-8/24 border rounded-lg mr-5">
-    <div v-if="!isLoading" class="p-5 flex flex-col h-full justify-between">
+    <div class="p-5 flex flex-col h-full justify-between">
       <div class="text-main text-smm font-semibold mb-3">Past Stress Test Results</div>
-      <div v-if="isAvailableCocument" class="flex flex-col">
+      <el-skeleton v-if="isLoading" :rows="2" animated class="p-5" />
+      <SwdErrorBlock v-else-if="isError" />
+      <div v-else-if="isAvailableCocument" class="flex flex-col">
         <div
           class="flex border-input-border border rounded-md p-3 w-full mb-3.5 cursor-pointer"
           @click="openPrewiev(stressTestDocument.data[0].url)"
@@ -43,7 +45,6 @@
         @click="moreActionStressTest"
       />
     </div>
-    <el-skeleton v-else :rows="5" animated class="p-5" />
     <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
   </div>
 </template>
@@ -75,7 +76,7 @@ export default {
     })
 
     const isAvailableCocument = computed(() => {
-      return stressTestDocument.value.data && stressTestDocument.value.data.length
+      return stressTestDocument.value?.data && stressTestDocument.value?.data?.length
     })
 
     const moreActionStressTest = () => {

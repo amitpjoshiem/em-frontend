@@ -34,6 +34,7 @@ export default {
     const queryClient = useQueryClient()
 
     const { isLoading, isFetching, isError, data: salesforceStatus } = useFetchSalesforceStatus(id)
+
     const {
       mutateAsync: createAccount,
       isError: isErrorCreate,
@@ -41,7 +42,7 @@ export default {
     } = useMutation(createSalesforceAccount)
 
     const isShowStatus = computed(() => {
-      return !isLoading.value && !salesforceStatus.value.data.status
+      return !isLoading.value && !isError.value && !salesforceStatus.value.data.status
     })
 
     const connectSalesforce = async () => {

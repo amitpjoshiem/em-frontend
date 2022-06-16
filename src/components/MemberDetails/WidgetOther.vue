@@ -1,10 +1,12 @@
 <template>
-  <div class="px-3 pt-4 pb-4 border border-color-grey box-border rounded-r-md border-l-0 w-6/24">
+  <div class="px-3 pt-4 pb-4 border border-color-grey box-border rounded-r-md border-l-0 w-6/24 h-[269px]">
     <div class="flex justify-between items-center text-smm font-semibold">
       <span class="text-main">Other</span>
       <el-button size="small" @click="showMore">More</el-button>
     </div>
-    <div class="text-xs pt-3">
+    <el-skeleton v-if="isLoading" :rows="3" animated />
+    <SwdErrorBlock v-else-if="isError" />
+    <div v-else-if="other" class="text-xs pt-8">
       <div class="border-input-border border rounded-md p-2 w-full my-2">
         <p class="text-gray03 mb-[2px]">Risk level:</p>
         <p class="font-semibold" data-testid="widjet-other-risk">{{ other.value.risk }}</p>
@@ -30,21 +32,17 @@
 <script>
 import ModalMemberDetailsOther from './ModalMemberDetailsOther.vue'
 import { useStore } from 'vuex'
+import { useProspectDetails } from '@/api/use-prospect-details.js'
 
 export default {
   name: 'WidgetOther',
   components: {
     ModalMemberDetailsOther,
   },
-  props: {
-    other: {
-      type: Object,
-      require: true,
-      default: () => {},
-    },
-  },
   setup() {
     const store = useStore()
+
+    const { isLoading, isError, other } = useProspectDetails()
 
     const getText = (text) => {
       if (text && text.length > 28) return text.slice(0, 28) + '...'
@@ -61,6 +59,9 @@ export default {
     return {
       getText,
       showMore,
+      isLoading,
+      isError,
+      other,
     }
   },
 }

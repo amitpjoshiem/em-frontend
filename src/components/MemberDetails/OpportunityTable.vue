@@ -32,14 +32,15 @@
         <div class="w-3/24 title">Close date</div>
         <div class="w-1/24 title" />
       </div>
-
-      <div v-if="!isLoading">
+      <el-skeleton v-if="isLoading || isLoadingUserProfile || isLoadingProspectDetails" :rows="5" animated />
+      <SwdErrorBlock v-else-if="isError || isErrorUserProfile || isErrorProspectDetails" />
+      <div v-else-if="data && member && userProfile">
         <template v-if="data.length">
           <OpportunityItem
             v-for="(user, index) in data"
             :key="index"
             :user="user"
-            :prospect="prospect"
+            :prospect="member"
             :user-profile="userProfile"
             class="oportunity-item"
           >
@@ -50,7 +51,7 @@
           <span class="text-main text-sm"> No recently added opportunities </span>
         </div>
       </div>
-      <el-skeleton v-else :rows="6" animated class="w-full p-3" />
+      <el-skeleton v-else :rows="3" animated class="w-full p-3" />
     </div>
   </div>
 </template>
@@ -61,18 +62,12 @@ import { useRoute } from 'vue-router'
 import OpportunityItem from '@/components/MemberDetails/OpportunityItem.vue'
 import { useOpportunityList } from '@/api/use-opportunity-list.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
-import { isEmptyObject } from '@/utils/use-empty-object'
+import { useProspectDetails } from '@/api/use-prospect-details.js'
 
 export default {
   name: 'OpportunityTable',
   components: {
     OpportunityItem,
-  },
-  props: {
-    prospect: {
-      type: Object,
-      required: true,
-    },
   },
   setup() {
     const route = useRoute()
@@ -81,6 +76,8 @@ export default {
     const { isLoading, isError, data } = useOpportunityList(prospectId)
 
     const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: userProfile } = useUserProfile()
+
+    const { isLoading: isLoadingProspectDetails, isError: isErrorProspectDetails, data: member } = useProspectDetails()
 
     return {
       IconPlus,
@@ -91,7 +88,9 @@ export default {
       isLoadingUserProfile,
       isErrorUserProfile,
       userProfile,
-      isEmptyObject,
+      isLoadingProspectDetails,
+      isErrorProspectDetails,
+      member,
     }
   },
 }

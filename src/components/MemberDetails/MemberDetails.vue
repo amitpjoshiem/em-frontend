@@ -1,24 +1,19 @@
 <template>
   <div class="p-5">
     <SwdSubHeader :title="getTitle" witch-info-btn info-btn-destination="MemberDetails" />
-    <div v-if="!isLoadingProspectDetails" class="flex my-5">
+    <div class="flex my-5">
       <div class="w-8/24 mr-5">
-        <WidgetMemberDetails
-          :user="member"
-          :is-loading-prospect-details="isLoadingProspectDetails"
-          @updateMemberInfo="updateMemberInfo"
-        />
+        <WidgetMemberDetails />
         <InfoSalesforceStatus />
       </div>
       <AssetsAllocation class="w-10/24" />
-      <WidgetOther :other="other" />
+      <WidgetOther />
     </div>
-    <el-skeleton v-else :rows="6" animated class="pr-5 h-[264px]" />
     <div class="flex mb-5">
       <WidgetPastStress />
       <RetirementIncomePlan />
     </div>
-    <OpportunityTable class="mb-10" :prospect="member ? member : {}" />
+    <OpportunityTable class="mb-10" />
   </div>
 </template>
 <script>
@@ -45,7 +40,7 @@ export default {
   },
 
   setup() {
-    const { isLoading: isLoadingProspectDetails, isError, data: member, updateMemberInfo, other } = useProspectDetails()
+    const { isLoading: isLoadingProspectDetails, isError, data: member } = useProspectDetails()
 
     const getTitle = computed(() => {
       if (member.value && member.value.type === 'prospect') return 'Opportunity details'
@@ -57,8 +52,6 @@ export default {
       isError,
       member,
       getTitle,
-      updateMemberInfo,
-      other,
     }
   },
 }
