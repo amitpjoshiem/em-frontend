@@ -36,7 +36,7 @@
 
     <el-table-column label="Stage" prop="Stage" min-width="130" sortable>
       <template #default="scope">
-        <span class="text-xss">{{ scope.row.salesforce.stage }}</span>
+        <SwdStubForText :text="scope.row.salesforce.stage" plug="&mdash;" class="text-xss text-main" />
       </template>
     </el-table-column>
 

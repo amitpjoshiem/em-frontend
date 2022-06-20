@@ -30,7 +30,7 @@ export default {
     const rows = computed(() => Number(store.state.globalComponents.itemsPerPage.values.listOfHouseholds))
 
     const { isLoading, isError, data, pagination, salesforce } = useListHouseholders({
-      type: 'prospect',
+      type: 'prospect,client',
       include: 'salesforce',
       page: paginationData,
     })
