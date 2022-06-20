@@ -10,6 +10,8 @@
       <ShareBtn v-if="withShareBtn" :pdf-region="region" />
       <SwdInfoBtn v-if="witchInfoBtn" :destination="infoBtnDestination" />
       <slot name="change-assistent" />
+      <slot name="add-user" />
+      <slot name="add-company" />
     </div>
   </div>
 </template>

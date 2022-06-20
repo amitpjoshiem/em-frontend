@@ -3,6 +3,7 @@ import store from '@/store'
 import AdvisorHome from '@/layouts/AdvisorHome.vue'
 import ClientHome from '@/layouts/ClientHome.vue'
 import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
+import AdminPanelHome from '@/layouts/AdminPanelHome.vue'
 import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
 import Home from '@/layouts/Home.vue'
@@ -597,6 +598,51 @@ const routes = [
         path: 'otp',
         name: 'otp',
         component: () => import(/* webpackChunkName: "Login" */ '../components/Login/OtpForm.vue'),
+      },
+    ],
+  },
+
+  {
+    path: '/admin-panel',
+    name: 'admin-panel',
+    component: Login,
+    children: [
+      {
+        path: '/admin-panel',
+        name: 'admin-panel',
+        meta: { publicRoute: true },
+        component: () => import(/* webpackChunkName: "Login" */ '../components/Login/LoginForm.vue'),
+      },
+    ],
+  },
+
+  {
+    path: '/ap',
+    name: '/ap',
+    component: AdminPanelHome,
+    meta: {
+      resource: [{ advisor: 'all' }],
+      type: 'advisor',
+    },
+    children: [
+      {
+        path: 'dashboard',
+        name: 'ap-dashboard',
+        component: () =>
+          import(
+            /* webpackChunkName: "AdminPanelDashboard" */ '../components/AdminPanel/Dashboard/AdminPanelDashboard.vue'
+          ),
+      },
+      {
+        path: 'users',
+        name: 'ap-users',
+        component: () => import(/* webpackChunkName: "AdminPanelUsers" */ '../components/AdminPanel/Users/Users.vue'),
+      },
+      {
+        path: 'companies',
+        name: 'ap-companies',
+        component: () =>
+          import(/* webpackChunkName: "AdminPanelCompanies" */ '../components/AdminPanel/Companies/Companies.vue'),
       },
     ],
   },

@@ -283,3 +283,11 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+.el-menu{
+  border: 0;
+}
+
+.el-header {
+  padding: 0;
+}
