@@ -156,7 +156,7 @@ export default defineComponent({
       }
       if (tabsValue.value === 'SF') {
         const data = {
-          media_id: docShare.value.id,
+          media_id: docShare.value.media_id,
         }
         const res = await sendReportSalesForce({ data, id: route.params.id })
         if (!('error' in res)) {
