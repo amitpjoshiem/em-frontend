@@ -58,12 +58,7 @@
       <HeaderNotificationsBlock />
     </div>
 
-    <div class="flex items-center justify-end cursor-pointer sm:w-4/24 xl:w-2/24 ml-2">
-      <router-link :to="{ name: 'profile' }">
-        <SwdAvatar v-if="!isLoadingUserProfile" :link="user.avatar.url" />
-      </router-link>
-      <UserAction />
-    </div>
+    <UserAction class="sm:w-4/24 xl:w-2/24 ml-2" />
   </div>
   <NewLeadModal />
 </template>
@@ -78,7 +73,6 @@ import NewOpportunityBtn from '@/components/Header/NewOpportunityBtn.vue'
 import TestEventBtn from '@/components/Header/TestEventBtn.vue'
 import SelectCompany from '@/components/Header/SelectCompany.vue'
 import SelectAdvisors from '@/components/Header/SelectAdvisors.vue'
-import { useUserProfile } from '@/api/use-user-profile.js'
 import { useShowContentEnv } from '@/hooks/use-show-content-env'
 
 import { useStore } from 'vuex'
@@ -103,8 +97,6 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const store = useStore()
-
-    const { isLoading: isLoadingUserProfile, isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
 
     const { showContent } = useShowContentEnv()
 
@@ -142,10 +134,6 @@ export default {
     }
 
     return {
-      isLoadingUserProfile,
-      isErrorUserProfile,
-      user,
-      isFetched,
       showContent,
       goAdvisors,
       goDashboard,

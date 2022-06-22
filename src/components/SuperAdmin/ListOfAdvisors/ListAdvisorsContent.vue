@@ -17,10 +17,8 @@
 
 <script>
 import IconAction from '@/assets/svg/icon-action.svg'
-
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-
 import { useFetchStatsAdvisors } from '@/api/use-fetch-stats-advisors.js'
 
 export default {

@@ -3,6 +3,7 @@ import store from '@/store'
 import AdvisorHome from '@/layouts/AdvisorHome.vue'
 import ClientHome from '@/layouts/ClientHome.vue'
 import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
+import AdminPanelHome from '@/layouts/AdminPanelHome.vue'
 import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
 import Home from '@/layouts/Home.vue'
@@ -602,6 +603,37 @@ const routes = [
   },
 
   {
+    path: '/admin-panel',
+    name: 'admin-panel',
+    component: AdminPanelHome,
+    meta: {
+      resource: [{ admin: 'all' }, { ceo: 'all' }],
+      type: 'advisor',
+    },
+    children: [
+      {
+        path: 'dashboard',
+        name: 'ap-dashboard',
+        component: () =>
+          import(
+            /* webpackChunkName: "AdminPanelDashboard" */ '../components/AdminPanel/Dashboard/AdminPanelDashboard.vue'
+          ),
+      },
+      {
+        path: 'users',
+        name: 'ap-users',
+        component: () => import(/* webpackChunkName: "AdminPanelUsers" */ '../components/AdminPanel/Users/Users.vue'),
+      },
+      {
+        path: 'companies',
+        name: 'ap-companies',
+        component: () =>
+          import(/* webpackChunkName: "AdminPanelCompanies" */ '../components/AdminPanel/Companies/Companies.vue'),
+      },
+    ],
+  },
+
+  {
     path: '/403',
     name: '403',
     component: () => import(/* webpackChunkName: "Forbidden" */ '../views/Forbidden.vue'),
@@ -621,6 +653,7 @@ const routes = [
 
   {
     path: '/',
+    name: 'home',
     component: Home,
   },
 ]
