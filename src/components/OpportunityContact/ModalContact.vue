@@ -6,7 +6,7 @@
     custom-class="dialog-style pdf-viewer"
     :before-close="closeDialog"
   >
-    <el-form ref="form" :model="contact" status-icon label-position="top" :rules="rules">
+    <el-form ref="form" :model="contact" label-position="top" :rules="rules">
       <div class="flex mb-4">
         <el-form-item label="Retired?">
           <el-radio-group v-model="contact.retired">

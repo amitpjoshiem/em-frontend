@@ -8,7 +8,7 @@
       <div class="w-4/12 text-xs text-gray03">Current</div>
       <div class="w-4/12 text-xs text-gray03">Future</div>
     </div>
-    <el-form ref="form" :model="ruleForm" status-icon size="small">
+    <el-form ref="form" :model="ruleForm" size="small">
       <!-- Member -->
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
         <div class="w-4/12 text-main text-xss">Member</div>

@@ -6,7 +6,7 @@
       </div>
     </template>
     <template #contentDialog>
-      <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules" @submit.prevent="submit">
+      <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules" @submit.prevent="submit">
         <el-form-item v-if="state.isShowConfirmCode" label="Confirm code" class="w-full" prop="code">
           <el-input v-model="ruleForm.code" placeholder="Enter confirm code" />
         </el-form-item>
@@ -14,10 +14,6 @@
         <el-form-item v-else label="Phone number" class="w-full">
           <el-input v-model="ruleForm.phone" placeholder="Enter pnone number" />
         </el-form-item>
-
-        <!-- <el-form-item label="Phone number" class="w-full" prop="phone">
-          <el-input v-model="ruleForm.phone" v-maska="'+1 (###) ###-####'" placeholder="Enter pnone number" />
-        </el-form-item> -->
 
         <div v-if="!state.isShowConfirmCode" class="pt-3 text-right">
           <Button default-blue-btn text-btn="Verified" @click="verifiedNumber" />

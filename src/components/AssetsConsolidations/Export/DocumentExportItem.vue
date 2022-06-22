@@ -17,7 +17,7 @@
       v-if="item.status === 'success'"
       :href="item.media.url"
       download
-      class="el-button el-button--primary el-button--mini is-plain"
+      class="el-button el-button--primary el-button--small is-plain"
     >
       Download
     </a>

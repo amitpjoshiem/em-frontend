@@ -1,17 +1,16 @@
 <template>
   <div class="border border-color-grey rounded-t-xl mr-5 opportuniti-block">
     <OpportunitiesBlockHeader class="pt-5 pr-5 pl-5" />
-    <div v-if="!isFetching">
-      <div class="p-5">
-        <OpportunitiesBlockChart :values="opportunity.data.values" />
-        <OpportunitiesBlockTotal
-          :percent="opportunity.data.percent"
-          :total="opportunity.data.total"
-          :up="opportunity.data.up"
-        />
-      </div>
+    <el-skeleton v-if="isLoading" :rows="5" animated class="p-5" />
+    <SwdErrorBlock v-else-if="isError" />
+    <div v-else-if="opportunity" class="p-5">
+      <OpportunitiesBlockChart :values="opportunity.data.values" />
+      <OpportunitiesBlockTotal
+        :percent="opportunity.data.percent"
+        :total="opportunity.data.total"
+        :up="opportunity.data.up"
+      />
     </div>
-    <el-skeleton v-else :rows="5" animated class="p-5" />
   </div>
 </template>
 

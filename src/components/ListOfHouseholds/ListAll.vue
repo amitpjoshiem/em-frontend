@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <UsersListTable v-if="!isLoading" :users-list="data" />
-    <el-skeleton v-else :rows="rows" animated class="p-5" />
-    <div class="flex items-center justify-center border-color-grey py-6">
-      <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
-    </div>
+  <el-skeleton v-if="isLoading" :rows="rows" animated class="p-5" />
+  <SwdErrorBlock v-else-if="isError" />
+  <UsersListTable v-else-if="data" :users-list="data" />
+  <div class="flex items-center justify-center border-color-grey py-6">
+    <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
   </div>
 </template>
 
@@ -35,8 +34,8 @@ export default {
     return {
       isLoading,
       isError,
-      data: data,
-      pagination: pagination,
+      data,
+      pagination,
       handlePaginationChange,
       rows,
     }

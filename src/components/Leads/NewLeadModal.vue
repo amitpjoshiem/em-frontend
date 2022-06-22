@@ -1,7 +1,7 @@
 <template>
   <el-dialog v-model="state.dialogVisible" title="New Lead" width="45%" :before-close="closeDialog">
     <div>
-      <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules">
+      <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
         <el-form-item label="Name" prop="name" class="w-full mb-4">
           <el-input v-model="ruleForm.name" placeholder="Enter first name" />
         </el-form-item>
@@ -9,7 +9,7 @@
           <el-input v-model="ruleForm.email" placeholder="Enter email" />
         </el-form-item>
         <div class="pt-5 text-right">
-          <el-button class="mr-5 w-20" @click="closeDialog">Close</el-button>
+          <el-button class="w-20" @click="closeDialog">Close</el-button>
           <el-button :loading="isLoading" :disabled="isLoading" type="primary" class="w-20" @click="sendLink">
             Send
           </el-button>
@@ -53,6 +53,8 @@ export default {
         destination: 'newLead',
         value: false,
       })
+      ruleForm.name = ''
+      ruleForm.email = ''
     }
 
     const sendLink = (e) => {

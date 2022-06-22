@@ -79,7 +79,7 @@ const state = () => ({
   pdfRegion: '',
   showDialogReloadPage: false,
   needUpdateContent: null,
-  docIdShare: null,
+  docShare: null,
   contact: null,
 })
 
@@ -113,8 +113,8 @@ const mutations = {
     state.pdfRegion = value
   },
 
-  setDocIdShare(state, value) {
-    state.docIdShare = value
+  setDocShare(state, value) {
+    state.docShare = value
   },
 
   setNeedUpdateContent(state, value) {

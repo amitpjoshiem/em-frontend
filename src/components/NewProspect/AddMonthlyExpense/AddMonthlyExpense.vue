@@ -5,8 +5,7 @@
       <div class="w-2/12 text-gray03 text-xs">ESSENTIAL</div>
       <div class="w-2/12 text-gray03 text-xs">DISCRETIONARY</div>
     </div>
-    <el-form ref="form" :model="ruleForm" status-icon>
-      <!-- <el-form ref="form" :model="ruleForm" status-icon label-position="top" :rules="rules"> -->
+    <el-form ref="form" :model="ruleForm">
       <el-card shadow="never" class="mb-5">
         <div class="flex mb-4">
           <!-- HOUSING -->

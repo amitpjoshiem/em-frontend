@@ -1,12 +1,18 @@
 <template>
-  <div class="border border-color-grey box-border rounded-l-md py-5 px-3">
-    <router-link
-      :to="{ name: 'asset-allocation-details', params: { id: memberId } }"
-      class="text-main text-smm font-semibold cursor-pointer"
-    >
-      <span class="text-main text-smm font-semibold">Asset Allocation</span>
-    </router-link>
-    <div v-if="!isLoading" class="flex pt-8">
+  <div class="border border-color-grey box-border rounded-l-md py-5 px-3 h-[269px]">
+    <div class="pb-8">
+      <router-link
+        :to="{ name: 'asset-allocation-details', params: { id: memberId } }"
+        class="text-main text-smm font-semibold cursor-pointer"
+      >
+        <span class="text-main text-smm font-semibold">Asset Allocation</span>
+      </router-link>
+    </div>
+
+    <el-skeleton v-if="isLoading" :rows="3" animated />
+    <SwdErrorBlock v-else-if="isError" />
+
+    <div v-else-if="assetsData" class="flex">
       <AssetsChart :values="ruleForm" />
       <div class="flex ml-4">
         <div class="flex flex-col justify-center mr-3">
@@ -20,7 +26,7 @@
           <div>Income</div>
         </div>
         <div class="flex flex-col justify-center text-main text-xs font-medium">
-          <el-form ref="form" :model="ruleForm" status-icon size="small">
+          <el-form ref="form" :model="ruleForm" size="small">
             <el-form-item>
               <SwdCurrencyInput
                 v-model="ruleForm.liquidity"
@@ -58,7 +64,6 @@
         </div>
       </div>
     </div>
-    <el-skeleton v-else :rows="4" animated />
   </div>
 </template>
 

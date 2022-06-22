@@ -1,15 +1,20 @@
 <template>
   <div class="border border-color-grey rounded-xl">
-    <div v-if="!isFetchingRetired && !isFetchingAge" class="flex">
+    <div class="flex">
       <div class="w-8/12 mr-2.5 border-r">
         <div class="p-5">
-          <div class="text-smm text-main font-semibold">Households Statistics</div>
-          <StatisticsRetiredChart :values="statisticsRetired.data" />
+          <div class="text-smm text-main font-semibold mb-2">Households Statistics</div>
+          <el-skeleton v-if="isLoadingRetired" :rows="2" animated class="p-5" />
+          <SwdErrorBlock v-else-if="isErrorRetired" />
+          <StatisticsRetiredChart v-else-if="statisticsRetired" :values="statisticsRetired.data" />
         </div>
       </div>
-      <StatisticsAgeChart :values="statisticsAge.data" class="w-4/12 p-5" />
+      <div class="w-4/12 p-5">
+        <el-skeleton v-if="isLoadingAge" :rows="2" animated class="p-5" />
+        <SwdErrorBlock v-else-if="isErrorAge" />
+        <StatisticsAgeChart v-else-if="statisticsAge" :values="statisticsAge.data" />
+      </div>
     </div>
-    <el-skeleton v-else :rows="3" animated class="p-5" />
   </div>
 </template>
 
@@ -32,6 +37,7 @@ export default {
       isFetching: isFetchingAge,
       data: statisticsAge,
     } = usePipeLineStatisticsAge()
+
     const {
       isLoading: isLoadingRetired,
       isFetching: isFetchingRetired,

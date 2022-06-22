@@ -10,7 +10,7 @@
 
     <div v-if="!isLoading">
       <div v-for="(table, indexTable) in state" :key="table.id" class="mb-14">
-        <el-form ref="form" :model="ruleForm" status-icon label-position="top" class="mb-3">
+        <el-form ref="form" :model="ruleForm" label-position="top" class="mb-3">
           <div class="flex justify-between">
             <el-form-item label="Account Name" prop="table_name" class="w-3/12">
               <el-input
@@ -385,7 +385,7 @@ export default {
   padding-right: 3px;
 }
 
-.item .el-input__inner {
+.item .el-input__wrapper {
   box-shadow: none;
 }
 </style>

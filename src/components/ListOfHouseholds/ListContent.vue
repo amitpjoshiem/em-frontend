@@ -1,13 +1,34 @@
 <template>
-  <div v-if="!isLoading && !isFetching" class="border border-color-grey rounded-t-lg">
+  <div class="border border-color-grey rounded-t-lg">
+    <div></div>
     <div class="flex p-5 justify-between">
       <div class="flex">
-        <TabAll v-if="visibleTab.includes('all')" :count="data.data.count.all" />
-        <TabOpportunities v-if="visibleTab.includes('opportunities')" :count="data.data.count.prospect" />
-        <TabClients v-if="visibleTab.includes('clients')" :count="data.data.count.client" />
-        <TabAllLeads v-if="visibleTab.includes('all-leads')" :count="data.data.leads.all" />
-        <TabActiveLeads v-if="visibleTab.includes('active-leads')" :count="data.data.leads.active" />
-        <TabDeactivatedLeads v-if="visibleTab.includes('deactivated-leads')" :count="data.data.leads.inactive" />
+        <TabAll v-if="visibleTab.includes('all')" :count="count ? count.data.count.all : 0" :is-loading="isLoading" />
+        <TabOpportunities
+          v-if="visibleTab.includes('opportunities')"
+          :count="count ? count.data.count.prospect : 0"
+          :is-loading="isLoading"
+        />
+        <TabClients
+          v-if="visibleTab.includes('clients')"
+          :count="count ? count.data.count.client : 0"
+          :is-loading="isLoading"
+        />
+        <TabAllLeads
+          v-if="visibleTab.includes('all-leads')"
+          :count="count ? count.data.leads.all : 0"
+          :is-loading="isLoading"
+        />
+        <TabActiveLeads
+          v-if="visibleTab.includes('active-leads')"
+          :count="count ? count.data.leads.active : 0"
+          :is-loading="isLoading"
+        />
+        <TabDeactivatedLeads
+          v-if="visibleTab.includes('deactivated-leads')"
+          :is-loading="isLoading"
+          :count="count ? count.data.leads.inactive : null"
+        />
       </div>
       <div class="flex">
         <SwdItemsPerPage :destination="'listOfHouseholds'" />
@@ -15,7 +36,6 @@
     </div>
     <router-view />
   </div>
-  <el-skeleton v-else :rows="10" animated />
 </template>
 
 <script>
@@ -47,14 +67,14 @@ export default {
     },
   },
   setup() {
-    const { isLoading, isFetching, isError, data } = useFetchStatsMembers()
+    const { isLoading, isFetching, isError, data: count } = useFetchStatsMembers()
 
     return {
       IconAction,
       isLoading,
       isFetching,
       isError,
-      data,
+      count,
     }
   },
 }

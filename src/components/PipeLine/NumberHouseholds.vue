@@ -1,10 +1,9 @@
 <template>
   <div class="border border-color-grey rounded-xl p-5">
     <div class="text-smm text-main font-semibold mb-5">Number of Households</div>
-    <div v-if="!isFetchingCount">
-      <StatisticsCountChart :values="statisticsCount.data" class="my-4" />
-    </div>
-    <el-skeleton v-else :rows="3" animated class="p-5" />
+    <el-skeleton v-if="isLoading" :rows="3" animated class="p-5" />
+    <SwdErrorBlock v-else-if="isError" />
+    <StatisticsCountChart v-else-if="data" :values="data.data" class="my-4" />
   </div>
 </template>
 <script>
@@ -16,17 +15,12 @@ export default {
     StatisticsCountChart,
   },
   setup() {
-    const {
-      isLoading: isLoadingCount,
-      isFetching: isFetchingCount,
-      isError: isErrorCount,
-      data: statisticsCount,
-    } = usePipeLineStatisticsCount()
+    const { isLoading, isFetching, isError, data } = usePipeLineStatisticsCount()
     return {
-      isLoadingCount,
-      isErrorCount,
-      statisticsCount,
-      isFetchingCount,
+      isLoading,
+      isFetching,
+      isError,
+      data,
     }
   },
 }
