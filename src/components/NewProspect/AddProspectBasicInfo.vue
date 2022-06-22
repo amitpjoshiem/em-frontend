@@ -261,7 +261,7 @@
               </el-form-item>
             </template>
 
-            <div class="w-5 pt-7 ml-3 cursor-pointer w-3/24">
+            <div class="w-5 pt-7 ml-3 cursor-pointer">
               <InlineSvg
                 v-if="index === ruleForm.employment_history.length - 1"
                 :src="IconAdd"
@@ -318,7 +318,7 @@
                 </el-form-item>
               </template>
 
-              <div class="w-5 pt-7 ml-3 cursor-pointer w-3/24">
+              <div class="w-5 pt-7 ml-3 cursor-pointer">
                 <InlineSvg
                   v-if="index === ruleForm.spouse.employment_history.length - 1"
                   :src="IconAdd"

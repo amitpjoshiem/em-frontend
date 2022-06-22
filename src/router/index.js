@@ -605,23 +605,9 @@ const routes = [
   {
     path: '/admin-panel',
     name: 'admin-panel',
-    component: Login,
-    children: [
-      {
-        path: '/admin-panel',
-        name: 'admin-panel',
-        meta: { publicRoute: true },
-        component: () => import(/* webpackChunkName: "Login" */ '../components/Login/LoginForm.vue'),
-      },
-    ],
-  },
-
-  {
-    path: '/ap',
-    name: '/ap',
     component: AdminPanelHome,
     meta: {
-      resource: [{ advisor: 'all' }],
+      resource: [{ admin: 'all' }, { ceo: 'all' }],
       type: 'advisor',
     },
     children: [
@@ -667,6 +653,7 @@ const routes = [
 
   {
     path: '/',
+    name: 'home',
     component: Home,
   },
 ]

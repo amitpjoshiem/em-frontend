@@ -1,16 +1,18 @@
 <template>
-  <div class="h-full bg-widget-bg flex items-center">
-    <div class="w-2/12"></div>
-    <div class="w-8/12 flex justify-center">SWD Admin Panel</div>
-    <div class="w-2/12 flex justify-end pr-5">
-      <el-button type="danger" plain size="small">Logout</el-button>
-    </div>
+  <div class="h-full bg-widget-bg flex items-center px-5">
+    <div class="w-4/12" />
+    <div class="w-4/12 flex justify-center">SWD Admin Panel</div>
+    <UserAction class="w-4/12" :id-admin-panel="true" />
   </div>
 </template>
 
 <script>
+import UserAction from '@/components/UserAction.vue'
+
 export default {
   name: 'Header',
-  setup() {},
+  components: {
+    UserAction,
+  },
 }
 </script>
