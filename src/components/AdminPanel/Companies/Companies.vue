@@ -7,6 +7,8 @@
     </SwdSubHeader>
   </div>
 
+  <CompaniesList />
+
   <el-dialog v-model="dialogFormVisible" title="Add company">
     <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
       <el-form-item label="Name" class="mb-4" prop="name">
@@ -31,8 +33,13 @@ import { ref, reactive } from 'vue'
 import { rules } from '@/validationRules/modalAddCompany'
 import { useAlert } from '@/utils/use-alert'
 
+import CompaniesList from '@/components/AdminPanel/Companies/CompaniesList'
+
 export default {
   name: 'Companies',
+  components: {
+    CompaniesList,
+  },
   setup() {
     const dialogFormVisible = ref(false)
     const form = ref(null)

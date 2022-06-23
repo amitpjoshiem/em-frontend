@@ -90,7 +90,7 @@ import { useAlert } from '@/utils/use-alert'
 import { useStore } from 'vuex'
 import { maska } from 'maska'
 import { ElMessageBox } from 'element-plus'
-import { useFetchAdminPanelRolesCompanies } from '@/api/admin-panel/useFetchAdminPanelRolesCompanies.js'
+import { useFetchAdminPanelRolesCompanies } from '@/api/admin-panel/use-fetch-admin-panel-roles-companies.js'
 import { useMutation, useQueryClient } from 'vue-query'
 import { createAdminPanelUsers } from '@/api/vueQuery/admin-panel/create-admin-panel-users'
 
