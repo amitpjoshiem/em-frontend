@@ -19,6 +19,7 @@ import ModalReloadPage from '@/components/ModalReloadPage/ModalRealoadPage.vue'
 import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
 import SwdModalTerms from '@/components/Global/SwdModalTerms.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
+import ModalUserProfile from '@/components/AdminPanel/Users/ModalUserProfile'
 
 export default {
   components: {
@@ -27,6 +28,7 @@ export default {
     SwdShareDialog,
     SwdModalExportSucces,
     SwdModalTerms,
+    ModalUserProfile,
   },
   setup() {
     useQueryProvider({

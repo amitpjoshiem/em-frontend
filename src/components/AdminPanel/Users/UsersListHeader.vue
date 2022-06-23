@@ -1,20 +1,17 @@
 <template>
   <div class="flex text-sm text-main font-semibold bg-widget-bg">
-    <div class="header-item w-4/24 p-2">Name</div>
-    <div class="header-item w-5/24 p-2">E-mail</div>
-    <div class="header-item w-3/24 p-2">Position</div>
-    <div class="header-item w-3/24 p-2">Phone</div>
-    <div class="header-item w-2/24 p-2">NPM</div>
-    <div class="header-item w-2/24 p-2">Role</div>
-    <div class="header-item w-2/24 p-2">Company</div>
-    <div class="header-item w-2/24 p-2">Verified</div>
-    <div class="header-item w-1/24 p-2"></div>
+    <div class="header-item w-5/24 h-9 flex items-center justify-center">Name</div>
+    <div class="header-item w-6/24 h-9 flex items-center justify-center">E-mail</div>
+    <div class="header-item w-3/24 h-9 flex items-center justify-center">Position</div>
+    <div class="header-item w-3/24 h-9 flex items-center justify-center">Role</div>
+    <div class="header-item w-4/24 h-9 flex items-center justify-center">Company</div>
+    <div class="header-item w-2/24 h-9 flex items-center justify-center">Verified</div>
+    <div class="header-item w-1/24 h-9 flex items-center justify-center"></div>
   </div>
 </template>
 <script>
 export default {
   name: 'UsersListHeader',
-  setup() {},
 }
 </script>
 

@@ -70,6 +70,7 @@ const state = () => ({
       modalSucces: false,
       modalTerms: false,
       modalAddNewUser: false,
+      modalUserProfile: false,
     },
   },
   sortMembers: {
@@ -82,6 +83,7 @@ const state = () => ({
   needUpdateContent: null,
   docShare: null,
   contact: null,
+  editUserId: null,
 })
 
 const mutations = {
@@ -176,6 +178,10 @@ const mutations = {
 
   setDateRangeClientReport(state, value) {
     state.dateRangeClientReport = value
+  },
+
+  setEditUserId(state, value) {
+    state.editUserId = value
   },
 }
 

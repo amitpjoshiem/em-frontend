@@ -9,7 +9,10 @@
       <el-button size="small" plain>Advisor</el-button>
     </div>
     <UsersListHeader />
-    <div v-for="(item, index) in data" :key="index" class="border-t last:border-b">
+    <el-skeleton v-if="isLoading" :rows="5" animated class="p-5" />
+    <SwdErrorBlock v-else-if="isError" />
+
+    <div v-for="(item, index) in users.data" v-else-if="users.data" :key="index" class="border-t last:border-b">
       <UserListItem :user="item" />
     </div>
   </div>
@@ -18,6 +21,7 @@
 <script>
 import UserListItem from '@/components/AdminPanel/Users/UserListItem'
 import UsersListHeader from '@/components/AdminPanel/Users/UsersListHeader'
+import { useFetchAdminPanelUsers } from '@/api/admin-panel/use-fetch-ap-users.js'
 
 export default {
   name: 'UsersList',
@@ -26,55 +30,12 @@ export default {
     UsersListHeader,
   },
   setup() {
-    const data = [
-      {
-        name: 'Tom',
-        username: 'YDmitriy',
-        email: 'admin@swdgroup.net',
-        position: 'FE dev',
-        phone: '0504522328',
-        npm: '123456',
-        role: 'CEO',
-        company: 'SWD',
-        verified: true,
-      },
-      {
-        name: 'Tom1',
-        username: 'YDmitriy',
-        email: 'admin@swdgroup.net',
-        position: 'FE dev',
-        phone: '0504522328',
-        npm: '123456',
-        role: 'Assistant',
-        company: 'SWD',
-        verified: true,
-      },
-      {
-        name: 'Tom2',
-        username: 'YDmitriy',
-        email: 'admin@swdgroup.net',
-        position: 'FE dev',
-        phone: '0504522328',
-        npm: '123456',
-        role: 'Assistant',
-        company: 'SWD',
-        verified: false,
-      },
-      {
-        name: 'Tom3',
-        username: 'YDmitriy',
-        email: 'admin@swdgroup.net',
-        position: 'FE dev',
-        phone: '0504522328',
-        npm: '123456',
-        role: 'Advisor',
-        company: 'SWD',
-        verified: true,
-      },
-    ]
+    const { isLoading, isError, data: users } = useFetchAdminPanelUsers()
 
     return {
-      data,
+      isLoading,
+      isError,
+      users,
     }
   },
 }
