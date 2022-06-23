@@ -6,6 +6,7 @@
   <SwdShareDialog />
   <SwdModalExportSucces />
   <SwdModalTerms />
+  <ModalUserProfile />
 </template>
 
 <script>
