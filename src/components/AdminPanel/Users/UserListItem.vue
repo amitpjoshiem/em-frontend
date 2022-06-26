@@ -44,6 +44,7 @@ import { createAdminPanelPassword } from '@/api/vueQuery/admin-panel/create-admi
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { ElMessage, ElMessageBox } from 'element-plus'
+
 export default {
   name: 'UserListItem',
   components: {
@@ -77,7 +78,7 @@ export default {
 
     const handleCommand = (command) => {
       if (command === 'profile') profileCommand()
-      if (command === 'edit') console.log('edit')
+      if (command === 'edit') editedUserCommand()
       if (command === 'delete') deleteCommand()
       if (command === 'create-password') createPasswordCommand()
     }
@@ -124,6 +125,13 @@ export default {
           message: 'Send create password success',
         })
       }
+    }
+
+    const editedUserCommand = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'modalAddNewUser',
+        value: true,
+      })
     }
 
     return {

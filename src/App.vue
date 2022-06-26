@@ -7,6 +7,7 @@
   <SwdModalExportSucces />
   <SwdModalTerms />
   <ModalUserProfile />
+  <ModalAdminPanelUser />
 </template>
 
 <script>
@@ -21,6 +22,7 @@ import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
 import SwdModalTerms from '@/components/Global/SwdModalTerms.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
 import ModalUserProfile from '@/components/AdminPanel/Users/ModalUserProfile'
+import ModalAdminPanelUser from '@/components/AdminPanel/Users/ModalAdminPanelUser'
 
 export default {
   components: {
@@ -30,6 +32,7 @@ export default {
     SwdModalExportSucces,
     SwdModalTerms,
     ModalUserProfile,
+    ModalAdminPanelUser,
   },
   setup() {
     useQueryProvider({

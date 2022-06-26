@@ -9,6 +9,10 @@ function fetchAdminPanelUsers({ queryKey }) {
 
   let search = undefined
 
+  if (roleFilter && companyFilter) {
+    search = `roles.id:${roleFilter}` + ';' + `company.id:${companyFilter}` + '&searchJoin=and'
+  }
+
   if (roleFilter) {
     search = `roles.id:${roleFilter}`
   }

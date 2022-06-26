@@ -3,12 +3,20 @@
     <UsersFilterByRole />
     <UsersFilterByCompany />
     <UsersListHeader />
-    <el-skeleton v-if="isLoading" :rows="5" animated class="p-5" />
 
-    <div v-for="item in users" :key="item.id" class="border-b">
-      <UserListItem :user="item" />
-    </div>
+    <el-skeleton v-if="isLoading" :rows="7" animated class="p-5 min-h-[370px]" />
+    <SwdErrorBlock v-else-if="isError" />
 
+    <template v-else-if="users">
+      <UserListItem v-for="item in users" :key="item.id" :user="item" class="border-b" />
+
+      <div v-if="!users.length" class="flex flex-col justify-center items-center">
+        <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center">
+          <InlineSvg :src="IconLastActivityEmpty" />
+        </div>
+        <span class="text-gray03 font-semibold text-xss mt-5">No recently users</span>
+      </div>
+    </template>
     <div class="flex items-center justify-center border-color-grey py-6">
       <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
     </div>

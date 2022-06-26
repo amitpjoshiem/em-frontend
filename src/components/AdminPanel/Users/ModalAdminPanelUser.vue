@@ -95,7 +95,7 @@ import { useMutation, useQueryClient } from 'vue-query'
 import { createAdminPanelUsers } from '@/api/vueQuery/admin-panel/create-admin-panel-users'
 
 export default {
-  name: 'AddNewUser',
+  name: 'ModalAdminPanelUser',
   directives: { maska },
   setup() {
     const store = useStore()
