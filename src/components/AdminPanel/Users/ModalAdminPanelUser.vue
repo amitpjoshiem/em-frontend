@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" title="Add user" width="50%" :before-close="closeDialog" destroy-on-close>
+  <el-dialog v-model="dialogFormVisible" :title="getTitle" width="50%" :before-close="closeDialog" destroy-on-close>
     <el-scrollbar height="350px">
       <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules" class="pr-4">
         <div class="flex justify-between mb-4">
@@ -93,6 +93,7 @@ import { ElMessageBox } from 'element-plus'
 import { useFetchAdminPanelRolesCompanies } from '@/api/admin-panel/use-fetch-admin-panel-roles-companies.js'
 import { useMutation, useQueryClient } from 'vue-query'
 import { createAdminPanelUsers } from '@/api/vueQuery/admin-panel/create-admin-panel-users'
+import { updateAdminPanelUser } from '@/api/vueQuery/admin-panel/update-admin-panel-user'
 
 export default {
   name: 'ModalAdminPanelUser',
@@ -100,9 +101,18 @@ export default {
   setup() {
     const store = useStore()
     const queryClient = useQueryClient()
+    const isEditModal = ref(false)
 
-    const { isLoading, isError, data: init, refetch } = useFetchAdminPanelRolesCompanies({ enabled: false })
+    const {
+      isLoading,
+      isError,
+      data: init,
+      refetch: refetchInit,
+    } = useFetchAdminPanelRolesCompanies({ enabled: false })
+
     const { isLoading: isLoadingCreate, mutateAsync: createUser } = useMutation(createAdminPanelUsers)
+
+    const { mutateAsync: updateUser } = useMutation(updateAdminPanelUser)
 
     const dialogFormVisible = ref(false)
     const form = ref(null)
@@ -138,9 +148,17 @@ export default {
 
     watchEffect(() => {
       dialogFormVisible.value = store.state.adminPanelUsers.dialog.showDialog.modalAddNewUser
+
       if (dialogFormVisible.value) {
-        refetch.value()
+        refetchInit.value()
       }
+
+      if (store.state.adminPanelUsers.editUser) {
+        isEditModal.value = true
+        const user = store.state.adminPanelUsers.editUser
+        setInitValue(user)
+      }
+
       if (!isLoading.value && init.value) {
         optionsRole.value = init.value.roles.map((item) => {
           return { label: item.display_name, value: item.id }
@@ -155,7 +173,12 @@ export default {
       e.preventDefault()
       form.value.validate(async (valid) => {
         if (valid) {
-          const res = await createUser(ruleForm)
+          let res = null
+          if (isEditModal.value) {
+            res = await updateUser({ id: store.state.adminPanelUsers.editUser.id, data: ruleForm })
+          } else {
+            res = await createUser(ruleForm)
+          }
           if (!('error' in res)) {
             useAlert({
               title: 'Success',
@@ -189,6 +212,8 @@ export default {
         destination: 'modalAddNewUser',
         value: false,
       })
+      store.commit('adminPanelUsers/setEditUser', null)
+      isEditModal.value = false
       initialState()
     }
 
@@ -202,6 +227,23 @@ export default {
       ruleForm.position = ''
       ruleForm.username = ''
       dialogFormVisible.value = false
+    }
+
+    const getTitle = computed(() => {
+      if (isEditModal.value) return 'Edit user'
+      return 'Add user'
+    })
+
+    const setInitValue = (user) => {
+      ruleForm.first_name = user.first_name
+      ruleForm.last_name = user.last_name
+      ruleForm.email = user.email
+      ruleForm.role = user.roles[0].id
+      ruleForm.company_id = user.company.id
+      ruleForm.npn = user.npn
+      ruleForm.position = user.position
+      ruleForm.username = user.username
+      ruleForm.phone = user.phone
     }
 
     return {
@@ -219,11 +261,15 @@ export default {
 
       isLoading,
       isError,
-      data: init,
-      refetch,
+      init,
+      refetchInit,
 
       createUser,
       isLoadingCreate,
+
+      isEditModal,
+
+      getTitle,
     }
   },
 }

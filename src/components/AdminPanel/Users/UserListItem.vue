@@ -128,6 +128,9 @@ export default {
     }
 
     const editedUserCommand = () => {
+      store.commit('adminPanelUsers/setEditUser', props.user)
+      // store.commit('adminPanelUsers/setEditUserIdAdminPanel', props.user.id)
+
       store.commit('adminPanelUsers/setShowModal', {
         destination: 'modalAddNewUser',
         value: true,
