@@ -87,16 +87,16 @@ export default {
     const { isLoading, isError, data: user, refetch } = useFetchAdminPanelUserById({ enabled: false })
 
     watchEffect(() => {
-      dialogVisible.value = store.state.globalComponents.dialog.showDialog.modalUserProfile
-      if (store.state.globalComponents.editUserId !== null) {
+      dialogVisible.value = store.state.adminPanelUsers.dialog.showDialog.modalUserProfile
+      if (store.state.adminPanelUsers.profileUserId !== null) {
         refetch.value()
       }
     })
 
     const closeDialog = () => {
       dialogVisible.value = false
-      store.commit('globalComponents/setEditUserId', null)
-      store.commit('globalComponents/setShowModal', {
+      store.commit('adminPanelUsers/setProfileUserId', null)
+      store.commit('adminPanelUsers/setShowModal', {
         destination: 'modalUserProfile',
         value: false,
       })

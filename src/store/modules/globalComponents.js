@@ -32,7 +32,6 @@ const state = () => ({
       listOfHouseholds: '6',
       superAdminDashboard: '6',
       superAdminListAdvisors: '6',
-      adminPanelUsesrs: 10,
     },
   },
   selectFilter: {
@@ -70,8 +69,6 @@ const state = () => ({
       modalNewTable: false,
       modalSucces: false,
       modalTerms: false,
-      modalAddNewUser: false,
-      modalUserProfile: false,
     },
   },
   sortMembers: {
@@ -84,9 +81,6 @@ const state = () => ({
   needUpdateContent: null,
   docShare: null,
   contact: null,
-  editUserId: null,
-  filterRoleAdminPanel: null,
-  filterCompanyAdminPanel: null,
 })
 
 const mutations = {
@@ -181,18 +175,6 @@ const mutations = {
 
   setDateRangeClientReport(state, value) {
     state.dateRangeClientReport = value
-  },
-
-  setEditUserId(state, value) {
-    state.editUserId = value
-  },
-
-  setFilterRoleAdminPanel(state, value) {
-    state.filterRoleAdminPanel = value
-  },
-
-  setFilterCompanyAdminPanel(state, value) {
-    state.filterCompanyAdminPanel = value
   },
 }
 

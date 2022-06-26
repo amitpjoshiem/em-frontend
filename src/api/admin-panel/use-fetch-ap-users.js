@@ -6,9 +6,9 @@ import { useStore } from 'vuex'
 export const useFetchAdminPanelUsers = (page) => {
   const store = useStore()
 
-  const limit = computed(() => store.state.globalComponents.itemsPerPage.values.adminPanelUsesrs)
-  const roleFilter = computed(() => store.state.globalComponents.filterRoleAdminPanel)
-  const companyFilter = computed(() => store.state.globalComponents.filterCompanyAdminPanel)
+  const limit = computed(() => store.state.adminPanelUsers.limit)
+  const roleFilter = computed(() => store.state.adminPanelUsers.filterRoleAdminPanel)
+  const companyFilter = computed(() => store.state.adminPanelUsers.filterCompanyAdminPanel)
 
   const reactiveLimit = ref(limit)
   const reactivePage = ref(page)

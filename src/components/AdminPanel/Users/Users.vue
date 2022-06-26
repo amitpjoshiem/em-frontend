@@ -23,7 +23,7 @@ export default {
     const store = useStore()
 
     const openDialog = () => {
-      store.commit('globalComponents/setShowModal', {
+      store.commit('adminPanelUsers/setShowModal', {
         destination: 'modalAddNewUser',
         value: true,
       })

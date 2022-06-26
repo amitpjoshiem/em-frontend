@@ -137,7 +137,7 @@ export default {
     })
 
     watchEffect(() => {
-      dialogFormVisible.value = store.state.globalComponents.dialog.showDialog.modalAddNewUser
+      dialogFormVisible.value = store.state.adminPanelUsers.dialog.showDialog.modalAddNewUser
       if (dialogFormVisible.value) {
         refetch.value()
       }
@@ -185,7 +185,7 @@ export default {
     }
 
     const doneCloceDialog = () => {
-      store.commit('globalComponents/setShowModal', {
+      store.commit('adminPanelUsers/setShowModal', {
         destination: 'modalAddNewUser',
         value: false,
       })

@@ -6,7 +6,7 @@ import { useStore } from 'vuex'
 
 export const useFetchAdminPanelUserById = (options) => {
   const store = useStore()
-  const reactiveId = computed(() => store.state.globalComponents.editUserId)
+  const reactiveId = computed(() => store.state.adminPanelUsers.profileUserId)
   const queryKey = reactive([
     ['admin-panel-user-by-id', reactiveId],
     {

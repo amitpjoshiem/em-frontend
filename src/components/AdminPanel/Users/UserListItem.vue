@@ -109,8 +109,8 @@ export default {
     }
 
     const profileCommand = () => {
-      store.commit('globalComponents/setEditUserId', props.user.id)
-      store.commit('globalComponents/setShowModal', {
+      store.commit('adminPanelUsers/setProfileUserId', props.user.id)
+      store.commit('adminPanelUsers/setShowModal', {
         destination: 'modalUserProfile',
         value: true,
       })
@@ -128,7 +128,7 @@ export default {
     }
 
     const editedUserCommand = () => {
-      store.commit('globalComponents/setShowModal', {
+      store.commit('adminPanelUsers/setShowModal', {
         destination: 'modalAddNewUser',
         value: true,
       })
