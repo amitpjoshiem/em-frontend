@@ -1,12 +1,12 @@
 <template>
   <div class="flex text-sm text-main font-semibold bg-widget-bg">
-    <div class="header-item w-5/24 h-9 flex items-center justify-center">Name</div>
-    <div class="header-item w-6/24 h-9 flex items-center justify-center">E-mail</div>
-    <div class="header-item w-3/24 h-9 flex items-center justify-center">Position</div>
-    <div class="header-item w-3/24 h-9 flex items-center justify-center">Role</div>
-    <div class="header-item w-4/24 h-9 flex items-center justify-center">Company</div>
-    <div class="header-item w-2/24 h-9 flex items-center justify-center">Verified</div>
-    <div class="header-item w-1/24 h-9 flex items-center justify-center"></div>
+    <div class="header-item w-5/24">Name</div>
+    <div class="header-item w-6/24">E-mail</div>
+    <div class="header-item w-3/24">Position</div>
+    <div class="header-item w-3/24">Role</div>
+    <div class="header-item w-4/24">Company</div>
+    <div class="header-item w-2/24">Verified</div>
+    <div class="header-item w-1/24"></div>
   </div>
 </template>
 <script>
@@ -17,6 +17,6 @@ export default {
 
 <style>
 .header-item {
-  @apply border-r first:border-l border-t;
+  @apply p-2 flex items-center;
 }
 </style>

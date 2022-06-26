@@ -1,11 +1,11 @@
 <template>
   <div class="flex user-table text-sm text-main hover:bg-gray-100">
-    <div class="table-item w-5/24 p-2">{{ getName }}</div>
-    <div class="table-item w-6/24 p-2">{{ user.email }}</div>
-    <div class="table-item w-3/24 p-2">{{ user.position }}</div>
-    <div class="table-item w-3/24 p-2 capitalize">{{ getRole }}</div>
+    <div class="table-item w-5/24">{{ getName }}</div>
+    <div class="table-item w-6/24">{{ user.email }}</div>
+    <div class="table-item w-3/24">{{ user.position }}</div>
+    <div class="table-item w-3/24 capitalize">{{ getRole }}</div>
     <div class="table-item w-4/24 p-2">{{ user.company.name }}</div>
-    <div class="table-item w-2/24 p-2">
+    <div class="table-item w-2/24">
       <div class="flex items-center justify-center">
         <el-icon v-if="user.is_email_confirmed" color="green">
           <Check />
@@ -74,7 +74,6 @@ export default {
           destination: 'modalUserProfile',
           value: true,
         })
-        console.log('props.user.id - ', props.user.id)
       }
       if (command === 'edit') console.log('edit')
       if (command === 'delete') console.log('delete')
@@ -92,6 +91,6 @@ export default {
 
 <style>
 .table-item {
-  @apply border-r first:border-l;
+  @apply p-2 flex items-center;
 }
 </style>

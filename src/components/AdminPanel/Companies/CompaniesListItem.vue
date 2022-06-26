@@ -46,9 +46,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.table-item {
-  @apply border-r first:border-l;
-}
-</style>

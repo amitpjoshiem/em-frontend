@@ -1,19 +1,43 @@
 import { useQuery } from 'vue-query'
-import { fetcher } from '@/api/fetcher/fetcher'
+import { fetchAdminPanelUsers } from '../vueQuery/admin-panel/fetch-admin-panel-users'
+import { computed, reactive, ref } from 'vue'
+import { useStore } from 'vuex'
 
-export const useFetchAdminPanelUsers = () => {
-  const { isLoading, isError, isFetching, data, isFetched } = useQuery(['admin-panel-users'], () => {
-    return fetcher({
-      url: `/admin/users`,
-      options: { method: 'GET' },
-    })
+export const useFetchAdminPanelUsers = (page) => {
+  const store = useStore()
+
+  const limit = computed(() => store.state.globalComponents.itemsPerPage.values.adminPanelUsesrs)
+  const roleFilter = computed(() => store.state.globalComponents.filterRoleAdminPanel)
+  const companyFilter = computed(() => store.state.globalComponents.filterCompanyAdminPanel)
+
+  const reactiveLimit = ref(limit)
+  const reactivePage = ref(page)
+  const reactiveRoleFilter = ref(roleFilter)
+  const reactiveCompanyilter = ref(companyFilter)
+
+  const queryKey = reactive([
+    'admin-panel-users',
+    {
+      reactiveLimit,
+      reactivePage,
+      reactiveRoleFilter,
+      reactiveCompanyilter,
+    },
+  ])
+
+  let pagination = reactive({})
+
+  const query = useQuery(queryKey, {
+    cacheTime: 0,
+    queryFn: fetchAdminPanelUsers,
+    select: ({ data, meta }) => {
+      pagination.value = meta.pagination
+      return data
+    },
   })
 
   return {
-    isLoading,
-    isError,
-    data,
-    isFetching,
-    isFetched,
+    ...query,
+    pagination,
   }
 }

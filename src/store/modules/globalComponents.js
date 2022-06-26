@@ -32,6 +32,7 @@ const state = () => ({
       listOfHouseholds: '6',
       superAdminDashboard: '6',
       superAdminListAdvisors: '6',
+      adminPanelUsesrs: 10,
     },
   },
   selectFilter: {
@@ -84,6 +85,8 @@ const state = () => ({
   docShare: null,
   contact: null,
   editUserId: null,
+  filterRoleAdminPanel: null,
+  filterCompanyAdminPanel: null,
 })
 
 const mutations = {
@@ -182,6 +185,14 @@ const mutations = {
 
   setEditUserId(state, value) {
     state.editUserId = value
+  },
+
+  setFilterRoleAdminPanel(state, value) {
+    state.filterRoleAdminPanel = value
+  },
+
+  setFilterCompanyAdminPanel(state, value) {
+    state.filterCompanyAdminPanel = value
   },
 }
 

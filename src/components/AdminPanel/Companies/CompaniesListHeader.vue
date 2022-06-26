@@ -1,8 +1,8 @@
 <template>
   <div class="flex text-sm text-main font-semibold bg-widget-bg">
-    <div class="header-item w-11/24 h-9 flex items-center justify-center">Name</div>
-    <div class="header-item w-11/24 h-9 flex items-center justify-center">Domain</div>
-    <div class="header-item w-2/24 h-9 flex items-center justify-center"></div>
+    <div class="header-item w-11/24">Name</div>
+    <div class="header-item w-11/24">Domain</div>
+    <div class="header-item w-2/24"></div>
   </div>
 </template>
 <script>
@@ -13,6 +13,6 @@ export default {
 
 <style>
 .header-item {
-  @apply border-r first:border-l border-t;
+  @apply border-t p-2 flex items-center;
 }
 </style>

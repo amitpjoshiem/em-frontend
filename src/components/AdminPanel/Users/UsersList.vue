@@ -1,41 +1,48 @@
 <template>
   <div class="p-5">
-    <div class="flex items-center mb-4">
-      <div class="pr-4">Filter role:</div>
-      <el-button type="primary" size="small" plain>All</el-button>
-      <el-button size="small" plain>CEO</el-button>
-      <el-button size="small" plain>Admin</el-button>
-      <el-button size="small" plain>Assistant</el-button>
-      <el-button size="small" plain>Advisor</el-button>
-    </div>
+    <UsersFilterByRole />
+    <UsersFilterByCompany />
     <UsersListHeader />
     <el-skeleton v-if="isLoading" :rows="5" animated class="p-5" />
-    <SwdErrorBlock v-else-if="isError" />
 
-    <div v-for="(item, index) in users.data" v-else-if="users.data" :key="index" class="border-t last:border-b">
+    <div v-for="item in users" :key="item.id" class="border-b">
       <UserListItem :user="item" />
+    </div>
+
+    <div class="flex items-center justify-center border-color-grey py-6">
+      <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
     </div>
   </div>
 </template>
 
 <script>
 import UserListItem from '@/components/AdminPanel/Users/UserListItem'
+import UsersFilterByRole from '@/components/AdminPanel/Users/UsersFilterByRole'
+import UsersFilterByCompany from '@/components/AdminPanel/Users/UsersFilterByCompany'
 import UsersListHeader from '@/components/AdminPanel/Users/UsersListHeader'
 import { useFetchAdminPanelUsers } from '@/api/admin-panel/use-fetch-ap-users.js'
+import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
+import { usePaginationData } from '@/utils/use-pagination-data.js'
 
 export default {
   name: 'UsersList',
   components: {
     UserListItem,
     UsersListHeader,
+    UsersFilterByRole,
+    UsersFilterByCompany,
   },
   setup() {
-    const { isLoading, isError, data: users } = useFetchAdminPanelUsers()
+    const { paginationData, handlePaginationChange } = usePaginationData()
+    const { isLoading, isError, data: users, pagination } = useFetchAdminPanelUsers(paginationData)
 
     return {
       isLoading,
       isError,
       users,
+      pagination,
+      IconLastActivityEmpty,
+      handlePaginationChange,
     }
   },
 }
