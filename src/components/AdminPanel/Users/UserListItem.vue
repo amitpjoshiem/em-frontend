@@ -39,7 +39,10 @@
 import { Check, Close, Setting } from '@element-plus/icons-vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-
+import { deleteAdminPanelUsers } from '@/api/vueQuery/admin-panel/delete-admin-panel-user'
+import { useMutation, useQueryClient } from 'vue-query'
+import { useAlert } from '@/utils/use-alert'
+import { ElMessage, ElMessageBox } from 'element-plus'
 export default {
   name: 'UserListItem',
   components: {
@@ -57,6 +60,9 @@ export default {
   setup(props) {
     const store = useStore()
 
+    const { mutateAsync: deleteUser } = useMutation(deleteAdminPanelUsers)
+    const queryClient = useQueryClient()
+
     const getName = computed(() => {
       if (props.user.first_name && props.user.last_name) return props.user.first_name + ' ' + props.user.last_name
       return '-'
@@ -68,16 +74,43 @@ export default {
     })
 
     const handleCommand = (command) => {
-      if (command === 'profile') {
-        store.commit('globalComponents/setEditUserId', props.user.id)
-        store.commit('globalComponents/setShowModal', {
-          destination: 'modalUserProfile',
-          value: true,
-        })
-      }
+      if (command === 'profile') profileCommand()
       if (command === 'edit') console.log('edit')
-      if (command === 'delete') console.log('delete')
+      if (command === 'delete') deleteCommand()
       if (command === 'create-password') console.log('create-password')
+    }
+
+    const deleteCommand = async () => {
+      ElMessageBox.confirm('Are you sure to delete. Continue?', 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      })
+        .then(async () => {
+          const res = await deleteUser(props.user.id)
+          if (!('error' in res)) {
+            useAlert({
+              title: 'Success',
+              type: 'success',
+              message: 'Delete completed',
+            })
+            queryClient.invalidateQueries(['admin-panel-users'])
+          }
+        })
+        .catch(() => {
+          ElMessage({
+            type: 'info',
+            message: 'Delete canceled',
+          })
+        })
+    }
+
+    const profileCommand = () => {
+      store.commit('globalComponents/setEditUserId', props.user.id)
+      store.commit('globalComponents/setShowModal', {
+        destination: 'modalUserProfile',
+        value: true,
+      })
     }
 
     return {
