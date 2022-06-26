@@ -40,6 +40,7 @@ import { Check, Close, Setting } from '@element-plus/icons-vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { deleteAdminPanelUsers } from '@/api/vueQuery/admin-panel/delete-admin-panel-user'
+import { createAdminPanelPassword } from '@/api/vueQuery/admin-panel/create-admin-panel-password'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -59,9 +60,10 @@ export default {
   },
   setup(props) {
     const store = useStore()
+    const queryClient = useQueryClient()
 
     const { mutateAsync: deleteUser } = useMutation(deleteAdminPanelUsers)
-    const queryClient = useQueryClient()
+    const { mutateAsync: createPassword } = useMutation(createAdminPanelPassword)
 
     const getName = computed(() => {
       if (props.user.first_name && props.user.last_name) return props.user.first_name + ' ' + props.user.last_name
@@ -77,7 +79,7 @@ export default {
       if (command === 'profile') profileCommand()
       if (command === 'edit') console.log('edit')
       if (command === 'delete') deleteCommand()
-      if (command === 'create-password') console.log('create-password')
+      if (command === 'create-password') createPasswordCommand()
     }
 
     const deleteCommand = async () => {
@@ -111,6 +113,17 @@ export default {
         destination: 'modalUserProfile',
         value: true,
       })
+    }
+
+    const createPasswordCommand = async () => {
+      const res = await createPassword(props.user.id)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Send create password success',
+        })
+      }
     }
 
     return {
