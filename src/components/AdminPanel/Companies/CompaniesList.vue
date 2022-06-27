@@ -3,7 +3,6 @@
     <CompaniesListHeader />
     <el-skeleton v-if="isLoading" :rows="5" animated class="p-5" />
     <SwdErrorBlock v-else-if="isError" />
-
     <div v-for="(item, index) in companies.data" v-else-if="companies.data" :key="index" class="border-t last:border-b">
       <CompaniesListItem :company="item" />
     </div>

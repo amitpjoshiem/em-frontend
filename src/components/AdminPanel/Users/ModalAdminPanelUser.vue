@@ -103,12 +103,10 @@
 <script>
 import { ref, reactive, watchEffect, computed } from 'vue'
 import { useStore } from 'vuex'
-
 import { rules } from '@/validationRules/modalAddCompany'
 import { useAlert } from '@/utils/use-alert'
 import { maska } from 'maska'
 import { ElMessageBox } from 'element-plus'
-
 import { useMutation, useQueryClient } from 'vue-query'
 import { createAdminPanelUsers } from '@/api/vueQuery/admin-panel/create-admin-panel-users'
 import { updateAdminPanelUser } from '@/api/vueQuery/admin-panel/update-admin-panel-user'
@@ -304,22 +302,16 @@ export default {
       isShowPositionTitle,
       isShowSelectAdvisors,
       closeDialog,
-
       isLoadingInit,
       init,
       refetchInit,
-
       createUser,
       isLoadingCreate,
-
       isEditModal,
-
       getTitle,
-
       isLoadingAdvisors,
       advisors,
       refetchAdvisors,
-
       handleCompany,
     }
   },

@@ -31,10 +31,8 @@ import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/modalAddCompany'
 import { useStore } from 'vuex'
 import { ElMessageBox } from 'element-plus'
-
 import { createAdminPanelCompanies } from '@/api/vueQuery/admin-panel/create-admin-panel-company'
 import { updateAdminPanelCompany } from '@/api/vueQuery/admin-panel/update-admin-panel-company'
-
 import { useMutation, useQueryClient } from 'vue-query'
 
 export default {
@@ -137,7 +135,6 @@ export default {
       closeDialog,
       dialogVisible,
       isEditModal,
-
       isLoadingCreate,
       getTitle,
     }

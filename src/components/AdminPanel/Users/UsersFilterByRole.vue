@@ -31,7 +31,7 @@ export default {
     const store = useStore()
     const currentFilter = ref(null)
 
-    const { isLoading, isError, data: init } = useFetchAdminPanelRolesCompanies()
+    const { isLoading, data: init } = useFetchAdminPanelRolesCompanies()
 
     const getFilter = (role) => {
       if (role?.id) {
@@ -45,7 +45,6 @@ export default {
 
     return {
       isLoading,
-      isError,
       init,
       getFilter,
       currentFilter,

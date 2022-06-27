@@ -61,7 +61,6 @@
         </template>
       </div>
     </el-scrollbar>
-
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="closeDialog">Close</el-button>
@@ -111,7 +110,6 @@ export default {
       closeDialog,
       Edit,
       confirm,
-
       isLoading,
       isError,
       user,
