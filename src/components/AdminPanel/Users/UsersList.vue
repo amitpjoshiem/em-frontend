@@ -31,6 +31,8 @@ import UsersListHeader from '@/components/AdminPanel/Users/UsersListHeader'
 import { useFetchAdminPanelUsers } from '@/api/admin-panel/use-fetch-ap-users.js'
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
 import { usePaginationData } from '@/utils/use-pagination-data.js'
+import { onUnmounted } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'UsersList',
@@ -41,8 +43,15 @@ export default {
     UsersFilterByCompany,
   },
   setup() {
+    const store = useStore()
+
     const { paginationData, handlePaginationChange } = usePaginationData()
     const { isLoading, isError, data: users, pagination } = useFetchAdminPanelUsers(paginationData)
+
+    onUnmounted(() => {
+      store.commit('adminPanelUsers/setFilterCompanyAdminPanel', null)
+      store.commit('adminPanelUsers/setFilterRoleAdminPanel', null)
+    })
 
     return {
       isLoading,

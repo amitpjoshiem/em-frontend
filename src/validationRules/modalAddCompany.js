@@ -6,6 +6,13 @@ const rules = {
       trigger: 'change',
     },
   ],
+  advisors: [
+    {
+      required: true,
+      message: 'Please select role',
+      trigger: 'change',
+    },
+  ],
   company_id: [
     {
       required: true,

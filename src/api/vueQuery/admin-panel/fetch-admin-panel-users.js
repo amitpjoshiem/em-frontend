@@ -8,10 +8,7 @@ function fetchAdminPanelUsers({ queryKey }) {
   const companyFilter = queryKey[1].reactiveCompanyilter ? queryKey[1].reactiveCompanyilter : ''
 
   let search = undefined
-
-  if (roleFilter && companyFilter) {
-    search = `roles.id:${roleFilter}` + ';' + `company.id:${companyFilter}` + '&searchJoin=and'
-  }
+  let searchJoin = undefined
 
   if (roleFilter) {
     search = `roles.id:${roleFilter}`
@@ -21,8 +18,14 @@ function fetchAdminPanelUsers({ queryKey }) {
     search = `company.id:${companyFilter}`
   }
 
+  if (roleFilter && companyFilter) {
+    search = `roles.id:${roleFilter}` + ';' + `company.id:${companyFilter}`
+    searchJoin = 'and'
+  }
+
   const searchParams = {
     search,
+    searchJoin,
     limit,
     page,
   }

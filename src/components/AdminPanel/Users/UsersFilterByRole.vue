@@ -36,10 +36,10 @@ export default {
     const getFilter = (role) => {
       if (role?.id) {
         currentFilter.value = role.display_name
-        store.commit('globalComponents/setFilterRoleAdminPanel', role.id)
+        store.commit('adminPanelUsers/setFilterRoleAdminPanel', role.id)
       } else {
         currentFilter.value = null
-        store.commit('globalComponents/setFilterRoleAdminPanel', null)
+        store.commit('adminPanelUsers/setFilterRoleAdminPanel', null)
       }
     }
 

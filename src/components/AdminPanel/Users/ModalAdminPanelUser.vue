@@ -4,13 +4,19 @@
       <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules" class="pr-4">
         <div class="flex justify-between mb-4">
           <el-form-item label="Role" class="w-6/12 pr-2" prop="role">
-            <el-select v-model="ruleForm.role" placeholder="Select role" class="w-full" :loading="isLoading">
+            <el-select v-model="ruleForm.role" placeholder="Select role" class="w-full" :loading="isLoadingInit">
               <el-option v-for="item in optionsRole" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
 
           <el-form-item label="Company" class="w-6/12 pl-2" prop="company_id">
-            <el-select v-model="ruleForm.company_id" placeholder="Select company" class="w-full" :loading="isLoading">
+            <el-select
+              v-model="ruleForm.company_id"
+              placeholder="Select company"
+              class="w-full"
+              :loading="isLoadingInit"
+              @change="handleCompany()"
+            >
               <el-option v-for="item in optionsCompany" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
@@ -63,6 +69,17 @@
             placeholder="Enter position title"
           />
         </el-form-item>
+
+        <el-form-item v-if="isShowSelectAdvisors" label="Advisors" prop="advisors">
+          <el-select-v2
+            v-model="ruleForm.advisors"
+            class="w-full"
+            :disabled="disabledForm"
+            :options="optionsAdvisors"
+            placeholder="Please select advisors"
+            multiple
+          />
+        </el-form-item>
       </el-form>
     </el-scrollbar>
 
@@ -85,15 +102,18 @@
 
 <script>
 import { ref, reactive, watchEffect, computed } from 'vue'
+import { useStore } from 'vuex'
+
 import { rules } from '@/validationRules/modalAddCompany'
 import { useAlert } from '@/utils/use-alert'
-import { useStore } from 'vuex'
 import { maska } from 'maska'
 import { ElMessageBox } from 'element-plus'
-import { useFetchAdminPanelRolesCompanies } from '@/api/admin-panel/use-fetch-admin-panel-roles-companies.js'
+
 import { useMutation, useQueryClient } from 'vue-query'
 import { createAdminPanelUsers } from '@/api/vueQuery/admin-panel/create-admin-panel-users'
 import { updateAdminPanelUser } from '@/api/vueQuery/admin-panel/update-admin-panel-user'
+import { useFetchAdminPanelRolesCompanies } from '@/api/admin-panel/use-fetch-admin-panel-roles-companies.js'
+import { useFetchAdminPanelAdvisorsByCompany } from '@/api/admin-panel/use-fetch-admin-panel-advisors-by-company.js'
 
 export default {
   name: 'ModalAdminPanelUser',
@@ -102,22 +122,6 @@ export default {
     const store = useStore()
     const queryClient = useQueryClient()
     const isEditModal = ref(false)
-
-    const {
-      isLoading,
-      isError,
-      data: init,
-      refetch: refetchInit,
-    } = useFetchAdminPanelRolesCompanies({ enabled: false })
-
-    const { isLoading: isLoadingCreate, mutateAsync: createUser } = useMutation(createAdminPanelUsers)
-
-    const { mutateAsync: updateUser } = useMutation(updateAdminPanelUser)
-
-    const dialogFormVisible = ref(false)
-    const form = ref(null)
-    const optionsRole = ref([])
-    const optionsCompany = ref([])
 
     const ruleForm = reactive({
       first_name: '',
@@ -129,20 +133,51 @@ export default {
       position: '',
       username: '',
       phone: '',
+      advisors: [],
     })
 
+    const {
+      isLoading: isLoadingInit,
+      data: init,
+      refetch: refetchInit,
+    } = useFetchAdminPanelRolesCompanies({ enabled: false })
+
+    const {
+      isLoading: isLoadingAdvisors,
+      data: advisors,
+      refetch: refetchAdvisors,
+    } = useFetchAdminPanelAdvisorsByCompany({ enabled: false })
+
+    const { isLoading: isLoadingCreate, mutateAsync: createUser } = useMutation(createAdminPanelUsers)
+
+    const { mutateAsync: updateUser } = useMutation(updateAdminPanelUser)
+
+    const dialogFormVisible = ref(false)
+    const form = ref(null)
+    const optionsRole = ref([])
+    const optionsCompany = ref([])
+    const optionsAdvisors = ref([])
+
     const disabledForm = computed(() => {
-      if (!ruleForm.role) return true
+      if (!ruleForm.role || !ruleForm.company_id) return true
       return false
     })
 
     const isShowNpn = computed(() => {
-      if (ruleForm.role === 'y968o0wr6wve7rpz') return true
+      const idAdvisorRole = init.value.roles.find((item) => item.display_name === 'Advisor Role').id
+      if (ruleForm.role === idAdvisorRole) return true
       return false
     })
 
     const isShowPositionTitle = computed(() => {
-      if (ruleForm.role === 'y968o0wr6wve7rpz') return true
+      const idAdvisorRole = init.value.roles.find((item) => item.display_name === 'Advisor Role').id
+      if (ruleForm.role === idAdvisorRole) return true
+      return false
+    })
+
+    const isShowSelectAdvisors = computed(() => {
+      const idAssistantRole = init.value.roles.find((item) => item.display_name === 'Assistant Role').id
+      if (ruleForm.role === idAssistantRole) return true
       return false
     })
 
@@ -159,7 +194,7 @@ export default {
         setInitValue(user)
       }
 
-      if (!isLoading.value && init.value) {
+      if (!isLoadingInit.value && init.value) {
         optionsRole.value = init.value.roles.map((item) => {
           return { label: item.display_name, value: item.id }
         })
@@ -226,6 +261,7 @@ export default {
       ruleForm.npn = ''
       ruleForm.position = ''
       ruleForm.username = ''
+      ruleForm.advisors = []
       dialogFormVisible.value = false
     }
 
@@ -233,6 +269,14 @@ export default {
       if (isEditModal.value) return 'Edit user'
       return 'Add user'
     })
+
+    const handleCompany = async () => {
+      await store.commit('adminPanelUsers/setCurrentCompanyId', ruleForm.company_id)
+      await refetchAdvisors.value()
+      optionsAdvisors.value = advisors.value.map((item) => {
+        return { label: item.last_name + ' ' + item.first_name, value: item.id }
+      })
+    }
 
     const setInitValue = (user) => {
       ruleForm.first_name = user.first_name
@@ -254,13 +298,14 @@ export default {
       confirm,
       optionsRole,
       optionsCompany,
+      optionsAdvisors,
       disabledForm,
       isShowNpn,
       isShowPositionTitle,
+      isShowSelectAdvisors,
       closeDialog,
 
-      isLoading,
-      isError,
+      isLoadingInit,
       init,
       refetchInit,
 
@@ -270,6 +315,12 @@ export default {
       isEditModal,
 
       getTitle,
+
+      isLoadingAdvisors,
+      advisors,
+      refetchAdvisors,
+
+      handleCompany,
     }
   },
 }

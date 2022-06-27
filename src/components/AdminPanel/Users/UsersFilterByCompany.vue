@@ -36,10 +36,10 @@ export default {
     const getFilter = (company) => {
       if (company?.id) {
         currentFilter.value = company.name
-        store.commit('globalComponents/setFilterCompanyAdminPanel', company.id)
+        store.commit('adminPanelUsers/setFilterCompanyAdminPanel', company.id)
       } else {
         currentFilter.value = null
-        store.commit('globalComponents/setFilterCompanyAdminPanel', null)
+        store.commit('adminPanelUsers/setFilterCompanyAdminPanel', null)
       }
     }
 
