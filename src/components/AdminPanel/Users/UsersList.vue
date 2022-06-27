@@ -1,5 +1,6 @@
 <template>
   <div class="p-5">
+    <UsersSearch />
     <UsersFilterByRole />
     <UsersFilterByCompany />
     <UsersListHeader />
@@ -10,7 +11,7 @@
     <template v-else-if="users">
       <UserListItem v-for="item in users" :key="item.id" :user="item" class="border-b" />
 
-      <div v-if="!users.length" class="flex flex-col justify-center items-center">
+      <div v-if="!users.length" class="flex flex-col justify-center items-center min-h-[370px]">
         <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center">
           <InlineSvg :src="IconLastActivityEmpty" />
         </div>
@@ -28,6 +29,7 @@ import UserListItem from '@/components/AdminPanel/Users/UserListItem'
 import UsersFilterByRole from '@/components/AdminPanel/Users/UsersFilterByRole'
 import UsersFilterByCompany from '@/components/AdminPanel/Users/UsersFilterByCompany'
 import UsersListHeader from '@/components/AdminPanel/Users/UsersListHeader'
+import UsersSearch from '@/components/AdminPanel/Users/UsersSearch'
 import { useFetchAdminPanelUsers } from '@/api/admin-panel/use-fetch-ap-users.js'
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
 import { usePaginationData } from '@/utils/use-pagination-data.js'
@@ -41,6 +43,7 @@ export default {
     UsersListHeader,
     UsersFilterByRole,
     UsersFilterByCompany,
+    UsersSearch,
   },
   setup() {
     const store = useStore()

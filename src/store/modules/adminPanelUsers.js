@@ -3,6 +3,7 @@ const state = () => ({
   page: 1,
   filterRoleAdminPanel: null,
   filterCompanyAdminPanel: null,
+  filterUserAdminPanel: null,
   profileUserId: null,
   editUser: null,
   currentCompanyId: null,
@@ -26,6 +27,10 @@ const mutations = {
 
   setFilterCompanyAdminPanel(state, value) {
     state.filterCompanyAdminPanel = value
+  },
+
+  setFilterUserAdminPanel(state, value) {
+    state.filterUserAdminPanel = value
   },
 
   setEditUser(state, value) {

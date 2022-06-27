@@ -9,11 +9,13 @@ export const useFetchAdminPanelUsers = (page) => {
   const limit = computed(() => store.state.adminPanelUsers.limit)
   const roleFilter = computed(() => store.state.adminPanelUsers.filterRoleAdminPanel)
   const companyFilter = computed(() => store.state.adminPanelUsers.filterCompanyAdminPanel)
+  const userFilter = computed(() => store.state.adminPanelUsers.filterUserAdminPanel)
 
   const reactiveLimit = ref(limit)
   const reactivePage = ref(page)
   const reactiveRoleFilter = ref(roleFilter)
-  const reactiveCompanyilter = ref(companyFilter)
+  const reactiveCompanyFilter = ref(companyFilter)
+  const reactiveUserFilter = ref(userFilter)
 
   const queryKey = reactive([
     'admin-panel-users',
@@ -21,7 +23,8 @@ export const useFetchAdminPanelUsers = (page) => {
       reactiveLimit,
       reactivePage,
       reactiveRoleFilter,
-      reactiveCompanyilter,
+      reactiveCompanyFilter,
+      reactiveUserFilter,
     },
   ])
 

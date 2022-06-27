@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-wrap items-center">
-    <div class="pr-4 mb-2 text-main">Role:</div>
+  <div class="flex flex-wrap items-center px-5 pt-4 border border-input-border rounded-lg">
+    <div class="pr-4 mb-4 text-main text-sm font-semibold">Role:</div>
     <SwdSpinner v-if="isLoading" />
     <template v-else>
       <el-button
-        class="mb-2 mr-2"
+        class="mb-4 mr-2"
         :type="currentFilter === null ? 'primary' : ''"
         size="small"
         plain
@@ -16,7 +16,7 @@
         <el-button
           size="small"
           plain
-          class="mb-2"
+          class="mb-4"
           :type="currentFilter === role.display_name ? 'primary' : ''"
           @click="getFilter(role)"
         >
