@@ -27,7 +27,9 @@
             <el-dropdown-item command="profile">Profile</el-dropdown-item>
             <el-dropdown-item command="edit">Edit</el-dropdown-item>
             <el-dropdown-item command="delete">Delete</el-dropdown-item>
-            <el-dropdown-item command="create-password">Send Create Password</el-dropdown-item>
+            <el-dropdown-item v-if="!user.is_email_confirmed" command="create-password">
+              Send Create Password
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -129,8 +131,6 @@ export default {
 
     const editedUserCommand = () => {
       store.commit('adminPanelUsers/setEditUser', props.user)
-      // store.commit('adminPanelUsers/setEditUserIdAdminPanel', props.user.id)
-
       store.commit('adminPanelUsers/setShowModal', {
         destination: 'modalAddNewUser',
         value: true,
