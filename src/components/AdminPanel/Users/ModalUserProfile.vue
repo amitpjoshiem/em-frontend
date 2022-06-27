@@ -33,14 +33,14 @@
         <!-- Email -->
         <div class="flex">
           <div class="w-6/12 pr-2 font-semibold">Email:</div>
-          <!-- <div class="w-6/12 pl-2 text-main">{{ user.email }}</div> -->
-          <a href="mailto:{{user.email}}">{{ user.email }}</a>
+          <a class="w-6/12 pl-2 text-activity" href="mailto:{{user.email}}">{{ user.email }}</a>
         </div>
         <el-divider />
         <!-- Phone -->
         <div class="flex">
           <div class="w-6/12 pr-2 font-semibold">Phone:</div>
-          <SwdStubForText :text="user.phone" plug="&mdash;" class="w-6/12 pl-2 text-main" />
+          <a v-if="user.phone" class="w-6/12 pl-2 text-activity" href="tel:{{user.phone}}">{{ user.phone }}</a>
+          <span v-else class="w-6/12 pl-2 text-main">&mdash;</span>
         </div>
         <el-divider />
         <!-- NPN -->
