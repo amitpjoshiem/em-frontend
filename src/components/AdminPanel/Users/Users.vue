@@ -7,26 +7,23 @@
     </SwdSubHeader>
   </div>
   <UsersList />
-  <AddNewUser />
 </template>
 
 <script>
 import { Edit } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
-import AddNewUser from '@/components/AdminPanel/Users/AddNewUser'
 import UsersList from '@/components/AdminPanel/Users/UsersList'
 
 export default {
   name: 'Users',
   components: {
-    AddNewUser,
     UsersList,
   },
   setup() {
     const store = useStore()
 
     const openDialog = () => {
-      store.commit('globalComponents/setShowModal', {
+      store.commit('adminPanelUsers/setShowModal', {
         destination: 'modalAddNewUser',
         value: true,
       })

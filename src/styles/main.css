@@ -38,10 +38,10 @@
   padding-right: 0;
 }
 
-.el-input--small .el-input__inner{
+/* .el-input--small .el-input__inner{
   height: 30px;
   line-height: 30px;
-}
+} */
 
 .el-dropdown-menu__item {
   display: flex;

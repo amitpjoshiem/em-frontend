@@ -1,40 +1,16 @@
 const rules = {
-  role: [
+  name: [
     {
       required: true,
-      message: 'Please select role',
+      message: 'Please input name',
       trigger: 'change',
     },
   ],
-  company: [
+  domain: [
     {
       required: true,
-      message: 'Please select company',
+      message: 'Please input domai',
       trigger: 'change',
-    },
-  ],
-  first_name: [
-    {
-      required: true,
-      message: 'Please input company',
-      trigger: 'blur',
-    },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
-  ],
-  last_name: [
-    {
-      required: true,
-      message: 'Please input domain',
-      trigger: 'blur',
-    },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
-  ],
-  email: [
-    { required: true, message: 'The field cannot be empty', trigger: 'blur' },
-    {
-      type: 'email',
-      message: 'Please enter valid email ID',
-      trigger: 'blur',
     },
   ],
 }

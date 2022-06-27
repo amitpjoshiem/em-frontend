@@ -1,80 +1,68 @@
 <template>
   <div class="p-5">
-    <div class="flex items-center mb-4">
-      <div class="pr-4">Filter role:</div>
-      <el-button type="primary" size="small" plain>All</el-button>
-      <el-button size="small" plain>CEO</el-button>
-      <el-button size="small" plain>Admin</el-button>
-      <el-button size="small" plain>Assistant</el-button>
-      <el-button size="small" plain>Advisor</el-button>
-    </div>
+    <UsersSearch />
+    <UsersFilterByRole />
+    <UsersFilterByCompany />
     <UsersListHeader />
-    <div v-for="(item, index) in data" :key="index" class="border-t last:border-b">
-      <UserListItem :user="item" />
+
+    <el-skeleton v-if="isLoading" :rows="7" animated class="p-5 min-h-[370px]" />
+    <SwdErrorBlock v-else-if="isError" />
+
+    <template v-else-if="users">
+      <UserListItem v-for="item in users" :key="item.id" :user="item" class="border-b" />
+
+      <div v-if="!users.length" class="flex flex-col justify-center items-center min-h-[370px]">
+        <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center">
+          <InlineSvg :src="IconLastActivityEmpty" />
+        </div>
+        <span class="text-gray03 font-semibold text-xss mt-5">No recently users</span>
+      </div>
+    </template>
+    <div class="flex items-center justify-center border-color-grey py-6">
+      <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
     </div>
   </div>
 </template>
 
 <script>
 import UserListItem from '@/components/AdminPanel/Users/UserListItem'
+import UsersFilterByRole from '@/components/AdminPanel/Users/UsersFilterByRole'
+import UsersFilterByCompany from '@/components/AdminPanel/Users/UsersFilterByCompany'
 import UsersListHeader from '@/components/AdminPanel/Users/UsersListHeader'
+import UsersSearch from '@/components/AdminPanel/Users/UsersSearch'
+import { useFetchAdminPanelUsers } from '@/api/admin-panel/use-fetch-ap-users.js'
+import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
+import { usePaginationData } from '@/utils/use-pagination-data.js'
+import { onUnmounted } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'UsersList',
   components: {
     UserListItem,
     UsersListHeader,
+    UsersFilterByRole,
+    UsersFilterByCompany,
+    UsersSearch,
   },
   setup() {
-    const data = [
-      {
-        name: 'Tom',
-        username: 'YDmitriy',
-        email: 'admin@swdgroup.net',
-        position: 'FE dev',
-        phone: '0504522328',
-        npm: '123456',
-        role: 'CEO',
-        company: 'SWD',
-        verified: true,
-      },
-      {
-        name: 'Tom1',
-        username: 'YDmitriy',
-        email: 'admin@swdgroup.net',
-        position: 'FE dev',
-        phone: '0504522328',
-        npm: '123456',
-        role: 'Assistant',
-        company: 'SWD',
-        verified: true,
-      },
-      {
-        name: 'Tom2',
-        username: 'YDmitriy',
-        email: 'admin@swdgroup.net',
-        position: 'FE dev',
-        phone: '0504522328',
-        npm: '123456',
-        role: 'Assistant',
-        company: 'SWD',
-        verified: false,
-      },
-      {
-        name: 'Tom3',
-        username: 'YDmitriy',
-        email: 'admin@swdgroup.net',
-        position: 'FE dev',
-        phone: '0504522328',
-        npm: '123456',
-        role: 'Advisor',
-        company: 'SWD',
-        verified: true,
-      },
-    ]
+    const store = useStore()
+
+    const { paginationData, handlePaginationChange } = usePaginationData()
+    const { isLoading, isError, data: users, pagination } = useFetchAdminPanelUsers(paginationData)
+
+    onUnmounted(() => {
+      store.commit('adminPanelUsers/setFilterCompanyAdminPanel', null)
+      store.commit('adminPanelUsers/setFilterRoleAdminPanel', null)
+    })
 
     return {
-      data,
+      isLoading,
+      isError,
+      users,
+      pagination,
+      IconLastActivityEmpty,
+      handlePaginationChange,
     }
   },
 }

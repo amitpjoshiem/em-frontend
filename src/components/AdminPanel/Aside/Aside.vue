@@ -1,6 +1,6 @@
 <template>
   <div class="bg-primary">
-    <el-aside width="200px" class="h-screen">
+    <el-aside width="150px" class="h-screen">
       <div class="cursor-pointer flex justify-center">
         <InlineSvg :src="IconLogo" />
       </div>

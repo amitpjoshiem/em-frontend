@@ -1,15 +1,15 @@
 <template>
   <div class="flex user-table text-sm text-main hover:bg-gray-100">
-    <div class="table-item w-4/24 p-2">{{ user.name }}</div>
-    <div class="table-item w-5/24 p-2">{{ user.email }}</div>
-    <div class="table-item w-3/24 p-2">{{ user.position }}</div>
-    <div class="table-item w-3/24 p-2">{{ user.phone }}</div>
-    <div class="table-item w-2/24 p-2">{{ user.npm }}</div>
-    <div class="table-item w-2/24 p-2">{{ user.role }}</div>
-    <div class="table-item w-2/24 p-2">{{ user.company }}</div>
-    <div class="table-item w-2/24 p-2">
+    <div class="table-item w-5/24">{{ getName }}</div>
+    <div class="table-item w-6/24">
+      <a class="w-6/12 pl-2 text-activity" href="mailto:{{user.email}}">{{ user.email }}</a>
+    </div>
+    <div class="table-item w-3/24">{{ user.position }}</div>
+    <div class="table-item w-3/24 capitalize">{{ getRole }}</div>
+    <div class="table-item w-4/24 p-2">{{ user.company.name }}</div>
+    <div class="table-item w-2/24">
       <div class="flex items-center justify-center">
-        <el-icon v-if="user.verified" color="green">
+        <el-icon v-if="user.is_email_confirmed" color="green">
           <Check />
         </el-icon>
         <el-icon v-else color="red">
@@ -17,20 +17,21 @@
         </el-icon>
       </div>
     </div>
-    <div class="table-item w-1/24 p-2 flex items-center justify-center cursor-pointer">
-      <el-dropdown trigger="click">
-        <span class="el-dropdown-link">
+    <div class="table-item w-1/24 p-2 flex items-center justify-center">
+      <el-dropdown trigger="click" @command="handleCommand">
+        <span class="el-dropdown-link" cursor-pointer>
           <el-icon>
             <Setting color="green" />
           </el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>Action 1</el-dropdown-item>
-            <el-dropdown-item>Action 2</el-dropdown-item>
-            <el-dropdown-item>Action 3</el-dropdown-item>
-            <el-dropdown-item disabled>Action 4</el-dropdown-item>
-            <el-dropdown-item divided>Action 5</el-dropdown-item>
+            <el-dropdown-item command="profile">Profile</el-dropdown-item>
+            <el-dropdown-item command="edit">Edit</el-dropdown-item>
+            <el-dropdown-item command="delete">Delete</el-dropdown-item>
+            <el-dropdown-item v-if="!user.is_email_confirmed" command="create-password">
+              Send Create Password
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -40,6 +41,13 @@
 
 <script>
 import { Check, Close, Setting } from '@element-plus/icons-vue'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { deleteAdminPanelUsers } from '@/api/vueQuery/admin-panel/delete-admin-panel-user'
+import { createAdminPanelPassword } from '@/api/vueQuery/admin-panel/create-admin-panel-password'
+import { useMutation, useQueryClient } from 'vue-query'
+import { useAlert } from '@/utils/use-alert'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default {
   name: 'UserListItem',
@@ -55,12 +63,93 @@ export default {
       default: () => {},
     },
   },
-  setup() {},
+  setup(props) {
+    const store = useStore()
+    const queryClient = useQueryClient()
+
+    const { mutateAsync: deleteUser } = useMutation(deleteAdminPanelUsers)
+    const { mutateAsync: createPassword } = useMutation(createAdminPanelPassword)
+
+    const getName = computed(() => {
+      if (props.user.first_name && props.user.last_name) return props.user.first_name + ' ' + props.user.last_name
+      return '-'
+    })
+
+    const getRole = computed(() => {
+      if (props.user.roles[0].name === 'ceo') return 'CEO'
+      return props.user.roles[0].name
+    })
+
+    const handleCommand = (command) => {
+      if (command === 'profile') profileCommand()
+      if (command === 'edit') editedUserCommand()
+      if (command === 'delete') deleteCommand()
+      if (command === 'create-password') createPasswordCommand()
+    }
+
+    const deleteCommand = async () => {
+      ElMessageBox.confirm('Are you sure to delete. Continue?', 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      })
+        .then(async () => {
+          const res = await deleteUser(props.user.id)
+          if (!('error' in res)) {
+            useAlert({
+              title: 'Success',
+              type: 'success',
+              message: 'Delete completed',
+            })
+            queryClient.invalidateQueries(['admin-panel-users'])
+          }
+        })
+        .catch(() => {
+          ElMessage({
+            type: 'info',
+            message: 'Delete canceled',
+          })
+        })
+    }
+
+    const profileCommand = () => {
+      store.commit('adminPanelUsers/setProfileUserId', props.user.id)
+      store.commit('adminPanelUsers/setShowModal', {
+        destination: 'modalUserProfile',
+        value: true,
+      })
+    }
+
+    const createPasswordCommand = async () => {
+      const res = await createPassword(props.user.id)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Send create password success',
+        })
+      }
+    }
+
+    const editedUserCommand = () => {
+      store.commit('adminPanelUsers/setEditUser', props.user)
+      store.commit('adminPanelUsers/setShowModal', {
+        destination: 'modalAddNewUser',
+        value: true,
+      })
+    }
+
+    return {
+      getName,
+      handleCommand,
+      getRole,
+    }
+  },
 }
 </script>
 
 <style>
 .table-item {
-  @apply border-r first:border-l;
+  @apply p-2 flex items-center;
 }
 </style>
