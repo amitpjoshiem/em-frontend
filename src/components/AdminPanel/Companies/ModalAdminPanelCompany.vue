@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogVisible" :title="getTitle" :before-close="closeDialog">
+  <el-dialog v-model="dialogVisible" :title="getTitle" :before-close="closeDialog" destroy-on-close>
     <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
       <el-form-item label="Name" class="mb-4" prop="name">
         <el-input v-model="ruleForm.name" autocomplete="off" />

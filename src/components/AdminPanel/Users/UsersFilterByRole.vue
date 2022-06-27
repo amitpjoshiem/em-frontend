@@ -1,21 +1,28 @@
 <template>
-  <div class="flex items-center mb-4">
-    <div class="pr-4 text-main">Role:</div>
+  <div class="flex flex-wrap items-center">
+    <div class="pr-4 mb-2 text-main">Role:</div>
     <SwdSpinner v-if="isLoading" />
     <template v-else>
-      <el-button :type="currentFilter === null ? 'primary' : ''" size="small" plain @click="getFilter(null)">
-        All
-      </el-button>
       <el-button
-        v-for="(role, index) in init.roles"
-        :key="index"
+        class="mb-2 mr-2"
+        :type="currentFilter === null ? 'primary' : ''"
         size="small"
         plain
-        :type="currentFilter === role.display_name ? 'primary' : ''"
-        @click="getFilter(role)"
+        @click="getFilter(null)"
       >
-        {{ role.display_name }}
+        All
       </el-button>
+      <span v-for="(role, index) in init.roles" :key="index" class="mr-2">
+        <el-button
+          size="small"
+          plain
+          class="mb-2"
+          :type="currentFilter === role.display_name ? 'primary' : ''"
+          @click="getFilter(role)"
+        >
+          {{ role.display_name }}
+        </el-button>
+      </span>
     </template>
   </div>
 </template>

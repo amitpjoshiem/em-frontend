@@ -1,21 +1,28 @@
 <template>
-  <div class="flex items-center mb-4">
-    <div class="pr-4 text-main">Company:</div>
-    <SwdSpinner v-if="isLoading" />
+  <div class="flex flex-wrap items-center">
+    <div class="pr-4 mb-2 text-main">Company:</div>
+    <SwdSpinner v-if="isLoading" class="mb-2" />
     <template v-else>
-      <el-button :type="currentFilter === null ? 'primary' : ''" size="small" plain @click="getFilter(null)">
-        All
-      </el-button>
       <el-button
-        v-for="(item, index) in init.companies"
-        :key="index"
+        :type="currentFilter === null ? 'primary' : ''"
         size="small"
         plain
-        :type="currentFilter === item.name ? 'primary' : ''"
-        @click="getFilter(item)"
+        class="mb-2 mr-2"
+        @click="getFilter(null)"
       >
-        {{ item.name }}
+        All
       </el-button>
+      <span v-for="(item, index) in init.companies" :key="index" class="mr-2">
+        <el-button
+          size="small"
+          class="mb-2"
+          plain
+          :type="currentFilter === item.name ? 'primary' : ''"
+          @click="getFilter(item)"
+        >
+          {{ item.name }}
+        </el-button>
+      </span>
     </template>
   </div>
 </template>
