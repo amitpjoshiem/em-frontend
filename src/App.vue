@@ -8,6 +8,7 @@
   <SwdModalTerms />
   <ModalUserProfile />
   <ModalAdminPanelUser />
+  <ModalAdminPanelCompany />
 </template>
 
 <script>
@@ -23,6 +24,7 @@ import SwdModalTerms from '@/components/Global/SwdModalTerms.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
 import ModalUserProfile from '@/components/AdminPanel/Users/ModalUserProfile'
 import ModalAdminPanelUser from '@/components/AdminPanel/Users/ModalAdminPanelUser'
+import ModalAdminPanelCompany from '@/components/AdminPanel/Companies/ModalAdminPanelCompany'
 
 export default {
   components: {
@@ -33,6 +35,7 @@ export default {
     SwdModalTerms,
     ModalUserProfile,
     ModalAdminPanelUser,
+    ModalAdminPanelCompany,
   },
   setup() {
     useQueryProvider({

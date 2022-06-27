@@ -6,33 +6,12 @@
       </template>
     </SwdSubHeader>
   </div>
-
   <CompaniesList />
-
-  <el-dialog v-model="dialogFormVisible" title="Add company">
-    <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
-      <el-form-item label="Name" class="mb-4" prop="name">
-        <el-input v-model="ruleForm.name" autocomplete="off" />
-      </el-form-item>
-      <el-form-item label="Domain" prop="domain">
-        <el-input v-model="ruleForm.Domain" autocomplete="off" />
-      </el-form-item>
-    </el-form>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="cancel">Cancel</el-button>
-        <el-button type="primary" @click="confirm">Confirm</el-button>
-      </span>
-    </template>
-  </el-dialog>
 </template>
 
 <script>
 import { Edit } from '@element-plus/icons-vue'
-import { ref, reactive } from 'vue'
-import { rules } from '@/validationRules/modalAddCompany'
-import { useAlert } from '@/utils/use-alert'
-
+import { useStore } from 'vuex'
 import CompaniesList from '@/components/AdminPanel/Companies/CompaniesList'
 
 export default {
@@ -41,56 +20,19 @@ export default {
     CompaniesList,
   },
   setup() {
-    const dialogFormVisible = ref(false)
-    const form = ref(null)
-
-    const ruleForm = reactive({
-      name: '',
-      domain: '',
-    })
+    const store = useStore()
 
     const openDialog = () => {
-      dialogFormVisible.value = true
-    }
-
-    const confirm = (e) => {
-      e.preventDefault()
-
-      form.value.validate(async (valid) => {
-        if (valid) {
-          // const res = await createAssetsConsolidationTable({ id: memberId, form: ruleForm })
-          // if (!('error' in res)) {
-          useAlert({
-            title: 'Success',
-            type: 'success',
-            message: 'Company created',
-          })
-          dialogFormVisible.value = false
-
-          // closeDialog()
-          // queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])
-          // }
-        } else {
-          return false
-        }
+      store.commit('adminPanelUsers/setShowModal', {
+        destination: 'modalCompany',
+        value: true,
       })
-    }
-
-    const cancel = () => {
-      ruleForm.name = ''
-      ruleForm.domain = ''
-      dialogFormVisible.value = false
     }
 
     return {
       Edit,
-      dialogFormVisible,
       openDialog,
-      form,
-      ruleForm,
       confirm,
-      cancel,
-      rules,
     }
   },
 }

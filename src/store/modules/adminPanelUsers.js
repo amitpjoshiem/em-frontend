@@ -10,6 +10,7 @@ const state = () => ({
     showDialog: {
       modalAddNewUser: false,
       modalUserProfile: false,
+      modalCompany: false,
     },
   },
 })
