@@ -43,7 +43,6 @@ export default {
     }
 
     const editedComapnyCommand = () => {
-      console.log('editedComapnyCommand')
       store.commit('adminPanelUsers/setEditCompany', props.company)
       store.commit('adminPanelUsers/setShowModal', {
         destination: 'modalCompany',

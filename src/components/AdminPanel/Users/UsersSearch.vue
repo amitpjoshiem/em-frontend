@@ -26,7 +26,6 @@ export default {
 
     watchEffect(() => {
       if (name.value.length > 2) {
-        console.log('search')
         setTimeout(function () {
           store.commit('adminPanelUsers/setFilterUserAdminPanel', name.value)
         }, 1000)

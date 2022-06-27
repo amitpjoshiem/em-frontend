@@ -89,7 +89,6 @@ export default {
     }
 
     const closeDialog = () => {
-      console.log('closeDialog')
       if (ruleForm.name || ruleForm.domain) {
         ElMessageBox.confirm('Are you sure to close this dialog?')
           .then(() => {
