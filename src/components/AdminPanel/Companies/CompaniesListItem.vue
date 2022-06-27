@@ -22,6 +22,7 @@
 
 <script>
 import { Setting } from '@element-plus/icons-vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'CompaniesListItem',
@@ -35,9 +36,20 @@ export default {
       default: () => {},
     },
   },
-  setup() {
+  setup(props) {
+    const store = useStore()
+
     const handleCommand = (command) => {
-      if (command === 'edit') console.log('edit')
+      if (command === 'edit') editedComapnyCommand()
+    }
+
+    const editedComapnyCommand = () => {
+      console.log('editedComapnyCommand')
+      store.commit('adminPanelUsers/setEditCompany', props.company)
+      store.commit('adminPanelUsers/setShowModal', {
+        destination: 'modalCompany',
+        value: true,
+      })
     }
 
     return {

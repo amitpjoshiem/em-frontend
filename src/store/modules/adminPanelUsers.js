@@ -6,6 +6,7 @@ const state = () => ({
   profileUserId: null,
   editUser: null,
   currentCompanyId: null,
+  editCompany: null,
   dialog: {
     showDialog: {
       modalAddNewUser: false,
@@ -29,6 +30,10 @@ const mutations = {
 
   setEditUser(state, value) {
     state.editUser = value
+  },
+
+  setEditCompany(state, value) {
+    state.editCompany = value
   },
 
   setProfileUserId(state, value) {
