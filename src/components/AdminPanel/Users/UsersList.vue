@@ -4,13 +4,10 @@
     <UsersFilterByRole />
     <UsersFilterByCompany />
     <UsersListHeader />
-
     <el-skeleton v-if="isLoading" :rows="7" animated class="p-5 min-h-[370px]" />
     <SwdErrorBlock v-else-if="isError" />
-
     <template v-else-if="users">
       <UserListItem v-for="item in users" :key="item.id" :user="item" class="border-b" />
-
       <div v-if="!users.length" class="flex flex-col justify-center items-center min-h-[370px]">
         <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center">
           <InlineSvg :src="IconLastActivityEmpty" />
