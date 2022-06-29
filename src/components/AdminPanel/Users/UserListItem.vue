@@ -1,5 +1,5 @@
 <template>
-  <div class="flex user-table text-sm text-main hover:bg-gray-100">
+  <div class="flex user-table text-xss text-main hover:bg-gray-100">
     <div class="table-item w-5/24">{{ getName }}</div>
     <div class="table-item w-6/24">
       <a class="w-6/12 pl-2 text-activity" href="mailto:{{user.email}}">{{ user.email }}</a>

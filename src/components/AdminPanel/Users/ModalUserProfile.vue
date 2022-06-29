@@ -8,54 +8,64 @@
       <div v-else-if="user">
         <!-- Role -->
         <div class="flex">
-          <div class="w-6/12 pr-2 font-semibold">Role:</div>
-          <div class="w-6/12 pl-2 text-main">{{ user.roles[0].description }}</div>
+          <div class="w-6/12 font-semibold">Role:</div>
+          <div class="w-6/12 text-main">{{ user.roles[0].description }}</div>
         </div>
         <el-divider />
         <!-- Company -->
         <div class="flex">
-          <div class="w-6/12 pr-2 font-semibold">Company:</div>
-          <div class="w-6/12 pl-2 text-main">{{ user.company.name }}</div>
+          <div class="w-6/12 font-semibold">Company:</div>
+          <div class="w-6/12 text-main">{{ user.company.name }}</div>
         </div>
         <el-divider />
         <!-- FirstName -->
         <div class="flex">
-          <div class="w-6/12 pr-2 font-semibold">First name:</div>
-          <SwdStubForText :text="user.first_name" plug="&mdash;" class="w-6/12 pl-2 text-main" />
+          <div class="w-6/12 font-semibold">First name:</div>
+          <SwdStubForText :text="user.first_name" plug="&mdash;" class="w-6/12 text-main" />
         </div>
         <el-divider />
         <!-- LastName -->
         <div class="flex">
-          <div class="w-6/12 pr-2 font-semibold">Last name:</div>
-          <SwdStubForText :text="user.last_name" plug="&mdash;" class="w-6/12 pl-2 text-main" />
+          <div class="w-6/12 font-semibold">Last name:</div>
+          <SwdStubForText :text="user.last_name" plug="&mdash;" class="w-6/12 text-main" />
         </div>
         <el-divider />
         <!-- Email -->
         <div class="flex">
-          <div class="w-6/12 pr-2 font-semibold">Email:</div>
-          <a class="w-6/12 pl-2 text-activity" href="mailto:{{user.email}}">{{ user.email }}</a>
+          <div class="w-6/12 font-semibold">Email:</div>
+          <a class="w-6/12 text-activity" href="mailto:{{user.email}}">{{ user.email }}</a>
         </div>
         <el-divider />
         <!-- Phone -->
         <div class="flex">
-          <div class="w-6/12 pr-2 font-semibold">Phone:</div>
-          <a v-if="user.phone" class="w-6/12 pl-2 text-activity" href="tel:{{user.phone}}">{{ user.phone }}</a>
-          <span v-else class="w-6/12 pl-2 text-main">&mdash;</span>
+          <div class="w-6/12 font-semibold">Phone:</div>
+          <a v-if="user.phone" class="w-6/12 text-activity" href="tel:{{user.phone}}">{{ user.phone }}</a>
+          <span v-else class="w-6/12 text-main">&mdash;</span>
         </div>
         <el-divider />
         <!-- NPN -->
         <template v-if="user.npm">
           <div class="flex">
-            <div class="w-6/12 pr-2 font-semibold">NPN:</div>
-            <div class="w-6/12 pl-2 text-main">{{ user.npm }}</div>
+            <div class="w-6/12 font-semibold">NPN:</div>
+            <div class="w-6/12 text-main">{{ user.npm }}</div>
           </div>
           <el-divider />
         </template>
         <!-- Position -->
         <template v-if="user.position">
           <div class="flex">
-            <div class="w-6/12 pr-2 font-semibold">Position:</div>
-            <div class="w-6/12 pl-2 text-main">{{ user.position }}</div>
+            <div class="w-6/12 font-semibold">Position:</div>
+            <div class="w-6/12 text-main">{{ user.position }}</div>
+          </div>
+          <el-divider />
+        </template>
+        <!-- Advisors -->
+        <template v-if="user.advisors">
+          <div class="flex">
+            <div class="w-6/12 font-semibold">Advisors:</div>
+            <div class="w-6/12 text-main">
+              <el-tag v-for="(item, index) in getAdvisors" :key="index" type="info" class="mb-2">{{ item }}</el-tag>
+            </div>
           </div>
           <el-divider />
         </template>
@@ -70,7 +80,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, computed } from 'vue'
 import { useStore } from 'vuex'
 import { Edit } from '@element-plus/icons-vue'
 import { useFetchAdminPanelUserById } from '@/api/admin-panel/use-fetch-ap-user-by-id.js'
@@ -105,6 +115,12 @@ export default {
       closeDialog()
     }
 
+    const getAdvisors = computed(() => {
+      return user.value.advisors.map((item) => {
+        return item.first_name + ' ' + item.last_name
+      })
+    })
+
     return {
       dialogVisible,
       closeDialog,
@@ -114,6 +130,7 @@ export default {
       isError,
       user,
       refetch,
+      getAdvisors,
     }
   },
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-wrap items-center px-5 pt-4 border border-input-border rounded-lg">
     <div class="pr-4 mb-4 text-main text-sm font-semibold">Role:</div>
-    <SwdSpinner v-if="isLoading" />
+    <SwdSpinner v-if="isLoading" class="mb-4" />
     <template v-else>
       <el-button
         class="mb-4 mr-2"

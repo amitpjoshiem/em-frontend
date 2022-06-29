@@ -28,7 +28,7 @@
 <script>
 import { ref, reactive, watchEffect, computed } from 'vue'
 import { useAlert } from '@/utils/use-alert'
-import { rules } from '@/validationRules/modalAddCompany'
+import { rules } from '@/validationRules/modalAddAdminPanelCompany'
 import { useStore } from 'vuex'
 import { ElMessageBox } from 'element-plus'
 import { createAdminPanelCompanies } from '@/api/vueQuery/admin-panel/create-admin-panel-company'
