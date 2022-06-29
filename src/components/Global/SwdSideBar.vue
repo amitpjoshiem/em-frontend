@@ -128,11 +128,7 @@ export default {
     })
 
     const goHome = () => {
-      if (isAuth.value) {
-        router.push({ path: '/' })
-      } else {
-        router.push({ name: 'login' })
-      }
+      router.push({ name: 'home' })
     }
 
     const isShowSideBar = computed(() => {
