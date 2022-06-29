@@ -1,5 +1,5 @@
 <template>
-  <div class="flex user-table text-sm text-main hover:bg-gray-100">
+  <div class="flex user-table text-xss text-main hover:bg-gray-100">
     <div class="table-item w-11/24 p-2">{{ company.name }}</div>
     <div class="table-item w-11/24 p-2">{{ company.domain }}</div>
     <div class="table-item w-2/24 p-2 flex items-center justify-center">

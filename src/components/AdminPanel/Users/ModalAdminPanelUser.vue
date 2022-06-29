@@ -59,7 +59,13 @@
           />
         </el-form-item>
         <el-form-item v-if="isShowNpn" label="NPN" class="mb-4" prop="npn">
-          <el-input v-model="ruleForm.npn" autocomplete="off" :disabled="disabledForm" placeholder="Enter NPN" />
+          <el-input
+            v-model="ruleForm.npn"
+            type="number"
+            autocomplete="off"
+            :disabled="disabledForm"
+            placeholder="Enter NPN"
+          />
         </el-form-item>
         <el-form-item v-if="isShowPositionTitle" label="Position Title" class="mb-4" prop="position">
           <el-input
@@ -103,7 +109,7 @@
 <script>
 import { ref, reactive, watchEffect, computed } from 'vue'
 import { useStore } from 'vuex'
-import { rules } from '@/validationRules/modalAddCompany'
+import { rules } from '@/validationRules/modalAddAdminPanelUser'
 import { useAlert } from '@/utils/use-alert'
 import { maska } from 'maska'
 import { ElMessageBox } from 'element-plus'
@@ -162,19 +168,20 @@ export default {
     })
 
     const isShowNpn = computed(() => {
-      const idAdvisorRole = init.value.roles.find((item) => item.display_name === 'Advisor Role').id
+      const idAdvisorRole = init.value.roles.find((item) => item.name === 'advisor').id
       if (ruleForm.role === idAdvisorRole) return true
       return false
     })
 
     const isShowPositionTitle = computed(() => {
-      const idAdvisorRole = init.value.roles.find((item) => item.display_name === 'Advisor Role').id
-      if (ruleForm.role === idAdvisorRole) return true
+      const idCeoRole = init.value.roles.find((item) => item.name === 'ceo').id
+      const idAdminRole = init.value.roles.find((item) => item.name === 'admin').id
+      if (ruleForm.role !== idCeoRole && ruleForm.role !== idAdminRole) return true
       return false
     })
 
     const isShowSelectAdvisors = computed(() => {
-      const idAssistantRole = init.value.roles.find((item) => item.display_name === 'Assistant Role').id
+      const idAssistantRole = init.value.roles.find((item) => item.name === 'assistant').id
       if (ruleForm.role === idAssistantRole) return true
       return false
     })
@@ -268,15 +275,26 @@ export default {
       return 'Add user'
     })
 
-    const handleCompany = async () => {
-      await store.commit('adminPanelUsers/setCurrentCompanyId', ruleForm.company_id)
+    const setOptionsAdvisors = async () => {
       await refetchAdvisors.value()
       optionsAdvisors.value = advisors.value.map((item) => {
         return { label: item.last_name + ' ' + item.first_name, value: item.id }
       })
     }
 
-    const setInitValue = (user) => {
+    const handleCompany = async () => {
+      await store.commit('adminPanelUsers/setCurrentCompanyId', ruleForm.company_id)
+      await setOptionsAdvisors()
+    }
+
+    const setInitValue = async (user) => {
+      if (user.company.id) {
+        await store.commit('adminPanelUsers/setCurrentCompanyId', user.company.id)
+        await setOptionsAdvisors()
+      }
+      if (user.roles[0].name === 'assistant') {
+        ruleForm.advisors = user.advisors.map((item) => item.id)
+      }
       ruleForm.first_name = user.first_name
       ruleForm.last_name = user.last_name
       ruleForm.email = user.email

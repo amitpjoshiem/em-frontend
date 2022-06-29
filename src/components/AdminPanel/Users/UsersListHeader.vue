@@ -1,5 +1,5 @@
 <template>
-  <div class="flex text-sm text-main font-semibold bg-widget-bg">
+  <div class="flex text-xss text-main font-semibold bg-widget-bg">
     <div class="header-item w-5/24">Name</div>
     <div class="header-item w-6/24">E-mail</div>
     <div class="header-item w-3/24">Position</div>
