@@ -30,10 +30,7 @@
       <div v-if="loading && hasMore" class="flex items-center justify-center h-6">
         <SwdSpinner />
       </div>
-      <div
-        v-if="!loading && !isLoading && !activities.pages[0].data.length"
-        class="flex flex-col justify-center items-center"
-      >
+      <div v-if="!isLoading && !activities.pages[0].data.length" class="flex flex-col justify-center items-center">
         <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center">
           <InlineSvg :src="IconLastActivityEmpty" />
         </div>
