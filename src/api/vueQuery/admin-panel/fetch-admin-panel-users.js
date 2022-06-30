@@ -10,6 +10,7 @@ function fetchAdminPanelUsers({ queryKey }) {
 
   let search = ''
   let searchJoin = 'and'
+  let name_search = undefined
 
   if (roleFilter) {
     search += `roles.id:${roleFilter};`
@@ -20,7 +21,7 @@ function fetchAdminPanelUsers({ queryKey }) {
   }
 
   if (userFilter) {
-    search += `last_name:${userFilter};`
+    name_search = userFilter
   }
 
   const searchParams = {
@@ -28,6 +29,7 @@ function fetchAdminPanelUsers({ queryKey }) {
     searchJoin,
     limit,
     page,
+    name_search,
   }
 
   return fetcher({
