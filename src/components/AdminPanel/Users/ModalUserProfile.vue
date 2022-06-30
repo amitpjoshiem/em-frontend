@@ -1,6 +1,6 @@
 <template>
   <el-dialog v-model="dialogVisible" title="Profile" width="50%" :before-close="closeDialog" destroy-on-close>
-    <el-scrollbar height="500px">
+    <el-scrollbar height="500px" class="pr-[15px]">
       <div v-if="isLoading" class="flex items-center justify-center">
         <SwdSpinner large />
       </div>

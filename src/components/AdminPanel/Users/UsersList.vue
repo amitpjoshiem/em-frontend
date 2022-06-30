@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <div class="px-5">
     <UsersSearch />
     <UsersFilterByRole />
     <UsersFilterByCompany />
