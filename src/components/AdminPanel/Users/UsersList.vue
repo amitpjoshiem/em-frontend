@@ -1,6 +1,7 @@
 <template>
   <div class="px-5">
     <UsersSearch />
+    <UsersFilterByStatus />
     <UsersFilterByRole />
     <UsersFilterByCompany />
     <UsersListHeader />
@@ -25,6 +26,7 @@
 import UserListItem from '@/components/AdminPanel/Users/UserListItem'
 import UsersFilterByRole from '@/components/AdminPanel/Users/UsersFilterByRole'
 import UsersFilterByCompany from '@/components/AdminPanel/Users/UsersFilterByCompany'
+import UsersFilterByStatus from '@/components/AdminPanel/Users/UsersFilterByStatus'
 import UsersListHeader from '@/components/AdminPanel/Users/UsersListHeader'
 import UsersSearch from '@/components/AdminPanel/Users/UsersSearch'
 import { useFetchAdminPanelUsers } from '@/api/admin-panel/use-fetch-ap-users.js'
@@ -40,6 +42,7 @@ export default {
     UsersListHeader,
     UsersFilterByRole,
     UsersFilterByCompany,
+    UsersFilterByStatus,
     UsersSearch,
   },
   setup() {

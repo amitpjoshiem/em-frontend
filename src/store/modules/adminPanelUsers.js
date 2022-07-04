@@ -4,15 +4,18 @@ const state = () => ({
   filterRoleAdminPanel: null,
   filterCompanyAdminPanel: null,
   filterUserAdminPanel: null,
+  filterStatusAdminPanel: 'with',
   profileUserId: null,
   editUser: null,
   currentCompanyId: null,
   editCompany: null,
+  deleteUser: null,
   dialog: {
     showDialog: {
       modalAddNewUser: false,
       modalUserProfile: false,
       modalCompany: false,
+      modalDeleteUser: false,
     },
   },
 })
@@ -47,6 +50,14 @@ const mutations = {
 
   setCurrentCompanyId(state, value) {
     state.currentCompanyId = value
+  },
+
+  setDeleteUser(state, value) {
+    state.deleteUser = value
+  },
+
+  setFilterStatusAdminPanel(state, value) {
+    state.filterStatusAdminPanel = value
   },
 
   setShowModal(state, data) {

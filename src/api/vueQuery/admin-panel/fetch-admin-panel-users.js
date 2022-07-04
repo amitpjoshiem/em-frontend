@@ -7,8 +7,10 @@ function fetchAdminPanelUsers({ queryKey }) {
   const roleFilter = queryKey[1].reactiveRoleFilter ? queryKey[1].reactiveRoleFilter : ''
   const companyFilter = queryKey[1].reactiveCompanyFilter ? queryKey[1].reactiveCompanyFilter : ''
   const userFilter = queryKey[1].reactiveUserFilter ? queryKey[1].reactiveUserFilter : ''
+  const statusFilter = queryKey[1].reactiveUserStatusFilter ? queryKey[1].reactiveUserStatusFilter : ''
 
   let search = ''
+  let deleted = ''
   let searchJoin = 'and'
   let name_search = undefined
 
@@ -24,12 +26,17 @@ function fetchAdminPanelUsers({ queryKey }) {
     name_search = userFilter
   }
 
+  if (statusFilter) {
+    deleted = statusFilter
+  }
+
   const searchParams = {
     search,
     searchJoin,
     limit,
     page,
     name_search,
+    deleted,
   }
 
   return fetcher({

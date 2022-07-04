@@ -1,18 +1,12 @@
 <template>
-  <div class="common-layout">
-    <el-container>
-      <Aside />
-      <el-container>
-        <!-- <el-header>Header</el-header> -->
-        <el-header>
-          <Header />
-        </el-header>
-
-        <div class="h-full">
-          <router-view />
-        </div>
-      </el-container>
-    </el-container>
+  <div class="flex">
+    <Aside class="fixed" />
+    <div class="flex flex-col w-full ml-[150px]">
+      <Header />
+      <div class="h-full mt-[60px]">
+        <router-view />
+      </div>
+    </div>
   </div>
 </template>
 
