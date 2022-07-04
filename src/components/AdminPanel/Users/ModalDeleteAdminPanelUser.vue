@@ -67,7 +67,7 @@ export default {
       dialogFormVisible.value = store.state.adminPanelUsers.dialog.showDialog.modalDeleteUser
       deleteUser.value = store.state.adminPanelUsers.deleteUser
 
-      if (deleteUser.value) {
+      if (deleteUser.value && dialogFormVisible.value) {
         await store.commit('adminPanelUsers/setCurrentCompanyId', deleteUser.value.company.id)
         await refetchAdvisors.value()
         advisors.value.forEach((element) => {
