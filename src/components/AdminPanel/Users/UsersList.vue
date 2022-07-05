@@ -1,6 +1,7 @@
 <template>
   <div class="px-5">
     <UsersSearch />
+    <UsersFilterByStatus />
     <UsersFilterByRole />
     <UsersFilterByCompany />
     <UsersListHeader />
@@ -25,13 +26,15 @@
 import UserListItem from '@/components/AdminPanel/Users/UserListItem'
 import UsersFilterByRole from '@/components/AdminPanel/Users/UsersFilterByRole'
 import UsersFilterByCompany from '@/components/AdminPanel/Users/UsersFilterByCompany'
+import UsersFilterByStatus from '@/components/AdminPanel/Users/UsersFilterByStatus'
 import UsersListHeader from '@/components/AdminPanel/Users/UsersListHeader'
 import UsersSearch from '@/components/AdminPanel/Users/UsersSearch'
 import { useFetchAdminPanelUsers } from '@/api/admin-panel/use-fetch-ap-users.js'
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
 import { usePaginationData } from '@/utils/use-pagination-data.js'
-import { onUnmounted } from 'vue'
+import { onUnmounted, watchEffect } from 'vue'
 import { useStore } from 'vuex'
+import { useQueryClient } from 'vue-query'
 
 export default {
   name: 'UsersList',
@@ -40,10 +43,12 @@ export default {
     UsersListHeader,
     UsersFilterByRole,
     UsersFilterByCompany,
+    UsersFilterByStatus,
     UsersSearch,
   },
   setup() {
     const store = useStore()
+    const queryClient = useQueryClient()
 
     const { paginationData, handlePaginationChange } = usePaginationData()
     const { isLoading, isError, data: users, pagination } = useFetchAdminPanelUsers(paginationData)
@@ -51,6 +56,12 @@ export default {
     onUnmounted(() => {
       store.commit('adminPanelUsers/setFilterCompanyAdminPanel', null)
       store.commit('adminPanelUsers/setFilterRoleAdminPanel', null)
+    })
+
+    watchEffect(() => {
+      if (store.state.globalComponents.needUpdateContent?.value === 'admin_panel_users') {
+        queryClient.invalidateQueries(['admin-panel-users'])
+      }
     })
 
     return {

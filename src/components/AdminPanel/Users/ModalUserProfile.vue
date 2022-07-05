@@ -6,6 +6,8 @@
       </div>
       <SwdErrorBlock v-else-if="isError" />
       <div v-else-if="user">
+        <div class="text-red-500">User is delete</div>
+        <el-divider />
         <!-- Role -->
         <div class="flex">
           <div class="w-6/12 font-semibold">Role:</div>

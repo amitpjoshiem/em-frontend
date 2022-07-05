@@ -9,6 +9,7 @@
   <ModalUserProfile />
   <ModalAdminPanelUser />
   <ModalAdminPanelCompany />
+  <ModalDeleteAdminPanelUser />
 </template>
 
 <script>
@@ -23,6 +24,7 @@ import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
 import SwdModalTerms from '@/components/Global/SwdModalTerms.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
 import ModalUserProfile from '@/components/AdminPanel/Users/ModalUserProfile'
+import ModalDeleteAdminPanelUser from '@/components/AdminPanel/Users/ModalDeleteAdminPanelUser'
 import ModalAdminPanelUser from '@/components/AdminPanel/Users/ModalAdminPanelUser'
 import ModalAdminPanelCompany from '@/components/AdminPanel/Companies/ModalAdminPanelCompany'
 
@@ -36,6 +38,7 @@ export default {
     ModalUserProfile,
     ModalAdminPanelUser,
     ModalAdminPanelCompany,
+    ModalDeleteAdminPanelUser,
   },
   setup() {
     useQueryProvider({
