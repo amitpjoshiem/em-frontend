@@ -7,6 +7,7 @@ import globalComponents from './modules/globalComponents'
 import notifications from './modules/notifications'
 import activity from './modules/activity'
 import logs from './modules/logs'
+import adminPanelUsers from './modules/adminPanelUsers'
 
 import createPersistedState from 'vuex-persistedstate'
 
@@ -73,6 +74,7 @@ export default createStore({
     notifications,
     activity,
     logs,
+    adminPanelUsers,
   },
   plugins: [
     dataStateAuth,

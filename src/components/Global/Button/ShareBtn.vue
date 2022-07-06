@@ -23,10 +23,9 @@
 
 <script>
 import IconShare from '@/assets/svg/icon-share.svg'
-import { useRouter } from 'vue-router'
 import { useDownloadBlueReport } from '@/api/use-download-blue-report'
 import { useDownloadClientReport } from '@/api/use-download-client-report'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useMutation } from 'vue-query'
 import { generatePdfClientReports } from '@/api/vueQuery/generate-pdf-client-reports'
 import { generatePdfBlueReports } from '@/api/vueQuery/generate-pdf-blue-reports'

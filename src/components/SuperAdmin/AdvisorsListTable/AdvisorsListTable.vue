@@ -24,7 +24,6 @@
 
     <el-table-column prop="city" label="Position" min-width="170" class="text-xss">
       <template #default="scope">
-        <!-- <span class="text-xss">{{ scope.row.position }}</span> -->
         <SwdStubForText :text="scope.row.position" plug="&mdash;" class="text-main" />
       </template>
     </el-table-column>
