@@ -8,7 +8,7 @@
       <div v-else-if="user">
         <div v-if="user.status === 'deleted'">
           <el-tag type="danger">User is delete</el-tag>
-          <div v-if="user.transferTo">
+          <div v-if="user.transferTo.length">
             <span>Data transfered to: </span>
             <el-tag type="success"> {{ user.transferTo.last_name }} {{ user.transferTo.first_name }} </el-tag>
           </div>
