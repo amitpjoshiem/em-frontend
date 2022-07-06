@@ -6,8 +6,14 @@
       </div>
       <SwdErrorBlock v-else-if="isError" />
       <div v-else-if="user">
-        <div class="text-red-500">User is delete</div>
-        <el-divider />
+        <div v-if="user.status === 'deleted'">
+          <el-tag type="danger">User is delete</el-tag>
+          <div>
+            <span>Data transfered to: </span>
+            <el-tag type="success"> {{ user.transferTo.last_name }} {{ user.transferTo.first_name }} </el-tag>
+          </div>
+          <el-divider />
+        </div>
         <!-- Role -->
         <div class="flex">
           <div class="w-6/12 font-semibold">Role:</div>
