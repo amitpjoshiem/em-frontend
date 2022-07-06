@@ -3,7 +3,7 @@
     <Aside class="fixed" />
     <div class="flex flex-col w-full ml-[150px]">
       <Header />
-      <div class="h-full">
+      <div>
         <router-view />
       </div>
     </div>
@@ -20,6 +20,5 @@ export default {
     Aside,
     Header,
   },
-  setup() {},
 }
 </script>
