@@ -3,7 +3,7 @@
     <Aside class="fixed" />
     <div class="flex flex-col w-full ml-[150px]">
       <Header />
-      <div class="h-full mt-[60px]">
+      <div class="h-full">
         <router-view />
       </div>
     </div>
