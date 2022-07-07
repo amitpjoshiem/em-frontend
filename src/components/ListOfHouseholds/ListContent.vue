@@ -27,7 +27,7 @@
         <TabDeactivatedLeads
           v-if="visibleTab.includes('deactivated-leads')"
           :is-loading="isLoading"
-          :count="count ? count.data.leads.inactive : null"
+          :count="count ? count.data.leads.inactive : 0"
         />
       </div>
       <div class="flex">
