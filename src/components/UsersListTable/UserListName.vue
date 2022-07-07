@@ -44,7 +44,11 @@ export default {
       if (getCurrentTypeUser.value === 'ceo') {
         store.commit('globalComponents/setAdvisorId', props.user.owner_id)
         router.push({ name: 'member-details', params: { id: props.user.id } })
+        return
+      }
 
+      if (props.user.type === 'client') {
+        router.push({ name: 'member-details', params: { id: props.user.id } })
         return
       }
 
