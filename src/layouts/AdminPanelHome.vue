@@ -8,17 +8,30 @@
       </div>
     </div>
   </div>
+  <ModalUserProfile />
+  <ModalAdminPanelUser />
+  <ModalAdminPanelCompany />
+  <ModalDeleteAdminPanelUser />
 </template>
 
 <script>
 import Aside from '@/components/AdminPanel/Aside/Aside.vue'
 import Header from '@/components/AdminPanel/Header.vue'
 
+import ModalUserProfile from '@/components/AdminPanel/Users/ModalUserProfile'
+import ModalDeleteAdminPanelUser from '@/components/AdminPanel/Users/ModalDeleteAdminPanelUser'
+import ModalAdminPanelUser from '@/components/AdminPanel/Users/ModalAdminPanelUser'
+import ModalAdminPanelCompany from '@/components/AdminPanel/Companies/ModalAdminPanelCompany'
+
 export default {
   name: 'AdminPanelHome',
   components: {
     Aside,
     Header,
+    ModalUserProfile,
+    ModalAdminPanelUser,
+    ModalAdminPanelCompany,
+    ModalDeleteAdminPanelUser,
   },
 }
 </script>
