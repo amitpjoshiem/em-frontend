@@ -14,6 +14,17 @@
           </div>
           <el-divider />
         </div>
+        <!-- Advisor -->
+        <template v-if="user.advisor.id">
+          <div class="flex">
+            <div class="w-6/12 font-semibold">Advisor:</div>
+            <el-tag v-if="user.advisor.last_name && user.advisor.first_name" type="success">
+              {{ user.advisor.last_name }} {{ user.advisor.first_name }}
+            </el-tag>
+            <el-tag v-else type="success">&mdash;</el-tag>
+          </div>
+          <el-divider />
+        </template>
         <!-- Role -->
         <div class="flex">
           <div class="w-6/12 font-semibold">Role:</div>
