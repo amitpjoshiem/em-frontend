@@ -1,7 +1,14 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="getTitle" width="50%" :before-close="closeDialog" destroy-on-close>
-    <el-scrollbar height="350px">
-      <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules" class="pr-4">
+  <el-dialog
+    v-model="dialogFormVisible"
+    :title="getTitle"
+    width="50%"
+    :before-close="closeDialog"
+    destroy-on-close
+    custom-class="dialog-admin-panel-user"
+  >
+    <div class="h-[430px]">
+      <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules" class="px-4 pt-4">
         <div class="flex justify-between mb-4">
           <el-form-item label="Role" class="w-6/12 pr-2" prop="role">
             <el-select v-model="ruleForm.role" placeholder="Select role" class="w-full" :loading="isLoadingInit">
@@ -22,41 +29,45 @@
           </el-form-item>
         </div>
 
-        <el-form-item label="First name" class="mb-4" prop="first_name">
-          <el-input
-            v-model="ruleForm.first_name"
-            autocomplete="off"
-            :disabled="disabledForm"
-            placeholder="Enter first name"
-          />
-        </el-form-item>
-        <el-form-item label="Last name" class="mb-4" prop="last_name">
-          <el-input
-            v-model="ruleForm.last_name"
-            autocomplete="off"
-            :disabled="disabledForm"
-            placeholder="Enter last name"
-          />
-        </el-form-item>
+        <div class="flex">
+          <el-form-item label="First name" class="mb-4 w-6/12 pr-2.5" prop="first_name">
+            <el-input
+              v-model="ruleForm.first_name"
+              autocomplete="off"
+              :disabled="disabledForm"
+              placeholder="Enter first name"
+            />
+          </el-form-item>
+          <el-form-item label="Last name" class="mb-4 w-6/12 pl-2.5" prop="last_name">
+            <el-input
+              v-model="ruleForm.last_name"
+              autocomplete="off"
+              :disabled="disabledForm"
+              placeholder="Enter last name"
+            />
+          </el-form-item>
+        </div>
+        <div class="flex">
+          <el-form-item label="Username" class="mb-4 w-6/12 pr-2.5" prop="username">
+            <el-input
+              v-model="ruleForm.username"
+              autocomplete="off"
+              :disabled="disabledForm"
+              placeholder="Enter Username"
+            />
+          </el-form-item>
+          <el-form-item label="Phone" class="mb-4 w-6/12 pl-2.5" prop="phone">
+            <el-input
+              v-model="ruleForm.phone"
+              v-maska="'(###) ###-####'"
+              placeholder="Enter phone number"
+              :disabled="disabledForm"
+              autocomplete="off"
+            />
+          </el-form-item>
+        </div>
         <el-form-item label="Email" class="mb-4" prop="email">
           <el-input v-model="ruleForm.email" autocomplete="off" :disabled="disabledForm" placeholder="Enter email" />
-        </el-form-item>
-        <el-form-item label="Username" class="mb-4" prop="username">
-          <el-input
-            v-model="ruleForm.username"
-            autocomplete="off"
-            :disabled="disabledForm"
-            placeholder="Enter Username"
-          />
-        </el-form-item>
-        <el-form-item label="Phone" class="mb-4" prop="phone">
-          <el-input
-            v-model="ruleForm.phone"
-            v-maska="'(###) ###-####'"
-            placeholder="Enter phone number"
-            :disabled="disabledForm"
-            autocomplete="off"
-          />
         </el-form-item>
         <el-form-item v-if="isShowNpn" label="NPN" class="mb-4" prop="npn">
           <el-input
@@ -87,7 +98,7 @@
           />
         </el-form-item>
       </el-form>
-    </el-scrollbar>
+    </div>
 
     <template #footer>
       <span class="dialog-footer">
@@ -335,3 +346,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.dialog-admin-panel-user > .el-dialog__body {
+  padding: 0;
+}
+</style>
