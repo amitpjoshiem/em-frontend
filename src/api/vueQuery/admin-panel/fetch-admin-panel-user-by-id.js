@@ -3,7 +3,7 @@ import { fetcher } from '@/api/fetcher/fetcher'
 function fetchAdminPanelUserById({ queryKey }) {
   const id = queryKey[1].reactiveId
 
-  const include = '?include=transferFrom,transferTo'
+  const include = '?include=transferFrom,transferTo,advisor'
 
   const searchParams = {
     include,

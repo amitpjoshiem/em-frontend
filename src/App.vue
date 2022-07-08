@@ -6,10 +6,6 @@
   <SwdShareDialog />
   <SwdModalExportSucces />
   <SwdModalTerms />
-  <ModalUserProfile />
-  <ModalAdminPanelUser />
-  <ModalAdminPanelCompany />
-  <ModalDeleteAdminPanelUser />
 </template>
 
 <script>
@@ -23,10 +19,6 @@ import ModalReloadPage from '@/components/ModalReloadPage/ModalRealoadPage.vue'
 import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
 import SwdModalTerms from '@/components/Global/SwdModalTerms.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
-import ModalUserProfile from '@/components/AdminPanel/Users/ModalUserProfile'
-import ModalDeleteAdminPanelUser from '@/components/AdminPanel/Users/ModalDeleteAdminPanelUser'
-import ModalAdminPanelUser from '@/components/AdminPanel/Users/ModalAdminPanelUser'
-import ModalAdminPanelCompany from '@/components/AdminPanel/Companies/ModalAdminPanelCompany'
 
 export default {
   components: {
@@ -35,10 +27,6 @@ export default {
     SwdShareDialog,
     SwdModalExportSucces,
     SwdModalTerms,
-    ModalUserProfile,
-    ModalAdminPanelUser,
-    ModalAdminPanelCompany,
-    ModalDeleteAdminPanelUser,
   },
   setup() {
     useQueryProvider({

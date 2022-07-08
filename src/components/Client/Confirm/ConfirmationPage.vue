@@ -70,8 +70,8 @@
         v-if="$can('advisor', 'all')"
         type="primary"
         plain
-        :disabled="isLoading"
-        :loading="isLoading"
+        :disabled="isLoadingConvert"
+        :loading="isLoadingConvert"
         @click="convert"
       >
         Convert to opportunity
@@ -79,7 +79,9 @@
     </div>
     <div class="flex justify-end mt-6 mb-4">
       <el-button v-if="$can('client', 'all')" type="info" plain @click="cancel"> Cancel </el-button>
-      <el-button v-if="$can('client', 'all')" type="primary" plain @click="submit"> Submit </el-button>
+      <el-button v-if="$can('client', 'all')" type="primary" plain :disabled="disabledSubmitBtn" @click="submit">
+        Submit
+      </el-button>
     </div>
   </div>
 </template>
@@ -89,16 +91,16 @@ import ConfirmationInformation from './Basic/ConfirmationBasic.vue'
 import ConfirmationExpense from './Expense/ConfirmationExpense.vue'
 import ConfirmationAssets from './Assets/ConfirmationAssets.vue'
 import ListDocumentsClient from './ListDocuments/ListDocumentsClient'
-
 import { convertLeadToOpportunity } from '@/api/vueQuery/fetch-convert-lead-to-opportunity'
+import { sendAllInformation } from '@/api/vueQuery/clients/fetch-send-all-information'
 import { useMutation } from 'vue-query'
 import { useRoute, useRouter } from 'vue-router'
 import { useAlert } from '@/utils/use-alert'
-import { onMounted } from 'vue'
-
+import { onMounted, computed } from 'vue'
 import { scrollTop } from '@/utils/scrollTop'
-
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
+import { ElMessageBox } from 'element-plus'
+import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 
 export default {
   name: 'ConfirmationPage',
@@ -114,7 +116,10 @@ export default {
 
     const id = route.params.id
 
-    const { mutateAsync: convertLead, isLoading } = useMutation(convertLeadToOpportunity)
+    const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
+
+    const { mutateAsync: convertLead, isLoadingConvert } = useMutation(convertLeadToOpportunity)
+    const { mutateAsync: sendAll } = useMutation(sendAllInformation)
 
     onMounted(() => {
       scrollTop()
@@ -137,20 +142,41 @@ export default {
     }
 
     const submit = () => {
-      useAlert({
-        title: 'Success',
-        type: 'success',
-        message: 'Thank you for submitting the details! The advisor will contact you nearest time.',
+      ElMessageBox.alert('Thank you for submitting the details! The advisor will contact you nearest time.', 'Info', {
+        showConfirmButton: false,
+        showClose: false,
       })
-      router.push({ name: 'client-dashboard' })
+
+      setTimeout(async function () {
+        const res = await sendAll(id)
+        if (!('error' in res)) {
+          router.push({ name: 'logout' })
+        }
+      }, 5000)
     }
 
+    const disabledSubmitBtn = computed(() => {
+      if (
+        clientsInfo.value &&
+        clientsInfo.value.steps.completed_financial_fact_finder &&
+        clientsInfo.value.steps.investment_and_retirement_accounts &&
+        clientsInfo.value.steps.life_insurance_annuity_and_long_terms_care_policies &&
+        clientsInfo.value.steps.social_security_information
+      ) {
+        return false
+      }
+      return true
+    })
+
     return {
-      isLoading,
+      isLoadingConvert,
       convert,
       IconDoneStep,
       submit,
       cancel,
+      isLoadingInfo,
+      clientsInfo,
+      disabledSubmitBtn,
     }
   },
 }

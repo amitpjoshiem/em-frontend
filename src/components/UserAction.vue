@@ -75,7 +75,7 @@ export default {
 
     const actionsOptionsAdminPanel = [
       {
-        title: 'SWD paltform',
+        title: 'SWD platform',
         command: 'sdw-platform',
       },
       {
