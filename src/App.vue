@@ -33,7 +33,6 @@ export default {
       defaultOptions: {
         queries: {
           refetchOnWindowFocus: false,
-          retry: false,
         },
       },
     })
