@@ -1,6 +1,7 @@
 <template>
   <el-upload
     ref="innerRef"
+    :file-list="fileList"
     :action="getUrlMedia"
     :show-file-list="showFileList"
     :on-success="($event) => $emit('upload-success', $event)"
@@ -16,10 +17,10 @@
   >
     <slot name="main" />
     <template v-if="showFileBlock" #file="{ file }">
-      <div v-if="file.status !== 'uploading' && file.status !== 'ready'">
-        <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
-        <div class="sm:flex sm:justify-between sm:items-center sm:mt-[10px] sm:ml-3">
-          <div class="flex flex-col">
+      <div v-if="file.status !== 'uploading' && file.status !== 'ready'" class="sm:flex items-center justify-between">
+        <div class="flex items-center">
+          <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+          <div class="flex flex-col ml-3">
             <div>
               <span class="text-gray03">File name: </span>
               <span class="font-semibold text-main">{{ file.name }}</span>
@@ -29,30 +30,31 @@
               <span class="font-semibold text-main">{{ file.created_at ? file.created_at : 'a few minutes ago' }}</span>
             </div>
           </div>
-          <div>
-            <el-button
-              v-if="file.extension === 'PDF'"
-              type="primary"
-              size="small"
-              plain
-              class="mr-5"
-              @click="handlePictureCardPreview(file)"
-            >
-              Prewiev
-            </el-button>
-            <el-popconfirm
-              confirm-button-text="Yes"
-              cancel-button-text="No"
-              icon="el-icon-info"
-              icon-color="red"
-              title="Are you sure to delete this?"
-              @confirm="handleRemove(file.id)"
-            >
-              <template #reference>
-                <el-button type="danger" size="small" plain :loading="idFileRemove === file.id">Remove</el-button>
-              </template>
-            </el-popconfirm>
-          </div>
+        </div>
+
+        <div class="flex justify-end pt-4 sm:pt-0 sm:block">
+          <el-button
+            v-if="file.extension === 'pdf'"
+            type="primary"
+            size="small"
+            plain
+            class="mr-5"
+            @click="handlePictureCardPreview(file)"
+          >
+            Prewiev
+          </el-button>
+          <el-popconfirm
+            confirm-button-text="Yes"
+            cancel-button-text="No"
+            icon="el-icon-info"
+            icon-color="red"
+            title="Are you sure to delete this?"
+            @confirm="handleRemove(file.id)"
+          >
+            <template #reference>
+              <el-button type="danger" size="small" plain :loading="idFileRemove === file.id">Remove</el-button>
+            </template>
+          </el-popconfirm>
         </div>
       </div>
     </template>
@@ -98,6 +100,11 @@ export default {
       required: false,
       default: false,
     },
+    docList: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
   },
   emits: [
     'upload-success',
@@ -112,6 +119,9 @@ export default {
     const store = useStore()
     const innerRef = ref(null)
     const idFileRemove = ref(null)
+
+    const fileList = ref([])
+
     const uploadRefFn = () => props.uploadRef
     const headers = computed(() => {
       const customHeader = {}
@@ -148,6 +158,7 @@ export default {
     })
 
     onMounted(() => {
+      fileList.value = props.docList
       nextTick(() => {
         emit('upload-mounted', innerRef)
       })
@@ -170,6 +181,7 @@ export default {
       handlePictureCardPreview,
       handleRemove,
       idFileRemove,
+      fileList,
     }
   },
 }
