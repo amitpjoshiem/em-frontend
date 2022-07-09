@@ -1,10 +1,11 @@
 <template>
-  <div class="border border-t-0 border-color-grey rounded-b px-10 pb-10">
-    <div class="flex mb-7">
-      <div class="w-6/24">
+  <div class="border border-border-blue rounded-md p-5 mb-4">
+    <div class="flex items-center mb-5">
+      <InlineSvg :src="IconDoneStep" />
+      <div>
         <router-link
           :to="{ name: 'prospect-employment', params: { id: prospect.id } }"
-          class="text-base text-main font-semibold"
+          class="text-xl text-main font-semibold ml-2"
         >
           Employment History
         </router-link>
@@ -50,6 +51,8 @@
 import { MemberDetailsUser } from '@/dto/Member/MemberDetailsUser'
 import { SpouseLastEmployment } from '@/dto/Member/SpouseLastEmployment'
 import { MemberLastEmployment } from '@/dto/Member/MemberLastEmployment'
+import IconDoneStep from '@/assets/svg/icon-done-step.svg'
+
 export default {
   name: 'MemberBasicInformationEmployment',
   props: {
@@ -68,6 +71,11 @@ export default {
       require: true,
       default: () => {},
     },
+  },
+  setup() {
+    return {
+      IconDoneStep,
+    }
   },
 }
 </script>

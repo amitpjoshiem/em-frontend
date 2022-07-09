@@ -1,39 +1,19 @@
 <template>
-  <SwdSubHeader class="p-5" title="Basic information" />
-  <el-skeleton v-if="isLoading" :rows="11" animated class="p-5" />
-  <SwdErrorBlock v-else-if="isError" />
-  <div v-else class="p-5">
-    <div>
-      <div class="flex items-center">
-        <SwdAvatar size="large" :link="prospect.avatar.url" />
-        <SwdCropper :show-cropper="state.isShowCropper" :file="state.file.raw" @change="change" />
-        <SwdUpload
-          :upload-data="{ collection: 'avatar' }"
-          :upload-before-hook="beforeAvatarUpload"
-          @upload-change="handleChange"
-          @upload-success="handleAvatarSuccess"
-          @upload-mounted="bindRef"
-        >
-          <template #main>
-            <div class="relative bottom-[-14px] left-[-16px] cursor-pointer">
-              <InlineSvg :src="IconEditAvatar" />
-            </div>
-          </template>
-        </SwdUpload>
-        <span class="text-main text-xl font-semibold ml-7">
-          {{ prospect.name }}
-        </span>
-      </div>
+  <div class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto lg:w-[960px]">
+    <SwdSubHeader class="p-5" title="Basic information" />
+    <el-skeleton v-if="isLoading" :rows="11" animated class="p-5" />
+    <SwdErrorBlock v-else-if="isError" />
+    <div v-else class="p-5">
+      <MemberBasicInformationAvatar :prospect="prospect" />
+      <MemberBasicInformationGeneral :prospect="prospect" :spouse="spouse.value" />
+      <MemberBasicInformationEmployment
+        :prospect="prospect"
+        :employment-prospect="employmentProspect.value"
+        :employment-spouse="employmentSpouse.value"
+      />
+      <MemberHousingInformation :house="house.value" />
+      <MemberBasicInformationOther :other="other.value" />
     </div>
-
-    <MemberBasicInformationGeneral :prospect="prospect" :spouse="spouse.value" />
-    <MemberBasicInformationEmployment
-      :prospect="prospect"
-      :employment-prospect="employmentProspect.value"
-      :employment-spouse="employmentSpouse.value"
-    />
-    <MemberHousingInformation :house="house.value" />
-    <MemberBasicInformationOther :other="other.value" />
   </div>
 </template>
 <script>
@@ -41,15 +21,10 @@ import MemberBasicInformationGeneral from '@/components/MemberBasicInformation/M
 import MemberHousingInformation from '@/components/MemberBasicInformation/MemberHousingInformation.vue'
 import MemberBasicInformationEmployment from '@/components/MemberBasicInformation/MemberBasicInformationEmployment.vue'
 import MemberBasicInformationOther from '@/components/MemberBasicInformation/MemberBasicInformationOther.vue'
-import SwdCropper from '@/components/Global/SwdCropper.vue'
-import SwdUpload from '@/components/Global/SwdUpload.vue'
-import IconEditAvatar from '@/assets/svg/icon-edit-avatar.svg'
+import MemberBasicInformationAvatar from '@/components/MemberBasicInformation/MemberBasicInformationAvatar.vue'
+
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useRoute } from 'vue-router'
-import { computed, reactive, ref } from 'vue'
-import { tokenStorage } from '@/api/api-client/TokenStorage'
-import { useMutation, useQueryClient } from 'vue-query'
-import { updateMembers } from '@/api/vueQuery/update-members'
 
 export default {
   name: 'MemberBasicInformation',
@@ -58,22 +33,12 @@ export default {
     MemberHousingInformation,
     MemberBasicInformationEmployment,
     MemberBasicInformationOther,
-    SwdCropper,
-    SwdUpload,
+    MemberBasicInformationAvatar,
   },
   setup() {
     const route = useRoute()
-    const id = route.params.id
-    const upload = ref(null)
-    const queryClient = useQueryClient()
 
-    const state = reactive({
-      isShowCropper: false,
-      file: '',
-      imgSrc: '',
-      croppedFile: '',
-      uploadRef: null,
-    })
+    const id = route.params.id
 
     const {
       isLoading,
@@ -86,37 +51,6 @@ export default {
       employmentProspect,
       employmentSpouse,
     } = useProspectDetails(id)
-    const { mutateAsync: updateMember } = useMutation(updateMembers)
-
-    const handleAvatarSuccess = async (res) => {
-      const form = { uuids: [res.data.uuid] }
-      await updateMember({ form, id })
-      state.isShowCropper = false
-      queryClient.invalidateQueries(['member'])
-    }
-
-    const beforeAvatarUpload = () => {
-      return Promise.resolve(state.croppedFile)
-    }
-
-    const headers = computed(() => {
-      const token = tokenStorage.getByKey('access_token')
-      return { Authorization: `Bearer ${token}` }
-    })
-
-    const handleChange = (file) => {
-      state.file = file
-      state.isShowCropper = true
-    }
-
-    const change = (file) => {
-      state.croppedFile = file
-      upload.value.submit()
-    }
-
-    const bindRef = (ref) => {
-      upload.value = ref.value
-    }
 
     return {
       isLoading,
@@ -128,14 +62,6 @@ export default {
       prospect,
       employmentProspect,
       employmentSpouse,
-      state,
-      handleAvatarSuccess,
-      beforeAvatarUpload,
-      headers,
-      handleChange,
-      change,
-      bindRef,
-      IconEditAvatar,
     }
   },
 }

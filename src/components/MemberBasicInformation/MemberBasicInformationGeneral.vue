@@ -1,10 +1,11 @@
 <template>
-  <div class="border border-b-0 border-color-grey rounded-t p-10 mt-12">
-    <!-- GENERAL -->
+  <div class="border border-border-blue rounded-md p-5 mb-4">
+    <div class="flex items-center mb-5">
+      <InlineSvg :src="IconDoneStep" />
+      <div class="text-main text-xl font-semibold ml-2">General</div>
+    </div>
     <div class="flex mb-7">
-      <div class="w-6/24">
-        <span class="text-base text-main font-semibold">General</span>
-      </div>
+      <div class="w-6/24"></div>
       <div class="w-9/24">
         <span class="text-xs text-gray03 font-semibold mr-1">OWNER</span>
         <SwdRetiredLabel :retired="prospect.retired" />
@@ -101,6 +102,7 @@
 <script>
 import { MemberDetailsSpouse } from '@/dto/Member/MemberDetailsSpouse'
 import { MemberDetailsUser } from '@/dto/Member/MemberDetailsUser'
+import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
   name: 'MemberBasicInformationGeneral',
@@ -115,6 +117,11 @@ export default {
       require: true,
       default: () => {},
     },
+  },
+  setup() {
+    return {
+      IconDoneStep,
+    }
   },
 }
 </script>
