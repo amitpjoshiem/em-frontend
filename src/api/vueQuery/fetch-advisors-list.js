@@ -22,7 +22,7 @@ function fetchAdvisorsList({ queryKey }) {
   }
 
   return fetcher({
-    url: `/users`,
+    url: `/users?include=avatar`,
     options: { method: 'GET', searchParams },
   })
 }
