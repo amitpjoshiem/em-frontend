@@ -7,7 +7,7 @@ function fetchUserProfile({ queryKey }) {
   if (filter) searchParams.filter = filter
 
   return fetcher({
-    url: `/users/profile`,
+    url: `/users/profile?include=avatar`,
     options: { method: 'GET', searchParams },
   })
 }

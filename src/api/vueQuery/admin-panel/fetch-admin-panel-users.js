@@ -40,7 +40,7 @@ function fetchAdminPanelUsers({ queryKey }) {
   }
 
   return fetcher({
-    url: `/admin/users`,
+    url: `/admin/users?include=avatar,roles,company`,
     options: { method: 'GET', searchParams },
   })
 }
