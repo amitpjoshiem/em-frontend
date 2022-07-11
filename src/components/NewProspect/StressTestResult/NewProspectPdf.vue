@@ -2,7 +2,7 @@
   <div v-if="!isFetching">
     <SwdUpload
       :upload-data="{ collection: 'stress_test' }"
-      :file-list="stressTestDocument.data"
+      :doc-list="stressTestDocument.data"
       :show-file-list="true"
       :auto-upload="true"
       :show-file-block="true"

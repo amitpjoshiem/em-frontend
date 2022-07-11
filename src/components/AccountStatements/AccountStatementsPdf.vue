@@ -2,7 +2,7 @@
   <div v-if="!isFetching">
     <SwdUpload
       :upload-data="{ collection: 'assets_consolidation_docs' }"
-      :file-list="assetsConsolidationDocs.data"
+      :doc-list="assetsConsolidationDocs.data"
       :show-file-list="true"
       :auto-upload="true"
       :show-file-block="true"
