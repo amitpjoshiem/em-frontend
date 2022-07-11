@@ -1,11 +1,17 @@
 <template>
-  <SwdDropDown :options="actionsOptions" @select="handleSelect">
+  <el-popconfirm title="Are you sure to delete this?" @confirm="confirmDelete">
+    <template #reference>
+      <el-icon :size="15" color="red" class="cursor-pointer"><Delete /></el-icon>
+    </template>
+  </el-popconfirm>
+
+  <!-- <SwdDropDown :options="actionsOptions" @select="handleSelect">
     <template #titleDropDown>
       <span class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3 border border-color-grey">
         <InlineSvg :src="IconActionGray" />
       </span>
     </template>
-  </SwdDropDown>
+  </SwdDropDown> -->
   <el-dialog v-model="dialogVisible" title="Info" width="40%">
     <p class="mb-5">Are you sure to delete</p>
     <p class="font-semibold">"{{ getNameUserModal }}"</p>
@@ -19,15 +25,19 @@
 </template>
 
 <script>
-import IconActionGray from '@/assets/svg/icon-action-gray.svg'
+// import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import { deleteChildOpportunity } from '@/api/vueQuery/delete-child-opportunity'
 import { useMutation } from 'vue-query'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useQueryClient } from 'vue-query'
 import { useRoute } from 'vue-router'
+import { Delete } from '@element-plus/icons-vue'
 
 export default {
   name: 'SwdOpportunityItemActions',
+  components: {
+    Delete,
+  },
   props: {
     user: {
       type: Object,
@@ -39,33 +49,34 @@ export default {
   setup(props) {
     const queryClient = useQueryClient()
     const route = useRoute()
-    const { mutateAsync: deleteChild } = useMutation(deleteChildOpportunity)
     const dialogVisible = ref(false)
     const memberId = route.params.id
 
-    const actionsOptions = [
-      {
-        title: 'Delete',
-        command: 'delete',
-      },
-    ]
+    const { mutateAsync: deleteChild } = useMutation(deleteChildOpportunity)
 
-    const actionsMap = {
-      delete: () => deleteItem(),
-    }
+    // const actionsOptions = [
+    //   {
+    //     title: 'Delete',
+    //     command: 'delete',
+    //   },
+    // ]
 
-    const handleSelect = (command) => {
-      const actionHandler = actionsMap[command]
-      actionHandler()
-    }
+    // const actionsMap = {
+    //   delete: () => deleteItem(),
+    // }
 
-    const getNameUserModal = computed(() => {
-      return props.user.name
-    })
+    // const handleSelect = (command) => {
+    //   const actionHandler = actionsMap[command]
+    //   actionHandler()
+    // }
 
-    const deleteItem = () => {
-      dialogVisible.value = true
-    }
+    // const getNameUserModal = computed(() => {
+    //   return props.user.name
+    // })
+
+    // const deleteItem = () => {
+    //   dialogVisible.value = true
+    // }
 
     const confirmDelete = async () => {
       const res = await deleteChild(props.user.id)
@@ -77,12 +88,13 @@ export default {
     }
 
     return {
-      handleSelect,
-      actionsOptions,
-      IconActionGray,
+      // handleSelect,
+      // actionsOptions,
+      // IconActionGray,
       dialogVisible,
-      getNameUserModal,
+      // getNameUserModal,
       confirmDelete,
+      // deleteItem,
     }
   },
 }

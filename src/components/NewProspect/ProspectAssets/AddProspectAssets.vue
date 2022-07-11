@@ -18,9 +18,7 @@
             <div v-if="row.custom" class="flex items-center ml-2 cursor-pointer">
               <el-popconfirm title="Are you sure to delete this?" @confirm="confirmEvent({ block, row })">
                 <template #reference>
-                  <el-icon color="red">
-                    <remove />
-                  </el-icon>
+                  <el-icon color="red" class="cursor-pointer"><Delete /></el-icon>
                 </template>
               </el-popconfirm>
             </div>
@@ -124,13 +122,13 @@ import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 import { ArrowDown } from '@element-plus/icons-vue'
-import { Remove } from '@element-plus/icons-vue'
+import { Delete } from '@element-plus/icons-vue'
 
 export default {
   name: 'AddProspectAssets',
   components: {
     ArrowDown,
-    Remove,
+    Delete,
   },
   setup() {
     const queryClient = useQueryClient()
