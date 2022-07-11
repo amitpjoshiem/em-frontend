@@ -173,21 +173,21 @@ export default {
         })
       }
 
-      if (props.user.can_restore) {
+      if (props.user.can_restore && !props.user.can_convert) {
         options.push({
           title: 'Activate account',
           command: 'restore-account',
         })
       }
 
-      if (!props.user.is_activated) {
+      if (props.user.is_activated && !props.user.can_convert) {
         options.push({
           title: 'Deactivate link',
           command: 'deactivated-link',
         })
       }
 
-      if (props.user.is_activated) {
+      if (props.user.can_convert) {
         options.push({
           title: 'Convert to opportunity',
           command: 'convert-opportunity',
