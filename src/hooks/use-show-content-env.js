@@ -6,12 +6,14 @@ export function useShowContentEnv() {
     testNotificationsBtn: false,
     testSentryBtn: false,
     showRole: false,
+    infoSalesforceStatus: false,
   })
 
   if (process.env.VUE_APP_ENV === 'development' || process.env.NODE_ENV === 'development') {
     showContent.testNotificationsBtn = true
     showContent.testSentryBtn = true
     showContent.showRole = true
+    showContent.infoSalesforceStatus = true
   }
 
   return { showContent }

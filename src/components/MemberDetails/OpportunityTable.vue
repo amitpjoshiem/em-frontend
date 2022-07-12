@@ -5,7 +5,6 @@
         <el-badge :value="getCount" :max="99" class="mr-8" :type="getCount ? 'primary' : 'info'" :hidden="isLoading">
           <span class="text-main text-smm font-semibold">Child Opportunities</span>
         </el-badge>
-
         <router-link :to="{ name: 'add-opportunity', params: { id: prospectId } }">
           <div
             class="
@@ -110,11 +109,4 @@ export default {
 .oportunity-item {
   @apply mr-3 hover:bg-gray-200;
 }
-/* .title {
-  @apply border-b border-title-gray text-small text-gray03 flex items-center uppercase first:pl-2;
-}
-
-.oportunity-item {
-  @apply border-b border-title-gray mr-3;
-} */
 </style>
