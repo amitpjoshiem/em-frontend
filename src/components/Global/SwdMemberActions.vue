@@ -1,16 +1,19 @@
 <template>
   <SwdDropDown :options="actionsOptions" @select="handleSelect">
     <template #titleDropDown>
-      <span class="cursor-pointer bg-white rounded flex justify-center items-center py-2 px-3">
-        <InlineSvg :src="IconActionGray" />
+      <span
+        class="cursor-pointer bg-white rounded flex justify-center items-center w-[28px] h-[28px]"
+        :class="{ 'border border-primary': pageDetails }"
+      >
+        <el-icon :color="pageDetails ? '#042D52' : '#C7CFE3'" class="rotate-90"><MoreFilled /></el-icon>
       </span>
     </template>
   </SwdDropDown>
 </template>
 
 <script>
-import IconActionGray from '@/assets/svg/icon-action-gray.svg'
 import { useRouter } from 'vue-router'
+import { MoreFilled } from '@element-plus/icons-vue'
 
 const allAvailibleOptions = {
   1: {
@@ -26,6 +29,8 @@ const allAvailibleOptions = {
 }
 
 const optionsPerStepAndType = {
+  'page-details-client': [5, 6],
+  'page-details-prospect': [4, 5, 6],
   client: [1, 3, 5, 6, 7],
   'prospect@step-0': [4, 5, 6, 7],
   'prospect@step-1': [1, 4, 5, 6, 7],
@@ -37,8 +42,12 @@ const optionsPerStepAndType = {
   onboarding: [4, 7],
 }
 
-function getClientStepHash(user) {
+function getClientStepHash(user, pageDetails) {
   switch (true) {
+    case pageDetails && user.type === 'client':
+      return 'page-details-client'
+    case pageDetails && user.type === 'prospect':
+      return 'page-details-prospect'
     case user.type === 'client':
       return 'client'
     case user.type === 'prospect' && user.step === 'basic':
@@ -77,8 +86,8 @@ function routerForStep(step) {
   }
 }
 
-function buildOptions(user) {
-  const hash = getClientStepHash(user)
+function buildOptions(user, pageDetails) {
+  const hash = getClientStepHash(user, pageDetails)
   const optionsIds = optionsPerStepAndType[hash]
 
   return optionsIds.map((id) => allAvailibleOptions[id])
@@ -86,16 +95,24 @@ function buildOptions(user) {
 
 export default {
   name: 'SwdMemberActions',
+  components: {
+    MoreFilled,
+  },
   props: {
     user: {
       type: Object,
       require: true,
       default: () => {},
     },
+    pageDetails: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
   },
   setup(props) {
     const router = useRouter()
-    const actionsOptions = buildOptions(props.user)
+    const actionsOptions = buildOptions(props.user, props.pageDetails)
 
     const handleSelect = (command) => {
       const actionHandler = actionsMap[command]
@@ -125,7 +142,6 @@ export default {
     }
 
     return {
-      IconActionGray,
       actionsOptions,
       handleSelect,
     }

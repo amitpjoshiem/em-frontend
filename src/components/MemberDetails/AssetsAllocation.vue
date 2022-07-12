@@ -38,7 +38,7 @@
                 @blur="change()"
               />
             </el-form-item>
-            <el-form-item class="mt-4">
+            <el-form-item class="mt-5">
               <SwdCurrencyInput
                 v-model="ruleForm.growth"
                 :options="optionsCurrencyInput"
@@ -49,7 +49,7 @@
                 @blur="change()"
               />
             </el-form-item>
-            <el-form-item class="mt-4">
+            <el-form-item class="mt-5">
               <SwdCurrencyInput
                 v-model="ruleForm.income"
                 :options="optionsCurrencyInput"

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-16/24 border border-color-grey box-border rounded-md p-5 bg-widget-bg">
+  <div class="w-full border border-color-grey box-border rounded-md p-5 bg-widget-bg">
     <div>
       <span class="text-main text-smm font-semibold"> Retirement Income Plan </span>
       <RetirementIncomeChart class="h-40 mb-2 mt-2" />

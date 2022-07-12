@@ -6,14 +6,17 @@
         <WidgetMemberDetails />
         <InfoSalesforceStatus />
       </div>
-      <AssetsAllocation class="w-10/24" />
-      <WidgetOther />
+      <OpportunityTable class="w-16/24" />
     </div>
     <div class="flex mb-5">
-      <WidgetPastStress />
-      <RetirementIncomePlan />
+      <!-- <RetirementIncomePlan /> -->
+      <WidgetFixedAnnuity />
     </div>
-    <OpportunityTable class="mb-10" />
+    <div class="flex">
+      <WidgetPastStress />
+      <AssetsAllocation />
+      <WidgetOther />
+    </div>
   </div>
 </template>
 <script>
@@ -21,7 +24,8 @@ import OpportunityTable from '@/components/MemberDetails/OpportunityTable.vue'
 import WidgetMemberDetails from '@/components/MemberDetails/WidgetMemberDetails.vue'
 import AssetsAllocation from '@/components/MemberDetails/AssetsAllocation.vue'
 import WidgetPastStress from '@/components/MemberDetails/WidgetPastStress.vue'
-import RetirementIncomePlan from '@/components/MemberDetails/RetirementIncomePlan.vue'
+// import RetirementIncomePlan from '@/components/MemberDetails/RetirementIncomePlan.vue'
+import WidgetFixedAnnuity from '@/components/MemberDetails/WidgetFixedAnnuity.vue'
 import WidgetOther from '@/components/MemberDetails/WidgetOther.vue'
 import InfoSalesforceStatus from '@/components/MemberDetails/InfoSalesforceStatus.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
@@ -34,9 +38,10 @@ export default {
     WidgetMemberDetails,
     AssetsAllocation,
     WidgetPastStress,
-    RetirementIncomePlan,
+    // RetirementIncomePlan,
     WidgetOther,
     InfoSalesforceStatus,
+    WidgetFixedAnnuity,
   },
 
   setup() {
