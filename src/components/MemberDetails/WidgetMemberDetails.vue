@@ -227,7 +227,6 @@ export default {
       change,
       optionsCurrencyInput,
       isLoadingUpdate,
-
       isLoadingProspectDetails,
       isErrorProspectDetails,
       member,
