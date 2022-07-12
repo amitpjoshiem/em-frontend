@@ -12,7 +12,7 @@
         :class="{ 'border-border-blue': item.id === currentCompany.id }"
       >
         <div
-          class="py-2 text-center hover:text-border-blue text-main"
+          class="py-2 text-center text-main cursor-default"
           :class="{ 'text-border-blue': item.id === currentCompany.id }"
         >
           {{ item.name }}
