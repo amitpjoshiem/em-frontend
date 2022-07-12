@@ -533,6 +533,17 @@ const routes = [
           },
         ],
       },
+      {
+        path: 'annuity-index/:id',
+        name: 'annuity-index',
+        component: () => import(/* webpackChunkName: "AnnuityIndex" */ '../components/AnnuityIndex/AnnuityIndex.vue'),
+      },
+      {
+        path: 'annuity-index-details/:id?',
+        name: 'annuity-index-details',
+        component: () =>
+          import(/* webpackChunkName: "AnnuityIndexItem" */ '../components/AnnuityIndex/AnnuityIndexDetails.vue'),
+      },
     ],
   },
 

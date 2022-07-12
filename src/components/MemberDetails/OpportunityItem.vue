@@ -2,7 +2,7 @@
   <div class="flex text-xs items-center text-center">
     <div class="w-9/24 item">
       <el-icon><User /></el-icon>
-      <span class="pl-1">
+      <span class="pl-1 whitespace-nowrap overflow-hidden overflow-ellipsis">
         {{ user.name }}
       </span>
     </div>
