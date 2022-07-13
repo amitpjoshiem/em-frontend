@@ -25,7 +25,7 @@
           </el-menu-item>
         </router-link>
 
-        <router-link :to="{ name: 'ap-companies' }">
+        <router-link v-if="$can('ceo', 'all')" :to="{ name: 'ap-companies' }">
           <el-menu-item index="3">
             <el-icon><OfficeBuilding /></el-icon>
             <span>Companies</span>
