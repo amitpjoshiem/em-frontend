@@ -7,10 +7,10 @@
 <script>
 import { ref } from 'vue'
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
-import { useStatisticsAgeChartDataOptions } from '@/components/PipeLine/Chart/StatisticsCountChart/useDataOptions'
+import { useStatisticsChartDataOptions } from '@/components/PipeLine/Chart/NumberLeedsConverted/useDataOptions.js'
 
 export default {
-  name: 'StatisticsCountChart',
+  name: 'NumberLeedsConverted',
   components: {
     Vue3ChartJs,
   },
@@ -24,7 +24,7 @@ export default {
   setup(props) {
     const chartRef = ref(null)
 
-    const { chartOptions } = useStatisticsAgeChartDataOptions(props.values)
+    const { chartOptions } = useStatisticsChartDataOptions(props.values)
 
     return {
       chartRef,

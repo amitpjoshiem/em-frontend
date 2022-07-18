@@ -58,7 +58,6 @@ export default {
 
     const showInfo = () => {
       dialogVisible.value = true
-      console.log('showInfo', props.destination)
     }
     return {
       showInfo,

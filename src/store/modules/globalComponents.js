@@ -53,6 +53,10 @@ const state = () => ({
       default: 'month',
       opportunitiesBlock: 'month',
       pipeLine: 'month',
+      numberLeeds: 'month',
+      numberLeedsFilledData: 'month',
+      numberLeedsConverted: 'month',
+      numberLeedsClosed: 'month',
     },
   },
   dialog: {

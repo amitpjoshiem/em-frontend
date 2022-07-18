@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <SwdSubHeader title="Pipe Line" />
+    <SwdSubHeader title="Revenue Dashboard" />
     <PipeLineContent />
   </div>
 </template>
