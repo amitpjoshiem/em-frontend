@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 
-export const useStatisticsAgeChartDataOptions = (values = []) => {
+export const useStatisticsChartDataOptions = (values = []) => {
   const getData = computed(() => {
     const chartData = {
       data: [],
