@@ -35,6 +35,7 @@ export const useStatisticsChartDataOptions = (values = []) => {
         y: {
           type: 'linear',
           ticks: {
+            min: 0,
             font: {
               size: 9,
             },

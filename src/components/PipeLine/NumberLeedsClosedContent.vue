@@ -2,19 +2,19 @@
   <div class="border border-color-grey rounded-xl p-5">
     <div class="flex justify-between items-center">
       <span class="text-smm font-medium">Number of Leeds Closed</span>
-      <SwdSelectFilter destination="numberLeedsContent" />
+      <SwdSelectFilter destination="numberLeedsClosed" />
     </div>
     <div>
-      <!-- <el-skeleton v-if="isLoading" :rows="3" animated class="p-5" /> -->
-      <!-- <SwdErrorBlock v-else-if="isError" /> -->
-      <NumberLeedsClosed class="my-4" :values="data" />
+      <el-skeleton v-if="isLoading" :rows="3" animated class="p-5" />
+      <SwdErrorBlock v-else-if="isError" />
+      <NumberLeedsClosed v-else-if="data" class="my-4" :values="data.data" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
 import NumberLeedsClosed from '@/components/PipeLine/Chart/NumberLeedsClosed/NumberLeedsClosed'
+import { useRevenueDashboardLeadClosed } from '@/api/use-revenue-dashboard-lead-closed.js'
 
 export default {
   name: 'NumberLeedsClosedContent',
@@ -22,9 +22,13 @@ export default {
     NumberLeedsClosed,
   },
   setup() {
-    const data = ref([])
+    const { isLoading, isFetching, isError, data } = useRevenueDashboardLeadClosed()
+
     return {
       data,
+      isLoading,
+      isFetching,
+      isError,
     }
   },
 }

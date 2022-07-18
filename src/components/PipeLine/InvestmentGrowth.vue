@@ -9,6 +9,7 @@
 <script>
 import { usePipeLineStatisticsCount } from '@/api/use-pipeline-statistics-count.js'
 import StatisticsInvestmentGrowth from '@/components/PipeLine/Chart/StatisticsInvestmentGrowth/StatisticsInvestmentGrowth.vue'
+
 export default {
   name: 'NumberHouseholds',
   components: {

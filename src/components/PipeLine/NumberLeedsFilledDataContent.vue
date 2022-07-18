@@ -5,16 +5,16 @@
       <SwdSelectFilter destination="numberLeedsFilledData" />
     </div>
     <div>
-      <!-- <el-skeleton v-if="isLoading" :rows="3" animated class="p-5" /> -->
-      <!-- <SwdErrorBlock v-else-if="isError" /> -->
-      <NumberLeedsFilledData class="my-4" :values="data" />
+      <el-skeleton v-if="isLoading" :rows="3" animated class="p-5" />
+      <SwdErrorBlock v-else-if="isError" />
+      <NumberLeedsFilledData v-else-if="data" class="my-4" :values="data.data" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
 import NumberLeedsFilledData from '@/components/PipeLine/Chart/NumberLeedsFilledData/NumberLeedsFilledData'
+import { useRevenueDashboardLeadFilled } from '@/api/use-revenue-dashboard-lead-filled.js'
 
 export default {
   name: 'NumberLeedsFilledDataContent',
@@ -22,9 +22,13 @@ export default {
     NumberLeedsFilledData,
   },
   setup() {
-    const data = ref([])
+    const { isLoading, isFetching, isError, data } = useRevenueDashboardLeadFilled()
+
     return {
       data,
+      isLoading,
+      isFetching,
+      isError,
     }
   },
 }

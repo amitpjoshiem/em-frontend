@@ -56,7 +56,7 @@ const state = () => ({
       numberLeeds: 'month',
       numberLeedsFilledData: 'month',
       numberLeedsConverted: 'month',
-      numberLeedsContent: 'month',
+      numberLeedsClosed: 'month',
     },
   },
   dialog: {
