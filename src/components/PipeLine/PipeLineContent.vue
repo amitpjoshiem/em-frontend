@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="mb-5 h-[250px]">
-    <NumberLeedsClosedContent />
+    <!-- <NumberLeedsClosedContent /> -->
     <!-- <AssetsUnderManagement class="w-6/12 mr-2.5" /> -->
   </div>
   <!-- <HouseholdsStatistics class="mb-5 h-[250px]" /> -->
@@ -24,7 +24,7 @@ import OpportunityList from '@/components/PipeLine/OpportunityList.vue'
 import NumberLeedsContent from '@/components/PipeLine/NumberLeedsContent.vue'
 import NumberLeedsFilledDataContent from '@/components/PipeLine/NumberLeedsFilledDataContent.vue'
 import NumberLeedsConvertedContent from '@/components/PipeLine/NumberLeedsConvertedContent.vue'
-import NumberLeedsClosedContent from '@/components/PipeLine/NumberLeedsClosedContent.vue'
+// import NumberLeedsClosedContent from '@/components/PipeLine/NumberLeedsClosedContent.vue'
 
 export default {
   name: 'PipeLineContent',
@@ -36,7 +36,7 @@ export default {
     NumberLeedsContent,
     NumberLeedsFilledDataContent,
     NumberLeedsConvertedContent,
-    NumberLeedsClosedContent,
+    // NumberLeedsClosedContent,
   },
 }
 </script>
