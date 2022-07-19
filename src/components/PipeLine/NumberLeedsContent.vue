@@ -5,9 +5,9 @@
       <SwdSelectFilter destination="countLeeds" />
     </div>
     <div>
-      <el-skeleton v-if="isLoading || isFetching" :rows="3" animated class="p-5" />
+      <el-skeleton v-if="isLoading" :rows="3" animated class="p-5" />
       <!-- <SwdErrorBlock v-else-if="isError" /> -->
-      <NumberLeeds v-if="data.data" class="my-4" :values="data.data" />
+      <NumberLeeds v-if="data" class="my-4" :values="data.data" />
     </div>
   </div>
 </template>

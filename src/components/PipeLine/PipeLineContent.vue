@@ -2,38 +2,38 @@
   <div>
     <div class="flex mb-5 h-[250px]">
       <NumberLeedsContent class="w-6/12 mr-2.5" />
-      <!-- <NumberLeedsFilledDataContent class="w-6/12 ml-2.5" /> -->
+      <NumberLeedsFilledDataContent class="w-6/12 ml-2.5" />
     </div>
     <div class="flex mb-5 h-[250px]">
-      <!-- <NumberLeedsConvertedContent class="w-6/12 mr-2.5" /> -->
-      <!-- <InvestmentGrowth class="w-6/12 ml-2.5" /> -->
+      <NumberLeedsConvertedContent class="w-6/12 mr-2.5" />
+      <InvestmentGrowth class="w-6/12 ml-2.5" />
     </div>
   </div>
   <div class="mb-5 h-[250px]">
-    <!-- <NumberLeedsClosedContent /> -->
+    <NumberLeedsClosedContent />
   </div>
-  <!-- <HouseholdsStatistics class="mb-5 h-[250px]" /> -->
+  <HouseholdsStatistics class="mb-5 h-[250px]" />
   <OpportunityList />
 </template>
 <script>
-// import InvestmentGrowth from '@/components/PipeLine/InvestmentGrowth.vue'
-// import HouseholdsStatistics from '@/components/PipeLine//HouseholdsStatistics.vue'
+import InvestmentGrowth from '@/components/PipeLine/InvestmentGrowth.vue'
+import HouseholdsStatistics from '@/components/PipeLine//HouseholdsStatistics.vue'
 import OpportunityList from '@/components/PipeLine/OpportunityList.vue'
 import NumberLeedsContent from '@/components/PipeLine/NumberLeedsContent.vue'
-// import NumberLeedsFilledDataContent from '@/components/PipeLine/NumberLeedsFilledDataContent.vue'
-// import NumberLeedsConvertedContent from '@/components/PipeLine/NumberLeedsConvertedContent.vue'
-// import NumberLeedsClosedContent from '@/components/PipeLine/NumberLeedsClosedContent.vue'
+import NumberLeedsFilledDataContent from '@/components/PipeLine/NumberLeedsFilledDataContent.vue'
+import NumberLeedsConvertedContent from '@/components/PipeLine/NumberLeedsConvertedContent.vue'
+import NumberLeedsClosedContent from '@/components/PipeLine/NumberLeedsClosedContent.vue'
 
 export default {
   name: 'PipeLineContent',
   components: {
-    // InvestmentGrowth,
-    // HouseholdsStatistics,
+    InvestmentGrowth,
+    HouseholdsStatistics,
     OpportunityList,
     NumberLeedsContent,
-    // NumberLeedsFilledDataContent,
-    // NumberLeedsConvertedContent,
-    // NumberLeedsClosedContent,
+    NumberLeedsFilledDataContent,
+    NumberLeedsConvertedContent,
+    NumberLeedsClosedContent,
   },
 }
 </script>
