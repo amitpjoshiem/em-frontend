@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue3-chart-js v-bind="chartOptions" ref="chartRef" />
+    <vue3-chart-js v-bind="chartOptions" ref="chartNumberLeedsRef" />
   </div>
 </template>
 
@@ -22,12 +22,12 @@ export default {
     },
   },
   setup(props) {
-    const chartRef = ref(null)
+    const chartNumberLeedsRef = ref(null)
 
     const { chartOptions } = useStatisticsChartDataOptions(props.values)
 
     return {
-      chartRef,
+      chartNumberLeedsRef,
       chartOptions,
     }
   },
