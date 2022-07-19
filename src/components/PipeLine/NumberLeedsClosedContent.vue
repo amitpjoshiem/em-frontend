@@ -1,7 +1,7 @@
 <template>
   <div class="border border-color-grey rounded-xl p-5">
     <div class="flex justify-between items-center">
-      <span class="text-smm font-medium">Number of Leeds Closed</span>
+      <span class="text-smm font-medium">Number of Leads Closed</span>
       <SwdSelectFilter destination="numberLeedsClosed" />
     </div>
     <div>
