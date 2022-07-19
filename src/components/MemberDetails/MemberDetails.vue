@@ -1,6 +1,7 @@
 <template>
   <div class="p-5">
     <SwdSubHeader :title="getTitle" witch-info-btn info-btn-destination="MemberDetails" />
+    <MemberStep />
     <div class="flex my-5">
       <div class="w-8/24 mr-5">
         <WidgetMemberDetails />
@@ -25,6 +26,7 @@ import AssetsAllocation from '@/components/MemberDetails/AssetsAllocation.vue'
 import WidgetPastStress from '@/components/MemberDetails/WidgetPastStress.vue'
 import WidgetFixedAnnuity from '@/components/MemberDetails/WidgetFixedAnnuity.vue'
 import WidgetOther from '@/components/MemberDetails/WidgetOther.vue'
+import MemberStep from '@/components/MemberDetails/MemberStep.vue'
 import InfoSalesforceStatus from '@/components/MemberDetails/InfoSalesforceStatus.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
@@ -40,6 +42,7 @@ export default {
     WidgetOther,
     InfoSalesforceStatus,
     WidgetFixedAnnuity,
+    MemberStep,
   },
 
   setup() {
