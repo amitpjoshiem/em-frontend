@@ -2,7 +2,7 @@
   <div class="border border-color-grey rounded-xl p-5">
     <div class="flex justify-between items-center">
       <span class="text-smm font-medium">Number of Leeds</span>
-      <SwdSelectFilter destination="numberLeeds" />
+      <SwdSelectFilter destination="countLeeds" />
     </div>
     <div>
       <el-skeleton v-if="isLoading || isFetching" :rows="3" animated class="p-5" />

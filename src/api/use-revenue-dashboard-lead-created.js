@@ -7,7 +7,7 @@ import { useStore } from 'vuex'
 export const useRevenueDashboardLeadCreated = () => {
   const store = useStore()
 
-  const type = computed(() => store.state.globalComponents.selectFilter.values.numberLeeds)
+  const type = computed(() => store.state.globalComponents.selectFilter.values.countLeeds)
   const reactiveType = ref(type)
 
   const queryKey = reactive([
