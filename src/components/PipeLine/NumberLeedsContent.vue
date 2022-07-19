@@ -6,8 +6,8 @@
     </div>
     <div>
       <el-skeleton v-if="isLoading || isFetching" :rows="3" animated class="p-5" />
-      <SwdErrorBlock v-else-if="isError" />
-      <NumberLeeds v-else-if="data.data" class="my-4" :values="data.data" />
+      <!-- <SwdErrorBlock v-else-if="isError" /> -->
+      <NumberLeeds v-if="data.data" class="my-4" :values="data.data" />
     </div>
   </div>
 </template>
