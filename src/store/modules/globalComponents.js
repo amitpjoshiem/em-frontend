@@ -53,7 +53,7 @@ const state = () => ({
       default: 'month',
       opportunitiesBlock: 'month',
       pipeLine: 'month',
-      countLeeds: 'month',
+      countLeeds: 'year',
       // numberLeedsFilledData: 'month',
       // numberLeedsConverted: 'month',
       // numberLeedsClosed: 'month',
