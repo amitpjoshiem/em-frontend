@@ -13,13 +13,13 @@
     <NumberLeedsClosedContent />
     <!-- <AssetsUnderManagement class="w-6/12 mr-2.5" /> -->
   </div>
-  <HouseholdsStatistics class="mb-5 h-[250px]" />
+  <!-- <HouseholdsStatistics class="mb-5 h-[250px]" /> -->
   <OpportunityList />
 </template>
 <script>
 // import AssetsUnderManagement from '@/components/PipeLine/AssetsUnderManagement.vue'
 import InvestmentGrowth from '@/components/PipeLine/InvestmentGrowth.vue'
-import HouseholdsStatistics from '@/components/PipeLine//HouseholdsStatistics.vue'
+// import HouseholdsStatistics from '@/components/PipeLine//HouseholdsStatistics.vue'
 import OpportunityList from '@/components/PipeLine/OpportunityList.vue'
 import NumberLeedsContent from '@/components/PipeLine/NumberLeedsContent.vue'
 import NumberLeedsFilledDataContent from '@/components/PipeLine/NumberLeedsFilledDataContent.vue'
@@ -31,7 +31,7 @@ export default {
   components: {
     // AssetsUnderManagement,
     InvestmentGrowth,
-    HouseholdsStatistics,
+    // HouseholdsStatistics,
     OpportunityList,
     NumberLeedsContent,
     NumberLeedsFilledDataContent,
