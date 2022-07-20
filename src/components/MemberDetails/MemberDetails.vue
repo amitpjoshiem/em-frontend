@@ -1,7 +1,12 @@
 <template>
   <div class="p-5">
-    <SwdSubHeader :title="getTitle" witch-info-btn info-btn-destination="MemberDetails" />
-    <MemberStep />
+    <SwdSubHeader
+      :title="getTitle"
+      witch-info-btn
+      info-btn-destination="MemberDetails"
+      :loading="isLoadingProspectDetails"
+    />
+    <MemberStep v-if="!isLoadingProspectDetails && member.type === 'prospect'" />
     <div class="flex my-5">
       <div class="w-8/24 mr-5">
         <WidgetMemberDetails />
