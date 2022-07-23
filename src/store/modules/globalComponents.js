@@ -73,6 +73,7 @@ const state = () => ({
       modalNewTable: false,
       modalSucces: false,
       modalTerms: false,
+      modalAddAnnuityIndex: false,
     },
   },
   sortMembers: {

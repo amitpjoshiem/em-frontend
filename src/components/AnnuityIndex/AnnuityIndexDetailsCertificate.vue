@@ -36,7 +36,7 @@ import { ref } from 'vue'
 import { EditPen } from '@element-plus/icons-vue'
 
 export default {
-  name: 'AnnuityIndexDetailsItem',
+  name: 'AnnuityIndexDetailsCertificate',
   components: {
     EditPen,
   },

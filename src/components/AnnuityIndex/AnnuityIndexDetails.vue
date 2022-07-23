@@ -1,59 +1,119 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="Fixed Index Annuity Details" />
-    <div class="border border-color-grey rounded-md p-5 mb-4">
+    <el-skeleton v-if="isLoading" :rows="7" animated />
+
+    <div v-else-if="annuityIndex.data" class="border border-color-grey rounded-md p-5 mb-4">
       <div class="flex justify-between items-center mb-5">
         <div class="flex">
           <InlineSvg :src="IconDoneStep" />
           <div class="text-main text-xl font-semibold ml-2">Basic Information</div>
         </div>
-        <el-button v-if="isEdit" type="success" :icon="Check" circle @click="saveBasicInformation" />
-        <el-button v-else type="primary" :icon="Edit" circle @click="editBasicInformation" />
+
+        <div v-if="isEdit">
+          <el-button type="primary" size="small" class="w-[60px]" @click="cancelEdit">Cancel</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            :loading="loadingUpdate"
+            class="w-[60px]"
+            @click="saveBasicInformation"
+          >
+            Save
+          </el-button>
+        </div>
+        <div v-else>
+          <el-button type="primary" size="small" plain>Send</el-button>
+          <el-button
+            v-if="!ruleForm.is_advisor_signed"
+            type="primary"
+            size="small"
+            plain
+            :loading="loadingSignAnnuityIndex"
+            class="w-[60px]"
+            @click="sign"
+          >
+            Sign
+          </el-button>
+          <el-button v-if="!isEdit" type="primary" size="small" class="w-[60px]" plain @click="editBasicInformation">
+            Edit
+          </el-button>
+        </div>
       </div>
       <div class="flex items-center justify-center">
-        <div class="w-4/12">
+        <div class="w-4/12 flex items-center justify-center flex-col">
           <el-icon color="#042D52" :size="100"><Document /></el-icon>
+          <SwdUpload
+            :upload-data="{ collection: 'fixed_index_annuities' }"
+            :auto-upload="true"
+            @upload-success="handleChangeDocSuccess"
+            @upload-mounted="bindRef"
+          >
+            <template #main>
+              <el-button type="primary" size="small" plain class="mt-4 w-[130px]">Change document</el-button>
+            </template>
+          </SwdUpload>
+          <el-button
+            type="primary"
+            size="small"
+            plain
+            class="mt-4 w-[130px]"
+            @click="handlePreview(ruleForm.media.url)"
+          >
+            Preview
+          </el-button>
         </div>
         <div class="w-8/12 text-xss">
           <el-form ref="form" :model="ruleForm">
             <div class="text-main flex items-center h-6">
-              <span class="w-6/12 text-gray03 font-semibold">Document name:</span>
-              <el-form-item v-if="isEdit" size="small">
-                <el-input v-model="ruleForm.document_name" />
+              <span class="w-4/12 text-gray03 font-semibold">Document name:</span>
+              <el-form-item v-if="isEdit" size="small" class="w-4/12">
+                <el-input v-model="ruleForm.name" />
               </el-form-item>
-              <span v-else class="w-6/12">{{ ruleForm.document_name }}</span>
+              <span v-else class="w-4/12">{{ ruleForm.name }}</span>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-6/12 text-gray03 font-semibold">Insurance provider:</span>
-              <el-form-item v-if="isEdit" size="small">
+              <span class="w-4/12 text-gray03 font-semibold">Insurance provider:</span>
+              <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.insurance_provider" />
               </el-form-item>
-              <span v-else class="w-6/12">{{ ruleForm.insurance_provider }}</span>
+              <span v-else class="w-4/12">{{ ruleForm.insurance_provider }}</span>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-6/12 text-gray03 font-semibold">Date signed:</span>
-              <el-form-item v-if="isEdit" size="small">
-                <el-input v-model="ruleForm.date_signed" />
+              <span class="w-4/12 text-gray03 font-semibold">Date signed advisor:</span>
+              <span class="w-4/12">{{ ruleForm.advisor_signed ? ruleForm.advisor_signed : 'not signed' }}</span>
+            </div>
+            <div class="text-main flex items-center h-6 mt-2">
+              <span class="w-4/12 text-gray03 font-semibold">Date signed client:</span>
+              <span class="w-4/12">{{ ruleForm.client_signed ? ruleForm.client_signed : 'not signed' }}</span>
+            </div>
+            <div class="text-main flex items-center h-6 mt-2">
+              <span class="w-4/12 text-gray03 font-semibold">Tax Qualification:</span>
+              <el-form-item v-if="isEdit" size="small" class="w-4/12">
+                <el-select
+                  v-model="ruleForm.tax_qualification"
+                  class="w-full"
+                  placeholder="Select Tax Qualification"
+                  :loading="isLoadingInit"
+                >
+                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
               </el-form-item>
-              <span v-else class="w-6/12">{{ ruleForm.date_signed }}</span>
+              <div v-else class="w-4/12 flex items-center cursor-pointer">{{ ruleForm.tax_qualification }}</div>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-6/12 text-gray03 font-semibold">Tax Qualification:</span>
-              <div class="w-6/12 flex items-center cursor-pointer">Tax Qualification</div>
-            </div>
-            <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-6/12 text-gray03 font-semibold">Agent Rep Code:</span>
-              <el-form-item v-if="isEdit" size="small">
+              <span class="w-4/12 text-gray03 font-semibold">Agent Rep Code:</span>
+              <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.agent_rep_code" />
               </el-form-item>
-              <span v-else class="w-6/12">{{ ruleForm.agent_rep_code }}</span>
+              <span v-else class="w-4/12">{{ ruleForm.agent_rep_code }}</span>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-6/12 text-gray03 font-semibold">License Number:</span>
-              <el-form-item v-if="isEdit" size="small">
+              <span class="w-4/12 text-gray03 font-semibold">License Number:</span>
+              <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.license_number" />
               </el-form-item>
-              <span v-else class="w-6/12">{{ ruleForm.license_number }}</span>
+              <span v-else class="w-4/12">{{ ruleForm.license_number }}</span>
             </div>
           </el-form>
         </div>
@@ -78,29 +138,64 @@
         </el-col>
       </el-row>
     </div>
+    <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
   </div>
 </template>
 <script>
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 import { Document, Edit, Check } from '@element-plus/icons-vue'
-import { reactive, ref } from 'vue'
-import AnnuityIndexDetailsItem from './AnnuityIndexDetailsItem.vue'
+import { reactive, ref, watchEffect } from 'vue'
+import AnnuityIndexDetailsItem from './AnnuityIndexDetailsCertificate.vue'
+import { useRoute } from 'vue-router'
+import { useAnnuityIndexFind } from '@/api/use-fetch-annuity-index-find.js'
+import { updateAnnuityIndex } from '@/api/vueQuery/update-annuity-index'
+import { fetchSignAnnuityIndex } from '@/api/vueQuery/fetch-sign-annuity-index'
+import { useMutation } from 'vue-query'
+import { useAlert } from '@/utils/use-alert'
+import { useFetchTaxQualificationInit } from '@/api/use-fetch-tax-qualification-init.js'
+import SwdUpload from '@/components/Global/SwdUpload.vue'
+import { useStore } from 'vuex'
+import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
+
 export default {
   name: 'AnnuityIndexDetails',
   components: {
     Document,
     AnnuityIndexDetailsItem,
+    SwdUpload,
+    PrewiewPdfModal,
   },
   setup() {
-    const form = ref(null)
-    const isEdit = ref(false)
+    const route = useRoute()
+    const store = useStore()
 
-    const ruleForm = reactive({
-      document_name: 'Annuity Index name',
-      insurance_provider: 'Insurance provider',
-      date_signed: '01/01/2022',
-      agent_rep_code: '123456789',
-      license_number: '123456789',
+    const form = ref(null)
+    const options = ref([])
+    const isEdit = ref(false)
+    const upload = ref(null)
+
+    const { isLoading, data: annuityIndex } = useAnnuityIndexFind(route.params.id)
+    const { isLoading: isLoadingInit, data: init } = useFetchTaxQualificationInit()
+
+    const { mutateAsync: update, isLoading: loadingUpdate } = useMutation(updateAnnuityIndex)
+    const { mutateAsync: signAnnuityIndex, isLoading: loadingSignAnnuityIndex } = useMutation(fetchSignAnnuityIndex)
+
+    const ruleForm = reactive({})
+
+    const state = reactive({
+      dialogVisible: false,
+      previewUrl: '',
+    })
+
+    watchEffect(() => {
+      if (!isLoading.value) {
+        setInitValue(annuityIndex.value.data)
+      }
+      if (!isLoadingInit.value && init.value) {
+        options.value = init.value.tax_qualifications.map((item) => {
+          return { label: item, value: item }
+        })
+      }
     })
 
     const editBasicInformation = () => {
@@ -108,7 +203,73 @@ export default {
     }
 
     const saveBasicInformation = () => {
+      form.value.validate(async (valid) => {
+        if (valid) {
+          const data = {
+            name: ruleForm.name,
+            insurance_provider: ruleForm.insurance_provider,
+            tax_qualification: ruleForm.tax_qualification,
+            agent_rep_code: ruleForm.agent_rep_code,
+            license_number: ruleForm.license_number,
+          }
+          const res = await update({ form: data, id: route.params.id })
+          if (!('error' in res)) {
+            isEdit.value = false
+            useAlert({
+              title: 'Success',
+              type: 'success',
+              message: 'Update successfully',
+            })
+          }
+        }
+      })
+    }
+
+    const sign = async () => {
+      const res = await signAnnuityIndex(annuityIndex.value.data.id)
+      if (!('error' in res)) {
+        setInitValue(res.data)
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Annuity Index signed',
+        })
+      }
+    }
+
+    const cancelEdit = () => {
       isEdit.value = false
+      setInitValue(annuityIndex.value.data)
+    }
+
+    const setInitValue = (data) => {
+      Object.assign(ruleForm, data)
+    }
+
+    const bindRef = (ref) => {
+      upload.value = ref.value
+    }
+
+    const handleChangeDocSuccess = async (file) => {
+      console.log('handleChangeDocSuccess')
+      const res = await update({ form: { uuids: [file.data.uuid] }, id: route.params.id })
+      if (!('error' in res)) {
+        setInitValue(res.data)
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Update successfully',
+        })
+      }
+    }
+
+    const handlePreview = (url) => {
+      state.previewUrl = url
+      state.dialogVisible = true
+      store.commit('globalComponents/setShowModal', {
+        destination: 'prewievPdf',
+        value: true,
+      })
     }
 
     return {
@@ -120,6 +281,21 @@ export default {
       form,
       isEdit,
       saveBasicInformation,
+      isLoading,
+      annuityIndex,
+      update,
+      loadingUpdate,
+      isLoadingInit,
+      init,
+      options,
+      cancelEdit,
+      signAnnuityIndex,
+      loadingSignAnnuityIndex,
+      sign,
+      bindRef,
+      handleChangeDocSuccess,
+      handlePreview,
+      state,
     }
   },
 }
