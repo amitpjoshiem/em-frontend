@@ -3,41 +3,25 @@
     <SwdSubHeader title="Fixed Index Annuity Details" />
     <el-skeleton v-if="isLoading" :rows="7" animated />
 
-    <div v-else-if="annuityIndex.data" class="border border-color-grey rounded-md p-5 mb-4">
+    <div
+      v-else-if="annuityIndex.data"
+      v-loading="loadingUpdate || loadingSignAnnuityIndex"
+      class="border border-color-grey rounded-md p-5 mb-4"
+    >
       <div class="flex justify-between items-center mb-5">
         <div class="flex">
           <InlineSvg :src="IconDoneStep" />
           <div class="text-main text-xl font-semibold ml-2">Basic Information</div>
         </div>
-
-        <div v-if="isEdit">
-          <el-button type="primary" size="small" class="w-[60px]" @click="cancelEdit">Cancel</el-button>
-          <el-button
-            type="primary"
-            size="small"
-            :loading="loadingUpdate"
-            class="w-[60px]"
-            @click="saveBasicInformation"
-          >
-            Save
-          </el-button>
-        </div>
-        <div v-else>
-          <el-button type="primary" size="small" plain>Send</el-button>
-          <el-button
-            v-if="!ruleForm.is_advisor_signed"
-            type="primary"
-            size="small"
-            plain
-            :loading="loadingSignAnnuityIndex"
-            class="w-[60px]"
-            @click="sign"
-          >
-            Sign
-          </el-button>
-          <el-button v-if="!isEdit" type="primary" size="small" class="w-[60px]" plain @click="editBasicInformation">
-            Edit
-          </el-button>
+        <div>
+          <el-tag :type="ruleForm.is_client_signed ? 'success' : 'danger'" class="mr-4">
+            <el-icon><EditPen /></el-icon>
+            Client
+          </el-tag>
+          <el-tag :type="ruleForm.is_advisor_signed ? 'success' : 'danger'">
+            <el-icon><EditPen /></el-icon>
+            Advisor
+          </el-tag>
         </div>
       </div>
       <div class="flex items-center justify-center">
@@ -118,6 +102,37 @@
           </el-form>
         </div>
       </div>
+      <div class="flex justify-end">
+        <div v-if="isEdit">
+          <el-button type="primary" size="small" class="w-[60px]" @click="cancelEdit">Cancel</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            :loading="loadingUpdate"
+            class="w-[60px]"
+            @click="saveBasicInformation"
+          >
+            Save
+          </el-button>
+        </div>
+        <div v-else>
+          <el-button type="primary" size="small" plain>Send</el-button>
+          <el-button
+            v-if="!ruleForm.is_advisor_signed"
+            type="primary"
+            size="small"
+            plain
+            :loading="loadingSignAnnuityIndex"
+            class="w-[60px]"
+            @click="sign"
+          >
+            Sign
+          </el-button>
+          <el-button v-if="!isEdit" type="primary" size="small" class="w-[60px]" plain @click="editBasicInformation">
+            Edit
+          </el-button>
+        </div>
+      </div>
     </div>
 
     <div class="border border-color-grey rounded-md p-5 mb-4">
@@ -156,6 +171,7 @@ import { useFetchTaxQualificationInit } from '@/api/use-fetch-tax-qualification-
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import { useStore } from 'vuex'
 import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
+import { EditPen } from '@element-plus/icons-vue'
 
 export default {
   name: 'AnnuityIndexDetails',
@@ -164,6 +180,7 @@ export default {
     AnnuityIndexDetailsItem,
     SwdUpload,
     PrewiewPdfModal,
+    EditPen,
   },
   setup() {
     const route = useRoute()
@@ -173,6 +190,7 @@ export default {
     const options = ref([])
     const isEdit = ref(false)
     const upload = ref(null)
+    const isChangeDocument = ref(false)
 
     const { isLoading, data: annuityIndex } = useAnnuityIndexFind(route.params.id)
     const { isLoading: isLoadingInit, data: init } = useFetchTaxQualificationInit()
@@ -251,10 +269,11 @@ export default {
     }
 
     const handleChangeDocSuccess = async (file) => {
-      console.log('handleChangeDocSuccess')
+      isChangeDocument.value = true
       const res = await update({ form: { uuids: [file.data.uuid] }, id: route.params.id })
       if (!('error' in res)) {
         setInitValue(res.data)
+        isChangeDocument.value = false
         useAlert({
           title: 'Success',
           type: 'success',
