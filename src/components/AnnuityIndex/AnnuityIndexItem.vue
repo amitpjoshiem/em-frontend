@@ -1,10 +1,10 @@
 <template>
   <el-card class="mb-4">
     <div class="flex items-center justify-center">
-      <div class="w-4/12">
+      <div class="w-3/12 mr-3">
         <el-icon color="#042D52" :size="100"><Document /></el-icon>
       </div>
-      <div class="w-8/12 text-xss">
+      <div class="w-9/12 text-xss">
         <div class="text-main flex">
           <span class="w-6/12 text-gray03 font-semibold">Document name:</span>
           <span class="w-6/12">{{ item.name }}</span>
@@ -38,7 +38,7 @@
         </div>
         <div class="flex justify-end text-main pt-4">
           <el-button size="small" plain type="primary">Client Reports</el-button>
-          <el-button size="small" plain @click="getDetails">Details</el-button>
+          <el-button size="small" plain type="primary" @click="getDetails">Details</el-button>
         </div>
       </div>
     </div>
