@@ -72,7 +72,7 @@ export default {
     }
 
     const getDetails = () => {
-      router.push({ name: 'annuity-index-details', params: { id: props.item.id } })
+      router.push({ name: 'annuity-index-details', params: { annuityId: props.item.id } })
     }
 
     return {

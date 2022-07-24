@@ -44,6 +44,7 @@
         :auto-upload="true"
         :show-file-block="true"
         :limit="1"
+        :disabled="fileList.length"
         @upload-success="handleSuccess"
         @upload-change="handleChange"
         @upload-mounted="bindRef"
@@ -78,7 +79,7 @@ import { useFetchTaxQualificationInit } from '@/api/use-fetch-tax-qualification-
 import { ElMessageBox } from 'element-plus'
 import { rules } from '@/validationRules/addAnnuityIndex.js'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { createAnnuitiIndex } from '@/api/vueQuery/create-annuiti-index'
+import { createAnnuityIndex } from '@/api/vueQuery/create-annuity-index'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 
@@ -103,7 +104,7 @@ export default {
 
     const fileList = reactive([])
 
-    const { mutateAsync: create, isLoading: loadingCreate } = useMutation(createAnnuitiIndex)
+    const { mutateAsync: create, isLoading: loadingCreate } = useMutation(createAnnuityIndex)
 
     const ruleForm = reactive({
       name: '',
@@ -175,7 +176,7 @@ export default {
       if (!fileList.length) validUpload.value = false
       form.value.validate(async (valid) => {
         if (valid && validUpload.value) {
-          const res = await createAnnuitiIndex({ id: memberId, data: ruleForm })
+          const res = await createAnnuityIndex({ id: memberId, data: ruleForm })
           if (!('error' in res)) {
             useAlert({
               title: 'Success',

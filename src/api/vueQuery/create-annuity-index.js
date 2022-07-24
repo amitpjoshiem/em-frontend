@@ -1,6 +1,6 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function createAnnuitiIndex({ id, data }) {
+function createAnnuityIndex({ id, data }) {
   return fetcher({
     url: `/fixed_index_annuities/${id}`,
     data,
@@ -8,4 +8,4 @@ function createAnnuitiIndex({ id, data }) {
   })
 }
 
-export { createAnnuitiIndex }
+export { createAnnuityIndex }

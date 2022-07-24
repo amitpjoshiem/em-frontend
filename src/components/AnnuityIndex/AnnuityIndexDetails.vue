@@ -116,6 +116,14 @@
           </el-button>
         </div>
         <div v-else>
+          <el-popconfirm title="Are you sure to delete this?" @confirm="confirmDelete()">
+            <template #reference>
+              <el-button type="danger" size="small" class="w-[60px]" plain :loading="loadingDeleteAnnuity">
+                Delete
+              </el-button>
+            </template>
+          </el-popconfirm>
+
           <el-button type="primary" size="small" plain>Send</el-button>
           <el-button
             v-if="!ruleForm.is_advisor_signed"
@@ -157,21 +165,22 @@
   </div>
 </template>
 <script>
-import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 import { Document, Edit, Check } from '@element-plus/icons-vue'
 import { reactive, ref, watchEffect } from 'vue'
-import AnnuityIndexDetailsItem from './AnnuityIndexDetailsCertificate.vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAnnuityIndexFind } from '@/api/use-fetch-annuity-index-find.js'
 import { updateAnnuityIndex } from '@/api/vueQuery/update-annuity-index'
 import { fetchSignAnnuityIndex } from '@/api/vueQuery/fetch-sign-annuity-index'
+import { fetchDeleteAnnuityIndex } from '@/api/vueQuery/fetch-delete-annuity-index'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { useFetchTaxQualificationInit } from '@/api/use-fetch-tax-qualification-init.js'
-import SwdUpload from '@/components/Global/SwdUpload.vue'
 import { useStore } from 'vuex'
-import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 import { EditPen } from '@element-plus/icons-vue'
+import AnnuityIndexDetailsItem from './AnnuityIndexDetailsCertificate.vue'
+import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
+import SwdUpload from '@/components/Global/SwdUpload.vue'
+import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
   name: 'AnnuityIndexDetails',
@@ -184,6 +193,7 @@ export default {
   },
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const store = useStore()
 
     const form = ref(null)
@@ -192,11 +202,12 @@ export default {
     const upload = ref(null)
     const isChangeDocument = ref(false)
 
-    const { isLoading, data: annuityIndex } = useAnnuityIndexFind(route.params.id)
+    const { isLoading, data: annuityIndex } = useAnnuityIndexFind(route.params.annuityId)
     const { isLoading: isLoadingInit, data: init } = useFetchTaxQualificationInit()
 
     const { mutateAsync: update, isLoading: loadingUpdate } = useMutation(updateAnnuityIndex)
     const { mutateAsync: signAnnuityIndex, isLoading: loadingSignAnnuityIndex } = useMutation(fetchSignAnnuityIndex)
+    const { mutateAsync: deleteAnnuity, isLoading: loadingDeleteAnnuity } = useMutation(fetchDeleteAnnuityIndex)
 
     const ruleForm = reactive({})
 
@@ -230,7 +241,7 @@ export default {
             agent_rep_code: ruleForm.agent_rep_code,
             license_number: ruleForm.license_number,
           }
-          const res = await update({ form: data, id: route.params.id })
+          const res = await update({ form: data, id: route.params.annuityId })
           if (!('error' in res)) {
             isEdit.value = false
             useAlert({
@@ -270,7 +281,7 @@ export default {
 
     const handleChangeDocSuccess = async (file) => {
       isChangeDocument.value = true
-      const res = await update({ form: { uuids: [file.data.uuid] }, id: route.params.id })
+      const res = await update({ form: { uuids: [file.data.uuid] }, id: route.params.annuityId })
       if (!('error' in res)) {
         setInitValue(res.data)
         isChangeDocument.value = false
@@ -289,6 +300,18 @@ export default {
         destination: 'prewievPdf',
         value: true,
       })
+    }
+
+    const confirmDelete = async () => {
+      const res = await deleteAnnuity(route.params.annuityId)
+      if (!('error' in res)) {
+        router.push({ name: 'annuity-index', params: { id: route.params.id } })
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Delete successfully',
+        })
+      }
     }
 
     return {
@@ -315,6 +338,9 @@ export default {
       handleChangeDocSuccess,
       handlePreview,
       state,
+
+      confirmDelete,
+      loadingDeleteAnnuity,
     }
   },
 }
