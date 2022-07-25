@@ -6,7 +6,6 @@ export const useAnnuityIndexFind = (id) => {
   const queryKey = reactive(['annuityIndexFind', id])
 
   const query = useQuery(queryKey, {
-    cacheTime: 0,
     queryFn: fetchAnnuityIndexFind,
   })
 

@@ -17,7 +17,7 @@
       <SwdUpload
         :upload-data="{ collection: 'investment_package' }"
         :doc-list="fileList"
-        :show-file-list="false"
+        :show-file-list="true"
         :auto-upload="true"
         :show-file-block="true"
         :limit="1"
@@ -55,7 +55,7 @@ import { useStore } from 'vuex'
 import { ElMessageBox } from 'element-plus'
 import { rules } from '@/validationRules/addAnnuityIndex.js'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { createAnnuityIndex } from '@/api/vueQuery/create-annuity-index'
+import { createInvestmentPackage } from '@/api/vueQuery/create-investment-package'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 
@@ -76,10 +76,11 @@ export default {
     const validUpload = ref(true)
 
     const memberId = route.params.id
+    const fixedIndexAnnuitiesId = route.params.annuityId
 
     const fileList = reactive([])
 
-    const { mutateAsync: create, isLoading: loadingCreate } = useMutation(createAnnuityIndex)
+    const { mutateAsync: create, isLoading: loadingCreate } = useMutation(createInvestmentPackage)
 
     const ruleForm = reactive({
       name: '',
@@ -113,6 +114,7 @@ export default {
     const initialState = () => {
       ruleForm.name = ''
       ruleForm.uuids = []
+      removeMedia()
     }
 
     const save = (e) => {
@@ -120,14 +122,14 @@ export default {
       if (!fileList.length) validUpload.value = false
       form.value.validate(async (valid) => {
         if (valid && validUpload.value) {
-          const res = await createAnnuityIndex({ id: memberId, data: ruleForm })
+          const res = await create({ id: fixedIndexAnnuitiesId, data: ruleForm })
           if (!('error' in res)) {
             useAlert({
               title: 'Success',
               type: 'success',
               message: 'Annuity Index created',
             })
-            queryClient.invalidateQueries(['annuityIndex'])
+            queryClient.invalidateQueries(['investment-package-all', fixedIndexAnnuitiesId])
             doneCloceDialog()
           }
         } else {
@@ -169,7 +171,6 @@ export default {
       inChangeFile,
       create,
       loadingCreate,
-
       validUpload,
     }
   },

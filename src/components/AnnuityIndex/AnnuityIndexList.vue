@@ -43,7 +43,6 @@ export default {
     const { isLoading, isError, data } = useAnnuityIndex(route.params.id)
 
     const addIndexAnnuity = () => {
-      console.log('addIndexAnnuity')
       store.commit('globalComponents/setShowModal', {
         destination: 'modalAddAnnuityIndex',
         value: true,

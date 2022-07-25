@@ -44,7 +44,7 @@
         :auto-upload="true"
         :show-file-block="true"
         :limit="1"
-        :disabled="fileList.length"
+        :disabled="!!fileList.length"
         @upload-success="handleSuccess"
         @upload-change="handleChange"
         @upload-mounted="bindRef"
@@ -169,6 +169,7 @@ export default {
       ruleForm.agent_rep_code = ''
       ruleForm.license_number = ''
       ruleForm.uuids = []
+      removeMedia()
     }
 
     const save = (e) => {

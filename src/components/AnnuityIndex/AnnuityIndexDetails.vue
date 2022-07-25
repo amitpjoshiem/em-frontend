@@ -1,19 +1,19 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="Fixed Index Annuity Details" />
-    <el-skeleton v-if="isLoading" :rows="7" animated />
 
     <div
-      v-else-if="annuityIndex.data"
       v-loading="loadingUpdate || loadingSignAnnuityIndex"
-      class="border border-color-grey rounded-md p-5 mb-4"
+      class="border border-color-grey rounded-md p-5 mb-4 h-[334px]"
     >
       <div class="flex justify-between items-center mb-5">
         <div class="flex">
           <InlineSvg :src="IconDoneStep" />
           <div class="text-main text-xl font-semibold ml-2">Basic Information</div>
         </div>
-        <div>
+        <SwdSpinner v-if="isLoading" />
+
+        <div v-else>
           <el-tag :type="ruleForm.is_client_signed ? 'success' : 'danger'" class="mr-4">
             <el-icon><EditPen /></el-icon>
             Client
@@ -24,123 +24,127 @@
           </el-tag>
         </div>
       </div>
-      <div class="flex items-center justify-center">
-        <div class="w-4/12 flex items-center justify-center flex-col">
-          <el-icon color="#042D52" :size="100"><Document /></el-icon>
-          <SwdUpload
-            :upload-data="{ collection: 'fixed_index_annuities' }"
-            :auto-upload="true"
-            @upload-success="handleChangeDocSuccess"
-            @upload-mounted="bindRef"
-          >
-            <template #main>
-              <el-button type="primary" size="small" plain class="mt-4 w-[130px]">Change document</el-button>
-            </template>
-          </SwdUpload>
-          <el-button
-            type="primary"
-            size="small"
-            plain
-            class="mt-4 w-[130px]"
-            @click="handlePreview(ruleForm.media.url)"
-          >
-            Preview
-          </el-button>
-        </div>
-        <div class="w-8/12 text-xss">
-          <el-form ref="form" :model="ruleForm">
-            <div class="text-main flex items-center h-6">
-              <span class="w-4/12 text-gray03 font-semibold">Document name:</span>
-              <el-form-item v-if="isEdit" size="small" class="w-4/12">
-                <el-input v-model="ruleForm.name" />
-              </el-form-item>
-              <span v-else class="w-4/12">{{ ruleForm.name }}</span>
-            </div>
-            <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Insurance provider:</span>
-              <el-form-item v-if="isEdit" size="small" class="w-4/12">
-                <el-input v-model="ruleForm.insurance_provider" />
-              </el-form-item>
-              <span v-else class="w-4/12">{{ ruleForm.insurance_provider }}</span>
-            </div>
-            <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Date signed advisor:</span>
-              <span class="w-4/12">{{ ruleForm.advisor_signed ? ruleForm.advisor_signed : 'not signed' }}</span>
-            </div>
-            <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Date signed client:</span>
-              <span class="w-4/12">{{ ruleForm.client_signed ? ruleForm.client_signed : 'not signed' }}</span>
-            </div>
-            <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Tax Qualification:</span>
-              <el-form-item v-if="isEdit" size="small" class="w-4/12">
-                <el-select
-                  v-model="ruleForm.tax_qualification"
-                  class="w-full"
-                  placeholder="Select Tax Qualification"
-                  :loading="isLoadingInit"
-                >
-                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-                </el-select>
-              </el-form-item>
-              <div v-else class="w-4/12 flex items-center cursor-pointer">{{ ruleForm.tax_qualification }}</div>
-            </div>
-            <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Agent Rep Code:</span>
-              <el-form-item v-if="isEdit" size="small" class="w-4/12">
-                <el-input v-model="ruleForm.agent_rep_code" />
-              </el-form-item>
-              <span v-else class="w-4/12">{{ ruleForm.agent_rep_code }}</span>
-            </div>
-            <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">License Number:</span>
-              <el-form-item v-if="isEdit" size="small" class="w-4/12">
-                <el-input v-model="ruleForm.license_number" />
-              </el-form-item>
-              <span v-else class="w-4/12">{{ ruleForm.license_number }}</span>
-            </div>
-          </el-form>
-        </div>
-      </div>
-      <div class="flex justify-end">
-        <div v-if="isEdit">
-          <el-button type="primary" size="small" class="w-[60px]" @click="cancelEdit">Cancel</el-button>
-          <el-button
-            type="primary"
-            size="small"
-            :loading="loadingUpdate"
-            class="w-[60px]"
-            @click="saveBasicInformation"
-          >
-            Save
-          </el-button>
-        </div>
-        <div v-else>
-          <el-popconfirm title="Are you sure to delete this?" @confirm="confirmDelete()">
-            <template #reference>
-              <el-button type="danger" size="small" class="w-[60px]" plain :loading="loadingDeleteAnnuity">
-                Delete
-              </el-button>
-            </template>
-          </el-popconfirm>
 
-          <el-button type="primary" size="small" plain>Send</el-button>
-          <el-button
-            v-if="!ruleForm.is_advisor_signed"
-            type="primary"
-            size="small"
-            plain
-            :loading="loadingSignAnnuityIndex"
-            class="w-[60px]"
-            @click="sign"
-          >
-            Sign
-          </el-button>
-          <el-button v-if="!isEdit" type="primary" size="small" class="w-[60px]" plain @click="editBasicInformation">
-            Edit
-          </el-button>
+      <el-skeleton v-if="isLoading" :rows="3" animated />
+      <template v-else-if="annuityIndex.data">
+        <div class="flex items-center justify-center">
+          <div class="w-4/12 flex items-center justify-center flex-col">
+            <el-icon color="#042D52" :size="100"><Document /></el-icon>
+            <SwdUpload
+              :upload-data="{ collection: 'fixed_index_annuities' }"
+              :auto-upload="true"
+              @upload-success="handleChangeDocSuccess"
+              @upload-mounted="bindRef"
+            >
+              <template #main>
+                <el-button type="primary" size="small" plain class="mt-4 w-[130px]">Change document</el-button>
+              </template>
+            </SwdUpload>
+            <el-button
+              type="primary"
+              size="small"
+              plain
+              class="mt-4 w-[130px]"
+              @click="handlePreview(ruleForm.media.url)"
+            >
+              Preview
+            </el-button>
+          </div>
+          <div class="w-8/12 text-xss">
+            <el-form ref="form" :model="ruleForm">
+              <div class="text-main flex items-center h-6">
+                <span class="w-4/12 text-gray03 font-semibold">Document name:</span>
+                <el-form-item v-if="isEdit" size="small" class="w-4/12">
+                  <el-input v-model="ruleForm.name" />
+                </el-form-item>
+                <span v-else class="w-4/12">{{ ruleForm.name }}</span>
+              </div>
+              <div class="text-main flex items-center h-6 mt-2">
+                <span class="w-4/12 text-gray03 font-semibold">Insurance provider:</span>
+                <el-form-item v-if="isEdit" size="small" class="w-4/12">
+                  <el-input v-model="ruleForm.insurance_provider" />
+                </el-form-item>
+                <span v-else class="w-4/12">{{ ruleForm.insurance_provider }}</span>
+              </div>
+              <div class="text-main flex items-center h-6 mt-2">
+                <span class="w-4/12 text-gray03 font-semibold">Date signed advisor:</span>
+                <span class="w-4/12">{{ ruleForm.advisor_signed ? ruleForm.advisor_signed : 'not signed' }}</span>
+              </div>
+              <div class="text-main flex items-center h-6 mt-2">
+                <span class="w-4/12 text-gray03 font-semibold">Date signed client:</span>
+                <span class="w-4/12">{{ ruleForm.client_signed ? ruleForm.client_signed : 'not signed' }}</span>
+              </div>
+              <div class="text-main flex items-center h-6 mt-2">
+                <span class="w-4/12 text-gray03 font-semibold">Tax Qualification:</span>
+                <el-form-item v-if="isEdit" size="small" class="w-4/12">
+                  <el-select
+                    v-model="ruleForm.tax_qualification"
+                    class="w-full"
+                    placeholder="Select Tax Qualification"
+                    :loading="isLoadingInit"
+                  >
+                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
+                </el-form-item>
+                <div v-else class="w-4/12 flex items-center cursor-pointer">{{ ruleForm.tax_qualification }}</div>
+              </div>
+              <div class="text-main flex items-center h-6 mt-2">
+                <span class="w-4/12 text-gray03 font-semibold">Agent Rep Code:</span>
+                <el-form-item v-if="isEdit" size="small" class="w-4/12">
+                  <el-input v-model="ruleForm.agent_rep_code" />
+                </el-form-item>
+                <span v-else class="w-4/12">{{ ruleForm.agent_rep_code }}</span>
+              </div>
+              <div class="text-main flex items-center h-6 mt-2">
+                <span class="w-4/12 text-gray03 font-semibold">License Number:</span>
+                <el-form-item v-if="isEdit" size="small" class="w-4/12">
+                  <el-input v-model="ruleForm.license_number" />
+                </el-form-item>
+                <span v-else class="w-4/12">{{ ruleForm.license_number }}</span>
+              </div>
+            </el-form>
+          </div>
         </div>
-      </div>
+        <div class="flex justify-end">
+          <div v-if="isEdit">
+            <el-button type="primary" size="small" class="w-[60px]" @click="cancelEdit">Cancel</el-button>
+            <el-button
+              type="primary"
+              size="small"
+              :loading="loadingUpdate"
+              class="w-[60px]"
+              @click="saveBasicInformation"
+            >
+              Save
+            </el-button>
+          </div>
+          <div v-else>
+            <el-popconfirm title="Are you sure to delete this?" @confirm="confirmDelete()">
+              <template #reference>
+                <el-button type="danger" size="small" class="w-[60px]" plain :loading="loadingDeleteAnnuity">
+                  Delete
+                </el-button>
+              </template>
+            </el-popconfirm>
+
+            <el-button type="primary" size="small" plain>Send</el-button>
+            <el-button
+              v-if="!ruleForm.is_advisor_signed"
+              type="primary"
+              size="small"
+              plain
+              :loading="loadingSignAnnuityIndex"
+              class="w-[60px]"
+              @click="sign"
+            >
+              Sign
+            </el-button>
+            <el-button v-if="!isEdit" type="primary" size="small" class="w-[60px]" plain @click="editBasicInformation">
+              Edit
+            </el-button>
+          </div>
+        </div>
+      </template>
     </div>
     <InvestmentPackageList />
     <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
