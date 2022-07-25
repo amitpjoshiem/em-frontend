@@ -203,6 +203,10 @@ export default {
       previewUrl: '',
     })
 
+    const setInitValue = (data) => {
+      Object.assign(ruleForm, data)
+    }
+
     watchEffect(() => {
       if (!isLoading.value) {
         setInitValue(annuityIndex.value.data)
@@ -257,10 +261,6 @@ export default {
     const cancelEdit = () => {
       isEdit.value = false
       setInitValue(annuityIndex.value.data)
-    }
-
-    const setInitValue = (data) => {
-      Object.assign(ruleForm, data)
     }
 
     const bindRef = (ref) => {
