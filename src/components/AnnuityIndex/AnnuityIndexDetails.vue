@@ -142,25 +142,7 @@
         </div>
       </div>
     </div>
-
-    <div class="border border-color-grey rounded-md p-5 mb-4">
-      <div class="flex items-center mb-5">
-        <InlineSvg :src="IconDoneStep" />
-        <div class="text-main text-xl font-semibold ml-2">Investment Package</div>
-      </div>
-
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <AnnuityIndexDetailsItem />
-        </el-col>
-        <el-col :span="12">
-          <AnnuityIndexDetailsItem />
-        </el-col>
-        <el-col :span="12">
-          <AnnuityIndexDetailsItem />
-        </el-col>
-      </el-row>
-    </div>
+    <InvestmentPackageList />
     <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
   </div>
 </template>
@@ -177,19 +159,19 @@ import { useAlert } from '@/utils/use-alert'
 import { useFetchTaxQualificationInit } from '@/api/use-fetch-tax-qualification-init.js'
 import { useStore } from 'vuex'
 import { EditPen } from '@element-plus/icons-vue'
-import AnnuityIndexDetailsItem from './AnnuityIndexDetailsCertificate.vue'
 import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
+import InvestmentPackageList from '@/components/AnnuityIndex/InvestmentPackageList.vue'
 
 export default {
   name: 'AnnuityIndexDetails',
   components: {
     Document,
-    AnnuityIndexDetailsItem,
     SwdUpload,
     PrewiewPdfModal,
     EditPen,
+    InvestmentPackageList,
   },
   setup() {
     const route = useRoute()
