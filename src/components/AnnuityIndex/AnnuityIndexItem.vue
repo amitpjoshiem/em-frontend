@@ -15,11 +15,11 @@
         </div>
         <div class="text-main flex pt-2">
           <span class="w-6/12 text-gray03 font-semibold">Date signed advisor:</span>
-          <span class="w-6/12">{{ item.advisor_signed ? item.advisor_signed : 'not signed' }}</span>
+          <SwdStubForText :text="item.advisor_signed" plug="&mdash;" class="text-sm text-main" />
         </div>
         <div class="text-main flex pt-2">
           <span class="w-6/12 text-gray03 font-semibold">Date signed client:</span>
-          <span class="w-6/12">{{ item.client_signed ? item.client_signed : 'not signed' }}</span>
+          <SwdStubForText :text="item.client_signed" plug="&mdash;" class="text-sm text-main" />
         </div>
         <div class="text-main flex pt-2">
           <span class="w-6/12 text-gray03 font-semibold">Tax Qualification:</span>

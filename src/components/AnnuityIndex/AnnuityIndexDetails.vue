@@ -68,11 +68,11 @@
               </div>
               <div class="text-main flex items-center h-6 mt-2">
                 <span class="w-4/12 text-gray03 font-semibold">Date signed advisor:</span>
-                <span class="w-4/12">{{ ruleForm.advisor_signed ? ruleForm.advisor_signed : 'not signed' }}</span>
+                <SwdStubForText :text="ruleForm.advisor_signed" plug="&mdash;" class="text-sm text-main" />
               </div>
               <div class="text-main flex items-center h-6 mt-2">
                 <span class="w-4/12 text-gray03 font-semibold">Date signed client:</span>
-                <span class="w-4/12">{{ ruleForm.client_signed ? ruleForm.client_signed : 'not signed' }}</span>
+                <SwdStubForText :text="ruleForm.client_signed" plug="&mdash;" class="text-sm text-main" />
               </div>
               <div class="text-main flex items-center h-6 mt-2">
                 <span class="w-4/12 text-gray03 font-semibold">Tax Qualification:</span>
