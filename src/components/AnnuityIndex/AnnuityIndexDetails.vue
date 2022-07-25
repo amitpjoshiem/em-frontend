@@ -154,11 +154,11 @@ import { useAnnuityIndexFind } from '@/api/use-fetch-annuity-index-find.js'
 import { updateAnnuityIndex } from '@/api/vueQuery/update-annuity-index'
 import { fetchSignAnnuityIndex } from '@/api/vueQuery/fetch-sign-annuity-index'
 import { fetchDeleteAnnuityIndex } from '@/api/vueQuery/fetch-delete-annuity-index'
-import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { useFetchTaxQualificationInit } from '@/api/use-fetch-tax-qualification-init.js'
 import { useStore } from 'vuex'
 import { EditPen } from '@element-plus/icons-vue'
+import { useMutation, useQueryClient } from 'vue-query'
 import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
@@ -177,6 +177,7 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
+    const queryClient = useQueryClient()
 
     const form = ref(null)
     const options = ref([])
@@ -226,6 +227,7 @@ export default {
           const res = await update({ form: data, id: route.params.annuityId })
           if (!('error' in res)) {
             isEdit.value = false
+            queryClient.invalidateQueries(['annuityIndexFind', route.params.annuityId])
             useAlert({
               title: 'Success',
               type: 'success',
