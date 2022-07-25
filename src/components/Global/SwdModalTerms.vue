@@ -15,36 +15,34 @@
     </div>
     <el-scrollbar height="400px" class="text-black pr-3">
       <p class="pb-2 font-semibold text-base pt-4">Terms and Conditions</p>
-      <p class="pb-2">We use your personal information collected via our application and forms for</p>
-      <ol>
-        <li class="pb-2">1. Facilitating your account creation and the logon process.</li>
-        <li class="pb-2">2. Requesting Feedback: We may use your information to contact you and request feedback.</li>
-        <li class="pb-2">
-          3. Managing user’s account: We may use your information for the purpose of managing your account and keeping
-          it in working order.
-        </li>
-        <li class="pb-2">
-          4. Sending administrative information: We may use your personal information to send details on products and
-          services we offer, or to inform you of changes to our terms, conditions and policies.
-        </li>
-        <li class="pb-2">
-          5. Protecting our services: We may use your information as part of our ongoing efforts to keep our services
-          safe and secure through fraud monitoring and prevention.
-        </li>
-        <li class="pb-2">
-          6. Enforcement of our terms, conditions and policies regarding legal and regulatory requirements in connection
-          with this contract.
-        </li>
-        <li class="pb-2">
-          7. Responding to legal requests and to prevent potential harm: If we receive a subpoena or legal request, we
-          may be required to inspect data to determine an appropriate response.
-        </li>
-        <li class="pb-2">
-          8. Delivery of services or user inquiries: We may use your information to respond to your inquiries or solve
-          potential issues users may have with our services.
-        </li>
-        <li class="pb-2">9. Keeping your account updated.</li>
-      </ol>
+      <p class="term-item">We use your personal information collected via our application and forms for</p>
+      <p class="term-item">1. Facilitating your account creation and the logon process.</p>
+      <p class="term-item">2. Requesting Feedback: We may use your information to contact you and request feedback.</p>
+      <p class="term-item">
+        3. Managing user’s account: We may use your information for the purpose of managing your account and keeping it
+        in working order.
+      </p>
+      <p class="term-item">
+        4. Sending administrative information: We may use your personal information to send details on products and
+        services we offer, or to inform you of changes to our terms, conditions and policies.
+      </p>
+      <p class="term-item">
+        5. Protecting our services: We may use your information as part of our ongoing efforts to keep our services safe
+        and secure through fraud monitoring and prevention.
+      </p>
+      <p class="term-item">
+        6. Enforcement of our terms, conditions and policies regarding legal and regulatory requirements in connection
+        with this contract.
+      </p>
+      <p class="term-item">
+        7. Responding to legal requests and to prevent potential harm: If we receive a subpoena or legal request, we may
+        be required to inspect data to determine an appropriate response.
+      </p>
+      <p class="term-item">
+        8. Delivery of services or user inquiries: We may use your information to respond to your inquiries or solve
+        potential issues users may have with our services.
+      </p>
+      <p class="term-item">9. Keeping your account updated.</p>
     </el-scrollbar>
     <template #footer>
       <span class="dialog-footer">
@@ -105,5 +103,9 @@ export default defineComponent({
 <style>
 .dialog-terms {
   border-radius: 0;
+}
+.term-item {
+  padding-bottom: 10px;
+  word-break: break-word;
 }
 </style>
