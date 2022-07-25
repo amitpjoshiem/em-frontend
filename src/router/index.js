@@ -343,10 +343,29 @@ const routes = [
       },
 
       {
-        path: 'member-details/:id',
-        name: 'member-details',
-        component: () =>
-          import(/* webpackChunkName: "MemberDetails" */ '../components/MemberDetails/MemberDetails.vue'),
+        path: 'member/:id',
+        name: 'member',
+        component: () => import(/* webpackChunkName: "MemberDetails" */ '../views/MemberDetails.vue'),
+        children: [
+          {
+            path: 'member-details',
+            name: 'member-details',
+            component: () =>
+              import(/* webpackChunkName: "MemberDetails" */ '../components/MemberDetails/MemberDetails.vue'),
+          },
+          {
+            path: 'annuity-index/:annuityId',
+            name: 'annuity-index',
+            component: () =>
+              import(/* webpackChunkName: "AnnuityIndex" */ '../components/AnnuityIndex/AnnuityIndexList.vue'),
+          },
+          {
+            path: 'annuity-index-details/:annuityId?',
+            name: 'annuity-index-details',
+            component: () =>
+              import(/* webpackChunkName: "AnnuityIndexItem" */ '../components/AnnuityIndex/AnnuityIndexDetails.vue'),
+          },
+        ],
       },
 
       {
@@ -531,17 +550,18 @@ const routes = [
           },
         ],
       },
-      {
-        path: 'annuity-index/:id',
-        name: 'annuity-index',
-        component: () => import(/* webpackChunkName: "AnnuityIndex" */ '../components/AnnuityIndex/AnnuityIndex.vue'),
-      },
-      {
-        path: 'annuity-index-details/:id?',
-        name: 'annuity-index-details',
-        component: () =>
-          import(/* webpackChunkName: "AnnuityIndexItem" */ '../components/AnnuityIndex/AnnuityIndexDetails.vue'),
-      },
+      // {
+      //   path: 'annuity-index/:id',
+      //   name: 'annuity-index',
+      //   component: () =>
+      //     import(/* webpackChunkName: "AnnuityIndex" */ '../components/AnnuityIndex/AnnuityIndexList.vue'),
+      // },
+      // {
+      //   path: 'annuity-index-details/:id?',
+      //   name: 'annuity-index-details',
+      //   component: () =>
+      //     import(/* webpackChunkName: "AnnuityIndexItem" */ '../components/AnnuityIndex/AnnuityIndexDetails.vue'),
+      // },
     ],
   },
 

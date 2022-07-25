@@ -46,7 +46,6 @@ export default {
     SwdUpload,
     PrewiewPdfModal,
   },
-
   setup() {
     const store = useStore()
     const route = useRoute()

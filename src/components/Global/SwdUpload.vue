@@ -1,6 +1,7 @@
 <template>
   <el-upload
     ref="innerRef"
+    :limit="limit"
     :file-list="fileList"
     :action="getUrlMedia"
     :show-file-list="showFileList"
@@ -49,7 +50,7 @@
             icon="el-icon-info"
             icon-color="red"
             title="Are you sure to delete this?"
-            @confirm="handleRemove(file.id)"
+            @confirm="handleRemove(file)"
           >
             <template #reference>
               <el-button type="danger" size="small" plain :loading="idFileRemove === file.id">Remove</el-button>
@@ -104,6 +105,11 @@ export default {
       type: Array,
       required: false,
       default: () => [],
+    },
+    limit: {
+      type: Number,
+      required: false,
+      default: 10,
     },
   },
   emits: [
@@ -168,9 +174,14 @@ export default {
       emit('open-prewiev', file.url)
     }
 
-    const handleRemove = (id) => {
-      idFileRemove.value = id
-      emit('remove-media', id)
+    const handleRemove = (media) => {
+      if (media.id) {
+        idFileRemove.value = media.id
+        emit('remove-media', media.id)
+      } else {
+        idFileRemove.value = media
+        emit('remove-media', media)
+      }
     }
 
     return {
