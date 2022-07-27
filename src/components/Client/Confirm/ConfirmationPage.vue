@@ -57,13 +57,13 @@
       <ListDocumentsClient doc-collections="social_security_information" page="social-security" />
     </div>
 
-    <div class="border border-border-blue rounded-md p-5 mb-4">
+    <!-- <div class="border border-border-blue rounded-md p-5 mb-4">
       <div class="flex items-center mb-5">
         <InlineSvg :src="IconDoneStep" />
         <div class="text-main text-xl font-semibold ml-2">List of Stock Certificates or Bonds</div>
       </div>
       <ListDocumentsClient doc-collections="list_of_stock_certificates_or_bonds" page="list-stock" />
-    </div>
+    </div> -->
 
     <div class="flex justify-end mt-6 mb-4">
       <el-button
