@@ -1,119 +1,78 @@
 <template>
-  <!-- <div class="flex justify-between">
-    <div
-      class="signpost"
-      :class="{
-        'step-complet': active > 1,
-        'step-no-complet': active < 1,
-        'step-current': active === 1,
-      }"
-      @click="setActive(1)"
-    >
-      <p>1st Appointment</p>
-    </div>
-    <div
-      class="signpost"
-      :class="{
-        'step-complet': active > 2,
-        'step-no-complet': active < 2,
-        'step-current': active === 2,
-      }"
-      @click="setActive(2)"
-    >
-      <p>2nd Appointment</p>
-    </div>
-    <div
-      class="signpost"
-      :class="{
-        'step-complet': active > 3,
-        'step-no-complet': active < 3,
-        'step-current': active === 3,
-      }"
-      @click="setActive(3)"
-    >
-      <p>3rd Appointment</p>
-    </div>
-    <div
-      class="signpost"
-      :class="{
-        'step-complet': active > 4,
-        'step-no-complet': active < 4,
-        'step-current': active === 4,
-      }"
-      @click="setActive(4)"
-    >
-      <p>Place Holder Acct</p>
-    </div>
-    <div
-      class="signpost"
-      :class="{
-        'step-complet': active > 5,
-        'step-no-complet': active < 5,
-        'step-current': active === 5,
-      }"
-      @click="setActive(5)"
-    >
-      <p>Paperwork Signed</p>
-    </div>
-    <div
-      class="signpost"
-      :class="{
-        'step-complet': active > 6,
-        'step-no-complet': active < 6,
-        'step-current': active === 6,
-      }"
-      @click="setActive(6)"
-    >
-      <p>Commission Paid</p>
-    </div>
-    <div
-      class="signpost flex-col"
-      :class="{
-        'step-complet': active > 7,
-        'step-no-complet': active < 7,
-        'step-current': active === 7,
-      }"
-      @click="setActive(7)"
-    >
-      <p>Contract delivery/</p>
-      <p>Free look period</p>
-    </div>
-    <div
-      class="signpost"
-      :class="{
-        'step-no-complet': active < 8,
-        'step-current': active === 8,
-      }"
-      @click="setActive(8)"
-    >
-      <p>Closed</p>
-    </div>
-  </div> -->
   <div class="flex justify-between">
     <div
       v-for="(item, index) in steps"
       :key="index"
       class="signpost"
       :class="{
-        'step-complet': active > index,
-        'step-no-complet': active < index,
-        'step-current': active === index,
+        'step-complet': active > index + 1,
+        'step-no-complet': active < index + 1,
+        'step-current': active === index + 1,
       }"
-      @click="setActive(index)"
+      @click="setActive(item.value)"
     >
       <p>{{ item.label }}</p>
     </div>
   </div>
-  <!-- <div v-if="!isLoading">{{ salesforceStage.data }}</div> -->
-  <!-- <div v-if="!isLoadingSchema">{{ salesforceSchema.data }}</div> -->
-  <!-- <div>{{ currentStage }}</div> -->
+
+  <el-dialog v-model="dialogVisible" title="Stage" width="45%" :before-close="closeDialog">
+    <div v-if="isLoadingSchema" class="flex items-center justify-center">
+      <SwdSpinner large />
+    </div>
+    <el-form
+      v-if="!isLoadingSchema && salesforceSchema"
+      ref="form"
+      :model="ruleForm"
+      label-position="top"
+      :rules="salesforceSchema.data.rules"
+    >
+      <div v-for="(elem, index) in salesforceSchema.data.schema" :key="index">
+        <!-- STRING -->
+        <el-form-item v-if="elem.type === 'string'" :label="elem.label" class="w-full mb-4" :prop="elem.name">
+          <el-input v-model="ruleForm[elem.name]" placeholder="Enter first name" />
+        </el-form-item>
+        <!-- SELECT -->
+        <el-form-item v-if="elem.type === 'select'" :label="elem.label" class="mb-4" :prop="elem.name">
+          <el-select v-model="ruleForm[elem.name]" placeholder="Select" class="w-full">
+            <el-option v-for="item in elem.options" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </el-form-item>
+        <!-- DATE PICKER -->
+        <el-form-item v-if="elem.type === 'date'" :label="elem.label" class="w-full mb-4" :prop="elem.name">
+          <el-date-picker
+            v-model="ruleForm[elem.name]"
+            type="date"
+            placeholder="Enter date"
+            format="MM/DD/YYYY"
+            value-format="YYYY-MM-DD"
+          />
+        </el-form-item>
+      </div>
+
+      <div class="pt-5 text-right">
+        <el-button class="w-20" @click="closeDialog">Close</el-button>
+        <el-button
+          type="primary"
+          class="w-20"
+          :disabled="isLoadingUpdateStage"
+          :loading="isLoadingUpdateStage"
+          @click="saveStage"
+        >
+          Save
+        </el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script>
-import { ref, watchEffect } from 'vue'
-// import { useAlert } from '@/utils/use-alert'
+import { ref, watchEffect, reactive, computed } from 'vue'
 import { useFetchSalesforceOpportunityStages } from '@/api/use-fetch-salesforce-opportunity-stages.js'
 import { useFetchSalesforceOpportunitySchema } from '@/api/use-fetch-salesforce-opportunity-schema.js'
+import { updateSalesforceOpportunityStages } from '@/api/vueQuery/update-salesforce-opportunity-stages'
+import { useMutation, useQueryClient } from 'vue-query'
+import { useRoute } from 'vue-router'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'MemberStage',
@@ -124,71 +83,143 @@ export default {
       default: 'prospect',
     },
   },
-  setup() {
+  setup(props) {
+    const queryClient = useQueryClient()
+    const route = useRoute()
+
     const active = ref(0)
     const steps = ref([])
     const newStage = ref('')
+    const dialogVisible = ref(false)
+    const form = ref(null)
 
-    const { isLoading, isError, data: salesforceStage } = useFetchSalesforceOpportunityStages()
+    const ruleForm = reactive({})
+
+    const { isLoading, data: salesforceStage } = useFetchSalesforceOpportunityStages()
+
     const {
       isLoading: isLoadingSchema,
-      isError: isErrorSchema,
       data: salesforceSchema,
-      refetch,
+      refetch: refetchSchema,
     } = useFetchSalesforceOpportunitySchema(newStage, { enabled: false })
-    // } = useFetchSalesforceOpportunitySchema({ stage: 'appointment_1st' }, { enabled: false })
+
+    const { mutateAsync: updateStage, isLoading: isLoadingUpdateStage } = useMutation(updateSalesforceOpportunityStages)
 
     const setActive = async (step) => {
-      console.log('step - ', step)
-      await setNewStage()
-      await refetch.value()
-      // active.value = step
-      // useAlert({
-      //   title: 'Success',
-      //   type: 'success',
-      //   message: 'Information update successfully',
-      // })
+      await setNewStage(step)
+      const res = await refetchSchema.value()
+      if (res.data.data.schema.length) {
+        dialogVisible.value = true
+        initState()
+        res.data.data.schema.forEach((item) => {
+          ruleForm[item.name] = ''
+        })
+      } else {
+        handleUpdate()
+      }
+    }
+
+    const getLabel = (label) => {
+      if (label.indexOf('/') !== -1) {
+        return label.split('/')[0] + '/ ' + label.split('/')[1]
+      } else {
+        return label
+      }
+    }
+
+    const getActiveStage = computed(() => {
+      switch (true) {
+        case props.currentStage === '1st Appointment':
+          return 1
+        case props.currentStage === '2nd Appointment':
+          return 2
+        case props.currentStage === '3rd Appointment':
+          return 3
+        case props.currentStage === 'Place Holder Acct':
+          return 4
+        case props.currentStage === 'Paperwork Signed':
+          return 5
+        case props.currentStage === 'Commission Paid':
+          return 6
+        case props.currentStage === 'Contract delivery/Free look period':
+          return 7
+        case props.currentStage === 'Closed Won' || props.currentStage === 'Closed Win':
+          return 8
+        default:
+          return 0
+      }
+    })
+
+    const setNewStage = (step) => {
+      newStage.value = step
+    }
+
+    const closeDialog = () => {
+      dialogVisible.value = false
+    }
+
+    const initState = () => {
+      for (var prop in ruleForm) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (ruleForm.hasOwnProperty(prop)) {
+          delete ruleForm[prop]
+        }
+      }
+    }
+
+    const saveStage = async (e) => {
+      e.preventDefault()
+      form.value.validate(async (valid) => {
+        if (valid) {
+          handleUpdate()
+        } else {
+          return false
+        }
+      })
+    }
+
+    const handleUpdate = async () => {
+      const form = { stage: newStage.value, ...ruleForm }
+      const res = await updateStage({ id: route.params.id, form })
+      if (!('error' in res)) {
+        queryClient.invalidateQueries(['member'])
+        dialogVisible.value = false
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Upadte successfully',
+        })
+      }
     }
 
     watchEffect(() => {
       if (!isLoading.value) {
-        // console.log('salesforceStage.value.data - ', salesforceStage.value.data)
-        // salesforceStage.value.data.forEach((item) => {
-        //   console.log('item - ', item)
-        // })
+        active.value = getActiveStage?.value
+        steps.value = []
         for (var key in salesforceStage.value.data) {
           steps.value.push({
-            label: salesforceStage.value.data[key],
+            label: getLabel(salesforceStage.value.data[key]),
             value: key,
           })
         }
-        steps.value.splice(0, 1)
-        console.log('steps - ', steps)
-
-        // salesforceStage.value.data.forE
-        // steps.value = Object.entries(salesforceStage.value.data)
-        // steps.value.splice(0, 1)
       }
     })
-
-    const setNewStage = () => {
-      newStage.value = 'appointment_1st'
-    }
 
     return {
       active,
       setActive,
-
       isLoading,
-      isError,
       salesforceStage,
-
       isLoadingSchema,
-      isErrorSchema,
       salesforceSchema,
-
       newStage,
       steps,
+      dialogVisible,
+      closeDialog,
+      ruleForm,
+      saveStage,
+      form,
+      isLoadingUpdateStage,
     }
   },
 }
@@ -204,7 +235,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  word-break: break-all;
+  word-break: break-word;
 }
 .signpost p {
   font-size: 11px;

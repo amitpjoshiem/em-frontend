@@ -13,6 +13,7 @@ export const useFetchSalesforceOpportunitySchema = (stage, options = {}) => {
   ])
 
   const query = useQuery(queryKey, {
+    cacheTime: 0,
     queryFn: fetchSalesforceOpportunitySchema,
     ...options,
   })

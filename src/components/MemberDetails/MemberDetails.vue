@@ -6,7 +6,13 @@
       info-btn-destination="MemberDetails"
       :loading="isLoadingProspectDetails"
     />
-    <MemberStage v-if="!isLoadingProspectDetails && member.type === 'prospect'" :current-stage="salesforce.stage" />
+    <div v-if="isLoadingProspectDetails" class="flex items-center justify-center">
+      <SwdSpinner />
+    </div>
+    <MemberStage
+      v-else-if="!isLoadingProspectDetails && member.type === 'prospect'"
+      :current-stage="salesforce.value.stage"
+    />
 
     <div class="flex my-5">
       <div class="w-8/24 mr-5">
