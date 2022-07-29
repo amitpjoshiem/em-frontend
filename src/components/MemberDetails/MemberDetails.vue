@@ -6,7 +6,14 @@
       info-btn-destination="MemberDetails"
       :loading="isLoadingProspectDetails"
     />
-    <MemberStep v-if="!isLoadingProspectDetails && member.type === 'prospect'" />
+    <div v-if="isLoadingProspectDetails" class="flex items-center justify-center">
+      <SwdSpinner />
+    </div>
+    <MemberStage
+      v-else-if="!isLoadingProspectDetails && member.type === 'prospect'"
+      :current-stage="salesforce.value.stage"
+    />
+
     <div class="flex my-5">
       <div class="w-8/24 mr-5">
         <WidgetMemberDetails />
@@ -31,7 +38,7 @@ import AssetsAllocation from '@/components/MemberDetails/AssetsAllocation.vue'
 import WidgetPastStress from '@/components/MemberDetails/WidgetPastStress.vue'
 import WidgetFixedAnnuity from '@/components/MemberDetails/WidgetFixedAnnuity.vue'
 import WidgetOther from '@/components/MemberDetails/WidgetOther.vue'
-import MemberStep from '@/components/MemberDetails/MemberStep.vue'
+import MemberStage from '@/components/MemberDetails/MemberStage.vue'
 import InfoSalesforceStatus from '@/components/MemberDetails/InfoSalesforceStatus.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
@@ -47,11 +54,11 @@ export default {
     WidgetOther,
     InfoSalesforceStatus,
     WidgetFixedAnnuity,
-    MemberStep,
+    MemberStage,
   },
 
   setup() {
-    const { isLoading: isLoadingProspectDetails, isError, data: member } = useProspectDetails()
+    const { isLoading: isLoadingProspectDetails, isError, data: member, salesforce } = useProspectDetails()
     const { showContent } = useShowContentEnv()
 
     const getTitle = computed(() => {
@@ -65,6 +72,7 @@ export default {
       member,
       getTitle,
       showContent,
+      salesforce,
     }
   },
 }
