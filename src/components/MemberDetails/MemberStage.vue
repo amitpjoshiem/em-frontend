@@ -1,8 +1,10 @@
 <template>
+  <div>{{ isLoadingUpdateStage }}</div>
   <div class="flex justify-between">
     <div
       v-for="(item, index) in steps"
       :key="index"
+      v-loading="isLoadingUpdateStage && newStage === item.value"
       class="signpost"
       :class="{
         'step-complet': active > index + 1,
@@ -187,7 +189,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Upadte successfully',
+          message: 'Update successfully',
         })
       }
     }
