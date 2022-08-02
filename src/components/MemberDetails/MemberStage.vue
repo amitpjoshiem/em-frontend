@@ -1,5 +1,4 @@
 <template>
-  <div>{{ isLoadingUpdateStage }}</div>
   <div class="flex justify-between">
     <div
       v-for="(item, index) in steps"
