@@ -242,11 +242,11 @@ export default {
     const sign = async () => {
       const res = await signAnnuityIndex(annuityIndex.value.data.id)
       if (!('error' in res)) {
-        setInitValue(res.data)
+        window.open(res.data.url, '_blank')
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Annuity Index signed',
+          message: 'A signing link has been sent to your email.',
         })
       }
     }

@@ -65,11 +65,11 @@ export default {
     const handleSign = async () => {
       const res = await sign(props.item.id)
       if (!('error' in res)) {
-        queryClient.invalidateQueries(['investment-package-all', route.params.annuityId])
+        window.open(res.data.url, '_blank')
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Investment Package signed',
+          message: 'A signing link has been sent to your email.',
         })
       }
     }
