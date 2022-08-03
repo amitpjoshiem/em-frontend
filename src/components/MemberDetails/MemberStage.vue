@@ -144,7 +144,7 @@ export default {
           return 6
         case props.currentStage === 'Contract delivery/Free look period':
           return 7
-        case props.currentStage === 'Closed Won' || props.currentStage === 'Closed Win':
+        case props.currentStage.trim() === 'Closed Won' || props.currentStage.trim() === 'Closed Win':
           return 8
         default:
           return 0
