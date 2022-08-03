@@ -87,15 +87,15 @@ export default {
 
     const getActionsOptions = computed(() => {
       if (
-        store.state.globalComponents.role === 'admin' ||
-        (store.state.globalComponents.role === 'ceo' && !props.idAdminPanel)
+        (store.state.globalComponents.role === 'admin' || store.state.globalComponents.role === 'ceo') &&
+        !props.idAdminPanel
       ) {
         return actionsOptionsAdmin
       }
 
       if (
-        store.state.globalComponents.role === 'admin' ||
-        (store.state.globalComponents.role === 'ceo' && props.idAdminPanel)
+        (store.state.globalComponents.role === 'admin' || store.state.globalComponents.role === 'ceo') &&
+        props.idAdminPanel
       ) {
         return actionsOptionsAdminPanel
       }
