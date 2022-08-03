@@ -66,7 +66,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Send link',
+              message: 'Send link success',
             })
             closeDialog()
           }
