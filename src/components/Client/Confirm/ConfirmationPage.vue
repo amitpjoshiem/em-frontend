@@ -142,7 +142,7 @@ export default {
     }
 
     const submit = () => {
-      ElMessageBox.alert('Thank you for submitting the details! The advisor will contact you nearest time.', 'Info', {
+      ElMessageBox.alert('Thank you for submitting your information. We will be in contact soon!', 'Info', {
         showConfirmButton: false,
         showClose: false,
       })
