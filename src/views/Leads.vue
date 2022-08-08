@@ -1,8 +1,8 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="List of Leads" />
     <ListContent :visible-tab="['all-leads', 'active-leads', 'deactivated-leads']" />
-  </div>
+  </SwdWrapper>
 </template>
 
 <script>

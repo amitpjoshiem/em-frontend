@@ -1,8 +1,8 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="Revenue Dashboard" />
     <PipeLineContent />
-  </div>
+  </SwdWrapper>
 </template>
 <script>
 import PipeLineContent from '@/components/PipeLine/PipeLineContent.vue'
