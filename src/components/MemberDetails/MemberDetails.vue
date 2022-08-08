@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader
       :title="getTitle"
       witch-info-btn
@@ -29,7 +29,7 @@
       <AssetsAllocation />
       <WidgetOther />
     </div>
-  </div>
+  </SwdWrapper>
 </template>
 <script>
 import OpportunityTable from '@/components/MemberDetails/OpportunityTable.vue'

@@ -1,9 +1,9 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <NewProspectHeader />
     <NewProspectSteps />
     <router-view />
-  </div>
+  </SwdWrapper>
 </template>
 
 <script>

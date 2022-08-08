@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="Fixed Index Annuity" />
     <div class="flex justify-end pt-2 pb-5">
       <el-button plain type="primary" size="small" @click="addIndexAnnuity">Add Index Annuity</el-button>
@@ -20,7 +20,7 @@
     </el-row>
 
     <ModalAddAnnuityIndex />
-  </div>
+  </SwdWrapper>
 </template>
 <script>
 import AnnuityIndexItem from '@/components/AnnuityIndex/AnnuityIndexItem.vue'

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader :title="getTitle" />
     <div v-if="!isLoading">
       <div class="mb-5">
@@ -66,7 +66,7 @@
     </div>
     <el-skeleton v-else :rows="15" animated />
     <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
-  </div>
+  </SwdWrapper>
 </template>
 
 <script>

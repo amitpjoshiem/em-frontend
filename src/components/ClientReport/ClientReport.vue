@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <div class="pb-5 flex">
       <div class="w-4/12">
         <BackButton text="Back" @click="$router.go(-1)" />
@@ -42,7 +42,7 @@
       </div>
       <p class="text-gray03 font-semibold text-xss mt-3">No client reports available</p>
     </div>
-  </div>
+  </SwdWrapper>
 </template>
 <script>
 import { ref } from 'vue'

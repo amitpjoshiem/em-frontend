@@ -1,10 +1,10 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="Fixed Index Annuity Details" />
     <AnnuityIndexDetailsBasic />
     <AnnuityIndexDetailsDeposits />
     <InvestmentPackageList />
-  </div>
+  </SwdWrapper>
 </template>
 <script>
 import InvestmentPackageList from '@/components/AnnuityIndex/InvestmentPackageList.vue'

@@ -1,8 +1,8 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="Assets Consolidations" />
     <TableAssetsConsolidations />
-  </div>
+  </SwdWrapper>
 </template>
 
 <script>

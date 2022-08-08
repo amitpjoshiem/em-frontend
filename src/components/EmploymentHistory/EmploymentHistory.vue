@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="Employment history" />
     <div v-if="!isLoading">
       <div class="flex mt-4">
@@ -12,7 +12,7 @@
       </div>
     </div>
     <el-skeleton v-else :rows="5" animated class="p-5" />
-  </div>
+  </SwdWrapper>
 </template>
 <script>
 import { useEmploymentHistory } from '@/api/use-employment-history.js'
