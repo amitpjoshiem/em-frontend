@@ -9,7 +9,7 @@
     <div v-else class="flex items-center justify-between">
       <WidgetFixedAnnuityItem :item="annuityIndex.data[0] ? annuityIndex.data[0] : {}" />
       <WidgetFixedAnnuityItem :item="annuityIndex.data[1] ? annuityIndex.data[1] : {}" />
-      <WidgetFixedAnnuityItem :item="annuityIndex.data[2] ? annuityIndex.data[2] : {}" />
+      <WidgetFixedAnnuityItem :item="annuityIndex.data[2] ? annuityIndex.data[2] : {}" last-item />
     </div>
   </div>
 </template>
