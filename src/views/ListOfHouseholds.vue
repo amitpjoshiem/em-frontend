@@ -1,7 +1,7 @@
 <template>
   <SwdWrapper>
     <SwdSubHeader title="List of Households" />
-    <ListContent :visible-tab="['all', 'opportunities', 'clients']" :context="context" />
+    <ListContent :visible-tab="['all', 'opportunities', 'clients']" :context="context" destination="households" />
   </SwdWrapper>
 </template>
 
