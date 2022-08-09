@@ -92,7 +92,7 @@ export default {
     },
 
     findPos(obj) {
-      return obj.offsetTop
+      if (obj !== null) return obj.offsetTop
     },
   },
 }

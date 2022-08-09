@@ -3,6 +3,16 @@
     <div class="flex justify-between">
       <div class="mb-4 text-main font-semibold">Certificate: {{ item.name }}</div>
       <div>
+        <el-button
+          v-if="item.is_client_signed && item.is_advisor_signed"
+          type="success"
+          :icon="Key"
+          circle
+          class="mr-4"
+          plain
+          size="small"
+          @click="handlePreview(item.certificate.url)"
+        />
         <el-tag :type="item.client_signed ? 'success' : 'danger'" class="mr-4">
           <el-icon><EditPen /></el-icon>
           Client
@@ -35,8 +45,9 @@
 
 <script>
 import { ref } from 'vue'
-import { EditPen } from '@element-plus/icons-vue'
+import { EditPen, Key } from '@element-plus/icons-vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import { useQueryClient, useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { fetchSignInvestmentPackage } from '@/api/vueQuery/fetch-sign-investment-package'
@@ -55,6 +66,7 @@ export default {
     },
   },
   setup(props) {
+    const store = useStore()
     const route = useRoute()
     const queryClient = useQueryClient()
     const fileList = ref([])
@@ -86,12 +98,22 @@ export default {
       }
     }
 
+    const handlePreview = (url) => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'prewievPdf',
+        value: true,
+      })
+      store.commit('globalComponents/setPreviewUrlPdf', url)
+    }
+
     return {
       fileList,
       handleSign,
       confirmDelete,
       isLoading,
       loadingDelete,
+      handlePreview,
+      Key,
     }
   },
 }

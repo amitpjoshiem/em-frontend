@@ -154,7 +154,6 @@
       </div>
     </template>
   </div>
-  <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
 </template>
 <script>
 import { Document, Edit, Check } from '@element-plus/icons-vue'
@@ -169,7 +168,6 @@ import { useFetchTaxQualificationInit } from '@/api/use-fetch-tax-qualification-
 import { useStore } from 'vuex'
 import { EditPen, Key } from '@element-plus/icons-vue'
 import { useMutation, useQueryClient } from 'vue-query'
-import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
@@ -178,7 +176,6 @@ export default {
   components: {
     Document,
     SwdUpload,
-    PrewiewPdfModal,
     EditPen,
   },
   setup() {
@@ -202,11 +199,6 @@ export default {
 
     const ruleForm = reactive({})
 
-    const state = reactive({
-      dialogVisible: false,
-      previewUrl: '',
-    })
-
     const setInitValue = (data) => {
       Object.assign(ruleForm, data)
     }
@@ -227,7 +219,6 @@ export default {
         queryClient.invalidateQueries(['investment-package-all', route.params.annuityId])
         queryClient.invalidateQueries(['annuityIndexFind', route.params.annuityId])
       }
-      state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
     })
 
     const editBasicInformation = () => {
@@ -294,12 +285,11 @@ export default {
     }
 
     const handlePreview = (url) => {
-      state.previewUrl = url
-      state.dialogVisible = true
       store.commit('globalComponents/setShowModal', {
         destination: 'prewievPdf',
         value: true,
       })
+      store.commit('globalComponents/setPreviewUrlPdf', url)
     }
 
     const confirmDelete = async () => {
@@ -337,7 +327,6 @@ export default {
       bindRef,
       handleChangeDocSuccess,
       handlePreview,
-      state,
       confirmDelete,
       loadingDeleteAnnuity,
       Key,

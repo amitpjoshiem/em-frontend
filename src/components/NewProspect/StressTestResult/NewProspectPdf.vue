@@ -26,14 +26,13 @@
     </div>
   </div>
   <el-skeleton v-else :rows="10" animated class="p-5" />
-  <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
 </template>
 
 <script>
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { onMounted, reactive, ref, watchEffect } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { computed } from 'vue'
@@ -43,7 +42,6 @@ import { useMutation } from 'vue-query'
 import { useFetchStressTest } from '@/api/use-fetch-stress-test.js'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
 import { useQueryClient } from 'vue-query'
-import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 import { fetchStressTestConfirm } from '@/api/vueQuery/fetch-stress-test-confirm'
 import { useAlert } from '@/utils/use-alert'
 
@@ -51,7 +49,6 @@ export default {
   name: 'NewProspectPdf',
   components: {
     SwdUpload,
-    PrewiewPdfModal,
   },
   props: {
     showNavBtn: {
@@ -82,8 +79,6 @@ export default {
     const state = reactive({
       file: '',
       uploadRef: null,
-      dialogVisible: false,
-      previewUrl: '',
     })
 
     const step = computed(() => store.state.newProspect.step)
@@ -118,18 +113,13 @@ export default {
       upload.value = ref.value
     }
 
-    const openPrewiev = (pdfUrl) => {
-      state.dialogVisible = true
-      state.previewUrl = pdfUrl
+    const openPrewiev = (url) => {
       store.commit('globalComponents/setShowModal', {
         destination: 'prewievPdf',
         value: true,
       })
+      store.commit('globalComponents/setPreviewUrlPdf', url)
     }
-
-    watchEffect(() => {
-      state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
-    })
 
     const removeMedia = async (media) => {
       const res = await deletePdf(media)
