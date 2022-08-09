@@ -17,7 +17,7 @@ import { computed } from 'vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
-  name: 'App',
+  name: 'OpportunitiesBlockChart',
   components: {
     Vue3ChartJs,
   },

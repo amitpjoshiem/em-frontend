@@ -34,13 +34,13 @@
       </template>
     </el-table-column>
 
-    <el-table-column label="Stage" prop="Stage" min-width="130" sortable>
+    <el-table-column label="Stage" prop="Stage" min-width="180">
       <template #default="scope">
         <SwdStubForText :text="scope.row.salesforce.stage" plug="&mdash;" class="text-xss text-main" />
       </template>
     </el-table-column>
 
-    <el-table-column prop="investment_size" label="Total Investment Size" min-width="240" class="text-xss">
+    <el-table-column prop="investment_size" label="Total Investment Size" min-width="180" class="text-xss">
       <template #default="scope">
         <SwdStubForText
           :text="scope.row.salesforce.investment_size"

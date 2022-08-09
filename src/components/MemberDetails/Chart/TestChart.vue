@@ -16,7 +16,7 @@ import { ref } from 'vue'
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 
 export default {
-  name: 'App',
+  name: 'TestChart',
   components: {
     Vue3ChartJs,
   },

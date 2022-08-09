@@ -1,12 +1,14 @@
 <template>
   <div>
-    <div class="border box-border color-light-gray rounded-lg">
-      <div class="text-smm font-medium text-main py-5 pl-5 flex justify-between px-5">
-        <span>Child Opportunities</span>
+    <div class="border box-border color-light-gray rounded-lg h-[269px]">
+      <div class="pt-5 pb-3 pl-5 flex justify-between px-5">
+        <el-badge :value="getCount" :max="99" class="mr-8" :type="getCount ? 'primary' : 'info'" :hidden="isLoading">
+          <span class="text-main text-smm font-semibold">Child Opportunities</span>
+        </el-badge>
         <router-link :to="{ name: 'add-opportunity', params: { id: prospectId } }">
           <div
             class="
-              h-9
+              h-8
               bg-color-grey
               rounded-md
               border-input-border border
@@ -24,18 +26,17 @@
           </div>
         </router-link>
       </div>
-      <div class="flex h-12 bg-widget-bg">
-        <div class="w-8/24 title">Opportunity name</div>
-        <div class="w-4/24 title">Account name</div>
+      <div class="flex h-8 bg-widget-bg">
+        <div class="w-9/24 title">Opportunity name</div>
         <div class="w-4/24 title">Amount</div>
-        <div class="w-4/24 title">Stage</div>
-        <div class="w-3/24 title">Close date</div>
+        <div class="w-6/24 title">Stage</div>
+        <div class="w-4/24 title">Close date</div>
         <div class="w-1/24 title" />
       </div>
-      <el-skeleton v-if="isLoading || isLoadingUserProfile || isLoadingProspectDetails" :rows="5" animated />
+      <el-skeleton v-if="isLoading || isLoadingUserProfile || isLoadingProspectDetails" :rows="2" animated />
       <SwdErrorBlock v-else-if="isError || isErrorUserProfile || isErrorProspectDetails" />
       <div v-else-if="data && member && userProfile">
-        <template v-if="data.length">
+        <el-scrollbar v-if="data.length" height="155px">
           <OpportunityItem
             v-for="(user, index) in data"
             :key="index"
@@ -46,12 +47,10 @@
           >
             {{ user }}
           </OpportunityItem>
-        </template>
-        <div v-else class="text-center py-2">
-          <span class="text-main text-sm"> No recently added opportunities </span>
-        </div>
+        </el-scrollbar>
+        <div v-else class="text-center text-gray03 text-sm pt-20">No recently added opportunities</div>
       </div>
-      <el-skeleton v-else :rows="3" animated class="w-full p-3" />
+      <el-skeleton v-else :rows="2" animated class="w-full p-3" />
     </div>
   </div>
 </template>
@@ -63,6 +62,7 @@ import OpportunityItem from '@/components/MemberDetails/OpportunityItem.vue'
 import { useOpportunityList } from '@/api/use-opportunity-list.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
+import { computed } from 'vue'
 
 export default {
   name: 'OpportunityTable',
@@ -79,6 +79,10 @@ export default {
 
     const { isLoading: isLoadingProspectDetails, isError: isErrorProspectDetails, data: member } = useProspectDetails()
 
+    const getCount = computed(() => {
+      return data.value?.length
+    })
+
     return {
       IconPlus,
       prospectId,
@@ -91,6 +95,7 @@ export default {
       isLoadingProspectDetails,
       isErrorProspectDetails,
       member,
+      getCount,
     }
   },
 }
@@ -98,10 +103,10 @@ export default {
 
 <style scoped>
 .title {
-  @apply border-r border-b border-title-gray text-small text-gray03 flex items-center justify-center uppercase text-center last:border-r-0;
+  @apply text-small text-gray03 flex items-center uppercase first:pl-2;
 }
 
 .oportunity-item {
-  @apply border-b border-title-gray last:border-b-0;
+  @apply mr-3 hover:bg-gray-200;
 }
 </style>

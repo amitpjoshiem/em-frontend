@@ -1,7 +1,9 @@
 <template>
   <div class="p-5 bg-widget-bg rounded-lg">
     <div class="flex justify-between items-center">
-      <router-link :to="{ name: getLink }" class="text-smm font-medium hover:text-activity">Pipe Line</router-link>
+      <router-link :to="{ name: getLink }" class="text-smm font-medium hover:text-activity">
+        Revenue Dashboard
+      </router-link>
       <SwdSelectFilter destination="pipeLine" />
     </div>
     <el-skeleton v-if="isLoading" :rows="4" animated />

@@ -1,7 +1,7 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <LogsContent />
-  </div>
+  </SwdWrapper>
 </template>
 <script>
 import LogsContent from '@/components/Logs/LogsContent.vue'

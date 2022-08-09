@@ -1,8 +1,8 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="List of Advisors" />
     <ListAdvisorsContent :visible-tab="['all']" />
-  </div>
+  </SwdWrapper>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="Warning" />
     <div class="flex flex-col justify-center mt-5 items-center">
       <InlineSvg :src="IconError" />
@@ -7,7 +7,7 @@
         {{ message }}
       </span>
     </div>
-  </div>
+  </SwdWrapper>
 </template>
 
 <script>

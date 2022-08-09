@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-color-grey box-border rounded-l-md py-5 px-3 h-[269px]">
+  <div class="w-10/24 border border-color-grey box-border rounded-l-md py-5 px-3">
     <div class="pb-8">
       <router-link
         :to="{ name: 'asset-allocation-details', params: { id: memberId } }"
@@ -38,7 +38,7 @@
                 @blur="change()"
               />
             </el-form-item>
-            <el-form-item class="mt-4">
+            <el-form-item class="mt-5">
               <SwdCurrencyInput
                 v-model="ruleForm.growth"
                 :options="optionsCurrencyInput"
@@ -49,7 +49,7 @@
                 @blur="change()"
               />
             </el-form-item>
-            <el-form-item class="mt-4">
+            <el-form-item class="mt-5">
               <SwdCurrencyInput
                 v-model="ruleForm.income"
                 :options="optionsCurrencyInput"

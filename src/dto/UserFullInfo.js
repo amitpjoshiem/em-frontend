@@ -15,6 +15,7 @@ class UserFullInfo {
     is_activated,
     can_delete,
     can_restore,
+    can_convert,
     owner_id,
   }) {
     this.id = id
@@ -31,6 +32,7 @@ class UserFullInfo {
     this.is_activated = is_activated
     this.can_delete = can_delete
     this.can_restore = can_restore
+    this.can_convert = can_convert
     this.owner_id = owner_id
   }
 

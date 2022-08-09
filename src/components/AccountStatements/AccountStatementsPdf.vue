@@ -24,29 +24,25 @@
     </SwdUpload>
   </div>
   <el-skeleton v-else :rows="5" animated class="p-5" />
-  <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
 </template>
 
 <script>
 import IconDownRisk from '@/assets/svg/icon-down-risk.svg'
 import IconUpRisk from '@/assets/svg/icon-up-risk.svg'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { reactive, ref, watchEffect, computed } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { createAssetsConsolidationDocs } from '@/api/vueQuery/create-assets-consolidation-docs'
 import { useFetchAssetsConsolidationDocs } from '@/api/use-fetch-assets-consolidation-docs'
 import { useMutation, useQueryClient } from 'vue-query'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
-import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 
 export default {
   name: 'AccountStatementsPdf',
   components: {
     SwdUpload,
-    PrewiewPdfModal,
   },
-
   setup() {
     const store = useStore()
     const route = useRoute()
@@ -62,8 +58,6 @@ export default {
     const state = reactive({
       file: '',
       uploadRef: null,
-      dialogVisible: false,
-      previewUrl: '',
     })
 
     const handleSuccess = async (res) => {
@@ -83,18 +77,13 @@ export default {
       upload.value = ref.value
     }
 
-    const openPrewiev = (pdfUrl) => {
-      state.dialogVisible = true
-      state.previewUrl = pdfUrl
+    const openPrewiev = (url) => {
       store.commit('globalComponents/setShowModal', {
         destination: 'prewievPdf',
         value: true,
       })
+      store.commit('globalComponents/setPreviewUrlPdf', url)
     }
-
-    watchEffect(() => {
-      state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
-    })
 
     const removeMedia = async (media) => {
       const res = await deletePdf(media)

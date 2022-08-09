@@ -53,12 +53,11 @@ export default {
     },
   },
 
-  setup(props) {
+  setup() {
     const dialogVisible = ref(false)
 
     const showInfo = () => {
       dialogVisible.value = true
-      console.log('showInfo', props.destination)
     }
     return {
       showInfo,

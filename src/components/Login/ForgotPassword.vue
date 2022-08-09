@@ -19,7 +19,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div v-else class="my-5">{{ response.message }}</div>
+      <div v-else class="my-5">Please check your email for your IRIS password reset link</div>
     </div>
   </div>
 </template>

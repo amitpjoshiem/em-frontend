@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader class="p-5" title="All documents" />
     <div class="flex p-5 justify-between">
       <div class="flex">
@@ -27,7 +27,7 @@
       </div>
     </div>
     <router-view />
-  </div>
+  </SwdWrapper>
 </template>
 
 <script>

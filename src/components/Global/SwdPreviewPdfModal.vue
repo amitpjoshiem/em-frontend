@@ -5,8 +5,9 @@
     width="90%"
     custom-class="dialog-style pdf-viewer"
     :before-close="closeDialog"
+    destroy-on-close
   >
-    <PdfViewer type="application/pdf" :src="pdfUrl" :page="1" />
+    <SwdPdfViewer type="application/pdf" :src="getPdfUrl" :page="1" />
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="closeDialog">Close</el-button>
@@ -17,26 +18,23 @@
 
 <script>
 import { useStore } from 'vuex'
-import { reactive, watchEffect } from 'vue'
-import PdfViewer from '@/components/NewProspect/StressTestResult/PdfViewer'
+import { reactive, watchEffect, computed } from 'vue'
+import SwdPdfViewer from '@/components/Global/SwdPdfViewer'
 
 export default {
-  name: 'PrewiewPdfModal',
+  name: 'SwdPreviewPdfModal',
   components: {
-    PdfViewer,
-  },
-  props: {
-    pdfUrl: {
-      type: String,
-      require: true,
-      default: () => {},
-    },
+    SwdPdfViewer,
   },
   setup() {
     const store = useStore()
 
     const state = reactive({
       dialogVisible: false,
+    })
+
+    const getPdfUrl = computed(() => {
+      return store.state.globalComponents.previewUrl
     })
 
     watchEffect(() => {
@@ -48,11 +46,13 @@ export default {
         destination: 'prewievPdf',
         value: false,
       })
+      store.commit('globalComponents/setPreviewUrlPdf', null)
     }
 
     return {
       closeDialog,
       state,
+      getPdfUrl,
     }
   },
 }

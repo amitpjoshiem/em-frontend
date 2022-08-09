@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="Document import" />
     <el-skeleton v-if="isLoading" :rows="10" animated />
     <SwdErrorBlock v-else-if="isError" />
@@ -14,7 +14,7 @@
         <p>No recently added documents</p>
       </div>
     </div>
-  </div>
+  </SwdWrapper>
 </template>
 <script>
 import { useFetchExcelDocuments } from '@/api/use-fetch-excel-documents.js'

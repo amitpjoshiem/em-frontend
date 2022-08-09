@@ -2,7 +2,7 @@ import { fetcher } from '@/api/fetcher/fetcher'
 
 function fetchMember(id) {
   return fetcher({
-    url: `/members/` + id,
+    url: `/members/` + id + '?include=salesforce',
     options: { method: 'GET' },
   })
 }

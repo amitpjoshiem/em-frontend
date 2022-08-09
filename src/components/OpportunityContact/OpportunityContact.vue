@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="Opportunity contacts" />
     <div class="flex justify-end pb-5">
       <el-button type="primary" plain @click="addContact">Add contact</el-button>
@@ -98,8 +98,8 @@
       </div>
     </div>
     <el-skeleton v-else :rows="10" animated />
-  </div>
-  <ModalContact />
+    <ModalContact />
+  </SwdWrapper>
 </template>
 
 <script>

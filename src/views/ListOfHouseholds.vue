@@ -1,8 +1,8 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="List of Households" />
-    <ListContent :visible-tab="['all', 'opportunities', 'clients']" :context="context" />
-  </div>
+    <ListContent :visible-tab="['all', 'opportunities', 'clients']" :context="context" destination="households" />
+  </SwdWrapper>
 </template>
 
 <script>

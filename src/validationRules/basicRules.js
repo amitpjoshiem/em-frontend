@@ -3,7 +3,7 @@ const rules = {
     {
       required: true,
       message: 'Please input prospect name',
-      trigger: 'blur',
+      trigger: 'change',
       transform(value) {
         return value.trim()
       },
@@ -24,7 +24,7 @@ const rules = {
       type: 'date',
       required: true,
       message: 'Please pick a date',
-      trigger: 'blur',
+      trigger: 'change',
     },
   ],
   retirement_date: [

@@ -3,28 +3,47 @@
     <el-skeleton v-if="isLoadingProspectDetails" :rows="5" animated />
     <SwdErrorBlock v-else-if="isErrorProspectDetails" />
     <template v-else-if="member">
-      <div class="border-b pb-5 flex justify-between">
-        <div class="flex">
+      <div class="flex pb-3">
+        <div class="w-2/12 flex items-center">
           <SwdAvatar :link="member.avatar.url" />
-          <div class="flex flex-col ml-2">
-            <router-link
-              :to="{
-                name: 'member-basic-information',
-                params: { id: memberId },
-              }"
-              class="text-sm text-main font-medium"
-            >
+        </div>
+        <div class="w-10/12">
+          <div>
+            <span class="text-sm text-main font-medium">
               {{ member.name }}
-            </router-link>
+            </span>
+          </div>
+          <div class="flex justify-between items-center">
             <span class="text-small text-activity-item font-medium uppercase">
               {{ getUserType }}
             </span>
+            <div class="flex items-center">
+              <div class="action-btn">
+                <router-link
+                  :to="{
+                    name: 'opportunity-contact',
+                    params: { id: member.id },
+                  }"
+                >
+                  <el-icon class="mt-[7px]" color="#042D52"><Cellphone /></el-icon>
+                </router-link>
+              </div>
+              <div class="action-btn">
+                <router-link
+                  :to="{
+                    name: 'member-basic-information',
+                    params: { id: member.id },
+                  }"
+                >
+                  <el-icon class="mt-[7px]" color="#042D52"><User /></el-icon>
+                </router-link>
+              </div>
+              <SwdMemberActions :user="member" page-details />
+            </div>
           </div>
         </div>
-        <SwdMemberActions :user="member" />
       </div>
-
-      <div class="flex justify-between py-3">
+      <div class="flex justify-between pb-3 pt-3 border-t border-input-border">
         <div class="flex items-center">
           <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
             <InlineSvg :src="IconProspectAge" />
@@ -106,9 +125,14 @@ import { updateMembers } from '@/api/vueQuery/update-members'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { convertToClient } from '@/api/vueQuery/convert-to-client'
 import { ElMessageBox } from 'element-plus'
+import { User, Cellphone } from '@element-plus/icons-vue'
 
 export default {
   name: 'WidgetMemberDetails',
+  components: {
+    User,
+    Cellphone,
+  },
   setup() {
     const route = useRoute()
     const memberId = route.params.id
@@ -203,7 +227,6 @@ export default {
       change,
       optionsCurrencyInput,
       isLoadingUpdate,
-
       isLoadingProspectDetails,
       isErrorProspectDetails,
       member,
@@ -213,3 +236,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.action-btn {
+  @apply flex justify-center items-center w-7 h-7 cursor-pointer bg-white border border-primary rounded mr-3;
+}
+</style>
