@@ -65,7 +65,6 @@
       </div>
     </div>
     <el-skeleton v-else :rows="15" animated />
-    <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
   </SwdWrapper>
 </template>
 
@@ -76,7 +75,6 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
@@ -93,7 +91,6 @@ export default {
   name: 'DocumentsClients',
   components: {
     SwdUpload,
-    PrewiewPdfModal,
   },
   setup(_, { attrs }) {
     const router = useRouter()
@@ -118,14 +115,11 @@ export default {
     const state = reactive({
       file: '',
       uploadRef: null,
-      dialogVisible: false,
-      previewUrl: '',
       availabilityDocuments: false,
     })
 
     watchEffect(() => {
       if (isFetching.value === false && data.value.status === 'no_documents') state.availabilityDocuments = true
-      state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
     })
 
     const bindRef = (ref) => {
@@ -197,13 +191,12 @@ export default {
       return !data.value.documents?.length && !inChangeFile.value && !isFetching.value
     })
 
-    const openPrewiev = (pdfUrl) => {
-      state.dialogVisible = true
-      state.previewUrl = pdfUrl
+    const openPrewiev = (url) => {
       store.commit('globalComponents/setShowModal', {
         destination: 'prewievPdf',
         value: true,
       })
+      store.commit('globalComponents/setPreviewUrlPdf', url)
     }
 
     return {

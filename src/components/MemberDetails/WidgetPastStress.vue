@@ -45,23 +45,18 @@
         @click="moreActionStressTest"
       />
     </div>
-    <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
   </div>
 </template>
 
 <script>
-import { computed, reactive, watchEffect } from 'vue'
+import { computed } from 'vue'
 import { useFetchStressTest } from '@/api/use-fetch-stress-test.js'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
   name: 'WidgetPastStress',
-  components: {
-    PrewiewPdfModal,
-  },
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -69,11 +64,6 @@ export default {
     const id = route.params.id
 
     const { isLoading, isFetching, isError, data: stressTestDocument } = useFetchStressTest(id)
-
-    const state = reactive({
-      dialogVisible: false,
-      previewUrl: '',
-    })
 
     const isAvailableCocument = computed(() => {
       return stressTestDocument.value?.data && stressTestDocument.value?.data?.length
@@ -83,18 +73,13 @@ export default {
       router.push({ name: 'past-stress-test', params: { id } })
     }
 
-    const openPrewiev = (pdfUrl) => {
-      state.dialogVisible = true
-      state.previewUrl = pdfUrl
+    const openPrewiev = (url) => {
       store.commit('globalComponents/setShowModal', {
         destination: 'prewievPdf',
         value: true,
       })
+      store.commit('globalComponents/setPreviewUrlPdf', url)
     }
-
-    watchEffect(() => {
-      state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
-    })
 
     return {
       isLoading,
@@ -104,7 +89,6 @@ export default {
       isAvailableCocument,
       moreActionStressTest,
       openPrewiev,
-      state,
       IconEmptyUsers,
     }
   },
