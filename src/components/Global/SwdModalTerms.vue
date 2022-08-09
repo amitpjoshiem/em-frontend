@@ -15,7 +15,7 @@
     </div>
     <el-scrollbar height="400px" class="text-black pr-3">
       <p class="pb-2 font-semibold text-base pt-4">Terms and Conditions</p>
-      <p class="term-item">We use your personal information collected via our application and forms for</p>
+      <p class="term-item">We use your personal information collected via our application and forms for:</p>
       <p class="term-item">1. Facilitating your account creation and the logon process.</p>
       <p class="term-item">2. Requesting Feedback: We may use your information to contact you and request feedback.</p>
       <p class="term-item">
