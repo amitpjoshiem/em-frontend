@@ -1,33 +1,32 @@
 <template>
   <div class="border border-color-grey rounded-t-lg">
-    <div></div>
     <div class="flex p-5 justify-between">
       <div class="flex">
-        <TabAll v-if="visibleTab.includes('all')" :count="count ? count.data.count.all : 0" :is-loading="isLoading" />
+        <TabAll v-if="visibleTab.includes('all')" :count="!isLoading ? data.count.all : 0" :is-loading="isLoading" />
         <TabOpportunities
           v-if="visibleTab.includes('opportunities')"
-          :count="count ? count.data.count.prospect : 0"
+          :count="!isLoading ? data.count.prospect : 0"
           :is-loading="isLoading"
         />
         <TabClients
           v-if="visibleTab.includes('clients')"
-          :count="count ? count.data.count.client : 0"
+          :count="!isLoading ? data.count.client : 0"
           :is-loading="isLoading"
         />
         <TabAllLeads
           v-if="visibleTab.includes('all-leads')"
-          :count="count ? count.data.leads.all : 0"
+          :count="!isLoading ? data.leads.all : 0"
           :is-loading="isLoading"
         />
         <TabActiveLeads
           v-if="visibleTab.includes('active-leads')"
-          :count="count ? count.data.leads.active : 0"
+          :count="!isLoading ? data.leads.active : 0"
           :is-loading="isLoading"
         />
         <TabDeactivatedLeads
           v-if="visibleTab.includes('deactivated-leads')"
           :is-loading="isLoading"
-          :count="count ? count.data.leads.inactive : 0"
+          :count="!isLoading ? data.leads.inactive : 0"
         />
       </div>
       <div class="flex">
@@ -46,7 +45,7 @@ import TabClients from './Tabs/TabClients.vue'
 import TabAllLeads from './Tabs/TabAllLeads.vue'
 import TabActiveLeads from './Tabs/TabActiveLeads.vue'
 import TabDeactivatedLeads from './Tabs/TabDeactivatedLeads.vue'
-
+import { computed } from 'vue'
 import { useFetchStatsMembers } from '@/api/use-fetch-stats-members.js'
 
 export default {
@@ -65,16 +64,26 @@ export default {
       require: true,
       default: () => [],
     },
+    destination: {
+      type: String,
+      require: true,
+      default: 'households',
+    },
   },
-  setup() {
-    const { isLoading, isFetching, isError, data: count } = useFetchStatsMembers()
+  setup(props) {
+    const getMembersStats = computed(() => {
+      if (props.destination === 'households') return 'prospect,client'
+      return 'lead'
+    })
+
+    const { isLoading, isFetching, isError, data } = useFetchStatsMembers(getMembersStats)
 
     return {
       IconAction,
       isLoading,
       isFetching,
       isError,
-      count,
+      data,
     }
   },
 }
