@@ -11,6 +11,17 @@
       <SwdSpinner v-if="isLoading" />
 
       <div v-else>
+        <el-button
+          v-if="ruleForm.is_client_signed && ruleForm.is_advisor_signed"
+          type="success"
+          :icon="Key"
+          circle
+          class="mr-4"
+          plain
+          size="small"
+          @click="handlePreview(ruleForm.certificate.url)"
+        />
+
         <el-tag :type="ruleForm.is_client_signed ? 'success' : 'danger'" class="mr-4">
           <el-icon><EditPen /></el-icon>
           Client
@@ -156,7 +167,7 @@ import { fetchDeleteAnnuityIndex } from '@/api/vueQuery/fetch-delete-annuity-ind
 import { useAlert } from '@/utils/use-alert'
 import { useFetchTaxQualificationInit } from '@/api/use-fetch-tax-qualification-init.js'
 import { useStore } from 'vuex'
-import { EditPen } from '@element-plus/icons-vue'
+import { EditPen, Key } from '@element-plus/icons-vue'
 import { useMutation, useQueryClient } from 'vue-query'
 import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
@@ -209,6 +220,14 @@ export default {
           return { label: item, value: item }
         })
       }
+      if (store.state.globalComponents.needUpdateContent?.value === 'fixed_annuities_index') {
+        store.commit('globalComponents/setNeedUpdateContent', {
+          value: null,
+        })
+        queryClient.invalidateQueries(['investment-package-all', route.params.annuityId])
+        queryClient.invalidateQueries(['annuityIndexFind', route.params.annuityId])
+      }
+      state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
     })
 
     const editBasicInformation = () => {
@@ -319,9 +338,9 @@ export default {
       handleChangeDocSuccess,
       handlePreview,
       state,
-
       confirmDelete,
       loadingDeleteAnnuity,
+      Key,
     }
   },
 }
