@@ -3,6 +3,7 @@ import store from '@/store'
 import AdvisorHome from '@/layouts/AdvisorHome.vue'
 import ClientHome from '@/layouts/ClientHome.vue'
 import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
+import AdminPanelHome from '@/layouts/AdminPanelHome.vue'
 import Settings from '@/layouts/Settings.vue'
 import Login from '@/layouts/Login.vue'
 import Home from '@/layouts/Home.vue'
@@ -342,10 +343,29 @@ const routes = [
       },
 
       {
-        path: 'member-details/:id',
-        name: 'member-details',
-        component: () =>
-          import(/* webpackChunkName: "MemberDetails" */ '../components/MemberDetails/MemberDetails.vue'),
+        path: 'member/:id',
+        name: 'member',
+        component: () => import(/* webpackChunkName: "MemberDetails" */ '../views/MemberDetails.vue'),
+        children: [
+          {
+            path: 'member-details',
+            name: 'member-details',
+            component: () =>
+              import(/* webpackChunkName: "MemberDetails" */ '../components/MemberDetails/MemberDetails.vue'),
+          },
+          {
+            path: 'annuity-index/:annuityId',
+            name: 'annuity-index',
+            component: () =>
+              import(/* webpackChunkName: "AnnuityIndex" */ '../components/AnnuityIndex/AnnuityIndexList.vue'),
+          },
+          {
+            path: 'annuity-index-details/:annuityId?',
+            name: 'annuity-index-details',
+            component: () =>
+              import(/* webpackChunkName: "AnnuityIndexItem" */ '../components/AnnuityIndex/AnnuityIndexDetails.vue'),
+          },
+        ],
       },
 
       {
@@ -435,9 +455,7 @@ const routes = [
             path: 'assets/:id?',
             name: 'assets-information',
             component: () =>
-              import(
-                /* webpackChunkName: "NewProspect" */ '../components/NewProspect/ProspectAssets/AddProspectAssets.vue'
-              ),
+              import(/* webpackChunkName: "NewProspect" */ '../components/NewProspect/AddProspectAssetsIncome.vue'),
           },
           {
             path: 'monthly-expense/:id?',
@@ -532,6 +550,18 @@ const routes = [
           },
         ],
       },
+      // {
+      //   path: 'annuity-index/:id',
+      //   name: 'annuity-index',
+      //   component: () =>
+      //     import(/* webpackChunkName: "AnnuityIndex" */ '../components/AnnuityIndex/AnnuityIndexList.vue'),
+      // },
+      // {
+      //   path: 'annuity-index-details/:id?',
+      //   name: 'annuity-index-details',
+      //   component: () =>
+      //     import(/* webpackChunkName: "AnnuityIndexItem" */ '../components/AnnuityIndex/AnnuityIndexDetails.vue'),
+      // },
     ],
   },
 
@@ -602,6 +632,37 @@ const routes = [
   },
 
   {
+    path: '/admin-panel',
+    name: 'admin-panel',
+    component: AdminPanelHome,
+    meta: {
+      resource: [{ admin: 'all' }, { ceo: 'all' }],
+      type: 'advisor',
+    },
+    children: [
+      {
+        path: 'dashboard',
+        name: 'ap-dashboard',
+        component: () =>
+          import(
+            /* webpackChunkName: "AdminPanelDashboard" */ '../components/AdminPanel/Dashboard/AdminPanelDashboard.vue'
+          ),
+      },
+      {
+        path: 'users',
+        name: 'ap-users',
+        component: () => import(/* webpackChunkName: "AdminPanelUsers" */ '../components/AdminPanel/Users/Users.vue'),
+      },
+      {
+        path: 'companies',
+        name: 'ap-companies',
+        component: () =>
+          import(/* webpackChunkName: "AdminPanelCompanies" */ '../components/AdminPanel/Companies/Companies.vue'),
+      },
+    ],
+  },
+
+  {
     path: '/403',
     name: '403',
     component: () => import(/* webpackChunkName: "Forbidden" */ '../views/Forbidden.vue'),
@@ -621,6 +682,7 @@ const routes = [
 
   {
     path: '/',
+    name: 'home',
     component: Home,
   },
 ]

@@ -1,8 +1,8 @@
 <template>
-  <div class="p-5">
+  <SwdWrapper>
     <SwdSubHeader title="Activity" />
     <ActivityContent />
-  </div>
+  </SwdWrapper>
 </template>
 <script>
 import ActivityContent from '@/components/Activity/ActivityContent.vue'

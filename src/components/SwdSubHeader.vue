@@ -3,13 +3,16 @@
     <div class="w-2/12">
       <BackButton v-if="withBackBtn" text="Back" @click="$router.go(-1)" />
     </div>
-    <div class="text-center w-8/12">
-      <span class="text-sm sm:text-title text-main font-semibold">{{ title }}</span>
+    <div class="flex justify-center w-8/12">
+      <SwdSpinner v-if="loading" />
+      <span v-else class="text-sm sm:text-title text-main font-semibold">{{ title }}</span>
     </div>
     <div class="w-2/12 flex justify-end">
       <ShareBtn v-if="withShareBtn" :pdf-region="region" />
       <SwdInfoBtn v-if="witchInfoBtn" :destination="infoBtnDestination" />
       <slot name="change-assistent" />
+      <slot name="add-user" />
+      <slot name="add-company" />
     </div>
   </div>
 </template>
@@ -51,6 +54,11 @@ export default {
       default: '',
     },
     smallTitle: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    loading: {
       type: Boolean,
       require: false,
       default: false,

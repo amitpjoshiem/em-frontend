@@ -18,9 +18,7 @@
             <div v-if="row.custom" class="flex items-center ml-2 cursor-pointer">
               <el-popconfirm title="Are you sure to delete this?" @confirm="confirmEvent({ block, row })">
                 <template #reference>
-                  <el-icon color="red">
-                    <remove />
-                  </el-icon>
+                  <el-icon color="red" class="cursor-pointer"><Delete /></el-icon>
                 </template>
               </el-popconfirm>
             </div>
@@ -120,17 +118,18 @@ import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
+import { fetchAssetsIncomeConfirm } from '@/api/vueQuery/fetch-assets-income-confirm'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 import { ArrowDown } from '@element-plus/icons-vue'
-import { Remove } from '@element-plus/icons-vue'
+import { Delete } from '@element-plus/icons-vue'
 
 export default {
-  name: 'AddProspectAssets',
+  name: 'AddProspectAssetsIncome',
   components: {
     ArrowDown,
-    Remove,
+    Delete,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -154,6 +153,7 @@ export default {
     const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
 
     const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
+    const { mutateAsync: assetsIncomeConfirm } = useMutation(fetchAssetsIncomeConfirm)
 
     const { setInitValue } = useAssetsInfoHooks()
 
@@ -180,16 +180,19 @@ export default {
     }
 
     const nextPage = async () => {
-      useAlert({
-        title: 'Success',
-        type: 'success',
-        message: 'Opportunity update successfully',
-      })
-      store.commit('newProspect/setStep', step.value + 1)
-      router.push({
-        name: 'monthly-expense',
-        params: { id: memberId },
-      })
+      const res = await assetsIncomeConfirm(memberId)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Opportunity update successfully',
+        })
+        store.commit('newProspect/setStep', step.value + 1)
+        router.push({
+          name: 'monthly-expense',
+          params: { id: memberId },
+        })
+      }
     }
 
     const addLine = ({ model, variable, indexGroup, indexRow, label }) => {

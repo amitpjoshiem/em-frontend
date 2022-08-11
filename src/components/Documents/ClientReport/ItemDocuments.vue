@@ -31,21 +31,16 @@
       <el-button v-if="document.status === 'error'" type="danger" size="small" plain disabled>error</el-button>
     </div>
   </div>
-  <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
 </template>
 
 <script>
-import { computed, reactive } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { useDownloadClientReport } from '@/api/use-download-client-report'
-import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
 
 export default {
   name: 'ItemDocuments',
-  components: {
-    PrewiewPdfModal,
-  },
   props: {
     contracts: {
       type: Array,
@@ -63,11 +58,6 @@ export default {
     const route = useRoute()
 
     const memberId = route.params.id
-
-    const state = reactive({
-      dialogVisible: false,
-      previewUrl: '',
-    })
 
     const {
       response: clientReportPdf,
@@ -102,13 +92,12 @@ export default {
       }, 100)
     }
 
-    const handlePictureCardPreview = (doc) => {
-      state.previewUrl = doc.link
-      state.dialogVisible = true
+    const handlePictureCardPreview = (url) => {
       store.commit('globalComponents/setShowModal', {
         destination: 'prewievPdf',
         value: true,
       })
+      store.commit('globalComponents/setPreviewUrlPdf', url.link)
     }
 
     return {
@@ -119,7 +108,6 @@ export default {
       errorClientReport,
       fetchingClientReport,
       getClientReport,
-      state,
       handlePictureCardPreview,
     }
   },

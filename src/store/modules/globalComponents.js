@@ -53,6 +53,10 @@ const state = () => ({
       default: 'month',
       opportunitiesBlock: 'month',
       pipeLine: 'month',
+      countLeeds: 'month',
+      numberLeedsFilledData: 'month',
+      numberLeedsConverted: 'month',
+      numberLeedsClosed: 'month',
     },
   },
   dialog: {
@@ -69,6 +73,8 @@ const state = () => ({
       modalNewTable: false,
       modalSucces: false,
       modalTerms: false,
+      modalAddAnnuityIndex: false,
+      modalInvestmentPackage: false,
     },
   },
   sortMembers: {
@@ -81,6 +87,7 @@ const state = () => ({
   needUpdateContent: null,
   docShare: null,
   contact: null,
+  previewUrl: null,
 })
 
 const mutations = {
@@ -175,6 +182,11 @@ const mutations = {
 
   setDateRangeClientReport(state, value) {
     state.dateRangeClientReport = value
+  },
+
+  setPreviewUrlPdf(state, value) {
+    state.previewUrl = value
+    console.log('state - ', state)
   },
 }
 

@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 
-export const useStatisticsAgeChartDataOptions = (values = []) => {
+export const useStatisticsChartDataOptions = (values = []) => {
   const getData = computed(() => {
     const chartData = {
       data: [],
@@ -34,6 +34,7 @@ export const useStatisticsAgeChartDataOptions = (values = []) => {
       scales: {
         y: {
           type: 'linear',
+          min: 0,
           ticks: {
             font: {
               size: 9,

@@ -47,22 +47,17 @@
   <div v-else class="flex justify-center items-center">
     <SwdSpinner large />
   </div>
-  <PrewiewPdfModal v-if="state.dialogVisible" :pdf-url="state.previewUrl" />
 </template>
 
 <script>
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
 import { useFetchGetClientDocuments } from '@/api/use-fetch-get-clients-documents.js'
-import PrewiewPdfModal from '@/components/NewProspect/StressTestResult/PrewievPdfModal.vue'
-import { reactive, watchEffect, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 
 export default {
   name: 'ListDocumentsClient',
-  components: {
-    PrewiewPdfModal,
-  },
   props: {
     docCollections: {
       type: String,
@@ -116,22 +111,12 @@ export default {
       }
     })
 
-    const state = reactive({
-      dialogVisible: false,
-      previewUrl: '',
-    })
-
-    watchEffect(() => {
-      state.dialogVisible = store.state.globalComponents.dialog.showDialog.prewievPdf
-    })
-
     const handlePictureCardPreview = (url) => {
-      state.previewUrl = url
-      state.dialogVisible = true
       store.commit('globalComponents/setShowModal', {
         destination: 'prewievPdf',
         value: true,
       })
+      store.commit('globalComponents/setPreviewUrlPdf', url)
     }
 
     const edit = () => {
@@ -147,7 +132,6 @@ export default {
       isFetchingAdvisor,
       refetchAdvisor,
       dataAdvisor,
-      state,
       handlePictureCardPreview,
       edit,
       data,

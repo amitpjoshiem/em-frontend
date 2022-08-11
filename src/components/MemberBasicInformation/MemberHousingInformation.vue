@@ -1,7 +1,8 @@
 <template>
-  <div class="border border-color-grey rounded p-10 mt-10">
-    <div class="mb-5">
-      <span class="text-base text-main font-semibold"> Housing Information </span>
+  <div class="border border-border-blue rounded-md p-5 mb-4">
+    <div class="flex items-center mb-5">
+      <InlineSvg :src="IconDoneStep" />
+      <div class="text-main text-xl font-semibold mx-2">Housing Information</div>
       <span
         v-if="house.type"
         data-testid="member-housing-information-type"
@@ -13,15 +14,16 @@
 
     <div v-if="house.id">
       <div v-if="house.type === 'own' || house.type === 'family'" class="flex justify-between my-7">
-        <span class="text-gray03 text-xss font-semibold">Market Value</span>
-        <span class="text-main text-sm font-semibold" data-testid="member-housing-information-market-value">
+        <div class="w-6/24 text-gray03 text-xss font-semibold">Market Value</div>
+        <div class="w-9/24 text-main text-sm" data-testid="member-housing-information-market-value">
           {{ currencyFormat(house.marketValue) }}
-        </span>
+        </div>
       </div>
 
       <div v-if="house.type === 'own' || house.type === 'family'" class="flex justify-between mb-7">
-        <span class="text-gray03 text-xss font-semibold">Total Debt</span>
+        <div class="w-6/24 text-gray03 text-xss font-semibold">Total Debt</div>
         <SwdStubForText
+          class="w-9/24 text-sm text-main"
           :text="currencyFormat(house.totalDebt)"
           plug="&mdash;"
           data-testid="member-housing-information-total-debt"
@@ -29,24 +31,24 @@
       </div>
 
       <div v-if="house.type === 'own' || house.type === 'family'" class="flex justify-between mb-7">
-        <span class="text-gray03 text-xss font-semibold">Remaining mortgage amount</span>
-        <span class="text-main text-sm" data-testid="member-housing-information-remaining-mortgage-amount">
+        <div class="w-6/24 text-gray03 text-xss font-semibold">Remaining mortgage amount</div>
+        <div class="w-9/24 text-main text-sm" data-testid="member-housing-information-remaining-mortgage-amount">
           {{ currencyFormat(house.remainingMortgageAmount) }}
-        </span>
+        </div>
       </div>
 
       <div v-if="house.type === 'rent'" class="flex justify-between mb-7">
-        <span class="text-gray03 text-xss font-semibold">Monthly payment</span>
-        <span class="text-main text-sm" data-testid="member-housing-information-monthly-payment">
+        <div class="w-6/24 text-gray03 text-xss font-semibold">Monthly payment</div>
+        <div class="w-9/24 text-main text-sm" data-testid="member-housing-information-monthly-payment">
           {{ currencyFormat(house.monthlyPayment) }}
-        </span>
+        </div>
       </div>
 
       <div v-if="house.type === 'rent'" class="flex justify-between mb-7">
-        <span class="text-gray03 text-xss font-semibold"> Total monthly expenses </span>
-        <span class="text-main text-sm" data-testid="member-housing-information-total-monthly-expenses">
+        <div class="w-6/24 text-gray03 text-xss font-semibold">Total monthly expenses</div>
+        <div class="w-9/24 text-main text-sm" data-testid="member-housing-information-total-monthly-expenses">
           {{ currencyFormat(house.totalMonthlyExpenses) }}
-        </span>
+        </div>
       </div>
     </div>
 
@@ -59,6 +61,7 @@
 <script>
 import { currencyFormat } from '@/utils/currencyFormat'
 import { MemberDetailsHouse } from '@/dto/Member/MemberDetailsHouse'
+import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
   name: 'MemberHousingInformation',
@@ -72,6 +75,7 @@ export default {
   setup() {
     return {
       currencyFormat,
+      IconDoneStep,
     }
   },
 }

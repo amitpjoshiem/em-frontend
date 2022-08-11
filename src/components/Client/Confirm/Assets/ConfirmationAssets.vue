@@ -37,14 +37,10 @@
                 v-if="typeof assets.data[item.model.group][item.model.model][item.model.item] === 'boolean'"
                 class="flex"
               >
-                <el-tag
-                  v-if="assets.data[item.model.group][item.model.model][item.model.item]"
-                  class="ml-4"
-                  type="success"
-                >
+                <el-tag v-if="assets.data[item.model.group][item.model.model][item.model.item]" type="success">
                   Yes
                 </el-tag>
-                <el-tag v-else class="ml-4" type="danger">No</el-tag>
+                <el-tag v-else type="danger">No</el-tag>
               </div>
             </div>
           </template>

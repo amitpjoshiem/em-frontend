@@ -754,17 +754,21 @@ export default {
       }
     }
 
-    const nextStep = () => {
-      useAlert({
-        title: 'Success',
-        type: 'success',
-        message: 'Opportunity update successfully',
-      })
-      store.commit('newProspect/setStep', step.value + 1)
-      router.push({
-        name: 'assets-account',
-        params: { id: memberId },
-      })
+    const nextStep = async () => {
+      const res = await create({ id: memberId, data: {} })
+
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Opportunity update successfully',
+        })
+        store.commit('newProspect/setStep', step.value + 1)
+        router.push({
+          name: 'assets-account',
+          params: { id: memberId },
+        })
+      }
     }
 
     return {
