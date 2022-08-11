@@ -116,7 +116,8 @@ Sentry.init({
   integrations: [
     new Integrations.BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracingOrigins: ['https://dev.app.swdgroup.net/', 'https://stage.app.swdgroup.net/', /^\//],
+      // eslint-disable-next-line no-undef
+      tracingOrigins: [process.env.VUE_APP_API_URL, /^\//],
     }),
   ],
   tracesSampleRate: 1.0,
