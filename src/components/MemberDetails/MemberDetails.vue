@@ -21,9 +21,9 @@
       </div>
       <OpportunityTable class="w-16/24" />
     </div>
-    <div class="flex mb-5">
+    <!-- <div class="flex mb-5">
       <WidgetFixedAnnuity />
-    </div>
+    </div> -->
     <div class="flex">
       <WidgetPastStress />
       <AssetsAllocation />
@@ -36,7 +36,7 @@ import OpportunityTable from '@/components/MemberDetails/OpportunityTable.vue'
 import WidgetMemberDetails from '@/components/MemberDetails/WidgetMemberDetails.vue'
 import AssetsAllocation from '@/components/MemberDetails/AssetsAllocation.vue'
 import WidgetPastStress from '@/components/MemberDetails/WidgetPastStress.vue'
-import WidgetFixedAnnuity from '@/components/MemberDetails/WidgetFixedAnnuity.vue'
+// import WidgetFixedAnnuity from '@/components/MemberDetails/WidgetFixedAnnuity.vue'
 import WidgetOther from '@/components/MemberDetails/WidgetOther.vue'
 import MemberStage from '@/components/MemberDetails/MemberStage.vue'
 import InfoSalesforceStatus from '@/components/MemberDetails/InfoSalesforceStatus.vue'
@@ -53,7 +53,7 @@ export default {
     WidgetPastStress,
     WidgetOther,
     InfoSalesforceStatus,
-    WidgetFixedAnnuity,
+    // WidgetFixedAnnuity,
     MemberStage,
   },
 
