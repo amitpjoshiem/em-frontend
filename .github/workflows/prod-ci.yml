@@ -49,4 +49,4 @@ jobs:
           aws s3 sync ./dist s3://swd-web-prod --delete
       - name: aws cloudfront invalidation
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_PROD }} --paths /*
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_PROD }} --paths "/*"
