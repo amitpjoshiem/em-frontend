@@ -1,14 +1,10 @@
 <template>
   <div class="flex flex-col w-full items-center justify-center">
     <div class="max-w-sm pt-6 pl-6 pr-6 bg-widget-bg rounded-md w-[370px]">
-      <div class="flex items-center justify-center p-2">
-        <div class="rounded-full h-10 w-10 flex items-center justify-center bg-lightgray03">
-          <InlineSvg :src="IconForgotPassword" />
-        </div>
+      <div class="flex items-center justify-center mb-2">
+        <InlineSvg :src="IrisLogoStandart" width="100" height="40" />
       </div>
-
       <h1 class="text-center text-main font-medium text-2xl">Create a new password</h1>
-
       <div class="py-5">
         <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
           <el-form-item label="Password" prop="password">
@@ -43,8 +39,7 @@
 </template>
 
 <script>
-import IconForgotPassword from '@/assets/svg/icon-forgot-password.svg'
-
+import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
 import { reactive, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCreatePassword } from '@/api/authentication/use-create-password'
@@ -111,7 +106,7 @@ export default {
     return {
       data,
       route,
-      IconForgotPassword,
+      IrisLogoStandart,
       ruleForm,
       form,
       submit,
