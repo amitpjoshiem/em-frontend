@@ -2,8 +2,8 @@
   <div v-if="!isLoading">
     <div class="flex pb-2 mt-8">
       <div class="w-8/12" />
-      <div class="w-2/12 text-gray03 text-xs">ESSENTIAL</div>
-      <div class="w-2/12 text-gray03 text-xs">DISCRETIONARY</div>
+      <div class="w-2/12 text-main text-xs">ESSENTIAL</div>
+      <div class="w-2/12 text-main text-xs">DISCRETIONARY</div>
     </div>
     <el-form ref="form" :model="ruleForm">
       <el-card shadow="never" class="mb-5">

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap items-center px-5 pt-4 border border-input-border rounded-lg mb-2">
+  <div class="flex flex-wrap items-center px-5 pt-4 border border-main-gray rounded-lg mb-2">
     <div class="pr-4 mb-4 text-main text-sm font-semibold">Status:</div>
     <el-button
       class="mb-4 mr-2"

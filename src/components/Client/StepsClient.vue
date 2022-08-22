@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-widget-bg rounded-lg px-5 mb-5 lg:max-w-5xl lg:mx-auto">
+  <div class="bg-main-gray rounded-lg px-5 mb-5 lg:max-w-5xl lg:mx-auto">
     <div class="flex w-full pt-2">
       <router-link
         :to="{ name: 'client-basic-information', params: { id: memberId } }"
@@ -70,13 +70,13 @@ export default {
 .cycle-active {
   width: 9px;
   height: 9px;
-  background-color: #66b6ff;
+  background-color: #83ccf0;
   border-radius: 50%;
 }
 .cycle-next {
   width: 13px;
   height: 13px;
-  background-color: #66b6ff;
+  background-color: #83ccf0;
   border-radius: 50%;
   border: 2px solid white;
 }

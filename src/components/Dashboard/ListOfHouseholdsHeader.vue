@@ -1,6 +1,6 @@
 <template>
   <div class="p-5 flex justify-between">
-    <router-link :to="{ name: 'all' }" class="text-smm font-medium cursor-pointer hover:text-activity">
+    <router-link :to="{ name: 'all' }" class="text-primary text-sm font-semibold hover:text-main-blue">
       List of Households
     </router-link>
     <div class="flex items-center">

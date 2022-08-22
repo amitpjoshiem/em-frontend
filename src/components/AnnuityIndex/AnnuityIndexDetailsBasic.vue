@@ -61,29 +61,29 @@
         <div class="w-8/12 text-xss">
           <el-form ref="form" :model="ruleForm">
             <div class="text-main flex items-center h-6">
-              <span class="w-4/12 text-gray03 font-semibold">Document name:</span>
+              <span class="w-4/12 text-main font-semibold">Document name:</span>
               <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.name" />
               </el-form-item>
               <span v-else class="w-4/12">{{ ruleForm.name }}</span>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Insurance provider:</span>
+              <span class="w-4/12 text-main font-semibold">Insurance provider:</span>
               <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.insurance_provider" />
               </el-form-item>
               <span v-else class="w-4/12">{{ ruleForm.insurance_provider }}</span>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Date signed advisor:</span>
+              <span class="w-4/12 text-main font-semibold">Date signed advisor:</span>
               <SwdStubForText :text="ruleForm.advisor_signed" plug="&mdash;" class="text-sm text-main" />
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Date signed client:</span>
+              <span class="w-4/12 text-main font-semibold">Date signed client:</span>
               <SwdStubForText :text="ruleForm.client_signed" plug="&mdash;" class="text-sm text-main" />
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Tax Qualification:</span>
+              <span class="w-4/12 text-main font-semibold">Tax Qualification:</span>
               <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-select
                   v-model="ruleForm.tax_qualification"
@@ -97,14 +97,14 @@
               <div v-else class="w-4/12 flex items-center cursor-pointer">{{ ruleForm.tax_qualification }}</div>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Agent Rep Code:</span>
+              <span class="w-4/12 text-main font-semibold">Agent Rep Code:</span>
               <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.agent_rep_code" />
               </el-form-item>
               <span v-else class="w-4/12">{{ ruleForm.agent_rep_code }}</span>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">License Number:</span>
+              <span class="w-4/12 text-main font-semibold">License Number:</span>
               <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.license_number" />
               </el-form-item>

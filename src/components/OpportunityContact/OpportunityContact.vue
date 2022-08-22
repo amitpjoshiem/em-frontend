@@ -13,26 +13,26 @@
             </div>
             <div class="flex flex-col w-5/12">
               <div class="mb-1">
-                <span class="text-xss text-gray03 font-semibold pr-2">Name:</span>
+                <span class="text-xss text-main font-semibold pr-2">Name:</span>
                 <SwdStubForText :text="item.name" plug="&mdash;" class="text-sm text-main inline-block" />
               </div>
               <div class="mb-1">
-                <span class="text-xss text-gray03 font-semibold pr-2">Email:</span>
+                <span class="text-xss text-main font-semibold pr-2">Email:</span>
                 <span class="text-sm text-main">{{ item.email }}</span>
               </div>
               <div class="mb-1">
-                <span class="text-xss text-gray03 font-semibold pr-2">Birthday:</span>
+                <span class="text-xss text-main font-semibold pr-2">Birthday:</span>
                 <SwdStubForText :text="item.birthday" plug="&mdash;" class="text-sm text-main inline-block" />
               </div>
               <div class="mb-1">
-                <span class="text-xss text-gray03 font-semibold pr-2">Age:</span>
+                <span class="text-xss text-main font-semibold pr-2">Age:</span>
                 <SwdStubForText :text="item.age" plug="&mdash;" class="text-sm text-main inline-block" />
               </div>
               <div>
                 <span
                   v-if="!item.retired"
                   data-testid="type-member-basic-information-spouse-not-retired"
-                  class="text-border-green text-xxs font-semibold bg-light-green rounded pr-2 pl-1 py-1"
+                  class="text-border-green text-xxs font-semibold bg-main-green rounded pr-2 pl-1 py-1"
                 >
                   Not Retired
                 </span>
@@ -47,19 +47,19 @@
             </div>
             <div class="flex flex-col w-4/12">
               <div class="mb-1">
-                <span class="text-xss text-gray03 font-semibold pr-2">Retirement date:</span>
+                <span class="text-xss text-main font-semibold pr-2">Retirement date:</span>
                 <SwdStubForText :text="item.retirement_date" plug="&mdash;" class="text-sm text-main inline-block" />
               </div>
               <div class="mb-1">
-                <span class="text-xss text-gray03 font-semibold pr-2">Phone:</span>
+                <span class="text-xss text-main font-semibold pr-2">Phone:</span>
                 <SwdStubForText :text="item.phone" plug="&mdash;" class="text-sm text-main inline-block" />
               </div>
               <div class="mb-1">
-                <span class="text-xss text-gray03 font-semibold pr-2">Created:</span>
+                <span class="text-xss text-main font-semibold pr-2">Created:</span>
                 <SwdStubForText :text="item.created_at" plug="&mdash;" class="text-sm text-main inline-block" />
               </div>
               <div class="mb-1">
-                <span class="text-xss text-gray03 font-semibold pr-2">Updated</span>
+                <span class="text-xss text-main font-semibold pr-2">Updated</span>
                 <SwdStubForText :text="item.updated_at" plug="&mdash;" class="text-sm text-main inline-block" />
               </div>
               <div>
@@ -90,8 +90,8 @@
           </div>
         </el-card>
       </template>
-      <div v-else class="text-gray03 flex items-center flex-col mt-5">
-        <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+      <div v-else class="text-main flex items-center flex-col mt-5">
+        <div class="bg-main-gray rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
           <InlineSvg :src="IconEmptyUsers" />
         </div>
         <p>No recently added contacts</p>

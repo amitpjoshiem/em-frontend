@@ -10,7 +10,7 @@
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">General</div>
           </div>
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusGeneral }">
+          <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusGeneral }">
             <div>
               <div class="flex justify-between w-full sm:justify-start">
                 <el-form-item label="Retired?" class="sm:mr-10">
@@ -144,7 +144,7 @@
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">Spouse</div>
           </div>
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusSpouse }">
+          <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusSpouse }">
             <el-form-item label="Retired?" class="mb-4">
               <el-radio-group v-model="ruleForm.spouse.retired">
                 <el-radio :label="true">Yes</el-radio>
@@ -222,7 +222,7 @@
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">Housing Information</div>
           </div>
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusHouse }">
+          <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusHouse }">
             <el-form-item label="Type" class="mb-4">
               <el-radio-group v-model="ruleForm.house.type">
                 <el-radio label="own">Own</el-radio>
@@ -314,8 +314,8 @@
             <div class="text-main text-xl font-semibold ml-2">Employment history</div>
           </div>
 
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusEmployment }">
-            <div class="text-gray03 text-xs uppercase my-2">Contact</div>
+          <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusEmployment }">
+            <div class="text-main text-xs uppercase my-2">Contact</div>
             <div v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-2">
               <div class="sm:flex sm:flex-wrap">
                 <el-form-item
@@ -398,7 +398,7 @@
             </div>
 
             <div v-if="ruleForm.married" class="mt-5">
-              <div class="text-gray03 text-xs uppercase my-2">Spouse</div>
+              <div class="text-main text-xs uppercase my-2">Spouse</div>
               <div v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-2">
                 <div class="sm:flex sm:flex-wrap">
                   <el-form-item
@@ -492,7 +492,7 @@
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">Other</div>
           </div>
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusOther }">
+          <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusOther }">
             <!-- <MoreInfoAbout /> -->
 
             <el-form-item

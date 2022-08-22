@@ -1,5 +1,5 @@
 <template>
-  <div v-if="member" class="w-7/12 bg-widget-bg rounded-lg">
+  <div v-if="member" class="w-7/12 bg-main-gray rounded-lg">
     <div class="border-b">
       <div class="flex p-5">
         <SwdAvatar :link="getAvatarUrl" />
@@ -11,15 +11,15 @@
     </div>
     <div class="flex p-5 items-center">
       <InlineSvg :src="IconRedRisk" />
-      <span class="ml-2 text-xs text-gray03">Red risk</span>
+      <span class="ml-2 text-xs text-main">Red risk</span>
     </div>
     <div class="flex pl-5 items-center">
       <InlineSvg :src="IconOpenSafety" />
-      <span class="ml-2 text-xs text-gray03">Open-safety</span>
+      <span class="ml-2 text-xs text-main">Open-safety</span>
     </div>
     <div class="flex p-5 items-center">
       <InlineSvg :src="IconBlueCash" />
-      <span class="ml-2 text-xs text-gray03">Blue-cash liquidity</span>
+      <span class="ml-2 text-xs text-main">Blue-cash liquidity</span>
     </div>
   </div>
 </template>

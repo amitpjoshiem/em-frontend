@@ -6,8 +6,8 @@
     </div>
 
     <el-skeleton v-if="isLoading" :rows="7" animated />
-    <div v-else-if="!data.data.length" class="text-gray03 flex items-center flex-col mt-5">
-      <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+    <div v-else-if="!data.data.length" class="text-main flex items-center flex-col mt-5">
+      <div class="bg-main-gray rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
         <InlineSvg :src="IconEmptyUsers" />
       </div>
       <p>No recently added Index Annuity</p>

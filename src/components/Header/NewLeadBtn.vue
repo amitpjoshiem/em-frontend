@@ -1,24 +1,8 @@
 <template>
-  <div
-    class="
-      h-[30px]
-      bg-color-grey
-      rounded-md
-      border-input-border border
-      flex
-      items-center
-      justify-center
-      text-primary text-xss
-      cursor-pointer
-      mr-5
-    "
-    @click="newLead"
-  >
-    <span class="px-2">
-      <InlineSvg :src="IconPlus" />
-    </span>
-    <div class="pr-2">Add new lead</div>
-  </div>
+  <SwdButton small class="mr-2" @click="newLead">
+    <InlineSvg :src="IconPlus" class="mr-1.5" />
+    Add new lead
+  </SwdButton>
 </template>
 
 <script>

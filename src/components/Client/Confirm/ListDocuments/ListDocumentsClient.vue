@@ -41,7 +41,7 @@
       </el-card>
     </div>
     <div v-else class="flex justify-center items-center py-2">
-      <p class="text-gray03">No recently added documents</p>
+      <p class="text-main">No recently added documents</p>
     </div>
   </div>
   <div v-else class="flex justify-center items-center">

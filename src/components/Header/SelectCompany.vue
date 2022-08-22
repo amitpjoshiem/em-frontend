@@ -8,7 +8,7 @@
       <div
         v-for="item in data.data"
         :key="item.id"
-        class="border border-input-border p-2 m-2 rounded-lg hover:border-border-blue"
+        class="border border-main-gray p-2 m-2 rounded-lg hover:border-border-blue"
         :class="{ 'border-border-blue': item.id === currentCompany.id }"
       >
         <div

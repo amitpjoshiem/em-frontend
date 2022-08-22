@@ -73,10 +73,10 @@
         <SwdSpinner />
       </div>
       <div v-if="!isLoading && !logs.pages[0].data.length" class="flex flex-col justify-center items-center pt-10">
-        <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center">
+        <div class="w-14 h-14 bg-main-gray rounded-full flex items-center justify-center">
           <InlineSvg :src="IconLastActivityEmpty" />
         </div>
-        <span class="text-gray03 font-semibold text-xss mt-5">No recently added activities</span>
+        <span class="text-main font-semibold text-xss mt-5">No recently added activities</span>
       </div>
     </div>
   </div>

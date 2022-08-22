@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-widget-bg items-center h-16 flex justify-between px-3">
+  <div class="bg-main-gray items-center h-16 flex justify-between px-3">
     <SwdRemoteSearch v-if="!$can('client', 'all')" class="sm:w-4/24" />
 
     <div v-if="$can('advisor', 'all')" class="flex items-center justify-end sm:w-14/24">

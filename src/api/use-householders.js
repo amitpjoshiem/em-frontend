@@ -36,7 +36,7 @@ export const useHouseholders = () => {
   ])
 
   const query = useQuery(queryKey, {
-    cacheTime: 0,
+    // cacheTime: 0,
     queryFn: fetchMembersList,
     select: ({ data }) => {
       return data.map((houseHolder) => new UserFullInfo(houseHolder))

@@ -211,7 +211,7 @@
         <div class="px-16 mt-7 border-b">
           <span class="text-main text-xl font-semibold">Employment history</span>
           <div class="my-5">
-            <span class="text-gray03 text-xs uppercase">Contact opportunity</span>
+            <span class="text-main text-xs uppercase">Contact opportunity</span>
           </div>
 
           <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-6">
@@ -273,7 +273,7 @@
 
           <div v-if="ruleForm.married" class="mt-5">
             <div class="my-5">
-              <span class="text-gray03 text-xs uppercase">Spouse</span>
+              <span class="text-main text-xs uppercase">Spouse</span>
             </div>
 
             <el-form-item v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-10">
@@ -364,13 +364,18 @@
         </div>
 
         <div class="flex justify-end my-10">
-          <el-button
+          <SwdButton main :disabled="isLoadingCreateMember || isLoadingUpdateMember" @click="submitForm()">
+            <SwdSpinner v-show="isLoadingCreateMember || isLoadingUpdateMember" class="mr-2" />
+            Go to the assets &amp; income
+          </SwdButton>
+
+          <!-- <el-button
             type="primary"
             :disabled="isLoadingCreateMember || isLoadingUpdateMember"
             @click="submitForm('ruleForm')"
           >
             Go to the assets &amp; income
-          </el-button>
+          </el-button> -->
         </div>
       </el-form>
     </div>

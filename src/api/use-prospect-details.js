@@ -32,7 +32,7 @@ export const useProspectDetails = () => {
       return fetchMember(id)
     },
     {
-      cacheTime: 0,
+      // cacheTime: 0,
       select: (data) => {
         spouse.value = dataFactory(MemberDetailsSpouse, data.data.spouse)
         house.value = dataFactory(MemberDetailsHouse, data.data.house)

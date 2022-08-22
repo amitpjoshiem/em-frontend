@@ -8,7 +8,7 @@
         <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
         <div class="flex pb-2 mt-8">
           <div class="w-4/12"></div>
-          <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-gray03 text-xs">
+          <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-main text-xs">
             {{ header.toUpperCase() }}
           </div>
         </div>

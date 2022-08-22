@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col w-full items-center justify-center">
-    <div class="max-w-sm pt-6 pl-6 pr-6 bg-widget-bg rounded-md w-[370px]">
+    <div class="max-w-sm pt-6 pl-6 pr-6 bg-main-gray rounded-md w-[370px]">
       <div class="flex items-center justify-center mb-2">
         <InlineSvg :src="IrisLogoStandart" width="100" height="40" />
       </div>
       <h1 class="text-center text-main font-medium text-2xl">Forgot password?</h1>
-      <h1 class="text-center text-gray03 text-xss">Please enter you email</h1>
+      <h1 class="text-center text-main text-xss">Please enter you email</h1>
       <div v-if="sendFormForgotPass" class="my-5">Please check your email for your IRIS password reset link</div>
       <div v-else>
         <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">

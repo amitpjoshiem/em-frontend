@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex h-8 bg-widget-bg">
+    <div class="flex h-8 bg-main-gray">
       <div class="title w-2/10">Amount</div>
       <div class="title w-2/10">Date</div>
       <div class="title w-2/10">Fee</div>
@@ -110,10 +110,10 @@ export default {
 
 <style scoped>
 .title {
-  @apply text-xss text-gray03 flex items-center uppercase first:pl-2;
+  @apply text-xss text-main flex items-center uppercase first:pl-2;
 }
 
 .item {
-  @apply text-xss text-text-light-gray flex items-center h-8 text-left first:pl-2 border-b;
+  @apply text-xss text-main flex items-center h-8 text-left first:pl-2 border-b;
 }
 </style>

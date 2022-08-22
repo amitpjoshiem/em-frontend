@@ -365,8 +365,8 @@ export default {
 
 <style scoped>
 .item {
-  @apply text-xs text-text-light-gray flex items-center justify-center uppercase text-center;
-  @apply border-title-gray border-b border-r first:border-l;
+  @apply text-xs text-main flex items-center justify-center uppercase text-center;
+  @apply border-main-gray border-b border-r first:border-l;
 }
 </style>
 

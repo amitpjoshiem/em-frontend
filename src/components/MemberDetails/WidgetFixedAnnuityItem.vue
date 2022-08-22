@@ -2,7 +2,7 @@
   <div
     v-if="item.id"
     class="w-4/12 px-10 pt-10 flex items-center flex-col"
-    :class="{ 'border-r border-input-border': !lastItem }"
+    :class="{ 'border-r border-main-gray': !lastItem }"
   >
     <div class="flex items-center justify-between pb-5">
       <el-icon color="#042D52" :size="100"><Document /></el-icon>
@@ -14,7 +14,7 @@
     </div>
     <el-button size="small" type="primary" plain @click="open">Open</el-button>
   </div>
-  <div v-else class="w-4/12" :class="{ 'border-r border-input-border': !lastItem }">
+  <div v-else class="w-4/12" :class="{ 'border-r border-main-gray': !lastItem }">
     <el-empty />
   </div>
 </template>

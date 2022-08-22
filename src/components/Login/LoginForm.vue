@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col w-full items-center justify-center pr-[63px]">
-    <div class="form max-w-sm pt-6 pl-6 pr-6 bg-widget-bg rounded-md w-[370px]">
+    <div class="form max-w-sm pt-6 pl-6 pr-6 bg-main-gray rounded-md w-[370px]">
       <div class="flex items-center justify-center mb-2">
         <InlineSvg :src="IrisLogoStandart" width="100" height="40" />
       </div>
       <h1 class="text-center text-main font-medium text-2xl">Login</h1>
-      <h1 class="text-center text-gray03 text-xss">Please enter you email and password</h1>
+      <h1 class="text-center text-main text-xss">Please enter you email and password</h1>
       <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
         <el-form-item label="E-mail" prop="email" class="py-3">
           <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" />
@@ -32,7 +32,7 @@
       </el-form>
     </div>
     <div class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
-      <span class="text-xss text-gray03 cursor-pointer">
+      <span class="text-xss text-main cursor-pointer">
         <router-link :to="{ name: 'forgotpassword' }"> Forgot your password? </router-link>
       </span>
     </div>

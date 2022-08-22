@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap items-center pt-4 px-5 border border-input-border rounded-lg my-2">
+  <div class="flex flex-wrap items-center pt-4 px-5 border border-main-gray rounded-lg my-2">
     <div class="pr-4 mb-4 text-main text-sm font-semibold">Company:</div>
     <SwdSpinner v-if="isLoading" class="mb-4" />
     <template v-else>

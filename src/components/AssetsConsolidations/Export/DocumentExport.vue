@@ -7,8 +7,8 @@
       <template v-if="document.data.length">
         <DocumentExportItem v-for="(elem, index) in document.data" :key="index" :item="elem" />
       </template>
-      <div v-else class="text-gray03 flex items-center flex-col mt-5">
-        <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+      <div v-else class="text-main flex items-center flex-col mt-5">
+        <div class="bg-main-gray rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
           <InlineSvg :src="IconEmptyUsers" />
         </div>
         <p>No recently added documents</p>

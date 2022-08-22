@@ -2,7 +2,7 @@
   <el-badge :value="count" :max="99" class="mr-8" :type="getType ? 'primary' : 'info'" :hidden="isLoading">
     <router-link
       :to="{ name: 'list-deactivated-leads' }"
-      class="text-gray03 text-smm cursor-pointer"
+      class="text-main text-smm cursor-pointer"
       :class="{ active: getType }"
     >
       Deactivated Leads
@@ -55,7 +55,7 @@ export default {
 
 <style scoped>
 .active {
-  color: #66b6ff;
-  border-bottom: 2px solid #66b6ff;
+  color: #83ccf0;
+  border-bottom: 2px solid #83ccf0;
 }
 </style>

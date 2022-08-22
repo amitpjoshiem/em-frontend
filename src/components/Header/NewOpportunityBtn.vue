@@ -1,24 +1,8 @@
 <template>
-  <div
-    class="
-      h-[30px]
-      bg-color-grey
-      rounded-md
-      border-input-border border
-      flex
-      items-center
-      justify-center
-      text-primary text-xss
-      cursor-pointer
-      mr-5
-    "
-    @click="newOpportunity"
-  >
-    <span class="px-2">
-      <InlineSvg :src="IconPlus" />
-    </span>
-    <div class="pr-2">Add new opportunity</div>
-  </div>
+  <SwdButton small @click="newOpportunity">
+    <InlineSvg :src="IconPlus" class="mr-1.5" />
+    Add new opportunity
+  </SwdButton>
 </template>
 
 <script>

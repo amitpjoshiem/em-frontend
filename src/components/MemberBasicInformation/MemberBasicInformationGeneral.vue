@@ -7,18 +7,18 @@
     <div class="flex mb-7">
       <div class="w-6/24"></div>
       <div class="w-9/24">
-        <span class="text-xs text-gray03 font-semibold mr-1">OWNER</span>
+        <span class="text-xs text-main font-semibold mr-1">OWNER</span>
         <SwdRetiredLabel :retired="prospect.retired" />
       </div>
       <div class="w-9/24">
-        <span class="text-xs text-gray03 font-semibold mr-1">SPOUSE</span>
+        <span class="text-xs text-main font-semibold mr-1">SPOUSE</span>
         <SwdRetiredLabel v-if="prospect.married" :retired="spouse.retired" />
       </div>
     </div>
 
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold">Name</span>
+        <span class="text-xss text-main font-semibold">Name</span>
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main font-semibold" data-testid="member-basic-information-prospect-name">
@@ -32,7 +32,7 @@
 
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold">Phone</span>
+        <span class="text-xss text-main font-semibold">Phone</span>
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main" data-testid="member-basic-information-prospect-phone">
@@ -46,7 +46,7 @@
 
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold">Email</span>
+        <span class="text-xss text-main font-semibold">Email</span>
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main" data-testid="member-basic-information-prospect-emeil">
@@ -60,7 +60,7 @@
 
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold"> Date of Birth </span>
+        <span class="text-xss text-main font-semibold"> Date of Birth </span>
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main" data-testid="member-basic-information-prospect-birthday">
@@ -74,7 +74,7 @@
 
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold"> Retirement Date </span>
+        <span class="text-xss text-main font-semibold"> Retirement Date </span>
       </div>
       <div class="w-9/24">
         <span class="text-sm text-main" data-testid="member-basic-information-prospect-retirement-date">
@@ -88,7 +88,7 @@
 
     <div class="flex mb-10">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold">Address</span>
+        <span class="text-xss text-main font-semibold">Address</span>
       </div>
       <div class="w-18">
         <span class="text-sm text-main" data-testid="member-basic-information-prospect-address">

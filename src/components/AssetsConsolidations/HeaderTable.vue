@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-12 bg-widget-bg">
+  <div class="flex h-12 bg-main-gray">
     <div class="w-6/24 title">name</div>
     <div class="w-2/24 title">
       % of <br />
@@ -40,7 +40,7 @@ export default {
 
 <style scoped>
 .title {
-  @apply text-small text-gray03 flex items-center justify-center uppercase text-center;
-  @apply border-r border-b border-t border-title-gray first:border-l;
+  @apply text-small text-main flex items-center justify-center uppercase text-center;
+  @apply border-r border-b border-t border-main-gray first:border-l;
 }
 </style>

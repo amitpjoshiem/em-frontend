@@ -5,7 +5,7 @@
         :to="{ name: 'asset-allocation-details', params: { id: memberId } }"
         class="text-main text-smm font-semibold cursor-pointer"
       >
-        <span class="text-main text-smm font-semibold">Asset Allocation</span>
+        <SwdWidgetTitle text="Asset Allocation" />
       </router-link>
     </div>
 
@@ -79,7 +79,7 @@ import { useQueryClient } from 'vue-query'
 import { useMutation } from 'vue-query'
 
 export default {
-  name: 'AssetsAllocation',
+  name: 'WidgetAssetsAllocation',
   components: {
     AssetsChart,
   },

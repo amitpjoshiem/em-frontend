@@ -1,32 +1,18 @@
 <template>
   <div>
-    <div class="border box-border color-light-gray rounded-lg h-[269px]">
+    <div class="border box-border color-main-gray rounded-lg h-[269px]">
       <div class="pt-5 pb-3 pl-5 flex justify-between px-5">
         <el-badge :value="getCount" :max="99" class="mr-8" :type="getCount ? 'primary' : 'info'" :hidden="isLoading">
-          <span class="text-main text-smm font-semibold">Child Opportunities</span>
+          <SwdWidgetTitle text="Child Opportunities" />
         </el-badge>
         <router-link :to="{ name: 'add-opportunity', params: { id: prospectId } }">
-          <div
-            class="
-              h-8
-              bg-color-grey
-              rounded-md
-              border-input-border border
-              flex
-              items-center
-              justify-center
-              text-primary text-xss
-              cursor-pointer
-            "
-          >
-            <span class="px-2">
-              <InlineSvg :src="IconPlus" />
-            </span>
-            <div class="pr-2">Add child opportunity</div>
-          </div>
+          <SwdButton small>
+            <InlineSvg :src="IconPlus" class="mr-1.5" />
+            Add child opportunity
+          </SwdButton>
         </router-link>
       </div>
-      <div class="flex h-8 bg-widget-bg">
+      <div class="flex h-8 bg-main-gray">
         <div class="w-9/24 title">Opportunity name</div>
         <div class="w-4/24 title">Amount</div>
         <div class="w-6/24 title">Stage</div>
@@ -48,7 +34,7 @@
             {{ user }}
           </OpportunityItem>
         </el-scrollbar>
-        <div v-else class="text-center text-gray03 text-sm pt-20">No recently added opportunities</div>
+        <div v-else class="text-center text-main text-sm pt-20">No recently added opportunities</div>
       </div>
       <el-skeleton v-else :rows="2" animated class="w-full p-3" />
     </div>
@@ -103,7 +89,7 @@ export default {
 
 <style scoped>
 .title {
-  @apply text-small text-gray03 flex items-center uppercase first:pl-2;
+  @apply text-small text-main flex items-center uppercase first:pl-2;
 }
 
 .oportunity-item {

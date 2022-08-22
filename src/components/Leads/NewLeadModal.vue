@@ -8,11 +8,12 @@
         <el-form-item label="Email" prop="email" class="w-full">
           <el-input v-model="ruleForm.email" placeholder="Enter email" />
         </el-form-item>
-        <div class="pt-5 text-right">
-          <el-button class="w-20" @click="closeDialog">Close</el-button>
-          <el-button :loading="isLoading" :disabled="isLoading" type="primary" class="w-20" @click="sendLink">
+        <div class="pt-5 flex justify-end">
+          <SwdButton main class="mr-2 w-28" @click="closeDialog">Close</SwdButton>
+          <SwdButton main class="w-28" :disabled="isLoading" @click="sendLink">
+            <SwdSpinner v-if="isLoading" />
             Send
-          </el-button>
+          </SwdButton>
         </div>
       </el-form>
     </div>
@@ -79,7 +80,6 @@ export default {
     return {
       state,
       closeDialog,
-
       ruleForm,
       form,
       rules,

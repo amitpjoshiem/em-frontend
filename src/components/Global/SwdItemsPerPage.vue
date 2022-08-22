@@ -1,6 +1,6 @@
 <template>
   <div class="mr-2.5 flex items-center">
-    <span class="text-xss text-text-gray mr-1.5">Items per page</span>
+    <span class="text-xss text-main mr-1.5">Items per page</span>
     <div class="w-16">
       <SwdNativeSelect :options="actions" size="small" :init-value="initValue" @select="handleItemsPerPage" />
     </div>

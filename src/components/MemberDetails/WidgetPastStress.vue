@@ -1,12 +1,12 @@
 <template>
   <div class="w-8/24 border rounded-lg mr-5">
     <div class="p-5 flex flex-col h-full justify-between">
-      <div class="text-main text-smm font-semibold mb-3">Past Stress Test Results</div>
+      <SwdWidgetTitle text="Past Stress Test Results" />
       <el-skeleton v-if="isLoading" :rows="2" animated class="p-5" />
       <SwdErrorBlock v-else-if="isError" />
       <div v-else-if="isAvailableCocument" class="flex flex-col">
         <div
-          class="flex border-input-border border rounded-md p-3 w-full mb-3.5 cursor-pointer"
+          class="flex border-main-gray border rounded-md p-3 w-full mb-3.5 cursor-pointer"
           @click="openPrewiev(stressTestDocument.data[0].url)"
         >
           <div class="w-[35px] mr-2">
@@ -19,7 +19,7 @@
         </div>
         <div
           v-if="stressTestDocument.data[1]"
-          class="flex border-input-border border rounded-md p-3 w-full mb-3.5 cursor-pointer"
+          class="flex border-main-gray border rounded-md p-3 w-full mb-3.5 cursor-pointer"
           @click="openPrewiev(stressTestDocument.data[1].url)"
         >
           <div class="w-[35px] mr-2">
@@ -32,18 +32,12 @@
         </div>
       </div>
       <div v-else class="flex flex-col items-center justify-center">
-        <div class="bg-widget-bg rounded-full w-12 h-12 flex flex-col items-center justify-center mb-3">
+        <div class="bg-main-gray rounded-full w-12 h-12 flex flex-col items-center justify-center mb-3">
           <InlineSvg :src="IconEmptyUsers" />
         </div>
-        <p class="text-gray03 text-sm">No recently added documents</p>
+        <p class="text-main text-sm">No recently added documents</p>
       </div>
-      <Button
-        small-btn-gray
-        text-semi-bold
-        wide-btn
-        :text-btn="isAvailableCocument ? 'More' : 'Add'"
-        @click="moreActionStressTest"
-      />
+      <SwdButton small @click="moreActionStressTest">{{ isAvailableCocument ? 'More' : 'Add' }}</SwdButton>
     </div>
   </div>
 </template>

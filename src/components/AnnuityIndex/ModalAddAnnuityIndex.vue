@@ -36,7 +36,7 @@
       </el-form-item>
     </el-form>
 
-    <div class="h-[200px] border rounded p-2" :class="validUpload ? 'border-input-border' : 'border-color-error'">
+    <div class="h-[200px] border rounded p-2" :class="validUpload ? 'border-main-gray' : 'border-color-error'">
       <SwdUpload
         :upload-data="{ collection: 'fixed_index_annuities' }"
         :doc-list="fileList"
@@ -57,7 +57,7 @@
             </el-button>
             <div class="el-upload__tip">PDF files only (max file size 10Mb)</div>
           </div>
-          <div v-if="!inChangeFile" class="text-gray03 text-center pt-6">No documents uploaded</div>
+          <div v-if="!inChangeFile" class="text-main text-center pt-6">No documents uploaded</div>
         </template>
       </SwdUpload>
     </div>

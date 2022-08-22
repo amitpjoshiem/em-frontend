@@ -37,10 +37,10 @@
     </template>
 
     <div v-else class="flex flex-col items-center justify-center mt-10">
-      <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+      <div class="bg-main-gray rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
         <InlineSvg :src="IconEmptyUsers" />
       </div>
-      <p class="text-gray03 font-semibold text-xss mt-3">No client reports available</p>
+      <p class="text-main font-semibold text-xss mt-3">No client reports available</p>
     </div>
   </SwdWrapper>
 </template>

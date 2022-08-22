@@ -13,31 +13,29 @@
 
     <table class="w-full table-auto border-collapse border rounded-md text-xs">
       <tr>
-        <th colspan="5" scope="colgroup" class="border border-input-border w-5/10 bg-orange-bg py-1">
-          Since Inception
-        </th>
+        <th colspan="5" scope="colgroup" class="border border-main-gray w-5/10 bg-orange-bg py-1">Since Inception</th>
       </tr>
-      <tr class="bg-widget-bg">
-        <th class="border border-input-border w-1/10 py-1" scope="col">Total Premiums</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Bonus Received</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Interest credited</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Total Withdrawals</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Average Growth</th>
+      <tr class="bg-main-gray">
+        <th class="border border-main-gray w-1/10 py-1" scope="col">Total Premiums</th>
+        <th class="border border-main-gray w-1/10 py-1" scope="col">Bonus Received</th>
+        <th class="border border-main-gray w-1/10 py-1" scope="col">Interest credited</th>
+        <th class="border border-main-gray w-1/10 py-1" scope="col">Total Withdrawals</th>
+        <th class="border border-main-gray w-1/10 py-1" scope="col">Average Growth</th>
       </tr>
       <tr>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+        <td class="border border-main-gray w-2/10 py-1 pl-3 font-semibold">
           {{ currencyFormat(clientReportSince.totalPremiums) }}
         </td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+        <td class="border border-main-gray w-2/10 py-1 pl-3 font-semibold">
           {{ currencyFormat(clientReportSince.bonusReceived) }}
         </td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+        <td class="border border-main-gray w-2/10 py-1 pl-3 font-semibold">
           {{ currencyFormat(clientReportSince.interestCredited) }}
         </td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+        <td class="border border-main-gray w-2/10 py-1 pl-3 font-semibold">
           {{ currencyFormat(clientReportSince.totalWithdrawals) }}
         </td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+        <td class="border border-main-gray w-2/10 py-1 pl-3 font-semibold">
           {{ currencyFormat(clientReportSince.averageGrowth) }}
         </td>
       </tr>

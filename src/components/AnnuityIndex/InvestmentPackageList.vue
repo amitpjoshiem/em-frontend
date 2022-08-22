@@ -17,10 +17,10 @@
       </el-col>
     </el-row>
     <div v-else class="flex flex-col justify-center items-center">
-      <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center mt-5">
+      <div class="w-14 h-14 bg-main-gray rounded-full flex items-center justify-center mt-5">
         <InlineSvg :src="IconLastActivityEmpty" />
       </div>
-      <span class="text-gray03 font-semibold text-xss mt-5">No recently Investment Package</span>
+      <span class="text-main font-semibold text-xss mt-5">No recently Investment Package</span>
     </div>
 
     <ModalAddInvestmentPackage />

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full items-center justify-center">
-    <div class="max-w-sm pt-6 pl-6 pr-6 bg-widget-bg rounded-md w-[370px]">
+    <div class="max-w-sm pt-6 pl-6 pr-6 bg-main-gray rounded-md w-[370px]">
       <div class="flex items-center justify-center mb-2">
         <InlineSvg :src="IrisLogoStandart" width="100" height="40" />
       </div>

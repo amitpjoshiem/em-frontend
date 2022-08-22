@@ -24,7 +24,7 @@
 
     <el-table-column prop="created_at" label="created At" min-width="110">
       <template #default="scope">
-        <span class="text-xss">{{ scope.row.createdAtFormatted }}</span>
+        <span class="text-main text-xss">{{ scope.row.createdAtFormatted }}</span>
       </template>
     </el-table-column>
 
@@ -117,12 +117,12 @@ export default {
 
 <style>
 .header-class {
-  background-color: #f2f5fa !important;
+  background-color: #e9e9e9 !important;
   height: 24px !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
-  color: #aab5cf;
-  font-size: 10px;
+  color: #282828;
+  font-size: 9px;
   text-transform: uppercase;
 }
 </style>

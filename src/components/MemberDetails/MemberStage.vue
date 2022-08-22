@@ -244,15 +244,15 @@ export default {
 }
 
 .step-no-complet {
-  background-color: rgb(243, 243, 243);
+  background-color: #e9e9e9;
 }
 
 .step-no-complet p {
-  color: #000;
+  color: #282828;
 }
 
 .step-complet {
-  background-color: #6ebaff;
+  background-color: #83ccf0;
 }
 
 .step-complet p {
@@ -260,7 +260,7 @@ export default {
 }
 
 .step-current {
-  background-color: #042d52;
+  background-color: #073763;
 }
 .step-current p {
   color: #fff;

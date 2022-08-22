@@ -1,7 +1,7 @@
 <template>
-  <div class="p-5 bg-widget-bg rounded-lg">
+  <div class="p-5 bg-main-gray rounded-lg">
     <div class="flex justify-between items-center">
-      <router-link :to="{ name: getLink }" class="text-smm font-medium hover:text-activity">
+      <router-link :to="{ name: getLink }" class="text-primary text-sm font-semibold hover:text-main-blue">
         Revenue Dashboard
       </router-link>
       <SwdSelectFilter destination="pipeLine" />
@@ -9,39 +9,41 @@
     <el-skeleton v-if="isLoading" :rows="4" animated />
     <SwdErrorBlock v-else-if="isError" />
     <div v-else-if="pipeLine" class="pt-6 flex justify-between sm:mb-5 xl:mb-0">
-      <div class="justify-between flex flex-col border border-widget-border rounded-lg pt-3 bg-white w-5/12">
+      <div class="justify-between flex flex-col rounded-lg pt-3 bg-white w-5/12">
         <div class="flex text-small items-center justify-between px-2.5">
-          <span class="text-gray03">Total AUM</span>
+          <span class="text-main">Total AUM</span>
           <div
             class="flex rounded-md p-1"
-            :class="{ 'bg-color-green': pipeLine.data.new_aum, 'bg-input-border': pipeLine.data.new_aum === null }"
+            :class="{ 'bg-main-green': pipeLine.data.new_aum, 'bg-main-gray': pipeLine.data.new_aum === null }"
           >
             <InlineSvg v-if="pipeLine.data.new_aum !== null" :src="IconUpArrow" class="mt-[2px] mr-px" />
-            <span class="text-white ml-px font-semibold"> ${{ currencyCompact(pipeLine.data.new_aum) }} </span>
+            <span class="text-main ml-px font-semibold"> ${{ currencyCompact(pipeLine.data.new_aum) }} </span>
           </div>
         </div>
-        <span class="flex items-center justify-center text-xll font-medium">
+        <span class="text-main flex items-center justify-center text-xll font-medium">
           ${{ currencyCompact(pipeLine.data.aum) }}
         </span>
         <InlineSvg v-if="pipeLine.data.aum === null" :src="IconTotalGray" />
         <InlineSvg v-else :src="IconTotal" />
       </div>
 
-      <div class="justify-between flex flex-col border border-widget-border rounded-lg pt-3 bg-white w-5/12">
+      <div class="justify-between flex flex-col rounded-lg pt-3 bg-white w-5/12">
         <div class="flex text-small items-center justify-between px-2.5">
-          <span class="text-gray03">Members</span>
+          <span class="text-main">Members</span>
           <div
             class="flex rounded-md p-1"
             :class="{
-              'bg-color-green': pipeLine.data.new_members,
-              'bg-input-border': pipeLine.data.new_members === null,
+              'bg-main-green': pipeLine.data.new_members,
+              'bg-main-gray': pipeLine.data.new_members === null,
             }"
           >
             <InlineSvg :src="IconUpArrow" class="mt-[2px]" />
-            <span class="text-white ml-px font-semibold"> {{ pipeLine.data.new_members }} </span>
+            <span class="text-main ml-px font-semibold"> {{ pipeLine.data.new_members }} </span>
           </div>
         </div>
-        <span class="flex items-center justify-center text-xll font-medium"> {{ pipeLine.data.members }} </span>
+        <span class="text-main flex items-center justify-center text-xll font-medium">
+          {{ pipeLine.data.members }}
+        </span>
         <div class="-ml-px">
           <InlineSvg v-if="pipeLine.data.members" :src="IconMembers" />
           <InlineSvg v-else :src="IconTotalGray" />
