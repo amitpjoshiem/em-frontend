@@ -1,7 +1,7 @@
 <template>
-  <div class="border box-border color-light-gray rounded-lg">
+  <div class="border box-border color-main-gray rounded-lg">
     <div class="text-smm font-medium text-main py-5 pl-5">Asset</div>
-    <div class="flex h-6 bg-widget-bg">
+    <div class="flex h-6 bg-main-gray">
       <div class="w-5/12 title pl-5">asset Name</div>
       <div class="w-1/12 title">$</div>
       <div class="w-1/12 title">%</div>
@@ -54,11 +54,11 @@ export default {
 
 <style scoped>
 .title {
-  @apply text-small text-gray03 flex items-center uppercase text-center last:border-r-0;
+  @apply text-small text-main flex items-center uppercase text-center last:border-r-0;
 }
 
 .item {
-  @apply text-xs text-text-light-gray flex items-center text-center last:border-r-0;
+  @apply text-xs text-main flex items-center text-center last:border-r-0;
 }
 
 .line-item {

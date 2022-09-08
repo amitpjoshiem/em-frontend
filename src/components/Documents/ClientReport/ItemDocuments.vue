@@ -9,12 +9,11 @@
       </div>
     </div>
     <div class="flex w-5/12 justify-end">
-      <el-button v-if="document.status === 'process'" type="primary" size="small" plain disabled>
-        <div class="flex items-center">
-          <SwdSpinner />
-          <span class="pl-2">processing</span>
-        </div>
-      </el-button>
+      <SwdButton v-if="document.status === 'process'" class="ml-2" primary main :`disabled="true">
+        <SwdSpinner class="mr-2" />
+        Processing
+        <SwdSpinner class="mr-2" />
+      </SwdButton>
       <el-button
         v-if="document.status === 'success' && document.type === 'pdf'"
         type="primary"
@@ -24,10 +23,10 @@
       >
         Prewiev
       </el-button>
-      <el-button v-if="document.status === 'success'" type="primary" plain size="small" @click="share">Share</el-button>
-      <el-button v-if="document.status === 'success'" type="primary" plain size="small" @click="downloadDocuments">
-        Download
-      </el-button>
+      <SwdButton v-if="document.status === 'success'" primary small @click="share">Share</SwdButton>
+      <SwdButton v-if="document.status === 'success'" class="my-2" primary small @click="downloadDocuments"
+        >Download</SwdButton
+      >
       <el-button v-if="document.status === 'error'" type="danger" size="small" plain disabled>error</el-button>
     </div>
   </div>

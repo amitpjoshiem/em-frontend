@@ -13,17 +13,17 @@
         </div>
       </div>
       <div>
-        <div class="border rounded-md border-input-border p-5 mb-10">
+        <div class="border rounded-md border-main-gray p-5 mb-10">
           <ContractInfoYear :client-report="clientReport" :client-report-year="clientReportYear.value" />
           <ContractInfoSince :client-report="clientReport" :client-report-since="clientReportSince.value" />
         </div>
       </div>
       <div class="pr-5 w-96 total-info ml-auto mr-0 mb-5">
-        <div class="bg-widget-bg rounded-md py-2 flex justify-between">
+        <div class="bg-main-gray rounded-md py-2 flex justify-between">
           <span class="pl-3 w-7/12">TDA Total Value</span>
           <span class="w-5/12 text-center">---</span>
         </div>
-        <div class="bg-widget-bg rounded-md py-2 flex justify-between mt-3">
+        <div class="bg-main-gray rounded-md py-2 flex justify-between mt-3">
           <span class="pl-3 w-7/12">Total Current Value</span>
           <span class="w-5/12 text-center">---</span>
         </div>

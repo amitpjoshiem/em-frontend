@@ -1,18 +1,18 @@
 <template>
-  <div class="w-6/24 px-3 pt-4 pb-4 border border-color-grey box-border rounded-r-md border-l-0">
+  <div class="w-6/24 p-5 pb-4 border border-color-grey box-border rounded-r-md border-l-0">
     <div class="flex justify-between items-center text-smm font-semibold">
-      <span class="text-main">Other</span>
-      <el-button size="small" @click="showMore">More</el-button>
+      <SwdWidgetTitle text="Other" />
+      <SwdButton primary small @click="showMore">More</SwdButton>
     </div>
     <el-skeleton v-if="isLoading" :rows="3" animated />
     <SwdErrorBlock v-else-if="isError" />
     <div v-else-if="other" class="text-xs pt-5">
-      <div class="border-input-border border rounded-md p-2 w-full my-2">
-        <p class="text-gray03 mb-[2px]">Risk level:</p>
+      <div class="border-main-gray border rounded-md p-2 w-full my-2">
+        <p class="text-main mb-[2px]">Risk level:</p>
         <p class="font-semibold" data-testid="widjet-other-risk">{{ other.value.risk }}</p>
       </div>
-      <div class="border-input-border border rounded-md p-2 w-full mb-2 flex flex-col">
-        <span class="text-gray03 mb-[2px]">Goal for retirement:</span>
+      <div class="border-main-gray border rounded-md p-2 w-full mb-2 flex flex-col">
+        <span class="text-main mb-[2px]">Goal for retirement:</span>
         <p
           class="font-semibold whitespace-nowrap overflow-hidden overflow-ellipsis"
           data-testid="widjet-other-retirement"
@@ -20,8 +20,8 @@
           {{ getText(other.value.retirement) }}
         </p>
       </div>
-      <div class="border-input-border border rounded-md p-2 w-full">
-        <p class="text-gray03 mb-[2px]">Goal for retirement money:</p>
+      <div class="border-main-gray border rounded-md p-2 w-full">
+        <p class="text-main mb-[2px]">Goal for retirement money:</p>
         <p
           class="font-semibold whitespace-nowrap overflow-hidden overflow-ellipsis"
           data-testid="widjet-other-retirement-money"

@@ -9,14 +9,14 @@
 
     <div class="flex mb-4">
       <p
-        class="text-gray03 text-smm cursor-pointer mr-4"
+        class="text-main text-smm cursor-pointer mr-4"
         :class="{ active: activeTab === 'withdrawals' }"
         @click="setActiveTab('withdrawals')"
       >
         Withdrawals
       </p>
       <p
-        class="text-gray03 text-smm cursor-pointer"
+        class="text-main text-smm cursor-pointer"
         :class="{ active: activeTab === 'deposits' }"
         @click="setActiveTab('deposits')"
       >
@@ -59,7 +59,7 @@ export default {
 
 <style scoped>
 .active {
-  color: #66b6ff;
-  border-bottom: 2px solid #66b6ff;
+  color: #83ccf0;
+  border-bottom: 2px solid #83ccf0;
 }
 </style>

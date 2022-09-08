@@ -53,8 +53,10 @@
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="closeDialog">Close</el-button>
-        <el-button type="primary" class="ml-4" @click="saveContact">Save</el-button>
+        <div class="flex justify-end">
+          <SwdButton info main @click="closeDialog">Close</SwdButton>
+          <SwdButton class="ml-2" primary main @click="saveContact">Save</SwdButton>
+        </div>
       </span>
     </template>
   </el-dialog>

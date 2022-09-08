@@ -2,11 +2,11 @@
   <div v-if="!isLoading && !isLoadingInfo" class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div class="hidden pb-2 mt-8 md:flex">
       <div class="md:w-8/12" />
-      <div class="md:w-2/12 text-gray03 text-xs">ESSENTIAL</div>
-      <div class="md:w-2/12 text-gray03 text-xs">DISCRETIONARY</div>
+      <div class="md:w-2/12 text-main text-xs">ESSENTIAL</div>
+      <div class="md:w-2/12 text-main text-xs">DISCRETIONARY</div>
     </div>
     <el-form ref="form" :model="ruleForm">
-      <div class="border border-input-border rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusHousing }">
+      <div class="border border-main-gray rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusHousing }">
         <div class="flex items-center mb-5">
           <InlineSvg v-show="isFocusHousing && !isDoneCurrentStep" :src="IconActive" />
           <InlineSvg v-show="!isFocusHousing && !isDoneCurrentStep" :src="IconNotActive" />
@@ -18,8 +18,8 @@
         <div class="md:flex mb-4">
           <!-- HOUSING -->
           <div class="flex pb-2 mt-5 md:hidden">
-            <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
-            <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
+            <div class="w-6/12 text-main text-xs text-center">ESSENTIAL</div>
+            <div class="w-6/12 text-main text-xs text-center">DISCRETIONARY</div>
           </div>
           <div class="w-3/12" />
           <div class="md:w-5/12 text-main text-xss flex items-center">Mortgage/Rent/Fees</div>
@@ -134,7 +134,7 @@
 
       <!-- FOOD TRANSPORTATION -->
       <div
-        class="border border-input-border rounded-lg p-5 mb-5"
+        class="border border-main-gray rounded-lg p-5 mb-5"
         :class="{ 'border-border-blue': isFocusAtHome || isFocusTransportation }"
       >
         <div class="flex items-center mb-5">
@@ -145,8 +145,8 @@
         </div>
         <div class="md:flex mb-4">
           <div class="flex pb-2 mt-5 md:hidden">
-            <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
-            <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
+            <div class="w-6/12 text-main text-xs text-center">ESSENTIAL</div>
+            <div class="w-6/12 text-main text-xs text-center">DISCRETIONARY</div>
           </div>
           <div class="w-3/12" />
           <div class="md:w-5/12 text-main text-xss flex items-center">At Home</div>
@@ -290,7 +290,7 @@
       </div>
 
       <!-- HEALTHCARE -->
-      <div class="border border-input-border rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusHealthcare }">
+      <div class="border border-main-gray rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusHealthcare }">
         <div class="flex items-center mb-5">
           <InlineSvg v-show="isFocusHealthcare && !isDoneCurrentStep" :src="IconActive" />
           <InlineSvg v-show="!isFocusHealthcare && !isDoneCurrentStep" :src="IconNotActive" />
@@ -301,8 +301,8 @@
           <div class="w-3/12" />
 
           <div class="flex pb-2 mt-5 md:hidden">
-            <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
-            <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
+            <div class="w-6/12 text-main text-xs text-center">ESSENTIAL</div>
+            <div class="w-6/12 text-main text-xs text-center">DISCRETIONARY</div>
           </div>
           <div class="md:w-5/12 text-main text-xss flex items-center">Health Insurance</div>
           <SwdCurrencyInput
@@ -394,7 +394,7 @@
 
       <!-- PERSONAL -->
       <div
-        class="border border-input-border rounded-lg p-5 mb-5"
+        class="border border-main-gray rounded-lg p-5 mb-5"
         :class="{ 'border-border-blue': isFocusPersonal || isFocusPersonalCare }"
       >
         <div class="flex items-center mb-5">
@@ -406,8 +406,8 @@
         <div class="md:flex mb-4">
           <div class="w-3/12" />
           <div class="flex pb-2 mt-5 md:hidden">
-            <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
-            <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
+            <div class="w-6/12 text-main text-xs text-center">ESSENTIAL</div>
+            <div class="w-6/12 text-main text-xs text-center">DISCRETIONARY</div>
           </div>
           <div class="md:w-5/12 text-main text-xss flex items-center">Life/Other</div>
           <SwdCurrencyInput
@@ -462,8 +462,8 @@
         <div class="md:flex mb-4">
           <div class="w-3/12" />
           <div class="flex pb-2 mt-5 md:hidden">
-            <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
-            <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
+            <div class="w-6/12 text-main text-xs text-center">ESSENTIAL</div>
+            <div class="w-6/12 text-main text-xs text-center">DISCRETIONARY</div>
           </div>
           <div class="md:w-5/12 text-main text-xss flex items-center">Clothing</div>
           <SwdCurrencyInput
@@ -510,12 +510,12 @@
       </div>
 
       <!-- OTHER -->
-      <div class="border border-input-border rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusOther }">
+      <div class="border border-main-gray rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusOther }">
         <div class="md:flex mb-4">
           <div class="w-3/12" />
           <div class="flex pb-2 mt-5 md:hidden">
-            <div class="w-6/12 text-gray03 text-xs text-center">ESSENTIAL</div>
-            <div class="w-6/12 text-gray03 text-xs text-center">DISCRETIONARY</div>
+            <div class="w-6/12 text-main text-xs text-center">ESSENTIAL</div>
+            <div class="w-6/12 text-main text-xs text-center">DISCRETIONARY</div>
           </div>
           <div class="md:w-5/12 text-main text-xss flex items-center">Entertainment</div>
           <SwdCurrencyInput
@@ -695,15 +695,11 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button
-          type="primary"
-          :disabled="isLoadingUpdateSteps"
-          :loading="isLoadingUpdateSteps"
-          class="w-20"
-          @click="save"
-        >
+
+        <SwdButton primary main :disabled="isLoadingUpdateSteps" class="w-2/12" @click="save">
+          <SwdSpinner v-show="isLoadingUpdateSteps" class="mr-2" />
           Save
-        </el-button>
+        </SwdButton>
       </div>
     </el-form>
   </div>

@@ -47,6 +47,6 @@ export default {
 
 <style scoped>
 .item {
-  @apply text-xs text-text-light-gray flex items-center h-8 text-left first:pl-2;
+  @apply text-xs text-main flex items-center h-8 text-left first:pl-2;
 }
 </style>

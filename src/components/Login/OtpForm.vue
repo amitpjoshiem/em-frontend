@@ -1,45 +1,39 @@
 <template>
   <div class="flex flex-col w-full items-center justify-center pr-[63px]">
-    <div class="form max-w-sm pt-6 pl-6 pr-6 bg-widget-bg rounded-md w-[370px]">
-      <div class="flex items-center justify-center p-2">
-        <div class="rounded-full h-10 w-10 flex items-center justify-center bg-lightgray03">
-          <InlineSvg :src="IconLoginForm" />
-        </div>
+    <div class="form max-w-sm pt-6 pl-6 pr-6 bg-main-gray rounded-md w-[370px]">
+      <div class="flex items-center justify-center mb-2">
+        <InlineSvg :src="IrisLogoStandart" width="100" height="40" />
       </div>
       <h1 class="text-center text-main font-medium text-2xl">Login</h1>
       <div>
-        <h1 v-if="otpTypeEmail" class="text-center text-gray03 pt-2.5 text-sm">
+        <h1 v-if="otpTypeEmail" class="text-center text-main pt-2.5 text-sm">
           We just sent you a temporary login code. Please check your inbox.
         </h1>
-        <h1 v-if="otpTypeGoogle" class="text-center text-gray03 pt-2.5 text-sm">
+        <h1 v-if="otpTypeGoogle" class="text-center text-main pt-2.5 text-sm">
           Please check your Google Authenticator.
         </h1>
-        <h1 v-if="otpTypePhone" class="text-center text-gray03 pt-2.5 text-sm">Please check your SMS.</h1>
+        <h1 v-if="otpTypePhone" class="text-center text-main pt-2.5 text-sm">Please check your SMS.</h1>
         <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
           <el-form-item label="OTP" prop="code">
             <el-input v-model="ruleForm.code" placeholder="Enter otp code" />
           </el-form-item>
           <el-form-item class="my-6">
-            <Button
-              :default-primary="!fetching"
-              full
-              type="submit"
-              text-btn="Continue"
-              :disabled="fetching"
-              @click="submit()"
-            />
+            <SwdButton primary main :disabled="fetching" class="w-full" @click="submit()">
+              <SwdSpinner v-show="fetching" class="mr-2" />
+              Continue
+            </SwdButton>
           </el-form-item>
         </el-form>
       </div>
     </div>
     <div v-if="otpTypeEmail || otpTypePhone" class="flex justify-between w-full pt-3 max-w-sm rounded-md pl-2">
-      <span class="text-xss text-gray03 cursor-pointer" @click="getResendOtp">Resend OTP code</span>
+      <span class="text-xss text-main cursor-pointer" @click="getResendOtp">Resend OTP code</span>
     </div>
   </div>
 </template>
 
 <script>
-import IconLoginForm from '@/assets/svg/icon-login-form.svg'
+import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
 import { useStore } from 'vuex'
 import { computed, reactive, ref } from 'vue'
 import { useOtp } from '@/api/authentication/use-otp'
@@ -99,7 +93,7 @@ export default {
       response,
       error,
       fetching,
-      IconLoginForm,
+      IrisLogoStandart,
       otpTypeEmail,
       ruleForm,
       form,

@@ -36,7 +36,7 @@
       </el-form-item>
     </el-form>
 
-    <div class="h-[200px] border rounded p-2" :class="validUpload ? 'border-input-border' : 'border-color-error'">
+    <div class="h-[200px] border rounded p-2" :class="validUpload ? 'border-main-gray' : 'border-color-error'">
       <SwdUpload
         :upload-data="{ collection: 'fixed_index_annuities' }"
         :doc-list="fileList"
@@ -52,20 +52,23 @@
       >
         <template #main>
           <div class="my-5">
-            <el-button :disabled="fileList.length > 0" size="small" type="primary" class="mr-5">
-              Attach a document
-            </el-button>
+            <SwdButton :disabled="fileList.length > 0" class="mr-5" primary small>Attach a document</SwdButton>
             <div class="el-upload__tip">PDF files only (max file size 10Mb)</div>
           </div>
-          <div v-if="!inChangeFile" class="text-gray03 text-center pt-6">No documents uploaded</div>
+          <div v-if="!inChangeFile" class="text-main text-center pt-6">No documents uploaded</div>
         </template>
       </SwdUpload>
     </div>
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button class="w-[80px]" @click="closeDialog">Close</el-button>
-        <el-button type="primary" class="ml-4 w-[80px]" :loading="loadingCreate" @click="save">Save</el-button>
+        <div class="flex justify-end">
+          <SwdButton info main @click="closeDialog">Close</SwdButton>
+          <SwdButton class="ml-2" primary main @click="save">
+            Save
+            <SwdSpinner v-show="loadingCreate" class="mr-2" />
+          </SwdButton>
+        </div>
       </span>
     </template>
   </el-dialog>

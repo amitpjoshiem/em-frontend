@@ -23,11 +23,11 @@
           <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
           <div class="flex flex-col ml-3">
             <div>
-              <span class="text-gray03">File name: </span>
+              <span class="text-main">File name: </span>
               <span class="font-semibold text-main">{{ file.name }}</span>
             </div>
             <div>
-              <span class="text-gray03">Created at: </span>
+              <span class="text-main">Created at: </span>
               <span class="font-semibold text-main">{{ file.created_at ? file.created_at : 'a few minutes ago' }}</span>
             </div>
           </div>

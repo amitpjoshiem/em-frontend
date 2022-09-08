@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-widget-bg rounded-lg p-5 h-[269px]">
+  <div class="bg-main-gray rounded-lg p-4 h-[269px]">
     <el-skeleton v-if="isLoadingProspectDetails" :rows="5" animated />
     <SwdErrorBlock v-else-if="isErrorProspectDetails" />
     <template v-else-if="member">
@@ -43,12 +43,12 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-between pb-3 pt-3 border-t border-input-border">
+      <div class="flex justify-between pb-3 pt-3 border-t border-white">
         <div class="flex items-center">
-          <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
+          <span class="w-6 h-6 rounded-md flex justify-center items-center bg-main-orange">
             <InlineSvg :src="IconProspectAge" />
           </span>
-          <span class="ml-2 text-xs text-gray03">Age</span>
+          <span class="ml-2 text-xs text-main">Age</span>
         </div>
         <div class="text-sm">
           <span class="text-main pr-2">{{ member.age }}</span>
@@ -58,10 +58,10 @@
       <el-form ref="form" :model="ruleForm" size="small">
         <div class="flex justify-between items-center">
           <div class="flex items-center">
-            <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
+            <span class="w-6 h-6 rounded-md flex justify-center items-center bg-main-orange">
               <InlineSvg :src="IconTotal" />
             </span>
-            <span class="ml-2 text-xs text-gray03">Total net worth:</span>
+            <span class="ml-2 text-xs text-main">Total net worth:</span>
           </div>
           <el-form-item class="w-5/12">
             <SwdCurrencyInput
@@ -78,10 +78,10 @@
 
         <div class="flex justify-between pt-3">
           <div class="flex items-center">
-            <span class="w-6 h-6 rounded-md flex justify-center items-center bg-color-error">
+            <span class="w-6 h-6 rounded-md flex justify-center items-center bg-main-orange">
               <InlineSvg :src="IconGoal" />
             </span>
-            <span class="ml-2 text-xs text-gray03">Goal:</span>
+            <span class="ml-2 text-xs text-main">Goal:</span>
           </div>
           <el-form-item class="w-5/12">
             <SwdCurrencyInput
@@ -97,16 +97,16 @@
         </div>
       </el-form>
 
-      <div v-if="member.type === 'prospect'" class="flex justify-between pt-5">
-        <Button small-btn-activity text-semi-bold text-btn="Convert to client" @click="convert" />
+      <div v-if="member.type === 'prospect'" class="flex justify-between pt-8">
+        <SwdButton primary small class="mr-2" @click="convert">Convert to client</SwdButton>
 
-        <router-link :to="{ name: 'blueprint-report', params: { id: member.id } }" class="pl-2.5 font-medium">
-          <Button small-btn-gray text-semi-bold text-btn="Blueprint report" />
+        <router-link :to="{ name: 'blueprint-report', params: { id: member.id } }">
+          <SwdButton primary small class="mr-2">Blueprint report</SwdButton>
         </router-link>
       </div>
       <div v-else class="flex justify-end pt-5">
         <router-link :to="{ name: 'clientreport', params: { id: member.id } }" class="pl-2.5 font-medium">
-          <Button small-btn-gray text-semi-bold text-btn="Client report" />
+          <SwdButton primary small class="mr-2">Client report</SwdButton>
         </router-link>
       </div>
     </template>

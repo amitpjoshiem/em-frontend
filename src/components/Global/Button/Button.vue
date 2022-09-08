@@ -8,9 +8,8 @@
       'w-full': full,
       'bg-input-border rounded-md h-10 text-color-grey cursor-not-allowed ': disabled,
       'bg-activity px-7 text-white text-xss': defaultBlueBtn,
-      'bg-color-grey text-xss px-7 text-activity': defaultGrayBtn,
-      'bg-color-link-btn w-full flex justify-center items-center text-xss font-medium': defaultLinkBtn,
-      'border border-dashed border-input-border w-full flex justify-center items-center text-xss font-medium':
+      'bg-main-gray text-xss px-7 text-primary': defaultGrayBtn,
+      'border border-dashed border-main-gray w-full flex justify-center items-center text-xss font-medium':
         transparentBtn,
       'bg-activity text-xss text-white px-1.5': smallBtnActivity,
       'text-xss border border-activity px-1.5': smallBtnGray,

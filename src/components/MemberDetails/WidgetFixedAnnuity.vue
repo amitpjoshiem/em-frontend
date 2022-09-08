@@ -1,8 +1,8 @@
 <template>
   <div class="w-full border border-color-grey box-border rounded-md p-5 h-[269px]">
     <div class="flex justify-between items-center text-smm font-semibold">
-      <span class="text-main text-smm font-semibold mb-2">Fixed Annuity Index</span>
-      <el-button size="small" @click="more">More</el-button>
+      <SwdWidgetTitle text="Fixed Annuity Index" />
+      <SwdButton primary small class="mr-2" @click="more">More</SwdButton>
     </div>
     <el-skeleton v-if="isLoading" :rows="3" animated class="p-5" />
 

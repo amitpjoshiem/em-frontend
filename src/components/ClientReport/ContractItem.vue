@@ -1,6 +1,6 @@
 <template>
   <div class="mb-5 w-[49%]">
-    <div class="flex justify-between items-center bg-widget-bg p-5 rounded-t">
+    <div class="flex justify-between items-center bg-main-gray p-5 rounded-t">
       <div class="flex items-center">
         <span class="w-9 h-9 rounded-md flex justify-center items-center bg-activity">
           <InlineSvg :src="IconCurrentYear" />
@@ -9,7 +9,7 @@
           <span class="ml-4 text-main text-title font-semibold">Contract {{ contract.contract_number }}</span>
         </router-link>
       </div>
-      <span class="text-xs text-gray03">issue date: {{ getIssueDate }}</span>
+      <span class="text-xs text-main">issue date: {{ getIssueDate }}</span>
     </div>
 
     <div class="border border-t-0 border-color-grey flex justify-between px-4 py-2">
@@ -27,9 +27,11 @@
       <span class="text-main text-sm font-semibold">{{ currencyFormat(contract.current_year.current_value) }}</span>
     </div>
     <div class="border border-t-0 border-color-grey flex justify-end px-4 py-2">
-      <el-button size="small" type="primary" plain @click="genPdf">Generate PDF</el-button>
-      <el-button size="small" type="success" plain @click="genExcel">Generate EXCEL</el-button>
-      <el-button size="small" type="info" plain @click="moreAction">More info</el-button>
+      <div class="flex">
+        <SwdButton primary small @click="genPdf">Generate PDF</SwdButton>
+        <SwdButton class="ml-2" primary small @click="genExcel">Generate EXCEL</SwdButton>
+        <SwdButton class="ml-2" primary small @click="moreAction">More info</SwdButton>
+      </div>
     </div>
   </div>
 </template>

@@ -4,8 +4,8 @@
     <div v-if="!isLoading">
       <div class="flex mt-4">
         <div class="w-4/12"></div>
-        <div class="w-4/12 text-sm text-gray03 font-semibold">OWNER</div>
-        <div class="w-4/12 text-sm text-gray03 font-semibold">SPOUSE</div>
+        <div class="w-4/12 text-sm text-main font-semibold">OWNER</div>
+        <div class="w-4/12 text-sm text-main font-semibold">SPOUSE</div>
       </div>
       <div v-for="item in employment" :key="item.id">
         <EmploymentHistoryItem :employment-item="item" />

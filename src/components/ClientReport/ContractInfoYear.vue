@@ -23,31 +23,31 @@
 
     <table class="w-full table-auto border-collapse border rounded-md text-xs">
       <tr>
-        <th colspan="5" scope="colgroup" class="border border-input-border w-5/10 bg-color-light-blue py-1">
+        <th colspan="5" scope="colgroup" class="border border-main-gray w-5/10 bg-color-main-blue py-1">
           Current Year
         </th>
       </tr>
-      <tr class="bg-widget-bg">
-        <th class="border border-input-border w-1/10 py-1" scope="col">Beginning Balance</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Interest credited</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Growth</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Withdrawals</th>
-        <th class="border border-input-border w-1/10 py-1" scope="col">Current value</th>
+      <tr class="bg-main-gray">
+        <th class="border border-main-gray w-1/10 py-1" scope="col">Beginning Balance</th>
+        <th class="border border-main-gray w-1/10 py-1" scope="col">Interest credited</th>
+        <th class="border border-main-gray w-1/10 py-1" scope="col">Growth</th>
+        <th class="border border-main-gray w-1/10 py-1" scope="col">Withdrawals</th>
+        <th class="border border-main-gray w-1/10 py-1" scope="col">Current value</th>
       </tr>
       <tr>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+        <td class="border border-main-gray w-2/10 py-1 pl-3 font-semibold">
           {{ currencyFormat(clientReportYear.beginningBalance) }}
         </td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+        <td class="border border-main-gray w-2/10 py-1 pl-3 font-semibold">
           {{ currencyFormat(clientReportYear.interestCredited) }}
         </td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+        <td class="border border-main-gray w-2/10 py-1 pl-3 font-semibold">
           {{ currencyFormat(clientReportYear.growth) }}
         </td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+        <td class="border border-main-gray w-2/10 py-1 pl-3 font-semibold">
           {{ currencyFormat(clientReportYear.withdrawals) }}
         </td>
-        <td class="border border-input-border w-2/10 py-1 pl-3 font-semibold">
+        <td class="border border-main-gray w-2/10 py-1 pl-3 font-semibold">
           {{ currencyFormat(clientReportYear.currentValue) }}
         </td>
       </tr>

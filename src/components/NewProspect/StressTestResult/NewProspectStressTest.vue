@@ -102,7 +102,7 @@
         </div>
       </div>
 
-      <div class="border-t border-color-grey bg-color-grey text-xs pl-5 py-2 font-medium">Risk Stats</div>
+      <div class="border-t border-color-grey bg-main-gray text-xs pl-5 py-2 font-medium">Risk Stats</div>
 
       <div class="flex text-xs text-main">
         <div class="w-2/12 border-r border-color-grey py-2 pl-5">Correlation Risk</div>
@@ -120,7 +120,7 @@
         </div>
       </div>
 
-      <div class="border-t border-color-grey bg-color-grey text-xs pl-5 py-2 font-medium">Performance Stats</div>
+      <div class="border-t border-color-grey bg-main-gray text-xs pl-5 py-2 font-medium">Performance Stats</div>
 
       <div class="flex text-xs text-main">
         <div class="w-2/12 border-t border-r border-color-grey py-2 pl-5">Total Return</div>
@@ -151,7 +151,7 @@
         </div>
       </div>
 
-      <div class="border-t border-color-grey bg-color-grey text-xs pl-5 py-2 font-medium">Portfolio Stats</div>
+      <div class="border-t border-color-grey bg-main-gray text-xs pl-5 py-2 font-medium">Portfolio Stats</div>
 
       <div class="flex text-xs text-main">
         <div class="w-2/12 border-t border-r border-color-grey py-2 pl-5">Yield</div>
@@ -174,7 +174,7 @@
           <span class="bg-lighy-green py-1 px-2 border border-border-green rounded text-border-green">13.48%</span>
         </div>
       </div>
-      <div class="border-t border-color-grey bg-color-grey text-xs pl-5 py-2 font-medium">Expences</div>
+      <div class="border-t border-color-grey bg-main-gray text-xs pl-5 py-2 font-medium">Expences</div>
 
       <div class="flex text-xs text-main">
         <div class="w-2/12 border-t border-r border-color-grey py-2 pl-5">Expense Ratio</div>

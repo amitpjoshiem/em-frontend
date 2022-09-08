@@ -6,7 +6,7 @@
     <select
       v-model="data.value"
       :class="selectClass"
-      class="styled-select border rounded-md border-input-border text-main text-xss px-2 py-1 bg-white"
+      class="styled-select border rounded-md border-main-gray text-main text-xss px-2 py-1 bg-white"
       @change="handleCommand($event)"
     >
       <option v-for="(item, index) in options" :key="index" :value="item.command">{{ item.title }}</option>

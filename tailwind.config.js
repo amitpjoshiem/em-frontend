@@ -7,37 +7,58 @@ module.exports = {
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
-        main: '#424450',
-        gray03: '#AAB5CF',
-        lightgray03: '#E2E9F4',
-        'widget-bg': '#F2F5FA',
-        primary: '#042D52',
+
+        // TITLE
+        primary: '#073763',
+
+        // BUTTON
+        'main-blue': '#83ccf0',
+
+        // BORDER AND BACKGROUND
+        'main-gray': '#e9e9e9',
+
+        'main-orange': '#f58833',
+
+        // REST
+        'main-green': '#7BD7BD',
+
+        // TEXT
+        main: '#282828',
+
         activity: '#66B6FF',
-        'activity-item': '#A9B1CC',
-        'input-border': '#D4DDEB',
-        'color-grey': '#EBF0FA',
-        'widget-border': '#E7EDFB',
-        'color-green': '#7BD7BD',
-        'color-light-blue': '#E9F8FF',
-        'color-blue-border': '#66B9FF',
-        'text-gray': '#2E2F38',
-        'orange-badge': '#FF9979',
-        'orange-bg': '#FFEFEA',
-        'orange-border': '#FF9979',
-        'color-error': '#FF92A5',
-        'color-link-btn': '#E2E9F9',
-        'title-gray': '#C7CFE3',
-        'color-light-gray': '#EBF1F9',
-        'text-light-gray': '#383838',
-        'lighy-green': '#EEFFF9',
-        'border-green': '#76E1BB',
-        'dark-blue-charts': '#53576A',
-        'light-green': '#DBF4EE',
-        'color-link': '#6EBAFF',
-        'border-blue': '#66B6FF',
+
+        'blue-primary': '#66B9FF',
+        'blue-primary-light': '#E9F8FF',
+
+        'orange-primary': '#FF9979',
+        'orange-primary-light': '#FFEFEA',
+
+        // gray03: '#AAB5CF',
+        // 'input-border': '#D4DDEB',
+        // 'widget-bg': '#F2F5FA',
+        // 'border-blue': '#66B6FF',
+        // lightgray03: '#E2E9F4',
+        // 'activity-item': '#A9B1CC',
+        // 'color-grey': '#EBF0FA',
+        // 'widget-border': '#E7EDFB',
+        // 'color-main-blue': '#E9F8FF',
+        // 'color-blue-border': '#66B9FF',
+        // 'text-gray': '#2E2F38',
+        // 'orange-badge': '#FF9979',
+        // 'orange-bg': '#FFEFEA',
+        // 'orange-border': '#FF9979',
+        // 'color-error': '#FF92A5',
+        // 'title-gray': '#C7CFE3',
+        // 'color-main-gray': '#EBF1F9',
+        // 'text-main-gray': '#383838',
+        // 'lighy-green': '#EEFFF9',
+        // 'border-green': '#76E1BB',
+        // 'dark-blue-charts': '#53576A',
+        // 'main-green': '#DBF4EE',
+        // 'color-link': '#6EBAFF',
       },
       fontFamily: {
-        sans: ['Work Sans', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: ['Montserrat', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
       },
       fontSize: {
         smallx: '9px',

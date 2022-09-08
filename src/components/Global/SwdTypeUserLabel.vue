@@ -2,9 +2,9 @@
   <div
     class="border border-opacity-50 rounded capitalize text-center w-full"
     :class="{
-      'text-activity border-color-blue-border bg-color-light-blue': userType === 'prospect',
-      'text-orange-badge border-orange-border bg-orange-bg': userType === 'client',
-      'text-green-600 border-green-600 bg-green-200': userType === 'lead',
+      'text-activity border-blue-primary bg-blue-primary-light': userType === 'prospect',
+      'text-orange-primary border-orange-primary bg-orange-primary-light': userType === 'client',
+      'text-main border-main-blue': userType === 'lead',
     }"
   >
     <span>

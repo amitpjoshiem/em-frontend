@@ -27,11 +27,11 @@ html, body {
   page-break-after: always
 }
 
-.bg-widget-bg{
+.bg-main-gray{
   background-color: #F2F5FA
 }
 
-.text-gray03{
+.text-main{
   color: #AAB5CF;
 }
 
@@ -39,7 +39,7 @@ html, body {
   color: #2E2F38;
 }
 
-.bg-color-light-blue{
+.bg-color-main-blue{
   background-color: #E9F8FF;
 }
 

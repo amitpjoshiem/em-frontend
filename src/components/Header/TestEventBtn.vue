@@ -1,6 +1,6 @@
 <template>
   <el-dropdown class="mr-4 cursor-pointer" trigger="click" @command="handleCommand">
-    <el-button type="info" plain>
+    <el-button type="info" plain size="small">
       Test event
       <el-icon class="el-icon--right">
         <arrow-down />
