@@ -1,6 +1,6 @@
 <template>
   <div v-if="member" class="w-7/12 bg-main-gray rounded-lg">
-    <div class="border-b">
+    <div class="border-b border-white">
       <div class="flex p-5">
         <SwdAvatar :link="getAvatarUrl" />
         <div class="flex flex-col ml-2">

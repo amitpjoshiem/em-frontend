@@ -50,17 +50,12 @@
         </el-form-item>
       </div>
 
-      <div class="pt-5 text-right">
-        <el-button class="w-20" @click="closeDialog">Close</el-button>
-        <el-button
-          type="primary"
-          class="w-20"
-          :disabled="isLoadingUpdateStage"
-          :loading="isLoadingUpdateStage"
-          @click="saveStage"
-        >
+      <div class="pt-5 flex justify-end">
+        <SwdButton info small class="mr-2 w-[60px]" @click="closeDialog">Close</SwdButton>
+        <SwdButton primary small class="w-[60px]" :disabled="isLoadingUpdateStage" @click="saveStage">
+          <SwdSpinner v-show="isLoadingUpdateStage" class="mr-2" />
           Save
-        </el-button>
+        </SwdButton>
       </div>
     </el-form>
   </el-dialog>

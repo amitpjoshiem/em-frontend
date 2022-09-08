@@ -261,7 +261,7 @@
               </el-form-item>
             </template>
 
-            <div class="w-5 pt-7 ml-3 cursor-pointer">
+            <div class="w-5 pt-5 ml-3 cursor-pointer">
               <InlineSvg
                 v-if="index === ruleForm.employment_history.length - 1"
                 :src="IconAdd"
@@ -318,7 +318,7 @@
                 </el-form-item>
               </template>
 
-              <div class="w-5 pt-7 ml-3 cursor-pointer">
+              <div class="w-5 pt-5 ml-3 cursor-pointer">
                 <InlineSvg
                   v-if="index === ruleForm.spouse.employment_history.length - 1"
                   :src="IconAdd"
@@ -364,18 +364,10 @@
         </div>
 
         <div class="flex justify-end my-10">
-          <SwdButton main :disabled="isLoadingCreateMember || isLoadingUpdateMember" @click="submitForm()">
+          <SwdButton primary main :disabled="isLoadingCreateMember || isLoadingUpdateMember" @click="submitForm()">
             <SwdSpinner v-show="isLoadingCreateMember || isLoadingUpdateMember" class="mr-2" />
             Go to the assets &amp; income
           </SwdButton>
-
-          <!-- <el-button
-            type="primary"
-            :disabled="isLoadingCreateMember || isLoadingUpdateMember"
-            @click="submitForm('ruleForm')"
-          >
-            Go to the assets &amp; income
-          </el-button> -->
         </div>
       </el-form>
     </div>
@@ -384,7 +376,7 @@
       <span class="py-5"
         >Please check your Partners Settings Make Partner Settings clickable link to the Partner screen</span
       >
-      <el-button type="primary" class="w-[150px]" size="small" @click="goPartnerSettings">Partner Settings</el-button>
+      <SwdButton class="ml-2" primary main @click="goPartnerSettings">Partner Settings</SwdButton>
     </div>
   </div>
   <el-skeleton v-else :rows="10" animated />

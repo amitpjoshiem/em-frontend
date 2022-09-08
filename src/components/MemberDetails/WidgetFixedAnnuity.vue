@@ -2,7 +2,7 @@
   <div class="w-full border border-color-grey box-border rounded-md p-5 h-[269px]">
     <div class="flex justify-between items-center text-smm font-semibold">
       <SwdWidgetTitle text="Fixed Annuity Index" />
-      <SwdButton small class="mr-2" @click="more">More</SwdButton>
+      <SwdButton primary small class="mr-2" @click="more">More</SwdButton>
     </div>
     <el-skeleton v-if="isLoading" :rows="3" animated class="p-5" />
 

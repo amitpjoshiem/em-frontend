@@ -18,14 +18,10 @@
             <el-input v-model="ruleForm.code" placeholder="Enter otp code" />
           </el-form-item>
           <el-form-item class="my-6">
-            <Button
-              :default-primary="!fetching"
-              full
-              type="submit"
-              text-btn="Continue"
-              :disabled="fetching"
-              @click="submit()"
-            />
+            <SwdButton primary main :disabled="fetching" class="w-full" @click="submit()">
+              <SwdSpinner v-show="fetching" class="mr-2" />
+              Continue
+            </SwdButton>
           </el-form-item>
         </el-form>
       </div>

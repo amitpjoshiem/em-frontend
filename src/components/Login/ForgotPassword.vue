@@ -13,7 +13,10 @@
             <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" />
           </el-form-item>
           <el-form-item class="my-6">
-            <Button :default-primary="!fetching" full text-btn="Continue" :disabled="fetching" type="submit" />
+            <SwdButton primary main :disabled="fetching" class="w-full" @click="submit()">
+              <SwdSpinner v-show="fetching" class="mr-2" />
+              Continue
+            </SwdButton>
           </el-form-item>
         </el-form>
       </div>

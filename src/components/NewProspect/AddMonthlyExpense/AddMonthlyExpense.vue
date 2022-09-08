@@ -569,7 +569,7 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button type="primary" @click="nextStep"> Go to the assets accounts </el-button>
+        <SwdButton primary main @click="nextStep()"> Go to the assets accounts </SwdButton>
       </div>
     </el-form>
   </div>

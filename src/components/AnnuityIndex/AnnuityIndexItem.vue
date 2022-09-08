@@ -37,8 +37,7 @@
           <span class="w-6/12">{{ item.license_number }}</span>
         </div>
         <div class="flex justify-end text-main pt-4">
-          <el-button size="small" plain type="primary">Client Reports</el-button>
-          <el-button size="small" plain type="primary" @click="getDetails">Details</el-button>
+          <SwdButton primary small @click="getDetails">Details</SwdButton>
         </div>
       </div>
     </div>

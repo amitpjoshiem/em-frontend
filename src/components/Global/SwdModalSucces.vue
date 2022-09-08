@@ -8,7 +8,7 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="closeDialog">Close</el-button>
+        <SwdButton info main @click="closeDialog">Close</SwdButton>
       </span>
     </template>
   </el-dialog>

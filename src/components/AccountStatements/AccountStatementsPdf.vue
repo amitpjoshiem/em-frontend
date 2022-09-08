@@ -14,7 +14,9 @@
     >
       <template #main>
         <div class="my-5">
-          <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
+          <div class="w-2/12">
+            <SwdButton primary small @click="moreDocuments">Click to upload</SwdButton>
+          </div>
           <div class="el-upload__tip">PDF files only</div>
         </div>
         <div v-if="!assetsConsolidationDocs.data.length && !inChangeFile" class="text-main text-center pb-5">

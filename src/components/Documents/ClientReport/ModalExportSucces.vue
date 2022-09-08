@@ -10,7 +10,7 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="closeDialog">Close</el-button>
+        <SwdButton info small class="ml-2" @click="closeDialog">Close</SwdButton>
       </span>
     </template>
   </el-dialog>

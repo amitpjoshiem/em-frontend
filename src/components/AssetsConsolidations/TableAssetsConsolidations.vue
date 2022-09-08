@@ -4,7 +4,7 @@
       <div v-if="isShowTitle" class="text-smm font-medium text-main">Asset Consolidations</div>
       <div class="flex">
         <ExportExcel />
-        <el-button size="small" class="ml-2" @click="moreDocuments">More documents</el-button>
+        <SwdButton primary small class="ml-4" @click="moreDocuments">More documents</SwdButton>
       </div>
     </div>
 
@@ -184,7 +184,7 @@
       </div>
 
       <div class="flex justify-end mb-10">
-        <el-button type="primary" @click="addTable">Add table</el-button>
+        <SwdButton primary main @click="addTable">Add table</SwdButton>
       </div>
     </div>
     <el-skeleton v-else :rows="10" animated class="p-5" />

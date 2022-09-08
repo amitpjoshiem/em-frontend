@@ -37,7 +37,11 @@
         </div>
         <p class="text-main text-sm">No recently added documents</p>
       </div>
-      <SwdButton small @click="moreActionStressTest">{{ isAvailableCocument ? 'More' : 'Add' }}</SwdButton>
+      <SwdButton primary v-if="isAvailableCocument" small @click="moreActionStressTest">More</SwdButton>
+      <SwdButton primary v-if="!isAvailableCocument" small class="mr-2" @click="moreActionStressTest">
+        <InlineSvg :src="IconPlus" class="mr-1.5" />
+        Add
+      </SwdButton>
     </div>
   </div>
 </template>
@@ -48,6 +52,7 @@ import { useFetchStressTest } from '@/api/use-fetch-stress-test.js'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
+import IconPlus from '@/assets/svg/icon-plus.svg'
 
 export default {
   name: 'WidgetPastStress',
@@ -84,6 +89,7 @@ export default {
       moreActionStressTest,
       openPrewiev,
       IconEmptyUsers,
+      IconPlus,
     }
   },
 }

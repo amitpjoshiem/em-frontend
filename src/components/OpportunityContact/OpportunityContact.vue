@@ -2,7 +2,7 @@
   <SwdWrapper>
     <SwdSubHeader title="Opportunity contacts" />
     <div class="flex justify-end pb-5">
-      <el-button type="primary" plain @click="addContact">Add contact</el-button>
+      <SwdButton primary main @click="addContact">Add contact</SwdButton>
     </div>
     <div v-if="!isLoading">
       <template v-if="state.length">

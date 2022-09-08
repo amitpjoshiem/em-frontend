@@ -6,7 +6,7 @@
           <SwdWidgetTitle text="Child Opportunities" />
         </el-badge>
         <router-link :to="{ name: 'add-opportunity', params: { id: prospectId } }">
-          <SwdButton small>
+          <SwdButton primary small>
             <InlineSvg :src="IconPlus" class="mr-1.5" />
             Add child opportunity
           </SwdButton>

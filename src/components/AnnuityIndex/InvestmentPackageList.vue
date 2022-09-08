@@ -5,9 +5,7 @@
         <InlineSvg :src="IconDoneStep" />
         <div class="text-main text-xl font-semibold ml-2">Investment Package</div>
       </div>
-      <el-button type="primary" size="small" plain class="w-[160px]" @click="addPackage">
-        Add Investment Package
-      </el-button>
+      <SwdButton primary small @click="addPackage">Add Investment Package</SwdButton>
     </div>
 
     <el-skeleton v-if="isLoading" :rows="3" animated />

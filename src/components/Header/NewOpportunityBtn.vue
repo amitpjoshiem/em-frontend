@@ -1,5 +1,5 @@
 <template>
-  <SwdButton small @click="newOpportunity">
+  <SwdButton primary small @click="newOpportunity">
     <InlineSvg :src="IconPlus" class="mr-1.5" />
     Add new opportunity
   </SwdButton>

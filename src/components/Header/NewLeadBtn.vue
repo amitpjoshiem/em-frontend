@@ -1,5 +1,5 @@
 <template>
-  <SwdButton small class="mr-2" @click="newLead">
+  <SwdButton primary small class="mr-2" @click="newLead">
     <InlineSvg :src="IconPlus" class="mr-1.5" />
     Add new lead
   </SwdButton>

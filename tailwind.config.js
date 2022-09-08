@@ -8,21 +8,21 @@ module.exports = {
         transparent: 'transparent',
         current: 'currentColor',
 
-        // ЗАГОЛОВКИ
+        // TITLE
         primary: '#073763',
 
-        // КНОПКИ
+        // BUTTON
         'main-blue': '#83ccf0',
 
-        // БОРДЕР ФОН
+        // BORDER AND BACKGROUND
         'main-gray': '#e9e9e9',
 
         'main-orange': '#f58833',
 
-        // ОСТАЛЬНОЕ
+        // REST
         'main-green': '#7BD7BD',
 
-        // ТЕКСТ
+        // TEXT
         main: '#282828',
 
         activity: '#66B6FF',
@@ -33,20 +33,14 @@ module.exports = {
         'orange-primary': '#FF9979',
         'orange-primary-light': '#FFEFEA',
 
-        //
         // gray03: '#AAB5CF',
         // 'input-border': '#D4DDEB',
         // 'widget-bg': '#F2F5FA',
-
         // 'border-blue': '#66B6FF',
-
         // lightgray03: '#E2E9F4',
-        //
-        //
         // 'activity-item': '#A9B1CC',
         // 'color-grey': '#EBF0FA',
         // 'widget-border': '#E7EDFB',
-        //
         // 'color-main-blue': '#E9F8FF',
         // 'color-blue-border': '#66B9FF',
         // 'text-gray': '#2E2F38',

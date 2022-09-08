@@ -14,7 +14,7 @@
     >
       <template #main>
         <div class="flex my-5">
-          <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
+          <SwdButton primary small class="w-2/12 mr-4" @click="moreDocuments">Click to upload1</SwdButton>
           <div class="el-upload__tip">PDF files only</div>
         </div>
         <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
@@ -22,7 +22,7 @@
     </SwdUpload>
     <div v-if="showNavBtn" class="flex justify-end my-6">
       <Button default-gray-btn text-btn="Back" class="mr-5" @click="backStep" />
-      <Button default-blue-btn text-btn="Show Report" @click="saveStep" />
+      <SwdButton primary main @click="saveStep">Show Report</SwdButton>
     </div>
   </div>
   <el-skeleton v-else :rows="10" animated class="p-5" />

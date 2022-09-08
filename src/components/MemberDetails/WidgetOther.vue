@@ -2,7 +2,7 @@
   <div class="w-6/24 p-5 pb-4 border border-color-grey box-border rounded-r-md border-l-0">
     <div class="flex justify-between items-center text-smm font-semibold">
       <SwdWidgetTitle text="Other" />
-      <SwdButton small @click="showMore">More</SwdButton>
+      <SwdButton primary small @click="showMore">More</SwdButton>
     </div>
     <el-skeleton v-if="isLoading" :rows="3" animated />
     <SwdErrorBlock v-else-if="isError" />

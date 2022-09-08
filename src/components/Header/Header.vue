@@ -3,7 +3,10 @@
     <SwdRemoteSearch v-if="!$can('client', 'all')" class="sm:w-4/24" />
 
     <div v-if="$can('advisor', 'all')" class="flex items-center justify-end sm:w-14/24">
-      <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" />
+      <!-- <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" /> -->
+      <div class="mr-4">
+        <InlineSvg :src="IrisLogoStandart" width="100" height="40" />
+      </div>
       <NewLeadBtn />
       <NewOpportunityBtn />
     </div>
@@ -58,7 +61,7 @@
       <HeaderNotificationsBlock />
     </div>
 
-    <UserAction class="sm:w-4/24 xl:w-2/24 ml-2" />
+    <UserAction class="sm:w-4/24 xl:w-2/24" />
   </div>
   <NewLeadModal />
 </template>
@@ -70,10 +73,11 @@ import HeaderNotificationsBlock from '@/components/Header/HeaderNotificationsBlo
 import NewLeadModal from '@/components/Leads/NewLeadModal.vue'
 import NewLeadBtn from '@/components/Header/NewLeadBtn.vue'
 import NewOpportunityBtn from '@/components/Header/NewOpportunityBtn.vue'
-import TestEventBtn from '@/components/Header/TestEventBtn.vue'
+// import TestEventBtn from '@/components/Header/TestEventBtn.vue'
 import SelectCompany from '@/components/Header/SelectCompany.vue'
 import SelectAdvisors from '@/components/Header/SelectAdvisors.vue'
 import { useShowContentEnv } from '@/hooks/use-show-content-env'
+import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
 
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
@@ -88,7 +92,7 @@ export default {
     NewLeadModal,
     NewLeadBtn,
     NewOpportunityBtn,
-    TestEventBtn,
+    // TestEventBtn,
     SelectCompany,
     SelectAdvisors,
   },
@@ -141,6 +145,7 @@ export default {
       goMembers,
       goPipeLine,
       getRouteName,
+      IrisLogoStandart,
     }
   },
 }

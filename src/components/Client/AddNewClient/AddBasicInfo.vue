@@ -383,14 +383,15 @@
                 </el-form-item>
               </div>
               <div class="flex justify-end mt-4">
-                <el-button
+                <SwdButton
+                  primary
                   v-if="index === ruleForm.employment_history.length - 1"
-                  type="primary"
-                  plain
+                  main
+                  :disabled="isLoadingUpdateMember"
                   @click="addEmployment(ruleForm)"
                 >
                   Add job
-                </el-button>
+                </SwdButton>
                 <el-button v-else type="danger" plain @click="removeEmployment({ ruleForm, index })">
                   Remove job
                 </el-button>
@@ -466,14 +467,15 @@
                   </el-form-item>
                 </div>
                 <div class="flex justify-end mt-4">
-                  <el-button
+                  <SwdButton
+                    primary
                     v-if="index === ruleForm.spouse.employment_history.length - 1"
-                    type="primary"
-                    plain
-                    @click="addEmploymentSpouse(ruleForm)"
+                    main
+                    :disabled="isLoadingUpdateMember"
+                    @click="addEmploymentSpouse()"
                   >
                     Add job
-                  </el-button>
+                  </SwdButton>
                   <el-button v-else type="danger" plain @click="removeEmploymentSpouse({ ruleForm, index })"
                     >Remove job</el-button
                   >
@@ -579,9 +581,10 @@
         <!-- Other -->
 
         <div class="flex justify-end my-10">
-          <el-button type="primary" :disabled="isLoadingUpdateMember" @click="submitForm('ruleForm')">
+          <SwdButton primary main :disabled="isLoadingUpdateMember" @click="submitForm('ruleForm')">
+            <SwdSpinner v-show="isLoadingUpdateMember" class="mr-2" />
             Go to the assets &amp; income
-          </el-button>
+          </SwdButton>
         </div>
       </el-form>
     </div>
@@ -606,17 +609,12 @@ import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 
-// import MoreInfoAbout from './MoreInfoAbout.vue'
-
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
   name: 'AddProspectBasicInfo',
-  components: {
-    // MoreInfoAbout,
-  },
   directives: { maska },
   setup() {
     const router = useRouter()
@@ -744,6 +742,10 @@ export default {
     }
 
     const isDoneCurrentStep = computed(() => {
+      console.log(
+        'clientsInfo.value.steps.completed_financial_fact_finder - ',
+        clientsInfo.value.steps.completed_financial_fact_finder
+      )
       return clientsInfo.value.steps.completed_financial_fact_finder
     })
 

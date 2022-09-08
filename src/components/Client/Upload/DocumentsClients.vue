@@ -33,8 +33,8 @@
             @open-prewiev="openPrewiev"
           >
             <template #main>
-              <div class="flex my-5">
-                <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
+              <div class="flex my-5 w-2/12">
+                <SwdButton primary small @click="moreDocuments">Click to upload</SwdButton>
               </div>
               <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
             </template>
@@ -49,19 +49,10 @@
         <p>No recently added documents</p>
       </div>
       <div class="flex justify-end">
-        <el-button type="primary" plain class="w-20" :disabled="isLoadingUpdateSteps" @click="backStep">
-          Back
-        </el-button>
-        <el-button
-          type="success"
-          plain
-          :disabled="disabledSaveBtn"
-          :loading="isLoadingUpdateSteps"
-          class="w-20"
-          @click="saveStep"
-        >
-          Save
-        </el-button>
+        <div class="pr-3">
+          <Button default-gray-btn text-btn="Back" :disabled="isLoadingUpdateSteps" @click="backStep" />
+        </div>
+        <SwdButton primary main :disabled="disabledSaveBtn" @click="saveStep">Save</SwdButton>
       </div>
     </div>
     <el-skeleton v-else :rows="15" animated />

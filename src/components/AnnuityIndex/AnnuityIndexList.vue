@@ -2,7 +2,7 @@
   <SwdWrapper>
     <SwdSubHeader title="Fixed Index Annuity" />
     <div class="flex justify-end pt-2 pb-5">
-      <el-button plain type="primary" size="small" @click="addIndexAnnuity">Add Index Annuity</el-button>
+      <SwdButton primary small @click="addIndexAnnuity">Add Index Annuity</SwdButton>
     </div>
 
     <el-skeleton v-if="isLoading" :rows="7" animated />

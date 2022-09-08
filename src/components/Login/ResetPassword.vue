@@ -24,13 +24,10 @@
             />
           </el-form-item>
           <el-form-item class="my-6">
-            <Button
-              :default-primary="!fetchingCreate && !fetchingReset"
-              full
-              text-btn="Continue"
-              type="Submit"
-              :disabled="fetchingCreate || fetchingReset"
-            />
+            <SwdButton primary main :disabled="fetchingCreate || fetchingReset" class="w-full" @click="submit()">
+              <SwdSpinner v-show="fetchingCreate || fetchingReset" class="mr-2" />
+              Continue
+            </SwdButton>
           </el-form-item>
         </el-form>
       </div>

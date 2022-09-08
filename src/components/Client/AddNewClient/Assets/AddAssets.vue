@@ -118,7 +118,7 @@
           <div class="pr-3">
             <Button default-gray-btn text-btn="Back" @click="backStep" />
           </div>
-          <el-button type="primary" @click="submitForm('ruleForm')">Go to the monthly expense</el-button>
+          <SwdButton primary main @click="submitForm()">Go to the monthly expense</SwdButton>
         </div>
       </el-form>
     </div>

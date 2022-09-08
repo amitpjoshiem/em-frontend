@@ -98,15 +98,15 @@
       </el-form>
 
       <div v-if="member.type === 'prospect'" class="flex justify-between pt-8">
-        <SwdButton small class="mr-2" @click="convert">Convert to client</SwdButton>
+        <SwdButton primary small class="mr-2" @click="convert">Convert to client</SwdButton>
 
         <router-link :to="{ name: 'blueprint-report', params: { id: member.id } }">
-          <SwdButton small class="mr-2">Blueprint report</SwdButton>
+          <SwdButton primary small class="mr-2">Blueprint report</SwdButton>
         </router-link>
       </div>
       <div v-else class="flex justify-end pt-5">
         <router-link :to="{ name: 'clientreport', params: { id: member.id } }" class="pl-2.5 font-medium">
-          <SwdButton small class="mr-2">Client report</SwdButton>
+          <SwdButton primary small class="mr-2">Client report</SwdButton>
         </router-link>
       </div>
     </template>

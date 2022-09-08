@@ -9,8 +9,8 @@
           <el-input v-model="ruleForm.email" placeholder="Enter email" />
         </el-form-item>
         <div class="pt-5 flex justify-end">
-          <SwdButton main class="mr-2 w-28" @click="closeDialog">Close</SwdButton>
-          <SwdButton main class="w-28" :disabled="isLoading" @click="sendLink">
+          <SwdButton primary main class="mr-2 w-28" @click="closeDialog">Close</SwdButton>
+          <SwdButton primary main class="w-28" :disabled="isLoading" @click="sendLink">
             <SwdSpinner v-if="isLoading" />
             Send
           </SwdButton>

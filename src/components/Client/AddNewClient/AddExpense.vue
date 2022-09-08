@@ -695,15 +695,11 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button
-          type="primary"
-          :disabled="isLoadingUpdateSteps"
-          :loading="isLoadingUpdateSteps"
-          class="w-20"
-          @click="save"
-        >
+
+        <SwdButton primary main :disabled="isLoadingUpdateSteps" class="w-2/12" @click="save">
+          <SwdSpinner v-show="isLoadingUpdateSteps" class="mr-2" />
           Save
-        </el-button>
+        </SwdButton>
       </div>
     </el-form>
   </div>

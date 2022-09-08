@@ -2,14 +2,18 @@
   <div
     :disabled="disabled"
     :loading="loading"
-    class="flex items-center justify-center rounded bg-primary cursor-pointer"
+    class="flex items-center justify-center rounded cursor-pointer"
     :class="{
       'opacity-60': disabled,
+      'bg-primary': primary,
+      'bg-main-gray': info,
     }"
   >
     <div
-      class="flex items-center justify-center text-white"
+      class="flex items-center justify-center"
       :class="{
+        'text-white': primary,
+        'text-primary': info,
         'text-xs px-2 py-1': small,
         'text-sm py-1.5 px-4': main,
         'hover:text-main-blue': !disabled,
@@ -43,6 +47,16 @@ export default defineComponent({
       default: false,
     },
     small: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    primary: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    info: {
       type: Boolean,
       require: false,
       default: false,

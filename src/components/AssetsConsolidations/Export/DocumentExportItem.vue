@@ -7,12 +7,10 @@
         <span class="mt-1">{{ getTime }}</span>
       </div>
     </div>
-    <el-button v-if="item.status === 'process'" type="primary" size="small" plain disabled>
-      <div class="flex items-center">
-        <SwdSpinner />
-        <span class="pl-2">processing</span>
-      </div>
-    </el-button>
+    <SwdButton v-if="item.status === 'process'" class="ml-2" primary main>
+      Processing
+      <SwdSpinner class="mr-2" />
+    </SwdButton>
     <a
       v-if="item.status === 'success'"
       :href="item.media.url"

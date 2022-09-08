@@ -8,7 +8,7 @@
       'w-full': full,
       'bg-input-border rounded-md h-10 text-color-grey cursor-not-allowed ': disabled,
       'bg-activity px-7 text-white text-xss': defaultBlueBtn,
-      'bg-main-gray text-xss px-7 text-activity': defaultGrayBtn,
+      'bg-main-gray text-xss px-7 text-primary': defaultGrayBtn,
       'border border-dashed border-main-gray w-full flex justify-center items-center text-xss font-medium':
         transparentBtn,
       'bg-activity text-xss text-white px-1.5': smallBtnActivity,

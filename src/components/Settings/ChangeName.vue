@@ -14,9 +14,10 @@
           <el-input v-model="ruleForm.last_name" placeholder="Enter last name" />
         </el-form-item>
         <div class="pt-3 text-right">
-          <el-button type="primary" plain :disabled="isLoading" :loading="isLoading" class="w-20" @click="saveName">
+          <SwdButton primary main :disabled="isLoading" class="w-2/12" @click="saveName">
+            <SwdSpinner v-show="isLoading" class="mr-2" />
             Save
-          </el-button>
+          </SwdButton>
         </div>
       </el-form>
       <SwdDialogSucces v-else text="The name was succesfully changed!" @closeDialog="closeDialog" />

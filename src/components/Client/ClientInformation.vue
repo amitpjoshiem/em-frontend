@@ -5,8 +5,8 @@
     </div>
     <div v-else-if="isErrorInfo">An error has occurred: {{ error }}</div>
     <div v-else-if="clientsInfo" class="p-5 text-main">
-      <div class="flex justify-center">
-        <img src="../../assets/img/swd-logo-blue.png" alt="excel" class="w-[150px]" />
+      <div class="flex justify-center mb-8">
+        <InlineSvg :src="IrisLogoStandart" width="250" height="100" />
       </div>
       <template v-if="clientsInfo.type === 'lead'">
         <div class="flex flex-col items-center">
@@ -28,7 +28,7 @@
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
-                <circle-check-filled :color="clientsInfo.steps.completed_financial_fact_finder ? '#4cd972' : 'gray'" />
+                <circle-check-filled :color="clientsInfo.steps.completed_financial_fact_finder ? '#073763' : 'gray'" />
               </el-icon>
               <div class="text-xs sm:text-base text-main">Completed Financial Fact Finder</div>
             </div>
@@ -40,7 +40,7 @@
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
                 <circle-check-filled
-                  :color="clientsInfo.steps.investment_and_retirement_accounts ? '#4cd972' : 'gray'"
+                  :color="clientsInfo.steps.investment_and_retirement_accounts ? '#073763' : 'gray'"
                 />
               </el-icon>
               <div class="text-xs sm:text-base text-main">Upload your Investment/Retirement Statements Here</div>
@@ -53,7 +53,7 @@
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
                 <circle-check-filled
-                  :color="clientsInfo.steps.life_insurance_annuity_and_long_terms_care_policies ? '#4cd972' : 'gray'"
+                  :color="clientsInfo.steps.life_insurance_annuity_and_long_terms_care_policies ? '#073763' : 'gray'"
                 />
               </el-icon>
               <div class="text-xs sm:text-base text-main">Upload your Life Insurance Statements Here</div>
@@ -65,25 +65,12 @@
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
-                <circle-check-filled :color="clientsInfo.steps.social_security_information ? '#4cd972' : 'gray'" />
+                <circle-check-filled :color="clientsInfo.steps.social_security_information ? '#073763' : 'gray'" />
               </el-icon>
               <div class="text-xs sm:text-base text-main">Upload your Social Security Statements Here</div>
             </div>
           </el-card>
         </router-link>
-
-        <!-- <router-link :to="{ name: 'list-stock' }" class="flex">
-          <el-card class="mb-4 w-full">
-            <div class="flex items-center">
-              <el-icon :size="25" class="mr-5">
-                <circle-check-filled
-                  :color="clientsInfo.steps.list_of_stock_certificates_or_bonds ? '#4cd972' : 'gray'"
-                />
-              </el-icon>
-              <div class="text-xs sm:text-base text-main">List of Stock Certificates or Bonds</div>
-            </div>
-          </el-card>
-        </router-link> -->
       </template>
       <template v-else>
         <div class="flex flex-col items-center my-8">
@@ -100,16 +87,13 @@
         <el-card class="mb-4 w-full">
           <div class="flex items-center">
             <el-icon :size="25" class="mr-5">
-              <document-checked color="#4cd972" />
+              <document-checked color="#073763" />
             </el-icon>
             <div class="text-xs sm:text-base text-main">Confirmation Information</div>
           </div>
         </el-card>
       </router-link>
     </div>
-    <!-- <SwdModalSucces
-      text="Thank you for entering all the details. The advisor will receive the information and will contact you."
-    /> -->
   </div>
 </template>
 
@@ -117,14 +101,13 @@
 import { DocumentChecked, CircleCheckFilled } from '@element-plus/icons-vue'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
-// import SwdModalSucces from '@/components/Global/SwdModalSucces.vue'
+import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
 
 export default {
   name: 'ClientInformation',
   components: {
     CircleCheckFilled,
     DocumentChecked,
-    // SwdModalSucces,
   },
   setup() {
     const {
@@ -140,6 +123,7 @@ export default {
       isErrorInfo,
       clientsInfo,
       IconSuccesChanged,
+      IrisLogoStandart,
     }
   },
 }
