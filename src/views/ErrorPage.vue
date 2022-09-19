@@ -3,7 +3,7 @@
     <SwdSubHeader title="Warning" />
     <div class="flex flex-col justify-center mt-5 items-center">
       <InlineSvg :src="IconError" />
-      <span class="text-gray03 pt-5">
+      <span class="text-main pt-5">
         {{ message }}
       </span>
     </div>

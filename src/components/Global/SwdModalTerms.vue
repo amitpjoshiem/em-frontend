@@ -9,11 +9,11 @@
     :close-on-press-escape="false"
     :close-on-click-modal="false"
   >
-    <div class="text-black pb-4">
+    <div class="text-main pb-4">
       <p class="pb-2 font-semibold text-lg">Disclaimer</p>
       <p class="pb-2 text-base">The data you provide is safe and used solely for IRIS platform fulfillment.</p>
     </div>
-    <el-scrollbar height="400px" class="text-black pr-3">
+    <el-scrollbar height="400px" class="text-main pr-3">
       <p class="pb-2 font-semibold text-base pt-4">Terms and Conditions</p>
       <p class="term-item">We use your personal information collected via our application and forms for:</p>
       <p class="term-item">1. Facilitating your account creation and the logon process.</p>
@@ -46,10 +46,15 @@
     </el-scrollbar>
     <template #footer>
       <span class="dialog-footer">
-        <el-button plain type="danger" :loading="fetching" class="w-[90px]" @click="handleDecline">Cancel</el-button>
-        <el-button plain type="primary" :loading="isLoadingUpdate" class="w-[90px]" @click="handleAccept">
-          I Agree
-        </el-button>
+        <div class="flex justify-center">
+          <div class="pr-3">
+            <Button default-gray-btn text-btn="Cancel" @click="handleDecline" />
+          </div>
+          <SwdButton primary main :disabled="isLoadingUpdate" class="w-2/12" @click="handleAccept">
+            <SwdSpinner v-show="isLoadingUpdate" class="mr-2" />
+            I Agree
+          </SwdButton>
+        </div>
       </span>
     </template>
   </el-dialog>

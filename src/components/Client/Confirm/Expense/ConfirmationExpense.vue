@@ -2,13 +2,13 @@
   <div>
     <div v-if="!isLoadingExpense">
       <div v-if="$can('client', 'all')" class="flex justify-end mb-4">
-        <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
+        <SwdButton primary small :disabled="disabledSaveBtn" @click="edit">Edit</SwdButton>
       </div>
       <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
         <div class="hidden pb-2 mt-8 md:flex">
           <div class="md:w-8/12" />
-          <div class="md:w-2/12 text-gray03 text-xs">ESSENTIAL</div>
-          <div class="md:w-2/12 text-gray03 text-xs">DISCRETIONARY</div>
+          <div class="md:w-2/12 text-main text-xs">ESSENTIAL</div>
+          <div class="md:w-2/12 text-main text-xs">DISCRETIONARY</div>
         </div>
         <div>
           <!-- HOUSING -->
@@ -16,8 +16,8 @@
             <div class="md:flex mb-4">
               <div class="w-3/12 flex items-center text-sm font-semibold">Housing</div>
               <div class="flex pb-2 mt-5 md:hidden">
-                <div class="w-6/12 text-gray03 text-xs md:text-center">ESSENTIAL</div>
-                <div class="w-6/12 text-gray03 text-xs md:text-center">DISCRETIONARY</div>
+                <div class="w-6/12 text-main text-xs md:text-center">ESSENTIAL</div>
+                <div class="w-6/12 text-main text-xs md:text-center">DISCRETIONARY</div>
               </div>
               <template
                 v-if="data.housing.mortgage_rent_fees.essential || data.housing.mortgage_rent_fees.discretionary"
@@ -84,8 +84,8 @@
             <div class="md:flex mb-4">
               <div class="w-3/12 flex items-center text-sm font-semibold">Food</div>
               <div class="flex pb-2 mt-5 md:hidden">
-                <div class="w-6/12 text-gray03 text-xs md:text-center">ESSENTIAL</div>
-                <div class="w-6/12 text-gray03 text-xs md:text-center">DISCRETIONARY</div>
+                <div class="w-6/12 text-main text-xs md:text-center">ESSENTIAL</div>
+                <div class="w-6/12 text-main text-xs md:text-center">DISCRETIONARY</div>
               </div>
               <template
                 v-if="data.food_transportation.at_home.essential || data.food_transportation.at_home.discretionary"
@@ -194,8 +194,8 @@
             <div class="md:flex mb-4">
               <div class="w-3/12 flex items-center text-sm font-semibold">Healthcare</div>
               <div class="flex pb-2 mt-5 md:hidden">
-                <div class="w-6/12 text-gray03 text-xs md:text-center">ESSENTIAL</div>
-                <div class="w-6/12 text-gray03 text-xs md:text-center">DISCRETIONARY</div>
+                <div class="w-6/12 text-main text-xs md:text-center">ESSENTIAL</div>
+                <div class="w-6/12 text-main text-xs md:text-center">DISCRETIONARY</div>
               </div>
               <template
                 v-if="data.healthcare.health_insurance.essential || data.healthcare.health_insurance.discretionary"
@@ -261,8 +261,8 @@
             <div class="md:flex mb-4">
               <div class="md:w-3/12 flex items-center text-sm font-semibold">Personal Insurance</div>
               <div class="flex pb-2 mt-5 md:hidden">
-                <div class="w-6/12 text-gray03 text-xs md:text-center">ESSENTIAL</div>
-                <div class="w-6/12 text-gray03 text-xs md:text-center">DISCRETIONARY</div>
+                <div class="w-6/12 text-main text-xs md:text-center">ESSENTIAL</div>
+                <div class="w-6/12 text-main text-xs md:text-center">DISCRETIONARY</div>
               </div>
               <template
                 v-if="data.personal_insurance.life_other.essential || data.personal_insurance.life_other.discretionary"
@@ -292,8 +292,8 @@
             <div class="md:flex mb-4">
               <div class="md:w-3/12 flex items-center text-sm font-semibold">Personal Care</div>
               <div class="flex pb-2 mt-5 md:hidden">
-                <div class="w-6/12 text-gray03 text-xs md:text-center">ESSENTIAL</div>
-                <div class="w-6/12 text-gray03 text-xs md:text-center">DISCRETIONARY</div>
+                <div class="w-6/12 text-main text-xs md:text-center">ESSENTIAL</div>
+                <div class="w-6/12 text-main text-xs md:text-center">DISCRETIONARY</div>
               </div>
               <template
                 v-if="data.personal_insurance.clothing.essential || data.personal_insurance.clothing.discretionary"
@@ -327,8 +327,8 @@
             <div class="md:flex mb-4">
               <div class="w-3/12" />
               <div class="flex pb-2 mt-5 md:hidden">
-                <div class="w-6/12 text-gray03 text-xs md:text-center">ESSENTIAL</div>
-                <div class="w-6/12 text-gray03 text-xs md:text-center">DISCRETIONARY</div>
+                <div class="w-6/12 text-main text-xs md:text-center">ESSENTIAL</div>
+                <div class="w-6/12 text-main text-xs md:text-center">DISCRETIONARY</div>
               </div>
               <template v-if="data.entertainment.essential || data.entertainment.discretionary">
                 <div class="md:w-5/12 text-main text-xss flex items-center">Entertainment</div>

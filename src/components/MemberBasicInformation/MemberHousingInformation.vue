@@ -6,7 +6,7 @@
       <span
         v-if="house.type"
         data-testid="member-housing-information-type"
-        class="text-border-green text-xxs font-semibold bg-light-green rounded pr-2 pl-1 py-1 capitalize"
+        class="text-border-green text-xxs font-semibold bg-main-green rounded pr-2 pl-1 py-1 capitalize"
       >
         {{ house.type }}
       </span>
@@ -14,14 +14,14 @@
 
     <div v-if="house.id">
       <div v-if="house.type === 'own' || house.type === 'family'" class="flex justify-between my-7">
-        <div class="w-6/24 text-gray03 text-xss font-semibold">Market Value</div>
+        <div class="w-6/24 text-main text-xss font-semibold">Market Value</div>
         <div class="w-9/24 text-main text-sm" data-testid="member-housing-information-market-value">
           {{ currencyFormat(house.marketValue) }}
         </div>
       </div>
 
       <div v-if="house.type === 'own' || house.type === 'family'" class="flex justify-between mb-7">
-        <div class="w-6/24 text-gray03 text-xss font-semibold">Total Debt</div>
+        <div class="w-6/24 text-main text-xss font-semibold">Total Debt</div>
         <SwdStubForText
           class="w-9/24 text-sm text-main"
           :text="currencyFormat(house.totalDebt)"
@@ -31,21 +31,21 @@
       </div>
 
       <div v-if="house.type === 'own' || house.type === 'family'" class="flex justify-between mb-7">
-        <div class="w-6/24 text-gray03 text-xss font-semibold">Remaining mortgage amount</div>
+        <div class="w-6/24 text-main text-xss font-semibold">Remaining mortgage amount</div>
         <div class="w-9/24 text-main text-sm" data-testid="member-housing-information-remaining-mortgage-amount">
           {{ currencyFormat(house.remainingMortgageAmount) }}
         </div>
       </div>
 
       <div v-if="house.type === 'rent'" class="flex justify-between mb-7">
-        <div class="w-6/24 text-gray03 text-xss font-semibold">Monthly payment</div>
+        <div class="w-6/24 text-main text-xss font-semibold">Monthly payment</div>
         <div class="w-9/24 text-main text-sm" data-testid="member-housing-information-monthly-payment">
           {{ currencyFormat(house.monthlyPayment) }}
         </div>
       </div>
 
       <div v-if="house.type === 'rent'" class="flex justify-between mb-7">
-        <div class="w-6/24 text-gray03 text-xss font-semibold">Total monthly expenses</div>
+        <div class="w-6/24 text-main text-xss font-semibold">Total monthly expenses</div>
         <div class="w-9/24 text-main text-sm" data-testid="member-housing-information-total-monthly-expenses">
           {{ currencyFormat(house.totalMonthlyExpenses) }}
         </div>
@@ -53,7 +53,7 @@
     </div>
 
     <div v-else>
-      <span class="text-gray03" data-testid="member-housing-no-information"> No information about housing </span>
+      <span class="text-main" data-testid="member-housing-no-information"> No information about housing </span>
     </div>
   </div>
 </template>

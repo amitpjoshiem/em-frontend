@@ -7,7 +7,7 @@
     <div v-if="other.id">
       <div class="flex my-7">
         <div class="w-6/24">
-          <span class="text-gray03 text-xss font-semibold">Risk Tolerance</span>
+          <span class="text-main text-xss font-semibold">Risk Tolerance</span>
         </div>
         <div class="w-18/24">
           <span class="text-main text-sm font-semibold capitalize" data-testid="member-basic-information-other-risk">
@@ -17,7 +17,7 @@
       </div>
       <div class="flex justify-between mb-7">
         <div class="w-6/24">
-          <span class="text-gray03 text-xss font-semibold">Specific questions</span>
+          <span class="text-main text-xss font-semibold">Specific questions</span>
         </div>
         <div class="w-18/24">
           <span class="text-main text-sm" data-testid="member-basic-information-other-questions">
@@ -27,7 +27,7 @@
       </div>
       <div class="flex justify-between mb-7">
         <div class="w-6/24">
-          <span class="text-gray03 text-xss font-semibold">Goal for retirement</span>
+          <span class="text-main text-xss font-semibold">Goal for retirement</span>
         </div>
         <div class="w-18/24">
           <span class="text-main text-sm" data-testid="member-basic-information-other-retirement">
@@ -37,7 +37,7 @@
       </div>
       <div class="flex justify-between mb-7">
         <div class="w-6/24">
-          <span class="text-gray03 text-xss font-semibold">Goal for retirement money</span>
+          <span class="text-main text-xss font-semibold">Goal for retirement money</span>
         </div>
         <div class="w-18/24">
           <span class="text-main text-sm" data-testid="member-basic-information-other-retirementMoney">
@@ -48,7 +48,7 @@
     </div>
 
     <div v-else class="mt-4">
-      <span class="text-gray03" data-testid="member-basic-information-no-other">No other information</span>
+      <span class="text-main" data-testid="member-basic-information-no-other">No other information</span>
     </div>
   </div>
 </template>

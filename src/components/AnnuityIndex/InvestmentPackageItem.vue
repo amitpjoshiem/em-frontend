@@ -37,8 +37,8 @@
         </template>
       </el-popconfirm>
 
-      <el-button type="primary" size="small" plain>Send</el-button>
-      <el-button v-if="!item.advisor_signed" type="primary" size="small" plain @click="handleSign">Sign</el-button>
+      <SwdButton primary small class="ml-2">Send</SwdButton>
+      <SwdButton v-if="!item.advisor_signed" class="ml-2" primary small @click="handleSign">Sign</SwdButton>
     </div>
   </el-card>
 </template>

@@ -7,16 +7,16 @@
     :before-close="closeDialog"
   >
     <div>
-      <div class="border-input-border border rounded-md p-2 w-full">
-        <p class="text-gray03 mb-[2px]">Risk level:</p>
+      <div class="border-main-gray border rounded-md p-2 w-full">
+        <p class="text-main mb-[2px]">Risk level:</p>
         <p class="font-semibold">{{ other.value.risk }}</p>
       </div>
-      <div class="border-input-border border rounded-md p-2 w-full my-4 flex flex-col">
-        <span class="text-gray03 mb-[2px]">Goal for retirement:</span>
+      <div class="border-main-gray border rounded-md p-2 w-full my-4 flex flex-col">
+        <span class="text-main mb-[2px]">Goal for retirement:</span>
         <span class="font-semibold">{{ other.value.retirement }}</span>
       </div>
-      <div class="border-input-border border rounded-md p-2 w-full">
-        <p class="text-gray03 mb-[2px]">Goal for retirement money:</p>
+      <div class="border-main-gray border rounded-md p-2 w-full">
+        <p class="text-main mb-[2px]">Goal for retirement money:</p>
         <p class="font-semibold">
           {{ other.value.retirementMoney }}
         </p>
@@ -24,7 +24,7 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="closeDialog">Close</el-button>
+        <SwdButton info class="mr-2 w-[60px]" @click="closeDialog">Close</SwdButton>
       </span>
     </template>
   </el-dialog>

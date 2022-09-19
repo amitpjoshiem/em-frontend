@@ -9,7 +9,6 @@
       class="w-48 ml-2"
       clearable
     />
-    <!-- <el-button type="danger" :icon="Delete" size="small" @click="removeAllFilter">Remove all filter</el-button> -->
   </div>
 </template>
 
@@ -34,18 +33,9 @@ export default {
       }
     })
 
-    // const removeAllFilter = () => {
-    //   name.value = ''
-    //   store.commit('adminPanelUsers/setFilterUserAdminPanel', null)
-    //   store.commit('adminPanelUsers/setFilterCompanyAdminPanel', null)
-    //   store.commit('adminPanelUsers/setFilterRoleAdminPanel', null)
-    // }
-
     return {
       Search,
-      // Delete,
       name,
-      // removeAllFilter,
     }
   },
 }

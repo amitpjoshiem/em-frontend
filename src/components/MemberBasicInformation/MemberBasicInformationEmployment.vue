@@ -13,7 +13,7 @@
     </div>
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold">Company Name</span>
+        <span class="text-xss text-main font-semibold">Company Name</span>
       </div>
       <div class="w-9/24" data-testid="basic-information-employment-prospect-company-name">
         <SwdStubForText :text="employmentProspect.companyName" plug="&mdash;" class="text-sm text-main" />
@@ -24,7 +24,7 @@
     </div>
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold">Occupation</span>
+        <span class="text-xss text-main font-semibold">Occupation</span>
       </div>
       <div class="w-9/24" data-testid="basic-information-employment-prospect-occupation">
         <SwdStubForText :text="employmentProspect.occupation" plug="&mdash;" class="text-sm text-main" />
@@ -35,7 +35,7 @@
     </div>
     <div class="flex mb-7">
       <div class="w-6/24">
-        <span class="text-xss text-gray03 font-semibold">Years</span>
+        <span class="text-xss text-main font-semibold">Years</span>
       </div>
       <div class="w-9/24" data-testid="basic-information-employment-prospect-years">
         <SwdStubForText :text="employmentProspect.years" plug="&mdash;" class="text-sm text-main" />

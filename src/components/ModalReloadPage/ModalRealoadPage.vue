@@ -4,8 +4,10 @@
     <p>Please refresh the page to get latest updates</p>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="hideModal">Cancel</el-button>
-        <el-button type="primary" @click="reloadPage">Reload</el-button>
+        <div class="flex justify-end">
+          <SwdButton info main @click="hideModal">Cancel</SwdButton>
+          <SwdButton class="ml-2" primary main @click="reloadPage"> Reload </SwdButton>
+        </div>
       </span>
     </template>
   </el-dialog>

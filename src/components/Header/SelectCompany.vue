@@ -1,14 +1,15 @@
 <template>
-  <el-button type="success" plain size="small" class="w-[100px]" :loading="isLoading" @click="dialogVisible = true">
+  <SwdButton primary small :disabled="isLoading" class="w-[100px]" @click="edit">
+    <SwdSpinner v-show="isLoading" class="mr-2" />
     {{ getText(company) }}
-  </el-button>
+  </SwdButton>
 
   <el-dialog v-model="dialogVisible" title="Select Company" width="55%">
     <div class="flex flex-wrap">
       <div
         v-for="item in data.data"
         :key="item.id"
-        class="border border-input-border p-2 m-2 rounded-lg hover:border-border-blue"
+        class="border border-main-gray p-2 m-2 rounded-lg hover:border-border-blue"
         :class="{ 'border-border-blue': item.id === currentCompany.id }"
       >
         <div

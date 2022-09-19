@@ -1,7 +1,7 @@
 <template>
   <div
     style="border-top-color: transparent"
-    class="size border-2 border-color-link border-solid rounded-full animate-spin"
+    class="size border-2 border-main-blue border-solid rounded-full animate-spin"
     :class="size"
   />
 </template>

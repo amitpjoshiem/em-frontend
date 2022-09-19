@@ -1,12 +1,12 @@
 <template>
-  <div class="w-full border border-color-grey box-border rounded-md p-5 bg-widget-bg">
+  <div class="w-full border border-color-grey box-border rounded-md p-5 bg-main-gray">
     <div>
       <span class="text-main text-smm font-semibold"> Retirement Income Plan </span>
       <RetirementIncomeChart class="h-40 mb-2 mt-2" />
     </div>
     <div class="flex justify-between items-center">
       <div>
-        <span class="text-gray03 text-xs font-semibold"> Retirement spending ability </span>
+        <span class="text-main text-xs font-semibold"> Retirement spending ability </span>
       </div>
       <div class="text-main text-xs">
         <span>Projected </span>

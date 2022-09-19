@@ -10,10 +10,10 @@
     <template v-else-if="users">
       <UserListItem v-for="item in users" :key="item.id" :user="item" class="border-b" />
       <div v-if="!users.length" class="flex flex-col justify-center items-center min-h-[370px]">
-        <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center">
+        <div class="w-14 h-14 bg-main-gray rounded-full flex items-center justify-center">
           <InlineSvg :src="IconLastActivityEmpty" />
         </div>
-        <span class="text-gray03 font-semibold text-xss mt-5">No recently users</span>
+        <span class="text-main font-semibold text-xss mt-5">No recently users</span>
       </div>
     </template>
     <div class="flex items-center justify-center border-color-grey py-6">

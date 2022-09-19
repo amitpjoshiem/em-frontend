@@ -2,29 +2,22 @@
   <div class="py-5 px-5 flex flex-col justify-between h-full">
     <div class="">
       <div class="flex flex-col">
-        <Button
-          class="mr-5"
-          text-btn="Link an account"
-          witch-icon
-          icon-type="lock"
-          :disabled="fetchingSendLink"
-          default-link-btn
-          :is-show-spinner="fetchingSendLink"
-          @click="sendLinkYodlee"
-        >
-        </Button>
+        <SwdButton primary main :disabled="fetchingSendLink" @click="sendLinkYodlee()">
+          <InlineSvg :src="IconLock" class="mr-2" />
+          <SwdSpinner v-show="fetchingSendLink" class="mr-2" />
+          Link an account
+        </SwdButton>
         <div class="mt-3 text-sm">
           Account connection is optional. You can skip this step and go to Assets Consolidations
         </div>
       </div>
     </div>
-
     <div class="flex justify-end my-6">
       <div class="pr-3">
         <Button default-gray-btn text-btn="Back" @click="backStep" />
       </div>
       <div>
-        <Button default-blue-btn text-btn="Go to the Assets Consolidations" @click="saveStep" />
+        <SwdButton primary main @click="saveStep()">Go to the Assets Consolidations</SwdButton>
       </div>
     </div>
   </div>
@@ -42,6 +35,7 @@ import { useFetchYodleeSendLink } from '@/api/use-fetch-yodlee-send-link.js'
 import { fetchAssetsAccountsConfirm } from '@/api/vueQuery/fetch-assets-accounts-confirm'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
+import IconLock from '@/assets/svg/icon-lock.svg'
 
 export default {
   name: 'AssetsAccounts',
@@ -110,6 +104,7 @@ export default {
       sendLinkYodlee,
       linkSendError,
       assetsConfirm,
+      IconLock,
     }
   },
 }

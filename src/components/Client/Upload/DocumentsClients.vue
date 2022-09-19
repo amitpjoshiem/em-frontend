@@ -17,7 +17,7 @@
         by clicking this link
       </div>
 
-      <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-input-border rounded-md">
+      <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-main-gray rounded-md">
         <div v-if="!isFetching">
           <SwdUpload
             :upload-data="{ collection }"
@@ -33,35 +33,26 @@
             @open-prewiev="openPrewiev"
           >
             <template #main>
-              <div class="flex my-5">
-                <el-button size="small" type="primary" class="mr-5">Click to upload</el-button>
+              <div class="flex my-5 w-2/12">
+                <SwdButton primary small @click="moreDocuments">Click to upload</SwdButton>
               </div>
-              <div v-if="isShowNoDocuments" class="text-gray03 text-center pb-5">No documents uploaded</div>
+              <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
             </template>
           </SwdUpload>
         </div>
         <el-skeleton v-else :rows="5" animated class="p-5" />
       </div>
-      <div v-else class="min-h-[175px] mb-5 text-gray03 flex flex-col items-center justify-center">
-        <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+      <div v-else class="min-h-[175px] mb-5 text-main flex flex-col items-center justify-center">
+        <div class="bg-main-gray rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
           <InlineSvg :src="IconEmptyUsers" />
         </div>
         <p>No recently added documents</p>
       </div>
       <div class="flex justify-end">
-        <el-button type="primary" plain class="w-20" :disabled="isLoadingUpdateSteps" @click="backStep">
-          Back
-        </el-button>
-        <el-button
-          type="success"
-          plain
-          :disabled="disabledSaveBtn"
-          :loading="isLoadingUpdateSteps"
-          class="w-20"
-          @click="saveStep"
-        >
-          Save
-        </el-button>
+        <div class="pr-3">
+          <Button default-gray-btn text-btn="Back" :disabled="isLoadingUpdateSteps" @click="backStep" />
+        </div>
+        <SwdButton primary main :disabled="disabledSaveBtn" @click="saveStep">Save</SwdButton>
       </div>
     </div>
     <el-skeleton v-else :rows="15" animated />

@@ -26,7 +26,7 @@
     </div>
     <div class="flex">
       <WidgetPastStress />
-      <AssetsAllocation />
+      <WidgetAssetsAllocation />
       <WidgetOther />
     </div>
   </SwdWrapper>
@@ -34,7 +34,7 @@
 <script>
 import OpportunityTable from '@/components/MemberDetails/OpportunityTable.vue'
 import WidgetMemberDetails from '@/components/MemberDetails/WidgetMemberDetails.vue'
-import AssetsAllocation from '@/components/MemberDetails/AssetsAllocation.vue'
+import WidgetAssetsAllocation from '@/components/MemberDetails/WidgetAssetsAllocation.vue'
 import WidgetPastStress from '@/components/MemberDetails/WidgetPastStress.vue'
 import WidgetFixedAnnuity from '@/components/MemberDetails/WidgetFixedAnnuity.vue'
 import WidgetOther from '@/components/MemberDetails/WidgetOther.vue'
@@ -49,7 +49,7 @@ export default {
   components: {
     OpportunityTable,
     WidgetMemberDetails,
-    AssetsAllocation,
+    WidgetAssetsAllocation,
     WidgetPastStress,
     WidgetOther,
     InfoSalesforceStatus,

@@ -50,17 +50,12 @@
         </el-form-item>
       </div>
 
-      <div class="pt-5 text-right">
-        <el-button class="w-20" @click="closeDialog">Close</el-button>
-        <el-button
-          type="primary"
-          class="w-20"
-          :disabled="isLoadingUpdateStage"
-          :loading="isLoadingUpdateStage"
-          @click="saveStage"
-        >
+      <div class="pt-5 flex justify-end">
+        <SwdButton info small class="mr-2 w-[60px]" @click="closeDialog">Close</SwdButton>
+        <SwdButton primary small class="w-[60px]" :disabled="isLoadingUpdateStage" @click="saveStage">
+          <SwdSpinner v-show="isLoadingUpdateStage" class="mr-2" />
           Save
-        </el-button>
+        </SwdButton>
       </div>
     </el-form>
   </el-dialog>
@@ -244,15 +239,15 @@ export default {
 }
 
 .step-no-complet {
-  background-color: rgb(243, 243, 243);
+  background-color: #e9e9e9;
 }
 
 .step-no-complet p {
-  color: #000;
+  color: #282828;
 }
 
 .step-complet {
-  background-color: #6ebaff;
+  background-color: #83ccf0;
 }
 
 .step-complet p {
@@ -260,7 +255,7 @@ export default {
 }
 
 .step-current {
-  background-color: #042d52;
+  background-color: #073763;
 }
 .step-current p {
   color: #fff;

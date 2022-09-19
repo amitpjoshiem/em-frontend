@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-widget-bg rounded-lg px-5 mb-5 lg:max-w-5xl lg:mx-auto">
+  <div class="bg-main-gray rounded-lg px-5 mb-5 lg:max-w-5xl lg:mx-auto">
     <div class="flex w-full pt-2">
       <router-link
         :to="{ name: 'client-basic-information', params: { id: memberId } }"
@@ -31,13 +31,13 @@
     <div class="flex items-center pb-4">
       <!-- STEP 1 -->
       <div class="cycle-active" />
-      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step >= 1 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-main-blue': step >= 1 }" />
       <div :class="{ 'cycle-next': step === 1, 'cycle-active': step > 1 }" />
-      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 2, 'bg-activity': step >= 2 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-white': step < 2, 'bg-main-blue': step >= 2 }" />
 
       <!-- STEP 2 -->
       <div :class="{ 'cycle-default': step < 2, 'cycle-active': step > 2, 'cycle-next': step === 2 }" />
-      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 3, 'bg-activity': step >= 3 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-white': step < 3, 'bg-main-blue': step >= 3 }" />
     </div>
   </div>
 </template>
@@ -70,13 +70,13 @@ export default {
 .cycle-active {
   width: 9px;
   height: 9px;
-  background-color: #66b6ff;
+  background-color: #83ccf0;
   border-radius: 50%;
 }
 .cycle-next {
   width: 13px;
   height: 13px;
-  background-color: #66b6ff;
+  background-color: #83ccf0;
   border-radius: 50%;
   border: 2px solid white;
 }
@@ -85,7 +85,7 @@ export default {
   width: 9px;
   height: 9px;
   background: white;
-  border: 2px solid #d4ddeb;
+  border: 2px solid #f58833;
   border-radius: 50%;
 }
 

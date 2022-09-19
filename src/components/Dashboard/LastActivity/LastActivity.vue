@@ -1,7 +1,7 @@
 <template>
-  <div class="row-span-2 col-span-1 bg-widget-bg rounded-[10px] pl-5 pt-5 pr-5 min-h-[250px]">
+  <div class="row-span-2 col-span-1 bg-main-gray rounded-[10px] pl-5 pt-5 pr-5 min-h-[250px]">
     <div class="pb-4">
-      <router-link :to="{ name: getLink }" class="font-medium text-smm text-main hover:text-activity">
+      <router-link :to="{ name: getLink }" class="text-primary text-sm font-semibold hover:text-main-blue">
         Last Activity
       </router-link>
     </div>
@@ -11,7 +11,7 @@
       <div v-for="elem in activity.data" :key="elem.times" class="font-medium active-item flex flex-col text-xs">
         <div class="flex items-center">
           <div class="h-[9px] w-[9px] rounded-full mb-[2px] mr-[8px] bg-activity" />
-          <div class="text-activity-item">
+          <div class="text-activity">
             <DateListActivity :day="elem.date" :timestamp="elem.timestamp" />
           </div>
         </div>
@@ -20,10 +20,10 @@
     </template>
 
     <div v-else class="flex flex-col justify-center items-center">
-      <div class="w-14 h-14 bg-color-grey rounded-full flex items-center justify-center mt-5">
+      <div class="w-14 h-14 bg-main-gray rounded-full flex items-center justify-center mt-5">
         <InlineSvg :src="IconLastActivityEmpty" />
       </div>
-      <span class="text-gray03 font-semibold text-xss mt-5">No recently activity</span>
+      <span class="text-main font-semibold text-xss mt-5">No recently activity</span>
     </div>
   </div>
 </template>

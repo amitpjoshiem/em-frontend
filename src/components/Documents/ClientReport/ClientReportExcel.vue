@@ -10,8 +10,8 @@
         <ItemDocuments :document="item" :contracts="item.contracts ? item.contracts : []" />
       </el-collapse-item>
     </el-collapse>
-    <div v-else class="text-gray03 flex items-center flex-col mt-5">
-      <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+    <div v-else class="text-main flex items-center flex-col mt-5">
+      <div class="bg-main-gray rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
         <InlineSvg :src="IconEmptyUsers" />
       </div>
       <p>No recently added documents</p>

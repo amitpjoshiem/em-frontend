@@ -10,7 +10,7 @@
     <SwdPdfViewer type="application/pdf" :src="getPdfUrl" :page="1" />
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="closeDialog">Close</el-button>
+        <SwdButton class="ml-2" info @click="closeDialog">Close</SwdButton>
       </span>
     </template>
   </el-dialog>

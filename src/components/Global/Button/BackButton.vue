@@ -1,7 +1,7 @@
 <template>
   <div class="flex cursor-pointer items-center">
     <InlineSvg :src="IconBack" />
-    <span class="text-xss text-gray03 pl-3">{{ text }}</span>
+    <span class="text-xss text-main pl-3">{{ text }}</span>
   </div>
 </template>
 <script>

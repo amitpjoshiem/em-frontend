@@ -11,17 +11,17 @@
             <div class="flex items-center w-4/12">
               <div class="bg-dark-blue-charts w-3 h-3 rounded-full" />
               <span class="text-main mx-2">Liquidity</span>
-              <span class="text-gray03">59%</span>
+              <span class="text-main">59%</span>
             </div>
             <div class="flex items-center w-4/12">
               <div class="bg-activity w-3 h-3 rounded-full" />
               <span class="text-main mx-2">Growth</span>
-              <span class="text-gray03">27%</span>
+              <span class="text-main">27%</span>
             </div>
             <div class="flex items-center w-4/12">
               <div class="bg-color-error w-3 h-3 rounded-full" />
               <span class="text-main mx-2">Income</span>
-              <span class="text-gray03">14%</span>
+              <span class="text-main">14%</span>
             </div>
           </div>
           <div class="flex text-main font-semibold text-sm mb-3">
@@ -30,7 +30,7 @@
             <div class="w-4/12">$16.800</div>
           </div>
           <div class="flex mb-3">
-            <div class="w-4/12 text-gray03 text-xxs">Highest assets invested</div>
+            <div class="w-4/12 text-main text-xxs">Highest assets invested</div>
             <div class="w-8/12 flex items-center">
               <InlineSvg :src="IconAssetsLine" />
             </div>
@@ -47,7 +47,7 @@
             </div>
           </div>
           <div class="flex mb-3">
-            <div class="w-4/12 text-gray03 text-xxs">Lowest assets invested</div>
+            <div class="w-4/12 text-main text-xxs">Lowest assets invested</div>
             <div class="w-8/12 flex items-center">
               <InlineSvg :src="IconAssetsLine" />
             </div>
@@ -82,7 +82,7 @@
       <div class="flex justify-center">
         <ChartRiskLevel class="items-center" />
       </div>
-      <div class="text-sm font-semibold bg-widget-bg p-3 flex justify-center">
+      <div class="text-sm font-semibold bg-main-gray p-3 flex justify-center">
         <span class="text-main">Risk level: </span>
         <span class="text-activity">Moderate</span>
       </div>

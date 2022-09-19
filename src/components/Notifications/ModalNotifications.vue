@@ -31,7 +31,7 @@
         class="py-5 border-b border-color-grey flex justify-between"
       >
         <span class="text-main text-sm item-notifications" v-html="item.notification" />
-        <span class="text-gray03 text-xs">
+        <span class="text-main text-xs">
           {{ item.timestamp }}
         </span>
       </div>
@@ -93,6 +93,6 @@ export default {
 }
 
 .item-notifications p a {
-  color: #66b6ff;
+  color: #83ccf0;
 }
 </style>

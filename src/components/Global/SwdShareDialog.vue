@@ -41,16 +41,13 @@
     <SwdDialogSucces v-else :text="getDialogSuccesText" @closeDialog="closeDialog" />
     <template #footer>
       <span v-if="state.isShowForm" class="dialog-footer">
-        <el-button class="w-[100px]" @click="closeDialog">Cancel</el-button>
-        <el-button
-          type="primary"
-          :disabled="confirmBtnDisabled"
-          :loading="loadingSendlueprintReport || loadingSendlClientReport || loadingSendlReportSalesForce"
-          class="w-[100px]"
-          @click="confirm"
-        >
-          Confirm
-        </el-button>
+        <div class="flex justify-end">
+          <SwdButton info main @click="closeDialog">Cancel</SwdButton>
+          <SwdButton class="ml-2" primary main :disabled="confirmBtnDisabled" @click="confirm">
+            <SwdSpinner v-show="confirmBtnDisabled" class="mr-2" />
+            Save
+          </SwdButton>
+        </div>
       </span>
     </template>
   </el-dialog>
