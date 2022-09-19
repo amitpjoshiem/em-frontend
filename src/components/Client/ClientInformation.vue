@@ -28,7 +28,13 @@
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
-                <circle-check-filled :color="clientsInfo.steps.completed_financial_fact_finder ? '#073763' : 'gray'" />
+                <circle-check-filled
+                  :color="
+                    clientsInfo.steps.completed_financial_fact_finder
+                      ? stepsColorSchema.active
+                      : stepsColorSchema.notActive
+                  "
+                />
               </el-icon>
               <div class="text-xs sm:text-base text-main">Completed Financial Fact Finder</div>
             </div>
@@ -40,7 +46,11 @@
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
                 <circle-check-filled
-                  :color="clientsInfo.steps.investment_and_retirement_accounts ? '#073763' : 'gray'"
+                  :color="
+                    clientsInfo.steps.investment_and_retirement_accounts
+                      ? stepsColorSchema.active
+                      : stepsColorSchema.notActive
+                  "
                 />
               </el-icon>
               <div class="text-xs sm:text-base text-main">Upload your Investment/Retirement Statements Here</div>
@@ -53,7 +63,11 @@
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
                 <circle-check-filled
-                  :color="clientsInfo.steps.life_insurance_annuity_and_long_terms_care_policies ? '#073763' : 'gray'"
+                  :color="
+                    clientsInfo.steps.life_insurance_annuity_and_long_terms_care_policies
+                      ? stepsColorSchema.active
+                      : stepsColorSchema.notActive
+                  "
                 />
               </el-icon>
               <div class="text-xs sm:text-base text-main">Upload your Life Insurance Statements Here</div>
@@ -65,7 +79,11 @@
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
-                <circle-check-filled :color="clientsInfo.steps.social_security_information ? '#073763' : 'gray'" />
+                <circle-check-filled
+                  :color="
+                    clientsInfo.steps.social_security_information ? stepsColorSchema.active : stepsColorSchema.notActive
+                  "
+                />
               </el-icon>
               <div class="text-xs sm:text-base text-main">Upload your Social Security Statements Here</div>
             </div>
@@ -110,6 +128,11 @@ export default {
     DocumentChecked,
   },
   setup() {
+    const stepsColorSchema = {
+      active: '#83CCF0',
+      notActive: 'gray',
+    }
+
     const {
       isLoading: isLoadingInfo,
       fetching: fetchingInfo,
@@ -124,6 +147,7 @@ export default {
       clientsInfo,
       IconSuccesChanged,
       IrisLogoStandart,
+      stepsColorSchema,
     }
   },
 }
