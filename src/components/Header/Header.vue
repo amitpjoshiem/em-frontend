@@ -52,10 +52,6 @@
     <SelectCompany v-if="$can('ceo', 'all')" />
     <SelectAdvisors v-if="$can('assistant', 'all')" />
 
-    <!--    <div class="flex items-center justify-end" :class="{ 'w-full': $can('client', 'all') }">-->
-    <!--      <HeaderNotificationsBlock />-->
-    <!--    </div>-->
-
     <div class="flex items-center" :class="{ 'ml-auto': !$can('admin', 'all') }">
       <div v-if="$can('advisor', 'all')" class="flex items-center justify-end mr-5">
         <!-- <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" /> -->
