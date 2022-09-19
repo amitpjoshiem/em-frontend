@@ -79,7 +79,7 @@ export default {
               font: {
                 size: 9,
               },
-              fontFamily: 'Work Sans',
+              fontFamily: 'Montserrat',
               color: '#424450',
             },
             grid: {

@@ -18,3 +18,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.el-progress__text {
+  color: #282828;
+}
+</style>

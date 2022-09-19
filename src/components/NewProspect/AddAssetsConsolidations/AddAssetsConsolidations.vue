@@ -8,9 +8,7 @@
       <div class="pr-3">
         <Button default-gray-btn text-btn="Back" @click="backStep" />
       </div>
-      <div>
-        <Button default-blue-btn text-btn="Go to the stress test results" @click="saveStep" />
-      </div>
+      <SwdButton primary main @click="saveStep">Go to the stress test results</SwdButton>
     </div>
   </div>
 </template>

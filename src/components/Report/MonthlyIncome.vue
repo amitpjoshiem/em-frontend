@@ -1,12 +1,12 @@
 <template>
   <div v-if="isFetched" class="w-5/12">
-    <div class="bg-widget-bg pt-5 pl-5 pb-2 rounded-tr-lg rounded-tl-lg text-smm text-main font-medium">
+    <div class="bg-main-gray pt-5 pl-5 pb-2 rounded-tr-lg rounded-tl-lg text-smm text-main font-medium">
       Monthly Income analysis
     </div>
     <div class="flex py-2 border-b border-r border-l border-color-grey px-5">
       <div class="w-4/12" />
-      <div class="w-4/12 text-xs text-gray03">Current</div>
-      <div class="w-4/12 text-xs text-gray03">Future</div>
+      <div class="w-4/12 text-xs text-main">Current</div>
+      <div class="w-4/12 text-xs text-main">Future</div>
     </div>
     <el-form ref="form" :model="ruleForm" size="small">
       <!-- Member -->
@@ -140,7 +140,7 @@
         </el-form-item>
       </div>
 
-      <div class="bg-widget-bg px-5 py-2 text-xss text-main font-medium flex justify-between">
+      <div class="bg-main-gray px-5 py-2 text-xss text-main font-medium flex justify-between">
         <div class="w-8/12">Total</div>
         <SwdSpinner v-if="isFetching" />
         <div v-else class="w-4/12 text-right font-semibold pr-1">{{ currencyFormat(monthlyIncome.total) }}</div>
@@ -193,7 +193,7 @@
       </div>
     </el-form>
 
-    <div class="bg-color-light-blue rounded-br-lg rounded-bl-lg text-xss text-main font-medium">
+    <div class="bg-color-main-blue rounded-br-lg rounded-bl-lg text-xss text-main font-medium">
       <div class="pl-5 pr-5 py-3 flex justify-between">
         <span>Monthly Expenses:</span>
         <SwdSpinner v-if="isFetching" />

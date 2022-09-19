@@ -5,9 +5,9 @@
         <el-form-item label="Name" prop="name" class="w-full mb-4">
           <el-input v-model="ruleForm.name" placeholder="Enter Account Name" />
         </el-form-item>
-        <div class="pt-5 text-right">
-          <el-button class="mr-5" @click="closeDialog">Close</el-button>
-          <Button default-blue-btn text-btn="Add table" @click="addTable" />
+        <div class="flex justify-end pt-5">
+          <SwdButton info main class="mr-5" @click="closeDialog">Close</SwdButton>
+          <SwdButton class="ml-2" primary main @click="addTable"> Save </SwdButton>
         </div>
       </el-form>
     </div>

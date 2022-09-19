@@ -5,7 +5,7 @@
     </div>
     <div class="flex justify-center w-8/12">
       <SwdSpinner v-if="loading" />
-      <span v-else class="text-sm sm:text-title text-main font-semibold">{{ title }}</span>
+      <span v-else class="text-sm sm:text-title text-primary font-semibold">{{ title }}</span>
     </div>
     <div class="w-2/12 flex justify-end">
       <ShareBtn v-if="withShareBtn" :pdf-region="region" />

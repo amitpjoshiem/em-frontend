@@ -2,7 +2,7 @@
   <div>
     <div class="flex">
       <div class="w-10/12"></div>
-      <div class="w-2/12 flex justify-between text-gray03 text-xss">
+      <div class="w-2/12 flex justify-between text-main text-xss">
         <div>App</div>
         <div>Email</div>
       </div>
@@ -58,8 +58,8 @@ export default {
 
 <style>
 .el-switch.is-checked .el-switch__core {
-  background-color: #66b6ff;
-  border-color: #66b6ff;
+  background-color: #83ccf0;
+  border-color: #83ccf0;
 }
 
 .el-switch__core {

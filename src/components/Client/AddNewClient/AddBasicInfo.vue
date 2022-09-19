@@ -10,7 +10,7 @@
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">General</div>
           </div>
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusGeneral }">
+          <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusGeneral }">
             <div>
               <div class="flex justify-between w-full sm:justify-start">
                 <el-form-item label="Retired?" class="sm:mr-10">
@@ -144,7 +144,7 @@
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">Spouse</div>
           </div>
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusSpouse }">
+          <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusSpouse }">
             <el-form-item label="Retired?" class="mb-4">
               <el-radio-group v-model="ruleForm.spouse.retired">
                 <el-radio :label="true">Yes</el-radio>
@@ -222,7 +222,7 @@
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">Housing Information</div>
           </div>
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusHouse }">
+          <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusHouse }">
             <el-form-item label="Type" class="mb-4">
               <el-radio-group v-model="ruleForm.house.type">
                 <el-radio label="own">Own</el-radio>
@@ -314,8 +314,8 @@
             <div class="text-main text-xl font-semibold ml-2">Employment history</div>
           </div>
 
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusEmployment }">
-            <div class="text-gray03 text-xs uppercase my-2">Contact</div>
+          <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusEmployment }">
+            <div class="text-main text-xs uppercase my-2">Contact</div>
             <div v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-2">
               <div class="sm:flex sm:flex-wrap">
                 <el-form-item
@@ -383,14 +383,15 @@
                 </el-form-item>
               </div>
               <div class="flex justify-end mt-4">
-                <el-button
+                <SwdButton
+                  primary
                   v-if="index === ruleForm.employment_history.length - 1"
-                  type="primary"
-                  plain
+                  main
+                  :disabled="isLoadingUpdateMember"
                   @click="addEmployment(ruleForm)"
                 >
                   Add job
-                </el-button>
+                </SwdButton>
                 <el-button v-else type="danger" plain @click="removeEmployment({ ruleForm, index })">
                   Remove job
                 </el-button>
@@ -398,7 +399,7 @@
             </div>
 
             <div v-if="ruleForm.married" class="mt-5">
-              <div class="text-gray03 text-xs uppercase my-2">Spouse</div>
+              <div class="text-main text-xs uppercase my-2">Spouse</div>
               <div v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-2">
                 <div class="sm:flex sm:flex-wrap">
                   <el-form-item
@@ -466,14 +467,15 @@
                   </el-form-item>
                 </div>
                 <div class="flex justify-end mt-4">
-                  <el-button
+                  <SwdButton
+                    primary
                     v-if="index === ruleForm.spouse.employment_history.length - 1"
-                    type="primary"
-                    plain
-                    @click="addEmploymentSpouse(ruleForm)"
+                    main
+                    :disabled="isLoadingUpdateMember"
+                    @click="addEmploymentSpouse()"
                   >
                     Add job
-                  </el-button>
+                  </SwdButton>
                   <el-button v-else type="danger" plain @click="removeEmploymentSpouse({ ruleForm, index })"
                     >Remove job</el-button
                   >
@@ -492,7 +494,7 @@
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
             <div class="text-main text-xl font-semibold ml-2">Other</div>
           </div>
-          <div class="border border-input-border rounded-lg p-5" :class="{ 'border-border-blue': isFocusOther }">
+          <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusOther }">
             <!-- <MoreInfoAbout /> -->
 
             <el-form-item
@@ -579,9 +581,10 @@
         <!-- Other -->
 
         <div class="flex justify-end my-10">
-          <el-button type="primary" :disabled="isLoadingUpdateMember" @click="submitForm('ruleForm')">
+          <SwdButton primary main :disabled="isLoadingUpdateMember" @click="submitForm('ruleForm')">
+            <SwdSpinner v-show="isLoadingUpdateMember" class="mr-2" />
             Go to the assets &amp; income
-          </el-button>
+          </SwdButton>
         </div>
       </el-form>
     </div>
@@ -606,17 +609,12 @@ import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 
-// import MoreInfoAbout from './MoreInfoAbout.vue'
-
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
   name: 'AddProspectBasicInfo',
-  components: {
-    // MoreInfoAbout,
-  },
   directives: { maska },
   setup() {
     const router = useRouter()
@@ -744,6 +742,10 @@ export default {
     }
 
     const isDoneCurrentStep = computed(() => {
+      console.log(
+        'clientsInfo.value.steps.completed_financial_fact_finder - ',
+        clientsInfo.value.steps.completed_financial_fact_finder
+      )
       return clientsInfo.value.steps.completed_financial_fact_finder
     })
 

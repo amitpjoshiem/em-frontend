@@ -1,14 +1,14 @@
 <template>
   <div>
     <div v-if="$can('client', 'all')" class="flex justify-end mb-4">
-      <el-button type="primary" plain class="mr-10" size="small" @click="edit">Edit</el-button>
+      <SwdButton primary small :disabled="disabledSaveBtn" @click="edit">Edit</SwdButton>
     </div>
     <div v-if="!isAssetsLoading && !isAssetsSchemaLoading">
       <el-card v-for="(block, indexGroup) in assetsSchema.data" :key="indexGroup" class="rounded-md mb-10">
         <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
         <div class="flex pb-2 mt-8">
           <div class="w-4/12"></div>
-          <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-gray03 text-xs">
+          <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-main text-xs">
             {{ header.toUpperCase() }}
           </div>
         </div>

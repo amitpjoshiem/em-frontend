@@ -43,7 +43,7 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
   let salesforce = reactive({})
 
   const query = useQuery(queryKey, {
-    cacheTime: 0,
+    // cacheTime: 0,
     queryFn: fetchMembersList,
     select: ({ data, meta }) => {
       pagination.value = new MembersListPagination(meta.pagination)

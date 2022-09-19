@@ -5,10 +5,10 @@
     <div v-else-if="members">
       <TopMembersItem v-for="(member, index) in members.data" :key="index" :member="member" />
       <div v-if="!members.data.length" class="flex flex-col items-center justify-center mt-10">
-        <div class="bg-widget-bg rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+        <div class="bg-main-gray rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
           <InlineSvg :src="IconEmptyUsers" />
         </div>
-        <p class="text-gray03 font-semibold text-xss mt-3">No recently added opportunity</p>
+        <p class="text-main font-semibold text-xss mt-3">No recently added opportunity</p>
       </div>
     </div>
   </div>

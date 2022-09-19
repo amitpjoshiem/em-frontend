@@ -6,7 +6,7 @@
 
         <div class="flex pb-2 mt-8">
           <div class="w-4/12"></div>
-          <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-gray03 text-xs">
+          <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-main text-xs">
             {{ header.toUpperCase() }}
           </div>
         </div>
@@ -81,7 +81,7 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <el-button type="primary" @click="nextPage">Go to the monthly expense</el-button>
+        <SwdButton primary main @click="nextPage()"> Go to the monthly expense </SwdButton>
       </div>
     </el-form>
   </div>
@@ -91,17 +91,13 @@
     <el-input v-model="fieldName" placeholder="Please input field name" :autofocus="true" />
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="cancelDialog">Cancel</el-button>
-        <el-button
-          type="primary"
-          plain
-          :disabled="isLoadingCheck"
-          :loading="isLoadingCheck"
-          class="w-20"
-          @click="confirmCreateField"
-        >
-          Create
-        </el-button>
+        <div class="flex justify-end">
+          <SwdButton info main @click="closeDialog">Cancel</SwdButton>
+          <SwdButton class="ml-2" primary main :disabled="isLoadingCheck" @click="confirmCreateField">
+            <SwdSpinner v-show="isLoadingCheck" class="mr-2" />
+            Create
+          </SwdButton>
+        </div>
       </span>
     </template>
   </el-dialog>

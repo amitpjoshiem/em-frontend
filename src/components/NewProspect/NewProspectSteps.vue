@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-widget-bg rounded-lg px-5 mb-5">
+  <div class="bg-main-gray rounded-lg px-5 mb-5">
     <div class="flex w-full pt-7">
       <router-link
         :to="{ name: 'basic-information', params: { id: memberId } }"
@@ -66,25 +66,25 @@
     <div class="flex items-center pb-7">
       <!-- STEP 1 -->
       <div class="cycle-active" />
-      <div class="flex-grow h-[3px]" :class="{ 'bg-activity': step >= 1 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-main-blue': step >= 1 }" />
       <div :class="{ 'cycle-next': step === 1, 'cycle-active': step > 1 }" />
-      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 2, 'bg-activity': step >= 2 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-white': step < 2, 'bg-main-blue': step >= 2 }" />
 
       <!-- STEP 2 -->
       <div :class="{ 'cycle-default': step < 2, 'cycle-active': step > 2, 'cycle-next': step === 2 }" />
-      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 3, 'bg-activity': step >= 3 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-white': step < 3, 'bg-main-blue': step >= 3 }" />
 
       <!-- STEP 3 -->
       <div :class="{ 'cycle-default': step < 3, 'cycle-active': step > 3, 'cycle-next': step === 3 }" />
-      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 4, 'bg-activity': step >= 4 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-white': step < 4, 'bg-main-blue': step >= 4 }" />
 
       <!-- STEP 4 -->
       <div :class="{ 'cycle-default': step < 4, 'cycle-active': step > 4, 'cycle-next': step === 4 }" />
-      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 5, 'bg-activity': step >= 5 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-white': step < 5, 'bg-main-blue': step >= 5 }" />
 
       <!-- STEP 5 -->
       <div :class="{ 'cycle-default': step < 5, 'cycle-active': step > 5, 'cycle-next': step === 5 }" />
-      <div class="flex-grow h-[3px]" :class="{ 'bg-input-border': step < 6, 'bg-activity': step >= 6 }" />
+      <div class="flex-grow h-[3px]" :class="{ 'bg-white': step < 6, 'bg-main-blue': step >= 6 }" />
 
       <!-- STEP 6 -->
       <div :class="{ 'cycle-default': step < 6, 'cycle-active': step > 6, 'cycle-next': step === 6 }" />
@@ -120,13 +120,13 @@ export default {
 .cycle-active {
   width: 9px;
   height: 9px;
-  background-color: #66b6ff;
+  background-color: #83ccf0;
   border-radius: 50%;
 }
 .cycle-next {
   width: 13px;
   height: 13px;
-  background-color: #66b6ff;
+  background-color: #83ccf0;
   border-radius: 50%;
   border: 2px solid white;
 }
@@ -135,7 +135,7 @@ export default {
   width: 9px;
   height: 9px;
   background: white;
-  border: 2px solid #d4ddeb;
+  border: 2px solid #f58833;
   border-radius: 50%;
 }
 

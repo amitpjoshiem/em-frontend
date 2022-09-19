@@ -10,16 +10,13 @@
     <vue-cropper ref="cropper" :src="state.imgSrc" :container-style="{ 'max-width': '450px', 'max-height': '700px' }" />
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button
-          type="primary"
-          :disabled="disabledConfirmBtn"
-          :loading="disabledConfirmBtn"
-          style="max-height: 40px; top: 1px"
-          @click="cropImage"
-        >
-          Confirm
-        </el-button>
+        <div class="flex justify-end">
+          <SwdButton info main @click="dialogVisible = false">Cancel</SwdButton>
+          <SwdButton class="ml-2" primary main :disabled="disabledConfirmBtn" @click="cropImage">
+            <SwdSpinner v-show="disabledConfirmBtn" class="mr-2" />
+            Save
+          </SwdButton>
+        </div>
       </span>
     </template>
   </el-dialog>

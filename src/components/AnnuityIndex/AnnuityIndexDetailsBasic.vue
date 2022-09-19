@@ -10,17 +10,16 @@
       </div>
       <SwdSpinner v-if="isLoading" />
 
-      <div v-else>
-        <el-button
+      <div v-else class="flex">
+        <SwdButton
           v-if="ruleForm.is_client_signed && ruleForm.is_advisor_signed"
-          type="success"
-          :icon="Key"
-          circle
+          primary
+          small
           class="mr-4"
-          plain
-          size="small"
           @click="handlePreview(ruleForm.certificate.url)"
-        />
+        >
+          Add Index Annuity
+        </SwdButton>
 
         <el-tag :type="ruleForm.is_client_signed ? 'success' : 'danger'" class="mr-4">
           <el-icon><EditPen /></el-icon>
@@ -45,45 +44,37 @@
             @upload-mounted="bindRef"
           >
             <template #main>
-              <el-button type="primary" size="small" plain class="mt-4 w-[130px]">Change document</el-button>
+              <SwdButton primary primaryprimary small class="mt-4 w-[135px]">Change document</SwdButton>
             </template>
           </SwdUpload>
-          <el-button
-            type="primary"
-            size="small"
-            plain
-            class="mt-4 w-[130px]"
-            @click="handlePreview(ruleForm.media.url)"
-          >
-            Preview
-          </el-button>
+          <SwdButton primary small class="mt-4 w-[135px]" @click="handlePreview(ruleForm.media.url)">Preview</SwdButton>
         </div>
         <div class="w-8/12 text-xss">
           <el-form ref="form" :model="ruleForm">
             <div class="text-main flex items-center h-6">
-              <span class="w-4/12 text-gray03 font-semibold">Document name:</span>
+              <span class="w-4/12 text-main font-semibold">Document name:</span>
               <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.name" />
               </el-form-item>
               <span v-else class="w-4/12">{{ ruleForm.name }}</span>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Insurance provider:</span>
+              <span class="w-4/12 text-main font-semibold">Insurance provider:</span>
               <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.insurance_provider" />
               </el-form-item>
               <span v-else class="w-4/12">{{ ruleForm.insurance_provider }}</span>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Date signed advisor:</span>
+              <span class="w-4/12 text-main font-semibold">Date signed advisor:</span>
               <SwdStubForText :text="ruleForm.advisor_signed" plug="&mdash;" class="text-sm text-main" />
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Date signed client:</span>
+              <span class="w-4/12 text-main font-semibold">Date signed client:</span>
               <SwdStubForText :text="ruleForm.client_signed" plug="&mdash;" class="text-sm text-main" />
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Tax Qualification:</span>
+              <span class="w-4/12 text-main font-semibold">Tax Qualification:</span>
               <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-select
                   v-model="ruleForm.tax_qualification"
@@ -97,14 +88,14 @@
               <div v-else class="w-4/12 flex items-center cursor-pointer">{{ ruleForm.tax_qualification }}</div>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">Agent Rep Code:</span>
+              <span class="w-4/12 text-main font-semibold">Agent Rep Code:</span>
               <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.agent_rep_code" />
               </el-form-item>
               <span v-else class="w-4/12">{{ ruleForm.agent_rep_code }}</span>
             </div>
             <div class="text-main flex items-center h-6 mt-2">
-              <span class="w-4/12 text-gray03 font-semibold">License Number:</span>
+              <span class="w-4/12 text-main font-semibold">License Number:</span>
               <el-form-item v-if="isEdit" size="small" class="w-4/12">
                 <el-input v-model="ruleForm.license_number" />
               </el-form-item>
@@ -114,19 +105,14 @@
         </div>
       </div>
       <div class="flex justify-end">
-        <div v-if="isEdit">
-          <el-button type="primary" size="small" class="w-[60px]" @click="cancelEdit">Cancel</el-button>
-          <el-button
-            type="primary"
-            size="small"
-            :loading="loadingUpdate"
-            class="w-[60px]"
-            @click="saveBasicInformation"
-          >
+        <div v-if="isEdit" class="flex">
+          <SwdButton info small class="w-[60px] mr-2" @click="cancelEdit">Cancel</SwdButton>
+          <SwdButton primary small :disabled="loadingUpdate" class="w-[60px]" @click="saveBasicInformation">
+            <SwdSpinner v-show="loadingUpdate" class="mr-2" />
             Save
-          </el-button>
+          </SwdButton>
         </div>
-        <div v-else>
+        <div v-else class="flex">
           <el-popconfirm title="Are you sure to delete this?" @confirm="confirmDelete()">
             <template #reference>
               <el-button type="danger" size="small" class="w-[60px]" plain :loading="loadingDeleteAnnuity">
@@ -134,22 +120,19 @@
               </el-button>
             </template>
           </el-popconfirm>
-
-          <el-button type="primary" size="small" plain>Send</el-button>
-          <el-button
+          <SwdButton primary small class="ml-2">Send</SwdButton>
+          <SwdButton
             v-if="!ruleForm.is_advisor_signed"
-            type="primary"
-            size="small"
-            plain
-            :loading="loadingSignAnnuityIndex"
-            class="w-[60px]"
+            class="ml-2"
+            :disabled="loadingSignAnnuityIndex"
+            primary
+            small
             @click="sign"
           >
+            <SwdSpinner v-show="loadingSignAnnuityIndex" class="mr-2" />
             Sign
-          </el-button>
-          <el-button v-if="!isEdit" type="primary" size="small" class="w-[60px]" plain @click="editBasicInformation">
-            Edit
-          </el-button>
+          </SwdButton>
+          <SwdButton v-if="!isEdit" class="ml-2" primary small @click="editBasicInformation">Edit</SwdButton>
         </div>
       </div>
     </template>

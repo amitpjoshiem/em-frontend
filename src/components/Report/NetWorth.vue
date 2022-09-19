@@ -5,7 +5,7 @@
       <div class="w-8/12">
         <el-form ref="form" :model="ruleForm" size="small">
           <div class="flex justify-center items-center">
-            <div class="bg-dark-blue-charts w-2 h-2 rounded-full mr-1" />
+            <div class="bg-main w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Liquid</div>
             <el-form-item class="w-5/12">
               <SwdCurrencyInput
@@ -47,7 +47,7 @@
             </div>
           </div>
           <div class="flex justify-center items-center">
-            <div class="bg-color-error w-2 h-2 rounded-full mr-1" />
+            <div class="bg-main-orange w-2 h-2 rounded-full mr-1" />
             <div class="text-main text-xss w-4/12">Income safe</div>
             <el-form-item class="w-5/12">
               <SwdCurrencyInput

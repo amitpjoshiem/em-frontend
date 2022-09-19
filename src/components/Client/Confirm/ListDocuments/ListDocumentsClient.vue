@@ -1,8 +1,6 @@
 <template>
   <div class="flex justify-end mb-4">
-    <el-button v-if="$can('client', 'all')" type="primary" plain class="mr-10" size="small" @click="edit">
-      Edit
-    </el-button>
+    <SwdButton primary v-if="$can('client', 'all')" small :disabled="disabledSaveBtn" @click="edit">Edit</SwdButton>
   </div>
   <div v-if="!isFetchingAdvisor && !isFetchingClient">
     <div v-if="data.value?.status === 'no_documents'" class="flex">
@@ -26,22 +24,20 @@
             </div>
           </div>
           <div class="flex justify-end sm:block">
-            <el-button
+            <SwdButton
               v-if="item.extension === 'PDF'"
-              type="primary"
-              size="small"
-              plain
               class="mr-5"
+              primary
+              small
               @click="handlePictureCardPreview(item.url)"
+              >Prewiev</SwdButton
             >
-              Prewiev
-            </el-button>
           </div>
         </div>
       </el-card>
     </div>
     <div v-else class="flex justify-center items-center py-2">
-      <p class="text-gray03">No recently added documents</p>
+      <p class="text-main">No recently added documents</p>
     </div>
   </div>
   <div v-else class="flex justify-center items-center">

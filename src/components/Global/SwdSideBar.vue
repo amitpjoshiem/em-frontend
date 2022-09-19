@@ -1,7 +1,9 @@
 <template>
   <aside class="bg-primary min-h-screen flex-col w-[68px] sm:flex hidden">
     <div class="fixed cursor-pointer" @click="goHome">
-      <InlineSvg :src="IconLogo" />
+      <div class="flex items-center justify-center mt-4 w-[63px]">
+        <InlineSvg :src="IrisIconReverse" width="50" height="50" />
+      </div>
     </div>
     <div v-if="isShowSideBar" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
       <router-link
@@ -88,11 +90,11 @@ import IconActivityActiv from '@/assets/svg/icon-activity-activ.svg'
 import IconActivityGray from '@/assets/svg/icon-activity-gray.svg'
 import IconActivityPipeLine from '@/assets/svg/icon-pipeline-activ.svg'
 import IconPipeLine from '@/assets/svg/icon-pipeline.svg'
-import IconLogo from '@/assets/svg/icon-logo.svg'
 import IconLeads from '@/assets/svg/icon-leads.svg'
 import IconLeadsActive from '@/assets/svg/icon-leads-active.svg'
 import IconLogs from '@/assets/svg/icon-logs.svg'
 import IconLogsActive from '@/assets/svg/icon-logs-active.svg'
+import IrisIconReverse from '@/assets/svg/iris-icon-reverse.svg'
 
 export default {
   name: 'SwdSideBar',
@@ -150,7 +152,6 @@ export default {
       IconActivityActiv,
       IconActivityPipeLine,
       IconPipeLine,
-      IconLogo,
       IconAssetsActive,
       IconLeads,
       IconLeadsActive,
@@ -158,6 +159,7 @@ export default {
       IconLogsActive,
       goHome,
       isShowSideBar,
+      IrisIconReverse,
     }
   },
 }

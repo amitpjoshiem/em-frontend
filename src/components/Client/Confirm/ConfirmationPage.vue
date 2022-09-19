@@ -57,31 +57,20 @@
       <ListDocumentsClient doc-collections="social_security_information" page="social-security" />
     </div>
 
-    <!-- <div class="border border-border-blue rounded-md p-5 mb-4">
-      <div class="flex items-center mb-5">
-        <InlineSvg :src="IconDoneStep" />
-        <div class="text-main text-xl font-semibold ml-2">List of Stock Certificates or Bonds</div>
-      </div>
-      <ListDocumentsClient doc-collections="list_of_stock_certificates_or_bonds" page="list-stock" />
-    </div> -->
-
     <div class="flex justify-end mt-6 mb-4">
-      <el-button
-        v-if="$can('advisor', 'all')"
-        type="primary"
-        plain
-        :disabled="isLoadingConvert"
-        :loading="isLoadingConvert"
-        @click="convert"
-      >
-        Convert to opportunity
-      </el-button>
+      <SwdButton primary v-if="$can('advisor', 'all')" main :disabled="isLoadingConvert" @click="convert">
+        <SwdSpinner v-show="isLoadingConvert" class="mr-2" />
+        Save
+      </SwdButton>
     </div>
     <div class="flex justify-end mt-6 mb-4">
-      <el-button v-if="$can('client', 'all')" type="info" plain @click="cancel"> Cancel </el-button>
-      <el-button v-if="$can('client', 'all')" type="primary" plain :disabled="disabledSubmitBtn" @click="submit">
+      <div v-if="$can('client', 'all')" class="pr-3">
+        <Button default-gray-btn text-btn="Cancel" @click="cancel" />
+      </div>
+      <SwdButton primary v-if="$can('client', 'all')" main :disabled="disabledSubmitBtn" @click="submit">
+        <SwdSpinner v-show="isLoadingSubmitAll" class="mr-2" />
         Submit
-      </el-button>
+      </SwdButton>
     </div>
   </div>
 </template>
@@ -118,8 +107,8 @@ export default {
 
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
-    const { mutateAsync: convertLead, isLoadingConvert } = useMutation(convertLeadToOpportunity)
-    const { mutateAsync: sendAll } = useMutation(sendAllInformation)
+    const { mutateAsync: convertLead, isLoading: isLoadingConvert } = useMutation(convertLeadToOpportunity)
+    const { mutateAsync: sendAll, isLoading: isLoadingSubmitAll } = useMutation(sendAllInformation)
 
     onMounted(() => {
       scrollTop()
@@ -177,6 +166,7 @@ export default {
       isLoadingInfo,
       clientsInfo,
       disabledSubmitBtn,
+      isLoadingSubmitAll,
     }
   },
 }

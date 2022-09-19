@@ -5,7 +5,6 @@
     placeholder="Search member"
     :trigger-on-focus="false"
     minlength="3"
-    size="small"
     @select="handleSelect"
   >
     <template #prefix>

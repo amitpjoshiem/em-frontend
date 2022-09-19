@@ -44,6 +44,8 @@ import SwdRetiredLabel from '@/components/Global/SwdRetiredLabel.vue'
 import SwdFullScreenLoading from '@/components/Global/SwdFullScreenLoading.vue'
 import SwdErrorBlock from '@/components/Global/SwdErrorBlock.vue'
 import SwdWrapper from '@/components/Global/SwdWrapper.vue'
+import SwdButton from '@/components/Global/SwdButton.vue'
+import SwdWidgetTitle from '@/components/Global/SwdWidgetTitle.vue'
 
 import ElementPlus from 'element-plus'
 
@@ -79,6 +81,8 @@ const components = [
   SwdInfoBtn,
   SwdErrorBlock,
   SwdWrapper,
+  SwdButton,
+  SwdWidgetTitle,
 ]
 
 components.forEach((component) => {

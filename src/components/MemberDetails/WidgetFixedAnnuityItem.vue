@@ -2,7 +2,7 @@
   <div
     v-if="item.id"
     class="w-4/12 px-10 pt-10 flex items-center flex-col"
-    :class="{ 'border-r border-input-border': !lastItem }"
+    :class="{ 'border-r border-main-gray': !lastItem }"
   >
     <div class="flex items-center justify-between pb-5">
       <el-icon color="#042D52" :size="100"><Document /></el-icon>
@@ -12,9 +12,9 @@
         <div class="text-main text-sm">{{ dayjs(item.created_at).format('MM/DD/YYYY') }}</div>
       </div>
     </div>
-    <el-button size="small" type="primary" plain @click="open">Open</el-button>
+    <SwdButton class="ml-2" primary small @click="open">Open</SwdButton>
   </div>
-  <div v-else class="w-4/12" :class="{ 'border-r border-input-border': !lastItem }">
+  <div v-else class="w-4/12" :class="{ 'border-r border-main-gray': !lastItem }">
     <el-empty />
   </div>
 </template>

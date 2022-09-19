@@ -1,5 +1,5 @@
 <template>
-  <el-button size="small" type="success" plain @click="exportExcel">Export to Excel</el-button>
+  <SwdButton primary small @click="exportExcel">Export to Excel</SwdButton>
   <el-dialog v-model="state.dialogVisible" title="Export to Excel" width="45%" :before-close="closeDialog">
     <div class="flex flex-col items-center">
       <InlineSvg :src="IconSuccesChanged" />
@@ -13,7 +13,7 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="closeDialog">Close</el-button>
+        <SwdButton primary main class="ml-2" @click="closeDialog">Close</SwdButton>
       </span>
     </template>
   </el-dialog>

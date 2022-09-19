@@ -23,10 +23,10 @@
       layer of security beyond your username and password.
     </span>
     <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="cancel">Cancel</el-button>
-        <el-button type="primary" @click="confirm">Confirm</el-button>
-      </span>
+      <div class="flex justify-end">
+        <SwdButton info main @click="Cancel">Cancel</SwdButton>
+        <SwdButton class="ml-2" primary main @click="Confirm">Confirm</SwdButton>
+      </div>
     </template>
   </el-dialog>
 </template>

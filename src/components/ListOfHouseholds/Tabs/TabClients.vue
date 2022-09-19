@@ -1,6 +1,6 @@
 <template>
   <el-badge :value="count" :max="99" class="mr-8" :type="getType ? 'primary' : 'info'" :hidden="isLoading">
-    <router-link :to="{ name: getLink }" class="text-gray03 text-smm cursor-pointer" :class="{ active: getType }">
+    <router-link :to="{ name: getLink }" class="text-main text-smm cursor-pointer" :class="{ active: getType }">
       Clients
     </router-link>
   </el-badge>
@@ -61,7 +61,7 @@ export default {
 
 <style scoped>
 .active {
-  color: #66b6ff;
-  border-bottom: 2px solid #66b6ff;
+  color: #83ccf0;
+  border-bottom: 2px solid #83ccf0;
 }
 </style>

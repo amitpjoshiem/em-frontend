@@ -3,7 +3,7 @@
     <div class="flex p-5 justify-between">
       <div class="flex">
         <el-badge v-if="visibleTab.includes('all')" :value="data.data.users.all" :max="99" class="mr-8" type="primary">
-          <span class="text-gray03 text-smm cursor-pointer active"> All Advisors </span>
+          <span class="text-main text-smm cursor-pointer active"> All Advisors </span>
         </el-badge>
       </div>
       <div class="flex">
@@ -53,7 +53,7 @@ export default {
 
 <style scoped>
 .active {
-  color: #66b6ff;
-  border-bottom: 2px solid #66b6ff;
+  color: #83ccf0;
+  border-bottom: 2px solid #83ccf0;
 }
 </style>
