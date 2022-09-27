@@ -44,7 +44,7 @@
             @upload-mounted="bindRef"
           >
             <template #main>
-              <SwdButton primary primaryprimary small class="mt-4 w-[135px]">Change document</SwdButton>
+              <SwdButton primary small class="mt-4 w-[135px]">Change document</SwdButton>
             </template>
           </SwdUpload>
           <SwdButton primary small class="mt-4 w-[135px]" @click="handlePreview(ruleForm.media.url)">Preview</SwdButton>

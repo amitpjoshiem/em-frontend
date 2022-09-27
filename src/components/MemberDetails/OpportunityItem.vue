@@ -1,6 +1,6 @@
 <template>
   <div class="flex text-xs items-center text-center">
-    <div class="w-9/24 item">
+    <div class="w-8/24 item">
       <el-icon><User /></el-icon>
       <span class="pl-1 whitespace-nowrap overflow-hidden overflow-ellipsis">
         {{ user.name }}
@@ -12,16 +12,24 @@
     <div class="w-1/24 item">
       <SwdOpportunityItemActions :user="user" />
     </div>
+    <div class="w-1/24 item" @click="editOpportunity">
+      <el-icon color="green" class="cursor-pointer">
+        <EditPen />
+      </el-icon>
+    </div>
   </div>
 </template>
 <script>
 import { currencyFormat } from '@/utils/currencyFormat'
 import { User } from '@element-plus/icons-vue'
+import { EditPen } from '@element-plus/icons-vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'OpportunityItem',
   components: {
     User,
+    EditPen,
   },
   props: {
     user: {
@@ -38,8 +46,18 @@ export default {
     },
   },
   setup() {
+    const store = useStore()
+
+    const editOpportunity = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'addChildOpportunity',
+        value: true,
+      })
+    }
+
     return {
       currencyFormat,
+      editOpportunity,
     }
   },
 }

@@ -5,18 +5,17 @@
         <el-badge :value="getCount" :max="99" class="mr-8" :type="getCount ? 'primary' : 'info'" :hidden="isLoading">
           <SwdWidgetTitle text="Child Opportunities" />
         </el-badge>
-        <router-link :to="{ name: 'add-opportunity', params: { id: prospectId } }">
-          <SwdButton primary small>
-            <InlineSvg :src="IconPlus" class="mr-1.5" />
-            Add child opportunity
-          </SwdButton>
-        </router-link>
+        <SwdButton primary small @click="showModalAddChildOpportunity">
+          <InlineSvg :src="IconPlus" class="mr-1.5" />
+          Add child opportunity
+        </SwdButton>
       </div>
       <div class="flex h-8 bg-main-gray">
-        <div class="w-9/24 title">Opportunity name</div>
+        <div class="w-8/24 title">Opportunity name</div>
         <div class="w-4/24 title">Amount</div>
         <div class="w-6/24 title">Stage</div>
         <div class="w-4/24 title">Close date</div>
+        <div class="w-1/24 title" />
         <div class="w-1/24 title" />
       </div>
       <el-skeleton v-if="isLoading || isLoadingUserProfile || isLoadingProspectDetails" :rows="2" animated />
@@ -38,25 +37,30 @@
       </div>
       <el-skeleton v-else :rows="2" animated class="w-full p-3" />
     </div>
+    <ModalAddChildOpportunity />
   </div>
 </template>
 
 <script>
 import IconPlus from '@/assets/svg/icon-plus.svg'
-import { useRoute } from 'vue-router'
 import OpportunityItem from '@/components/MemberDetails/OpportunityItem.vue'
+import ModalAddChildOpportunity from '@/components/MemberDetails/ModalAddChildOpportunity.vue'
+import { useRoute } from 'vue-router'
 import { useOpportunityList } from '@/api/use-opportunity-list.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'OpportunityTable',
   components: {
     OpportunityItem,
+    ModalAddChildOpportunity,
   },
   setup() {
     const route = useRoute()
+    const store = useStore()
     const prospectId = route.params.id
 
     const { isLoading, isError, data } = useOpportunityList(prospectId)
@@ -68,6 +72,13 @@ export default {
     const getCount = computed(() => {
       return data.value?.length
     })
+
+    const showModalAddChildOpportunity = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'addChildOpportunity',
+        value: true,
+      })
+    }
 
     return {
       IconPlus,
@@ -82,6 +93,7 @@ export default {
       isErrorProspectDetails,
       member,
       getCount,
+      showModalAddChildOpportunity,
     }
   },
 }
@@ -90,9 +102,5 @@ export default {
 <style scoped>
 .title {
   @apply text-small text-main flex items-center uppercase first:pl-2;
-}
-
-.oportunity-item {
-  @apply mr-3 hover:bg-gray-200;
 }
 </style>

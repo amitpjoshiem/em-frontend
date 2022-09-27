@@ -75,6 +75,7 @@ const state = () => ({
       modalTerms: false,
       modalAddAnnuityIndex: false,
       modalInvestmentPackage: false,
+      addChildOpportunity: false,
     },
   },
   sortMembers: {
