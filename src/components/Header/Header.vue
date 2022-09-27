@@ -1,7 +1,6 @@
 <template>
   <div class="relative bg-main-gray items-center h-16 flex justify-between px-3">
     <SwdRemoteSearch v-if="!$can('client', 'all')" class="sm:w-4/24" />
-
     <div v-if="$can('admin', 'all') || $can('ceo', 'all')" class="flex justify-between items-center text-sm sm:w-11/24">
       <el-button
         :type="getRouteName === 'admin-dashboard' || getRouteName === 'ceo-dashboard' ? 'primary' : 'info'"
@@ -45,7 +44,7 @@
       </el-button>
     </div>
 
-    <div v-if="$can('advisor', 'all')" class="absolute left-[40%] top-1/2 -translate-y-1/2 -translate-x-[40%]">
+    <div v-if="isShowLogo" class="absolute left-[40%] top-1/2 -translate-y-1/2 -translate-x-[40%]">
       <InlineSvg :src="IrisLogoStandart" width="100" height="40" />
     </div>
 
@@ -54,7 +53,6 @@
 
     <div class="flex items-center" :class="{ 'ml-auto': !$can('admin', 'all') }">
       <div v-if="$can('advisor', 'all')" class="flex items-center justify-end mr-5">
-        <!-- <TestEventBtn v-if="showContent.testNotificationsBtn && showContent.testSentryBtn" /> -->
         <NewLeadBtn />
         <NewOpportunityBtn />
       </div>
@@ -76,7 +74,6 @@ import HeaderNotificationsBlock from '@/components/Header/HeaderNotificationsBlo
 import NewLeadModal from '@/components/Leads/NewLeadModal.vue'
 import NewLeadBtn from '@/components/Header/NewLeadBtn.vue'
 import NewOpportunityBtn from '@/components/Header/NewOpportunityBtn.vue'
-// import TestEventBtn from '@/components/Header/TestEventBtn.vue'
 import SelectCompany from '@/components/Header/SelectCompany.vue'
 import SelectAdvisors from '@/components/Header/SelectAdvisors.vue'
 import { useShowContentEnv } from '@/hooks/use-show-content-env'
@@ -85,6 +82,7 @@ import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { computed } from 'vue'
+import { useAbility } from '@casl/vue'
 
 export default {
   name: 'Header',
@@ -95,7 +93,6 @@ export default {
     NewLeadModal,
     NewLeadBtn,
     NewOpportunityBtn,
-    // TestEventBtn,
     SelectCompany,
     SelectAdvisors,
   },
@@ -104,6 +101,7 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const store = useStore()
+    const { can } = useAbility()
 
     const { showContent } = useShowContentEnv()
 
@@ -140,6 +138,12 @@ export default {
       if (getRole.value === 'ceo') router.push({ name: 'ceo-pipeline' })
     }
 
+    const isShowLogo = computed(() => {
+      if (can('advisor', 'all')) return true
+      if (can('client', 'all') && getRouteName.value !== 'client-dashboard') return true
+      return false
+    })
+
     return {
       showContent,
       goAdvisors,
@@ -149,6 +153,7 @@ export default {
       goPipeLine,
       getRouteName,
       IrisLogoStandart,
+      isShowLogo,
     }
   },
 }
