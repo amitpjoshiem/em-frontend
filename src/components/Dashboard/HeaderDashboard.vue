@@ -1,7 +1,6 @@
 <template>
   <div class="h-20 flex items-center">
     <div v-if="!isLoading" class="flex pt-5 pb-5 text-2xl font-medium">
-      <span v-if="showContent.showRole" class="pr-2">({{ isRole }})</span>
       <span class=""> Welcome, {{ userProfile.firstName }} {{ userProfile.lastName }} </span>
       <span v-if="userProfile.position" class="pl-2">({{ userProfile.position }})</span>
     </div>
