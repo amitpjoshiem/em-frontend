@@ -66,6 +66,7 @@ const state = () => ({
       shareFileEmailDialog: false,
       prewievPdf: false,
       moreOtherInfo: false,
+      moreOwnerInfo: false,
       changePhone: false,
       exportSucces: false,
       modalContact: false,

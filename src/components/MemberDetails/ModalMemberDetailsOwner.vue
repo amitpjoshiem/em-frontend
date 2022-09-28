@@ -1,25 +1,27 @@
 <template>
   <el-dialog
     v-model="state.dialogVisible"
-    title="Member details other"
+    title="Owner member details"
     width="80%"
     custom-class="dialog-style pdf-viewer"
     :before-close="closeDialog"
   >
     <div>
       <div class="border-main-gray border rounded-md p-2 w-full">
-        <p class="text-main mb-[2px]">Risk level:</p>
-        <p class="font-semibold">{{ other.value.risk }}</p>
+        <p class="text-main mb-[2px]">Owner name:</p>
+        <p class="font-semibold">{{ owner.value.last_name + ' ' + owner.value.first_name }}</p>
       </div>
-      <div class="border-main-gray border rounded-md p-2 w-full my-4 flex flex-col">
-        <span class="text-main mb-[2px]">Goal for retirement:</span>
-        <span class="font-semibold">{{ other.value.retirement }}</span>
+      <div class="border-main-gray border rounded-md p-2 w-full mt-2">
+        <p class="text-main mb-[2px]">Status:</p>
+        <p class="font-semibold">{{ owner.value.status }}</p>
       </div>
-      <div class="border-main-gray border rounded-md p-2 w-full">
-        <p class="text-main mb-[2px]">Goal for retirement money:</p>
-        <p class="font-semibold">
-          {{ other.value.retirementMoney }}
-        </p>
+      <div class="border-main-gray border rounded-md p-2 w-full mt-2">
+        <p class="text-main mb-[2px]">Owner email:</p>
+        <p class="font-semibold">{{ owner.value.email }}</p>
+      </div>
+      <div class="border-main-gray border rounded-md p-2 w-full mt-2">
+        <p class="text-main mb-[2px]">Owner phone:</p>
+        <SwdStubForText :text="owner.value.phone" plug="&mdash;" class="text-sm text-main" />
       </div>
     </div>
     <template #footer>
@@ -38,7 +40,7 @@ import { reactive, watchEffect } from 'vue'
 export default {
   name: 'ModalMemberDetailsOther',
   props: {
-    other: {
+    owner: {
       type: Object,
       require: true,
       default: () => {},
@@ -52,12 +54,12 @@ export default {
     })
 
     watchEffect(() => {
-      state.dialogVisible = store.state.globalComponents.dialog.showDialog.moreOtherInfo
+      state.dialogVisible = store.state.globalComponents.dialog.showDialog.moreOwnerInfo
     })
 
     const closeDialog = () => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'moreOtherInfo',
+        destination: 'moreOwnerInfo',
         value: false,
       })
     }
