@@ -45,10 +45,11 @@ export default {
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const store = useStore()
 
     const editOpportunity = () => {
+      store.commit('globalComponents/setOpportunityId', props.user.id)
       store.commit('globalComponents/setShowModal', {
         destination: 'addChildOpportunity',
         value: true,

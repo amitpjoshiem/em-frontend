@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="state.dialogVisible" title="Add child opportunity" width="80%" :before-close="closeDialog">
+  <el-dialog v-model="state.dialogVisible" :title="getModalTitle" width="80%" :before-close="closeDialog">
     <div v-if="!isLoadingContent">
       <div v-if="statusSfAcc.auth" class="border-color-grey">
         <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top">
@@ -72,8 +72,10 @@ import { useRoute, useRouter } from 'vue-router'
 import { useOpportunityInit } from '@/api/use-opportunity-init.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
+import { useFetchChildOpportunityById } from '@/api/use-fetch-child-opportunity-by-id.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
-import { createOpportunity } from '@/api/vueQuery/create-opportunity'
+import { createChildOpportunity } from '@/api/vueQuery/create-child-opportunity'
+import { updateChildOpportunity } from '@/api/vueQuery/update-child-opportunity'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/opportunity.js'
@@ -88,6 +90,7 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const queryClient = useQueryClient()
+    const isEditModal = ref(false)
 
     const form = ref(null)
     const id = route.params.id
@@ -105,23 +108,36 @@ export default {
       name: '',
     })
 
-    const { mutateAsync: addOpportunity, isLoading: isLoadingAddOpportunity } = useMutation(createOpportunity)
+    const { mutateAsync: addOpportunity, isLoading: isLoadingAddOpportunity } = useMutation(createChildOpportunity)
+    const { mutateAsync: updateOpportunity, isLoading: isLoadingUpdateOpportunity } =
+      useMutation(updateChildOpportunity)
     const { isLoading: isLoadingProspectDetails, data: prospectDetails } = useProspectDetails(id)
     const { isLoading: isLoadingInitOpportunity, data: initOpportunity } = useOpportunityInit()
     const { isLoading: isLoadingUserProfile, data: userProfile } = useUserProfile(userFilter)
     const { isLoading: isLoadingStatusSfAcc, data: statusSfAcc } = useSalesForceAuth()
+    const {
+      isLoading: isLoadingOpportunity,
+      data: childOpportunity,
+      refetch: refetchOpportunity,
+    } = useFetchChildOpportunityById({ enabled: false })
 
     const userFilter = 'last_name;first_name'
 
-    watchEffect(() => {
+    watchEffect(async () => {
       state.dialogVisible = store.state.globalComponents.dialog.showDialog.addChildOpportunity
       if (!isLoadingProspectDetails.value) ruleForm.opportunity_owner = prospectDetails.value.name
       if (!isLoadingUserProfile.value)
         ruleForm.account_name = userProfile.value.firstName + ' ' + userProfile.value.lastName
+      if (store.state.globalComponents.opportunityId) {
+        isEditModal.value = true
+        await refetchOpportunity.value()
+        setInitValue()
+      }
     })
 
     const closeDialog = () => {
       resetState()
+      store.commit('globalComponents/setOpportunityId', null)
       store.commit('globalComponents/setShowModal', {
         destination: 'addChildOpportunity',
         value: false,
@@ -131,7 +147,19 @@ export default {
     const submitForm = async () => {
       form.value.validate(async (valid) => {
         if (valid) {
-          const res = await addOpportunity({ ...ruleForm, member_id: id })
+          let res
+          if (isEditModal.value) {
+            const data = {
+              stage: ruleForm.stage,
+              close_date: ruleForm.close_date,
+              type: ruleForm.type,
+              amount: ruleForm.amount.toString(),
+              name: ruleForm.name,
+            }
+            res = await updateOpportunity({ data, id: store.state.globalComponents.opportunityId })
+          } else {
+            res = await addOpportunity({ ...ruleForm, member_id: id })
+          }
           if (!('error' in res)) {
             useAlert({
               title: 'Success',
@@ -164,6 +192,19 @@ export default {
       )
     })
 
+    const getModalTitle = computed(() => {
+      if (isEditModal.value) return 'Edit child opportunity'
+      return 'Add child opportunity'
+    })
+
+    const setInitValue = () => {
+      ruleForm.stage = childOpportunity.value.stage
+      ruleForm.close_date = childOpportunity.value.close_date
+      ruleForm.type = childOpportunity.value.type
+      ruleForm.amount = childOpportunity.value.amount
+      ruleForm.name = childOpportunity.value.name
+    }
+
     const resetState = () => {
       ruleForm.member_id = ''
       ruleForm.stage = ''
@@ -171,6 +212,7 @@ export default {
       ruleForm.type = ''
       ruleForm.amount = ''
       ruleForm.name = ''
+      isEditModal.value = false
     }
 
     return {
@@ -191,6 +233,12 @@ export default {
       isLoadingContent,
       isLoadingAddOpportunity,
       closeDialog,
+      getModalTitle,
+      isLoadingOpportunity,
+      childOpportunity,
+      refetchOpportunity,
+      updateOpportunity,
+      isLoadingUpdateOpportunity,
     }
   },
 }

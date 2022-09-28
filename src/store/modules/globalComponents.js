@@ -89,6 +89,7 @@ const state = () => ({
   docShare: null,
   contact: null,
   previewUrl: null,
+  opportunityId: null,
 })
 
 const mutations = {
@@ -187,7 +188,10 @@ const mutations = {
 
   setPreviewUrlPdf(state, value) {
     state.previewUrl = value
-    console.log('state - ', state)
+  },
+
+  setOpportunityId(state, value) {
+    state.opportunityId = value
   },
 }
 
