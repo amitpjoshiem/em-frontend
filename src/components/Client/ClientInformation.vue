@@ -21,6 +21,7 @@
             </span>
           </div>
         </div>
+        <!-- Completed Financial Fact Finder -->
         <router-link
           :to="{ name: 'client-basic-information', params: { id: clientsInfo.member_id } }"
           class="flex items-center"
@@ -41,6 +42,7 @@
           </el-card>
         </router-link>
 
+        <!-- Upload your Investment/Retirement Statements Here -->
         <router-link :to="{ name: 'investment-retirement' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
@@ -58,6 +60,7 @@
           </el-card>
         </router-link>
 
+        <!-- Upload your Life Insurance Statements Here -->
         <router-link :to="{ name: 'life-insurance' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
@@ -75,6 +78,7 @@
           </el-card>
         </router-link>
 
+        <!-- Upload your Social Security Statements Here -->
         <router-link :to="{ name: 'social-security' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
@@ -86,6 +90,34 @@
                 />
               </el-icon>
               <div class="text-xs sm:text-base text-main">Upload your Social Security Statements Here</div>
+            </div>
+          </el-card>
+        </router-link>
+
+        <!-- Upload your Medicare Details -->
+        <router-link :to="{ name: 'medicare-details' }" class="flex items-center">
+          <el-card class="mb-4 w-full">
+            <div class="flex items-center">
+              <el-icon :size="25" class="mr-5">
+                <circle-check-filled
+                  :color="clientsInfo.steps.medicare_details ? stepsColorSchema.active : stepsColorSchema.notActive"
+                />
+              </el-icon>
+              <div class="text-xs sm:text-base text-main">Upload your Medicare Details</div>
+            </div>
+          </el-card>
+        </router-link>
+
+        <!-- Upload your Property Casualty statements -->
+        <router-link :to="{ name: 'property-casualty' }" class="flex items-center">
+          <el-card class="mb-4 w-full">
+            <div class="flex items-center">
+              <el-icon :size="25" class="mr-5">
+                <circle-check-filled
+                  :color="clientsInfo.steps.property_casualty ? stepsColorSchema.active : stepsColorSchema.notActive"
+                />
+              </el-icon>
+              <div class="text-xs sm:text-base text-main">Upload your Property Casualty statements</div>
             </div>
           </el-card>
         </router-link>

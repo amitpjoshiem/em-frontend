@@ -57,6 +57,24 @@
       <ListDocumentsClient doc-collections="social_security_information" page="social-security" />
     </div>
 
+    <div class="border border-border-blue rounded-md p-5 mb-4">
+      <div class="flex items-center mb-5">
+        <InlineSvg :src="IconDoneStep" />
+        <div class="text-main text-xl font-semibold ml-2">
+          Upload your Medicare Details (Provider, Policy papers etc.)
+        </div>
+      </div>
+      <ListDocumentsClient doc-collections="medicare_details" page="medicare-details" />
+    </div>
+
+    <div class="border border-border-blue rounded-md p-5 mb-4">
+      <div class="flex items-center mb-5">
+        <InlineSvg :src="IconDoneStep" />
+        <div class="text-main text-xl font-semibold ml-2">Upload your Property Casualty statements</div>
+      </div>
+      <ListDocumentsClient doc-collections="property_casualty" page="property-casualty" />
+    </div>
+
     <div v-if="$can('client', 'all')" class="text-center font-semibold pt-4">
       <span>Please fill out all the required information to proceed.</span>
     </div>

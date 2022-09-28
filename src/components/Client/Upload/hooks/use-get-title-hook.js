@@ -11,6 +11,10 @@ export function useGetTile(context) {
         return 'Upload your Social Security Statements Here'
       case context === 'list_of_stock_certificates_or_bonds':
         return 'List of Stock Certificates or Bonds'
+      case context === 'medicare_details':
+        return 'Upload your Medicare Details (Provider, Policy papers etc.)'
+      case context === 'property_casualty':
+        return 'Upload your Property Casualty statements'
       default:
         return 'Client information'
     }
