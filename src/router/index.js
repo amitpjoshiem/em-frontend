@@ -88,9 +88,16 @@ const routes = [
           import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
       },
       {
-        path: 'list-stock',
-        name: 'list-stock',
-        props: { context: 'list_of_stock_certificates_or_bonds' },
+        path: 'medicare-details',
+        name: 'medicare-details',
+        props: { context: 'medicare_details' },
+        component: () =>
+          import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
+      },
+      {
+        path: 'property-casualty',
+        name: 'property-casualty',
+        props: { context: 'property_casualty' },
         component: () =>
           import(/* webpackChunkName: "DocumentsClients" */ '../components/Client/Upload/DocumentsClients.vue'),
       },
