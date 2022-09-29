@@ -2,11 +2,13 @@
   <div class="flex items-center">
     <el-autocomplete
       v-model="state"
+      clearable
       :fetch-suggestions="querySearchAsync"
-      placeholder="Search member"
+      placeholder="Search advisor"
       :trigger-on-focus="false"
       minlength="3"
       @select="handleSelect"
+      @clear="handleClear"
     >
       <template #prefix>
         <div class="flex items-center">
@@ -30,7 +32,8 @@
 <script>
 import { reactive, ref } from 'vue'
 import { Search } from '@element-plus/icons-vue'
-import { useSearchMembers } from '@/api/use-search-members.js'
+import { useSearchUsers } from '@/api/use-search-users.js'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ListOfHouseholdsFilter',
@@ -38,13 +41,14 @@ export default {
     Search,
   },
   setup() {
+    const store = useStore()
     const state = ref('')
 
     const ruleForm = reactive({
       owner: false,
     })
 
-    const { isLoading, isError, data, refetch } = useSearchMembers(
+    const { isLoading, isError, data, refetch } = useSearchUsers(
       {
         search: state,
       },
@@ -57,7 +61,7 @@ export default {
           .value()
           .then((res) => {
             const data = res.data
-            if (data.length) return data.map((item) => ({ id: item.id, name: item.name }))
+            if (data.length) return data.map((item) => ({ id: item.id, name: item.first_name + ' ' + item.last_name }))
             return [{ name: 'not found' }]
           })
           .then((res) => {
@@ -68,15 +72,27 @@ export default {
     }
 
     const changeOwner = () => {
-      console.log('======', ruleForm.owner)
-      if (ruleForm.owner) console.log('MY')
-      if (!ruleForm.owner) console.log('SELECTED')
+      if (ruleForm.owner) {
+        state.value = ''
+        store.commit('globalComponents/setOnlyMyMember', 'my')
+        store.commit('globalComponents/setOwnerIdMember', '')
+      }
+
+      if (!ruleForm.owner) {
+        store.commit('globalComponents/setOnlyMyMember', '')
+      }
     }
 
     const handleSelect = (item) => {
-      console.log('handleSelect - ', item)
       state.value = item.name
-      // state.id = item.id
+      ruleForm.owner = false
+      store.commit('globalComponents/setOwnerIdMember', item.id)
+      store.commit('globalComponents/setOnlyMyMember', 'selected')
+    }
+
+    const handleClear = () => {
+      store.commit('globalComponents/setOwnerIdMember', '')
+      store.commit('globalComponents/setOnlyMyMember', '')
     }
 
     return {
@@ -89,6 +105,7 @@ export default {
       data,
       refetch,
       handleSelect,
+      handleClear,
     }
   },
 }

@@ -742,10 +742,6 @@ export default {
     }
 
     const isDoneCurrentStep = computed(() => {
-      console.log(
-        'clientsInfo.value.steps.completed_financial_fact_finder - ',
-        clientsInfo.value.steps.completed_financial_fact_finder
-      )
       return clientsInfo.value.steps.completed_financial_fact_finder
     })
 

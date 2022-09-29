@@ -89,6 +89,8 @@ const state = () => ({
   docShare: null,
   contact: null,
   previewUrl: null,
+  onlyMyMember: false,
+  ownerIdMember: '',
 })
 
 const mutations = {
@@ -187,7 +189,14 @@ const mutations = {
 
   setPreviewUrlPdf(state, value) {
     state.previewUrl = value
-    console.log('state - ', state)
+  },
+
+  setOnlyMyMember(state, value) {
+    state.onlyMyMember = value
+  },
+
+  setOwnerIdMember(state, value) {
+    state.ownerIdMember = value
   },
 }
 
