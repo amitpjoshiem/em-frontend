@@ -1,6 +1,6 @@
 <template>
   <div class="sm:h-20 flex items-center">
-    <div v-if="!isLoading" class="flex pt-5 pb-5 text-2xl font-medium">
+    <div v-if="!isLoading" class="flex p-5 text-2xl font-medium">
       <span class=""> Welcome, {{ clientsInfo.name }}</span>
     </div>
     <el-skeleton v-else :rows="0" animated />

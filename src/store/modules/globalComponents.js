@@ -76,6 +76,7 @@ const state = () => ({
       modalTerms: false,
       modalAddAnnuityIndex: false,
       modalInvestmentPackage: false,
+      addChildOpportunity: false,
     },
   },
   sortMembers: {
@@ -89,6 +90,7 @@ const state = () => ({
   docShare: null,
   contact: null,
   previewUrl: null,
+  opportunityId: null,
   onlyMyMember: false,
   ownerMember: null,
 })
@@ -197,6 +199,10 @@ const mutations = {
 
   setOwnerMember(state, value) {
     state.ownerMember = value
+  },
+
+  setOpportunityId(state, value) {
+    state.opportunityId = value
   },
 }
 

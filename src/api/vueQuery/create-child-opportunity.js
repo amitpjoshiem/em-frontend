@@ -1,6 +1,6 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function createOpportunity(data) {
+function createChildOpportunity(data) {
   return fetcher({
     url: `/salesforce/child_opportunity`,
     data,
@@ -8,4 +8,4 @@ function createOpportunity(data) {
   })
 }
 
-export { createOpportunity }
+export { createChildOpportunity }

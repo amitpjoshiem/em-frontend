@@ -78,7 +78,7 @@ import { useOpportunityInit } from '@/api/use-opportunity-init.js'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
 import { useUserProfile } from '@/api/use-user-profile.js'
-import { createOpportunity } from '@/api/vueQuery/create-opportunity'
+import { createChildOpportunity } from '@/api/vueQuery/create-child-opportunity'
 import { useMutation } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/opportunity.js'
@@ -102,7 +102,7 @@ export default {
 
     const userFilter = 'last_name;first_name'
 
-    const { mutateAsync: addOpportunity, isLoadingAddOpportunity } = useMutation(createOpportunity)
+    const { mutateAsync: addOpportunity, isLoadingAddOpportunity } = useMutation(createChildOpportunity)
     const { isLoading: isLoadingProspectDetails, data: prospectDetails } = useProspectDetails(id)
     const { isLoading: isLoadingInitOpportunity, data: initOpportunity } = useOpportunityInit()
     const { isLoading: isLoadingUserProfile, data: userProfile } = useUserProfile(userFilter)
