@@ -66,6 +66,7 @@ const state = () => ({
       shareFileEmailDialog: false,
       prewievPdf: false,
       moreOtherInfo: false,
+      moreOwnerInfo: false,
       changePhone: false,
       exportSucces: false,
       modalContact: false,
@@ -90,6 +91,8 @@ const state = () => ({
   contact: null,
   previewUrl: null,
   opportunityId: null,
+  onlyMyMember: false,
+  ownerMember: null,
 })
 
 const mutations = {
@@ -188,6 +191,14 @@ const mutations = {
 
   setPreviewUrlPdf(state, value) {
     state.previewUrl = value
+  },
+
+  setOnlyMyMember(state, value) {
+    state.onlyMyMember = value
+  },
+
+  setOwnerMember(state, value) {
+    state.ownerMember = value
   },
 
   setOpportunityId(state, value) {

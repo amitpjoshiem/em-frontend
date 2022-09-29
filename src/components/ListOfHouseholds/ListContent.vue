@@ -1,7 +1,7 @@
 <template>
   <div class="border border-color-grey rounded-t-lg">
     <div class="flex p-5 justify-between">
-      <div class="flex">
+      <div class="flex items-center">
         <TabAll v-if="visibleTab.includes('all')" :count="!isLoading ? data.count.all : 0" :is-loading="isLoading" />
         <TabOpportunities
           v-if="visibleTab.includes('opportunities')"
@@ -29,7 +29,8 @@
           :count="!isLoading ? data.leads.inactive : 0"
         />
       </div>
-      <div class="flex">
+      <div class="flex items-center">
+        <ListOfHouseholdsFilter v-if="visibleTab.includes('opportunities')" class="pr-2" />
         <SwdItemsPerPage :destination="'listOfHouseholds'" />
       </div>
     </div>
@@ -47,6 +48,7 @@ import TabActiveLeads from './Tabs/TabActiveLeads.vue'
 import TabDeactivatedLeads from './Tabs/TabDeactivatedLeads.vue'
 import { computed } from 'vue'
 import { useFetchStatsMembers } from '@/api/use-fetch-stats-members.js'
+import ListOfHouseholdsFilter from './ListOfHouseholdsFilter.vue'
 
 export default {
   name: 'ListContent',
@@ -57,6 +59,7 @@ export default {
     TabAllLeads,
     TabActiveLeads,
     TabDeactivatedLeads,
+    ListOfHouseholdsFilter,
   },
   props: {
     visibleTab: {

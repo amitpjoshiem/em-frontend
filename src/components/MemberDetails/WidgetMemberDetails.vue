@@ -45,6 +45,18 @@
       </div>
       <div class="flex justify-between pb-3 pt-3 border-t border-white">
         <div class="flex items-center">
+          <span class="pr-2 text-xs text-primary font-semibold">Advisor</span>
+          <el-icon class="cursor-pointer" @click="moreInfoOwner">
+            <InfoFilled color="#66B6FF" />
+          </el-icon>
+        </div>
+        <div class="text-sm">
+          <span class="text-main pr-2">{{ owner.value.last_name + ' ' + owner.value.first_name }}</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between pb-3">
+        <div class="flex items-center">
           <span class="w-6 h-6 rounded-md flex justify-center items-center bg-main-orange">
             <InlineSvg :src="IconProspectAge" />
           </span>
@@ -97,7 +109,7 @@
         </div>
       </el-form>
 
-      <div v-if="member.type === 'prospect'" class="flex justify-between pt-8">
+      <div v-if="member.type === 'prospect'" class="flex justify-between pt-3">
         <SwdButton primary small class="mr-2" @click="convert">Convert to client</SwdButton>
 
         <router-link :to="{ name: 'blueprint-report', params: { id: member.id } }">
@@ -110,6 +122,7 @@
         </router-link>
       </div>
     </template>
+    <ModalMemberDetailsOwner :owner="owner" />
   </div>
 </template>
 
@@ -126,24 +139,34 @@ import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { convertToClient } from '@/api/vueQuery/convert-to-client'
 import { ElMessageBox } from 'element-plus'
 import { User, Cellphone } from '@element-plus/icons-vue'
+import { InfoFilled } from '@element-plus/icons-vue'
+import ModalMemberDetailsOwner from './ModalMemberDetailsOwner.vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'WidgetMemberDetails',
   components: {
     User,
     Cellphone,
+    InfoFilled,
+    ModalMemberDetailsOwner,
   },
   setup() {
     const route = useRoute()
     const memberId = route.params.id
+    const store = useStore()
 
     const {
       isLoading: isLoadingProspectDetails,
       isError: isErrorProspectDetails,
       data: member,
       updateMemberInfo,
-      other,
+      owner,
     } = useProspectDetails()
+
+    const { isLoading: isLoadingUpdate, mutateAsync: updateMember } = useMutation(updateMembers)
+
+    const { isLoading, isFetching, data, error, mutateAsync: convertClient } = useMutation(convertToClient)
 
     const optionsCurrencyInput = {
       currency: 'USD',
@@ -156,10 +179,6 @@ export default {
       total_net_worth: '',
       goal: '',
     })
-
-    const { isLoading: isLoadingUpdate, mutateAsync: updateMember } = useMutation(updateMembers)
-
-    const { isLoading, isFetching, data, error, mutateAsync: convertClient } = useMutation(convertToClient)
 
     watchEffect(() => {
       if (isLoadingProspectDetails.value === false && !isErrorProspectDetails.value) {
@@ -211,6 +230,13 @@ export default {
       }
     }
 
+    const moreInfoOwner = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'moreOwnerInfo',
+        value: true,
+      })
+    }
+
     return {
       IconProspectAge,
       IconTotal,
@@ -231,7 +257,8 @@ export default {
       isErrorProspectDetails,
       member,
       updateMemberInfo,
-      other,
+      owner,
+      moreInfoOwner,
     }
   },
 }
