@@ -18,7 +18,7 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
     return undefined
   })
   const onlyMy = computed(() => store.state.globalComponents.onlyMyMember)
-  const ownerIdMember = computed(() => store.state.globalComponents.ownerIdMember)
+  const ownerIdMember = computed(() => store.state.globalComponents.ownerMember?.id)
 
   const reactiveType = ref(type)
   const reactiveLimit = ref(limit)

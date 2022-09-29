@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import { useSearchUsers } from '@/api/use-search-users.js'
 import { useStore } from 'vuex'
@@ -55,6 +55,16 @@ export default {
       { enabled: false }
     )
 
+    onMounted(async () => {
+      if (store.state.globalComponents.onlyMyMember === 'my') {
+        ruleForm.owner = true
+      }
+
+      if (store.state.globalComponents.ownerMember?.name) {
+        state.value = store.state.globalComponents.ownerMember.name
+      }
+    })
+
     const querySearchAsync = async (_, callback) => {
       if (state.value.length > 2) {
         refetch
@@ -75,7 +85,7 @@ export default {
       if (ruleForm.owner) {
         state.value = ''
         store.commit('globalComponents/setOnlyMyMember', 'my')
-        store.commit('globalComponents/setOwnerIdMember', '')
+        store.commit('globalComponents/setOwnerMember', null)
       }
 
       if (!ruleForm.owner) {
@@ -86,12 +96,12 @@ export default {
     const handleSelect = (item) => {
       state.value = item.name
       ruleForm.owner = false
-      store.commit('globalComponents/setOwnerIdMember', item.id)
+      store.commit('globalComponents/setOwnerMember', item)
       store.commit('globalComponents/setOnlyMyMember', 'selected')
     }
 
     const handleClear = () => {
-      store.commit('globalComponents/setOwnerIdMember', '')
+      store.commit('globalComponents/setOwnerMember', null)
       store.commit('globalComponents/setOnlyMyMember', '')
     }
 

@@ -90,7 +90,7 @@ const state = () => ({
   contact: null,
   previewUrl: null,
   onlyMyMember: false,
-  ownerIdMember: '',
+  ownerMember: null,
 })
 
 const mutations = {
@@ -195,8 +195,8 @@ const mutations = {
     state.onlyMyMember = value
   },
 
-  setOwnerIdMember(state, value) {
-    state.ownerIdMember = value
+  setOwnerMember(state, value) {
+    state.ownerMember = value
   },
 }
 
