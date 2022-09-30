@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-end mb-4">
-    <SwdButton primary v-if="$can('client', 'all')" small :disabled="disabledSaveBtn" @click="edit">Edit</SwdButton>
+    <SwdButton v-if="$can('client', 'all')" primary small @click="edit">Edit</SwdButton>
   </div>
   <div v-if="!isFetchingAdvisor && !isFetchingClient">
     <div v-if="data.value?.status === 'no_documents'" class="flex">
@@ -25,13 +25,14 @@
           </div>
           <div class="flex justify-end sm:block">
             <SwdButton
-              v-if="item.extension === 'PDF'"
+              v-if="item.extension === 'pdf'"
               class="mr-5"
               primary
               small
               @click="handlePictureCardPreview(item.url)"
-              >Prewiev</SwdButton
             >
+              Prewiev
+            </SwdButton>
           </div>
         </div>
       </el-card>

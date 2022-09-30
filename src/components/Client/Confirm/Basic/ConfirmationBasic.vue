@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isFetchingMember">
     <div v-if="$can('client', 'all')" class="flex justify-end mb-4">
-      <SwdButton primary small :disabled="disabledSaveBtn" @click="edit">Edit</SwdButton>
+      <SwdButton primary small @click="edit">Edit</SwdButton>
     </div>
     <el-card class="mb-4 w-full sm:p-5">
       <div>
