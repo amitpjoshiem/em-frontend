@@ -2,7 +2,7 @@
   <div>
     <div v-if="!isLoadingExpense">
       <div v-if="$can('client', 'all')" class="flex justify-end mb-4">
-        <SwdButton primary small :disabled="disabledSaveBtn" @click="edit">Edit</SwdButton>
+        <SwdButton primary small @click="edit">Edit</SwdButton>
       </div>
       <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
         <div class="hidden pb-2 mt-8 md:flex">

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$can('client', 'all')" class="flex justify-end mb-4">
-      <SwdButton primary small :disabled="disabledSaveBtn" @click="edit">Edit</SwdButton>
+      <SwdButton primary small @click="edit">Edit</SwdButton>
     </div>
     <div v-if="!isAssetsLoading && !isAssetsSchemaLoading">
       <el-card v-for="(block, indexGroup) in assetsSchema.data" :key="indexGroup" class="rounded-md mb-10">
