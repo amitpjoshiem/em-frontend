@@ -3,7 +3,13 @@
   <SwdErrorBlock v-else-if="isError" />
   <UsersListTable v-else-if="data" :users-list="data" />
   <div class="flex items-center justify-center border-color-grey py-6">
-    <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
+    <div class="w-3/12" />
+    <div class="w-6/12 flex justify-center">
+      <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
+    </div>
+    <div class="w-3/12 flex justify-end">
+      <SwdItemsPerPage :destination="'listOfHouseholds'" />
+    </div>
   </div>
 </template>
 
