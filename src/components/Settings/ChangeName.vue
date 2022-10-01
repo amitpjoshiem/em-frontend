@@ -8,13 +8,13 @@
     <template #contentDialog>
       <el-form v-if="data.isShowForm" ref="form" :model="ruleForm" :rules="rules" label-position="top">
         <el-form-item label="First name" prop="first_name" class="w-full mb-4">
-          <el-input v-model="ruleForm.first_name" placeholder="Enter first name" />
+          <el-input v-model="ruleForm.first_name" placeholder="Enter first name" @keyup.enter="submit" />
         </el-form-item>
         <el-form-item label="Last name" prop="last_name" class="w-full">
-          <el-input v-model="ruleForm.last_name" placeholder="Enter last name" />
+          <el-input v-model="ruleForm.last_name" placeholder="Enter last name" @keyup.enter="submit" />
         </el-form-item>
-        <div class="pt-3 text-right">
-          <SwdButton primary main :disabled="isLoading" class="w-2/12" @click="saveName">
+        <div class="pt-3 flex justify-end">
+          <SwdButton primary main :disabled="isLoading" class="w-3/12" @click="submit">
             <SwdSpinner v-show="isLoading" class="mr-2" />
             Save
           </SwdButton>
@@ -66,7 +66,7 @@ export default {
       }
     })
 
-    const saveName = async (e) => {
+    const submit = async (e) => {
       e.preventDefault()
       changeUserNameProfile({ form: ruleForm, id: user.value.id })
         .then(() => {
@@ -98,7 +98,7 @@ export default {
       isFetching,
       data,
       error,
-      saveName,
+      submit,
       IconPencil,
       isLoadingUserProfile,
       isErrorUserProfile,
