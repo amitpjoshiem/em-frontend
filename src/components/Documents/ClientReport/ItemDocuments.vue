@@ -8,26 +8,21 @@
         </div>
       </div>
     </div>
-    <div class="flex w-5/12 justify-end">
-      <SwdButton v-if="document.status === 'process'" class="ml-2" primary main :`disabled="true">
+    <div class="flex w-3/12 justify-end">
+      <SwdButton v-if="document.status === 'process'" class="ml-2" primary small :disabled="true">
         <SwdSpinner class="mr-2" />
         Processing
-        <SwdSpinner class="mr-2" />
       </SwdButton>
-      <el-button
+      <SwdButton
         v-if="document.status === 'success' && document.type === 'pdf'"
-        type="primary"
-        size="small"
-        plain
+        primary
+        small
         @click="handlePictureCardPreview(document)"
       >
         Prewiev
-      </el-button>
-      <SwdButton v-if="document.status === 'success'" primary small @click="share">Share</SwdButton>
-      <SwdButton v-if="document.status === 'success'" class="my-2" primary small @click="downloadDocuments"
-        >Download</SwdButton
-      >
-      <el-button v-if="document.status === 'error'" type="danger" size="small" plain disabled>error</el-button>
+      </SwdButton>
+      <SwdButton v-if="document.status === 'success'" class="mx-4" primary small @click="share">Share</SwdButton>
+      <SwdButton v-if="document.status === 'success'" primary small @click="downloadDocuments"> Download </SwdButton>
     </div>
   </div>
 </template>
