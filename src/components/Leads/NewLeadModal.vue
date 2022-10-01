@@ -3,14 +3,14 @@
     <div>
       <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
         <el-form-item label="Name" prop="name" class="w-full mb-4">
-          <el-input v-model="ruleForm.name" placeholder="Enter first name" />
+          <el-input v-model="ruleForm.name" placeholder="Enter first name" @keyup.enter="submit" />
         </el-form-item>
         <el-form-item label="Email" prop="email" class="w-full">
-          <el-input v-model="ruleForm.email" placeholder="Enter email" />
+          <el-input v-model="ruleForm.email" placeholder="Enter email" @keyup.enter="submit" />
         </el-form-item>
         <div class="pt-5 flex justify-end">
           <SwdButton primary main class="mr-2 w-28" @click="closeDialog">Close</SwdButton>
-          <SwdButton primary main class="w-28" :disabled="isLoading" @click="sendLink">
+          <SwdButton primary main class="w-28" :disabled="isLoading" @click="submit">
             <SwdSpinner v-if="isLoading" />
             Send
           </SwdButton>
@@ -58,7 +58,7 @@ export default {
       ruleForm.email = ''
     }
 
-    const sendLink = (e) => {
+    const submit = (e) => {
       e.preventDefault()
       form.value.validate(async (valid) => {
         if (valid) {
@@ -83,7 +83,7 @@ export default {
       ruleForm,
       form,
       rules,
-      sendLink,
+      submit,
       isLoading,
       error,
     }
