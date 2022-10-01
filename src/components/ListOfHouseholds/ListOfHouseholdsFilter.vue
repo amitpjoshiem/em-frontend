@@ -22,8 +22,15 @@
       </template>
     </el-autocomplete>
     <el-form ref="ruleFormRef" :model="ruleForm" label-position="top">
-      <el-form-item label="Only my" prop="only_my" class="mt-[-20px] ml-2">
-        <el-switch v-model="ruleForm.owner" @change="changeOwner" />
+      <el-form-item prop="only_my" class="">
+        <el-switch
+          v-model="ruleForm.owner"
+          active-text="Only my"
+          inactive-text="All"
+          class="ml-4"
+          style="--el-switch-on-color: #f58833; --el-switch-off-color: #83ccf0"
+          @change="changeOwner"
+        />
       </el-form-item>
     </el-form>
   </div>

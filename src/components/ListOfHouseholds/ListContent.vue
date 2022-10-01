@@ -31,7 +31,6 @@
       </div>
       <div class="flex items-center">
         <ListOfHouseholdsFilter v-if="visibleTab.includes('opportunities')" class="pr-2" />
-        <SwdItemsPerPage :destination="'listOfHouseholds'" />
       </div>
     </div>
     <router-view />
