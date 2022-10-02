@@ -43,19 +43,8 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-between pb-3 pt-3 border-t border-white">
-        <div class="flex items-center">
-          <span class="pr-2 text-xs text-primary font-semibold">Advisor</span>
-          <el-icon class="cursor-pointer" @click="moreInfoOwner">
-            <InfoFilled color="#66B6FF" />
-          </el-icon>
-        </div>
-        <div class="text-sm">
-          <span class="text-main pr-2">{{ owner.value.last_name + ' ' + owner.value.first_name }}</span>
-        </div>
-      </div>
 
-      <div class="flex justify-between pb-3">
+      <div class="flex justify-between pt-2 pb-2 border-t border-white">
         <div class="flex items-center">
           <span class="w-6 h-6 rounded-md flex justify-center items-center bg-main-orange">
             <InlineSvg :src="IconProspectAge" />
@@ -88,7 +77,7 @@
           </el-form-item>
         </div>
 
-        <div class="flex justify-between pt-3">
+        <div class="flex justify-between pt-2">
           <div class="flex items-center">
             <span class="w-6 h-6 rounded-md flex justify-center items-center bg-main-orange">
               <InlineSvg :src="IconGoal" />
@@ -108,6 +97,18 @@
           </el-form-item>
         </div>
       </el-form>
+
+      <div class="flex justify-between pt-3">
+        <div class="flex items-center">
+          <span class="pr-2 text-xs text-primary font-semibold">Advisor</span>
+          <el-icon class="cursor-pointer" @click="moreInfoOwner">
+            <InfoFilled color="#66B6FF" />
+          </el-icon>
+        </div>
+        <div class="text-sm">
+          <span class="text-main pr-2">{{ owner.value.last_name + ' ' + owner.value.first_name }}</span>
+        </div>
+      </div>
 
       <div v-if="member.type === 'prospect'" class="flex justify-between pt-3">
         <SwdButton primary small class="mr-2" @click="convert">Convert to client</SwdButton>
