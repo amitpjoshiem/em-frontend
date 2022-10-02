@@ -106,7 +106,9 @@
           </el-icon>
         </div>
         <div class="text-sm">
-          <span class="text-main pr-2">{{ owner.value.last_name + ' ' + owner.value.first_name }}</span>
+          <el-tag class="ml-2 cursor-pointer" @click="moreInfoOwner">
+            {{ owner.value.last_name + ' ' + owner.value.first_name }}
+          </el-tag>
         </div>
       </div>
 
