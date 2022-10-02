@@ -44,8 +44,8 @@
         <div class="flex justify-end">
           <SwdButton info main @click="closeDialog">Cancel</SwdButton>
           <SwdButton class="ml-2" primary main :disabled="confirmBtnDisabled" @click="confirm">
-            <SwdSpinner v-show="confirmBtnDisabled" class="mr-2" />
-            Save
+            <SwdSpinner v-show="confirmBtnLoading" class="mr-2" />
+            Share
           </SwdButton>
         </div>
       </span>
@@ -111,15 +111,23 @@ export default defineComponent({
     })
 
     const handleClose = (done) => {
-      ElMessageBox.confirm('Are you sure to close this dialog?')
-        .then(() => {
-          done(closeDialog())
-        })
-        .catch(() => {})
+      if (state.dynamicTags.length) {
+        ElMessageBox.confirm('Are you sure to close this dialog?')
+          .then(() => {
+            done(closeDialog())
+          })
+          .catch(() => {})
+      } else {
+        done(closeDialog())
+      }
     }
 
     const confirmBtnDisabled = computed(() => {
       if (tabsValue.value === 'email' && !state.dynamicTags.length) return true
+      return loadingSendlueprintReport.value || loadingSendlClientReport.value || loadingSendlReportSalesForce.value
+    })
+
+    const confirmBtnLoading = computed(() => {
       return loadingSendlueprintReport.value || loadingSendlClientReport.value || loadingSendlReportSalesForce.value
     })
 
@@ -153,7 +161,7 @@ export default defineComponent({
       }
       if (tabsValue.value === 'SF') {
         const data = {
-          media_id: docShare.value.media_id,
+          media_id: docShare.value.id,
         }
         const res = await sendReportSalesForce({ data, id: route.params.id })
         if (!('error' in res)) {
@@ -244,6 +252,7 @@ export default defineComponent({
       sendReportSalesForce,
       loadingSendlReportSalesForce,
       docShare,
+      confirmBtnLoading,
     }
   },
 })
