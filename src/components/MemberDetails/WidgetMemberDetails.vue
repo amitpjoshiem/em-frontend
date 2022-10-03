@@ -101,13 +101,13 @@
       <div class="flex justify-between pt-3">
         <div class="flex items-center">
           <span class="pr-2 text-xs text-primary font-semibold">Advisor</span>
-          <el-icon class="cursor-pointer" @click="moreInfoOwner">
-            <InfoFilled color="#66B6FF" />
-          </el-icon>
         </div>
         <div class="text-sm">
           <el-tag class="ml-2 cursor-pointer" @click="moreInfoOwner">
             {{ owner.value.last_name + ' ' + owner.value.first_name }}
+            <el-icon>
+              <InfoFilled color="#66B6FF" />
+            </el-icon>
           </el-tag>
         </div>
       </div>

@@ -49,9 +49,7 @@
         <p>No recently added documents</p>
       </div>
       <div class="flex justify-end">
-        <div class="pr-3">
-          <Button default-gray-btn text-btn="Back" :disabled="isLoadingUpdateSteps" @click="backStep" />
-        </div>
+        <SwdButton info main class="mr-4" @click="backStep">Back</SwdButton>
         <SwdButton primary main :disabled="disabledSaveBtn" @click="saveStep">Save</SwdButton>
       </div>
     </div>
@@ -64,18 +62,13 @@ import { computed, reactive, ref, watchEffect } from 'vue'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-
-import SwdUpload from '@/components/Global/SwdUpload.vue'
-
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
-
 import { useGetTile } from './hooks/use-get-title-hook'
-
 import { useAlert } from '@/utils/use-alert'
-
+import SwdUpload from '@/components/Global/SwdUpload.vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
@@ -87,6 +80,16 @@ export default {
     const router = useRouter()
     const store = useStore()
     const queryClient = useQueryClient()
+    const upload = ref(null)
+    const inChangeFile = ref(false)
+
+    const { getTitle } = useGetTile(collection)
+
+    const state = reactive({
+      file: '',
+      uploadRef: null,
+      availabilityDocuments: false,
+    })
 
     const collection = attrs.context
 
@@ -97,17 +100,6 @@ export default {
     const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
     const { mutateAsync: deleteDocument } = useMutation(deleteMedia)
     const { mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
-
-    const { getTitle } = useGetTile(collection)
-
-    const upload = ref(null)
-    const inChangeFile = ref(false)
-
-    const state = reactive({
-      file: '',
-      uploadRef: null,
-      availabilityDocuments: false,
-    })
 
     watchEffect(() => {
       if (isFetching.value === false && data.value.status === 'no_documents') state.availabilityDocuments = true
@@ -165,6 +157,7 @@ export default {
         queryClient.invalidateQueries(['clientsDocuments', collection])
       }
     }
+
     const handleSuccess = async (res) => {
       const data = { uuids: [res.data.uuid] }
       const response = await uploadDoc({ collection, data })
