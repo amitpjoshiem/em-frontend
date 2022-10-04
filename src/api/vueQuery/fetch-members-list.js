@@ -8,7 +8,7 @@ function fetchMembersList({ queryKey }) {
   const sortedBy = queryKey[1].reactiveSortedBy ? queryKey[1].reactiveSortedBy : undefined
   const page = queryKey[1].reactivePage ? queryKey[1].reactivePage.page : ''
   const status = queryKey[1].reactiveStatus ? queryKey[1].reactiveStatus : ''
-  const owner = queryKey[1].reactiveOnlyMy ? queryKey[1].reactiveOnlyMy : ''
+  const owner = queryKey[1].reactiveOnlyMyMember ? queryKey[1].reactiveOnlyMyMember : ''
   const owner_id = queryKey[1].reactiveOwnerIdMember ? queryKey[1].reactiveOwnerIdMember : ''
 
   let search = undefined

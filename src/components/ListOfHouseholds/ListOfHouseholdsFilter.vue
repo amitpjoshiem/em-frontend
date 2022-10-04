@@ -22,7 +22,7 @@
       </template>
     </el-autocomplete>
     <el-form ref="ruleFormRef" :model="ruleForm" label-position="top">
-      <el-form-item prop="only_my" class="">
+      <el-form-item prop="only_my">
         <el-switch
           v-model="ruleForm.owner"
           active-text="Only my"
@@ -47,7 +47,14 @@ export default {
   components: {
     Search,
   },
-  setup() {
+  props: {
+    listType: {
+      type: String,
+      required: true,
+      default: 'member',
+    },
+  },
+  setup(props) {
     const store = useStore()
     const state = ref('')
 
@@ -63,12 +70,24 @@ export default {
     )
 
     onMounted(async () => {
-      if (store.state.globalComponents.onlyMyMember === 'my') {
-        ruleForm.owner = true
+      if (props.listType === 'member') {
+        if (store.state.globalComponents.onlyMyMember === 'my') {
+          ruleForm.owner = true
+        }
+
+        if (store.state.globalComponents.ownerMember?.name) {
+          state.value = store.state.globalComponents.ownerMember.name
+        }
       }
 
-      if (store.state.globalComponents.ownerMember?.name) {
-        state.value = store.state.globalComponents.ownerMember.name
+      if (props.listType === 'lead') {
+        if (store.state.globalComponents.onlyMyLead === 'my') {
+          ruleForm.owner = true
+        }
+
+        if (store.state.globalComponents.ownerLead?.name) {
+          state.value = store.state.globalComponents.ownerLead.name
+        }
       }
     })
 
@@ -89,27 +108,52 @@ export default {
     }
 
     const changeOwner = () => {
-      if (ruleForm.owner) {
-        state.value = ''
-        store.commit('globalComponents/setOnlyMyMember', 'my')
-        store.commit('globalComponents/setOwnerMember', null)
-      }
+      if (props.listType === 'member') {
+        if (ruleForm.owner) {
+          state.value = ''
+          store.commit('globalComponents/setOnlyMyMember', 'my')
+          store.commit('globalComponents/setOwnerMember', null)
+        }
 
-      if (!ruleForm.owner) {
-        store.commit('globalComponents/setOnlyMyMember', '')
+        if (!ruleForm.owner) {
+          store.commit('globalComponents/setOnlyMyMember', '')
+        }
+      }
+      if (props.listType === 'lead') {
+        if (ruleForm.owner) {
+          state.value = ''
+          store.commit('globalComponents/setOnlyMyLead', 'my')
+          store.commit('globalComponents/setOwnerLead', null)
+        }
+
+        if (!ruleForm.owner) {
+          store.commit('globalComponents/setOnlyMyLead', '')
+        }
       }
     }
 
     const handleSelect = (item) => {
       state.value = item.name
       ruleForm.owner = false
-      store.commit('globalComponents/setOwnerMember', item)
-      store.commit('globalComponents/setOnlyMyMember', 'selected')
+      if (props.listType === 'member') {
+        store.commit('globalComponents/setOwnerMember', item)
+        store.commit('globalComponents/setOnlyMyMember', 'selected')
+      }
+      if (props.listType === 'lead') {
+        store.commit('globalComponents/setOwnerLead', item)
+        store.commit('globalComponents/setOnlyMyLead', 'selected')
+      }
     }
 
     const handleClear = () => {
-      store.commit('globalComponents/setOwnerMember', null)
-      store.commit('globalComponents/setOnlyMyMember', '')
+      if (props.listType === 'member') {
+        store.commit('globalComponents/setOwnerMember', null)
+        store.commit('globalComponents/setOnlyMyMember', '')
+      }
+      if (props.listType === 'lead') {
+        store.commit('globalComponents/setOwnerLead', null)
+        store.commit('globalComponents/setOnlyMyLead', '')
+      }
     }
 
     return {

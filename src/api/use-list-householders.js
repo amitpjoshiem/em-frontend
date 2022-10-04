@@ -17,8 +17,24 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
     if (store.state.globalComponents.sortMembers.sortedBy === 'descending') return 'desc'
     return undefined
   })
-  const onlyMy = computed(() => store.state.globalComponents.onlyMyMember)
-  const ownerIdMember = computed(() => store.state.globalComponents.ownerMember?.id)
+  const onlyMy = computed(() => {
+    if (type === 'client,prospect') {
+      return store.state.globalComponents.onlyMyMember
+    }
+    if (type === 'lead') {
+      return store.state.globalComponents.onlyMyLead
+    }
+    return ''
+  })
+  const ownerIdMember = computed(() => {
+    if (type === 'client,prospect') {
+      store.state.globalComponents.ownerMember?.id
+    }
+    if (type === 'lead') {
+      return store.state.globalComponents.ownerLead?.id
+    }
+    return ''
+  })
 
   const reactiveType = ref(type)
   const reactiveLimit = ref(limit)
@@ -27,7 +43,7 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
   const reactivePage = ref(page)
   const reactiveStatus = ref(status)
   const reactiveInclude = ref(include)
-  const reactiveOnlyMy = ref(onlyMy)
+  const reactiveOnlyMyMember = ref(onlyMy)
   const reactiveOwnerIdMember = ref(ownerIdMember)
 
   const queryKey = reactive([
@@ -40,7 +56,7 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
       reactivePage,
       reactiveStatus,
       reactiveInclude,
-      reactiveOnlyMy,
+      reactiveOnlyMyMember,
       reactiveOwnerIdMember,
     },
   ])
