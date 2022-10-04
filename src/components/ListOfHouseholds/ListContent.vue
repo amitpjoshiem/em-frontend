@@ -30,7 +30,7 @@
         />
       </div>
       <div class="flex items-center">
-        <ListOfHouseholdsFilter v-if="visibleTab.includes('opportunities')" class="pr-2" />
+        <ListOfHouseholdsFilter class="pr-2" :list-type="listType" />
       </div>
     </div>
     <router-view />
@@ -45,9 +45,9 @@ import TabClients from './Tabs/TabClients.vue'
 import TabAllLeads from './Tabs/TabAllLeads.vue'
 import TabActiveLeads from './Tabs/TabActiveLeads.vue'
 import TabDeactivatedLeads from './Tabs/TabDeactivatedLeads.vue'
+import ListOfHouseholdsFilter from './ListOfHouseholdsFilter.vue'
 import { computed } from 'vue'
 import { useFetchStatsMembers } from '@/api/use-fetch-stats-members.js'
-import ListOfHouseholdsFilter from './ListOfHouseholdsFilter.vue'
 
 export default {
   name: 'ListContent',
@@ -78,6 +78,11 @@ export default {
       return 'lead'
     })
 
+    const listType = computed(() => {
+      if (props.destination === 'households') return 'member'
+      return 'lead'
+    })
+
     const { isLoading, isFetching, isError, data } = useFetchStatsMembers(getMembersStats)
 
     return {
@@ -86,6 +91,7 @@ export default {
       isFetching,
       isError,
       data,
+      listType,
     }
   },
 }

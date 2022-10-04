@@ -93,6 +93,8 @@ const state = () => ({
   opportunityId: null,
   onlyMyMember: false,
   ownerMember: null,
+  onlyMyLead: false,
+  ownerLead: null,
 })
 
 const mutations = {
@@ -199,6 +201,14 @@ const mutations = {
 
   setOwnerMember(state, value) {
     state.ownerMember = value
+  },
+
+  setOnlyMyLead(state, value) {
+    state.onlyMyLead = value
+  },
+
+  setOwnerLead(state, value) {
+    state.ownerLead = value
   },
 
   setOpportunityId(state, value) {
