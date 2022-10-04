@@ -69,7 +69,13 @@ export default {
         destination: 'shareFileEmailDialog',
         value: true,
       })
-      store.commit('globalComponents/setPdfRegion', 'client-report')
+
+      if (route.query.type === 'blueprint') {
+        store.commit('globalComponents/setPdfRegion', 'blue-report')
+      }
+      if (route.query.type === 'client') {
+        store.commit('globalComponents/setPdfRegion', 'client-report')
+      }
       store.commit('globalComponents/setDocShare', props.document)
     }
 

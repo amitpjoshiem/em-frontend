@@ -45,7 +45,6 @@
           <SwdButton info main @click="closeDialog">Cancel</SwdButton>
           <SwdButton class="ml-2" primary main :disabled="confirmBtnDisabled" @click="confirm">
             <SwdSpinner v-show="confirmBtnLoading" class="mr-2" />
-            Share
           </SwdButton>
         </div>
       </span>
@@ -142,7 +141,7 @@ export default defineComponent({
           emails: state.dynamicTags,
         }
         if (pdfRegion.value === 'blue-report') {
-          resSendReport = await sendBlueprintReportEmail({ data, member_id: route.params.id })
+          resSendReport = await sendBlueprintReportEmail({ data, doc_id: docShare.value.id })
         }
 
         if (pdfRegion.value === 'client-report') {
@@ -161,7 +160,7 @@ export default defineComponent({
       }
       if (tabsValue.value === 'SF') {
         const data = {
-          media_id: docShare.value.id,
+          media_id: docShare.value.media_id,
         }
         const res = await sendReportSalesForce({ data, id: route.params.id })
         if (!('error' in res)) {

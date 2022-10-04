@@ -1,8 +1,8 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function sendBlueprintReport({ data, member_id }) {
+function sendBlueprintReport({ data, doc_id }) {
   return fetcher({
-    url: `/blueprint/pdf/share/${member_id}`,
+    url: `/blueprint/share/${doc_id}`,
     data,
     options: { method: 'POST' },
   })
