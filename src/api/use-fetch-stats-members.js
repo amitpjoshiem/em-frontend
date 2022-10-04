@@ -6,8 +6,6 @@ import { useStore } from 'vuex'
 export const useFetchStatsMembers = (type) => {
   const store = useStore()
 
-  console.log('type - ', type.value)
-
   const onlyMy = computed(() => {
     if (type.value === 'client,prospect') {
       console.log('=====')
