@@ -74,7 +74,7 @@ export default {
   },
   setup(props) {
     const getMembersStats = computed(() => {
-      if (props.destination === 'households') return 'prospect,client'
+      if (props.destination === 'households') return 'client,prospect'
       return 'lead'
     })
 
