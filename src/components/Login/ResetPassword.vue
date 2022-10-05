@@ -13,7 +13,7 @@
               type="password"
               autocomplete="off"
               placeholder="Please input password"
-              @click="submit"
+              @keyup.enter="submit"
             />
           </el-form-item>
           <el-form-item label="Confirm" prop="password_confirmation" class="mt-2">
@@ -22,7 +22,7 @@
               type="password"
               autocomplete="off"
               placeholder="Please input password"
-              @click="submit"
+              @keyup.enter="submit"
             />
           </el-form-item>
           <el-form-item class="my-6">
