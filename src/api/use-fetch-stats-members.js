@@ -8,7 +8,6 @@ export const useFetchStatsMembers = (type) => {
 
   const onlyMy = computed(() => {
     if (type.value === 'client,prospect') {
-      console.log('=====')
       return store.state.globalComponents.onlyMyMember
     }
     if (type.value === 'lead') {

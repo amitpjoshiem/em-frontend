@@ -34,7 +34,7 @@
           >
             <template #main>
               <div class="flex my-5 w-2/12">
-                <SwdButton primary small @click="moreDocuments">Click to upload</SwdButton>
+                <SwdButton primary small>Click to upload</SwdButton>
               </div>
               <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
             </template>
