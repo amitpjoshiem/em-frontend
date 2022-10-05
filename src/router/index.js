@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import AdvisorHome from '@/layouts/AdvisorHome.vue'
-import ClientHome from '@/layouts/ClientHome.vue'
+import LeadHome from '@/layouts/LeadHome.vue'
 import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
 import AdminPanelHome from '@/layouts/AdminPanelHome.vue'
 import Settings from '@/layouts/Settings.vue'
@@ -14,16 +14,16 @@ import { useSetUpdateAbility } from '@/hooks/use-set-update-ability'
 
 const routes = [
   {
-    path: '/client',
-    name: 'client-home',
-    component: ClientHome,
+    path: '/lead',
+    name: 'lead-home',
+    component: LeadHome,
     meta: {
-      type: 'client',
+      type: 'lead',
     },
     children: [
       {
-        path: 'client-dashboard',
-        name: 'client-dashboard',
+        path: 'lead-dashboard',
+        name: 'lead-dashboard',
         component: () => import(/* webpackChunkName: "ClientDashboard" */ '../views/ClientDashboard.vue'),
       },
       {

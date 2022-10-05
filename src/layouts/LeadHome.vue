@@ -13,7 +13,7 @@ import SwdSideBar from '@/components/Global/SwdSideBar.vue'
 import Header from '@/components/Header/Header.vue'
 
 export default {
-  name: 'ClientHome',
+  name: 'LeadHome',
 
   components: {
     SwdSideBar,

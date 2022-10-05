@@ -153,6 +153,10 @@ export default {
         customHeader['x-user'] = store.state.globalComponents.clientId
       }
 
+      if (type === 'lead') {
+        customHeader['x-user'] = store.state.globalComponents.leadId
+      }
+
       const token = tokenStorage.getByKey('access_token')
 
       return { Authorization: `Bearer ${token}`, ...customHeader }
