@@ -172,7 +172,9 @@ export default {
         clientsInfo.value.steps.completed_financial_fact_finder &&
         clientsInfo.value.steps.investment_and_retirement_accounts &&
         clientsInfo.value.steps.life_insurance_annuity_and_long_terms_care_policies &&
-        clientsInfo.value.steps.social_security_information
+        clientsInfo.value.steps.social_security_information &&
+        clientsInfo.value.steps.property_casualty &&
+        clientsInfo.value.steps.medicare_details
       ) {
         return false
       }
