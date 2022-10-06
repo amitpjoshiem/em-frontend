@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-end mb-4">
-    <SwdButton v-if="$can('client', 'all')" primary small @click="edit">Edit</SwdButton>
+    <SwdButton v-if="$can('lead', 'all')" primary small @click="edit">Edit</SwdButton>
   </div>
   <div v-if="!isFetchingAdvisor && !isFetchingClient">
     <div v-if="data.value?.status === 'no_documents'" class="flex">

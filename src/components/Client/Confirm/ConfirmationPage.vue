@@ -1,6 +1,6 @@
 <template>
   <div class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto lg:w-[960px]">
-    <SwdSubHeader title="Confirmation Information" :with-back-btn="!$can('client', 'all')" />
+    <SwdSubHeader title="Confirmation Information" :with-back-btn="!$can('lead', 'all')" />
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
       <div class="flex items-center mb-5">
@@ -75,7 +75,7 @@
       <ListDocumentsClient doc-collections="property_casualty" page="property-casualty" />
     </div>
 
-    <div v-if="$can('client', 'all')" class="text-center font-semibold pt-4">
+    <div v-if="$can('lead', 'all')" class="text-center font-semibold pt-4">
       <span>Please fill out all the required information to proceed.</span>
     </div>
 
@@ -85,7 +85,7 @@
         Save
       </SwdButton>
     </div>
-    <div v-if="$can('client', 'all')" class="flex justify-end mt-4 mb-4">
+    <div v-if="$can('lead', 'all')" class="flex justify-end mt-4 mb-4">
       <div class="pr-3">
         <Button default-gray-btn text-btn="Cancel" @click="cancel" />
       </div>
@@ -149,7 +149,7 @@ export default {
     }
 
     const cancel = () => {
-      router.push({ name: 'client-dashboard' })
+      router.push({ name: 'lead-dashboard' })
     }
 
     const submit = () => {

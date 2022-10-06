@@ -909,7 +909,7 @@ export default {
           message: 'Information update successfully',
         })
         router.push({
-          name: 'client-dashboard',
+          name: 'lead-dashboard',
         })
       }
     }
