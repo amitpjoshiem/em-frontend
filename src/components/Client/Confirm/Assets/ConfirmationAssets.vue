@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$can('client', 'all')" class="flex justify-end mb-4">
+    <div v-if="$can('lead', 'all')" class="flex justify-end mb-4">
       <SwdButton primary small @click="edit">Edit</SwdButton>
     </div>
     <div v-if="!isAssetsLoading && !isAssetsSchemaLoading">

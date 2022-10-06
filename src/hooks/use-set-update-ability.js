@@ -19,6 +19,12 @@ export function useSetUpdateAbility() {
       can('client', 'read')
     }
 
+    if (role === 'lead') {
+      can('lead', 'all')
+      can('lead', 'update')
+      can('lead', 'read')
+    }
+
     if (role === 'admin') {
       can('admin', 'all')
       can('admin', 'update')

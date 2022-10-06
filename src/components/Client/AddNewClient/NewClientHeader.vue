@@ -51,7 +51,7 @@ export default {
           })
           break
         default:
-          router.push({ name: 'client-dashboard' })
+          router.push({ name: 'lead-dashboard' })
       }
     }
 
