@@ -17,7 +17,7 @@ export function useSetInit() {
       const typeUser = response.value.data.roles[0]
       const role = response.value.data.roles[0]
       const userId = response.value.data.user_id
-      const termsAndConditions = response.value.data.terms_and_conditions
+      const termsAndConditions = typeUser === 'lead' ? response.value.data.terms_and_conditions : true
       const advisorId = response.value.data.advisor_id
 
       store.commit('globalComponents/setRole', role)

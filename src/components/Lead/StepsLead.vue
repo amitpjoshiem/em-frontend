@@ -47,7 +47,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 export default {
-  name: 'StepsClient',
+  name: 'StepsLead',
   setup() {
     const store = useStore()
     const route = useRoute()

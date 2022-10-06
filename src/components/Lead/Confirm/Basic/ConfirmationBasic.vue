@@ -82,7 +82,7 @@
 <script>
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useRoute, useRouter } from 'vue-router'
-import MoreInfoAbout from '@/components/Client/AddNewClient/MoreInfoAbout.vue'
+import MoreInfoAbout from '@/components/Lead/AddLeadInformation/MoreInfoAbout.vue'
 
 export default {
   name: 'ConfirmationInformation',
