@@ -7,7 +7,7 @@ import { useStore } from 'vuex'
 import { computed } from 'vue'
 
 export default {
-  name: 'NewClientHeader',
+  name: 'NewLeadHeader',
   setup() {
     const router = useRouter()
     const store = useStore()
