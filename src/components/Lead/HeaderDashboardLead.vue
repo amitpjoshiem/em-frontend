@@ -13,7 +13,7 @@ import { useStore } from 'vuex'
 import { computed } from 'vue'
 
 export default {
-  name: 'HeaderDashboardClient',
+  name: 'HeaderDashboardLead',
   setup() {
     const store = useStore()
 

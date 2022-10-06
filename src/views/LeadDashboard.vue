@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import HeaderDashboardLead from '@/components/Client/HeaderDashboardLead.vue'
-import LeadInformation from '@/components/Client/LeadInformation.vue'
+import HeaderDashboardLead from '@/components/Lead/HeaderDashboardLead.vue'
+import LeadInformation from '@/components/Lead/LeadInformation.vue'
 
 export default {
   name: 'LeadDashboard',
