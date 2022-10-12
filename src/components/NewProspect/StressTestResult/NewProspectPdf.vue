@@ -6,13 +6,14 @@
       :show-file-list="true"
       :auto-upload="true"
       :show-file-block="true"
+      :disabled="disbaledUpload"
       @upload-change="handleChange"
       @upload-success="handleSuccess"
       @upload-mounted="bindRef"
       @open-prewiev="openPrewiev"
       @remove-media="removeMedia"
     >
-      <template #main>
+      <template v-if="!disbaledUpload" #main>
         <div class="flex my-5">
           <SwdButton primary small class="w-2/12 mr-4">Click to upload</SwdButton>
           <div class="el-upload__tip">PDF files only</div>
@@ -136,6 +137,11 @@ export default {
       return !stressTestDocument.value.data.length && !inChangeFile.value && !isFetching.value
     })
 
+    const disbaledUpload = computed(() => {
+      if (store.state.globalComponents.role === 'client') return true
+      return false
+    })
+
     return {
       IconDownRisk,
       IconUpRisk,
@@ -154,6 +160,7 @@ export default {
       removeMedia,
       handleChange,
       isShowNoDocuments,
+      disbaledUpload,
     }
   },
 }

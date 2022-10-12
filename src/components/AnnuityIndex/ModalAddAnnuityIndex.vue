@@ -32,7 +32,7 @@
       </el-form-item>
 
       <el-form-item label="License Number" prop="license_number" class="w-full mb-4">
-        <el-input v-model="ruleForm.license_number" placeholder="Enter License Number" />
+        <el-input v-model="ruleForm.license_number" placeholder="Enter License Number" type="number" />
       </el-form-item>
     </el-form>
 
