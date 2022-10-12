@@ -384,8 +384,8 @@
               </div>
               <div class="flex justify-end mt-4">
                 <SwdButton
-                  primary
                   v-if="index === ruleForm.employment_history.length - 1"
+                  primary
                   main
                   :disabled="isLoadingUpdateMember"
                   @click="addEmployment(ruleForm)"
@@ -468,17 +468,17 @@
                 </div>
                 <div class="flex justify-end mt-4">
                   <SwdButton
-                    primary
                     v-if="index === ruleForm.spouse.employment_history.length - 1"
+                    primary
                     main
                     :disabled="isLoadingUpdateMember"
-                    @click="addEmploymentSpouse()"
+                    @click="addEmploymentSpouse(ruleForm)"
                   >
                     Add job
                   </SwdButton>
-                  <el-button v-else type="danger" plain @click="removeEmploymentSpouse({ ruleForm, index })"
-                    >Remove job</el-button
-                  >
+                  <el-button v-else type="danger" plain @click="removeEmploymentSpouse({ ruleForm, index })">
+                    Remove job
+                  </el-button>
                 </div>
               </div>
             </div>

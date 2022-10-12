@@ -223,7 +223,7 @@
               <el-input
                 v-model="eh.company_name"
                 placeholder="Enter company name"
-                @change="changeCompanyNameMember(index)"
+                @change="changeCompanyNameMember({ ruleForm, index })"
               />
             </el-form-item>
 
@@ -265,9 +265,9 @@
               <InlineSvg
                 v-if="index === ruleForm.employment_history.length - 1"
                 :src="IconAdd"
-                @click="addEmployment"
+                @click="addEmployment(ruleForm)"
               />
-              <InlineSvg v-else :src="IconDelete" @click="removeEmployment(index)" />
+              <InlineSvg v-else :src="IconDelete" @click="removeEmployment({ ruleForm, index })" />
             </div>
           </el-form-item>
 
@@ -285,7 +285,7 @@
                 <el-input
                   v-model="eh.company_name"
                   placeholder="Enter company name"
-                  @change="changeCompanyNameSpouse(index)"
+                  @change="changeCompanyNameSpouse({ ruleForm, index })"
                 />
               </el-form-item>
 
@@ -322,9 +322,9 @@
                 <InlineSvg
                   v-if="index === ruleForm.spouse.employment_history.length - 1"
                   :src="IconAdd"
-                  @click="addEmploymentSpouse"
+                  @click="addEmploymentSpouse(ruleForm)"
                 />
-                <InlineSvg v-else :src="IconDelete" @click="removeEmploymentSpouse(index)" />
+                <InlineSvg v-else :src="IconDelete" @click="removeEmploymentSpouse({ ruleForm, index })" />
               </div>
             </el-form-item>
           </div>
