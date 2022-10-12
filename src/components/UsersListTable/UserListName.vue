@@ -37,7 +37,7 @@ export default {
 
     const goUser = () => {
       if (props.user.type === 'lead') {
-        store.commit('globalComponents/setClientId', props.user.client_user.id)
+        store.commit('globalComponents/setLeadId', props.user.client_user.id)
         router.push({ name: 'confirmation-page', params: { id: props.user.id } })
         return
       }
