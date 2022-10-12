@@ -1,10 +1,11 @@
 <template>
   <div class="w-8/24 border rounded-lg mr-5">
-    <div class="p-5 flex flex-col h-full justify-between">
+    <div class="p-5 flex flex-col h-full" :class="{ 'justify-between': isAvailableDocument }">
       <SwdWidgetTitle text="Past Stress Test Results" />
       <el-skeleton v-if="isLoading" :rows="2" animated class="p-5" />
       <SwdErrorBlock v-else-if="isError" />
-      <div v-else-if="isAvailableCocument" class="flex flex-col">
+
+      <div v-else-if="isAvailableDocument" class="flex flex-col">
         <div
           class="flex border-main-gray border rounded-md p-3 w-full mb-3.5 cursor-pointer"
           @click="openPrewiev(stressTestDocument.data[0].url)"
@@ -31,14 +32,22 @@
           </div>
         </div>
       </div>
-      <div v-else class="flex flex-col items-center justify-center">
+
+      <div v-else class="flex flex-col items-center justify-center h-full">
         <div class="bg-main-gray rounded-full w-12 h-12 flex flex-col items-center justify-center mb-3">
           <InlineSvg :src="IconEmptyUsers" />
         </div>
         <p class="text-main text-sm">No recently added documents</p>
       </div>
-      <SwdButton v-if="isAvailableCocument" primary small @click="moreActionStressTest">More</SwdButton>
-      <SwdButton v-if="!isAvailableCocument" primary small class="mr-2" @click="moreActionStressTest">
+
+      <SwdButton v-if="isAvailableDocument" primary small @click="moreActionStressTest">More</SwdButton>
+      <SwdButton
+        v-if="!isAvailableDocument && !$can('client', 'all')"
+        primary
+        small
+        class="mr-2"
+        @click="moreActionStressTest"
+      >
         <InlineSvg :src="IconPlus" class="mr-1.5" />
         Add
       </SwdButton>
@@ -64,7 +73,7 @@ export default {
 
     const { isLoading, isFetching, isError, data: stressTestDocument } = useFetchStressTest(id)
 
-    const isAvailableCocument = computed(() => {
+    const isAvailableDocument = computed(() => {
       return stressTestDocument.value?.data && stressTestDocument.value?.data?.length
     })
 
@@ -85,7 +94,7 @@ export default {
       isFetching,
       isError,
       stressTestDocument,
-      isAvailableCocument,
+      isAvailableDocument,
       moreActionStressTest,
       openPrewiev,
       IconEmptyUsers,

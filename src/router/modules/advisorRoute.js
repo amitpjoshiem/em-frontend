@@ -98,12 +98,12 @@ export const advisorRoute = {
 
     {
       path: 'member/:id',
-      name: 'member',
+      name: `${type}/member`,
       component: () => import(/* webpackChunkName: "MemberDetails" */ '../../views/MemberDetails.vue'),
       children: [
         {
           path: 'member-details',
-          name: 'member-details',
+          name: `${type}/member-details`,
           component: () =>
             import(/* webpackChunkName: "MemberDetails" */ '../../components/MemberDetails/MemberDetails.vue'),
         },

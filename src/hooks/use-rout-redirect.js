@@ -2,6 +2,7 @@ import { useRouter } from 'vue-router'
 
 export function useRoutRedirect() {
   const router = useRouter()
+  // const route = useRoute()
 
   const routRedirect = async ({ role, userId }) => {
     console.log('userId - ', userId)
@@ -10,7 +11,7 @@ export function useRoutRedirect() {
     if (role === 'admin') router.push({ name: 'admin-dashboard' })
     if (role === 'ceo') router.push({ name: 'ceo-dashboard' })
     if (role === 'assistant') router.push({ name: 'advisor-dashboard' })
-    if (role === 'client') router.push({ name: 'client-details', params: { id: userId } })
+    if (role === 'client') router.push({ name: `client/member-details`, params: { id: userId } })
   }
   return { routRedirect }
 }

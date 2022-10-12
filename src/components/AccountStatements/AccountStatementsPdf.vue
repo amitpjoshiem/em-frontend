@@ -15,7 +15,7 @@
       <template #main>
         <div class="my-5">
           <div class="w-2/12">
-            <SwdButton primary small @click="moreDocuments">Click to upload</SwdButton>
+            <SwdButton primary small>Click to upload</SwdButton>
           </div>
           <div class="el-upload__tip">PDF files only</div>
         </div>

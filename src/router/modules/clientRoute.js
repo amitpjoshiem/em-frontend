@@ -11,6 +11,33 @@ export const clientRoute = {
   },
   children: [
     {
+      path: 'member/:id',
+      name: `${type}/member`,
+      component: () => import(/* webpackChunkName: "MemberDetails" */ '../../views/MemberDetails.vue'),
+      children: [
+        {
+          path: 'member-details',
+          name: `${type}/member-details`,
+          component: () =>
+            import(/* webpackChunkName: "MemberDetails" */ '../../components/MemberDetails/MemberDetails.vue'),
+        },
+        {
+          path: 'annuity-index/:annuityId',
+          name: `${type}/annuity-index`,
+          component: () =>
+            import(/* webpackChunkName: "AnnuityIndex" */ '../../components/AnnuityIndex/AnnuityIndexList.vue'),
+        },
+
+        {
+          path: 'annuity-index-details/:annuityId?',
+          name: `${type}/annuity-index-details`,
+          component: () =>
+            import(/* webpackChunkName: "AnnuityIndexItem" */ '../../components/AnnuityIndex/AnnuityIndexDetails.vue'),
+        },
+      ],
+    },
+
+    {
       path: 'details/:id',
       name: 'client-details',
       component: () =>
@@ -37,13 +64,11 @@ export const clientRoute = {
       name: `${type}/blueprint-report`,
       component: () => import(/* webpackChunkName: "BlueprintReport" */ '../../components/Report/BlueprintReport.vue'),
     },
-
     {
       path: 'client-report/:id',
       name: `${type}/clientreport`,
       component: () => import(/* webpackChunkName: "Clientreport" */ '../../components/ClientReport/ClientReport.vue'),
     },
-
     {
       path: 'past-stress-test/:id',
       name: `${type}/past-stress-test`,
@@ -51,33 +76,6 @@ export const clientRoute = {
         import(
           /* webpackChunkName: "PastStressTestResults" */ '../../components/MemberDetails/PastStressTestResults.vue'
         ),
-    },
-
-    {
-      path: 'member/:id',
-      name: 'member',
-      component: () => import(/* webpackChunkName: "MemberDetails" */ '../../views/MemberDetails.vue'),
-      children: [
-        // {
-        //   path: 'member-details',
-        //   name: 'member-details',
-        //   component: () =>
-        //     import(/* webpackChunkName: "MemberDetails" */ '../../components/MemberDetails/MemberDetails.vue'),
-        // },
-        {
-          path: 'annuity-index/:annuityId',
-          name: `${type}/annuity-index`,
-          component: () =>
-            import(/* webpackChunkName: "AnnuityIndex" */ '../../components/AnnuityIndex/AnnuityIndexList.vue'),
-        },
-
-        {
-          path: 'annuity-index-details/:annuityId?',
-          name: `${type}/annuity-index-details`,
-          component: () =>
-            import(/* webpackChunkName: "AnnuityIndexItem" */ '../../components/AnnuityIndex/AnnuityIndexDetails.vue'),
-        },
-      ],
     },
   ],
 }
