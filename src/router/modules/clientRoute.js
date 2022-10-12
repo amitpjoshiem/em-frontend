@@ -36,13 +36,6 @@ export const clientRoute = {
         },
       ],
     },
-
-    {
-      path: 'details/:id',
-      name: 'client-details',
-      component: () =>
-        import(/* webpackChunkName: "MemberDetails" */ '../../components/MemberDetails/MemberDetails.vue'),
-    },
     {
       path: 'opportunity-contact/:id',
       name: `${type}/opportunity-contact`,
