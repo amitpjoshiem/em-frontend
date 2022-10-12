@@ -164,8 +164,6 @@ export default {
     const memberId = route.params.id
     const store = useStore()
 
-    // console.log('route.meta - ', route.meta)
-
     const {
       isLoading: isLoadingProspectDetails,
       isError: isErrorProspectDetails,
