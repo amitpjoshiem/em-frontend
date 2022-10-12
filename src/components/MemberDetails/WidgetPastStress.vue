@@ -37,8 +37,8 @@
         </div>
         <p class="text-main text-sm">No recently added documents</p>
       </div>
-      <SwdButton primary v-if="isAvailableCocument" small @click="moreActionStressTest">More</SwdButton>
-      <SwdButton primary v-if="!isAvailableCocument" small class="mr-2" @click="moreActionStressTest">
+      <SwdButton v-if="isAvailableCocument" primary small @click="moreActionStressTest">More</SwdButton>
+      <SwdButton v-if="!isAvailableCocument" primary small class="mr-2" @click="moreActionStressTest">
         <InlineSvg :src="IconPlus" class="mr-1.5" />
         Add
       </SwdButton>
@@ -69,7 +69,7 @@ export default {
     })
 
     const moreActionStressTest = () => {
-      router.push({ name: 'past-stress-test', params: { id } })
+      router.push({ name: `${route.meta.type}/past-stress-test`, params: { id } })
     }
 
     const openPrewiev = (url) => {

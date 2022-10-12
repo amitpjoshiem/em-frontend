@@ -14,7 +14,7 @@
     >
       <template #main>
         <div class="flex my-5">
-          <SwdButton primary small class="w-2/12 mr-4" @click="moreDocuments">Click to upload1</SwdButton>
+          <SwdButton primary small class="w-2/12 mr-4" @click="moreDocuments">Click to upload</SwdButton>
           <div class="el-upload__tip">PDF files only</div>
         </div>
         <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>

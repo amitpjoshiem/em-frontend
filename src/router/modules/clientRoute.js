@@ -43,5 +43,41 @@ export const clientRoute = {
       name: `${type}/clientreport`,
       component: () => import(/* webpackChunkName: "Clientreport" */ '../../components/ClientReport/ClientReport.vue'),
     },
+
+    {
+      path: 'past-stress-test/:id',
+      name: `${type}/past-stress-test`,
+      component: () =>
+        import(
+          /* webpackChunkName: "PastStressTestResults" */ '../../components/MemberDetails/PastStressTestResults.vue'
+        ),
+    },
+
+    {
+      path: 'member/:id',
+      name: 'member',
+      component: () => import(/* webpackChunkName: "MemberDetails" */ '../../views/MemberDetails.vue'),
+      children: [
+        // {
+        //   path: 'member-details',
+        //   name: 'member-details',
+        //   component: () =>
+        //     import(/* webpackChunkName: "MemberDetails" */ '../../components/MemberDetails/MemberDetails.vue'),
+        // },
+        {
+          path: 'annuity-index/:annuityId',
+          name: `${type}/annuity-index`,
+          component: () =>
+            import(/* webpackChunkName: "AnnuityIndex" */ '../../components/AnnuityIndex/AnnuityIndexList.vue'),
+        },
+
+        {
+          path: 'annuity-index-details/:annuityId?',
+          name: `${type}/annuity-index-details`,
+          component: () =>
+            import(/* webpackChunkName: "AnnuityIndexItem" */ '../../components/AnnuityIndex/AnnuityIndexDetails.vue'),
+        },
+      ],
+    },
   ],
 }

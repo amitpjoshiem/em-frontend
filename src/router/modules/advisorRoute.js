@@ -109,13 +109,14 @@ export const advisorRoute = {
         },
         {
           path: 'annuity-index/:annuityId',
-          name: 'annuity-index',
+          name: `${type}/annuity-index`,
           component: () =>
             import(/* webpackChunkName: "AnnuityIndex" */ '../../components/AnnuityIndex/AnnuityIndexList.vue'),
         },
+
         {
           path: 'annuity-index-details/:annuityId?',
-          name: 'annuity-index-details',
+          name: `${type}/annuity-index-details`,
           component: () =>
             import(/* webpackChunkName: "AnnuityIndexItem" */ '../../components/AnnuityIndex/AnnuityIndexDetails.vue'),
         },
@@ -124,7 +125,7 @@ export const advisorRoute = {
 
     {
       path: 'past-stress-test/:id',
-      name: 'past-stress-test',
+      name: `${type}/past-stress-test`,
       component: () =>
         import(
           /* webpackChunkName: "PastStressTestResults" */ '../../components/MemberDetails/PastStressTestResults.vue'
