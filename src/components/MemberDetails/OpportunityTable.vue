@@ -5,7 +5,7 @@
         <el-badge :value="getCount" :max="99" class="mr-8" :type="getCount ? 'primary' : 'info'" :hidden="isLoading">
           <SwdWidgetTitle text="Child Opportunities" />
         </el-badge>
-        <SwdButton primary small @click="showModalAddChildOpportunity">
+        <SwdButton v-if="!$can('client', 'all')" primary small @click="showModalAddChildOpportunity">
           <InlineSvg :src="IconPlus" class="mr-1.5" />
           Add child opportunity
         </SwdButton>

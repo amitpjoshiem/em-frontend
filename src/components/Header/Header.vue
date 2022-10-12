@@ -1,6 +1,6 @@
 <template>
   <div class="relative bg-main-gray items-center h-16 flex justify-between px-3">
-    <SwdRemoteSearch v-if="!$can('lead', 'all')" class="sm:w-4/24" />
+    <SwdRemoteSearch v-if="!($can('lead', 'all') || !$can('lead', 'all'))" class="sm:w-4/24" />
     <div v-if="$can('admin', 'all') || $can('ceo', 'all')" class="flex justify-between items-center text-sm sm:w-11/24">
       <el-button
         :type="getRouteName === 'admin-dashboard' || getRouteName === 'ceo-dashboard' ? 'primary' : 'info'"
