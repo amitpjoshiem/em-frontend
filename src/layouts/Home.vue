@@ -11,7 +11,7 @@ export default {
     const store = useStore()
     const { routRedirect } = useRoutRedirect()
     const role = store.state.globalComponents.role
-    const userId = store.state.globalComponents.userId ? store.state.globalComponents.userId : ''
+    const userId = store.state.globalComponents.userId
 
     if (store.state.auth.isAuth && role) routRedirect({ role, userId })
   },

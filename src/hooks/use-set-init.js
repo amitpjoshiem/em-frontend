@@ -12,7 +12,7 @@ export function useSetInit() {
 
   const getUserId = computed(() => {
     const role = response.value.data.roles[0]
-    if (role === 'client' || role === 'lead') return response.value.data.member_id
+    if (role === 'client') return response.value.data.member_id
     return response.value.data.user_id
   })
 
@@ -29,13 +29,13 @@ export function useSetInit() {
       store.commit('globalComponents/setRole', role)
       store.commit('globalComponents/setCurrentTypeUser', typeUser)
       store.commit('globalComponents/setCurrentCompanyId', response.value.data.company_id)
-      store.commit('globalComponents/setUserId', getUserId)
+      store.commit('globalComponents/setUserId', getUserId.value)
 
-      if (typeUser === 'admin') store.commit('globalComponents/setAdminId', getUserId)
-      if (typeUser === 'ceo') store.commit('globalComponents/setCeoId', getUserId)
-      if (typeUser === 'advisor') store.commit('globalComponents/setAdvisorId', getUserId)
-      if (typeUser === 'client') store.commit('globalComponents/setClientId', getUserId)
-      if (typeUser === 'lead') store.commit('globalComponents/setLeadId', getUserId)
+      if (typeUser === 'admin') store.commit('globalComponents/setAdminId', getUserId.value)
+      if (typeUser === 'ceo') store.commit('globalComponents/setCeoId', getUserId.value)
+      if (typeUser === 'advisor') store.commit('globalComponents/setAdvisorId', getUserId.value)
+      if (typeUser === 'client') store.commit('globalComponents/setClientId', getUserId.value)
+      if (typeUser === 'lead') store.commit('globalComponents/setLeadId', getUserId.value)
       if (typeUser === 'assistant') store.commit('globalComponents/setAdvisorId', advisorId)
 
       if (role === 'client' || role === 'lead') {
