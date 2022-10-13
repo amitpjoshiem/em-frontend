@@ -75,8 +75,8 @@
       <ListDocumentsClient doc-collections="property_casualty" page="property-casualty" />
     </div>
 
-    <div v-if="$can('lead', 'all')" class="text-center font-semibold pt-4">
-      <span>Please fill out all the required information to proceed.</span>
+    <div v-if="$can('lead', 'all') && errorSend" class="text-center font-semibold pt-4">
+      <span class="pulsate">Please fill out all the required information to proceed.</span>
     </div>
 
     <div class="flex justify-end mt-4 mb-4">
@@ -89,7 +89,7 @@
       <div class="pr-3">
         <Button default-gray-btn text-btn="Cancel" @click="cancel" />
       </div>
-      <SwdButton primary main :disabled="disabledSubmitBtn" @click="submit">
+      <SwdButton primary main @click="submit">
         <SwdSpinner v-show="isLoadingSubmitAll" class="mr-2" />
         Submit
       </SwdButton>
@@ -112,6 +112,7 @@ import { onMounted, computed } from 'vue'
 import { scrollTop } from '@/utils/scrollTop'
 import { ElMessageBox } from 'element-plus'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
+import { ref } from 'vue'
 
 export default {
   name: 'ConfirmationPage',
@@ -124,7 +125,7 @@ export default {
   setup() {
     const route = useRoute()
     const router = useRouter()
-
+    const errorSend = ref(false)
     const id = route.params.id
 
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
@@ -153,6 +154,10 @@ export default {
     }
 
     const submit = () => {
+      if (disabledSubmitBtn.value) {
+        errorSend.value = true
+        return
+      }
       ElMessageBox.alert('Thank you for submitting your information. We will be in contact soon!', 'Info', {
         showConfirmButton: false,
         showClose: false,
@@ -191,7 +196,27 @@ export default {
       clientsInfo,
       disabledSubmitBtn,
       isLoadingSubmitAll,
+      errorSend,
     }
   },
 }
 </script>
+
+<style>
+.pulsate {
+  -webkit-animation: pulsate 2s ease-out;
+  -webkit-animation-iteration-count: infinite;
+  opacity: 0.5;
+}
+@-webkit-keyframes pulsate {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+</style>
