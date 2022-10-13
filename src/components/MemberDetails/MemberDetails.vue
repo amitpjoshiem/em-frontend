@@ -1,18 +1,23 @@
 <template>
   <SwdWrapper>
     <SwdSubHeader
+      v-if="!$can('client', 'all')"
       :title="getTitle"
       witch-info-btn
       info-btn-destination="MemberDetails"
       :loading="isLoadingProspectDetails"
     />
-    <div v-if="isLoadingProspectDetails" class="flex items-center justify-center">
-      <SwdSpinner />
-    </div>
-    <MemberStage
-      v-else-if="!isLoadingProspectDetails && member.type === 'prospect'"
-      :current-stage="salesforce.value.stage"
-    />
+    <span v-else-if="member?.name" class="text-2xl font-semibold">Welcome, {{ member.name }}</span>
+
+    <template v-if="!$can('client', 'all')">
+      <div v-if="isLoadingProspectDetails" class="flex items-center justify-center">
+        <SwdSpinner />
+      </div>
+      <MemberStage
+        v-else-if="!isLoadingProspectDetails && member.type === 'prospect'"
+        :current-stage="salesforce.value.stage"
+      />
+    </template>
 
     <div class="flex my-5">
       <div class="w-8/24 mr-5">
