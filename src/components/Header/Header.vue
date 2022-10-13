@@ -139,7 +139,7 @@ export default {
     }
 
     const isShowLogo = computed(() => {
-      if (can('advisor', 'all')) return true
+      if (can('advisor', 'all') || can('client', 'all')) return true
       if (can('lead', 'all') && getRouteName.value !== 'lead-dashboard') return true
       return false
     })
