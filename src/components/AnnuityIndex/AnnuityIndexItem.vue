@@ -46,7 +46,7 @@
 <script>
 import { Document, Link } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
   name: 'AnnuityIndexItem',
@@ -63,6 +63,7 @@ export default {
   },
   setup(props) {
     const router = useRouter()
+    const route = useRoute()
 
     const open = () => {
       ElMessageBox.alert('This is a message', 'Title', {
@@ -71,7 +72,7 @@ export default {
     }
 
     const getDetails = () => {
-      router.push({ name: 'annuity-index-details', params: { annuityId: props.item.id } })
+      router.push({ name: `${route.meta.type}/annuity-index-details`, params: { annuityId: props.item.id } })
     }
 
     return {

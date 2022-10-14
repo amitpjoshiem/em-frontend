@@ -20,7 +20,7 @@
 </template>
 <script>
 import { Document } from '@element-plus/icons-vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import dayjs from 'dayjs'
 
 export default {
@@ -42,9 +42,10 @@ export default {
   },
   setup(props) {
     const router = useRouter()
+    const route = useRoute()
 
     const open = () => {
-      router.push({ name: 'annuity-index-details', params: { annuityId: props.item.id } })
+      router.push({ name: `${route.meta.type}/annuity-index-details`, params: { annuityId: props.item.id } })
     }
 
     return {

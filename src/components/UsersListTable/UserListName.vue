@@ -9,7 +9,7 @@
 
 <script>
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
 export default {
@@ -23,6 +23,7 @@ export default {
   },
   setup(props) {
     const router = useRouter()
+    const route = useRoute()
     const store = useStore()
 
     const getAvatarUrl = computed(() => {
@@ -36,19 +37,19 @@ export default {
 
     const goUser = () => {
       if (props.user.type === 'lead') {
-        store.commit('globalComponents/setClientId', props.user.client_user.id)
+        store.commit('globalComponents/setLeadId', props.user.client_user.id)
         router.push({ name: 'confirmation-page', params: { id: props.user.id } })
         return
       }
 
       if (getCurrentTypeUser.value === 'ceo' || getCurrentTypeUser.value === 'admin') {
         store.commit('globalComponents/setAdvisorId', props.user.owner_id)
-        router.push({ name: 'member-details', params: { id: props.user.id } })
+        router.push({ name: `${route.meta.type}/member-details`, params: { id: props.user.id } })
         return
       }
 
       if (props.user.type === 'client') {
-        router.push({ name: 'member-details', params: { id: props.user.id } })
+        router.push({ name: `${route.meta.type}/member-details`, params: { id: props.user.id } })
         return
       }
 
@@ -57,7 +58,7 @@ export default {
         return
       }
       if (props.user.step !== 'default') {
-        router.push({ name: 'member-details', params: { id: props.user.id } })
+        router.push({ name: `${route.meta.type}/member-details`, params: { id: props.user.id } })
         return
       }
     }

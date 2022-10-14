@@ -17,6 +17,24 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
     if (store.state.globalComponents.sortMembers.sortedBy === 'descending') return 'desc'
     return undefined
   })
+  const onlyMy = computed(() => {
+    if (type === 'client,prospect') {
+      return store.state.globalComponents.onlyMyMember
+    }
+    if (type === 'lead') {
+      return store.state.globalComponents.onlyMyLead
+    }
+    return ''
+  })
+  const ownerIdMember = computed(() => {
+    if (type === 'client,prospect') {
+      store.state.globalComponents.ownerMember?.id
+    }
+    if (type === 'lead') {
+      return store.state.globalComponents.ownerLead?.id
+    }
+    return ''
+  })
 
   const reactiveType = ref(type)
   const reactiveLimit = ref(limit)
@@ -25,6 +43,8 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
   const reactivePage = ref(page)
   const reactiveStatus = ref(status)
   const reactiveInclude = ref(include)
+  const reactiveOnlyMyMember = ref(onlyMy)
+  const reactiveOwnerIdMember = ref(ownerIdMember)
 
   const queryKey = reactive([
     'householders-list',
@@ -36,6 +56,8 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
       reactivePage,
       reactiveStatus,
       reactiveInclude,
+      reactiveOnlyMyMember,
+      reactiveOwnerIdMember,
     },
   ])
 
@@ -43,7 +65,6 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
   let salesforce = reactive({})
 
   const query = useQuery(queryKey, {
-    // cacheTime: 0,
     queryFn: fetchMembersList,
     select: ({ data, meta }) => {
       pagination.value = new MembersListPagination(meta.pagination)

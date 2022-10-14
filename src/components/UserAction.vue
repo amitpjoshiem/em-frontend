@@ -9,7 +9,7 @@
       <SwdDropDown :options="getActionsOptions" @select="handleSelect">
         <template #titleDropDown>
           <div v-if="!isLoadingUserProfile" class="flex items-center">
-            <span class="px-2 py-2 text-xs">{{ getNameTitle }}</span>
+            <span class="px-2 py-2 text-xs uppercase font-semibold text-primary">{{ getNameTitle }}</span>
             <InlineSvg :src="IconUserAction" />
           </div>
         </template>
@@ -105,7 +105,7 @@ export default {
 
     const getNameTitle = computed(() => {
       if (!user.value.firstName && !user.value.lastName) return 'User'
-      return user.value.firstName + ' ' + user.value.lastName.charAt(0) + '.'
+      return user.value.lastName.charAt(0) + user.value.firstName.charAt(0)
     })
 
     const actionsMap = {

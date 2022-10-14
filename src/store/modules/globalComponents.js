@@ -1,94 +1,112 @@
-const state = () => ({
-  companies: [],
-  userId: '',
-  currentCompanyId: '',
-  ceoId: '',
-  adminId: '',
-  advisorId: '',
-  clientId: '',
-  currentTypeUser: '',
-  role: '',
-  isLoadingApp: false,
-  termsAndConditions: null,
-  dateRangeClientReport: '',
-  itemsPerPage: {
-    options: [
-      {
-        title: '6',
-        command: '6',
+const getDefaultState = () => {
+  return {
+    companies: [],
+    userId: null,
+    currentCompanyId: '',
+    ceoId: '',
+    adminId: '',
+    advisorId: '',
+    clientId: '',
+    leadId: '',
+    currentTypeUser: '',
+    role: '',
+    isLoadingApp: false,
+    termsAndConditions: null,
+    dateRangeClientReport: '',
+    itemsPerPage: {
+      options: [
+        {
+          title: '6',
+          command: '6',
+        },
+        {
+          title: '12',
+          command: '12',
+        },
+        {
+          title: '18',
+          command: '18',
+        },
+      ],
+      values: {
+        default: '6',
+        advisorDashboard: '6',
+        listOfHouseholds: '6',
+        superAdminDashboard: '6',
+        superAdminListAdvisors: '6',
       },
-      {
-        title: '12',
-        command: '12',
-      },
-      {
-        title: '18',
-        command: '18',
-      },
-    ],
-    values: {
-      default: '6',
-      advisorDashboard: '6',
-      listOfHouseholds: '6',
-      superAdminDashboard: '6',
-      superAdminListAdvisors: '6',
     },
-  },
-  selectFilter: {
-    options: [
-      {
-        title: 'Past year',
-        command: 'year',
+    selectFilter: {
+      options: [
+        {
+          title: 'Past year',
+          command: 'year',
+        },
+        {
+          title: 'Past month',
+          command: 'month',
+        },
+        {
+          title: 'Past quarter',
+          command: 'quarter',
+        },
+      ],
+      values: {
+        default: 'month',
+        opportunitiesBlock: 'month',
+        pipeLine: 'month',
+        countLeeds: 'month',
+        numberLeedsFilledData: 'month',
+        numberLeedsConverted: 'month',
+        numberLeedsClosed: 'month',
       },
-      {
-        title: 'Past month',
-        command: 'month',
-      },
-      {
-        title: 'Past quarter',
-        command: 'quarter',
-      },
-    ],
-    values: {
-      default: 'month',
-      opportunitiesBlock: 'month',
-      pipeLine: 'month',
-      countLeeds: 'month',
-      numberLeedsFilledData: 'month',
-      numberLeedsConverted: 'month',
-      numberLeedsClosed: 'month',
     },
-  },
-  dialog: {
-    showDialog: {
-      changeName: false,
-      changePassword: false,
-      shareFileEmailDialog: false,
-      prewievPdf: false,
-      moreOtherInfo: false,
-      changePhone: false,
-      exportSucces: false,
-      modalContact: false,
-      newLead: false,
-      modalNewTable: false,
-      modalSucces: false,
-      modalTerms: false,
-      modalAddAnnuityIndex: false,
-      modalInvestmentPackage: false,
+    dialog: {
+      showDialog: {
+        changeName: false,
+        changePassword: false,
+        shareFileEmailDialog: false,
+        prewievPdf: false,
+        moreOtherInfo: false,
+        moreOwnerInfo: false,
+        changePhone: false,
+        exportSucces: false,
+        modalContact: false,
+        newLead: false,
+        modalNewTable: false,
+        modalSucces: false,
+        modalTerms: false,
+        modalAddAnnuityIndex: false,
+        modalInvestmentPackage: false,
+        addChildOpportunity: false,
+      },
     },
+    sortMembers: {
+      orderBy: 'created_at',
+      sortedBy: 'descending',
+    },
+    memberId: null,
+    pdfRegion: '',
+    showDialogReloadPage: false,
+    needUpdateContent: null,
+    docShare: null,
+    contact: null,
+    previewUrl: null,
+    opportunityId: null,
+    onlyMyMember: false,
+    ownerMember: null,
+    onlyMyLead: false,
+    ownerLead: null,
+  }
+}
+
+const state = getDefaultState()
+
+const actions = {
+  resetState({ commit }) {
+    commit('resetState')
   },
-  sortMembers: {
-    orderBy: 'created_at',
-    sortedBy: 'descending',
-  },
-  memberId: null,
-  pdfRegion: '',
-  showDialogReloadPage: false,
-  needUpdateContent: null,
-  docShare: null,
-  contact: null,
-  previewUrl: null,
-})
+}
 
 const mutations = {
   setDestinationItemsPerPage(state, data) {
@@ -160,6 +178,10 @@ const mutations = {
     state.clientId = value
   },
 
+  setLeadId(state, value) {
+    state.leadId = value
+  },
+
   setCurrentTypeUser(state, value) {
     state.currentTypeUser = value
   },
@@ -186,12 +208,36 @@ const mutations = {
 
   setPreviewUrlPdf(state, value) {
     state.previewUrl = value
-    console.log('state - ', state)
+  },
+
+  setOnlyMyMember(state, value) {
+    state.onlyMyMember = value
+  },
+
+  setOwnerMember(state, value) {
+    state.ownerMember = value
+  },
+
+  setOnlyMyLead(state, value) {
+    state.onlyMyLead = value
+  },
+
+  setOwnerLead(state, value) {
+    state.ownerLead = value
+  },
+
+  setOpportunityId(state, value) {
+    state.opportunityId = value
+  },
+
+  resetState(state) {
+    Object.assign(state, getDefaultState())
   },
 }
 
 export default {
   namespaced: true,
   state,
+  actions,
   mutations,
 }

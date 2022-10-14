@@ -1,7 +1,7 @@
 <template>
   <SwdWrapper>
     <SwdSubHeader title="Fixed Index Annuity" />
-    <div class="flex justify-end pt-2 pb-5">
+    <div v-if="!$can('client', 'all')" class="flex justify-end pt-2 pb-5">
       <SwdButton primary small @click="addIndexAnnuity">Add Index Annuity</SwdButton>
     </div>
 

@@ -10,7 +10,9 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <SwdButton info small class="ml-2" @click="closeDialog">Close</SwdButton>
+        <div class="flex justify-end">
+          <SwdButton info small class="ml-2" @click="closeDialog">Close</SwdButton>
+        </div>
       </span>
     </template>
   </el-dialog>

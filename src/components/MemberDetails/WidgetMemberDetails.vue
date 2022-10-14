@@ -21,7 +21,7 @@
               <div class="action-btn">
                 <router-link
                   :to="{
-                    name: 'opportunity-contact',
+                    name: `${route.meta.type}/opportunity-contact`,
                     params: { id: member.id },
                   }"
                 >
@@ -31,11 +31,13 @@
               <div class="action-btn">
                 <router-link
                   :to="{
-                    name: 'member-basic-information',
+                    name: `${route.meta.type}/basic-information`,
                     params: { id: member.id },
                   }"
                 >
-                  <el-icon class="mt-[7px]" color="#042D52"><User /></el-icon>
+                  <el-icon class="mt-[7px]" color="#042D52">
+                    <User />
+                  </el-icon>
                 </router-link>
               </div>
               <SwdMemberActions :user="member" page-details />
@@ -43,7 +45,8 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-between pb-3 pt-3 border-t border-white">
+
+      <div class="flex justify-between pt-2 pb-2 border-t border-white">
         <div class="flex items-center">
           <span class="w-6 h-6 rounded-md flex justify-center items-center bg-main-orange">
             <InlineSvg :src="IconProspectAge" />
@@ -76,7 +79,7 @@
           </el-form-item>
         </div>
 
-        <div class="flex justify-between pt-3">
+        <div class="flex justify-between pt-2">
           <div class="flex items-center">
             <span class="w-6 h-6 rounded-md flex justify-center items-center bg-main-orange">
               <InlineSvg :src="IconGoal" />
@@ -97,19 +100,37 @@
         </div>
       </el-form>
 
-      <div v-if="member.type === 'prospect'" class="flex justify-between pt-8">
+      <div class="flex justify-between pt-3">
+        <div class="flex items-center">
+          <span class="pr-2 text-xs text-primary font-semibold">Advisor</span>
+        </div>
+        <div class="text-sm">
+          <el-tag class="ml-2 cursor-pointer" @click="moreInfoOwner">
+            {{ owner.value.last_name + ' ' + owner.value.first_name }}
+            <el-icon>
+              <InfoFilled color="#66B6FF" />
+            </el-icon>
+          </el-tag>
+        </div>
+      </div>
+
+      <div v-if="member.type === 'prospect'" class="flex justify-between pt-3">
         <SwdButton primary small class="mr-2" @click="convert">Convert to client</SwdButton>
 
-        <router-link :to="{ name: 'blueprint-report', params: { id: member.id } }">
+        <router-link :to="{ name: `${route.meta.type}/blueprint-report`, params: { id: member.id } }">
           <SwdButton primary small class="mr-2">Blueprint report</SwdButton>
         </router-link>
       </div>
       <div v-else class="flex justify-end pt-5">
-        <router-link :to="{ name: 'clientreport', params: { id: member.id } }" class="pl-2.5 font-medium">
+        <router-link
+          :to="{ name: `${route.meta.type}/clientreport`, params: { id: member.id } }"
+          class="pl-2.5 font-medium"
+        >
           <SwdButton primary small class="mr-2">Client report</SwdButton>
         </router-link>
       </div>
     </template>
+    <ModalMemberDetailsOwner :owner="owner" />
   </div>
 </template>
 
@@ -126,24 +147,34 @@ import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { convertToClient } from '@/api/vueQuery/convert-to-client'
 import { ElMessageBox } from 'element-plus'
 import { User, Cellphone } from '@element-plus/icons-vue'
+import { InfoFilled } from '@element-plus/icons-vue'
+import ModalMemberDetailsOwner from './ModalMemberDetailsOwner.vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'WidgetMemberDetails',
   components: {
     User,
     Cellphone,
+    InfoFilled,
+    ModalMemberDetailsOwner,
   },
   setup() {
     const route = useRoute()
     const memberId = route.params.id
+    const store = useStore()
 
     const {
       isLoading: isLoadingProspectDetails,
       isError: isErrorProspectDetails,
       data: member,
       updateMemberInfo,
-      other,
+      owner,
     } = useProspectDetails()
+
+    const { isLoading: isLoadingUpdate, mutateAsync: updateMember } = useMutation(updateMembers)
+
+    const { isLoading, isFetching, data, error, mutateAsync: convertClient } = useMutation(convertToClient)
 
     const optionsCurrencyInput = {
       currency: 'USD',
@@ -156,10 +187,6 @@ export default {
       total_net_worth: '',
       goal: '',
     })
-
-    const { isLoading: isLoadingUpdate, mutateAsync: updateMember } = useMutation(updateMembers)
-
-    const { isLoading, isFetching, data, error, mutateAsync: convertClient } = useMutation(convertToClient)
 
     watchEffect(() => {
       if (isLoadingProspectDetails.value === false && !isErrorProspectDetails.value) {
@@ -211,6 +238,13 @@ export default {
       }
     }
 
+    const moreInfoOwner = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'moreOwnerInfo',
+        value: true,
+      })
+    }
+
     return {
       IconProspectAge,
       IconTotal,
@@ -231,7 +265,9 @@ export default {
       isErrorProspectDetails,
       member,
       updateMemberInfo,
-      other,
+      owner,
+      moreInfoOwner,
+      route,
     }
   },
 }

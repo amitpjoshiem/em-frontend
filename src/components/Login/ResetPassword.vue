@@ -13,6 +13,7 @@
               type="password"
               autocomplete="off"
               placeholder="Please input password"
+              @keyup.enter="submit"
             />
           </el-form-item>
           <el-form-item label="Confirm" prop="password_confirmation" class="mt-2">
@@ -21,10 +22,11 @@
               type="password"
               autocomplete="off"
               placeholder="Please input password"
+              @keyup.enter="submit"
             />
           </el-form-item>
           <el-form-item class="my-6">
-            <SwdButton primary main :disabled="fetchingCreate || fetchingReset" class="w-full" @click="submit()">
+            <SwdButton primary main :disabled="fetchingCreate || fetchingReset" class="w-full" @click="submit">
               <SwdSpinner v-show="fetchingCreate || fetchingReset" class="mr-2" />
               Continue
             </SwdButton>
