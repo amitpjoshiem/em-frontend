@@ -30,7 +30,7 @@ export default {
     const { isLoading, isError, data: annuityIndex } = useAnnuityIndexLast(route.params.id)
 
     const more = () => {
-      router.push({ name: 'annuity-index', params: { annuityId: route.params.id } })
+      router.push({ name: `${route.meta.type}/annuity-index`, params: { annuityId: route.params.id } })
     }
 
     return {

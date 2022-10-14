@@ -23,9 +23,11 @@
       </div>
     </div>
     <template #footer>
-      <span class="dialog-footer">
-        <SwdButton info class="mr-2 w-[60px]" @click="closeDialog">Close</SwdButton>
-      </span>
+      <div class="flex justify-end">
+        <span class="dialog-footer">
+          <SwdButton info class="mr-2 w-[60px]" @click="closeDialog">Close</SwdButton>
+        </span>
+      </div>
     </template>
   </el-dialog>
 </template>

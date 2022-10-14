@@ -13,7 +13,7 @@
       class="flex items-center justify-center"
       :class="{
         'text-white': primary,
-        'text-primary': info,
+        'text-primary px-2.5': info,
         'text-xs px-2 py-1': small,
         'text-sm py-1.5 px-4': main,
         'hover:text-main-blue': !disabled,

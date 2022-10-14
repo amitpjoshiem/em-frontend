@@ -291,3 +291,8 @@ input::-webkit-inner-spin-button {
 .el-header {
   padding: 0;
 }
+
+.el-tag__content{
+  display: flex;
+  align-items: center;
+}

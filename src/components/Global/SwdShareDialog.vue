@@ -44,8 +44,7 @@
         <div class="flex justify-end">
           <SwdButton info main @click="closeDialog">Cancel</SwdButton>
           <SwdButton class="ml-2" primary main :disabled="confirmBtnDisabled" @click="confirm">
-            <SwdSpinner v-show="confirmBtnDisabled" class="mr-2" />
-            Save
+            <SwdSpinner v-show="confirmBtnLoading" class="mr-2" />
           </SwdButton>
         </div>
       </span>
@@ -111,15 +110,23 @@ export default defineComponent({
     })
 
     const handleClose = (done) => {
-      ElMessageBox.confirm('Are you sure to close this dialog?')
-        .then(() => {
-          done(closeDialog())
-        })
-        .catch(() => {})
+      if (state.dynamicTags.length) {
+        ElMessageBox.confirm('Are you sure to close this dialog?')
+          .then(() => {
+            done(closeDialog())
+          })
+          .catch(() => {})
+      } else {
+        done(closeDialog())
+      }
     }
 
     const confirmBtnDisabled = computed(() => {
       if (tabsValue.value === 'email' && !state.dynamicTags.length) return true
+      return loadingSendlueprintReport.value || loadingSendlClientReport.value || loadingSendlReportSalesForce.value
+    })
+
+    const confirmBtnLoading = computed(() => {
       return loadingSendlueprintReport.value || loadingSendlClientReport.value || loadingSendlReportSalesForce.value
     })
 
@@ -134,7 +141,7 @@ export default defineComponent({
           emails: state.dynamicTags,
         }
         if (pdfRegion.value === 'blue-report') {
-          resSendReport = await sendBlueprintReportEmail({ data, member_id: route.params.id })
+          resSendReport = await sendBlueprintReportEmail({ data, doc_id: docShare.value.id })
         }
 
         if (pdfRegion.value === 'client-report') {
@@ -244,6 +251,7 @@ export default defineComponent({
       sendReportSalesForce,
       loadingSendlReportSalesForce,
       docShare,
+      confirmBtnLoading,
     }
   },
 })

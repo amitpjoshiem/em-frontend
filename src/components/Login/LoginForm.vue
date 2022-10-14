@@ -8,7 +8,7 @@
       <h1 class="text-center text-main text-xss">Please enter you email and password</h1>
       <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
         <el-form-item label="E-mail" prop="email" class="py-3">
-          <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" />
+          <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" @keyup.enter="submit" />
         </el-form-item>
         <el-form-item label="Password" prop="password">
           <el-input
@@ -17,10 +17,11 @@
             placeholder="Enter your password"
             type="password"
             autocomplete="off"
+            @keyup.enter="submit"
           />
         </el-form-item>
         <el-form-item class="my-6">
-          <SwdButton primary main :disabled="fetching" class="w-full" @click="submit()">
+          <SwdButton primary main :disabled="fetching" class="w-full" @click="submit">
             <SwdSpinner v-show="fetching" class="mr-2" />
             Continue
           </SwdButton>

@@ -6,6 +6,7 @@ import { MemberDetailsOther } from '@/dto/Member/MemberDetailsOther'
 import { MemberLastEmployment } from '@/dto/Member/MemberLastEmployment'
 import { SpouseLastEmployment } from '@/dto/Member/SpouseLastEmployment'
 import { MemberDetailsSalesforce } from '@/dto/Member/MemberDetailsSalesforce'
+import { MemberDetailsOwner } from '@/dto/Member/MemberDetailsOwner'
 import { fetchMember } from '@/api/vueQuery/fetch-member'
 import { dataFactory } from '@/utils/dataFactory'
 import { reactive, watch } from 'vue'
@@ -18,6 +19,7 @@ export const useProspectDetails = () => {
   let employmentProspect = reactive({})
   let employmentSpouse = reactive({})
   let salesforce = reactive({})
+  let owner = reactive({})
   const route = useRoute()
   const queryClient = useQueryClient()
 
@@ -32,13 +34,13 @@ export const useProspectDetails = () => {
       return fetchMember(id)
     },
     {
-      // cacheTime: 0,
       select: (data) => {
         spouse.value = dataFactory(MemberDetailsSpouse, data.data.spouse)
         house.value = dataFactory(MemberDetailsHouse, data.data.house)
         other.value = dataFactory(MemberDetailsOther, data.data.other)
         salesforce.value = dataFactory(MemberDetailsSalesforce, data.data.salesforce.opportunity)
         employmentProspect.value = dataFactory(MemberLastEmployment, data.data.employment_history[0])
+        owner.value = dataFactory(MemberDetailsOwner, data.data.owner)
         employmentSpouse.value = dataFactory(
           SpouseLastEmployment,
           data.data.spouse && data.data.spouse.employment_history?.length ? data.data.spouse.employment_history[0] : []
@@ -70,6 +72,7 @@ export const useProspectDetails = () => {
     employmentSpouse,
     other,
     salesforce,
+    owner,
     ...query,
     updateMemberInfo,
   }

@@ -14,7 +14,7 @@ import Header from '@/components/Header/Header.vue'
 import SettingsApp from '../views/SettingsApp.vue'
 
 export default {
-  name: 'ClientHome',
+  name: 'Settings',
 
   components: {
     SwdSideBar,
