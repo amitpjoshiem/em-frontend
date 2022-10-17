@@ -1,6 +1,6 @@
 <template>
   <SwdWrapper>
-    <SwdSubHeader title="Opportunity contacts" />
+    <SwdSubHeader :title="getTitle" />
     <div class="flex justify-end pb-5">
       <SwdButton primary main @click="addContact">Add contact</SwdButton>
     </div>
@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import { reactive, watchEffect } from 'vue'
+import { computed, reactive, watchEffect } from 'vue'
 import { useFetchAllContacts } from '@/api/use-fetch-all-contacts.js'
 import { useRoute } from 'vue-router'
 import { Edit, Delete, InfoFilled } from '@element-plus/icons-vue'
@@ -126,12 +126,16 @@ export default {
     const store = useStore()
     const queryClient = useQueryClient()
     const memberId = route.params.id
+    const state = reactive([])
 
     const { isLoading, isError, isFetching, data: contacts, isFetched, refetch } = useFetchAllContacts(memberId)
     const { mutateAsync: updateContact, isLoading: loadingUpdateContact } = useMutation(updateContacts)
     const { mutateAsync: deleteContact, isLoading: loadingDeleteContact } = useMutation(deleteContacts)
 
-    const state = reactive([])
+    const getTitle = computed(() => {
+      if (route.meta.type === 'client') return 'Client Contacts'
+      return 'Opportunity contacts'
+    })
 
     watchEffect(() => {
       if (!isLoading.value) {
@@ -198,20 +202,17 @@ export default {
       isFetched,
       refetch,
       loadingUpdateContact,
-
       addContact,
       editContact,
       removeContact,
       changeSpouse,
-
       deleteContact,
       loadingDeleteContact,
-
       Edit,
       Delete,
       InfoFilled,
-
       IconEmptyUsers,
+      getTitle,
     }
   },
 }

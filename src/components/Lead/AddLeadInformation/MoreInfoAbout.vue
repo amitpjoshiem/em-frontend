@@ -144,7 +144,7 @@ export default {
     })
 
     const disabledForm = computed(() => {
-      return store.state.globalComponents.role !== 'client'
+      return store.state.globalComponents.role !== 'lead'
     })
 
     const handleChange = async () => {
