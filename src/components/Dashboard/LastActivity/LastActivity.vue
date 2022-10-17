@@ -7,7 +7,7 @@
     </div>
     <el-skeleton v-if="isLoading" :rows="4" animated />
     <SwdErrorBlock v-else-if="isError" />
-    <template v-else-if="activity.data">
+    <template v-else-if="activity.data?.length">
       <div v-for="elem in activity.data" :key="elem.times" class="font-medium active-item flex flex-col text-xs">
         <div class="flex items-center">
           <div class="h-[9px] w-[9px] rounded-full mb-[2px] mr-[8px] bg-activity" />
@@ -20,7 +20,7 @@
     </template>
 
     <div v-else class="flex flex-col justify-center items-center">
-      <div class="w-14 h-14 bg-main-gray rounded-full flex items-center justify-center mt-5">
+      <div class="w-14 h-14 bg-main-gray border border-main-blue rounded-full flex items-center justify-center mt-5">
         <InlineSvg :src="IconLastActivityEmpty" />
       </div>
       <span class="text-main font-semibold text-xss mt-5">No recently activity</span>
