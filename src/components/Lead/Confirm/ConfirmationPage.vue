@@ -7,7 +7,10 @@
         <InlineSvg :src="IconDoneStep" />
         <div class="text-main text-xl font-semibold ml-2">Basic</div>
       </div>
-      <ConfirmationInformation />
+      <ConfirmationInformation v-if="!isFetchingMember" :member="member" />
+      <div v-else class="flex justify-center items-center">
+        <SwdSpinner large />
+      </div>
     </div>
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
@@ -79,20 +82,29 @@
       <span class="pulsate">Please fill out all the required information to proceed.</span>
     </div>
 
-    <div class="flex justify-end mt-4 mb-4">
-      <SwdButton v-if="$can('advisor', 'all')" primary main :disabled="isLoadingConvert" @click="convert">
-        <SwdSpinner v-show="isLoadingConvert" class="mr-2" />
-        Save
-      </SwdButton>
-    </div>
-    <div v-if="$can('lead', 'all')" class="flex justify-end mt-4 mb-4">
-      <div class="pr-3">
-        <Button default-gray-btn text-btn="Cancel" @click="cancel" />
+    <template v-if="!isFetchingMember">
+      <div v-if="$can('advisor', 'all')" class="flex justify-end mt-4 mb-4">
+        <SwdButton v-if="member.can_convert" primary main :disabled="isLoadingConvert" @click="convert">
+          <SwdSpinner v-show="isLoadingConvert" class="mr-2" />
+          Convert to
+        </SwdButton>
+        <SwdButton v-else info main @click="goLeadsList">
+          <SwdSpinner v-show="isLoadingConvert" class="mr-2" />
+          Close
+        </SwdButton>
       </div>
-      <SwdButton primary main @click="submit">
-        <SwdSpinner v-show="isLoadingSubmitAll" class="mr-2" />
-        Submit
-      </SwdButton>
+      <div v-if="$can('lead', 'all')" class="flex justify-end mt-4 mb-4">
+        <div class="pr-3">
+          <Button default-gray-btn text-btn="Cancel" @click="cancel" />
+        </div>
+        <SwdButton primary main @click="submit">
+          <SwdSpinner v-show="isLoadingSubmitAll" class="mr-2" />
+          Submit
+        </SwdButton>
+      </div>
+    </template>
+    <div v-else class="flex justify-center items-center">
+      <SwdSpinner large />
     </div>
   </div>
 </template>
@@ -112,6 +124,7 @@ import { onMounted, computed } from 'vue'
 import { scrollTop } from '@/utils/scrollTop'
 import { ElMessageBox } from 'element-plus'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
+import { useFetchMember } from '@/api/use-fetch-member.js'
 import { ref } from 'vue'
 
 export default {
@@ -129,6 +142,7 @@ export default {
     const id = route.params.id
 
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
+    const { isFetching: isFetchingMember, data: member } = useFetchMember({ id: route.params.id })
 
     const { mutateAsync: convertLead, isLoading: isLoadingConvert } = useMutation(convertLeadToOpportunity)
     const { mutateAsync: sendAll, isLoading: isLoadingSubmitAll } = useMutation(sendAllInformation)
@@ -186,6 +200,10 @@ export default {
       return true
     })
 
+    const goLeadsList = () => {
+      router.push({ name: 'list-all-leads' })
+    }
+
     return {
       isLoadingConvert,
       convert,
@@ -197,6 +215,9 @@ export default {
       disabledSubmitBtn,
       isLoadingSubmitAll,
       errorSend,
+      goLeadsList,
+      isFetchingMember,
+      member,
     }
   },
 }
