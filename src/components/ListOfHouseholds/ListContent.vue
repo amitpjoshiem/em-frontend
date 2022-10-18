@@ -29,7 +29,7 @@
           :count="!isLoading ? data.leads.inactive : 0"
         />
       </div>
-      <div class="flex items-center">
+      <div v-if="$can('advisor', 'all')" class="flex items-center">
         <ListOfHouseholdsFilter class="pr-2" :list-type="listType" />
       </div>
     </div>

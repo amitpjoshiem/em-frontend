@@ -7,6 +7,9 @@ export const useFetchStatsMembers = (type) => {
   const store = useStore()
 
   const onlyMy = computed(() => {
+    if (store.state.globalComponents.role === 'assistant') {
+      return 'selected'
+    }
     if (type.value === 'client,prospect') {
       return store.state.globalComponents.onlyMyMember
     }
@@ -16,6 +19,9 @@ export const useFetchStatsMembers = (type) => {
     return ''
   })
   const ownerIdMember = computed(() => {
+    if (store.state.globalComponents.role === 'assistant') {
+      return store.state.globalComponents.advisorId
+    }
     if (type.value === 'client,prospect') {
       store.state.globalComponents.ownerMember?.id
     }
