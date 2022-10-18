@@ -1,7 +1,6 @@
 <template>
   <div class="flex justify-end items-center">
     <SwdSpinner v-if="isLoadingUserProfile" />
-
     <template v-else>
       <router-link :to="{ name: 'profile' }">
         <SwdAvatar v-if="!isLoadingUserProfile" :link="user.avatar.url" />

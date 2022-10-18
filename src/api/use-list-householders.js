@@ -18,6 +18,9 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
     return undefined
   })
   const onlyMy = computed(() => {
+    if (store.state.globalComponents.role === 'assistant') {
+      return 'selected'
+    }
     if (type === 'client,prospect') {
       return store.state.globalComponents.onlyMyMember
     }
@@ -27,8 +30,11 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
     return ''
   })
   const ownerIdMember = computed(() => {
+    if (store.state.globalComponents.role === 'assistant') {
+      return store.state.globalComponents.advisorId
+    }
     if (type === 'client,prospect') {
-      store.state.globalComponents.ownerMember?.id
+      return store.state.globalComponents.ownerMember?.id
     }
     if (type === 'lead') {
       return store.state.globalComponents.ownerLead?.id
