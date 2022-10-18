@@ -1,5 +1,5 @@
 <template>
-  <SwdButton primary small :disabled="isLoading" class="w-[100px]" @click="edit">
+  <SwdButton primary small :disabled="isLoading" class="w-[100px] ml-4" @click="showModal">
     <SwdSpinner v-show="isLoading" class="mr-2" />
     {{ getText(company) }}
   </SwdButton>
@@ -10,11 +10,11 @@
         v-for="item in data.data"
         :key="item.id"
         class="border border-main-gray p-2 m-2 rounded-lg hover:border-border-blue"
-        :class="{ 'border-border-blue': item.id === currentCompany.id }"
+        :class="{ 'border-main-blue': item.id === currentCompany.id }"
       >
         <div
           class="py-2 text-center text-main cursor-default"
-          :class="{ 'text-border-blue': item.id === currentCompany.id }"
+          :class="{ 'text-primary font-semibold': item.id === currentCompany.id }"
         >
           {{ item.name }}
         </div>
@@ -34,7 +34,9 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <div class="flex justify-end">
+          <SwdButton info small class="w-[100px]" @click="dialogVisible = false">Cancel</SwdButton>
+        </div>
       </span>
     </template>
   </el-dialog>
@@ -54,10 +56,8 @@ export default {
     const store = useStore()
     const router = useRouter()
     const queryClient = useQueryClient()
-
     const company = ref()
     const options = ref([])
-
     const dialogVisible = ref(false)
 
     const { isLoading, isError, data } = useFetchCompanies()
@@ -96,24 +96,25 @@ export default {
       return text
     }
 
+    const showModal = () => {
+      dialogVisible.value = true
+    }
+
     return {
       company,
       options,
-
       isLoading,
       isError,
       data,
-
       Edit,
       dialogVisible,
       Finished,
       Link,
-
       newTabCompany,
       chooseCompany,
-
       getText,
       currentCompany,
+      showModal,
     }
   },
 }
