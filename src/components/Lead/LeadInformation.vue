@@ -42,7 +42,7 @@
           </el-card>
         </router-link>
 
-        <!-- Upload your Investment/Retirement Statements Here -->
+        <!-- Upload your Investment/Retirement Statements -->
         <router-link :to="{ name: 'investment-retirement' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
@@ -55,12 +55,12 @@
                   "
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload your Investment/Retirement Statements Here</div>
+              <div class="text-xs sm:text-base text-main">Upload your Investment/Retirement Statements</div>
             </div>
           </el-card>
         </router-link>
 
-        <!-- Upload your Life Insurance Statements Here -->
+        <!-- Upload your Life Insurance Statements -->
         <router-link :to="{ name: 'life-insurance' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
@@ -73,12 +73,12 @@
                   "
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload your Life Insurance Statements Here</div>
+              <div class="text-xs sm:text-base text-main">Upload your Life Insurance Statements</div>
             </div>
           </el-card>
         </router-link>
 
-        <!-- Upload your Social Security Statements Here -->
+        <!-- Upload your Social Security Statements -->
         <router-link :to="{ name: 'social-security' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
@@ -89,7 +89,7 @@
                   "
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload your Social Security Statements Here</div>
+              <div class="text-xs sm:text-base text-main">Upload your Social Security Statements</div>
             </div>
           </el-card>
         </router-link>
