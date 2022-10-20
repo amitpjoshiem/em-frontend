@@ -23,7 +23,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useSearchMembers } from '@/api/use-search-members.js'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { Search } from '@element-plus/icons-vue'
 
 export default defineComponent({
@@ -33,6 +33,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const links = ref([])
     const state = ref('')
 
@@ -60,7 +61,7 @@ export default defineComponent({
     }
 
     const handleSelect = (item) => {
-      if (item.id) router.push({ name: 'member-details', params: { id: item.id } })
+      if (item.id) router.push({ name: `${route.meta.type}/member-details`, params: { id: item.id } })
     }
 
     return {
