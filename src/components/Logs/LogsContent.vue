@@ -43,7 +43,7 @@
                     <span class="pr-2">Member: </span>
                     <router-link
                       v-if="elem.member_type !== 'lead'"
-                      :to="{ name: 'member-details', params: { id: elem.member_id } }"
+                      :to="{ name: `${route.meta.type}/member-details`, params: { id: elem.member_id } }"
                       class="text-smm font-medium hover:text-activity"
                     >
                       {{ elem.member_name }}
@@ -84,16 +84,17 @@
 <script>
 import { useFetchLogs } from '@/api/use-fetch-logs'
 import { useFetchAssistents } from '@/api/use-fetch-assistents.js'
-
 import IconLastActivityEmpty from '@/assets/svg/icon-last-activity-empty.svg'
 import { computed, onUnmounted, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'LogsContent',
 
   setup() {
     const store = useStore()
+    const route = useRoute()
 
     const value = ref('')
     const options = ref([])
@@ -156,16 +157,14 @@ export default {
       hasMore,
       isFetchingNextPage,
       isFetching,
-
       isLoadingAssistents,
       isErrorAssistents,
       assistents,
       isFetchedAssistents,
-
       changeAssistent,
-
       value,
       options,
+      route,
     }
   },
 }

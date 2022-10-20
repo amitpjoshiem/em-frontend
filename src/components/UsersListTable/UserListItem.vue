@@ -3,7 +3,7 @@
     <SwdAvatar :link="getAvatarUrl" />
     <router-link
       :to="{
-        name: user.step ? 'member-details' : 'basic-information',
+        name: user.step ? `${route.meta.type}/member-details` : 'basic-information',
         params: { id: user.id },
       }"
       class="pl-2.5 font-medium"
@@ -32,6 +32,7 @@
 <script>
 import SwdLinearProgress from '@/components/Global/SwdLinearProgress.vue'
 import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'UserListItem',
@@ -46,6 +47,8 @@ export default {
     },
   },
   setup(props) {
+    const route = useRoute()
+
     const getPercentage = computed(() => {
       if (props.user) {
         return Number(props.user.step) * 20
@@ -61,6 +64,7 @@ export default {
     return {
       getPercentage,
       getAvatarUrl,
+      route,
     }
   },
 }

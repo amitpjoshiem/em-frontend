@@ -124,7 +124,7 @@ export default {
               type: 'success',
               message: 'Opportunity created successfully',
             })
-            router.push({ name: 'member-details', params: { id } })
+            router.push({ name: `${route.meta.type}/member-details`, params: { id } })
           }
         } else {
           return false
