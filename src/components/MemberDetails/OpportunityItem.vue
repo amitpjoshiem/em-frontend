@@ -9,10 +9,10 @@
     <div class="w-4/24 item">{{ currencyFormat(user.amount) }}</div>
     <div class="w-6/24 item">{{ user.stage }}</div>
     <div class="w-4/24 item">{{ user.closeDateFormatted }}</div>
-    <div class="w-1/24 item">
+    <div v-if="!$can('client', 'all')" class="w-1/24 item">
       <SwdOpportunityItemActions :user="user" />
     </div>
-    <div class="w-1/24 item" @click="editOpportunity">
+    <div v-if="!$can('client', 'all')" class="w-1/24 item" @click="editOpportunity">
       <el-icon color="green" class="cursor-pointer">
         <EditPen />
       </el-icon>
