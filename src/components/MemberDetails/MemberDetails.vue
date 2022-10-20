@@ -9,7 +9,7 @@
     />
     <span v-else-if="member?.name" class="text-2xl font-semibold">Welcome, {{ member.name }}</span>
 
-    <template v-if="!$can('client', 'all')">
+    <template v-if="$can('advisor', 'all') || $can('admin', 'all') || $can('ceo', 'all')">
       <div v-if="isLoadingProspectDetails" class="flex items-center justify-center">
         <SwdSpinner />
       </div>

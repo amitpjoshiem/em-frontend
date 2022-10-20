@@ -164,7 +164,7 @@ export default {
     }
 
     const cancel = () => {
-      router.push({ name: 'lead-dashboard' })
+      router.push({ name: 'lead/dashboard' })
     }
 
     const submit = () => {

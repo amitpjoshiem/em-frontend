@@ -7,13 +7,20 @@ export const advisorRoute = {
   name: 'advisor-home',
   component: AdvisorHome,
   meta: {
-    resource: [{ advisor: 'all' }, { admin: 'all' }, { ceo: 'all' }, { assistant: 'all' }, { client: 'all' }],
+    resource: [
+      { advisor: 'all' },
+      { admin: 'all' },
+      { ceo: 'all' },
+      { assistant: 'all' },
+      { client: 'all' },
+      { support: 'all' },
+    ],
     type,
   },
   children: [
     {
-      path: 'advisor-dashboard',
-      name: 'advisor-dashboard',
+      path: 'dashboard',
+      name: `${type}/dashboard`,
       component: () => import(/* webpackChunkName: "Dashboard" */ '../../views/AdvisorDashboard.vue'),
     },
 
@@ -288,18 +295,18 @@ export const advisorRoute = {
 
     {
       path: 'list-of-households',
-      name: 'list-of-households',
+      name: `${type}/list-of-households`,
       component: () => import(/* webpackChunkName: "ListOfHouseholds" */ '../../views/ListOfHouseholds.vue'),
       children: [
         {
           path: 'all',
-          name: 'all',
+          name: `${type}/all`,
           component: () =>
             import(/* webpackChunkName: "ListOfHouseholds" */ '../../components/ListOfHouseholds/ListAll.vue'),
         },
         {
           path: 'opportunities',
-          name: 'opportunities',
+          name: `${type}/opportunities`,
           component: () =>
             import(
               /* webpackChunkName: "ListOfHouseholds" */ '../../components/ListOfHouseholds/ListOpportunities.vue'
@@ -307,7 +314,7 @@ export const advisorRoute = {
         },
         {
           path: 'clients',
-          name: 'clients',
+          name: `${type}/clients`,
           component: () =>
             import(/* webpackChunkName: "ListOfHouseholds" */ '../../components/ListOfHouseholds/ListClients.vue'),
         },

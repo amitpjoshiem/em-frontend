@@ -1,6 +1,10 @@
 <template>
-  <el-badge :value="count" :max="99" class="mr-8" :type="getType ? 'primary' : 'info'" :hidden="isLoading">
-    <router-link :to="{ name: getLink }" class="text-main text-smm cursor-pointer" :class="{ active: getType }">
+  <el-badge :value="count" :max="99" class="mr-8" :type="getType" :hidden="isLoading">
+    <router-link
+      :to="{ name: getLink }"
+      class="text-main text-smm cursor-pointer"
+      :class="{ active: getType === 'primary' }"
+    >
       Clients
     </router-link>
   </el-badge>
@@ -8,7 +12,6 @@
 <script>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 
 export default {
   name: 'TabClients',
@@ -26,28 +29,26 @@ export default {
   },
   setup() {
     const route = useRoute()
-    const store = useStore()
 
     const getActiveTab = computed(() => {
       return route.name
     })
 
-    const getCurrentTypeUser = computed(() => {
-      return store.state.globalComponents.currentTypeUser
-    })
-
     const getType = computed(() => {
-      if (getCurrentTypeUser.value === 'advisor' && getActiveTab.value === 'clients') return true
-      if (getCurrentTypeUser.value === 'admin' && getActiveTab.value === 'admin-opportunities-list') return true
-      if (getCurrentTypeUser.value === 'ceo' && getActiveTab.value === 'ceo-clients-list') return true
-      return false
+      if (route.name === route.meta.type + '/clients') return 'primary'
+      return 'info'
+      // if (getCurrentTypeUser.value === 'advisor' && getActiveTab.value === 'clients') return true
+      // if (getCurrentTypeUser.value === 'admin' && getActiveTab.value === 'admin-opportunities-list') return true
+      // if (getCurrentTypeUser.value === 'ceo' && getActiveTab.value === 'ceo-clients-list') return true
+      // return false
     })
 
     const getLink = computed(() => {
-      if (getCurrentTypeUser.value === 'advisor') return 'clients'
-      if (getCurrentTypeUser.value === 'admin') return 'admin-clients-list'
-      if (getCurrentTypeUser.value === 'ceo') return 'ceo-clients-list'
-      return '404'
+      return route.meta.type + '/clients'
+      // if (getCurrentTypeUser.value === 'advisor') return 'clients'
+      // if (getCurrentTypeUser.value === 'admin') return 'admin-clients-list'
+      // if (getCurrentTypeUser.value === 'ceo') return 'ceo-clients-list'
+      // return '404'
     })
 
     return {

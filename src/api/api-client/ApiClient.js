@@ -75,6 +75,8 @@ class ApiClient {
       const type = store.state.globalComponents.currentTypeUser
       const companyId = store.state.globalComponents.currentCompanyId
 
+      console.log('type - ', type)
+
       if (companyId) customHeader['x-company'] = companyId
 
       if (type === 'advisor') {
@@ -95,6 +97,11 @@ class ApiClient {
 
       if (type === 'lead') {
         customHeader['x-user'] = store.state.globalComponents.leadId
+      }
+
+      if (type === 'support') {
+        console.log('========', store.state.globalComponents.supportId)
+        customHeader['x-user'] = store.state.globalComponents.supportId
       }
     }
     return customHeader

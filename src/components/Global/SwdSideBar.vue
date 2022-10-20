@@ -1,22 +1,24 @@
 <template>
   <aside class="bg-primary min-h-screen flex-col w-[68px] sm:flex hidden">
-    <div class="fixed cursor-pointer" @click="goHome">
+    <router-link :to="{ name: `home` }">
       <div class="flex items-center justify-center mt-4 w-[63px]">
         <InlineSvg :src="IrisIconReverse" width="50" height="50" />
       </div>
-    </div>
-    <div v-if="isShowSideBar" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
+    </router-link>
+    <div v-if="isAuth" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
       <router-link
-        :to="{ name: 'advisor-dashboard' }"
+        v-if="$can('advisor', 'all') || $can('support', 'all')"
+        :to="{ name: `${route.meta.type}/dashboard` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
-        :class="{ active: getRouteName === 'advisor-dashboard' }"
+        :class="{ active: getRouteName === `${route.meta.type}/dashboard` }"
       >
-        <InlineSvg v-if="getRouteName === 'advisor-dashboard'" :src="IconDashboardActive" />
+        <InlineSvg v-if="getRouteName === `${route.meta.type}/dashboard`" :src="IconDashboardActive" />
         <InlineSvg v-else :src="IconDashboard" />
       </router-link>
 
       <router-link
-        :to="{ name: 'all' }"
+        v-if="$can('advisor', 'all') || $can('support', 'all')"
+        :to="{ name: `${route.meta.type}/all` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{
           active: getActiveListOfHouseholds,
@@ -27,6 +29,7 @@
       </router-link>
 
       <router-link
+        v-if="$can('advisor', 'all') || $can('support', 'all')"
         :to="{ name: 'activity' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'activity' }"
@@ -36,6 +39,7 @@
       </router-link>
 
       <router-link
+        v-if="$can('advisor', 'all')"
         :to="{ name: 'pipeline' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'pipeline' }"
@@ -45,6 +49,7 @@
       </router-link>
 
       <router-link
+        v-if="$can('advisor', 'all') || $can('support', 'all')"
         :to="{ name: 'list-all-leads' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'leads' }"
@@ -61,7 +66,7 @@
       </router-link>
 
       <router-link
-        v-if="!$can('lead', 'all')"
+        v-if="$can('advisor', 'all')"
         :to="{ name: 'logs' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'logs' }"
@@ -76,10 +81,7 @@
 <script>
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-
-import { useAbility } from '@casl/vue'
-
+import { useRoute } from 'vue-router'
 import IconList from '@/assets/svg/icon-list.svg'
 import IconListActive from '@/assets/svg/list-sidebar-active.svg'
 import IconAssets from '@/assets/svg/icon-assets.svg'
@@ -101,19 +103,9 @@ export default {
   setup() {
     const store = useStore()
     const route = useRoute()
-    const router = useRouter()
-    const { can } = useAbility()
 
     const isAuth = computed(() => {
       return store.state.auth.isAuth
-    })
-
-    const userType = computed(() => {
-      return store.state.globalComponents.currentTypeUser
-    })
-
-    const userRole = computed(() => {
-      return store.state.globalComponents.role
     })
 
     const getRouteName = computed(() => {
@@ -122,21 +114,11 @@ export default {
 
     const getActiveListOfHouseholds = computed(() => {
       return (
-        getRouteName.value === 'all' ||
-        getRouteName.value === 'clients' ||
-        getRouteName.value === 'opportunities' ||
-        getRouteName.value === 'list-of-advisors'
+        getRouteName.value === `${route.meta.type}/all` ||
+        getRouteName.value === `${route.meta.type}/clients` ||
+        getRouteName.value === `${route.meta.type}/opportunities` ||
+        getRouteName.value === `${route.meta.type}/list-of-advisors`
       )
-    })
-
-    const goHome = () => {
-      router.push({ name: 'home' })
-    }
-
-    const isShowSideBar = computed(() => {
-      if (isAuth.value && userType.value === 'advisor' && !can('lead', 'all')) return true
-      if (isAuth.value && userRole.value === 'advisor') return true
-      return false
     })
 
     return {
@@ -157,9 +139,8 @@ export default {
       IconLeadsActive,
       IconLogs,
       IconLogsActive,
-      goHome,
-      isShowSideBar,
       IrisIconReverse,
+      route,
     }
   },
 }
