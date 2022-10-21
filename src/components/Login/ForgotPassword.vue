@@ -5,7 +5,7 @@
         <InlineSvg :src="IrisLogoStandart" width="100" height="40" />
       </div>
       <h1 class="text-center text-main font-medium text-2xl">Forgot password?</h1>
-      <h1 class="text-center text-main text-xss">Please enter you email</h1>
+      <h1 class="text-center text-main text-xss">Please enter your email</h1>
       <div v-if="sendFormForgotPass" class="my-5">Please check your email for your IRIS password reset link</div>
       <div v-else>
         <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">

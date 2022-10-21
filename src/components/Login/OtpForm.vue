@@ -15,7 +15,7 @@
         <h1 v-if="otpTypePhone" class="text-center text-main pt-2.5 text-sm">Please check your SMS.</h1>
         <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
           <el-form-item label="OTP" prop="code">
-            <el-input v-model="ruleForm.code" placeholder="Enter otp code" />
+            <el-input v-model="ruleForm.code" placeholder="Enter otp code" autofocus="true" />
           </el-form-item>
           <el-form-item class="my-6">
             <SwdButton primary main :disabled="fetching" class="w-full" @click="submit">
