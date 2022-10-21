@@ -1,8 +1,7 @@
 import SuperAdminHome from '@/layouts/SuperAdminHome.vue'
 import store from '@/store'
-import { useRouter } from 'vue-router'
+import router from '../index'
 
-const router = useRouter()
 const type = 'ceo'
 
 export const ceoRoute = {
