@@ -727,7 +727,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Information update successfully',
+              message: 'Information updated successfully',
             })
             store.commit('newClient/setStep', step.value + 1)
             router.push({

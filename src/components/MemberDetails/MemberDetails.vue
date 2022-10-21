@@ -7,7 +7,9 @@
       info-btn-destination="MemberDetails"
       :loading="isLoadingProspectDetails"
     />
-    <span v-else-if="member?.name" class="text-2xl font-semibold">Welcome, {{ member.name }}</span>
+    <div v-else-if="member?.name" class="flex justify-center w-full">
+      <span class="text-2xl font-semibold">Welcome, {{ member.name }}</span>
+    </div>
 
     <template v-if="!$can('client', 'all')">
       <div v-if="isLoadingProspectDetails" class="flex items-center justify-center">
