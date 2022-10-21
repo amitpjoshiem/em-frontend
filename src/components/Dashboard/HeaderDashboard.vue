@@ -1,6 +1,6 @@
 <template>
   <div class="h-20 flex items-center">
-    <div v-if="!isLoading" class="flex pt-5 pb-5 text-2xl font-medium">
+    <div v-if="!isLoading" class="flex justify-center w-full pt-5 pb-5 text-2xl font-semibold">
       <span> Welcome, {{ userProfile.lastName }} {{ userProfile.firstName }} </span>
       <span v-if="userProfile.position" class="pl-2">({{ userProfile.position }})</span>
     </div>

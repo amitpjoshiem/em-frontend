@@ -245,6 +245,7 @@ export default {
       refetchOpportunity,
       updateOpportunity,
       isLoadingUpdateOpportunity,
+      isEditModal,
     }
   },
 }
