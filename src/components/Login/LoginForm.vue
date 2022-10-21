@@ -5,7 +5,7 @@
         <InlineSvg :src="IrisLogoStandart" width="100" height="40" />
       </div>
       <h1 class="text-center text-main font-medium text-2xl">Login</h1>
-      <h1 class="text-center text-main text-xss">Please enter you email and password</h1>
+      <h1 class="text-center text-main text-xss">Please enter your email and password</h1>
       <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" @submit.prevent="submit">
         <el-form-item label="E-mail" prop="email" class="py-3">
           <el-input v-model="ruleForm.email" placeholder="Enter your e-mail" @keyup.enter="submit" />
