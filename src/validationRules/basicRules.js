@@ -125,58 +125,43 @@ const rules = {
       },
     ],
   },
-  house: {
-    market_value: [
-      {
-        validator: validateNumber,
-        trigger: 'blur',
-        required: true,
-        // transform(value) {
-        //   return value.trim()
-        // },
-      },
-    ],
-    total_debt: [
-      {
-        validator: validateNumber,
-        trigger: 'blur',
-        required: true,
-        // transform(value) {
-        //   return value.trim()
-        // },
-      },
-    ],
-    remaining_mortgage_amount: [
-      {
-        validator: validateNumber,
-        trigger: 'blur',
-        required: true,
-        // transform(value) {
-        //   return value.trim()
-        // },
-      },
-    ],
-    monthly_payment: [
-      {
-        validator: validateNumber,
-        trigger: 'blur',
-        required: true,
-        // transform(value) {
-        //   return value.trim()
-        // },
-      },
-    ],
-    total_monthly_expenses: [
-      {
-        validator: validateNumber,
-        trigger: 'blur',
-        required: true,
-        // transform(value) {
-        //   return value.trim()
-        // },
-      },
-    ],
-  },
+  // house: {
+  //   market_value: [
+  //     {
+  //       validator: validateNumber,
+  //       trigger: 'blur',
+  //       required: true,
+  //     },
+  //   ],
+  //   total_debt: [
+  //     {
+  //       validator: validateNumber,
+  //       trigger: 'blur',
+  //       required: true,
+  //     },
+  //   ],
+  //   remaining_mortgage_amount: [
+  //     {
+  //       validator: validateNumber,
+  //       trigger: 'blur',
+  //       required: true,
+  //     },
+  //   ],
+  //   monthly_payment: [
+  //     {
+  //       validator: validateNumber,
+  //       trigger: 'blur',
+  //       required: true,
+  //     },
+  //   ],
+  //   total_monthly_expenses: [
+  //     {
+  //       validator: validateNumber,
+  //       trigger: 'blur',
+  //       required: true,
+  //     },
+  //   ],
+  // },
 
   employment_history: [
     {
@@ -186,9 +171,6 @@ const rules = {
           required: false,
           message: 'The field cannot be empty',
           trigger: 'blur',
-          // transform(value) {
-          //   return value.trim()
-          // },
         },
       ],
       occupation: [
@@ -233,7 +215,7 @@ function validateNumber(rule, value, callback) {
     callback(new Error('Data is not a number'))
   }
 
-  if (rule.required && !value) {
+  if (rule.required) {
     callback(new Error('The field cannot be empty'))
   }
 
