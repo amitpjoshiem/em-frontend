@@ -1,15 +1,16 @@
 <template>
   <div class="flex items-center">
     <SwdAvatar :link="getAvatarUrl" />
-    <router-link :to="{ name: `advisor/dashboard` }" class="pl-2.5 text-main text-xss font-semibold cursor-pointer">
+    <div class="pl-2.5 text-main text-xss font-semibold cursor-pointer" @click="openAdvisor">
       {{ getName }}
-    </router-link>
+    </div>
   </div>
 </template>
 
 <script>
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default {
   name: 'AdvisorsListName',
@@ -22,6 +23,8 @@ export default {
   },
   setup(props) {
     const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
 
     const getAvatarUrl = computed(() => {
       if (props.advisor.avatar?.url) return props.advisor.avatar.url
@@ -34,10 +37,17 @@ export default {
       return props.advisor.username
     })
 
+    const openAdvisor = () => {
+      store.commit('globalComponents/setAdvisorId', props.advisor.id)
+      router.push({ name: 'advisor/dashboard' })
+    }
+
     return {
       getAvatarUrl,
       getName,
       route,
+
+      openAdvisor,
     }
   },
 }

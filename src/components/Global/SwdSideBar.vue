@@ -7,7 +7,7 @@
     </router-link>
     <div v-if="isShowSideBar" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
       <router-link
-        v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all')"
+        v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: `${route.meta.type}/dashboard` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === `${route.meta.type}/dashboard` }"
@@ -16,7 +16,7 @@
         <InlineSvg v-else :src="IconDashboard" />
       </router-link>
       <router-link
-        v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all')"
+        v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: `${getRole}/all` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{
@@ -28,7 +28,7 @@
       </router-link>
 
       <router-link
-        v-if="$can('advisor', 'all') || $can('ceo', 'all')"
+        v-if="$can('advisor', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: 'activity' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'activity' }"
@@ -38,7 +38,7 @@
       </router-link>
 
       <router-link
-        v-if="$can('advisor', 'all') || $can('ceo', 'all')"
+        v-if="$can('advisor', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: 'pipeline' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'pipeline' }"
@@ -47,7 +47,7 @@
         <InlineSvg v-else :src="IconPipeLine" />
       </router-link>
       <router-link
-        v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all')"
+        v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: `${getRole}/all-leads` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'leads' }"
@@ -64,7 +64,7 @@
       </router-link>
 
       <router-link
-        v-if="$can('advisor', 'all') || $can('ceo', 'all')"
+        v-if="$can('advisor', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: 'logs' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'logs' }"
@@ -102,10 +102,6 @@ export default {
     const store = useStore()
     const route = useRoute()
 
-    // const isAuth = computed(() => {
-    //   return store.state.auth.isAuth
-    // })
-
     const getRouteName = computed(() => {
       return route.name
     })
@@ -124,9 +120,7 @@ export default {
     })
 
     const isShowSideBar = computed(() => {
-      console.log('route.meta.type - ', route.meta.type)
       if (store.state.auth.isAuth && (route.meta.type === 'advisor' || route.meta.type === 'support')) return true
-      // if (store.state.auth.isAuth) return true
       return false
     })
 
@@ -136,7 +130,6 @@ export default {
       IconDashboard,
       IconDashboardActive,
       IconListActive,
-      // isAuth,
       getRouteName,
       getActiveListOfHouseholds,
       IconActivityGray,
