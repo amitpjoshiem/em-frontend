@@ -23,18 +23,18 @@ export const ceoRoute = {
   },
   children: [
     {
-      path: 'ceo-dashboard',
-      name: 'ceo-dashboard',
+      path: 'dashboard',
+      name: `${type}/dashboard`,
       component: () => import(/* webpackChunkName: "SuperAdminDashboard" */ '../../views/SuperAdminDashboard.vue'),
     },
     {
       path: 'list-of-advisors',
-      name: 'ceo-list-of-advisors',
+      name: `${type}/list-of-advisors`,
       component: () => import(/* webpackChunkName: "ListOfAdvisors" */ '../../views/ListOfAdvisors.vue'),
       children: [
         {
-          path: 'all-advisors',
-          name: 'ceo-all-advisors',
+          path: 'all',
+          name: `${type}/all-advisors`,
           component: () =>
             import(
               /* webpackChunkName: "ListAdvisorsAll" */ '../../components/SuperAdmin/ListOfAdvisors/ListAdvisorsAll.vue'
@@ -44,39 +44,66 @@ export const ceoRoute = {
     },
     {
       path: 'list-of-households',
-      name: 'ceo-list-of-households',
+      name: `${type}/list-of-households`,
       component: () => import(/* webpackChunkName: "ListOfHouseholds" */ '../../views/ListOfHouseholds.vue'),
       children: [
         {
-          path: 'all-list',
-          name: 'ceo-all-list',
+          path: 'all',
+          name: `${type}/all`,
           component: () =>
             import(/* webpackChunkName: "ListOfHouseholds" */ '../../components/ListOfHouseholds/ListAll.vue'),
         },
         {
-          path: 'opportunities-list',
-          name: 'ceo-opportunities-list',
+          path: 'opportunities',
+          name: `${type}/opportunities`,
           component: () =>
             import(
               /* webpackChunkName: "ListOfHouseholds" */ '../../components/ListOfHouseholds/ListOpportunities.vue'
             ),
         },
         {
-          path: 'clients-list',
-          name: 'ceo-clients-list',
+          path: 'clients',
+          name: `${type}/clients`,
           component: () =>
             import(/* webpackChunkName: "ListOfHouseholds" */ '../../components/ListOfHouseholds/ListClients.vue'),
         },
       ],
     },
     {
+      path: 'leads',
+      name: `${type}/leads`,
+      component: () => import(/* webpackChunkName: "Leads" */ '../../views/Leads.vue'),
+      children: [
+        {
+          path: 'all-leads',
+          name: `${type}/all-leads`,
+          component: () =>
+            import(/* webpackChunkName: "ListOfLeads" */ '../../components/ListOfLeads/ListAllLeads.vue'),
+        },
+        {
+          path: 'active-leads',
+          name: `${type}/active-leads`,
+          component: () =>
+            import(/* webpackChunkName: "ListActiveLeads" */ '../../components/ListOfLeads/ListActiveLeads.vue'),
+        },
+        {
+          path: 'deactivated-leads',
+          name: `${type}/deactivated-leads`,
+          component: () =>
+            import(
+              /* webpackChunkName: "ListDeactivatedLeads" */ '../../components/ListOfLeads/ListDeactivatedLeads.vue'
+            ),
+        },
+      ],
+    },
+    {
       path: 'activity',
-      name: 'ceo-activity',
+      name: `${type}/activity`,
       component: () => import(/* webpackChunkName: "Activity" */ '../../views/Activity.vue'),
     },
     {
       path: 'pipeline',
-      name: 'ceo-pipeline',
+      name: `${type}/pipeline`,
       component: () => import(/* webpackChunkName: "PipeLine" */ '../../views/PipeLine.vue'),
     },
     {

@@ -53,7 +53,7 @@ export default {
     const getLink = computed(() => {
       if (getCurrentTypeUser.value === 'advisor') return 'activity'
       if (getCurrentTypeUser.value === 'admin') return 'admin-activity'
-      if (getCurrentTypeUser.value === 'ceo') return 'ceo-activity'
+      if (getCurrentTypeUser.value === 'ceo') return 'ceo/activity'
       return '404'
     })
 

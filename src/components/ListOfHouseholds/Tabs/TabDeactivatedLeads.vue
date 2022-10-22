@@ -1,9 +1,9 @@
 <template>
-  <el-badge :value="count" :max="99" class="mr-8" :type="getType ? 'primary' : 'info'" :hidden="isLoading">
+  <el-badge :value="count" :max="99" class="mr-8" :type="getType" :hidden="isLoading">
     <router-link
-      :to="{ name: 'list-deactivated-leads' }"
+      :to="{ name: `${route.meta.type}/deactivated-leads` }"
       class="text-main text-smm cursor-pointer"
-      :class="{ active: getType }"
+      :class="{ active: getType === 'primary' }"
     >
       Deactivated Leads
     </router-link>
@@ -12,7 +12,6 @@
 <script>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 
 export default {
   name: 'TabDeactivatedLeads',
@@ -30,24 +29,15 @@ export default {
   },
   setup() {
     const route = useRoute()
-    const store = useStore()
-
-    const getActiveTab = computed(() => {
-      return route.name
-    })
-
-    const getCurrentTypeUser = computed(() => {
-      return store.state.globalComponents.currentTypeUser
-    })
 
     const getType = computed(() => {
-      if (getCurrentTypeUser.value === 'advisor' && getActiveTab.value === 'list-deactivated-leads') return true
-      return false
+      if (route.name === route.meta.type + '/deactivated-leads') return 'primary'
+      return 'info'
     })
 
     return {
-      getActiveTab,
       getType,
+      route,
     }
   },
 }

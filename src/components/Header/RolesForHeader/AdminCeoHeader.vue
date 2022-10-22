@@ -2,7 +2,7 @@
   <SwdRemoteSearch class="w-2/12" />
   <div class="flex justify-end items-center text-sm w-8/12">
     <el-button
-      :type="getRouteName === 'admin-dashboard' || getRouteName === 'ceo-dashboard' ? 'primary' : 'info'"
+      :type="getRouteName === 'admin-dashboard' || getRouteName === 'ceo/dashboard' ? 'primary' : 'info'"
       size="small"
       plain
       @click="goDashboard"
@@ -10,7 +10,7 @@
       Dashboard
     </el-button>
     <el-button
-      :type="getRouteName === 'admin-all-advisors' || getRouteName === 'ceo-all-advisors' ? 'primary' : 'info'"
+      :type="getRouteName === 'admin-all-advisors' || getRouteName === 'ceo/all-advisors' ? 'primary' : 'info'"
       size="small"
       plain
       @click="goAdvisors"
@@ -20,7 +20,7 @@
     <el-button
       plain
       size="small"
-      :type="getRouteName === 'admin-all-list' || getRouteName === 'ceo-all-list' ? 'primary' : 'info'"
+      :type="getRouteName === 'admin-all-list' || getRouteName === 'ceo/all' ? 'primary' : 'info'"
       @click="goMembers"
     >
       Members
@@ -28,7 +28,7 @@
     <el-button
       plain
       size="small"
-      :type="getRouteName === 'admin-activity' || getRouteName === 'ceo-activity' ? 'primary' : 'info'"
+      :type="getRouteName === 'admin-activity' || getRouteName === 'ceo/activity' ? 'primary' : 'info'"
       @click="goActivity"
     >
       Activity
@@ -36,7 +36,7 @@
     <el-button
       plain
       size="small"
-      :type="getRouteName === 'admin-pipeline' || getRouteName === 'ceo-pipeline' ? 'primary' : 'info'"
+      :type="getRouteName === 'admin-pipeline' || getRouteName === 'ceo/pipeline' ? 'primary' : 'info'"
       @click="goPipeLine"
     >
       PipeLine
@@ -55,7 +55,7 @@ import SelectCompany from '@/components/Header/SelectCompany.vue'
 import HeaderNotificationsBlock from '@/components/Header/HeaderNotificationsBlock.vue'
 import UserAction from '@/components/UserAction.vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { computed } from 'vue'
 
 export default {
@@ -69,34 +69,39 @@ export default {
   setup() {
     const store = useStore()
     const router = useRouter()
+    const route = useRoute()
 
     const getRole = computed(() => {
       return store.state.globalComponents.role
     })
 
+    const getRouteName = computed(() => {
+      return route.name
+    })
+
     const goAdvisors = () => {
       if (getRole.value === 'admin') router.push({ name: 'admin-all-advisors' })
-      if (getRole.value === 'ceo') router.push({ name: 'ceo-all-advisors' })
+      if (getRole.value === 'ceo') router.push({ name: 'ceo/all-advisors' })
     }
 
     const goDashboard = () => {
       if (getRole.value === 'admin') router.push({ name: 'admin-dashboard' })
-      if (getRole.value === 'ceo') router.push({ name: 'ceo-dashboard' })
+      if (getRole.value === 'ceo') router.push({ name: 'ceo/dashboard' })
     }
 
     const goActivity = () => {
       if (getRole.value === 'admin') router.push({ name: 'admin-activity' })
-      if (getRole.value === 'ceo') router.push({ name: 'ceo-activity' })
+      if (getRole.value === 'ceo') router.push({ name: 'ceo/activity' })
     }
 
     const goMembers = () => {
       if (getRole.value === 'admin') router.push({ name: 'admin-all-list' })
-      if (getRole.value === 'ceo') router.push({ name: 'ceo-all-list' })
+      if (getRole.value === 'ceo') router.push({ name: 'ceo/all' })
     }
 
     const goPipeLine = () => {
       if (getRole.value === 'admin') router.push({ name: 'admin-pipeline' })
-      if (getRole.value === 'ceo') router.push({ name: 'ceo-pipeline' })
+      if (getRole.value === 'ceo') router.push({ name: 'ceo/pipeline' })
     }
 
     return {
@@ -105,6 +110,7 @@ export default {
       goActivity,
       goMembers,
       goPipeLine,
+      getRouteName,
     }
   },
 }

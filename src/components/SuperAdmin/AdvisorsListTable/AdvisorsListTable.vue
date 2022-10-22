@@ -12,7 +12,7 @@
   >
     <el-table-column prop="name" label="Name" min-width="240" sortable>
       <template #default="scope">
-        <AdvisorsListName :id="scope.row.id" :name="scope.row.username" :avatar="scope.row.avatar" />
+        <AdvisorsListName :advisor="scope.row" />
       </template>
     </el-table-column>
 

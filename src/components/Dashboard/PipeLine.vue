@@ -79,7 +79,7 @@ export default {
     const getLink = computed(() => {
       if (getCurrentTypeUser.value === 'advisor') return 'pipeline'
       if (getCurrentTypeUser.value === 'admin') return 'admin-pipeline'
-      if (getCurrentTypeUser.value === 'ceo') return 'ceo-pipeline'
+      if (getCurrentTypeUser.value === 'ceo') return 'ceo/pipeline'
       return '404'
     })
 

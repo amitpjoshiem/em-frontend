@@ -77,24 +77,24 @@ export const advisorRoute = {
 
     {
       path: 'leads',
-      name: 'leads',
+      name: `${type}/leads`,
       component: () => import(/* webpackChunkName: "Leads" */ '../../views/Leads.vue'),
       children: [
         {
-          path: 'list-all-leads',
-          name: 'list-all-leads',
+          path: 'all-leads',
+          name: `${type}/all-leads`,
           component: () =>
             import(/* webpackChunkName: "ListOfLeads" */ '../../components/ListOfLeads/ListAllLeads.vue'),
         },
         {
-          path: 'list-active-leads',
-          name: 'list-active-leads',
+          path: 'active-leads',
+          name: `${type}/active-leads`,
           component: () =>
             import(/* webpackChunkName: "ListActiveLeads" */ '../../components/ListOfLeads/ListActiveLeads.vue'),
         },
         {
-          path: 'list-deactivated-leads',
-          name: 'list-deactivated-leads',
+          path: 'deactivated-leads',
+          name: `${type}/deactivated-leads`,
           component: () =>
             import(
               /* webpackChunkName: "ListDeactivatedLeads" */ '../../components/ListOfLeads/ListDeactivatedLeads.vue'

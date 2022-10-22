@@ -201,7 +201,7 @@ export default {
     })
 
     const goLeadsList = () => {
-      router.push({ name: 'list-all-leads' })
+      router.push({ name: `${route.meta.type}/all-leads` })
     }
 
     return {
