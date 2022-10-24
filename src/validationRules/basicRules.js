@@ -215,7 +215,7 @@ function validateNumber(rule, value, callback) {
     callback(new Error('Data is not a number'))
   }
 
-  if (rule.required) {
+  if (rule.required && !value) {
     callback(new Error('The field cannot be empty'))
   }
 

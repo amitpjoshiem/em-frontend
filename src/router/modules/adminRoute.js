@@ -96,7 +96,6 @@ export const adminRoute = {
       name: `${type}/pipeline`,
       component: () => import(/* webpackChunkName: "PipeLine" */ '../../views/PipeLine.vue'),
     },
-
     {
       path: 'member/:id',
       name: `${type}/member`,
