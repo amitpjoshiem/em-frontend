@@ -14,6 +14,7 @@
 <script>
 import { useRouter } from 'vue-router'
 import { MoreFilled } from '@element-plus/icons-vue'
+import { useStore } from 'vuex'
 
 const allAvailibleOptions = {
   1: {
@@ -112,6 +113,7 @@ export default {
   },
   setup(props) {
     const router = useRouter()
+    const store = useStore()
     const actionsOptions = buildOptions(props.user, props.pageDetails)
 
     const handleSelect = (command) => {
@@ -131,14 +133,19 @@ export default {
           params: { id: props.user.id },
         }),
       'client-report': () => router.push({ name: 'clientreport', params: { id: props.user.id } }),
-      onboarding: () =>
-        router.push({
-          name: routerForStep(props.user.step),
-          params: { id: props.user.id, step: props.user.step },
-        }),
+      onboarding: () => getOnboarding(),
+
       'assets-accounts': () => router.push({ name: 'asset-accounts', params: { id: props.user.id } }),
       'assets-consolidations': () => router.push({ name: 'assets-consolidations', params: { id: props.user.id } }),
       'opportunity-contact': () => router.push({ name: 'opportunity-contact', params: { id: props.user.id } }),
+    }
+
+    const getOnboarding = () => {
+      store.commit('globalComponents/setAdvisorId', props.user.owner_id)
+      router.push({
+        name: routerForStep(props.user.step),
+        params: { id: props.user.id, step: props.user.step },
+      })
     }
 
     return {
