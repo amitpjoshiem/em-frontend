@@ -23,6 +23,7 @@ class MemberDetailsUser {
     notes,
     total_net_worth,
     goal,
+    owner_id,
   }) {
     this.id = id
     this.type = type
@@ -46,6 +47,7 @@ class MemberDetailsUser {
     this.notes = notes
     this.total_net_worth = total_net_worth
     this.goal = goal
+    this.owner_id = owner_id
   }
 
   get retirementDateFormatted() {
