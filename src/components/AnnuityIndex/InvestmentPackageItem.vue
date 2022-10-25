@@ -30,7 +30,7 @@
       <div class="texy-main text-xss">{{ item.media.file_name }}</div>
     </div>
 
-    <div v-if="!$can('client', 'all')" class="flex justify-end">
+    <div v-if="!$can('client', 'all') && !$can('support', 'all')" class="flex justify-end">
       <el-popconfirm title="Are you sure to delete this?" @confirm="confirmDelete()">
         <template #reference>
           <el-button type="danger" size="small" plain :loading="loadingDelete">Delete</el-button>

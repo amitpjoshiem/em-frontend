@@ -1,7 +1,7 @@
 <template>
   <SwdWrapper>
     <SwdSubHeader
-      v-if="!$can('client', 'all')"
+      v-if="!$can('client', 'all') && !$can('support', 'all')"
       :title="getTitle"
       witch-info-btn
       info-btn-destination="MemberDetails"

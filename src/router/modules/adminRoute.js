@@ -156,5 +156,20 @@ export const adminRoute = {
           /* webpackChunkName: "MemberDetails" */ '../../components/MemberBasicInformation/MemberBasicInformation.vue'
         ),
     },
+    {
+      path: 'asset-accounts/:id',
+      name: `${type}/asset-accounts`,
+      component: () =>
+        import(/* webpackChunkName: "AssetAccounts" */ '../../components/AssetAccounts/AssetAccounts.vue'),
+    },
+
+    {
+      path: 'assets-consolidations/:id',
+      name: `${type}/assets-consolidations`,
+      component: () =>
+        import(
+          /* webpackChunkName: "AssetsConsolidations" */ '../../components/AssetsConsolidations/AssetsConsolidations.vue'
+        ),
+    },
   ],
 }

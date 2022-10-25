@@ -148,14 +148,14 @@ export const advisorRoute = {
 
     {
       path: 'asset-accounts/:id',
-      name: 'asset-accounts',
+      name: `${type}/asset-accounts`,
       component: () =>
         import(/* webpackChunkName: "AssetAccounts" */ '../../components/AssetAccounts/AssetAccounts.vue'),
     },
 
     {
       path: 'assets-consolidations/:id',
-      name: 'assets-consolidations',
+      name: `${type}/assets-consolidations`,
       component: () =>
         import(
           /* webpackChunkName: "AssetsConsolidations" */ '../../components/AssetsConsolidations/AssetsConsolidations.vue'
