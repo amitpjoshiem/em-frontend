@@ -17,7 +17,7 @@
       </router-link>
       <router-link
         v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
-        :to="{ name: `${getRole}/all` }"
+        :to="{ name: `${route.meta.type}/all` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{
           active: getActiveListOfHouseholds,
@@ -48,15 +48,15 @@
       </router-link>
       <router-link
         v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
-        :to="{ name: `${getRole}/all-leads` }"
+        :to="{ name: `${route.meta.type}/all-leads` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'leads' }"
       >
         <InlineSvg
           v-if="
-            getRouteName === `${getRole}/all-leads` ||
-            getRouteName === `${getRole}/active-leads` ||
-            getRouteName === `${getRole}/deactivated-leads`
+            getRouteName === `${route.meta.type}/all-leads` ||
+            getRouteName === `${route.meta.type}/active-leads` ||
+            getRouteName === `${route.meta.type}/deactivated-leads`
           "
           :src="IconLeadsActive"
         />
@@ -106,22 +106,25 @@ export default {
       return route.name
     })
 
-    const getRole = computed(() => {
-      return store.state.globalComponents.role
-    })
-
     const getActiveListOfHouseholds = computed(() => {
       return (
-        getRouteName.value === `${getRole.value}/all` ||
-        getRouteName.value === `${getRole.value}/clients` ||
-        getRouteName.value === `${getRole.value}/opportunities` ||
-        getRouteName.value === `${getRole.value}/list-of-advisors`
+        getRouteName.value === `${route.meta.type}/all` ||
+        getRouteName.value === `${route.meta.type}/clients` ||
+        getRouteName.value === `${route.meta.type}/opportunities` ||
+        getRouteName.value === `${route.meta.type}/list-of-advisors`
       )
     })
 
     const isShowSideBar = computed(() => {
-      if (store.state.auth.isAuth && (route.meta.type === 'advisor' || route.meta.type === 'support')) return true
-      return false
+      if (!store.state.auth.isAuth) return false
+      if (
+        route.meta.type === 'client' ||
+        route.meta.type === 'lead' ||
+        route.meta.type === 'admin' ||
+        route.meta.type === 'ceo'
+      )
+        return false
+      return true
     })
 
     return {
@@ -143,7 +146,6 @@ export default {
       IconLogsActive,
       IrisIconReverse,
       route,
-      getRole,
       isShowSideBar,
     }
   },
