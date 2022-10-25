@@ -33,6 +33,8 @@ module.exports = {
         'orange-primary': '#FF9979',
         'orange-primary-light': '#FFEFEA',
 
+        'color-error': '#FF92A5',
+
         // gray03: '#AAB5CF',
         // 'input-border': '#D4DDEB',
         // 'widget-bg': '#F2F5FA',
