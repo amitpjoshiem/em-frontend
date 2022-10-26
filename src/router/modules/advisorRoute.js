@@ -26,7 +26,7 @@ export const advisorRoute = {
 
     {
       path: 'document-export/:id',
-      name: 'document-export',
+      name: `${type}/document-export`,
       component: () =>
         import(
           /* webpackChunkName: "DocumentExport" */ '../../components/AssetsConsolidations/Export/DocumentExport.vue'

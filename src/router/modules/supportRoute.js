@@ -145,5 +145,13 @@ export const supportRoute = {
           /* webpackChunkName: "AssetsConsolidations" */ '../../components/AssetsConsolidations/AssetsConsolidations.vue'
         ),
     },
+    {
+      path: 'document-export/:id',
+      name: `${type}/document-export`,
+      component: () =>
+        import(
+          /* webpackChunkName: "DocumentExport" */ '../../components/AssetsConsolidations/Export/DocumentExport.vue'
+        ),
+    },
   ],
 }
