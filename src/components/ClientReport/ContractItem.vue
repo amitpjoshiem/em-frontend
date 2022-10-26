@@ -5,7 +5,7 @@
         <span class="w-9 h-9 rounded-md flex justify-center items-center bg-activity">
           <InlineSvg :src="IconCurrentYear" />
         </span>
-        <router-link :to="{ name: 'contract-info', params: { id: contract.id } }">
+        <router-link :to="{ name: `${route.meta.type}/contract-info`, params: { id: contract.id } }">
           <span class="ml-4 text-main text-title font-semibold">Contract {{ contract.contract_number }}</span>
         </router-link>
       </div>
@@ -73,7 +73,7 @@ export default {
     })
 
     const moreAction = () => {
-      router.push({ name: 'contract-info', params: { id: props.contract.id } })
+      router.push({ name: `${route.meta.type}/contract-info`, params: { id: props.contract.id } })
     }
 
     const genPdf = async () => {
@@ -114,6 +114,7 @@ export default {
       moreAction,
       genPdf,
       genExcel,
+      route,
     }
   },
 }

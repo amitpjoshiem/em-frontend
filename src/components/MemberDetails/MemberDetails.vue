@@ -24,7 +24,7 @@
     <div class="flex my-5">
       <div class="w-8/24 mr-5">
         <WidgetMemberDetails />
-        <InfoSalesforceStatus v-if="showContent.infoSalesforceStatus" />
+        <InfoSalesforceStatus v-if="showContent.infoSalesforceStatus && $can('advisor', 'all')" />
       </div>
       <OpportunityTable class="w-16/24" />
     </div>

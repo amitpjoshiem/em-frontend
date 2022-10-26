@@ -4,23 +4,23 @@
     <div class="flex p-5 justify-between">
       <div class="flex">
         <router-link
-          :to="{ name: 'all-report', query: { type: getCurrentQuery } }"
+          :to="{ name: `${route.meta.type}/all-report`, query: { type: getCurrentQuery } }"
           class="mr-5 text-main text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'all-report' }"
+          :class="{ active: getActiveTab === `${route.meta.type}/all-report` }"
         >
           ALL
         </router-link>
         <router-link
-          :to="{ name: 'pdf-report', query: { type: getCurrentQuery } }"
+          :to="{ name: `${route.meta.type}/pdf-report`, query: { type: getCurrentQuery } }"
           class="mr-5 text-main text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'pdf-report' }"
+          :class="{ active: getActiveTab === `${route.meta.type}/pdf-report` }"
         >
           PDF
         </router-link>
         <router-link
-          :to="{ name: 'excel-report', query: { type: getCurrentQuery } }"
+          :to="{ name: `${route.meta.type}/excel-report`, query: { type: getCurrentQuery } }"
           class="text-main text-smm cursor-pointer"
-          :class="{ active: getActiveTab === 'excel-report' }"
+          :class="{ active: getActiveTab === `${route.meta.type}/excel-report` }"
         >
           EXCEL
         </router-link>
@@ -50,6 +50,7 @@ export default {
     return {
       getActiveTab,
       getCurrentQuery,
+      route,
     }
   },
 }

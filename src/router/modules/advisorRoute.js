@@ -47,7 +47,7 @@ export const advisorRoute = {
 
     {
       path: 'contract-info/:id',
-      name: 'contract-info',
+      name: `${type}/contract-info`,
       component: () => import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractInfo.vue'),
     },
 
@@ -260,7 +260,7 @@ export const advisorRoute = {
 
     {
       path: 'export-report/:id',
-      name: 'export-report',
+      name: `${type}/export-report`,
       component: () =>
         import(
           /* webpackChunkName: "ExportReport" */ '../../components/Documents/ClientReport/ExportClientReports.vue'
@@ -268,7 +268,7 @@ export const advisorRoute = {
       children: [
         {
           path: 'all',
-          name: 'all-report',
+          name: `${type}/all-report`,
           component: () =>
             import(
               /* webpackChunkName: "ExportReport" */ '../../components/Documents/ClientReport/ClientReportAll.vue'
@@ -276,7 +276,7 @@ export const advisorRoute = {
         },
         {
           path: 'pdf',
-          name: 'pdf-report',
+          name: `${type}/pdf-report`,
           component: () =>
             import(
               /* webpackChunkName: "ExportReport" */ '../../components/Documents/ClientReport/ClientReportPdf.vue'
@@ -284,7 +284,7 @@ export const advisorRoute = {
         },
         {
           path: 'excel',
-          name: 'excel-report',
+          name: `${type}/excel-report`,
           component: () =>
             import(
               /* webpackChunkName: "ExportReport" */ '../../components/Documents/ClientReport/ClientReportExcel.vue'

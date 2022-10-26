@@ -139,9 +139,9 @@ export default {
 
     const allDocuments = () => {
       if (props.pdfRegion === 'client-report')
-        router.push({ name: 'all-report', params: { id: memberId }, query: { type: 'client' } })
+        router.push({ name: `${route.meta.type}/all-report`, params: { id: memberId }, query: { type: 'client' } })
       if (props.pdfRegion === 'blue-report')
-        router.push({ name: 'all-report', params: { id: memberId }, query: { type: 'blueprint' } })
+        router.push({ name: `${route.meta.type}/all-report`, params: { id: memberId }, query: { type: 'blueprint' } })
     }
 
     const handleSelect = (command) => {
