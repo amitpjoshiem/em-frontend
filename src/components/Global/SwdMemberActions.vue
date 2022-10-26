@@ -31,7 +31,7 @@ const allAvailibleOptions = {
 
 const optionsPerStepAndType = {
   'page-details-client': [5, 6],
-  'page-details-support': [5, 6, 7],
+  'page-details-support': [5, 6],
   'page-details-prospect': [4, 5, 6],
   client: [1, 3, 5, 6, 7],
   'prospect@step-0': [4, 5, 6, 7],
@@ -48,7 +48,7 @@ function getClientStepHash(user, pageDetails, type = null) {
   switch (true) {
     case type !== null && type === 'support':
       return 'page-details-support'
-    case pageDetails && user.type === 'client':
+    case type !== null && type === 'client':
       return 'page-details-client'
     case pageDetails && user.type === 'prospect':
       return 'page-details-prospect'

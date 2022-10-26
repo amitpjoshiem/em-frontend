@@ -35,7 +35,10 @@
       </template>
 
       <template v-else>
-        <div class="border border-color-grey box-border p-5 rounded-md my-5">
+        <div
+          v-if="!$can('support', 'all') && !$can('client', 'all')"
+          class="border border-color-grey box-border p-5 rounded-md my-5"
+        >
           <div class="text-smm font-medium text-main">Create Yodlee account</div>
           <div class="w-2/12 mt-2">
             <SwdButton small primary @click="createAccountYodlee">Create account</SwdButton>
