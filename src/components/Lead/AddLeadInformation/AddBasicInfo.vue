@@ -19,7 +19,7 @@
                     <el-radio :label="false">No</el-radio>
                   </el-radio-group>
                 </el-form-item>
-                <el-form-item label="Married?">
+                <el-form-item label="Spouse/Partner?">
                   <el-radio-group v-model="ruleForm.married" @change="changeMarried(ruleForm)">
                     <el-radio :label="true">Yes</el-radio>
                     <el-radio :label="false">No</el-radio>
@@ -142,7 +142,7 @@
             <InlineSvg v-show="isFocusSpouse && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusSpouse && !isDoneCurrentStep" :src="IconNotActive" />
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
-            <div class="text-main text-xl font-semibold ml-2">Spouse</div>
+            <div class="text-main text-xl font-semibold ml-2">Spouse/Partner</div>
           </div>
           <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusSpouse }">
             <el-form-item label="Retired?" class="mb-4">
@@ -399,7 +399,7 @@
             </div>
 
             <div v-if="ruleForm.married" class="mt-5">
-              <div class="text-main text-xs uppercase my-2">Spouse</div>
+              <div class="text-main text-xs uppercase my-2">Spouse/Partner</div>
               <div v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-2">
                 <div class="sm:flex sm:flex-wrap">
                   <el-form-item
