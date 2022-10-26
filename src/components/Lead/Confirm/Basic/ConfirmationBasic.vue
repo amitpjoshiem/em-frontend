@@ -53,6 +53,10 @@
           <span class="text-gray-500 pr-2">Zip:</span>
           <SwdStubForText :text="member.zip" plug="&mdash;" class="text-sm text-main" />
         </div>
+        <div class="flex text-main mb-2 sm:w-6/12 xl:w-5/12">
+          <span class="text-gray-500 pr-2">Phone:</span>
+          <SwdStubForText :text="member.phone" plug="&mdash;" class="text-sm text-main" />
+        </div>
 
         <!-- RETIRED -->
         <div class="flex text-main mb-2 sm:w-6/12 xl:w-4/12">
