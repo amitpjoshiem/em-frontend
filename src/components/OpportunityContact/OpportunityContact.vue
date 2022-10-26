@@ -67,7 +67,7 @@
               <div>
                 <el-checkbox
                   v-model="item.is_spouse"
-                  label="Spouse"
+                  label="Spouse/Partner"
                   size="small"
                   :disabled="isDisabledSpouse"
                   @change="changeSpouse(item.id, index)"
