@@ -22,13 +22,14 @@
 import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 import { computed, reactive, watchEffect } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
   name: 'ModalExportSucces',
   setup() {
     const store = useStore()
     const router = useRouter()
+    const route = useRoute()
 
     const state = reactive({
       dialogVisible: false,
@@ -53,7 +54,11 @@ export default {
 
     const goAllList = () => {
       closeDialog()
-      router.push({ name: 'all-report', params: { id: getParams.value }, query: { type: getType.value } })
+      router.push({
+        name: `${route.meta.type}/all-report`,
+        params: { id: getParams.value },
+        query: { type: getType.value },
+      })
     }
 
     watchEffect(() => {

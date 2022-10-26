@@ -42,7 +42,7 @@
 
       <SwdButton v-if="isAvailableDocument" primary small @click="moreActionStressTest">More</SwdButton>
       <SwdButton
-        v-if="!isAvailableDocument && !$can('client', 'all')"
+        v-if="!isAvailableDocument && !$can('client', 'all') && !$can('support', 'all')"
         primary
         small
         class="mr-2"

@@ -2,11 +2,13 @@
   <SwdWrapper>
     <SwdSubHeader :title="getTitle" />
     <div class="flex justify-end pb-5">
-      <SwdButton primary main @click="addContact">Add contact</SwdButton>
+      <SwdButton v-if="!$can('client', 'all') && !$can('support', 'all')" primary main @click="addContact">
+        Add contact
+      </SwdButton>
     </div>
     <div v-if="!isLoading">
       <template v-if="state.length">
-        <el-card v-for="item in state" :key="item.id" class="box-card mb-5">
+        <el-card v-for="(item, index) in state" :key="item.id" class="box-card mb-5">
           <div class="flex">
             <div class="w-2/12 flex items-center justify-center">
               <SwdAvatar size="large" />
@@ -67,12 +69,15 @@
                   v-model="item.is_spouse"
                   label="Spouse"
                   size="small"
-                  :disabled="loadingUpdateContact || isFetching"
-                  @change="changeSpouse(item.id)"
+                  :disabled="isDisabledSpouse"
+                  @change="changeSpouse(item.id, index)"
                 />
               </div>
             </div>
-            <div class="w-1/12 flex flex-col items-center justify-center">
+            <div
+              v-if="!$can('client', 'all') && !$can('support', 'all')"
+              class="w-1/12 flex flex-col items-center justify-center"
+            >
               <el-button type="primary" plain :icon="Edit" circle @click="editContact(item.id)" />
               <el-popconfirm
                 confirm-button-text="OK"
@@ -114,6 +119,7 @@ import { useAlert } from '@/utils/use-alert'
 import { useStore } from 'vuex'
 import ModalContact from '@/components/OpportunityContact/ModalContact.vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
+import { useAbility } from '@casl/vue'
 
 export default {
   name: 'OpportunityContact',
@@ -127,6 +133,7 @@ export default {
     const queryClient = useQueryClient()
     const memberId = route.params.id
     const state = reactive([])
+    const { can } = useAbility()
 
     const { isLoading, isError, isFetching, data: contacts, isFetched, refetch } = useFetchAllContacts(memberId)
     const { mutateAsync: updateContact, isLoading: loadingUpdateContact } = useMutation(updateContacts)
@@ -173,9 +180,9 @@ export default {
       }
     }
 
-    const changeSpouse = async (id) => {
+    const changeSpouse = async (id, index) => {
       const form = {
-        is_spouse: true,
+        is_spouse: state[index].is_spouse,
       }
       const res = await updateContact({ form, id })
       responseUpdate(res)
@@ -192,16 +199,20 @@ export default {
       }
     }
 
+    const isDisabledSpouse = computed(() => {
+      if (can('client', 'all') || can('support', 'all')) return true
+      if (loadingUpdateContact.value || isFetching.value) return true
+      return false
+    })
+
     return {
       state,
 
       isLoading,
       isError,
-      isFetching,
       contacts,
       isFetched,
       refetch,
-      loadingUpdateContact,
       addContact,
       editContact,
       removeContact,
@@ -213,6 +224,7 @@ export default {
       InfoFilled,
       IconEmptyUsers,
       getTitle,
+      isDisabledSpouse,
     }
   },
 }

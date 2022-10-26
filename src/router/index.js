@@ -12,6 +12,7 @@ import { adminRoute } from './modules/adminRoute'
 import { ceoRoute } from './modules/ceoRoute'
 import { advisorRoute } from './modules/advisorRoute'
 import { adminPanelRoute } from './modules/adminPanelRoute'
+import { supportRoute } from './modules/supportRoute'
 import { settingsRoute } from './modules/settingsRoute'
 import { loginRoute } from './modules/loginRoute'
 
@@ -22,6 +23,7 @@ const routes = [
   ceoRoute,
   advisorRoute,
   adminPanelRoute,
+  supportRoute,
   settingsRoute,
   loginRoute,
 

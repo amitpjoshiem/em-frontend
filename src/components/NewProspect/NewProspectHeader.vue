@@ -1,5 +1,4 @@
 <template>
-  <!-- <SwdSubHeader :title="headerTitle" /> -->
   <div class="flex pb-5">
     <div class="w-3/12">
       <BackButton text="Back" @click="back" />

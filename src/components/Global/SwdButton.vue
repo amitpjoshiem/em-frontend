@@ -7,6 +7,7 @@
       'opacity-60': disabled,
       'bg-primary': primary,
       'bg-main-gray': info,
+      'h-[24px]': small,
     }"
   >
     <div

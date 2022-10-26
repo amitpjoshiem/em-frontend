@@ -21,7 +21,7 @@
       Total cost <br />
       in $
     </div>
-    <div v-if="isAddLine" class="w-1/24 title" />
+    <div v-if="isAddLine && !$can('client', 'all') && !$can('support', 'all')" class="w-1/24 title" />
   </div>
 </template>
 

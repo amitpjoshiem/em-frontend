@@ -16,7 +16,7 @@
       <AssetsChart :values="ruleForm" />
       <div class="flex ml-4">
         <div class="flex flex-col justify-center mr-3">
-          <div class="bg-dark-blue-charts w-2 h-2 rounded-full" />
+          <div class="bg-orange-primary w-2 h-2 rounded-full" />
           <div class="bg-activity w-2 h-2 rounded-full my-9" />
           <div class="bg-color-error w-2 h-2 rounded-full" />
         </div>
@@ -32,7 +32,7 @@
                 v-model="ruleForm.liquidity"
                 :options="optionsCurrencyInput"
                 prepend
-                :disabled="isLoadingCreate"
+                :disabled="isDisabledInput"
                 placeholder="$12345"
                 size="small"
                 @blur="change()"
@@ -43,7 +43,7 @@
                 v-model="ruleForm.growth"
                 :options="optionsCurrencyInput"
                 prepend
-                :disabled="isLoadingCreate"
+                :disabled="isDisabledInput"
                 placeholder="$12345"
                 size="small"
                 @blur="change()"
@@ -54,7 +54,7 @@
                 v-model="ruleForm.income"
                 :options="optionsCurrencyInput"
                 prepend
-                :disabled="isLoadingCreate"
+                :disabled="isDisabledInput"
                 placeholder="$12345"
                 size="small"
                 @blur="change()"
@@ -70,6 +70,7 @@
 <script>
 import AssetsChart from '@/components/MemberDetails/Chart/AssetsChart.vue'
 import IconAction from '@/assets/svg/icon-action.svg'
+import { computed } from 'vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useRoute } from 'vue-router'
 import { reactive, ref, watchEffect } from 'vue'
@@ -127,6 +128,10 @@ export default {
       }
     })
 
+    const isDisabledInput = computed(() => {
+      return isLoadingCreate.value || route.meta.type === 'support' || route.meta.type === 'client'
+    })
+
     return {
       currencyFormat,
       IconAction,
@@ -139,11 +144,11 @@ export default {
       isLoading,
       isFetching,
       create,
-      isLoadingCreate,
       isErrorCreate,
       isFetchingCreate,
       dataCreate,
       optionsCurrencyInput,
+      isDisabledInput,
     }
   },
 }
