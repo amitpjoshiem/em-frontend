@@ -6,12 +6,9 @@
 
         <div class="flex pb-2 mt-8">
           <div class="w-4/12" />
-          <div v-for="header in getHeaders" :key="header + indexGroup" class="w-2/12 px-2 text-main text-xs">
-            {{ header }}
-          </div>
-          <!-- <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-main text-xs">
+          <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-main text-xs">
             {{ header.toUpperCase() }}
-          </div> -->
+          </div>
         </div>
         <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
           <div class="w-4/12 flex items-center">
@@ -301,17 +298,6 @@ export default {
       fieldName.value = ''
     }
 
-    const headers = {
-      owner: 'Trevion Casper',
-      spouse: 'Esther Wisozk',
-      institution: 'Institution',
-      balance: 'Balance',
-    }
-
-    const getHeaders = computed(() => {
-      return Object.values(headers)
-    })
-
     return {
       ruleForm,
       schema,
@@ -336,8 +322,6 @@ export default {
       isLoadingCheck,
       dialogVisible,
       fieldName,
-
-      getHeaders,
     }
   },
 }

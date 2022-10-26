@@ -1,7 +1,7 @@
 <template>
   <el-badge :value="count" :max="99" class="mr-8" :type="getType" :hidden="isLoading">
     <router-link
-      :to="{ name: getLink }"
+      :to="{ name: `${route.meta.type}/all` }"
       class="text-main text-smm cursor-pointer"
       :class="{ active: getType === 'primary' }"
     >
@@ -37,24 +37,12 @@ export default {
     const getType = computed(() => {
       if (route.name === route.meta.type + '/all') return 'primary'
       return 'info'
-      // if (getCurrentTypeUser.value === 'advisor' && getActiveTab.value === 'all') return true
-      // if (getCurrentTypeUser.value === 'admin' && getActiveTab.value === 'admin-all-list') return true
-      // if (getCurrentTypeUser.value === 'ceo' && getActiveTab.value === 'ceo-all-list') return true
-      // return false
-    })
-
-    const getLink = computed(() => {
-      return route.meta.type + '/all'
-      // if (getCurrentTypeUser.value === 'advisor') return 'all'
-      // if (getCurrentTypeUser.value === 'admin') return 'admin-all-list'
-      // if (getCurrentTypeUser.value === 'ceo') return 'ceo-all-list'
-      // return '404'
     })
 
     return {
       getActiveTab,
       getType,
-      getLink,
+      route,
     }
   },
 }

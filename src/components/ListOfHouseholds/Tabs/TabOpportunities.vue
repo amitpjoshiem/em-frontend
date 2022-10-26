@@ -1,7 +1,7 @@
 <template>
   <el-badge :value="count" :max="99" class="mr-8" :type="getType" :hidden="isLoading">
     <router-link
-      :to="{ name: getLink }"
+      :to="{ name: `${route.meta.type}/opportunities` }"
       class="text-main text-smm cursor-pointer"
       :class="{ active: getType === 'primary' }"
     >
@@ -37,24 +37,12 @@ export default {
     const getType = computed(() => {
       if (route.name === route.meta.type + '/opportunities') return 'primary'
       return 'info'
-      // if (getCurrentTypeUser.value === 'advisor' && getActiveTab.value === 'opportunities') return true
-      // if (getCurrentTypeUser.value === 'admin' && getActiveTab.value === 'admin-opportunities-list') return true
-      // if (getCurrentTypeUser.value === 'ceo' && getActiveTab.value === 'ceo-opportunities-list') return true
-      // return false
-    })
-
-    const getLink = computed(() => {
-      return route.meta.type + '/opportunities'
-      // if (getCurrentTypeUser.value === 'advisor') return 'opportunities'
-      // if (getCurrentTypeUser.value === 'admin') return 'admin-opportunities-list'
-      // if (getCurrentTypeUser.value === 'ceo') return 'ceo-opportunities-list'
-      // return '404'
     })
 
     return {
       getActiveTab,
       getType,
-      getLink,
+      route,
     }
   },
 }
