@@ -6,8 +6,12 @@
 
         <div class="flex pb-2 mt-8">
           <div class="w-4/12" />
-          <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-main text-xs">
-            {{ header.toUpperCase() }}
+          <div
+            v-for="header in block.headers"
+            :key="header + indexGroup"
+            class="w-2/12 px-2 text-main text-xs font-semibold"
+          >
+            {{ header.label }}
           </div>
         </div>
         <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
