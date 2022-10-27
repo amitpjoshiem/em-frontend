@@ -20,7 +20,7 @@
               {{ row.label }}
             </div>
             <div v-if="row.custom" class="flex items-center ml-2 cursor-pointer">
-              <el-popconfirm title="Are you sure to delete this?" @confirm="confirmEvent({ block, row })">
+              <el-popconfirm title="Are you sure to delete this?" @confirm="confirmDelete({ block, row, indexRow })">
                 <template #reference>
                   <el-icon color="red" class="cursor-pointer"><Delete /></el-icon>
                 </template>
@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import { watchEffect, ref, computed, reactive, onMounted } from 'vue'
+import { watchEffect, ref, computed, reactive, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
@@ -169,7 +169,10 @@ export default {
       if (!isMemberAssetsLoading.value) {
         setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
       }
-      if (!isMemberAssetsSchemaLoading.value) {
+    })
+
+    watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
+      if (oldValue && !newValue) {
         Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value.data)))
       }
     })
@@ -195,7 +198,7 @@ export default {
       }
     }
 
-    const addLine = ({ model, variable, indexGroup, indexRow, label }) => {
+    const addLine = async ({ model, variable, indexGroup, indexRow, label }) => {
       Object.keys(schema[indexGroup].headers).forEach((element) => {
         ruleForm[model.group][variable] = { [element]: null }
       })
@@ -220,6 +223,14 @@ export default {
         elements,
       }
       schema[indexGroup].rows.splice(indexRow + 1, 0, dataSchema)
+      const data = {
+        group: model.group,
+        row: variable,
+        element: 'owner',
+        type: 'string',
+        value: null,
+      }
+      await updateMemberAssets({ data, id: memberId })
     }
 
     const changeInput = async (item) => {
@@ -232,7 +243,6 @@ export default {
           value: ruleForm[item.model.group][item.model.model][item.model.item],
         }
         await updateMemberAssets({ data, id: memberId })
-        queryClient.invalidateQueries(['memberAssetsSchema', memberId])
         queryClient.invalidateQueries(['memberAssets', memberId])
       }
     }
@@ -251,19 +261,23 @@ export default {
       return !!elem
     }
 
-    const confirmEvent = async ({ block, row }) => {
+    const confirmDelete = async ({ block, row, indexRow }) => {
       const data = {
         row: row.name,
         group: block.name,
       }
+
       const res = await deleteRow({ id: memberId, data })
       if (!('error' in res)) {
+        const elemIndex = schema[indexRow].rows.findIndex((item) => {
+          if (item.name === row.name) return item
+        })
+        schema[indexRow].rows.splice(elemIndex, 1)
         useAlert({
           title: 'Success',
           type: 'success',
           message: 'Remove success',
         })
-        queryClient.invalidateQueries(['memberAssetsSchema', memberId])
       }
     }
 
@@ -317,7 +331,7 @@ export default {
       showDialog,
       optionsCurrencyInput,
       isDisabled,
-      confirmEvent,
+      confirmDelete,
       isLoadingDeleteRow,
       closeDialog,
       cancelDialog,
