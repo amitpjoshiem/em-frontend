@@ -28,10 +28,18 @@
             </div>
           </div>
 
-          <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
+          <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0 item-assets">
             <el-form-item class="mb-4">
+              <template v-if="item.disabled">
+                <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
+                  <SwdSpinner />
+                </div>
+                <div v-else class="font-semibold">
+                  {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
+                </div>
+              </template>
               <SwdCurrencyInput
-                v-if="item.type === 'number'"
+                v-if="item.type === 'number' && !item.disabled"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
                 :options="optionsCurrencyInput"
                 :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
@@ -39,21 +47,21 @@
                 @blur="changeInput(item)"
               />
               <el-input
-                v-if="item.type === 'string'"
+                v-if="item.type === 'string' && !item.disabled"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
                 :placeholder="item.placeholder"
                 :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
                 @blur="changeInput(item)"
               />
               <el-radio-group
-                v-if="item.type === 'radio'"
+                v-if="item.type === 'radio' && !item.disabled"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
                 @change="changeInput(item)"
               >
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
-              <el-dropdown v-if="item.type === 'dropdown'" trigger="click">
+              <el-dropdown v-if="item.type === 'dropdown' && !item.disabled" trigger="click">
                 <el-button>
                   Add field
                   <el-icon class="el-icon--right">
@@ -124,6 +132,7 @@ import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { Delete } from '@element-plus/icons-vue'
+import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
   name: 'AddProspectAssetsIncome',
@@ -142,9 +151,12 @@ export default {
     const fieldName = ref()
     const step = computed(() => store.state.newProspect.step)
 
+    const ruleForm = reactive({})
+    const schema = reactive({})
+
     const memberId = route.params.id
 
-    const { data: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(memberId)
+    const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(memberId)
     const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(memberId)
 
     const { mutateAsync: create, data } = useMutation(createAssetsIncome)
@@ -156,9 +168,6 @@ export default {
     const { mutateAsync: assetsIncomeConfirm } = useMutation(fetchAssetsIncomeConfirm)
 
     const { setInitValue } = useAssetsInfoHooks()
-
-    const ruleForm = reactive({})
-    const schema = reactive({})
 
     onMounted(async () => {
       store.commit('newProspect/setStep', 2)
@@ -173,7 +182,7 @@ export default {
 
     watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
       if (oldValue && !newValue) {
-        Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value.data)))
+        Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value)))
       }
     })
 
@@ -205,7 +214,7 @@ export default {
 
       const elements = Object.keys(schema[indexGroup].headers).map((item) => {
         return {
-          type: 'string',
+          type: 'number',
           name: item,
           label: item,
           disabled: false,
@@ -272,6 +281,7 @@ export default {
         const elemIndex = schema[indexRow].rows.findIndex((item) => {
           if (item.name === row.name) return item
         })
+        queryClient.invalidateQueries(['memberAssets', memberId])
         schema[indexRow].rows.splice(elemIndex, 1)
         useAlert({
           title: 'Success',
@@ -339,7 +349,18 @@ export default {
       isLoadingCheck,
       dialogVisible,
       fieldName,
+      currencyFormat,
+      isFetching,
     }
   },
 }
 </script>
+
+<style>
+.item-assets .el-dropdown {
+  width: 100% !important;
+}
+.item-assets .el-button.el-tooltip__trigger {
+  width: 100%;
+}
+</style>
