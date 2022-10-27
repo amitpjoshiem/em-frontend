@@ -196,12 +196,11 @@ export default {
     }
 
     const addLine = ({ model, variable, indexGroup, indexRow, label }) => {
-      ruleForm[model.group][variable] = {}
-      schema[indexGroup].headers.forEach((element) => {
-        ruleForm[model.group][variable][element] = null
+      Object.keys(schema[indexGroup].headers).forEach((element) => {
+        ruleForm[model.group][variable] = { [element]: null }
       })
 
-      const elements = schema[indexGroup].headers.map((item) => {
+      const elements = Object.keys(schema[indexGroup].headers).map((item) => {
         return {
           type: 'string',
           name: item,
