@@ -20,7 +20,10 @@
               {{ row.label }}
             </div>
             <div v-if="row.custom" class="flex items-center ml-2 cursor-pointer">
-              <el-popconfirm title="Are you sure to delete this?" @confirm="confirmDelete({ block, row, indexRow })">
+              <el-popconfirm
+                title="Are you sure to delete this?"
+                @confirm="confirmDelete({ block, row, indexRow, indexGroup })"
+              >
                 <template #reference>
                   <el-icon color="red" class="cursor-pointer"><Delete /></el-icon>
                 </template>
@@ -214,7 +217,8 @@ export default {
 
       const elements = Object.keys(schema[indexGroup].headers).map((item) => {
         return {
-          type: 'number',
+          type: item !== 'institution' ? 'number' : 'string',
+          placeholder: item !== 'institution' ? '$12345' : 'Enter Name',
           name: item,
           label: item,
           disabled: false,
@@ -270,7 +274,7 @@ export default {
       return !!elem
     }
 
-    const confirmDelete = async ({ block, row, indexRow }) => {
+    const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
       const data = {
         row: row.name,
         group: block.name,
@@ -278,11 +282,7 @@ export default {
 
       const res = await deleteRow({ id: memberId, data })
       if (!('error' in res)) {
-        const elemIndex = schema[indexRow].rows.findIndex((item) => {
-          if (item.name === row.name) return item
-        })
-        queryClient.invalidateQueries(['memberAssets', memberId])
-        schema[indexRow].rows.splice(elemIndex, 1)
+        schema[indexGroup].rows.splice(indexRow, 1)
         useAlert({
           title: 'Success',
           type: 'success',
