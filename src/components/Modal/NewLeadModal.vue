@@ -89,7 +89,6 @@ export default {
               route.name === `${route.meta.type}/active-leads` ||
               route.name === `${route.meta.type}/deactivated-leads`
             ) {
-              console.log('householders-list')
               queryClient.invalidateQueries(['householders-list'])
             }
             closeDialog()
