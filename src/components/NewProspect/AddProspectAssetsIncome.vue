@@ -20,7 +20,10 @@
               {{ row.label }}
             </div>
             <div v-if="row.custom" class="flex items-center ml-2 cursor-pointer">
-              <el-popconfirm title="Are you sure to delete this?" @confirm="confirmEvent({ block, row })">
+              <el-popconfirm
+                title="Are you sure to delete this?"
+                @confirm="confirmDelete({ block, row, indexRow, indexGroup })"
+              >
                 <template #reference>
                   <el-icon color="red" class="cursor-pointer"><Delete /></el-icon>
                 </template>
@@ -28,10 +31,18 @@
             </div>
           </div>
 
-          <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
+          <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0 item-assets">
             <el-form-item class="mb-4">
+              <template v-if="item.disabled">
+                <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
+                  <SwdSpinner />
+                </div>
+                <div v-else class="font-semibold">
+                  {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
+                </div>
+              </template>
               <SwdCurrencyInput
-                v-if="item.type === 'number'"
+                v-if="item.type === 'number' && !item.disabled"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
                 :options="optionsCurrencyInput"
                 :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
@@ -39,21 +50,21 @@
                 @blur="changeInput(item)"
               />
               <el-input
-                v-if="item.type === 'string'"
+                v-if="item.type === 'string' && !item.disabled"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
                 :placeholder="item.placeholder"
                 :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
                 @blur="changeInput(item)"
               />
               <el-radio-group
-                v-if="item.type === 'radio'"
+                v-if="item.type === 'radio' && !item.disabled"
                 v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
                 @change="changeInput(item)"
               >
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
-              <el-dropdown v-if="item.type === 'dropdown'" trigger="click">
+              <el-dropdown v-if="item.type === 'dropdown' && !item.disabled" trigger="click">
                 <el-button>
                   Add field
                   <el-icon class="el-icon--right">
@@ -108,7 +119,7 @@
 </template>
 
 <script>
-import { watchEffect, ref, computed, reactive, onMounted } from 'vue'
+import { watchEffect, ref, computed, reactive, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
@@ -124,6 +135,7 @@ import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { Delete } from '@element-plus/icons-vue'
+import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
   name: 'AddProspectAssetsIncome',
@@ -142,9 +154,12 @@ export default {
     const fieldName = ref()
     const step = computed(() => store.state.newProspect.step)
 
+    const ruleForm = reactive({})
+    const schema = reactive({})
+
     const memberId = route.params.id
 
-    const { data: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(memberId)
+    const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(memberId)
     const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(memberId)
 
     const { mutateAsync: create, data } = useMutation(createAssetsIncome)
@@ -157,9 +172,6 @@ export default {
 
     const { setInitValue } = useAssetsInfoHooks()
 
-    const ruleForm = reactive({})
-    const schema = reactive({})
-
     onMounted(async () => {
       store.commit('newProspect/setStep', 2)
       scrollTop()
@@ -169,8 +181,11 @@ export default {
       if (!isMemberAssetsLoading.value) {
         setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
       }
-      if (!isMemberAssetsSchemaLoading.value) {
-        Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value.data)))
+    })
+
+    watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
+      if (oldValue && !newValue) {
+        Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value)))
       }
     })
 
@@ -195,14 +210,15 @@ export default {
       }
     }
 
-    const addLine = ({ model, variable, indexGroup, indexRow, label }) => {
+    const addLine = async ({ model, variable, indexGroup, indexRow, label }) => {
       Object.keys(schema[indexGroup].headers).forEach((element) => {
         ruleForm[model.group][variable] = { [element]: null }
       })
 
       const elements = Object.keys(schema[indexGroup].headers).map((item) => {
         return {
-          type: 'string',
+          type: item !== 'institution' ? 'number' : 'string',
+          placeholder: item !== 'institution' ? '$12345' : 'Enter Name',
           name: item,
           label: item,
           disabled: false,
@@ -220,6 +236,14 @@ export default {
         elements,
       }
       schema[indexGroup].rows.splice(indexRow + 1, 0, dataSchema)
+      const data = {
+        group: model.group,
+        row: variable,
+        element: 'owner',
+        type: 'string',
+        value: null,
+      }
+      await updateMemberAssets({ data, id: memberId })
     }
 
     const changeInput = async (item) => {
@@ -232,7 +256,6 @@ export default {
           value: ruleForm[item.model.group][item.model.model][item.model.item],
         }
         await updateMemberAssets({ data, id: memberId })
-        queryClient.invalidateQueries(['memberAssetsSchema', memberId])
         queryClient.invalidateQueries(['memberAssets', memberId])
       }
     }
@@ -251,19 +274,20 @@ export default {
       return !!elem
     }
 
-    const confirmEvent = async ({ block, row }) => {
+    const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
       const data = {
         row: row.name,
         group: block.name,
       }
+
       const res = await deleteRow({ id: memberId, data })
       if (!('error' in res)) {
+        schema[indexGroup].rows.splice(indexRow, 1)
         useAlert({
           title: 'Success',
           type: 'success',
           message: 'Remove success',
         })
-        queryClient.invalidateQueries(['memberAssetsSchema', memberId])
       }
     }
 
@@ -317,7 +341,7 @@ export default {
       showDialog,
       optionsCurrencyInput,
       isDisabled,
-      confirmEvent,
+      confirmDelete,
       isLoadingDeleteRow,
       closeDialog,
       cancelDialog,
@@ -325,7 +349,18 @@ export default {
       isLoadingCheck,
       dialogVisible,
       fieldName,
+      currencyFormat,
+      isFetching,
     }
   },
 }
 </script>
+
+<style>
+.item-assets .el-dropdown {
+  width: 100% !important;
+}
+.item-assets .el-button.el-tooltip__trigger {
+  width: 100%;
+}
+</style>
