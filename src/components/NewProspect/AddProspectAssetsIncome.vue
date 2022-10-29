@@ -1,21 +1,20 @@
 <template>
-  <div v-if="!isMemberAssetsLoading && !isMemberAssetsSchemaLoading">
+  <div v-if="!isMemberAssetsLoading && !isMemberAssetsSchemaLoading && !isLoadingMember">
     <el-form ref="form" :model="ruleForm">
       <div v-for="(block, indexGroup) in schema" :key="indexGroup" class="p-5 mb-10">
         <span class="text-main text-xl font-semibold">{{ block.title }}</span>
 
         <div class="flex pb-2 mt-8">
-          <div class="w-4/12" />
-          <div
-            v-for="header in block.headers"
-            :key="header + indexGroup"
-            class="w-2/12 px-2 text-main text-xs font-semibold"
-          >
-            {{ header.label }}
-          </div>
+          <div class="w-[35.3%]" />
+          <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
+            <div class="w-[15%] px-2 text-main text-xs font-semibold">
+              {{ header.label }}
+            </div>
+            <div v-if="indexHeader === 'owner'" class="w-[5%]" />
+          </template>
         </div>
         <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
-          <div class="w-4/12 flex items-center">
+          <div class="w-[35%] flex items-center">
             <div v-if="row.label" class="text-main font-semibold text-xss">
               {{ row.label }}
             </div>
@@ -34,8 +33,8 @@
           <template v-for="(item, itemIndex) in row.elements" :key="item">
             <div
               v-if="!(row.joined && item.name === 'spouse')"
-              class="px-2 mb-0 item-assets flex"
-              :class="row.joined && item.name === 'owner' ? 'w-4/12' : 'w-2/12'"
+              class="px-2 mb-0 item-assets"
+              :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
             >
               <el-form-item class="mb-4">
                 <template v-if="item.disabled">
@@ -52,6 +51,7 @@
                   :options="optionsCurrencyInput"
                   :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
                   :placeholder="item.placeholder"
+                  prepend
                   @blur="changeInput(item)"
                 />
                 <el-input
@@ -99,21 +99,18 @@
                   </template>
                 </el-dropdown>
               </el-form-item>
-              <template v-if="!isLoadingMember && itemIndex === 0 && !item.disabled && member.married">
+            </div>
+            <div v-if="itemIndex === 0 && member.married" class="w-[5%] text-center">
+              <template v-if="!item.disabled">
                 <el-icon
                   v-if="row.joined"
                   color="#f58833"
-                  class="cursor-pointer left-[7px] top-[7px]"
-                  @click="joinMember(item)"
+                  class="cursor-pointer top-[7px]"
+                  @click="disjoinMember(item)"
                 >
                   <Fold />
                 </el-icon>
-                <el-icon
-                  v-if="!row.joined"
-                  color="#073763"
-                  class="cursor-pointer left-[7px] top-[7px]"
-                  @click="joinMember(item)"
-                >
+                <el-icon v-else color="#073763" class="cursor-pointer top-[7px]" @click="joinMember(item)">
                   <Expand />
                 </el-icon>
               </template>
@@ -126,7 +123,7 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <SwdButton primary main @click="nextPage()">Go to the monthly expense</SwdButton>
+        <SwdButton primary main @click="nextPage">Go to the monthly expense</SwdButton>
       </div>
     </el-form>
   </div>
@@ -164,7 +161,7 @@ import { fetchAssetsIncomeConfirm } from '@/api/vueQuery/fetch-assets-income-con
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-import { ArrowDown, Expand, Delete, Fold } from '@element-plus/icons-vue'
+import { ArrowDown, Delete, Fold, Expand } from '@element-plus/icons-vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
@@ -217,7 +214,7 @@ export default {
 
     watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
       if (oldValue && !newValue) {
-        Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value)))
+        updateSchema()
       }
     })
 
@@ -358,7 +355,6 @@ export default {
     }
 
     const joinMember = async (item) => {
-      console.log('joinMember')
       const data = {
         group: item.model.group,
         row: item.model.model,
@@ -369,14 +365,41 @@ export default {
 
       const res = await updateMemberAssets({ data, id: memberId })
       if (!('error' in res)) {
-        queryClient.invalidateQueries(['memberAssets', memberId])
-        queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        await queryClient.invalidateQueries(['memberAssets', memberId])
+        await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        updateSchema()
         useAlert({
           title: 'Success',
           type: 'success',
           message: 'Join success',
         })
       }
+    }
+
+    const disjoinMember = async (item) => {
+      const data = {
+        group: item.model.group,
+        row: item.model.model,
+        element: item.model.item,
+        type: 'number',
+        joined: false,
+      }
+
+      const res = await updateMemberAssets({ data, id: memberId })
+      if (!('error' in res)) {
+        await queryClient.invalidateQueries(['memberAssets', memberId])
+        await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        updateSchema()
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Disjoin success',
+        })
+      }
+    }
+
+    const updateSchema = () => {
+      Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value)))
     }
 
     return {
@@ -408,6 +431,7 @@ export default {
       isLoadingMember,
       member,
       joinMember,
+      disjoinMember,
     }
   },
 }
