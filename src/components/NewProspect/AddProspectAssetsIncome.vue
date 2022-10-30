@@ -37,71 +37,75 @@
               :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
             >
               <el-form-item class="mb-4">
-                <template v-if="item.disabled">
+                <template v-if="row.name === 'total'">
                   <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                     <SwdSpinner />
                   </div>
-                  <div v-else class="font-semibold">
+                  <div v-else-if="item.name !== 'institution'" class="font-semibold">
                     {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
                   </div>
                 </template>
-                <SwdCurrencyInput
-                  v-if="item.type === 'number' && !item.disabled"
-                  v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                  :options="optionsCurrencyInput"
-                  :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
-                  :placeholder="item.placeholder"
-                  prepend
-                  @blur="changeInput(item)"
-                />
-                <el-input
-                  v-if="item.type === 'string' && !item.disabled"
-                  v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                  :placeholder="item.placeholder"
-                  :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
-                  @blur="changeInput(item)"
-                />
-                <el-radio-group
-                  v-if="item.type === 'radio' && !item.disabled"
-                  v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                  @change="changeInput(item)"
-                >
-                  <el-radio :label="true">Yes</el-radio>
-                  <el-radio :label="false">No</el-radio>
-                </el-radio-group>
-                <el-dropdown v-if="item.type === 'dropdown' && !item.disabled" trigger="click">
-                  <el-button>
-                    Add field
-                    <el-icon class="el-icon--right">
-                      <arrow-down />
-                    </el-icon>
-                  </el-button>
-                  <template #dropdown>
-                    <el-dropdown-menu>
-                      <el-dropdown-item
-                        v-for="option in item.options"
-                        :key="option"
-                        :disabled="isDisabled({ option, indexGroup })"
-                        @click="
-                          addLine({
-                            model: item.model,
-                            variable: option.name,
-                            indexGroup,
-                            indexRow,
-                            label: option.label,
-                          })
-                        "
-                      >
-                        {{ option.label }}
-                      </el-dropdown-item>
-                      <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })"> Custom </el-dropdown-item>
-                    </el-dropdown-menu>
-                  </template>
-                </el-dropdown>
+                <template v-if="row.name !== 'total'">
+                  <SwdCurrencyInput
+                    v-if="item.type === 'number'"
+                    v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                    :options="optionsCurrencyInput"
+                    :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
+                    :placeholder="item.placeholder"
+                    prepend
+                    @blur="changeInput(item)"
+                  />
+                  <el-input
+                    v-if="item.type === 'string'"
+                    v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                    :placeholder="item.placeholder"
+                    :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
+                    @blur="changeInput(item)"
+                  />
+                  <el-radio-group
+                    v-if="item.type === 'radio'"
+                    v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                    @change="changeInput(item)"
+                  >
+                    <el-radio :label="true">Yes</el-radio>
+                    <el-radio :label="false">No</el-radio>
+                  </el-radio-group>
+                  <el-dropdown v-if="item.type === 'dropdown'" trigger="click">
+                    <el-button>
+                      Add field
+                      <el-icon class="el-icon--right">
+                        <arrow-down />
+                      </el-icon>
+                    </el-button>
+                    <template #dropdown>
+                      <el-dropdown-menu>
+                        <el-dropdown-item
+                          v-for="option in item.options"
+                          :key="option"
+                          :disabled="isDisabled({ option, indexGroup })"
+                          @click="
+                            addLine({
+                              model: item.model,
+                              variable: option.name,
+                              indexGroup,
+                              indexRow,
+                              label: option.label,
+                            })
+                          "
+                        >
+                          {{ option.label }}
+                        </el-dropdown-item>
+                        <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })">
+                          Custom
+                        </el-dropdown-item>
+                      </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
+                </template>
               </el-form-item>
             </div>
-            <div v-if="itemIndex === 0 && member.married" class="w-[5%] text-center">
-              <template v-if="!item.disabled">
+            <div v-if="itemIndex === 0 && member.married && item.type === 'number'" class="w-[5%] text-center">
+              <template v-if="row.name !== 'total'">
                 <el-icon
                   v-if="row.joined"
                   color="#f58833"
