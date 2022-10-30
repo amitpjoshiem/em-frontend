@@ -43,6 +43,12 @@ export function useSetUpdateAbility() {
       can('assistant', 'read')
     }
 
+    if (role === 'support') {
+      can('support', 'all')
+      can('support', 'update')
+      can('support', 'read')
+    }
+
     ability.update(rules)
   }
   return { setUpdateAbility }

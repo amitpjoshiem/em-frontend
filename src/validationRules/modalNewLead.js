@@ -2,7 +2,7 @@ const rules = {
   name: [
     {
       required: true,
-      message: 'Please input lead name',
+      message: 'The field cannot be empty',
       trigger: 'blur',
       transform(value) {
         return value.trim()
@@ -18,6 +18,7 @@ const rules = {
       trigger: 'blur',
     },
   ],
+  phone: [{ required: true, len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
 }
 
 export { rules }

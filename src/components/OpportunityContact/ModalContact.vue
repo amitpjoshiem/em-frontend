@@ -14,7 +14,7 @@
             <el-radio :label="false">No</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="Spouse?" class="ml-10">
+        <el-form-item label="Spouse/Partner?" class="ml-10">
           <el-radio-group v-model="contact.is_spouse">
             <el-radio :label="true">Yes</el-radio>
             <el-radio :label="false">No</el-radio>

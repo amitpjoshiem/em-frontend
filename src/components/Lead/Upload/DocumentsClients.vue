@@ -129,13 +129,13 @@ export default {
           message: 'Information updated successfully',
         })
         router.push({
-          name: 'lead-dashboard',
+          name: 'lead/dashboard',
         })
       }
     }
 
     const backStep = () => {
-      router.push({ name: 'lead-dashboard' })
+      router.push({ name: 'lead/dashboard' })
     }
 
     const changeStatus = async () => {

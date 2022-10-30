@@ -1,22 +1,28 @@
 <template>
-  <div v-if="!isMemberAssetsLoading && !isMemberAssetsSchemaLoading">
+  <div v-if="!isMemberAssetsLoading && !isMemberAssetsSchemaLoading && !isLoadingMember">
     <el-form ref="form" :model="ruleForm">
       <div v-for="(block, indexGroup) in schema" :key="indexGroup" class="p-5 mb-10">
         <span class="text-main text-xl font-semibold">{{ block.title }}</span>
 
         <div class="flex pb-2 mt-8">
-          <div class="w-4/12"></div>
-          <div v-for="header in block.headers" :key="header + indexGroup" class="w-2/12 px-2 text-main text-xs">
-            {{ header.toUpperCase() }}
-          </div>
+          <div class="w-[35.3%]" />
+          <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
+            <div class="w-[15%] px-2 text-main text-xs font-semibold">
+              {{ header.label }}
+            </div>
+            <div v-if="indexHeader === 'owner' && member.married" class="w-[5%]" />
+          </template>
         </div>
         <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
-          <div class="w-4/12 flex items-center">
+          <div class="w-[35%] flex items-center">
             <div v-if="row.label" class="text-main font-semibold text-xss">
               {{ row.label }}
             </div>
             <div v-if="row.custom" class="flex items-center ml-2 cursor-pointer">
-              <el-popconfirm title="Are you sure to delete this?" @confirm="confirmEvent({ block, row })">
+              <el-popconfirm
+                title="Are you sure to delete this?"
+                @confirm="confirmDelete({ block, row, indexRow, indexGroup })"
+              >
                 <template #reference>
                   <el-icon color="red" class="cursor-pointer"><Delete /></el-icon>
                 </template>
@@ -24,56 +30,96 @@
             </div>
           </div>
 
-          <div v-for="item in row.elements" :key="item" class="w-2/12 px-2 mb-0">
-            <el-form-item class="mb-4">
-              <SwdCurrencyInput
-                v-if="item.type === 'number'"
-                v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                :options="optionsCurrencyInput"
-                :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
-                :placeholder="item.placeholder"
-                @blur="changeInput(item)"
-              />
-              <el-input
-                v-if="item.type === 'string'"
-                v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                :placeholder="item.placeholder"
-                :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
-                @blur="changeInput(item)"
-              />
-              <el-radio-group
-                v-if="item.type === 'radio'"
-                v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                @change="changeInput(item)"
-              >
-                <el-radio :label="true">Yes</el-radio>
-                <el-radio :label="false">No</el-radio>
-              </el-radio-group>
-              <el-dropdown v-if="item.type === 'dropdown'" trigger="click">
-                <el-button>
-                  Add field
-                  <el-icon class="el-icon--right">
-                    <arrow-down />
-                  </el-icon>
-                </el-button>
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item
-                      v-for="option in item.options"
-                      :key="option"
-                      :disabled="isDisabled({ option, indexGroup })"
-                      @click="
-                        addLine({ model: item.model, variable: option.name, indexGroup, indexRow, label: option.label })
-                      "
-                    >
-                      {{ option.label }}
-                    </el-dropdown-item>
-                    <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })"> Custom </el-dropdown-item>
-                  </el-dropdown-menu>
+          <template v-for="(item, itemIndex) in row.elements" :key="item">
+            <div
+              v-if="!(row.joined && item.name === 'spouse')"
+              class="px-2 mb-0 item-assets"
+              :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
+            >
+              <el-form-item class="mb-4">
+                <template v-if="row.name === 'total'">
+                  <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
+                    <SwdSpinner />
+                  </div>
+                  <div v-else-if="item.name !== 'institution'" class="font-semibold">
+                    {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
+                  </div>
                 </template>
-              </el-dropdown>
-            </el-form-item>
-          </div>
+                <template v-if="row.name !== 'total'">
+                  <SwdCurrencyInput
+                    v-if="item.type === 'number'"
+                    v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                    :options="optionsCurrencyInput"
+                    :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
+                    :placeholder="item.placeholder"
+                    prepend
+                    @blur="changeInput(item)"
+                  />
+                  <el-input
+                    v-if="item.type === 'string'"
+                    v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                    :placeholder="item.placeholder"
+                    :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
+                    @blur="changeInput(item)"
+                  />
+                  <el-radio-group
+                    v-if="item.type === 'radio'"
+                    v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                    @change="changeInput(item)"
+                  >
+                    <el-radio :label="true">Yes</el-radio>
+                    <el-radio :label="false">No</el-radio>
+                  </el-radio-group>
+                  <el-dropdown v-if="item.type === 'dropdown'" trigger="click">
+                    <el-button>
+                      Add field
+                      <el-icon class="el-icon--right">
+                        <arrow-down />
+                      </el-icon>
+                    </el-button>
+                    <template #dropdown>
+                      <el-dropdown-menu>
+                        <el-dropdown-item
+                          v-for="option in item.options"
+                          :key="option"
+                          :disabled="isDisabled({ option, indexGroup })"
+                          @click="
+                            addLine({
+                              model: item.model,
+                              variable: option.name,
+                              indexGroup,
+                              indexRow,
+                              label: option.label,
+                            })
+                          "
+                        >
+                          {{ option.label }}
+                        </el-dropdown-item>
+                        <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })">
+                          Custom
+                        </el-dropdown-item>
+                      </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
+                </template>
+              </el-form-item>
+            </div>
+            <div v-if="itemIndex === 0 && member.married && item.type === 'number'" class="w-[5%] text-center">
+              <template v-if="row.name !== 'total'">
+                <el-icon
+                  v-if="row.joined"
+                  color="#f58833"
+                  class="cursor-pointer top-[7px]"
+                  @click="disjoinMember(item)"
+                >
+                  <Fold />
+                </el-icon>
+                <el-icon v-else color="#073763" class="cursor-pointer top-[7px]" @click="joinMember(item)">
+                  <Expand />
+                </el-icon>
+              </template>
+            </div>
+          </template>
         </div>
       </div>
 
@@ -81,7 +127,7 @@
         <div class="pr-3">
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
-        <SwdButton primary main @click="nextPage()"> Go to the monthly expense </SwdButton>
+        <SwdButton primary main @click="nextPage">Go to the monthly expense</SwdButton>
       </div>
     </el-form>
   </div>
@@ -104,13 +150,14 @@
 </template>
 
 <script>
-import { watchEffect, ref, computed, reactive, onMounted } from 'vue'
+import { watchEffect, ref, computed, reactive, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
 import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
 import { checkCreateAssetsIncomeField } from '@/api/vueQuery/check-create-assets-income-field'
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
+import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
@@ -118,14 +165,16 @@ import { fetchAssetsIncomeConfirm } from '@/api/vueQuery/fetch-assets-income-con
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-import { ArrowDown } from '@element-plus/icons-vue'
-import { Delete } from '@element-plus/icons-vue'
+import { ArrowDown, Delete, Fold, Expand } from '@element-plus/icons-vue'
+import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
   name: 'AddProspectAssetsIncome',
   components: {
     ArrowDown,
     Delete,
+    Expand,
+    Fold,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -138,11 +187,14 @@ export default {
     const fieldName = ref()
     const step = computed(() => store.state.newProspect.step)
 
+    const ruleForm = reactive({})
+    const schema = reactive({})
+
     const memberId = route.params.id
 
-    const { data: memberAssets, isLoading: isMemberAssetsLoading } = useFetchMemberAssets(memberId)
+    const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(memberId)
     const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(memberId)
-
+    const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: memberId })
     const { mutateAsync: create, data } = useMutation(createAssetsIncome)
 
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
@@ -153,9 +205,6 @@ export default {
 
     const { setInitValue } = useAssetsInfoHooks()
 
-    const ruleForm = reactive({})
-    const schema = reactive({})
-
     onMounted(async () => {
       store.commit('newProspect/setStep', 2)
       scrollTop()
@@ -165,8 +214,11 @@ export default {
       if (!isMemberAssetsLoading.value) {
         setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
       }
-      if (!isMemberAssetsSchemaLoading.value) {
-        Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value.data)))
+    })
+
+    watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
+      if (oldValue && !newValue) {
+        updateSchema()
       }
     })
 
@@ -191,15 +243,15 @@ export default {
       }
     }
 
-    const addLine = ({ model, variable, indexGroup, indexRow, label }) => {
-      ruleForm[model.group][variable] = {}
-      schema[indexGroup].headers.forEach((element) => {
-        ruleForm[model.group][variable][element] = null
+    const addLine = async ({ model, variable, indexGroup, indexRow, label }) => {
+      Object.keys(schema[indexGroup].headers).forEach((element) => {
+        ruleForm[model.group][variable] = { [element]: null }
       })
 
-      const elements = schema[indexGroup].headers.map((item) => {
+      const elements = Object.keys(schema[indexGroup].headers).map((item) => {
         return {
-          type: 'string',
+          type: item !== 'institution' ? 'number' : 'string',
+          placeholder: item !== 'institution' ? '$12345' : 'Enter Name',
           name: item,
           label: item,
           disabled: false,
@@ -217,6 +269,14 @@ export default {
         elements,
       }
       schema[indexGroup].rows.splice(indexRow + 1, 0, dataSchema)
+      const data = {
+        group: model.group,
+        row: variable,
+        element: 'owner',
+        type: 'string',
+        value: null,
+      }
+      await updateMemberAssets({ data, id: memberId })
     }
 
     const changeInput = async (item) => {
@@ -229,7 +289,6 @@ export default {
           value: ruleForm[item.model.group][item.model.model][item.model.item],
         }
         await updateMemberAssets({ data, id: memberId })
-        queryClient.invalidateQueries(['memberAssetsSchema', memberId])
         queryClient.invalidateQueries(['memberAssets', memberId])
       }
     }
@@ -248,19 +307,20 @@ export default {
       return !!elem
     }
 
-    const confirmEvent = async ({ block, row }) => {
+    const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
       const data = {
         row: row.name,
         group: block.name,
       }
+
       const res = await deleteRow({ id: memberId, data })
       if (!('error' in res)) {
+        schema[indexGroup].rows.splice(indexRow, 1)
         useAlert({
           title: 'Success',
           type: 'success',
           message: 'Remove success',
         })
-        queryClient.invalidateQueries(['memberAssetsSchema', memberId])
       }
     }
 
@@ -298,6 +358,54 @@ export default {
       fieldName.value = ''
     }
 
+    const joinMember = async (item) => {
+      const data = {
+        group: item.model.group,
+        row: item.model.model,
+        element: item.model.item,
+        type: 'number',
+        joined: true,
+      }
+
+      const res = await updateMemberAssets({ data, id: memberId })
+      if (!('error' in res)) {
+        await queryClient.invalidateQueries(['memberAssets', memberId])
+        await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        updateSchema()
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Join success',
+        })
+      }
+    }
+
+    const disjoinMember = async (item) => {
+      const data = {
+        group: item.model.group,
+        row: item.model.model,
+        element: item.model.item,
+        type: 'number',
+        joined: false,
+      }
+
+      const res = await updateMemberAssets({ data, id: memberId })
+      if (!('error' in res)) {
+        await queryClient.invalidateQueries(['memberAssets', memberId])
+        await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        updateSchema()
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Disjoin success',
+        })
+      }
+    }
+
+    const updateSchema = () => {
+      Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value)))
+    }
+
     return {
       ruleForm,
       schema,
@@ -314,7 +422,7 @@ export default {
       showDialog,
       optionsCurrencyInput,
       isDisabled,
-      confirmEvent,
+      confirmDelete,
       isLoadingDeleteRow,
       closeDialog,
       cancelDialog,
@@ -322,7 +430,26 @@ export default {
       isLoadingCheck,
       dialogVisible,
       fieldName,
+      currencyFormat,
+      isFetching,
+      isLoadingMember,
+      member,
+      joinMember,
+      disjoinMember,
     }
   },
 }
 </script>
+
+<style>
+.item-assets .el-dropdown {
+  width: 100% !important;
+}
+.item-assets .el-button.el-tooltip__trigger {
+  width: 100%;
+}
+
+.item-assets .el-form-item {
+  width: 100%;
+}
+</style>

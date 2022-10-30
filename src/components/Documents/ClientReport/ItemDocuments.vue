@@ -15,14 +15,25 @@
       </SwdButton>
       <SwdButton
         v-if="document.status === 'success' && document.type === 'pdf'"
+        class="mr-4 h-[24px]"
         primary
         small
         @click="handlePictureCardPreview(document)"
       >
         Prewiev
       </SwdButton>
-      <SwdButton v-if="document.status === 'success'" class="mx-4" primary small @click="share">Share</SwdButton>
-      <SwdButton v-if="document.status === 'success'" primary small @click="downloadDocuments"> Download </SwdButton>
+      <SwdButton
+        v-if="document.status === 'success' && !$can('client', 'all') && !$can('support', 'all')"
+        class="h-[24px]"
+        primary
+        small
+        @click="share"
+      >
+        Share
+      </SwdButton>
+      <SwdButton v-if="document.status === 'success'" class="ml-4 h-[24px]" primary small @click="downloadDocuments">
+        Download
+      </SwdButton>
     </div>
   </div>
 </template>

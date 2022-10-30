@@ -12,7 +12,7 @@
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="Married?">
+            <el-form-item label="Spouse/Partner?">
               <el-radio-group v-model="ruleForm.married" @change="changeMarried">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
@@ -80,7 +80,7 @@
 
         <!-- Spouse -->
         <div v-if="ruleForm.married" class="px-16 border-b py-5">
-          <span class="text-main text-xl font-semibold">Spouse</span>
+          <span class="text-main text-xl font-semibold">Spouse/Partner</span>
           <div class="my-5">
             <el-form-item label="Retired?">
               <el-radio-group v-model="ruleForm.spouse.retired">
@@ -273,7 +273,7 @@
 
           <div v-if="ruleForm.married" class="mt-5">
             <div class="my-5">
-              <span class="text-main text-xs uppercase">Spouse</span>
+              <span class="text-main text-xs uppercase">Spouse/Partner</span>
             </div>
 
             <el-form-item v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-10">

@@ -164,7 +164,7 @@ export default {
     }
 
     const cancel = () => {
-      router.push({ name: 'lead-dashboard' })
+      router.push({ name: 'lead/dashboard' })
     }
 
     const submit = () => {
@@ -201,7 +201,7 @@ export default {
     })
 
     const goLeadsList = () => {
-      router.push({ name: 'list-all-leads' })
+      router.push({ name: `${route.meta.type}/all-leads` })
     }
 
     return {

@@ -8,6 +8,7 @@ const getDefaultState = () => {
     advisorId: '',
     clientId: '',
     leadId: '',
+    supportId: '',
     currentTypeUser: '',
     role: '',
     isLoadingApp: false,
@@ -180,6 +181,10 @@ const mutations = {
 
   setLeadId(state, value) {
     state.leadId = value
+  },
+
+  setSupportId(state, value) {
+    state.supportId = value
   },
 
   setCurrentTypeUser(state, value) {

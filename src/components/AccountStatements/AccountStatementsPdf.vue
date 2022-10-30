@@ -6,6 +6,7 @@
       :show-file-list="true"
       :auto-upload="true"
       :show-file-block="true"
+      :disabled="isDisabledUpload"
       @upload-success="handleSuccess"
       @upload-change="handleChange"
       @upload-mounted="bindRef"
@@ -13,7 +14,7 @@
       @remove-media="removeMedia"
     >
       <template #main>
-        <div class="my-5">
+        <div v-if="!isDisabledUpload" class="my-5">
           <div class="w-2/12">
             <SwdButton primary small>Click to upload</SwdButton>
           </div>
@@ -98,6 +99,11 @@ export default {
       return !assetsConsolidationDocs.data.length && !inChangeFile.value && !isFetching.value
     })
 
+    const isDisabledUpload = computed(() => {
+      if (route.meta.type !== 'support' && route.meta.type !== 'client') return false
+      return true
+    })
+
     return {
       IconDownRisk,
       IconUpRisk,
@@ -115,6 +121,7 @@ export default {
       handleChange,
       isShowNoDocuments,
       inChangeFile,
+      isDisabledUpload,
     }
   },
 }

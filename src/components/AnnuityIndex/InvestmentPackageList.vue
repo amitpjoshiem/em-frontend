@@ -5,7 +5,9 @@
         <InlineSvg :src="IconDoneStep" />
         <div class="text-main text-xl font-semibold ml-2">Investment Package</div>
       </div>
-      <SwdButton v-if="!$can('client', 'all')" primary small @click="addPackage">Add Investment Package</SwdButton>
+      <SwdButton v-if="!$can('client', 'all') && !$can('support', 'all')" primary small @click="addPackage">
+        Add Investment Package
+      </SwdButton>
     </div>
 
     <el-skeleton v-if="isLoading" :rows="3" animated />

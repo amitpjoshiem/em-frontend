@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { MoreFilled } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
 
@@ -31,6 +31,7 @@ const allAvailibleOptions = {
 
 const optionsPerStepAndType = {
   'page-details-client': [5, 6],
+  'page-details-support': [5, 6],
   'page-details-prospect': [4, 5, 6],
   client: [1, 3, 5, 6, 7],
   'prospect@step-0': [4, 5, 6, 7],
@@ -43,9 +44,11 @@ const optionsPerStepAndType = {
   onboarding: [4, 7],
 }
 
-function getClientStepHash(user, pageDetails) {
+function getClientStepHash(user, pageDetails, type = null) {
   switch (true) {
-    case pageDetails && user.type === 'client':
+    case type !== null && type === 'support':
+      return 'page-details-support'
+    case type !== null && type === 'client':
       return 'page-details-client'
     case pageDetails && user.type === 'prospect':
       return 'page-details-prospect'
@@ -87,8 +90,8 @@ function routerForStep(step) {
   }
 }
 
-function buildOptions(user, pageDetails) {
-  const hash = getClientStepHash(user, pageDetails)
+function buildOptions(user, pageDetails, type) {
+  const hash = getClientStepHash(user, pageDetails, type)
   const optionsIds = optionsPerStepAndType[hash]
 
   return optionsIds.map((id) => allAvailibleOptions[id])
@@ -113,8 +116,9 @@ export default {
   },
   setup(props) {
     const router = useRouter()
+    const route = useRoute()
     const store = useStore()
-    const actionsOptions = buildOptions(props.user, props.pageDetails)
+    const actionsOptions = buildOptions(props.user, props.pageDetails, route.meta.type)
 
     const handleSelect = (command) => {
       const actionHandler = actionsMap[command]
@@ -135,9 +139,12 @@ export default {
       'client-report': () => router.push({ name: 'clientreport', params: { id: props.user.id } }),
       onboarding: () => getOnboarding(),
 
-      'assets-accounts': () => router.push({ name: 'asset-accounts', params: { id: props.user.id } }),
-      'assets-consolidations': () => router.push({ name: 'assets-consolidations', params: { id: props.user.id } }),
-      'opportunity-contact': () => router.push({ name: 'opportunity-contact', params: { id: props.user.id } }),
+      'assets-accounts': () =>
+        router.push({ name: `${route.meta.type}/asset-accounts`, params: { id: props.user.id } }),
+      'assets-consolidations': () =>
+        router.push({ name: `${route.meta.type}/assets-consolidations`, params: { id: props.user.id } }),
+      'opportunity-contact': () =>
+        router.push({ name: `${route.meta.type}/opportunity-contact`, params: { id: props.user.id } }),
     }
 
     const getOnboarding = () => {

@@ -22,7 +22,7 @@
       </template>
     </el-autocomplete>
     <el-form ref="ruleFormRef" :model="ruleForm" label-position="top">
-      <el-form-item prop="only_my">
+      <el-form-item prop="only_my" class="only-my-filter">
         <el-switch
           v-model="ruleForm.owner"
           active-text="Only my"
@@ -171,3 +171,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.only-my-filter .el-switch__label.el-switch__label--right.is-active {
+  color: #f58833;
+}
+</style>

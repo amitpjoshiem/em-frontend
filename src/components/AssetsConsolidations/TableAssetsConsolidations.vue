@@ -17,6 +17,7 @@
                 v-model="state[indexTable].name"
                 placeholder="Enter Account Name"
                 size="small"
+                :disabled="isDisabledForm"
                 @change="changeInput({ id: table.table, value: state[indexTable].name, field: 'name' })"
               />
             </el-form-item>
@@ -26,6 +27,7 @@
                 placeholder="WRAP FEE"
                 type="number"
                 size="small"
+                :disabled="isDisabledForm"
                 @change="changeInput({ id: table.table, value: state[indexTable].wrap_fee, field: 'wrap_fee' })"
               />
             </el-form-item>
@@ -42,7 +44,7 @@
                 @change="change({ indexTable, index })"
               />
             </div>
-            <div class="w-2/24 item">{{ item.percent_of_holdings }}%</div>
+            <div class="w-2/24 item" :class="{ 'item-disaled': isDisabledForm }">{{ item.percent_of_holdings }}%</div>
             <div class="w-3/24 item amount">
               <el-input
                 v-model="state[indexTable].assets_consolidations[index].amount"
@@ -143,13 +145,13 @@
                 <template v-if="focusElem === 'wrap_fee' + indexTable + index" #prepend>%</template>
               </el-input>
             </div>
-            <div class="w-2/24 item">
+            <div class="w-2/24 item" :class="{ 'item-disaled': isDisabledForm }">
               <span>{{ item.total_cost_percent }}%</span>
             </div>
-            <div class="w-3/24 item">
+            <div class="w-3/24 item" :class="{ 'item-disaled': isDisabledForm }">
               {{ currencyFormat(item.total_cost) }}
             </div>
-            <div class="w-1/24 item">
+            <div v-if="!$can('client', 'all') && !$can('support', 'all')" class="w-1/24 item">
               <div class="w-[15px] h-[15px] cursor-pointer">
                 <el-popconfirm
                   confirm-button-text="Yes"
@@ -171,7 +173,7 @@
           <TotalTable
             v-else
             :total="state[indexTable].assets_consolidations[index]"
-            :is-fetching="isDisabledForm"
+            :is-fetching="isLoadingUpdate || isFetching"
             :is-add-line="true"
             @addTableLine="addTableLine(state[indexTable].table)"
           />
@@ -183,7 +185,7 @@
         <TotalTable v-for="(item, index) in total.value.assets_consolidations" :key="index" :total="item" />
       </div>
 
-      <div class="flex justify-end mb-10">
+      <div v-if="!$can('client', 'all') && !$can('support', 'all')" class="flex justify-end mb-10">
         <SwdButton primary main @click="addTable">Add table</SwdButton>
       </div>
     </div>
@@ -296,6 +298,7 @@ export default {
     }
 
     const isDisabledForm = computed(() => {
+      if (route.meta.type === 'support' || route.meta.type === 'client') return true
       return isLoadingUpdate.value || isFetching.value
     })
 
@@ -308,7 +311,7 @@ export default {
     }
 
     const moreDocuments = () => {
-      router.push({ name: 'document-export', params: { id: memberId } })
+      router.push({ name: `${route.meta.type}/document-export`, params: { id: memberId } })
     }
 
     const addTable = () => {
@@ -334,6 +337,11 @@ export default {
       isLoadingUpdate.value = false
     }
 
+    const isDisabled = computed(() => {
+      if (route.meta.type !== 'support' && route.meta.type !== 'client') return false
+      return true
+    })
+
     return {
       state,
       change,
@@ -358,6 +366,7 @@ export default {
       form,
       ruleForm,
       changeInput,
+      isDisabled,
     }
   },
 }
@@ -365,6 +374,7 @@ export default {
 
 <style scoped>
 .item {
+  height: 40px;
   @apply text-xs text-main flex items-center justify-center uppercase text-center;
   @apply border-main-gray border-b border-r first:border-l;
 }
@@ -374,7 +384,7 @@ export default {
 .item .el-input-group__prepend {
   border: none;
   border-radius: 0;
-  height: 39px;
+  height: 40px;
   padding-left: 1px;
   padding-right: 1px;
   box-shadow: none;
@@ -387,5 +397,12 @@ export default {
 
 .item .el-input__wrapper {
   box-shadow: none;
+  height: 40px;
+  border-radius: 0px;
+}
+
+.item-disaled {
+  background-color: #f5f7fa;
+  height: 39px;
 }
 </style>
