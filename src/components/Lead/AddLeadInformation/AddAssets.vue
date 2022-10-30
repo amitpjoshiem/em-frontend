@@ -37,7 +37,7 @@
               <div class="w-[15%] px-2 text-main text-xs font-semibold">
                 {{ header.label }}
               </div>
-              <div v-if="indexHeader === 'owner'" class="w-[5%]" />
+              <div v-if="indexHeader === 'owner' && member.married" class="w-[5%]" />
             </template>
           </div>
           <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
