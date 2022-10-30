@@ -21,7 +21,7 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
     if (store.state.globalComponents.role === 'assistant') {
       return 'selected'
     }
-    if (type === 'client,prospect') {
+    if (type === 'client,prospect' || type === 'prospect' || type === 'client') {
       return store.state.globalComponents.onlyMyMember
     }
     if (type === 'lead') {
@@ -33,7 +33,7 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
     if (store.state.globalComponents.role === 'assistant') {
       return store.state.globalComponents.advisorId
     }
-    if (type === 'client,prospect') {
+    if (type === 'client,prospect' || type === 'prospect' || type === 'client') {
       return store.state.globalComponents.ownerMember?.id
     }
     if (type === 'lead') {
