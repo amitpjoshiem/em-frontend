@@ -13,9 +13,10 @@ function fetchStatsMembers({ queryKey }) {
 
   const searchParams = {
     search,
-    owner,
-    owner_id,
   }
+
+  if (owner) searchParams.owner = owner
+  if (owner_id) searchParams.owner_id = owner_id
 
   return fetcher({
     url: `/stats/members`,

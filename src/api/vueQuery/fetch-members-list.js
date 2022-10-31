@@ -29,11 +29,11 @@ function fetchMembersList({ queryKey }) {
     page,
     orderBy,
     sortedBy,
-    owner,
-    owner_id,
   }
 
   if (status) searchParams.status = status
+  if (owner) searchParams.owner = owner
+  if (owner_id) searchParams.owner_id = owner_id
 
   return fetcher({
     url: `/members`,
