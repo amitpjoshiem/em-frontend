@@ -106,6 +106,9 @@
     <div v-else class="flex justify-center items-center">
       <SwdSpinner large />
     </div>
+    <el-dialog v-model="dialogVisible" title="Info" width="50%" :show-close="false" :close-on-click-modal="false">
+      <span>Thank you for submitting your information. We will be in contact soon!</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -122,7 +125,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAlert } from '@/utils/use-alert'
 import { onMounted, computed } from 'vue'
 import { scrollTop } from '@/utils/scrollTop'
-import { ElMessageBox } from 'element-plus'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { ref } from 'vue'
@@ -139,6 +141,7 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const errorSend = ref(false)
+    const dialogVisible = ref(false)
     const id = route.params.id
 
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
@@ -168,18 +171,12 @@ export default {
     }
 
     const submit = () => {
-      if (disabledSubmitBtn.value) {
-        errorSend.value = true
-        return
-      }
-      ElMessageBox.alert('Thank you for submitting your information. We will be in contact soon!', 'Info', {
-        showConfirmButton: false,
-        showClose: false,
-      })
+      dialogVisible.value = true
 
       setTimeout(async function () {
         const res = await sendAll(id)
         if (!('error' in res)) {
+          dialogVisible.value = false
           router.push({ name: 'logout' })
         }
       }, 5000)
@@ -218,6 +215,7 @@ export default {
       goLeadsList,
       isFetchingMember,
       member,
+      dialogVisible,
     }
   },
 }
