@@ -66,7 +66,7 @@ import SwdUpload from '@/components/Global/SwdUpload.vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
-  name: 'DocumentsClients',
+  name: 'LeadClients',
   components: {
     SwdUpload,
   },
