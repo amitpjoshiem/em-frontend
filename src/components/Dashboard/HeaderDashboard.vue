@@ -1,7 +1,7 @@
 <template>
   <div class="h-20 flex items-center">
     <div v-if="!isLoading" class="flex justify-center w-full pt-5 pb-5 text-2xl font-semibold">
-      <span> Welcome, {{ userProfile.lastName }} {{ userProfile.firstName }} </span>
+      <span> Welcome, {{ userProfile.firstName }} {{ userProfile.lastName }} </span>
       <span v-if="userProfile.position" class="pl-2">({{ userProfile.position }})</span>
     </div>
     <el-skeleton v-else :rows="0" animated />
