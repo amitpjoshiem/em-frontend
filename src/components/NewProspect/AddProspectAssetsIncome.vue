@@ -106,17 +106,13 @@
             </div>
             <div v-if="itemIndex === 0 && member.married && item.type === 'number'" class="w-[5%] text-center">
               <template v-if="row.name !== 'total'">
-                <el-icon
-                  v-if="row.joined"
-                  color="#f58833"
-                  class="cursor-pointer top-[7px]"
-                  @click="disjoinMember(item)"
-                >
-                  <Fold />
-                </el-icon>
-                <el-icon v-else color="#073763" class="cursor-pointer top-[7px]" @click="joinMember(item)">
-                  <Expand />
-                </el-icon>
+                <el-checkbox
+                  v-model="row.joined"
+                  label="Joint"
+                  size="small"
+                  class="top-[6px] left-[-3px]"
+                  @change="handleChange({ item, status: row.joined })"
+                />
               </template>
             </div>
           </template>
@@ -165,7 +161,7 @@ import { fetchAssetsIncomeConfirm } from '@/api/vueQuery/fetch-assets-income-con
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-import { ArrowDown, Delete, Fold, Expand } from '@element-plus/icons-vue'
+import { ArrowDown, Delete } from '@element-plus/icons-vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
@@ -173,8 +169,6 @@ export default {
   components: {
     ArrowDown,
     Delete,
-    Expand,
-    Fold,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -375,7 +369,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Join success',
+          message: 'Joint success',
         })
       }
     }
@@ -397,13 +391,21 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Disjoin success',
+          message: 'Unjoint success',
         })
       }
     }
 
     const updateSchema = () => {
       Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value)))
+    }
+
+    const handleChange = ({ item, status }) => {
+      if (status) {
+        joinMember(item)
+      } else {
+        disjoinMember(item)
+      }
     }
 
     return {
@@ -436,6 +438,7 @@ export default {
       member,
       joinMember,
       disjoinMember,
+      handleChange,
     }
   },
 }
