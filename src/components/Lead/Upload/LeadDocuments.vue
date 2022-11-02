@@ -55,18 +55,16 @@
 <script>
 import { computed, reactive, ref, watchEffect } from 'vue'
 import { useMutation, useQueryClient } from 'vue-query'
-import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
-import { useAlert } from '@/utils/use-alert'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
 export default {
-  name: 'LeadClients',
+  name: 'LeadDocuments',
   components: {
     SwdUpload,
   },
@@ -78,7 +76,6 @@ export default {
     },
   },
   setup(props) {
-    const router = useRouter()
     const store = useStore()
     const queryClient = useQueryClient()
     const upload = ref(null)
