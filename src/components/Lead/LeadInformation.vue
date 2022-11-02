@@ -37,7 +37,7 @@
                   "
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Completed Financial Fact Finder</div>
+              <div class="text-xs sm:text-base text-main">Step 1 - Completed Financial Fact Finder</div>
             </div>
           </el-card>
         </router-link>
@@ -49,7 +49,7 @@
               <el-icon :size="25" class="mr-5">
                 <circle-check-filled :color="getStatusRelevant" />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload Relevant Financial Documents</div>
+              <div class="text-xs sm:text-base text-main">Step 2 - Upload Relevant Financial Documents</div>
             </div>
           </el-card>
         </router-link>
@@ -63,7 +63,7 @@
                   :color="clientsInfo.steps.property_casualty ? stepsColorSchema.active : stepsColorSchema.notActive"
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload Property & Casualty Documents</div>
+              <div class="text-xs sm:text-base text-main">Step 3 - Upload Property & Casualty Documents</div>
             </div>
           </el-card>
         </router-link>
@@ -77,7 +77,7 @@
                   :color="clientsInfo.steps.medicare_details ? stepsColorSchema.active : stepsColorSchema.notActive"
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload Medicare Documents</div>
+              <div class="text-xs sm:text-base text-main">Step 4 - Upload Medicare Documents</div>
             </div>
           </el-card>
         </router-link>
