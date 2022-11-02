@@ -70,6 +70,7 @@ export default {
 
     const getTitle = computed(() => {
       if (member.value && member.value.type === 'prospect') return 'Opportunity details'
+      if (member.value && member.value.name) return member.value.name + ' details'
       return 'Client details'
     })
 
