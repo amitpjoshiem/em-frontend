@@ -33,7 +33,7 @@
       <SwdSpinner v-if="isFetching" />
       <span v-else>{{ currencyFormat(total.total_cost) }}</span>
     </div>
-    <div v-if="isAddLine" class="w-1/24 total">
+    <div v-if="isAddLine && !$can('client', 'all') && !$can('support', 'all')" class="w-1/24 total">
       <div class="w-[15px] h-[15px] cursor-pointer">
         <InlineSvg :src="IconAdd" @click="addLine" />
       </div>

@@ -1,19 +1,20 @@
 import { useQuery } from 'vue-query'
-import { fetcher } from '@/api/fetcher/fetcher'
+import { reactive } from 'vue'
+import { fetchMemberAssetsSchema } from './vueQuery/fetch-member-assets-schema'
 
 const useFetchMemberAssetsSchema = (id) => {
-  const { data, error, isFetching, isLoading } = useQuery(['memberAssetsSchema', id], () => {
-    return fetcher({
-      url: `/assets_income/schema/${id}`,
-      options: { method: 'GET' },
-    })
+  const queryKey = reactive(['memberAssetsSchema', id])
+
+  const query = useQuery(queryKey, {
+    cacheTime: 0,
+    queryFn: fetchMemberAssetsSchema,
+    select: ({ data }) => {
+      return data
+    },
   })
 
   return {
-    data,
-    error,
-    isFetching,
-    isLoading,
+    ...query,
   }
 }
 

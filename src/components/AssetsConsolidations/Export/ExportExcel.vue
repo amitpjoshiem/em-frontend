@@ -6,7 +6,10 @@
       <div class="pt-8">Export to Excel success.</div>
       <div class="pt-2">
         <span>You can find the file created in the</span>
-        <router-link :to="{ name: 'document-export', params: { id: memberId } }" class="text-activity">
+        <router-link
+          :to="{ name: `${route.meta.type}/document-export`, params: { id: memberId } }"
+          class="text-activity"
+        >
           List of documents.
         </router-link>
       </div>
@@ -29,7 +32,6 @@ export default {
   name: 'ExportExcel',
   setup() {
     const route = useRoute()
-
     const memberId = route.params.id
 
     const state = reactive({
@@ -60,6 +62,7 @@ export default {
       isError,
       isFetching,
       data,
+      route,
     }
   },
 }

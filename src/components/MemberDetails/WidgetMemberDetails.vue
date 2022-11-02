@@ -71,7 +71,7 @@
               v-model="ruleForm.total_net_worth"
               :options="optionsCurrencyInput"
               prepend
-              :disabled="isLoadingUpdate"
+              :disabled="isDisabledInput"
               placeholder="$12345"
               size="small"
               @blur="change()"
@@ -91,7 +91,7 @@
               v-model="ruleForm.goal"
               :options="optionsCurrencyInput"
               prepend
-              :disabled="isLoadingUpdate"
+              :disabled="isDisabledInput"
               placeholder="$12345"
               size="small"
               @blur="change()"
@@ -115,7 +115,9 @@
       </div>
 
       <div v-if="member.type === 'prospect'" class="flex justify-between pt-3">
-        <SwdButton primary small class="mr-2" @click="convert">Convert to client</SwdButton>
+        <SwdButton v-if="!$can('client', 'all') && !$can('support', 'all')" primary small class="mr-2" @click="convert">
+          Convert to client
+        </SwdButton>
 
         <router-link :to="{ name: `${route.meta.type}/blueprint-report`, params: { id: member.id } }">
           <SwdButton primary small class="mr-2">Blueprint report</SwdButton>
@@ -245,6 +247,10 @@ export default {
       })
     }
 
+    const isDisabledInput = computed(() => {
+      return isLoadingUpdate.value || route.meta.type === 'support' || route.meta.type === 'client'
+    })
+
     return {
       IconProspectAge,
       IconTotal,
@@ -260,7 +266,6 @@ export default {
       ruleForm,
       change,
       optionsCurrencyInput,
-      isLoadingUpdate,
       isLoadingProspectDetails,
       isErrorProspectDetails,
       member,
@@ -268,6 +273,7 @@ export default {
       owner,
       moreInfoOwner,
       route,
+      isDisabledInput,
     }
   },
 }

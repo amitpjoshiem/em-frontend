@@ -44,7 +44,7 @@
             @upload-success="handleChangeDocSuccess"
             @upload-mounted="bindRef"
           >
-            <template v-if="!$can('client', 'all')" #main>
+            <template v-if="!$can('client', 'all') && !$can('support', 'all')" #main>
               <SwdButton primary small class="mt-4 w-[135px]">Change document</SwdButton>
             </template>
           </SwdUpload>
@@ -105,7 +105,7 @@
           </el-form>
         </div>
       </div>
-      <div v-if="!$can('client', 'all')" class="flex justify-end">
+      <div v-if="!$can('client', 'all') && !$can('support', 'all')" class="flex justify-end">
         <div v-if="isEdit" class="flex">
           <SwdButton info small class="w-[60px] mr-2" @click="cancelEdit">Cancel</SwdButton>
           <SwdButton primary small :disabled="loadingUpdate" class="w-[60px]" @click="saveBasicInformation">

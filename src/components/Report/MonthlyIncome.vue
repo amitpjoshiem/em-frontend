@@ -37,7 +37,7 @@
       </div>
       <!-- Spouse -->
       <div class="flex justify-center items-center px-3 border-b border-r border-l border-color-grey py-4">
-        <div class="w-4/12 text-main text-xss">Spouse</div>
+        <div class="w-4/12 text-main text-xss">Spouse/Partner</div>
         <el-form-item class="w-4/12 mr-1">
           <SwdCurrencyInput
             v-model="ruleForm.current_spouse"

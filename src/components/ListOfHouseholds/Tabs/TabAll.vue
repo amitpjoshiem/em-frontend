@@ -1,6 +1,10 @@
 <template>
-  <el-badge :value="count" :max="99" class="mr-8" :type="getType ? 'primary' : 'info'" :hidden="isLoading">
-    <router-link :to="{ name: getLink }" class="text-main text-smm cursor-pointer" :class="{ active: getType }">
+  <el-badge :value="count" :max="99" class="mr-8" :type="getType" :hidden="isLoading">
+    <router-link
+      :to="{ name: `${route.meta.type}/all` }"
+      class="text-main text-smm cursor-pointer"
+      :class="{ active: getType === 'primary' }"
+    >
       All Households
     </router-link>
   </el-badge>
@@ -8,7 +12,6 @@
 <script>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 
 export default {
   name: 'TabOpportunities',
@@ -26,34 +29,20 @@ export default {
   },
   setup() {
     const route = useRoute()
-    const store = useStore()
 
     const getActiveTab = computed(() => {
       return route.name
     })
 
-    const getCurrentTypeUser = computed(() => {
-      return store.state.globalComponents.currentTypeUser
-    })
-
     const getType = computed(() => {
-      if (getCurrentTypeUser.value === 'advisor' && getActiveTab.value === 'all') return true
-      if (getCurrentTypeUser.value === 'admin' && getActiveTab.value === 'admin-all-list') return true
-      if (getCurrentTypeUser.value === 'ceo' && getActiveTab.value === 'ceo-all-list') return true
-      return false
-    })
-
-    const getLink = computed(() => {
-      if (getCurrentTypeUser.value === 'advisor') return 'all'
-      if (getCurrentTypeUser.value === 'admin') return 'admin-all-list'
-      if (getCurrentTypeUser.value === 'ceo') return 'ceo-all-list'
-      return '404'
+      if (route.name === route.meta.type + '/all') return 'primary'
+      return 'info'
     })
 
     return {
       getActiveTab,
       getType,
-      getLink,
+      route,
     }
   },
 }

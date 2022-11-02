@@ -1,6 +1,9 @@
 <template>
   <div class="p-5 flex justify-between">
-    <router-link :to="{ name: 'all' }" class="text-primary text-sm font-semibold hover:text-main-blue">
+    <router-link
+      :to="{ name: `${route.meta.type}/all` }"
+      class="text-primary text-sm font-semibold hover:text-main-blue"
+    >
       List of Households
     </router-link>
     <div class="flex items-center">
@@ -11,11 +14,13 @@
 </template>
 <script>
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'ListOfHouseholdsHeader',
   setup() {
     const store = useStore()
+    const route = useRoute()
 
     const actionsOptions = [
       {
@@ -46,6 +51,7 @@ export default {
     return {
       actionsOptions,
       handleSelect,
+      route,
     }
   },
 }

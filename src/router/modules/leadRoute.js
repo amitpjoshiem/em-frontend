@@ -11,8 +11,8 @@ export const leadRoute = {
   },
   children: [
     {
-      path: 'lead-dashboard',
-      name: 'lead-dashboard',
+      path: 'dashboard',
+      name: `${type}/dashboard`,
       component: () => import(/* webpackChunkName: "LeadDashboard" */ '../../views/LeadDashboard.vue'),
     },
     {

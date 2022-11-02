@@ -7,19 +7,26 @@ export const advisorRoute = {
   name: 'advisor-home',
   component: AdvisorHome,
   meta: {
-    resource: [{ advisor: 'all' }, { admin: 'all' }, { ceo: 'all' }, { assistant: 'all' }, { client: 'all' }],
+    resource: [
+      { advisor: 'all' },
+      { admin: 'all' },
+      { ceo: 'all' },
+      { assistant: 'all' },
+      { client: 'all' },
+      { support: 'all' },
+    ],
     type,
   },
   children: [
     {
-      path: 'advisor-dashboard',
-      name: 'advisor-dashboard',
+      path: 'dashboard',
+      name: `${type}/dashboard`,
       component: () => import(/* webpackChunkName: "Dashboard" */ '../../views/AdvisorDashboard.vue'),
     },
 
     {
       path: 'document-export/:id',
-      name: 'document-export',
+      name: `${type}/document-export`,
       component: () =>
         import(
           /* webpackChunkName: "DocumentExport" */ '../../components/AssetsConsolidations/Export/DocumentExport.vue'
@@ -40,7 +47,7 @@ export const advisorRoute = {
 
     {
       path: 'contract-info/:id',
-      name: 'contract-info',
+      name: `${type}/contract-info`,
       component: () => import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractInfo.vue'),
     },
 
@@ -70,24 +77,24 @@ export const advisorRoute = {
 
     {
       path: 'leads',
-      name: 'leads',
+      name: `${type}/leads`,
       component: () => import(/* webpackChunkName: "Leads" */ '../../views/Leads.vue'),
       children: [
         {
-          path: 'list-all-leads',
-          name: 'list-all-leads',
+          path: 'all-leads',
+          name: `${type}/all-leads`,
           component: () =>
             import(/* webpackChunkName: "ListOfLeads" */ '../../components/ListOfLeads/ListAllLeads.vue'),
         },
         {
-          path: 'list-active-leads',
-          name: 'list-active-leads',
+          path: 'active-leads',
+          name: `${type}/active-leads`,
           component: () =>
             import(/* webpackChunkName: "ListActiveLeads" */ '../../components/ListOfLeads/ListActiveLeads.vue'),
         },
         {
-          path: 'list-deactivated-leads',
-          name: 'list-deactivated-leads',
+          path: 'deactivated-leads',
+          name: `${type}/deactivated-leads`,
           component: () =>
             import(
               /* webpackChunkName: "ListDeactivatedLeads" */ '../../components/ListOfLeads/ListDeactivatedLeads.vue'
@@ -141,14 +148,14 @@ export const advisorRoute = {
 
     {
       path: 'asset-accounts/:id',
-      name: 'asset-accounts',
+      name: `${type}/asset-accounts`,
       component: () =>
         import(/* webpackChunkName: "AssetAccounts" */ '../../components/AssetAccounts/AssetAccounts.vue'),
     },
 
     {
       path: 'assets-consolidations/:id',
-      name: 'assets-consolidations',
+      name: `${type}/assets-consolidations`,
       component: () =>
         import(
           /* webpackChunkName: "AssetsConsolidations" */ '../../components/AssetsConsolidations/AssetsConsolidations.vue'
@@ -253,7 +260,7 @@ export const advisorRoute = {
 
     {
       path: 'export-report/:id',
-      name: 'export-report',
+      name: `${type}/export-report`,
       component: () =>
         import(
           /* webpackChunkName: "ExportReport" */ '../../components/Documents/ClientReport/ExportClientReports.vue'
@@ -261,7 +268,7 @@ export const advisorRoute = {
       children: [
         {
           path: 'all',
-          name: 'all-report',
+          name: `${type}/all-report`,
           component: () =>
             import(
               /* webpackChunkName: "ExportReport" */ '../../components/Documents/ClientReport/ClientReportAll.vue'
@@ -269,7 +276,7 @@ export const advisorRoute = {
         },
         {
           path: 'pdf',
-          name: 'pdf-report',
+          name: `${type}/pdf-report`,
           component: () =>
             import(
               /* webpackChunkName: "ExportReport" */ '../../components/Documents/ClientReport/ClientReportPdf.vue'
@@ -277,7 +284,7 @@ export const advisorRoute = {
         },
         {
           path: 'excel',
-          name: 'excel-report',
+          name: `${type}/excel-report`,
           component: () =>
             import(
               /* webpackChunkName: "ExportReport" */ '../../components/Documents/ClientReport/ClientReportExcel.vue'
@@ -288,18 +295,18 @@ export const advisorRoute = {
 
     {
       path: 'list-of-households',
-      name: 'list-of-households',
+      name: `${type}/list-of-households`,
       component: () => import(/* webpackChunkName: "ListOfHouseholds" */ '../../views/ListOfHouseholds.vue'),
       children: [
         {
           path: 'all',
-          name: 'all',
+          name: `${type}/all`,
           component: () =>
             import(/* webpackChunkName: "ListOfHouseholds" */ '../../components/ListOfHouseholds/ListAll.vue'),
         },
         {
           path: 'opportunities',
-          name: 'opportunities',
+          name: `${type}/opportunities`,
           component: () =>
             import(
               /* webpackChunkName: "ListOfHouseholds" */ '../../components/ListOfHouseholds/ListOpportunities.vue'
@@ -307,7 +314,7 @@ export const advisorRoute = {
         },
         {
           path: 'clients',
-          name: 'clients',
+          name: `${type}/clients`,
           component: () =>
             import(/* webpackChunkName: "ListOfHouseholds" */ '../../components/ListOfHouseholds/ListClients.vue'),
         },

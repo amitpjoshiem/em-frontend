@@ -1,5 +1,4 @@
 <template>
-  <!-- <SwdSubHeader :title="headerTitle" /> -->
   <div class="flex pb-5">
     <div class="w-3/12">
       <BackButton text="Back" @click="back" />
@@ -31,7 +30,7 @@ export default {
 
     const back = () => {
       if (step.value === 1) {
-        router.push({ name: 'advisor-dashboard' })
+        router.push({ name: `${route.meta.type}/dashboard` })
       } else {
         store.commit('newProspect/setStep', step.value - 1)
         goPage()
@@ -96,7 +95,7 @@ export default {
           router.push({ name: 'blueprint-report', params: { id: route.params.id ? route.params.id : '' } })
           break
         default:
-          router.push({ name: 'advisor-dashboard' })
+          router.push({ name: `${route.meta.type}/dashboard` })
       }
     }
 

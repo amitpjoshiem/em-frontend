@@ -80,7 +80,7 @@ export default {
 
     const newTabCompany = (item) => {
       dialogVisible.value = false
-      let routeData = router.resolve({ name: 'ceo-dashboard', query: { id: item.id } })
+      let routeData = router.resolve({ name: 'ceo/dashboard', query: { id: item.id } })
       window.open(routeData.href, '_blank')
     }
 

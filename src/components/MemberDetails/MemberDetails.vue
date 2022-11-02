@@ -1,7 +1,7 @@
 <template>
   <SwdWrapper>
     <SwdSubHeader
-      v-if="!$can('client', 'all')"
+      v-if="!$can('client', 'all') && !$can('support', 'all')"
       :title="getTitle"
       witch-info-btn
       info-btn-destination="MemberDetails"
@@ -11,7 +11,7 @@
       <span class="text-2xl font-semibold">Welcome, {{ member.name }}</span>
     </div>
 
-    <template v-if="!$can('client', 'all')">
+    <template v-if="$can('advisor', 'all') || $can('admin', 'all') || $can('ceo', 'all')">
       <div v-if="isLoadingProspectDetails" class="flex items-center justify-center">
         <SwdSpinner />
       </div>
@@ -24,7 +24,7 @@
     <div class="flex my-5">
       <div class="w-8/24 mr-5">
         <WidgetMemberDetails />
-        <InfoSalesforceStatus v-if="showContent.infoSalesforceStatus" />
+        <InfoSalesforceStatus v-if="showContent.infoSalesforceStatus && $can('advisor', 'all')" />
       </div>
       <OpportunityTable class="w-16/24" />
     </div>

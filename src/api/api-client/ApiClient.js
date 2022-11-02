@@ -96,6 +96,10 @@ class ApiClient {
       if (type === 'lead') {
         customHeader['x-user'] = store.state.globalComponents.leadId
       }
+
+      if (type === 'support') {
+        customHeader['x-user'] = store.state.globalComponents.supportId
+      }
     }
     return customHeader
   }

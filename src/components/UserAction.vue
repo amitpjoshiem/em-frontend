@@ -7,7 +7,7 @@
       </router-link>
       <SwdDropDown :options="getActionsOptions" @select="handleSelect">
         <template #titleDropDown>
-          <div v-if="!isLoadingUserProfile" class="flex items-center">
+          <div v-if="!isLoadingUserProfile" class="flex items-center cursor-pointer">
             <span class="px-2 py-2 text-xs uppercase font-semibold text-primary">{{ getNameTitle }}</span>
             <InlineSvg :src="IconUserAction" />
           </div>
