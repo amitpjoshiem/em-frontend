@@ -104,7 +104,7 @@ export default {
 
     const getNameTitle = computed(() => {
       if (!user.value.firstName && !user.value.lastName) return 'User'
-      return user.value.lastName.charAt(0) + user.value.firstName.charAt(0)
+      return user.value.firstName.charAt(0) + user.value.lastName.charAt(0)
     })
 
     const actionsMap = {
