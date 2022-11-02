@@ -1,6 +1,5 @@
 <template>
   <SwdWrapper>
-    <SwdSubHeader :title="getTitle" />
     <div v-if="!isLoading">
       <div class="mb-5">
         <el-checkbox
@@ -11,7 +10,7 @@
         />
       </div>
 
-      <div v-if="collection === 'social_security_information'" class="text-main text-sm mb-5">
+      <div v-if="context === 'social_security_information'" class="text-main text-sm mb-5">
         You may need to sign up to get your
         <a target="_blank" href="https://www.ssa.gov/" class="text-blue-400 italic">Social Security Statement online</a>
         by clicking this link
@@ -20,7 +19,7 @@
       <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-main-gray rounded-md">
         <div v-if="!isFetching">
           <SwdUpload
-            :upload-data="{ collection }"
+            :upload-data="{ collection: context }"
             :doc-list="data.documents"
             :show-file-list="true"
             :auto-upload="true"
@@ -48,12 +47,8 @@
         </div>
         <p>No recently added documents</p>
       </div>
-      <div class="flex justify-end">
-        <SwdButton info main class="mr-4" @click="backStep">Back</SwdButton>
-        <SwdButton primary main :disabled="disabledSaveBtn" @click="saveStep">Save</SwdButton>
-      </div>
     </div>
-    <el-skeleton v-else :rows="15" animated />
+    <el-skeleton v-else :rows="5" animated />
   </SwdWrapper>
 </template>
 
@@ -66,7 +61,6 @@ import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documen
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
-import { useGetTile } from './hooks/use-get-title-hook'
 import { useAlert } from '@/utils/use-alert'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
@@ -76,14 +70,19 @@ export default {
   components: {
     SwdUpload,
   },
-  setup(_, { attrs }) {
+  props: {
+    context: {
+      type: String,
+      required: true,
+      default: '',
+    },
+  },
+  setup(props) {
     const router = useRouter()
     const store = useStore()
     const queryClient = useQueryClient()
     const upload = ref(null)
     const inChangeFile = ref(false)
-
-    const { getTitle } = useGetTile(attrs.context)
 
     const state = reactive({
       file: '',
@@ -91,10 +90,8 @@ export default {
       availabilityDocuments: false,
     })
 
-    const collection = attrs.context
-
     const { isLoading, isFetching, isError, refetch, data } = useFetchClientDocuments({
-      collection,
+      collection: props.context,
     })
 
     const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
@@ -109,35 +106,6 @@ export default {
       upload.value = ref.value
     }
 
-    const statusStep = computed(() => {
-      if (state.availabilityDocuments) return 'no_documents'
-      if (data.value.documents?.length) return 'completed'
-      return 'not_completed'
-    })
-
-    const disabledSaveBtn = computed(() => {
-      if (isLoadingUpdateSteps.value) return true
-      return !(state.availabilityDocuments || data.value.documents.length)
-    })
-
-    const saveStep = async () => {
-      const res = await updateSteps({ [collection]: statusStep.value })
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Information updated successfully',
-        })
-        router.push({
-          name: 'lead/dashboard',
-        })
-      }
-    }
-
-    const backStep = () => {
-      router.push({ name: 'lead/dashboard' })
-    }
-
     const changeStatus = async () => {
       let status = 'not_completed'
 
@@ -148,22 +116,25 @@ export default {
         status = 'completed'
       }
 
-      await updateSteps({ [collection]: status })
+      await updateSteps({ [props.context]: status })
     }
 
     const removeMedia = async (media) => {
       const res = await deleteDocument(media)
       if (!('error' in res)) {
-        queryClient.invalidateQueries(['clientsDocuments', collection])
+        await queryClient.invalidateQueries(['clientsDocuments', props.context])
       }
+      if (!data.value.documents.length) changeStatus()
+      console.log(data.value.documents.length)
     }
 
     const handleSuccess = async (res) => {
       const data = { uuids: [res.data.uuid] }
-      const response = await uploadDoc({ collection, data })
+      const response = await uploadDoc({ collection: props.context, data })
       if (!('error' in response)) {
         inChangeFile.value = false
-        queryClient.invalidateQueries(['clientsDocuments', collection])
+        queryClient.invalidateQueries(['clientsDocuments', props.context])
+        changeStatus()
       }
     }
 
@@ -192,12 +163,7 @@ export default {
       refetch,
       data,
       IconEmptyUsers,
-      saveStep,
-      disabledSaveBtn,
       changeStatus,
-      backStep,
-      collection,
-      getTitle,
       handleChange,
       removeMedia,
       handleSuccess,
