@@ -1,7 +1,7 @@
 <template>
   <div class="sm:h-20 flex items-center">
     <div v-if="!isLoading" class="flex justify-center w-full p-5 text-2xl font-medium">
-      <span>Welcome, {{ clientsInfo.name }}</span>
+      <span>Welcome {{ clientsInfo.name }}</span>
     </div>
     <el-skeleton v-else :rows="0" animated />
   </div>

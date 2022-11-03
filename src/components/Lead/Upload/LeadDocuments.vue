@@ -4,7 +4,7 @@
       <div class="mb-5">
         <el-checkbox
           v-model="state.availabilityDocuments"
-          label="I want to skip and submit"
+          label="I want to skip this document."
           size="large"
           @change="changeStatus"
         />

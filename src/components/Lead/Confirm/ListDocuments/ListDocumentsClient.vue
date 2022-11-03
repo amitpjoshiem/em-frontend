@@ -4,7 +4,7 @@
   </div>
   <div v-if="!isFetchingAdvisor && !isFetchingClient">
     <div v-if="data.value?.status === 'no_documents'" class="flex">
-      <div>I want to skip and submit</div>
+      <div>I want to skip this document.</div>
       <el-tag class="ml-4" type="success">Yes</el-tag>
     </div>
     <div v-else-if="data.value?.documents.length">
