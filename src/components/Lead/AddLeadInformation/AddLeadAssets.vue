@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isMemberAssetsLoading && !isLoadingInfo && !isMemberAssetsSchemaLoading && !isLoadingMember">
-      <el-form ref="form" :model="ruleForm">
+      <el-form ref="form" :model="ruleForm" :disabled="isReadOnlyLead">
         <div
           v-for="(block, indexGroup) in schema"
           :key="indexGroup"
@@ -113,7 +113,7 @@
                       <el-radio :label="true">Yes</el-radio>
                       <el-radio :label="false">No</el-radio>
                     </el-radio-group>
-                    <el-dropdown v-if="item.type === 'dropdown'" trigger="click">
+                    <el-dropdown v-if="item.type === 'dropdown'" trigger="click" :disabled="isReadOnlyLead">
                       <el-button>
                         Add field
                         <el-icon class="el-icon--right">
@@ -205,7 +205,7 @@ import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income
 import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
-  name: 'AddAssets',
+  name: 'AddLeadAssets',
   components: {
     ArrowDown,
     Delete,
@@ -473,6 +473,10 @@ export default {
       }
     }
 
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
+    })
+
     return {
       ruleForm,
       backStep,
@@ -515,6 +519,7 @@ export default {
       isFetching,
       currencyFormat,
       handleChange,
+      isReadOnlyLead,
     }
   },
 }

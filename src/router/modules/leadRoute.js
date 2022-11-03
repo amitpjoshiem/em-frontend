@@ -26,7 +26,7 @@ export const leadRoute = {
           name: 'client-basic-information',
           component: () =>
             import(
-              /* webpackChunkName: "NewLeadBasicInformation" */ '../../components/Lead/AddLeadInformation/AddBasicInfo.vue'
+              /* webpackChunkName: "AddLeadBasicInfo" */ '../../components/Lead/AddLeadInformation/AddLeadBasicInfo.vue'
             ),
         },
         {
@@ -34,7 +34,7 @@ export const leadRoute = {
           name: 'client-assets-information',
           component: () =>
             import(
-              /* webpackChunkName: "NewLeadAssetsInformation" */ '../../components/Lead/AddLeadInformation/AddAssets.vue'
+              /* webpackChunkName: "AddLeadAssets" */ '../../components/Lead/AddLeadInformation/AddLeadAssets.vue'
             ),
         },
         {
@@ -42,7 +42,7 @@ export const leadRoute = {
           name: 'client-expense-information',
           component: () =>
             import(
-              /* webpackChunkName: "NewLeadExpenseInformation" */ '../../components/Lead/AddLeadInformation/AddExpense.vue'
+              /* webpackChunkName: "AddLeadExpense" */ '../../components/Lead/AddLeadInformation/AddLeadExpense.vue'
             ),
         },
       ],

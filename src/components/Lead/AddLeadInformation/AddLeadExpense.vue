@@ -5,7 +5,7 @@
       <div class="md:w-2/12 text-main text-xs">ESSENTIAL</div>
       <div class="md:w-2/12 text-main text-xs">DISCRETIONARY</div>
     </div>
-    <el-form ref="form" :model="ruleForm">
+    <el-form ref="form" :model="ruleForm" :disabled="isReadOnlyLead">
       <div class="border border-main-gray rounded-lg p-5 mb-5" :class="{ 'border-border-blue': isFocusHousing }">
         <div class="flex items-center mb-5">
           <InlineSvg v-show="isFocusHousing && !isDoneCurrentStep" :src="IconActive" />
@@ -28,6 +28,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             class="w-6/12 md:w-2/12 pr-2"
             @focus="focus('housing')"
             @blur="blur('housing')"
@@ -37,6 +38,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             class="w-6/12 md:w-2/12 pl-2"
             @focus="focus('housing')"
             @blur="blur('housing')"
@@ -51,6 +53,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('housing')"
             @blur="blur('housing')"
           />
@@ -60,6 +63,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('housing')"
             @blur="blur('housing')"
           />
@@ -73,6 +77,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('housing')"
             @blur="blur('housing')"
           />
@@ -82,6 +87,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('housing')"
             @blur="blur('housing')"
           />
@@ -95,6 +101,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('housing')"
             @blur="blur('housing')"
           />
@@ -104,6 +111,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('housing')"
             @blur="blur('housing')"
           />
@@ -117,6 +125,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('housing')"
             @blur="blur('housing')"
           />
@@ -126,6 +135,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('housing')"
             @blur="blur('housing')"
           />
@@ -156,6 +166,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('at-home')"
             @blur="blur('at-home')"
           />
@@ -165,6 +176,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('at-home')"
             @blur="blur('at-home')"
           />
@@ -178,6 +190,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('at-home')"
             @blur="blur('at-home')"
           />
@@ -187,6 +200,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('at-home')"
             @blur="blur('at-home')"
           />
@@ -208,6 +222,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('trasportation')"
             @blur="blur('trasportation')"
           />
@@ -217,6 +232,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('trasportation')"
             @blur="blur('trasportation')"
           />
@@ -230,6 +246,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('trasportation')"
             @blur="blur('trasportation')"
           />
@@ -239,6 +256,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('trasportation')"
             @blur="blur('trasportation')"
           />
@@ -252,6 +270,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('trasportation')"
             @blur="blur('trasportation')"
           />
@@ -261,6 +280,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('trasportation')"
             @blur="blur('trasportation')"
           />
@@ -274,6 +294,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('trasportation')"
             @blur="blur('trasportation')"
           />
@@ -283,6 +304,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('trasportation')"
             @blur="blur('trasportation')"
           />
@@ -311,6 +333,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('healthcare')"
             @blur="blur('healthcare')"
           />
@@ -320,6 +343,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('healthcare')"
             @blur="blur('healthcare')"
           />
@@ -333,6 +357,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('healthcare')"
             @blur="blur('healthcare')"
           />
@@ -342,6 +367,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('healthcare')"
             @blur="blur('healthcare')"
           />
@@ -355,6 +381,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('healthcare')"
             @blur="blur('healthcare')"
           />
@@ -364,6 +391,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('healthcare')"
             @blur="blur('healthcare')"
           />
@@ -377,6 +405,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('healthcare')"
             @blur="blur('healthcare')"
           />
@@ -386,6 +415,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('healthcare')"
             @blur="blur('healthcare')"
           />
@@ -416,6 +446,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('personal')"
             @blur="blur('personal')"
           />
@@ -425,6 +456,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('personal')"
             @blur="blur('personal')"
           />
@@ -438,6 +470,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('personal')"
             @blur="blur('personal')"
           />
@@ -447,6 +480,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('personal')"
             @blur="blur('personal')"
           />
@@ -472,6 +506,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('personal-care')"
             @blur="blur('personal-care')"
           />
@@ -481,6 +516,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('personal-care')"
             @blur="blur('personal-care')"
           />
@@ -494,6 +530,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('personal-care')"
             @blur="blur('personal-care')"
           />
@@ -503,6 +540,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('personal-care')"
             @blur="blur('personal-care')"
           />
@@ -524,6 +562,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -533,6 +572,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -546,6 +586,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -555,6 +596,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -568,6 +610,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -577,6 +620,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -590,6 +634,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -599,6 +644,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -612,6 +658,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -621,6 +668,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -634,6 +682,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -643,6 +692,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -656,6 +706,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -665,6 +716,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @focus="focus('other')"
             @blur="blur('other')"
           />
@@ -696,10 +748,13 @@
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
 
-        <SwdButton primary main :disabled="isLoadingUpdateSteps" class="w-2/12" @click="save">
+        <SwdButton v-if="!isReadOnlyLead" primary main :disabled="isLoadingUpdateSteps" class="w-2/12" @click="save">
           <SwdSpinner v-show="isLoadingUpdateSteps" class="mr-2" />
           Save
         </SwdButton>
+        <router-link v-else :to="{ name: `${route.meta.type}/dashboard` }" class="w-2/12">
+          <SwdButton primary main>Dashboard</SwdButton>
+        </router-link>
       </div>
     </el-form>
   </div>
@@ -709,25 +764,21 @@
 import { onMounted, computed, reactive, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
-
 import { useFetchMonthlyExpense } from '@/api/use-fetch-monthly-expense.js'
 import { createMonthlyExpenses } from '@/api/vueQuery/create-monthly-expenses'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useMutation } from 'vue-query'
-
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useAlert } from '@/utils/use-alert'
 import { scrollTop } from '@/utils/scrollTop'
-
 import { useExpenseInfoHooks } from '@/hooks/use-expense-info-hooks'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
-
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
-  name: 'AddExpense',
+  name: 'AddLeadExpense',
   setup() {
     const store = useStore()
     const router = useRouter()
@@ -939,6 +990,10 @@ export default {
       if (type === 'other') isFocusOther.value = false
     }
 
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
+    })
+
     return {
       backStep,
       ruleForm,
@@ -966,6 +1021,8 @@ export default {
       isFocusOther,
       isLoadingInfo,
       isDoneCurrentStep,
+      isReadOnlyLead,
+      route,
     }
   },
 }

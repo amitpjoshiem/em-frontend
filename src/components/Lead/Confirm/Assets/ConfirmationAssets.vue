@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$can('lead', 'all')" class="flex justify-end mb-4">
-      <SwdButton primary small @click="edit">Edit</SwdButton>
+      <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full information' : 'Edit' }}</SwdButton>
     </div>
     <div v-if="!isAssetsLoading && !isAssetsSchemaLoading">
       <el-card v-for="(block, indexGroup) in assetsSchema.data" :key="indexGroup" class="rounded-md mb-10">
@@ -66,7 +66,13 @@ import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
   name: 'ConfirmationAssets',
-  components: {},
+  props: {
+    isReadOnlyLead: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()

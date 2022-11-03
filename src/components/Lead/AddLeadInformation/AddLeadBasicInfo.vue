@@ -1,7 +1,7 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isFetchingMember && !isLoadingInfo" class="sm:p-5">
-      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top">
+      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isReadOnlyLead">
         <!-- GENERAL -->
         <div class="p-5">
           <div class="flex items-center mb-5">
@@ -614,7 +614,7 @@ import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
-  name: 'AddProspectBasicInfo',
+  name: 'AddLeadBasicInfo',
   directives: { maska },
   setup() {
     const router = useRouter()
@@ -745,6 +745,10 @@ export default {
       return clientsInfo.value.steps.completed_financial_fact_finder
     })
 
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
+    })
+
     const focus = (type) => {
       if (type === 'general') isFocusGeneral.value = true
       if (type === 'spouse') isFocusSpouse.value = true
@@ -798,6 +802,7 @@ export default {
 
       focus,
       blur,
+      isReadOnlyLead,
     }
   },
 }
