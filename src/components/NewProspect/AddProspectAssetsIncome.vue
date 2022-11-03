@@ -7,10 +7,10 @@
         <div class="flex pb-2 mt-8">
           <div class="w-[35.3%]" />
           <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
+            <div v-if="indexHeader === 'owner' && member.married" class="w-[5%]" />
             <div class="w-[15%] px-2 text-main text-xs font-semibold">
               {{ header.label }}
             </div>
-            <div v-if="indexHeader === 'owner' && member.married" class="w-[5%]" />
           </template>
         </div>
         <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
@@ -31,6 +31,18 @@
           </div>
 
           <template v-for="(item, itemIndex) in row.elements" :key="item">
+            <div v-if="itemIndex === 0 && member.married" class="w-[5%] text-center">
+              <template v-if="row.name !== 'total' && item.type === 'number'">
+                <el-checkbox
+                  v-model="row.joined"
+                  label="Joint"
+                  size="small"
+                  :disabled="isLoadingUpdate"
+                  class="top-[6px] left-[-3px]"
+                  @change="handleChange({ item, status: row.joined })"
+                />
+              </template>
+            </div>
             <div
               v-if="!(row.joined && item.name === 'spouse')"
               class="px-2 mb-0 item-assets"
@@ -103,17 +115,6 @@
                   </el-dropdown>
                 </template>
               </el-form-item>
-            </div>
-            <div v-if="itemIndex === 0 && member.married && item.type === 'number'" class="w-[5%] text-center">
-              <template v-if="row.name !== 'total'">
-                <el-checkbox
-                  v-model="row.joined"
-                  label="Joint"
-                  size="small"
-                  class="top-[6px] left-[-3px]"
-                  @change="handleChange({ item, status: row.joined })"
-                />
-              </template>
             </div>
           </template>
         </div>
