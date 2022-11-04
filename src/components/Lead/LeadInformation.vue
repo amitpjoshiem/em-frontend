@@ -23,7 +23,7 @@
         </div>
         <!-- Completed Financial Fact Finder -->
         <router-link
-          :to="{ name: 'client-basic-information', params: { id: clientsInfo.member_id } }"
+          :to="{ name: 'lead-basic-information', params: { id: clientsInfo.member_id } }"
           class="flex items-center"
         >
           <el-card class="mb-4 w-full">

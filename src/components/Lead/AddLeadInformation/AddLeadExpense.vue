@@ -939,7 +939,7 @@ export default {
 
     const backStep = () => {
       store.commit('newClient/setStep', step.value - 1)
-      router.push({ name: 'client-assets-information', params: { id: memberId } })
+      router.push({ name: 'lead-assets-information', params: { id: memberId } })
     }
 
     const handleChange = async () => {

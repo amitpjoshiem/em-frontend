@@ -2,13 +2,13 @@
   <div class="bg-main-gray rounded-lg px-5 mb-5 lg:max-w-5xl lg:mx-auto">
     <div class="flex w-full pt-2">
       <router-link
-        :to="{ name: 'client-basic-information', params: { id: memberId } }"
+        :to="{ name: 'lead-basic-information', params: { id: memberId } }"
         class="w-4/12 text-center text-xs font-medium text-main"
       >
         Basic
       </router-link>
       <router-link
-        :to="{ name: 'client-assets-information', params: { id: memberId } }"
+        :to="{ name: 'lead-assets-information', params: { id: memberId } }"
         class="w-4/12 text-center text-xs ml-4"
         :class="{
           'text-title-gray': step < 2,
@@ -18,7 +18,7 @@
         Assets &amp; Income
       </router-link>
       <router-link
-        :to="{ name: 'client-expense-information', params: { id: memberId } }"
+        :to="{ name: 'lead-expense-information', params: { id: memberId } }"
         class="w-4/12 text-center text-xs"
         :class="{
           'text-title-gray': step < 3,

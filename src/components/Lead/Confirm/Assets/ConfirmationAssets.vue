@@ -82,7 +82,7 @@ export default {
     const { data: assetsSchema, isLoading: isAssetsSchemaLoading } = useFetchMemberAssetsSchema(route.params.id)
 
     const edit = () => {
-      router.push({ name: 'client-assets-information', params: { id: route.params.id } })
+      router.push({ name: 'lead-assets-information', params: { id: route.params.id } })
     }
 
     const isShowRow = (row) => {

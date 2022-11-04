@@ -581,9 +581,23 @@
         <!-- Other -->
 
         <div class="flex justify-end my-10">
-          <SwdButton primary main :disabled="isLoadingUpdateMember" @click="submitForm('ruleForm')">
+          <router-link
+            v-if="isReadOnlyLead"
+            :to="{ name: `lead-assets-information`, params: { id: leadId } }"
+            class="w-4/12"
+          >
+            <SwdButton primary main>Go to the assets &amp; income</SwdButton>
+          </router-link>
+          <SwdButton
+            v-else
+            primary
+            main
+            class="w-2/12"
+            :disabled="isLoadingUpdateMember"
+            @click="submitForm('ruleForm')"
+          >
             <SwdSpinner v-show="isLoadingUpdateMember" class="mr-2" />
-            Go to the assets &amp; income
+            Save
           </SwdButton>
         </div>
       </el-form>
@@ -622,6 +636,7 @@ export default {
     const form = ref(null)
     const route = useRoute()
     const step = computed(() => store.state.newClient.step)
+    const leadId = route.params.id
 
     const isFocusGeneral = ref(false)
     const isFocusSpouse = ref(false)
@@ -731,7 +746,7 @@ export default {
             })
             store.commit('newClient/setStep', step.value + 1)
             router.push({
-              name: 'client-assets-information',
+              name: 'lead-assets-information',
               params: { id: route.params.id },
             })
           }
@@ -784,25 +799,20 @@ export default {
       optionsCurrencyInput,
       isFetchingMember,
       member,
-      refetchMember,
-
       IconActive,
       IconNotActive,
       IconDoneStep,
-
       isFocusGeneral,
       isFocusSpouse,
       isFocusHouse,
       isFocusEmployment,
       isFocusOther,
-
       isLoadingInfo,
-
       isDoneCurrentStep,
-
       focus,
       blur,
       isReadOnlyLead,
+      leadId,
     }
   },
 }

@@ -104,7 +104,7 @@ export default {
     const router = useRouter()
 
     const edit = () => {
-      router.push({ name: 'client-basic-information', params: { id: route.params.id } })
+      router.push({ name: 'lead-basic-information', params: { id: route.params.id } })
     }
 
     return {

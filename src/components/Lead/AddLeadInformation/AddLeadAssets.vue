@@ -155,7 +155,14 @@
           <div class="pr-3">
             <Button default-gray-btn text-btn="Back" @click="backStep" />
           </div>
-          <SwdButton primary main @click="submitForm()">Go to the monthly expense</SwdButton>
+          <router-link
+            v-if="isReadOnlyLead"
+            :to="{ name: `lead-expense-information`, params: { id: leadId } }"
+            class="w-4/12"
+          >
+            <SwdButton primary main>Go to the monthly expense</SwdButton>
+          </router-link>
+          <SwdButton v-else primary main @click="submitForm">Save</SwdButton>
         </div>
       </el-form>
     </div>
@@ -228,11 +235,11 @@ export default {
     const ruleForm = reactive({})
     const schema = reactive([])
 
-    const memberId = route.params.id
+    const leadId = route.params.id
 
-    const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(memberId)
-    const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(memberId)
-    const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: memberId })
+    const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(leadId)
+    const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(leadId)
+    const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: leadId })
 
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
@@ -250,7 +257,7 @@ export default {
 
     watchEffect(() => {
       if (!isMemberAssetsLoading.value) {
-        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
+        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: leadId })
       }
     })
 
@@ -262,7 +269,7 @@ export default {
 
     const backStep = () => {
       store.commit('newClient/setStep', step.value - 1)
-      router.push({ name: 'client-basic-information', params: { id: memberId } })
+      router.push({ name: 'lead-basic-information', params: { id: leadId } })
     }
 
     const submitForm = async () => {
@@ -273,8 +280,8 @@ export default {
       })
       store.commit('newClient/setStep', step.value + 1)
       router.push({
-        name: 'client-expense-information',
-        params: { id: memberId },
+        name: 'lead-expense-information',
+        params: { id: leadId },
       })
     }
 
@@ -335,7 +342,7 @@ export default {
         type: 'string',
         value: null,
       }
-      await updateMemberAssets({ data, id: memberId })
+      await updateMemberAssets({ data, id: leadId })
     }
 
     const changeInput = async (item) => {
@@ -347,8 +354,8 @@ export default {
           type: 'string',
           value: ruleForm[item.model.group][item.model.model][item.model.item],
         }
-        await updateMemberAssets({ data, id: memberId })
-        queryClient.invalidateQueries(['memberAssets', memberId])
+        await updateMemberAssets({ data, id: leadId })
+        queryClient.invalidateQueries(['memberAssets', leadId])
       }
     }
 
@@ -372,7 +379,7 @@ export default {
         group: block.name,
       }
 
-      const res = await deleteRow({ id: memberId, data })
+      const res = await deleteRow({ id: leadId, data })
       if (!('error' in res)) {
         schema[indexGroup].rows.splice(indexRow, 1)
         useAlert({
@@ -390,7 +397,7 @@ export default {
         group: item.model.group,
       }
 
-      const res = await checkCreateField({ memberId, data })
+      const res = await checkCreateField({ leadId, data })
 
       if (res.succes) {
         const model = item.model
@@ -426,10 +433,10 @@ export default {
         joined: true,
       }
 
-      const res = await updateMemberAssets({ data, id: memberId })
+      const res = await updateMemberAssets({ data, id: leadId })
       if (!('error' in res)) {
-        await queryClient.invalidateQueries(['memberAssets', memberId])
-        await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        await queryClient.invalidateQueries(['memberAssets', leadId])
+        await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
         updateSchema()
         useAlert({
           title: 'Success',
@@ -448,10 +455,10 @@ export default {
         joined: false,
       }
 
-      const res = await updateMemberAssets({ data, id: memberId })
+      const res = await updateMemberAssets({ data, id: leadId })
       if (!('error' in res)) {
-        await queryClient.invalidateQueries(['memberAssets', memberId])
-        await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        await queryClient.invalidateQueries(['memberAssets', leadId])
+        await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
         updateSchema()
         useAlert({
           title: 'Success',
@@ -520,6 +527,7 @@ export default {
       currencyFormat,
       handleChange,
       isReadOnlyLead,
+      leadId,
     }
   },
 }

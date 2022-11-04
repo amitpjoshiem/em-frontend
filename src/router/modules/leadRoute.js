@@ -23,7 +23,7 @@ export const leadRoute = {
       children: [
         {
           path: 'basic/:id?',
-          name: 'client-basic-information',
+          name: 'lead-basic-information',
           component: () =>
             import(
               /* webpackChunkName: "AddLeadBasicInfo" */ '../../components/Lead/AddLeadInformation/AddLeadBasicInfo.vue'
@@ -31,7 +31,7 @@ export const leadRoute = {
         },
         {
           path: 'assets/:id?',
-          name: 'client-assets-information',
+          name: 'lead-assets-information',
           component: () =>
             import(
               /* webpackChunkName: "AddLeadAssets" */ '../../components/Lead/AddLeadInformation/AddLeadAssets.vue'
@@ -39,7 +39,7 @@ export const leadRoute = {
         },
         {
           path: 'expense/:id?',
-          name: 'client-expense-information',
+          name: 'lead-expense-information',
           component: () =>
             import(
               /* webpackChunkName: "AddLeadExpense" */ '../../components/Lead/AddLeadInformation/AddLeadExpense.vue'

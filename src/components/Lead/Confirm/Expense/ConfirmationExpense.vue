@@ -452,7 +452,7 @@ export default {
     } = useFetchMonthlyExpense({ id: route.params.id })
 
     const edit = () => {
-      router.push({ name: 'client-expense-information', params: { id: route.params.id } })
+      router.push({ name: 'lead-expense-information', params: { id: route.params.id } })
     }
 
     return {
