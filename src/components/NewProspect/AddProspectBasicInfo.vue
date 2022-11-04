@@ -21,10 +21,10 @@
           </div>
 
           <div class="flex">
-            <el-form-item label="Name" prop="name" class="w-9/12 pr-5">
+            <el-form-item label="Name" prop="name" class="w-8/12 pr-5">
               <el-input v-model="ruleForm.name" placeholder="Enter prospect’s name" />
             </el-form-item>
-            <el-form-item prop="birthday" label="Date of birth" class="w-3/12">
+            <el-form-item prop="birthday" label="Date of birth" class="w-4/12">
               <el-date-picker
                 v-model="ruleForm.birthday"
                 type="date"
@@ -59,16 +59,16 @@
           </div>
 
           <div class="flex my-5">
-            <el-form-item label="Address" prop="address" class="w-5/12 pr-5">
-              <el-input v-model="ruleForm.address" placeholder="Enter prospect’s address" />
+            <el-form-item label="State" prop="state" class="w-5/12 pr-5">
+              <el-input v-model="ruleForm.state" placeholder="Enter prospect’s state" />
             </el-form-item>
 
             <el-form-item label="City" prop="city" class="w-5/12 pr-5">
               <el-input v-model="ruleForm.city" placeholder="Enter prospect’s city" />
             </el-form-item>
 
-            <el-form-item label="State" prop="state" class="w-5/12 pr-5">
-              <el-input v-model="ruleForm.state" placeholder="Enter prospect’s state" />
+            <el-form-item label="Address" prop="address" class="w-5/12 pr-5">
+              <el-input v-model="ruleForm.address" placeholder="Enter prospect’s address" />
             </el-form-item>
 
             <el-form-item label="ZIP" prop="zip" class="w-2/12">
@@ -393,12 +393,12 @@ import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useSalesForceAuth } from '@/api/use-sales-force-auth.js'
 import { rules } from '@/validationRules/basicRules.js'
 import { maska } from 'maska'
-import IconAdd from '@/assets/svg/icon-add.svg'
-import IconDelete from '@/assets/svg/icon-delete.svg'
 import { initialBasicInformation } from '@/components/NewProspect/initialState/basicInformation'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
+import IconAdd from '@/assets/svg/icon-add.svg'
+import IconDelete from '@/assets/svg/icon-delete.svg'
 
 export default {
   name: 'AddProspectBasicInfo',
