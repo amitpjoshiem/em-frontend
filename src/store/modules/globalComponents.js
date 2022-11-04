@@ -13,6 +13,7 @@ const getDefaultState = () => {
     role: '',
     isLoadingApp: false,
     termsAndConditions: null,
+    showModalReadOnly: false,
     dateRangeClientReport: '',
     itemsPerPage: {
       options: [
@@ -233,6 +234,10 @@ const mutations = {
 
   setOpportunityId(state, value) {
     state.opportunityId = value
+  },
+
+  setShowModalReadOnly(state, value) {
+    state.showModalReadOnly = value
   },
 
   resetState(state) {

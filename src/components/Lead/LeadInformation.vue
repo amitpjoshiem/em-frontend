@@ -105,6 +105,7 @@
       </router-link>
     </div>
   </div>
+  <ModalReadOnly />
 </template>
 
 <script>
@@ -113,12 +114,14 @@ import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
 import { computed } from 'vue'
+import ModalReadOnly from './ModalReadOnly.vue'
 
 export default {
   name: 'LeadInformation',
   components: {
     CircleCheckFilled,
     DocumentChecked,
+    ModalReadOnly,
   },
   setup() {
     const stepsColorSchema = {

@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isLoadingInfo" class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto lg:w-[960px]">
-    <SwdSubHeader title="Confirmation Information" :with-back-btn="!$can('lead', 'all')" />
+    <SwdSubHeader title="Confirmation Information" />
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
       <div class="flex items-center mb-5">

@@ -25,6 +25,7 @@ export function useSetInit() {
       const role = response.value.data.roles[0]
       const termsAndConditions = response.value.data.terms_and_conditions
       const advisorId = response.value.data.advisor_id
+      const readOnly = response.value.data.readonly
 
       store.commit('globalComponents/setRole', role)
       store.commit('globalComponents/setCurrentTypeUser', typeUser)
@@ -41,6 +42,9 @@ export function useSetInit() {
 
       if (role === 'client' || role === 'lead') {
         store.commit('globalComponents/setTermsAndConditions', termsAndConditions)
+      }
+      if (role === 'lead' && readOnly) {
+        store.commit('globalComponents/setShowModalReadOnly', readOnly)
       }
 
       await setUpdateAbility()
