@@ -45,6 +45,7 @@
             Prewiev
           </el-button>
           <el-popconfirm
+            v-if="withRemoveBtn"
             confirm-button-text="Yes"
             cancel-button-text="No"
             icon="el-icon-info"
@@ -100,6 +101,11 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    withRemoveBtn: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
     docList: {
       type: Array,

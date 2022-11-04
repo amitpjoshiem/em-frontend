@@ -1,13 +1,13 @@
 <template>
-  <div class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto lg:w-[960px]">
-    <SwdSubHeader title="Confirmation Information" :with-back-btn="!$can('lead', 'all')" />
+  <div v-if="!isLoadingInfo" class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto lg:w-[960px]">
+    <SwdSubHeader title="Confirmation Information" />
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
       <div class="flex items-center mb-5">
         <InlineSvg :src="IconDoneStep" />
         <div class="text-main text-xl font-semibold ml-2">Basic</div>
       </div>
-      <ConfirmationInformation v-if="!isFetchingMember" :member="member" />
+      <ConfirmationInformation v-if="!isFetchingMember" :member="member" :is-read-only-lead="isReadOnlyLead" />
       <div v-else class="flex justify-center items-center">
         <SwdSpinner large />
       </div>
@@ -18,7 +18,7 @@
         <InlineSvg :src="IconDoneStep" />
         <div class="text-main text-xl font-semibold ml-2">Assets &amp; Income</div>
       </div>
-      <ConfirmationAssets />
+      <ConfirmationAssets :is-read-only-lead="isReadOnlyLead" />
     </div>
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
@@ -26,7 +26,7 @@
         <InlineSvg :src="IconDoneStep" />
         <div class="text-main text-xl font-semibold ml-2">Expenses</div>
       </div>
-      <ConfirmationExpense />
+      <ConfirmationExpense :is-read-only-lead="isReadOnlyLead" />
     </div>
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
@@ -36,7 +36,11 @@
           Investment and Retirement Accounts (most recent statements)
         </div>
       </div>
-      <ListDocumentsClient doc-collections="investment_and_retirement_accounts" page="investment-retirement" />
+      <ListDocumentsClient
+        doc-collections="investment_and_retirement_accounts"
+        page="investment-retirement"
+        :is-read-only-lead="isReadOnlyLead"
+      />
     </div>
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
@@ -49,6 +53,7 @@
       <ListDocumentsClient
         doc-collections="life_insurance_annuity_and_long_terms_care_policies"
         page="life-insurance"
+        :is-read-only-lead="isReadOnlyLead"
       />
     </div>
 
@@ -57,7 +62,11 @@
         <InlineSvg :src="IconDoneStep" />
         <div class="text-main text-xl font-semibold ml-2">Social Security Information/Statement(s)</div>
       </div>
-      <ListDocumentsClient doc-collections="social_security_information" page="social-security" />
+      <ListDocumentsClient
+        doc-collections="social_security_information"
+        page="social-security"
+        :is-read-only-lead="isReadOnlyLead"
+      />
     </div>
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
@@ -67,7 +76,11 @@
           Upload your Medicare Details (Provider, Policy papers etc.)
         </div>
       </div>
-      <ListDocumentsClient doc-collections="medicare_details" page="medicare-details" />
+      <ListDocumentsClient
+        doc-collections="medicare_details"
+        page="medicare-details"
+        :is-read-only-lead="isReadOnlyLead"
+      />
     </div>
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
@@ -75,7 +88,11 @@
         <InlineSvg :src="IconDoneStep" />
         <div class="text-main text-xl font-semibold ml-2">Upload your Property Casualty statements</div>
       </div>
-      <ListDocumentsClient doc-collections="property_casualty" page="property-casualty" />
+      <ListDocumentsClient
+        doc-collections="property_casualty"
+        page="property-casualty"
+        :is-read-only-lead="isReadOnlyLead"
+      />
     </div>
 
     <div v-if="$can('lead', 'all') && errorSend" class="text-center font-semibold pt-4">
@@ -93,14 +110,19 @@
           Close
         </SwdButton>
       </div>
-      <div v-if="$can('lead', 'all')" class="flex justify-end mt-4 mb-4">
-        <div class="pr-3">
-          <Button default-gray-btn text-btn="Cancel" @click="cancel" />
-        </div>
-        <SwdButton primary main @click="submit">
-          <SwdSpinner v-show="isLoadingSubmitAll" class="mr-2" />
-          Submit
-        </SwdButton>
+      <div v-if="$can('lead', 'all')" class="flex justify-end my-8">
+        <template v-if="!isReadOnlyLead">
+          <div class="pr-3">
+            <Button default-gray-btn text-btn="Cancel" @click="cancel" />
+          </div>
+          <SwdButton primary main @click="submit">
+            <SwdSpinner v-show="isLoadingSubmitAll" class="mr-2" />
+            Submit
+          </SwdButton>
+        </template>
+        <router-link v-else :to="{ name: `${route.meta.type}/dashboard` }" class="w-2/12">
+          <SwdButton primary main>Dashboard</SwdButton>
+        </router-link>
       </div>
     </template>
     <div v-else class="flex justify-center items-center">
@@ -110,12 +132,13 @@
       <span>Thank you for submitting your information. We will be in contact soon!</span>
     </el-dialog>
   </div>
+  <el-skeleton v-else :rows="15" animated />
 </template>
 
 <script>
 import ConfirmationInformation from './Basic/ConfirmationBasic.vue'
-import ConfirmationExpense from './Expense/ConfirmationExpense.vue'
 import ConfirmationAssets from './Assets/ConfirmationAssets.vue'
+import ConfirmationExpense from './Expense/ConfirmationExpense.vue'
 import ListDocumentsClient from './ListDocuments/ListDocumentsClient'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 import { convertLeadToOpportunity } from '@/api/vueQuery/fetch-convert-lead-to-opportunity'
@@ -123,11 +146,10 @@ import { sendAllInformation } from '@/api/vueQuery/clients/fetch-send-all-inform
 import { useMutation } from 'vue-query'
 import { useRoute, useRouter } from 'vue-router'
 import { useAlert } from '@/utils/use-alert'
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import { scrollTop } from '@/utils/scrollTop'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useFetchMember } from '@/api/use-fetch-member.js'
-import { ref } from 'vue'
 
 export default {
   name: 'ConfirmationPage',
@@ -201,6 +223,10 @@ export default {
       router.push({ name: `${route.meta.type}/all-leads` })
     }
 
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
+    })
+
     return {
       isLoadingConvert,
       convert,
@@ -216,6 +242,8 @@ export default {
       isFetchingMember,
       member,
       dialogVisible,
+      route,
+      isReadOnlyLead,
     }
   },
 }

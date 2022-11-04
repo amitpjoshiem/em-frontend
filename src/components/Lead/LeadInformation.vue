@@ -23,7 +23,7 @@
         </div>
         <!-- Completed Financial Fact Finder -->
         <router-link
-          :to="{ name: 'client-basic-information', params: { id: clientsInfo.member_id } }"
+          :to="{ name: 'lead-basic-information', params: { id: clientsInfo.member_id } }"
           class="flex items-center"
         >
           <el-card class="mb-4 w-full">
@@ -105,6 +105,7 @@
       </router-link>
     </div>
   </div>
+  <ModalReadOnly />
 </template>
 
 <script>
@@ -113,12 +114,14 @@ import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
 import { computed } from 'vue'
+import ModalReadOnly from './ModalReadOnly.vue'
 
 export default {
   name: 'LeadInformation',
   components: {
     CircleCheckFilled,
     DocumentChecked,
+    ModalReadOnly,
   },
   setup() {
     const stepsColorSchema = {

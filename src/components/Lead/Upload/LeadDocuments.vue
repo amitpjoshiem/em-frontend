@@ -1,11 +1,12 @@
 <template>
   <SwdWrapper>
-    <div v-if="!isLoading">
+    <div v-if="!isLoading && !isLoadingInfo">
       <div class="mb-5">
         <el-checkbox
           v-model="state.availabilityDocuments"
           label="I want to skip this document."
           size="large"
+          :disabled="isReadOnlyLead"
           @change="changeStatus"
         />
       </div>
@@ -24,7 +25,8 @@
             :show-file-list="true"
             :auto-upload="true"
             :show-file-block="true"
-            :disabled="state.availabilityDocuments"
+            :disabled="state.availabilityDocuments || isReadOnlyLead"
+            :with-remove-btn="false"
             @upload-change="handleChange"
             @upload-success="handleSuccess"
             @upload-mounted="bindRef"
@@ -33,7 +35,7 @@
           >
             <template #main>
               <div class="flex my-5 w-2/12">
-                <SwdButton primary small>Click to upload</SwdButton>
+                <SwdButton primary small :disabled="isReadOnlyLead">Click to upload</SwdButton>
               </div>
               <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
             </template>
@@ -57,6 +59,7 @@ import { computed, reactive, ref, watchEffect } from 'vue'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
+import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
@@ -90,6 +93,7 @@ export default {
     const { isLoading, isFetching, isError, refetch, data } = useFetchClientDocuments({
       collection: props.context,
     })
+    const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
     const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
     const { mutateAsync: deleteDocument } = useMutation(deleteMedia)
@@ -151,6 +155,10 @@ export default {
       store.commit('globalComponents/setPreviewUrlPdf', url)
     }
 
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
+    })
+
     return {
       state,
       bindRef,
@@ -167,6 +175,9 @@ export default {
       isShowNoDocuments,
       openPrewiev,
       isLoadingUpdateSteps,
+      isLoadingInfo,
+      clientsInfo,
+      isReadOnlyLead,
     }
   },
 }

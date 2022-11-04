@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-end mb-4">
-    <SwdButton v-if="$can('lead', 'all')" primary small @click="edit">Edit</SwdButton>
+    <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full information' : 'Edit' }}</SwdButton>
   </div>
   <div v-if="!isFetchingAdvisor && !isFetchingClient">
     <div v-if="data.value?.status === 'no_documents'" class="flex">
@@ -65,6 +65,11 @@ export default {
       type: String,
       required: true,
       default: '',
+    },
+    isReadOnlyLead: {
+      type: Boolean,
+      require: false,
+      default: false,
     },
   },
   setup(props) {

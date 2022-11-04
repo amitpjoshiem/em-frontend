@@ -1,7 +1,6 @@
 <template>
-  <!-- <div v-if="!isFetchingMember"> -->
   <div v-if="$can('lead', 'all')" class="flex justify-end mb-4">
-    <SwdButton primary small @click="edit">Edit</SwdButton>
+    <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full information' : 'Edit' }}</SwdButton>
   </div>
   <el-card class="mb-4 w-full sm:p-5">
     <div>
@@ -94,13 +93,18 @@ export default {
       require: true,
       default: () => {},
     },
+    isReadOnlyLead: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
   },
   setup() {
     const route = useRoute()
     const router = useRouter()
 
     const edit = () => {
-      router.push({ name: 'client-basic-information', params: { id: route.params.id } })
+      router.push({ name: 'lead-basic-information', params: { id: route.params.id } })
     }
 
     return {

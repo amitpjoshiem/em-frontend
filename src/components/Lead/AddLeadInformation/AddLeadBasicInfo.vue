@@ -1,7 +1,7 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isFetchingMember && !isLoadingInfo" class="sm:p-5">
-      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top">
+      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isReadOnlyLead">
         <!-- GENERAL -->
         <div class="p-5">
           <div class="flex items-center mb-5">
@@ -581,9 +581,23 @@
         <!-- Other -->
 
         <div class="flex justify-end my-10">
-          <SwdButton primary main :disabled="isLoadingUpdateMember" @click="submitForm('ruleForm')">
+          <router-link
+            v-if="isReadOnlyLead"
+            :to="{ name: `lead-assets-information`, params: { id: leadId } }"
+            class="w-4/12"
+          >
+            <SwdButton primary main>Go to the assets &amp; income</SwdButton>
+          </router-link>
+          <SwdButton
+            v-else
+            primary
+            main
+            class="w-2/12"
+            :disabled="isLoadingUpdateMember"
+            @click="submitForm('ruleForm')"
+          >
             <SwdSpinner v-show="isLoadingUpdateMember" class="mr-2" />
-            Go to the assets &amp; income
+            Save
           </SwdButton>
         </div>
       </el-form>
@@ -614,7 +628,7 @@ import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
-  name: 'AddProspectBasicInfo',
+  name: 'AddLeadBasicInfo',
   directives: { maska },
   setup() {
     const router = useRouter()
@@ -622,6 +636,7 @@ export default {
     const form = ref(null)
     const route = useRoute()
     const step = computed(() => store.state.newClient.step)
+    const leadId = route.params.id
 
     const isFocusGeneral = ref(false)
     const isFocusSpouse = ref(false)
@@ -731,7 +746,7 @@ export default {
             })
             store.commit('newClient/setStep', step.value + 1)
             router.push({
-              name: 'client-assets-information',
+              name: 'lead-assets-information',
               params: { id: route.params.id },
             })
           }
@@ -743,6 +758,10 @@ export default {
 
     const isDoneCurrentStep = computed(() => {
       return clientsInfo.value.steps.completed_financial_fact_finder
+    })
+
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
     })
 
     const focus = (type) => {
@@ -780,24 +799,20 @@ export default {
       optionsCurrencyInput,
       isFetchingMember,
       member,
-      refetchMember,
-
       IconActive,
       IconNotActive,
       IconDoneStep,
-
       isFocusGeneral,
       isFocusSpouse,
       isFocusHouse,
       isFocusEmployment,
       isFocusOther,
-
       isLoadingInfo,
-
       isDoneCurrentStep,
-
       focus,
       blur,
+      isReadOnlyLead,
+      leadId,
     }
   },
 }

@@ -2,7 +2,7 @@
   <div>
     <div v-if="!isLoadingExpense">
       <div v-if="$can('lead', 'all')" class="flex justify-end mb-4">
-        <SwdButton primary small @click="edit">Edit</SwdButton>
+        <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full information' : 'Edit' }}</SwdButton>
       </div>
       <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
         <div class="hidden pb-2 mt-8 md:flex">
@@ -434,6 +434,13 @@ export default {
   components: {
     ConfirmExpenseItem,
   },
+  props: {
+    isReadOnlyLead: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+  },
   setup() {
     const router = useRouter()
     const route = useRoute()
@@ -445,7 +452,7 @@ export default {
     } = useFetchMonthlyExpense({ id: route.params.id })
 
     const edit = () => {
-      router.push({ name: 'client-expense-information', params: { id: route.params.id } })
+      router.push({ name: 'lead-expense-information', params: { id: route.params.id } })
     }
 
     return {
