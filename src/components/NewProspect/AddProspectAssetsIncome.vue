@@ -14,19 +14,9 @@
           </template>
         </div>
         <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
-          <div class="w-[35%] flex items-center">
-            <div v-if="row.label" class="text-main font-semibold text-xss">
+          <div class="w-[30%] flex items-center">
+            <div v-if="row.label" class="text-main font-semibold text-xss w-7/12">
               {{ row.label }}
-            </div>
-            <div v-if="row.custom" class="flex items-center ml-2 cursor-pointer">
-              <el-popconfirm
-                title="Are you sure to delete this?"
-                @confirm="confirmDelete({ block, row, indexRow, indexGroup })"
-              >
-                <template #reference>
-                  <el-icon color="red" class="cursor-pointer"><Delete /></el-icon>
-                </template>
-              </el-popconfirm>
             </div>
           </div>
 
@@ -96,7 +86,7 @@
                           :key="option"
                           :disabled="isDisabled({ option, indexGroup })"
                           @click="
-                            addLine({
+                            addElement({
                               model: item.model,
                               variable: option.name,
                               indexGroup,
@@ -107,6 +97,22 @@
                         >
                           {{ option.label }}
                         </el-dropdown-item>
+                        <!-- <el-dropdown-item
+                          v-for="option in item.options"
+                          :key="option"
+                          :disabled="isDisabled({ option, indexGroup })"
+                          @click="
+                            addLine({
+                              model: item.model,
+                              variable: option.name,
+                              indexGroup,
+                              indexRow,
+                              label: option.label,
+                            })
+                          "
+                        >
+                          {{ option.label }}
+                        </el-dropdown-item> -->
                         <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })">
                           Custom
                         </el-dropdown-item>
@@ -117,6 +123,16 @@
               </el-form-item>
             </div>
           </template>
+          <div v-if="row.custom" class="w-[5%] flex justify-center">
+            <SwdAssetsIncomeActions
+              class="top-[2px]"
+              :block="block"
+              :row="row"
+              :index-row="indexRow"
+              :index-group="indexGroup"
+              @confirmDelete="confirmDelete"
+            />
+          </div>
         </div>
       </div>
 
@@ -131,7 +147,7 @@
   <el-skeleton v-else :rows="15" animated />
   <el-dialog v-model="dialogVisible" title="Other" width="40%" lock-scroll :before-close="closeDialog">
     <span>Field name</span>
-    <el-input v-model="fieldName" placeholder="Please input field name" :autofocus="true" />
+    <el-input v-model="fieldName" placeholder="Please input field name" />
     <template #footer>
       <span class="dialog-footer">
         <div class="flex justify-end">
@@ -162,14 +178,15 @@ import { fetchAssetsIncomeConfirm } from '@/api/vueQuery/fetch-assets-income-con
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-import { ArrowDown, Delete } from '@element-plus/icons-vue'
+import { ArrowDown } from '@element-plus/icons-vue'
 import { currencyFormat } from '@/utils/currencyFormat'
+import SwdAssetsIncomeActions from '@/components/Global/SwdAssetsIncomeActions.vue'
 
 export default {
   name: 'AddProspectAssetsIncome',
   components: {
     ArrowDown,
-    Delete,
+    SwdAssetsIncomeActions,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -238,6 +255,30 @@ export default {
       }
     }
 
+    const addElement = ({ model, variable, indexGroup, indexRow, label }) => {
+      let newItemIndex = 0
+      let newVariable = variable
+      // eslint-disable-next-line no-constant-condition
+      labelAddItem: while (true) {
+        const elem = schema[indexGroup].rows.find((item) => {
+          return item.name === newVariable
+        })
+
+        if (!elem) {
+          break labelAddItem
+        }
+        newItemIndex += 1
+        newVariable = variable + '_' + newItemIndex
+      }
+      let newLabel = ''
+      if (newItemIndex) {
+        newLabel = label.charAt(0).toUpperCase() + label.slice(1) + ' ' + newItemIndex
+      } else {
+        newLabel = label.charAt(0).toUpperCase() + label.slice(1)
+      }
+      addLine({ model, variable: newVariable, indexGroup, indexRow, label: newLabel })
+    }
+
     const addLine = async ({ model, variable, indexGroup, indexRow, label }) => {
       Object.keys(schema[indexGroup].headers).forEach((element) => {
         ruleForm[model.group][variable] = { [element]: null }
@@ -295,11 +336,13 @@ export default {
       precision: 2,
     }
 
-    const isDisabled = ({ option, indexGroup }) => {
-      const elem = schema[indexGroup].rows.find((item) => {
-        return item.name === option.name
-      })
-      return !!elem
+    const isDisabled = () => {
+      // const isDisabled = ({ option, indexGroup }) => {
+      return false
+      // const elem = schema[indexGroup].rows.find((item) => {
+      //   return item.name === option.name
+      // })
+      // return !!elem
     }
 
     const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
@@ -322,7 +365,7 @@ export default {
     const confirmCreateField = async () => {
       const { item, indexGroup, indexRow } = newField.value
       const data = {
-        row: fieldName.value,
+        row: fieldName.value.trim(),
         group: item.model.group,
       }
 
@@ -330,7 +373,7 @@ export default {
 
       if (res.succes) {
         const model = item.model
-        const variable = fieldName.value.toLowerCase().replace(/ /g, '_')
+        const variable = fieldName.value.trim().toLowerCase().replace(/ /g, '_')
         const label = fieldName.value
         addLine({ model, variable, label, indexGroup, indexRow })
         dialogVisible.value = false
@@ -440,6 +483,7 @@ export default {
       joinMember,
       disjoinMember,
       handleChange,
+      addElement,
     }
   },
 }
