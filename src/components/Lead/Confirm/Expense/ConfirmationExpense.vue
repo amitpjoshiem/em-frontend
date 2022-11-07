@@ -2,7 +2,7 @@
   <div>
     <div v-if="!isLoadingExpense">
       <div v-if="$can('lead', 'all')" class="flex justify-end mb-4">
-        <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full information' : 'Edit' }}</SwdButton>
+        <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full info' : 'Edit' }}</SwdButton>
       </div>
       <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
         <div class="hidden pb-2 mt-8 md:flex">

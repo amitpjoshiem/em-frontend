@@ -117,7 +117,10 @@ export default {
         status = 'completed'
       }
 
-      await updateSteps({ [props.context]: status })
+      const res = await updateSteps({ [props.context]: status })
+      if (!('error' in res)) {
+        queryClient.invalidateQueries(['clients-info'])
+      }
     }
 
     const removeMedia = async (media) => {
