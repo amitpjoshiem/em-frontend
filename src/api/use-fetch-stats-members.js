@@ -23,7 +23,7 @@ export const useFetchStatsMembers = (type) => {
       return store.state.globalComponents.advisorId
     }
     if (type.value === 'client,prospect') {
-      store.state.globalComponents.ownerMember?.id
+      return store.state.globalComponents.ownerMember?.id
     }
     if (type.value === 'lead') {
       return store.state.globalComponents.ownerLead?.id

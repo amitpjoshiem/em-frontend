@@ -49,7 +49,6 @@
         <p>No recently added documents</p>
       </div>
       <div class="flex justify-end">
-        <SwdButton info main class="mr-4" @click="backStep">Back</SwdButton>
         <SwdButton primary main :disabled="disabledSaveBtn" @click="saveStep">Save</SwdButton>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$can('lead', 'all')" class="flex justify-end mb-4">
-      <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full information' : 'Edit' }}</SwdButton>
+      <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full info' : 'Edit' }}</SwdButton>
     </div>
     <div v-if="!isAssetsLoading && !isAssetsSchemaLoading">
       <el-card v-for="(block, indexGroup) in assetsSchema.data" :key="indexGroup" class="rounded-md mb-10">

@@ -1,6 +1,6 @@
 <template>
   <div v-if="$can('lead', 'all')" class="flex justify-end mb-4">
-    <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full information' : 'Edit' }}</SwdButton>
+    <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full info' : 'Edit' }}</SwdButton>
   </div>
   <el-card class="mb-4 w-full sm:p-5">
     <div>
