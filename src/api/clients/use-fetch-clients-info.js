@@ -3,7 +3,7 @@ import { reactive } from 'vue'
 import { fetchClientsInfo } from '../vueQuery/clients/fetch-clients-info'
 
 export const useFetchClietsInfo = (options = {}) => {
-  const queryKey = reactive([['clientsInfo']])
+  const queryKey = reactive(['clients-info'])
 
   const query = useQuery(queryKey, {
     queryFn: fetchClientsInfo,

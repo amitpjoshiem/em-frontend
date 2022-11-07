@@ -611,7 +611,6 @@ import { reactive, ref, onMounted, computed, watchEffect } from 'vue'
 import { updateMembers } from '@/api/vueQuery/update-members'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useFetchMember } from '@/api/use-fetch-member.js'
-
 import { useMutation } from 'vue-query'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
@@ -619,13 +618,12 @@ import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/basicRules.js'
 import { maska } from 'maska'
 import { scrollTop } from '@/utils/scrollTop'
-import IconAdd from '@/assets/svg/icon-add.svg'
-import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
-
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
+import IconAdd from '@/assets/svg/icon-add.svg'
+import IconDelete from '@/assets/svg/icon-delete.svg'
 
 export default {
   name: 'AddLeadBasicInfo',
