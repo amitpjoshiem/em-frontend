@@ -25,7 +25,7 @@
 <script>
 import { MoreFilled } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
-// import { ElMessage, ElMessageBox } from 'element-plus'
+import { onMounted, reactive } from 'vue'
 
 export default {
   name: 'SwdAssetsIncomeActions',
@@ -43,6 +43,11 @@ export default {
       require: true,
       default: () => {},
     },
+    model: {
+      type: Object,
+      require: true,
+      default: () => {},
+    },
     indexRow: {
       type: Number,
       require: true,
@@ -53,28 +58,38 @@ export default {
       require: true,
       default: '',
     },
+    custom: {
+      type: Boolean,
+      require: true,
+      default: false,
+    },
   },
-  emits: ['confirm-delete'],
+  emits: ['confirm-delete', 'add-element'],
   setup(props, { emit }) {
+    const actionsOptions = reactive([
+      {
+        title: 'Add New',
+        command: 'addNew',
+      },
+    ])
+
     const handleSelect = (command) => {
       const actionHandler = actionsMap[command]
       actionHandler()
     }
 
-    const actionsOptions = [
-      {
-        title: 'Remove',
-        command: 'remove',
-      },
-      {
-        title: 'Copy',
-        command: 'copy',
-      },
-    ]
+    onMounted(() => {
+      if (props.custom) {
+        actionsOptions.push({
+          title: 'Remove',
+          command: 'remove',
+        })
+      }
+    })
 
     const actionsMap = {
       remove: () => remove(),
-      copy: () => copy(),
+      addNew: () => addNew(),
     }
 
     const remove = () => {
@@ -92,12 +107,14 @@ export default {
       })
     }
 
-    const copy = () => {
-      console.log('copy', props)
-      const elem = props.block.rows.find((item) => {
-        return item.name === props.row.name
+    const addNew = () => {
+      emit('add-element', {
+        model: props.model,
+        variable: props.model.model.split('_')[0],
+        indexGroup: props.indexGroup,
+        indexRow: props.indexRow,
+        label: props.model.model.split('_')[0],
       })
-      console.log('elem - ', elem)
     }
 
     return {

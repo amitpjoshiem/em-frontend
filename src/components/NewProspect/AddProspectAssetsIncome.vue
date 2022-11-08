@@ -7,7 +7,7 @@
         <div class="flex pb-2 mt-8">
           <div class="w-[35.3%]" />
           <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
-            <div v-if="indexHeader === 'owner' && member.married" class="w-[5%]" />
+            <div v-if="indexHeader === 'owner' && member.married" />
             <div class="w-[15%] px-2 text-main text-xs font-semibold">
               {{ header.label }}
             </div>
@@ -22,7 +22,7 @@
 
           <template v-for="(item, itemIndex) in row.elements" :key="item">
             <div v-if="itemIndex === 0 && member.married" class="w-[5%] text-center">
-              <template v-if="row.name !== 'total' && item.type === 'number'">
+              <template v-if="row.name !== 'total' && item.type === 'number' && row.can_join">
                 <el-checkbox
                   v-model="row.joined"
                   label="Joint"
@@ -97,22 +97,6 @@
                         >
                           {{ option.label }}
                         </el-dropdown-item>
-                        <!-- <el-dropdown-item
-                          v-for="option in item.options"
-                          :key="option"
-                          :disabled="isDisabled({ option, indexGroup })"
-                          @click="
-                            addLine({
-                              model: item.model,
-                              variable: option.name,
-                              indexGroup,
-                              indexRow,
-                              label: option.label,
-                            })
-                          "
-                        >
-                          {{ option.label }}
-                        </el-dropdown-item> -->
                         <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })">
                           Custom
                         </el-dropdown-item>
@@ -122,17 +106,20 @@
                 </template>
               </el-form-item>
             </div>
+            <div v-if="row.custom && row.elements.length - 1 === itemIndex" class="w-[5%] flex justify-center">
+              <SwdAssetsIncomeActions
+                class="top-[2px]"
+                :block="block"
+                :model="item.model"
+                :row="row"
+                :index-row="indexRow"
+                :index-group="indexGroup"
+                :custom="row.custom"
+                @confirmDelete="confirmDelete"
+                @addElement="addElement"
+              />
+            </div>
           </template>
-          <div v-if="row.custom" class="w-[5%] flex justify-center">
-            <SwdAssetsIncomeActions
-              class="top-[2px]"
-              :block="block"
-              :row="row"
-              :index-row="indexRow"
-              :index-group="indexGroup"
-              @confirmDelete="confirmDelete"
-            />
-          </div>
         </div>
       </div>
 
@@ -146,8 +133,14 @@
   </div>
   <el-skeleton v-else :rows="15" animated />
   <el-dialog v-model="dialogVisible" title="Other" width="40%" lock-scroll :before-close="closeDialog">
-    <span>Field name</span>
-    <el-input v-model="fieldName" placeholder="Please input field name" />
+    <el-form-item class="mb-2">
+      <span>Field name</span>
+      <el-input v-model="fieldName" placeholder="Please input field name" />
+    </el-form-item>
+    <el-form-item>
+      <el-checkbox v-model="isCanJoin" label="Can Join?" size="small" />
+    </el-form-item>
+
     <template #footer>
       <span class="dialog-footer">
         <div class="flex justify-end">
@@ -197,6 +190,7 @@ export default {
     const dialogVisible = ref(false)
     const newField = ref([])
     const fieldName = ref()
+    const isCanJoin = ref()
     const step = computed(() => store.state.newProspect.step)
 
     const ruleForm = reactive({})
@@ -204,14 +198,15 @@ export default {
 
     const memberId = route.params.id
 
+    // FETCH
     const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(memberId)
     const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(memberId)
     const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: memberId })
-    const { mutateAsync: create, data } = useMutation(createAssetsIncome)
 
+    // MUTATION
+    const { mutateAsync: create, data } = useMutation(createAssetsIncome)
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
-
     const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
     const { mutateAsync: assetsIncomeConfirm } = useMutation(fetchAssetsIncomeConfirm)
 
@@ -256,6 +251,11 @@ export default {
     }
 
     const addElement = ({ model, variable, indexGroup, indexRow, label }) => {
+      console.log('model - ', model)
+      console.log('variable - ', variable)
+      console.log('indexGroup - ', indexGroup)
+      console.log('indexRow - ', indexRow)
+      console.log('label - ', label)
       let newItemIndex = 0
       let newVariable = variable
       // eslint-disable-next-line no-constant-condition
@@ -276,10 +276,10 @@ export default {
       } else {
         newLabel = label.charAt(0).toUpperCase() + label.slice(1)
       }
-      addLine({ model, variable: newVariable, indexGroup, indexRow, label: newLabel })
+      addLine({ model, variable: newVariable, indexGroup, indexRow, label: newLabel, canJoin: true })
     }
 
-    const addLine = async ({ model, variable, indexGroup, indexRow, label }) => {
+    const addLine = async ({ model, variable, indexGroup, indexRow, label, canJoin }) => {
       Object.keys(schema[indexGroup].headers).forEach((element) => {
         ruleForm[model.group][variable] = { [element]: null }
       })
@@ -291,6 +291,7 @@ export default {
           name: item,
           label: item,
           disabled: false,
+          can_join: canJoin,
           model: {
             group: model.group,
             model: variable,
@@ -303,13 +304,15 @@ export default {
         name: variable,
         custom: 'true',
         elements,
+        can_join: canJoin,
       }
-      schema[indexGroup].rows.splice(indexRow + 1, 0, dataSchema)
+      schema[indexGroup].rows.splice(indexRow, 0, dataSchema)
       const data = {
         group: model.group,
         row: variable,
         element: 'owner',
         type: 'string',
+        can_join: canJoin,
         value: null,
       }
       await updateMemberAssets({ data, id: memberId })
@@ -336,13 +339,11 @@ export default {
       precision: 2,
     }
 
-    const isDisabled = () => {
-      // const isDisabled = ({ option, indexGroup }) => {
-      return false
-      // const elem = schema[indexGroup].rows.find((item) => {
-      //   return item.name === option.name
-      // })
-      // return !!elem
+    const isDisabled = ({ option, indexGroup }) => {
+      const elem = schema[indexGroup].rows.find((item) => {
+        return item.name === option.name
+      })
+      return !!elem
     }
 
     const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
@@ -484,6 +485,7 @@ export default {
       disjoinMember,
       handleChange,
       addElement,
+      isCanJoin,
     }
   },
 }
