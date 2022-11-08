@@ -368,6 +368,7 @@ export default {
       const data = {
         row: fieldName.value.trim(),
         group: item.model.group,
+        can_join: isCanJoin.value,
       }
 
       const res = await checkCreateField({ memberId, data })
@@ -376,9 +377,10 @@ export default {
         const model = item.model
         const variable = fieldName.value.trim().toLowerCase().replace(/ /g, '_')
         const label = fieldName.value
-        addLine({ model, variable, label, indexGroup, indexRow })
+        addLine({ model, variable, label, indexGroup, indexRow: indexRow + 1, canJoin: isCanJoin.value })
         dialogVisible.value = false
         fieldName.value = ''
+        isCanJoin.value = ''
       }
     }
 
