@@ -9,7 +9,7 @@
 
 <script>
 import { computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 export default {
@@ -23,7 +23,7 @@ export default {
   },
   setup(props) {
     const router = useRouter()
-    const route = useRoute()
+    // const route = useRoute()
     const store = useStore()
 
     const getAvatarUrl = computed(() => {
@@ -31,15 +31,13 @@ export default {
       return ''
     })
 
-    const getCurrentTypeUser = computed(() => {
-      return store.state.globalComponents.currentTypeUser
-    })
+    // const getCurrentTypeUser = computed(() => {
+    //   return store.state.globalComponents.currentTypeUser
+    // })
 
     const showSummary = () => {
-      console.log('props.user.type - ', props.user.type)
-      console.log('getCurrentTypeUser - ', getCurrentTypeUser.value)
-
       if (props.user.type === 'client' || props.user.type === 'prospect') {
+        store.commit('globalComponents/setSummaryInfoMemberId', props.user.id)
         store.commit('globalComponents/setShowModal', {
           destination: 'modalSummaryInfo',
           value: true,

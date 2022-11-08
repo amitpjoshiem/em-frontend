@@ -64,7 +64,7 @@ export default {
       const form = { uuids: [res.data.uuid] }
       await updateMember({ form, id })
       state.isShowCropper = false
-      queryClient.invalidateQueries(['member'])
+      queryClient.invalidateQueries(['prospect'])
     }
 
     const beforeAvatarUpload = () => {

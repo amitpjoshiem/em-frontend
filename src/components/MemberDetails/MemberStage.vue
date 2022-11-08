@@ -178,7 +178,7 @@ export default {
       const form = { stage: newStage.value, ...ruleForm }
       const res = await updateStage({ id: route.params.id, form })
       if (!('error' in res)) {
-        queryClient.invalidateQueries(['member'])
+        queryClient.invalidateQueries(['prospect'])
         dialogVisible.value = false
         useAlert({
           title: 'Success',
