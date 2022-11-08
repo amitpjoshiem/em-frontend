@@ -5,8 +5,11 @@
     :before-close="closeDialog"
     width="75%"
     custom-class="summary-info"
+    destroy-on-close
   >
-    <SwdSpinner v-if="isLoadingMember" />
+    <div v-if="isLoadingMember" class="flex justify-center items-center">
+      <SwdSpinner large />
+    </div>
 
     <div v-else>
       <GeneralInfo :member="member" />
@@ -16,6 +19,7 @@
     <template #footer>
       <span class="dialog-footer">
         <div class="flex justify-end">
+          <SwdButton primary main class="w-2/12 mr-4" @click="getDetails">Details</SwdButton>
           <SwdButton info main class="w-2/12" @click="closeDialog">Close</SwdButton>
         </div>
       </span>
@@ -30,6 +34,7 @@ import { useFetchSummaryInfo } from '@/api/use-fetch-summary-info.js'
 import GeneralInfo from './GeneralInfo.vue'
 import AnnualReviewsInfo from './AnnualReviewsInfo.vue'
 import HouseHoldInfo from './HouseHoldInfo.vue'
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
   name: 'SwdModalSummaryInfo',
@@ -40,6 +45,8 @@ export default {
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
+    const route = useRoute()
     const dialogVisible = ref(false)
 
     const { isLoading: isLoadingMember, data: member, refetch } = useFetchSummaryInfo({ enabled: false })
@@ -50,23 +57,41 @@ export default {
         destination: 'modalSummaryInfo',
         value: false,
       })
-      store.commit('globalComponents/setSummaryInfoMemberId', null)
     }
 
     watchEffect(() => {
       if (store.state.globalComponents.dialog.showDialog.modalSummaryInfo) {
         dialogVisible.value = store.state.globalComponents.dialog.showDialog.modalSummaryInfo
       }
-      if (store.state.globalComponents.summaryInfoMemberId) {
+      if (store.state.globalComponents.summaryInfoMemberId !== null) {
         refetch.value()
       }
     })
+
+    const getDetails = () => {
+      closeDialog()
+      if (member.value.type === 'client') {
+        router.push({ name: `${route.meta.type}/member-details`, params: { id: member.value.id } })
+        return
+      }
+
+      if (member.value.step === 'default') {
+        router.push({ name: 'basic-information', params: { id: member.value.id } })
+        return
+      }
+
+      if (member.value.step !== 'default') {
+        router.push({ name: `${route.meta.type}/member-details`, params: { id: member.value.id } })
+        return
+      }
+    }
 
     return {
       dialogVisible,
       closeDialog,
       isLoadingMember,
       member,
+      getDetails,
     }
   },
 }
