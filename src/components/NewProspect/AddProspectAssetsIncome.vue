@@ -137,7 +137,7 @@
       <span>Field name</span>
       <el-input v-model="fieldName" placeholder="Please input field name" />
     </el-form-item>
-    <el-form-item>
+    <el-form-item v-if="member.married">
       <el-checkbox v-model="isCanJoin" label="Can be Joint?" size="small" />
     </el-form-item>
 
