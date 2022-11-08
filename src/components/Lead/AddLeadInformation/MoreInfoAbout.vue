@@ -6,63 +6,63 @@
         <el-checkbox
           v-model="ruleForm.more_info_about.indexed_annuities"
           label="Indexed Annuities"
-          class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          class="w-full sm:w-4/12 lg:w-4/12 mr-0"
           :disabled="disabledForm"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.strategic_wealth_report"
           label="Strategic Wealth Reports"
-          class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          class="w-full sm:w-4/12 lg:w-4/12 mr-0"
           :disabled="disabledForm"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.rule_of_100"
           label="The rule of 100"
-          class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          class="w-full sm:w-4/12 lg:w-4/12 mr-0"
           :disabled="disabledForm"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.moving_my_ira"
           label="Moving my IRA"
-          class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          class="w-full sm:w-4/12 lg:w-4/12 mr-0"
           :disabled="disabledForm"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.rolling_over_my_401_403"
           label="Rolling Over My 401/403"
-          class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          class="w-full sm:w-4/12 lg:w-4/12 mr-0"
           :disabled="disabledForm"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.retirement_income_analysis"
           label="Retirement Income Analysis"
-          class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          class="w-full sm:w-4/12 lg:w-4/12 mr-0"
           :disabled="disabledForm"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.securing_my_money"
           label="Securing my Money"
-          class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          class="w-full sm:w-4/12 lg:w-4/12 mr-0"
           :disabled="disabledForm"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.tax_free_accounts"
           label="Tax Free Accounts"
-          class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          class="w-full sm:w-4/12 lg:w-4/12 mr-0"
           :disabled="disabledForm"
           @change="handleChange()"
         />
         <el-checkbox
           v-model="ruleForm.more_info_about.my_variable_annuity"
           label="My Variable Annuity"
-          class="w-full sm:w-4/12 lg:w-3/12 mr-0"
+          class="w-full sm:w-4/12 lg:w-4/12 mr-0"
           :disabled="disabledForm"
           @change="handleChange()"
         />
