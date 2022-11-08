@@ -15,43 +15,48 @@
 import { useRouter, useRoute } from 'vue-router'
 import { MoreFilled } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
+import { useGetDetails } from '@/hooks/use-get-details'
 
 const allAvailibleOptions = {
   1: {
+    title: 'Details',
+    command: 'details',
+  },
+  2: {
     title: 'Basic Information',
     command: 'basic-information',
   },
-  2: { title: 'Blueprint Report', command: 'blueprint-report' },
-  3: { title: 'Client Report', command: 'client-report' },
-  4: { title: 'Onboarding', command: 'onboarding' },
-  5: { title: 'Assets Accounts', command: 'assets-accounts' },
-  6: { title: 'Assets Consolidations', command: 'assets-consolidations' },
-  7: { title: 'Contacts', command: 'opportunity-contact' },
+  3: { title: 'Blueprint Report', command: 'blueprint-report' },
+  4: { title: 'Client Report', command: 'client-report' },
+  5: { title: 'Onboarding', command: 'onboarding' },
+  6: { title: 'Assets Accounts', command: 'assets-accounts' },
+  7: { title: 'Assets Consolidations', command: 'assets-consolidations' },
+  8: { title: 'Contacts', command: 'opportunity-contact' },
 }
 
 const optionsPerStepAndType = {
-  'page-details-client': [5, 6],
-  'page-details-support': [5, 6],
-  'page-details-prospect': [4, 5, 6],
-  client: [5, 6],
-  'prospect@step-0': [4, 5, 6, 7],
-  'prospect@step-1': [1, 4, 5, 6, 7],
-  'prospect@step-2': [1, 4, 5, 6, 7],
-  'prospect@step-3': [1, 4, 5, 6, 7],
-  'prospect@step-4': [1, 4, 5, 6, 7],
-  'prospect@step-5': [1, 4, 5, 6, 7],
-  'prospect@step-6': [1, 4, 5, 6, 7],
-  onboarding: [4, 7],
+  'widget-details-client': [6, 7],
+  'widget-details-support': [6, 7],
+  'widget-details-prospect': [5, 6, 7],
+  client: [1, 2, 4, 6, 7, 8],
+  'prospect@step-0': [1, 5, 6, 7, 8],
+  'prospect@step-1': [1, 2, 5, 6, 7, 8],
+  'prospect@step-2': [1, 2, 5, 6, 7, 8],
+  'prospect@step-3': [1, 2, 5, 6, 7, 8],
+  'prospect@step-4': [1, 2, 5, 6, 7, 8],
+  'prospect@step-5': [1, 2, 5, 6, 7, 8],
+  'prospect@step-6': [1, 2, 5, 6, 7, 8],
+  onboarding: [5, 8],
 }
 
 function getClientStepHash(user, pageDetails, type = null) {
   switch (true) {
     case type !== null && type === 'support':
-      return 'page-details-support'
+      return 'widget-details-support'
     case type !== null && type === 'client':
-      return 'page-details-client'
+      return 'widget-details-client'
     case pageDetails && user.type === 'prospect':
-      return 'page-details-prospect'
+      return 'widget-details-prospect'
     case user.type === 'client':
       return 'client'
     case user.type === 'prospect' && user.step === 'basic':
@@ -118,6 +123,9 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const store = useStore()
+
+    const { getDetails } = useGetDetails()
+
     const actionsOptions = buildOptions(props.user, props.pageDetails, route.meta.type)
 
     const handleSelect = (command) => {
@@ -126,17 +134,18 @@ export default {
     }
 
     const actionsMap = {
+      details: () => details(),
       'basic-information': () =>
         router.push({
-          name: 'member-basic-information',
+          name: `${route.meta.type}/basic-information`,
           params: { id: props.user.id },
         }),
       'blueprint-report': () =>
         router.push({
-          name: 'blueprint-report',
+          name: `${route.meta.type}/blueprint-report`,
           params: { id: props.user.id },
         }),
-      'client-report': () => router.push({ name: 'clientreport', params: { id: props.user.id } }),
+      'client-report': () => router.push({ name: `${route.meta.type}/clientreport`, params: { id: props.user.id } }),
       onboarding: () => getOnboarding(),
 
       'assets-accounts': () =>
@@ -153,6 +162,10 @@ export default {
         name: routerForStep(props.user.step),
         params: { id: props.user.id, step: props.user.step },
       })
+    }
+
+    const details = () => {
+      getDetails({ member: props.user })
     }
 
     return {
