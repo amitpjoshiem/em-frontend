@@ -138,7 +138,7 @@
       <el-input v-model="fieldName" placeholder="Please input field name" />
     </el-form-item>
     <el-form-item>
-      <el-checkbox v-model="isCanJoin" label="Can Join?" size="small" />
+      <el-checkbox v-model="isCanJoin" label="Can be Joint?" size="small" />
     </el-form-item>
 
     <template #footer>
@@ -251,11 +251,6 @@ export default {
     }
 
     const addElement = ({ model, variable, indexGroup, indexRow, label }) => {
-      console.log('model - ', model)
-      console.log('variable - ', variable)
-      console.log('indexGroup - ', indexGroup)
-      console.log('indexRow - ', indexRow)
-      console.log('label - ', label)
       let newItemIndex = 0
       let newVariable = variable
       // eslint-disable-next-line no-constant-condition
