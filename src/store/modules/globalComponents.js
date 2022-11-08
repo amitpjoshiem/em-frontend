@@ -81,6 +81,7 @@ const getDefaultState = () => {
         modalAddAnnuityIndex: false,
         modalInvestmentPackage: false,
         addChildOpportunity: false,
+        modalSummaryInfo: false,
       },
     },
     sortMembers: {
