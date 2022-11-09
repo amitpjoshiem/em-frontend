@@ -81,6 +81,7 @@ const getDefaultState = () => {
         modalAddAnnuityIndex: false,
         modalInvestmentPackage: false,
         addChildOpportunity: false,
+        modalSummaryInfo: false,
       },
     },
     sortMembers: {
@@ -99,6 +100,7 @@ const getDefaultState = () => {
     ownerMember: null,
     onlyMyLead: false,
     ownerLead: null,
+    summaryInfoMemberId: null,
   }
 }
 
@@ -238,6 +240,10 @@ const mutations = {
 
   setShowModalReadOnly(state, value) {
     state.showModalReadOnly = value
+  },
+
+  setSummaryInfoMemberId(state, value) {
+    state.summaryInfoMemberId = value
   },
 
   resetState(state) {

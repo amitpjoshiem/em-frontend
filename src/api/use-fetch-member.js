@@ -1,12 +1,12 @@
 import { useQuery } from 'vue-query'
 import { reactive } from 'vue'
-import { fetchMemberNewStep } from './vueQuery/fetch-member-new-step'
+import { fetchMember } from './vueQuery/fetch-member'
 
 export const useFetchMember = ({ id }, options = {}) => {
-  const queryKey = reactive([['memberNewStep', id]])
+  const queryKey = reactive([['member', id]])
 
   const query = useQuery(queryKey, {
-    queryFn: fetchMemberNewStep,
+    queryFn: fetchMember,
     select: ({ data }) => {
       return data
     },

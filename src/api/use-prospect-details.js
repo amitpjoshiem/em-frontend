@@ -7,7 +7,7 @@ import { MemberLastEmployment } from '@/dto/Member/MemberLastEmployment'
 import { SpouseLastEmployment } from '@/dto/Member/SpouseLastEmployment'
 import { MemberDetailsSalesforce } from '@/dto/Member/MemberDetailsSalesforce'
 import { MemberDetailsOwner } from '@/dto/Member/MemberDetailsOwner'
-import { fetchMember } from '@/api/vueQuery/fetch-member'
+import { fetchProspect } from '@/api/vueQuery/fetch-prospect'
 import { dataFactory } from '@/utils/dataFactory'
 import { reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -25,13 +25,13 @@ export const useProspectDetails = () => {
 
   const idCallback = () => route.params.id
 
-  const queryKey = reactive(['member'])
+  const queryKey = reactive(['prospect'])
 
   const query = useQuery(
     queryKey,
     () => {
       const id = idCallback()
-      return fetchMember(id)
+      return fetchProspect(id)
     },
     {
       select: (data) => {
@@ -62,7 +62,7 @@ export const useProspectDetails = () => {
   )
 
   const updateMemberInfo = () => {
-    queryClient.invalidateQueries(['member'])
+    queryClient.invalidateQueries(['prospect'])
   }
 
   return {
