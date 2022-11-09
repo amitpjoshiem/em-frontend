@@ -387,7 +387,7 @@
                   v-if="index === ruleForm.employment_history.length - 1"
                   primary
                   main
-                  :disabled="isLoadingUpdateMember"
+                  :disabled="isLoadingUpdateMember || isReadOnlyLead"
                   @click="addEmployment(ruleForm)"
                 >
                   Add job
@@ -471,7 +471,7 @@
                     v-if="index === ruleForm.spouse.employment_history.length - 1"
                     primary
                     main
-                    :disabled="isLoadingUpdateMember"
+                    :disabled="isLoadingUpdateMember || isReadOnlyLead"
                     @click="addEmploymentSpouse(ruleForm)"
                   >
                     Add job
