@@ -54,9 +54,9 @@ export default {
       default: 0,
     },
     indexGroup: {
-      type: String,
+      type: Number,
       require: true,
-      default: '',
+      default: 0,
     },
     custom: {
       type: Boolean,

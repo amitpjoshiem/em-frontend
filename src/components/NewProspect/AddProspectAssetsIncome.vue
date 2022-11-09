@@ -366,7 +366,7 @@ export default {
         can_join: isCanJoin.value,
       }
 
-      const res = await checkCreateField({ memberId, data })
+      const res = await checkCreateField({ id: memberId, data })
 
       if (res.succes) {
         const model = item.model
