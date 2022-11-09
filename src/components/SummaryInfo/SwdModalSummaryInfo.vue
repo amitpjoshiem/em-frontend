@@ -19,7 +19,7 @@
     <template #footer>
       <span class="dialog-footer">
         <div class="flex justify-end">
-          <SwdButton primary main class="w-2/12 mr-4" @click="details">Details</SwdButton>
+          <SwdButton primary main class="w-2/12 mr-4" @click="details">More Details</SwdButton>
           <SwdButton info main class="w-2/12" @click="closeDialog">Close</SwdButton>
         </div>
       </span>

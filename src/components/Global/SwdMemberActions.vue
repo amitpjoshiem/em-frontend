@@ -19,7 +19,7 @@ import { useGetDetails } from '@/hooks/use-get-details'
 
 const allAvailibleOptions = {
   1: {
-    title: 'Details',
+    title: 'More Details',
     command: 'details',
   },
   2: {

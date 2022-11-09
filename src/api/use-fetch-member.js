@@ -3,7 +3,7 @@ import { reactive } from 'vue'
 import { fetchMember } from './vueQuery/fetch-member'
 
 export const useFetchMember = ({ id }, options = {}) => {
-  const queryKey = reactive([['member', id.value]])
+  const queryKey = reactive([['member', id]])
 
   const query = useQuery(queryKey, {
     queryFn: fetchMember,
