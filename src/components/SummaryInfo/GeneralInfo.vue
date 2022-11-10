@@ -11,15 +11,15 @@
       </div>
       <div class="flex mb-4">
         <div class="w-3/12">Phone:</div>
-        <div class="text-main font-semibold">{{ member.phone }}</div>
+        <SwdStubForText :text="member.phone" plug="&mdash;" class="text-main font-semibold" />
       </div>
       <div class="flex mb-4">
         <div class="w-3/12">Email:</div>
-        <div class="text-main font-semibold">{{ member.email }}</div>
+        <SwdStubForText :text="member.email" plug="&mdash;" class="text-main font-semibold" />
       </div>
       <div class="flex mb-4">
         <div class="w-3/12">Do Not Email:</div>
-        <SwdStubForText :text="member.salesforce.do_not_email" plug="&mdash;" class="text-main font-semibold" />
+        <SwdTag :status="!!member.salesforce.do_not_email" />
       </div>
       <div class="flex mb-4">
         <div class="w-3/12">Type:</div>
@@ -31,11 +31,11 @@
       </div>
       <div class="flex mb-4">
         <div class="w-3/12">Client Start Date:</div>
-        <SwdStubForText :text="member.salesforce.client_start_date" plug="&mdash;" class="text-main font-semibold" />
+        <SwdStubForText :text="getClientStartDate" plug="&mdash;" class="text-main font-semibold" />
       </div>
       <div class="flex mb-4">
         <div class="w-3/12">Client AR Date:</div>
-        <SwdStubForText :text="member.salesforce.client_ar_date" plug="&mdash;" class="text-main font-semibold" />
+        <SwdStubForText :text="getClientArDate" plug="&mdash;" class="text-main font-semibold" />
       </div>
       <div class="flex mb-4">
         <div class="w-3/12">Medicare Client:</div>
@@ -59,6 +59,8 @@
 
 <script>
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
+import dayjs from 'dayjs'
+import { computed } from 'vue'
 
 export default {
   name: 'GeneralInfo',
@@ -69,9 +71,25 @@ export default {
       default: () => {},
     },
   },
-  setup() {
+  setup(props) {
+    const getClientStartDate = computed(() => {
+      if (props.member.salesforce.client_start_date) {
+        return dayjs(props.member.salesforce.client_start_date).format('MM/DD/YYYY')
+      }
+      return ''
+    })
+
+    const getClientArDate = computed(() => {
+      if (props.member.salesforce.client_ar_date) {
+        return dayjs(props.member.salesforce.client_ar_date).format('MM/DD/YYYY')
+      }
+      return ''
+    })
+
     return {
       IconDoneStep,
+      getClientStartDate,
+      getClientArDate,
     }
   },
 }

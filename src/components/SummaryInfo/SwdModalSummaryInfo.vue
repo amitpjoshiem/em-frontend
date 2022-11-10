@@ -32,7 +32,7 @@ import { ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { useFetchSummaryInfo } from '@/api/use-fetch-summary-info.js'
 import GeneralInfo from './GeneralInfo.vue'
-import AnnualReviewsInfo from './AnnualReviewsInfo.vue'
+import AnnualReviewsInfo from './AnnualReviews/AnnualReviews.vue'
 import HouseHoldInfo from './HouseHoldInfo.vue'
 import { useGetDetails } from '@/hooks/use-get-details'
 
