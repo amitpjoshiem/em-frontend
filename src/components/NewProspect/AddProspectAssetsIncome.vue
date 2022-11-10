@@ -92,6 +92,7 @@
                               indexGroup,
                               indexRow,
                               label: option.label,
+                              canJoin: row.can_join,
                             })
                           "
                         >
@@ -250,7 +251,7 @@ export default {
       }
     }
 
-    const addElement = ({ model, variable, indexGroup, indexRow, label }) => {
+    const addElement = ({ model, variable, indexGroup, indexRow, label, canJoin }) => {
       let newItemIndex = 0
       let newVariable = variable
       // eslint-disable-next-line no-constant-condition
@@ -271,7 +272,7 @@ export default {
       } else {
         newLabel = label.charAt(0).toUpperCase() + label.slice(1)
       }
-      addLine({ model, variable: newVariable, indexGroup, indexRow, label: newLabel, canJoin: true })
+      addLine({ model, variable: newVariable, indexGroup, indexRow, label: newLabel, canJoin })
     }
 
     const addLine = async ({ model, variable, indexGroup, indexRow, label, canJoin }) => {
@@ -297,7 +298,7 @@ export default {
       const dataSchema = {
         label: label,
         name: variable,
-        custom: 'true',
+        custom: true,
         elements,
         can_join: canJoin,
       }

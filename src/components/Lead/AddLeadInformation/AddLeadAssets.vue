@@ -34,7 +34,7 @@
           <div class="flex pb-2 mt-8">
             <div class="w-[35.3%]" />
             <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
-              <div v-if="indexHeader === 'owner' && member.married" class="w-[5%]" />
+              <div v-if="indexHeader === 'owner' && member.married" />
               <div class="w-[15%] px-2 text-main text-xs font-semibold">
                 {{ header.label }}
               </div>
@@ -49,7 +49,7 @@
 
             <template v-for="(item, itemIndex) in row.elements" :key="item">
               <div v-if="itemIndex === 0 && member.married" class="w-[5%] text-center">
-                <template v-if="row.name !== 'total' && item.type === 'number'">
+                <template v-if="row.name !== 'total' && item.type === 'number' && row.can_join">
                   <el-checkbox
                     v-model="row.joined"
                     label="Joint"
@@ -121,6 +121,7 @@
                                 indexGroup,
                                 indexRow,
                                 label: option.label,
+                                canJoin: row.can_join,
                               })
                             "
                           >
@@ -315,7 +316,7 @@ export default {
       })
     }
 
-    const addElement = ({ model, variable, indexGroup, indexRow, label }) => {
+    const addElement = ({ model, variable, indexGroup, indexRow, label, canJoin }) => {
       let newItemIndex = 0
       let newVariable = variable
       // eslint-disable-next-line no-constant-condition
@@ -336,7 +337,7 @@ export default {
       } else {
         newLabel = label.charAt(0).toUpperCase() + label.slice(1)
       }
-      addLine({ model, variable: newVariable, indexGroup, indexRow, label: newLabel, canJoin: true })
+      addLine({ model, variable: newVariable, indexGroup, indexRow, label: newLabel, canJoin })
     }
 
     const addLine = async ({ model, variable, indexGroup, indexRow, label, canJoin }) => {
@@ -362,7 +363,7 @@ export default {
       const dataSchema = {
         label: label,
         name: variable,
-        custom: 'true',
+        custom: true,
         elements,
         can_join: canJoin,
       }
