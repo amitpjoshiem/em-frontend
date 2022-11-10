@@ -1,27 +1,33 @@
 <template>
-  <div class="flex mb-4">
-    <div class="w-3/12">Name:</div>
-    <SwdStubForText :text="annualItem.name" plug="&mdash;" class="text-main font-semibold" />
+  <div class="flex">
+    <div class="w-6/12 flex mb-4">
+      <div class="pr-2">Name:</div>
+      <SwdStubForText :text="annualItem.name" plug="&mdash;" class="text-main font-semibold" />
+    </div>
+    <div class="w-6/12 flex mb-4">
+      <div class="pr-2">Amount:</div>
+      <SwdStubForText :text="getAmount" plug="&mdash;" class="text-main font-semibold" />
+    </div>
   </div>
-  <div class="flex mb-4">
-    <div class="w-3/12">Amount:</div>
-    <SwdStubForText :text="getAmount" plug="&mdash;" class="text-main font-semibold" />
+  <div class="flex">
+    <div class="w-6/12 flex mb-4">
+      <div class="pr-2">Review date:</div>
+      <SwdStubForText :text="getReviewDate" plug="&mdash;" class="text-main font-semibold" />
+    </div>
+    <div class="w-6/12 flex mb-4">
+      <div class="pr-2">Type:</div>
+      <SwdStubForText :text="annualItem.type" plug="&mdash;" class="text-main font-semibold" />
+    </div>
   </div>
-  <div class="flex mb-4">
-    <div class="w-3/12">Review date:</div>
-    <SwdStubForText :text="getReviewDate" plug="&mdash;" class="text-main font-semibold" />
-  </div>
-  <div class="flex mb-4">
-    <div class="w-3/12">Type:</div>
-    <SwdStubForText :text="annualItem.type" plug="&mdash;" class="text-main font-semibold" />
-  </div>
-  <div class="flex mb-4">
-    <div class="w-3/12">New money :</div>
-    <SwdTag :status="!!annualItem.new_money" />
-  </div>
-  <div class="flex mb-4">
-    <div class="w-3/12">Notes:</div>
-    <SwdStubForText :text="annualItem.notes" plug="&mdash;" class="text-main font-semibold" />
+  <div class="flex">
+    <div class="w-6/12 flex mb-4">
+      <div class="pr-2">New money :</div>
+      <SwdTag :status="!!annualItem.new_money" />
+    </div>
+    <div class="w-6/12 flex mb-4">
+      <div class="pr-2">Notes:</div>
+      <SwdStubForText :text="annualItem.notes" plug="&mdash;" class="text-main font-semibold" />
+    </div>
   </div>
 </template>
 
