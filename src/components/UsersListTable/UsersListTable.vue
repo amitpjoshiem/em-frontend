@@ -42,7 +42,7 @@
 
     <el-table-column prop="city" label="Location" min-width="170" class="text-xss">
       <template #default="scope">
-        <span class="text-xss">{{ scope.row.city }}</span>
+        <span class="text-xss">{{ scope.row.city }}/{{ scope.row.state }}</span>
       </template>
     </el-table-column>
 
