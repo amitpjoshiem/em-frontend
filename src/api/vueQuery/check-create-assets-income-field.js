@@ -1,8 +1,8 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function checkCreateAssetsIncomeField({ memberId, data }) {
+function checkCreateAssetsIncomeField({ id, data }) {
   return fetcher({
-    url: `/assets_income/check/${memberId}`,
+    url: `/assets_income/check/${id}`,
     data,
     options: { method: 'POST' },
   })
