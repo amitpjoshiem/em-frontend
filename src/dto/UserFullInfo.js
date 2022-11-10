@@ -17,6 +17,7 @@ class UserFullInfo {
     can_restore,
     can_convert,
     owner_id,
+    state,
   }) {
     this.id = id
     this.name = name
@@ -34,6 +35,7 @@ class UserFullInfo {
     this.can_restore = can_restore
     this.can_convert = can_convert
     this.owner_id = owner_id
+    this.state = state
   }
 
   get createdAtFormatted() {

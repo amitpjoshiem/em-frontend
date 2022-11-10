@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-main-gray rounded-lg p-4 h-[269px]">
+  <div class="bg-main-gray rounded-lg p-4 h-[295px]">
     <el-skeleton v-if="isLoadingProspectDetails" :rows="5" animated />
     <SwdErrorBlock v-else-if="isErrorProspectDetails" />
     <template v-else-if="member">
@@ -46,7 +46,19 @@
         </div>
       </div>
 
-      <div class="flex justify-between pt-2 pb-2 border-t border-white">
+      <div class="flex justify-between pt-2 border-t border-white">
+        <div class="flex items-center">
+          <span class="w-6 h-6 rounded-md flex justify-center items-center bg-main-orange">
+            <el-icon color="white"><House /></el-icon>
+          </span>
+          <span class="ml-2 text-xs text-main">Location</span>
+        </div>
+        <div class="text-sm">
+          <span class="text-main pr-2">{{ member.city }}/{{ member.state }}</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between pt-2 pb-2">
         <div class="flex items-center">
           <span class="w-6 h-6 rounded-md flex justify-center items-center bg-main-orange">
             <InlineSvg :src="IconProspectAge" />
@@ -148,7 +160,7 @@ import { updateMembers } from '@/api/vueQuery/update-members'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { convertToClient } from '@/api/vueQuery/convert-to-client'
 import { ElMessageBox } from 'element-plus'
-import { User, Cellphone } from '@element-plus/icons-vue'
+import { User, Cellphone, House } from '@element-plus/icons-vue'
 import { InfoFilled } from '@element-plus/icons-vue'
 import ModalMemberDetailsOwner from './ModalMemberDetailsOwner.vue'
 import { useStore } from 'vuex'
@@ -160,6 +172,7 @@ export default {
     Cellphone,
     InfoFilled,
     ModalMemberDetailsOwner,
+    House,
   },
   setup() {
     const route = useRoute()

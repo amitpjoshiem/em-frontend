@@ -89,13 +89,10 @@
                   />
                 </el-form-item>
 
-                <el-form-item label="Address" prop="address" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pr-2 mb-4">
-                  <el-input
-                    v-model="ruleForm.address"
-                    placeholder="Enter address"
-                    @focus="focus('general')"
-                    @blur="blur('general')"
-                  />
+                <el-form-item label="State" prop="state" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pl-0 lg:pr-2 mb-4">
+                  <el-select v-model="ruleForm.state" filterable placeholder="Select">
+                    <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
                 </el-form-item>
 
                 <el-form-item label="City" prop="city" class="sm:w-6/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
@@ -107,10 +104,10 @@
                   />
                 </el-form-item>
 
-                <el-form-item label="State" prop="state" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pl-0 lg:pr-2 mb-4">
+                <el-form-item label="Address" prop="address" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pr-2 mb-4">
                   <el-input
-                    v-model="ruleForm.state"
-                    placeholder="Enter state"
+                    v-model="ruleForm.address"
+                    placeholder="Enter address"
                     @focus="focus('general')"
                     @blur="blur('general')"
                   />
@@ -778,6 +775,60 @@ export default {
       if (type === 'other') isFocusOther.value = false
     }
 
+    const stateList = [
+      { value: 'TX', label: 'Texas' },
+      { value: 'AK', label: 'Alaska' },
+      { value: 'AL', label: 'Alabama' },
+      { value: 'AR', label: 'Arkansas' },
+      { value: 'AZ', label: 'Arizona' },
+      { value: 'CA', label: 'California' },
+      { value: 'CO', label: 'Colorado' },
+      { value: 'CT', label: 'Connecticut' },
+      { value: 'DC', label: 'District of Columbia' },
+      { value: 'DE', label: 'Delaware' },
+      { value: 'FL', label: 'Florida' },
+      { value: 'GA', label: 'Georgia' },
+      { value: 'HI', label: 'Hawaii' },
+      { value: 'IA', label: 'Iowa' },
+      { value: 'ID', label: 'Idaho' },
+      { value: 'IL', label: 'Illinois' },
+      { value: 'IN', label: 'Indiana' },
+      { value: 'KS', label: 'Kansas' },
+      { value: 'KY', label: 'Kentucky' },
+      { value: 'LA', label: 'Louisiana' },
+      { value: 'MA', label: 'Massachusetts' },
+      { value: 'MD', label: 'Maryland' },
+      { value: 'ME', label: 'Maine' },
+      { value: 'MI', label: 'Michigan' },
+      { value: 'MN', label: 'Minnesota' },
+      { value: 'MO', label: 'Missouri' },
+      { value: 'MS', label: 'Mississippi' },
+      { value: 'MT', label: 'Montana' },
+      { value: 'NC', label: 'North Carolina' },
+      { value: 'ND', label: 'North Dakota' },
+      { value: 'NE', label: 'Nebraska' },
+      { value: 'NH', label: 'New Hampshire' },
+      { value: 'NJ', label: 'New Jersey' },
+      { value: 'NM', label: 'New Mexico' },
+      { value: 'NV', label: 'Nevada' },
+      { value: 'NY', label: 'New York' },
+      { value: 'OH', label: 'Ohio' },
+      { value: 'OK', label: 'Oklahoma' },
+      { value: 'OR', label: 'Oregon' },
+      { value: 'PA', label: 'Pennsylvania' },
+      { value: 'RI', label: 'Rhode Island' },
+      { value: 'SC', label: 'South Carolina' },
+      { value: 'SD', label: 'South Dakota' },
+      { value: 'TN', label: 'Tennessee' },
+      { value: 'UT', label: 'Utah' },
+      { value: 'VA', label: 'Virginia' },
+      { value: 'VT', label: 'Vermont' },
+      { value: 'WA', label: 'Washington' },
+      { value: 'WI', label: 'Wisconsin' },
+      { value: 'WV', label: 'West Virginia' },
+      { value: 'WY', label: 'Wyoming' },
+    ]
+
     return {
       ruleForm,
       rules,
@@ -811,6 +862,7 @@ export default {
       blur,
       isReadOnlyLead,
       leadId,
+      stateList,
     }
   },
 }
