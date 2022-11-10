@@ -5,53 +5,75 @@
       <div class="text-main text-xl font-semibold ml-2">General Info</div>
     </div>
     <div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Name:</div>
-        <div class="text-main font-semibold">{{ member.name }}</div>
+      <div class="flex">
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Name:</div>
+          <div class="text-main font-semibold">{{ member.name }}</div>
+        </div>
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Phone:</div>
+          <SwdStubForText :text="member.phone" plug="&mdash;" class="text-main font-semibold" />
+        </div>
       </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Phone:</div>
-        <div class="text-main font-semibold">{{ member.phone }}</div>
+      <div class="flex">
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Email:</div>
+          <SwdStubForText :text="member.email" plug="&mdash;" class="text-main font-semibold" />
+        </div>
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Do Not Email:</div>
+          <SwdTag :status="!!member.salesforce.do_not_email" />
+        </div>
       </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Email:</div>
-        <div class="text-main font-semibold">{{ member.email }}</div>
+      <div class="flex">
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Type:</div>
+          <div class="text-main font-semibold">{{ member.type }}</div>
+        </div>
+        <div class="flex mb-4">
+          <div class="pr-2">Category:</div>
+          <SwdStubForText :text="member.salesforce.category" plug="&mdash;" class="text-main font-semibold" />
+        </div>
       </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Do Not Email:</div>
-        <SwdStubForText :text="member.salesforce.do_not_email" plug="&mdash;" class="text-main font-semibold" />
+      <div class="flex">
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Client Start Date:</div>
+          <SwdStubForText :text="getClientStartDate" plug="&mdash;" class="text-main font-semibold" />
+        </div>
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Client AR Date:</div>
+          <SwdStubForText :text="getClientArDate" plug="&mdash;" class="text-main font-semibold" />
+        </div>
       </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Type:</div>
-        <div class="text-main font-semibold">{{ member.type }}</div>
+      <div class="flex">
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Medicare Client:</div>
+          <SwdTag :status="!!member.salesforce.medicare_client" />
+        </div>
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">P&C Client:</div>
+          <SwdTag :status="!!member.salesforce.p_c_client" />
+        </div>
       </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Category:</div>
-        <SwdStubForText :text="member.salesforce.category" plug="&mdash;" class="text-main font-semibold" />
+      <div class="flex">
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Medicare Client:</div>
+          <SwdTag :status="!!member.salesforce.medicare_client" />
+        </div>
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">P&C Client:</div>
+          <SwdTag :status="!!member.salesforce.p_c_client" />
+        </div>
       </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Client Start Date:</div>
-        <SwdStubForText :text="member.salesforce.client_start_date" plug="&mdash;" class="text-main font-semibold" />
-      </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Client AR Date:</div>
-        <SwdStubForText :text="member.salesforce.client_ar_date" plug="&mdash;" class="text-main font-semibold" />
-      </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Medicare Client:</div>
-        <SwdTag :status="!!member.salesforce.medicare_client" />
-      </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">P&C Client:</div>
-        <SwdTag :status="!!member.salesforce.p_c_client" />
-      </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Tax Conversion Client:</div>
-        <SwdTag :status="!!member.salesforce.tax_conversion_client" />
-      </div>
-      <div class="flex mb-4">
-        <div class="w-3/12">Platinum Club Client :</div>
-        <SwdTag :status="!!member.salesforce.platinum_club_client" />
+      <div class="flex">
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Tax Conversion Client:</div>
+          <SwdTag :status="!!member.salesforce.tax_conversion_client" />
+        </div>
+        <div class="flex mb-4 w-6/12">
+          <div class="pr-2">Platinum Club Client :</div>
+          <SwdTag :status="!!member.salesforce.platinum_club_client" />
+        </div>
       </div>
     </div>
   </div>
@@ -59,6 +81,8 @@
 
 <script>
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
+import dayjs from 'dayjs'
+import { computed } from 'vue'
 
 export default {
   name: 'GeneralInfo',
@@ -69,9 +93,25 @@ export default {
       default: () => {},
     },
   },
-  setup() {
+  setup(props) {
+    const getClientStartDate = computed(() => {
+      if (props.member.salesforce.client_start_date) {
+        return dayjs(props.member.salesforce.client_start_date).format('MM/DD/YYYY')
+      }
+      return ''
+    })
+
+    const getClientArDate = computed(() => {
+      if (props.member.salesforce.client_ar_date) {
+        return dayjs(props.member.salesforce.client_ar_date).format('MM/DD/YYYY')
+      }
+      return ''
+    })
+
     return {
       IconDoneStep,
+      getClientStartDate,
+      getClientArDate,
     }
   },
 }

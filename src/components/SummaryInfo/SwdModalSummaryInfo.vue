@@ -18,8 +18,10 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <div class="flex justify-end">
-          <SwdButton primary main class="w-2/12 mr-4" @click="details">More Details</SwdButton>
+        <div v-if="!isLoadingMember" class="flex justify-end">
+          <SwdButton primary main class="w-2/12 mr-4" @click="details">
+            {{ getTextBtn }}
+          </SwdButton>
           <SwdButton info main class="w-2/12" @click="closeDialog">Close</SwdButton>
         </div>
       </span>
@@ -28,11 +30,11 @@
 </template>
 
 <script>
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useFetchSummaryInfo } from '@/api/use-fetch-summary-info.js'
 import GeneralInfo from './GeneralInfo.vue'
-import AnnualReviewsInfo from './AnnualReviewsInfo.vue'
+import AnnualReviewsInfo from './AnnualReviews/AnnualReviews.vue'
 import HouseHoldInfo from './HouseHoldInfo.vue'
 import { useGetDetails } from '@/hooks/use-get-details'
 
@@ -73,12 +75,18 @@ export default {
       getDetails({ member: member.value })
     }
 
+    const getTextBtn = computed(() => {
+      if (member.value.step !== 'default') return 'More Details'
+      return 'Onboarding'
+    })
+
     return {
       dialogVisible,
       closeDialog,
       isLoadingMember,
       member,
       details,
+      getTextBtn,
     }
   },
 }
