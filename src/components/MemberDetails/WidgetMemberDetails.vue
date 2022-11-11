@@ -53,7 +53,7 @@
           </span>
           <span class="ml-2 text-xs text-main">Location</span>
         </div>
-        <div class="text-small flex items-center">
+        <div class="text-xs flex items-center">
           <span class="text-main pr-2">{{ member.city }}/{{ member.state }}</span>
         </div>
       </div>
