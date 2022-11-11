@@ -5,7 +5,7 @@
         <span class="text-main text-xl font-semibold">{{ block.title }}</span>
 
         <div class="flex pb-2 mt-8">
-          <div class="w-[35.3%]" />
+          <div class="w-[30.3%]" />
           <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
             <div v-if="indexHeader === 'owner' && member.married" />
             <div class="w-[15%] px-2 text-main text-xs font-semibold">
@@ -14,8 +14,8 @@
           </template>
         </div>
         <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
-          <div class="w-[30%] flex items-center">
-            <div v-if="row.label" class="text-main font-semibold text-xss w-7/12">
+          <div class="w-[25%] flex items-center">
+            <div v-if="row.label" class="text-main font-semibold text-xss">
               {{ row.label }}
             </div>
           </div>
@@ -36,18 +36,19 @@
             <div
               v-if="!(row.joined && item.name === 'spouse')"
               class="px-2 mb-0 item-assets"
-              :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
+              :class="row.joined && item.name === 'owner' ? 'w-[25%]' : 'w-[15%]'"
             >
               <el-form-item class="mb-4">
-                <template v-if="row.name === 'total'">
+                <template v-if="item.calculated">
                   <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                     <SwdSpinner />
                   </div>
-                  <div v-else-if="item.name !== 'institution'" class="font-semibold">
+                  <div v-else-if="item.name !== 'institution'" class="w-full font-semibold pl-2 border rounded">
                     {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
                   </div>
                 </template>
-                <template v-if="row.name !== 'total'">
+
+                <template v-else>
                   <SwdCurrencyInput
                     v-if="item.type === 'number'"
                     v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
@@ -107,18 +108,32 @@
                 </template>
               </el-form-item>
             </div>
-            <div v-if="row.custom && row.elements.length - 1 === itemIndex" class="w-[5%] flex justify-center">
-              <SwdAssetsIncomeActions
-                class="top-[2px]"
-                :block="block"
-                :model="item.model"
-                :row="row"
-                :index-row="indexRow"
-                :index-group="indexGroup"
-                :custom="row.custom"
-                @confirmDelete="confirmDelete"
-                @addElement="addElement"
-              />
+            <div v-if="row.custom && row.elements.length - 1 === itemIndex" class="w-[10%] flex justify-between px-4">
+              <el-icon
+                class="top-[5px] cursor-pointer"
+                :size="20"
+                color="red"
+                @click="remove({ block, row, indexRow, indexGroup })"
+              >
+                <Delete />
+              </el-icon>
+              <el-icon
+                class="top-[5px] cursor-pointer"
+                :size="20"
+                color="green"
+                @click="
+                  addElement({
+                    model: item.model,
+                    variable: item.model.model.split('_')[0],
+                    indexGroup,
+                    indexRow,
+                    label: item.model.model.split('_')[0],
+                    canJoin: row.can_join,
+                  })
+                "
+              >
+                <Plus />
+              </el-icon>
             </div>
           </template>
         </div>
@@ -172,15 +187,16 @@ import { fetchAssetsIncomeConfirm } from '@/api/vueQuery/fetch-assets-income-con
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-import { ArrowDown } from '@element-plus/icons-vue'
+import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { currencyFormat } from '@/utils/currencyFormat'
-import SwdAssetsIncomeActions from '@/components/Global/SwdAssetsIncomeActions.vue'
+import { ElMessageBox } from 'element-plus'
 
 export default {
   name: 'AddProspectAssetsIncome',
   components: {
     ArrowDown,
-    SwdAssetsIncomeActions,
+    Delete,
+    Plus,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -342,6 +358,16 @@ export default {
       return !!elem
     }
 
+    const remove = ({ block, row, indexRow, indexGroup }) => {
+      ElMessageBox.confirm('Are you sure to delete this?', 'Info', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }).then(() => {
+        confirmDelete({ block, row, indexRow, indexGroup })
+      })
+    }
+
     const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
       const data = {
         row: row.name,
@@ -484,6 +510,7 @@ export default {
       handleChange,
       addElement,
       isCanJoin,
+      remove,
     }
   },
 }
