@@ -4,8 +4,12 @@
       <InlineSvg :src="IconDoneStep" />
       <div class="text-main text-xl font-semibold ml-2">Annual Reviews</div>
     </div>
-    <div v-for="(item, index) in member.salesforce.annualReviews" :key="index">
+    <div v-if="!annualReviews.length" class="text-center">
+      <p class="text-main text-xss mt-3">No recently added annual reviews</p>
+    </div>
+    <div v-for="(item, index) in annualReviews" :key="index">
       <AnnualReviewsItem :annual-item="item" />
+      <el-divider v-if="annualReviews.length > 1 && index !== annualReviews.length - 1" border-style="dashed" />
     </div>
   </div>
 </template>
@@ -20,7 +24,7 @@ export default {
     AnnualReviewsItem,
   },
   props: {
-    member: {
+    annualReviews: {
       type: Object,
       required: true,
       default: () => {},

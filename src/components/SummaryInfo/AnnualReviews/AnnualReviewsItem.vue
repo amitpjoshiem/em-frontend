@@ -11,7 +11,7 @@
   </div>
   <div class="flex">
     <div class="w-6/12 flex mb-4">
-      <div class="pr-2">Review date:</div>
+      <div class="pr-2">Review Date:</div>
       <SwdStubForText :text="getReviewDate" plug="&mdash;" class="text-main font-semibold" />
     </div>
     <div class="w-6/12 flex mb-4">
@@ -24,8 +24,8 @@
       <div class="pr-2">New money :</div>
       <SwdTag :status="!!annualItem.new_money" />
     </div>
-    <div class="w-6/12 flex mb-4">
-      <div class="pr-2">Notes:</div>
+    <div class="w-6/12 mb-4">
+      <div class="pr-2 pb-2">Notes:</div>
       <SwdStubForText :text="annualItem.notes" plug="&mdash;" class="text-main font-semibold" />
     </div>
   </div>
@@ -48,8 +48,8 @@ export default {
   },
   setup(props) {
     const getReviewDate = computed(() => {
-      if (props.annualItem.client_start_date) {
-        return dayjs(props.annualItem.client_start_date).format('MM/DD/YYYY')
+      if (props.annualItem.review_date) {
+        return dayjs(props.annualItem.review_date).format('MM/DD/YYYY')
       }
       return ''
     })
