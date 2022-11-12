@@ -32,7 +32,7 @@
           </div>
 
           <div class="flex pb-2 mt-8">
-            <div class="w-[35.3%]" />
+            <div class="w-[30.3%]" />
             <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
               <div v-if="indexHeader === 'owner' && member.married" />
               <div class="w-[15%] px-2 text-main text-xs font-semibold">
@@ -41,7 +41,7 @@
             </template>
           </div>
           <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
-            <div class="w-[30%] flex items-center">
+            <div class="w-[25%] flex items-center">
               <div v-if="row.label" class="text-main font-semibold text-xss">
                 {{ row.label }}
               </div>
@@ -66,15 +66,15 @@
                 :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
               >
                 <el-form-item class="mb-4">
-                  <template v-if="row.name === 'total'">
+                  <template v-if="item.calculated">
                     <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                       <SwdSpinner />
                     </div>
-                    <div v-else-if="item.name !== 'institution'" class="font-semibold">
+                    <div v-else-if="item.name !== 'institution'" class="w-full font-semibold pl-2">
                       {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
                     </div>
                   </template>
-                  <template v-if="row.name !== 'total'">
+                  <template v-else>
                     <SwdCurrencyInput
                       v-if="item.type === 'number'"
                       v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
@@ -115,12 +115,10 @@
                             :key="option"
                             :disabled="isDisabled({ option, indexGroup })"
                             @click="
-                              addElement({
+                              addLine({
                                 model: item.model,
                                 variable: option.name,
                                 indexGroup,
-                                indexRow,
-                                label: option.label,
                                 canJoin: row.can_join,
                               })
                             "
@@ -136,18 +134,31 @@
                   </template>
                 </el-form-item>
               </div>
-              <div v-if="row.custom && row.elements.length - 1 === itemIndex" class="w-[5%] flex justify-center">
-                <SwdAssetsIncomeActions
-                  class="top-[2px]"
-                  :block="block"
-                  :model="item.model"
-                  :row="row"
-                  :index-row="indexRow"
-                  :index-group="indexGroup"
-                  :custom="row.custom"
-                  @confirmDelete="confirmDelete"
-                  @addElement="addElement"
-                />
+              <div v-if="row.custom && row.elements.length - 1 === itemIndex" class="w-[10%] flex justify-between px-4">
+                <el-icon
+                  class="top-[5px] cursor-pointer"
+                  :size="20"
+                  color="red"
+                  @click="remove({ block, row, indexRow, indexGroup })"
+                >
+                  <Delete />
+                </el-icon>
+                <el-icon
+                  class="top-[5px] cursor-pointer"
+                  :size="20"
+                  color="green"
+                  @click="
+                    addLine({
+                      model: item.model,
+                      variable: item.model.model,
+                      indexGroup,
+                      canJoin: row.can_join,
+                      copyLine: true,
+                    })
+                  "
+                >
+                  <Plus />
+                </el-icon>
               </div>
             </template>
           </div>
@@ -211,16 +222,16 @@ import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
-import { ArrowDown } from '@element-plus/icons-vue'
+import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
 import { currencyFormat } from '@/utils/currencyFormat'
-import SwdAssetsIncomeActions from '@/components/Global/SwdAssetsIncomeActions.vue'
 
 export default {
   name: 'AddLeadAssets',
   components: {
     ArrowDown,
-    SwdAssetsIncomeActions,
+    Delete,
+    Plus,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -265,6 +276,9 @@ export default {
     watchEffect(() => {
       if (!isMemberAssetsLoading.value) {
         setInitValue({ ruleForm, memberAssets: memberAssets.value, id: leadId })
+      }
+      if (!isMemberAssetsSchemaLoading.value) {
+        updateSchema()
       }
     })
 
@@ -316,60 +330,28 @@ export default {
       })
     }
 
-    const addElement = ({ model, variable, indexGroup, indexRow, label, canJoin }) => {
-      let newItemIndex = 0
-      let newVariable = variable
-      // eslint-disable-next-line no-constant-condition
-      labelAddItem: while (true) {
-        const elem = schema[indexGroup].rows.find((item) => {
-          return item.name === newVariable
-        })
+    const addLine = async ({ model, variable, indexGroup, canJoin, copyLine = false }) => {
+      if (copyLine) {
+        let newItemIndex = 0
+        let newVariable = variable
+        // eslint-disable-next-line no-constant-condition
+        labelAddItem: while (true) {
+          const elem = schema[indexGroup].rows.find((item) => {
+            return item.name === newVariable
+          })
 
-        if (!elem) {
-          break labelAddItem
+          if (!elem) {
+            break labelAddItem
+          }
+          newItemIndex += 1
+          newVariable = variable + '_' + newItemIndex
         }
-        newItemIndex += 1
-        newVariable = variable + '_' + newItemIndex
+        variable = newVariable
       }
-      let newLabel = ''
-      if (newItemIndex) {
-        newLabel = label.charAt(0).toUpperCase() + label.slice(1) + ' ' + newItemIndex
-      } else {
-        newLabel = label.charAt(0).toUpperCase() + label.slice(1)
-      }
-      addLine({ model, variable: newVariable, indexGroup, indexRow, label: newLabel, canJoin })
-    }
-
-    const addLine = async ({ model, variable, indexGroup, indexRow, label, canJoin }) => {
       Object.keys(schema[indexGroup].headers).forEach((element) => {
         ruleForm[model.group][variable] = { [element]: null }
       })
 
-      const elements = Object.keys(schema[indexGroup].headers).map((item) => {
-        return {
-          type: item !== 'institution' ? 'number' : 'string',
-          placeholder: item !== 'institution' ? '$12345' : 'Enter Name',
-          name: item,
-          label: item,
-          disabled: false,
-          can_join: canJoin,
-          model: {
-            group: model.group,
-            model: variable,
-            item: item,
-          },
-        }
-      })
-      const dataSchema = {
-        label: label,
-        name: variable,
-        custom: true,
-        elements,
-        can_join: canJoin,
-      }
-      console.log('indexGroup - ', indexGroup)
-      console.log('indexRow - ', indexRow)
-      schema[indexGroup].rows.splice(indexRow + 1, 0, dataSchema)
       const data = {
         group: model.group,
         row: variable,
@@ -379,6 +361,8 @@ export default {
         value: null,
       }
       await updateMemberAssets({ data, id: leadId })
+      await queryClient.invalidateQueries(['memberAssets', leadId])
+      await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
     }
 
     const changeInput = async (item) => {
@@ -453,11 +437,6 @@ export default {
     }
 
     const closeDialog = () => {
-      dialogVisible.value = false
-      fieldName.value = ''
-    }
-
-    const cancelDialog = () => {
       dialogVisible.value = false
       fieldName.value = ''
     }
@@ -555,8 +534,6 @@ export default {
       confirmCreateField,
       fieldName,
       closeDialog,
-      cancelDialog,
-
       isLoadingMember,
       member,
       joinMember,
@@ -566,9 +543,7 @@ export default {
       handleChange,
       isReadOnlyLead,
       leadId,
-
       isCanJoin,
-      addElement,
     }
   },
 }

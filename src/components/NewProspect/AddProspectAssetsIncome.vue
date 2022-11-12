@@ -43,7 +43,7 @@
                   <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                     <SwdSpinner />
                   </div>
-                  <div v-else-if="item.name !== 'institution'" class="w-full font-semibold pl-2 border rounded">
+                  <div v-else-if="item.name !== 'institution'" class="w-full font-semibold pl-2">
                     {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
                   </div>
                 </template>
@@ -87,12 +87,10 @@
                           :key="option"
                           :disabled="isDisabled({ option, indexGroup })"
                           @click="
-                            addElement({
+                            addLine({
                               model: item.model,
                               variable: option.name,
                               indexGroup,
-                              indexRow,
-                              label: option.label,
                               canJoin: row.can_join,
                             })
                           "
@@ -122,13 +120,12 @@
                 :size="20"
                 color="green"
                 @click="
-                  addElement({
+                  addLine({
                     model: item.model,
-                    variable: item.model.model.split('_')[0],
+                    variable: item.model.model,
                     indexGroup,
-                    indexRow,
-                    label: item.model.model.split('_')[0],
                     canJoin: row.can_join,
+                    copyLine: true,
                   })
                 "
               >
@@ -238,6 +235,9 @@ export default {
       if (!isMemberAssetsLoading.value) {
         setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
       }
+      if (!isMemberAssetsSchemaLoading.value) {
+        updateSchema()
+      }
     })
 
     watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
@@ -267,58 +267,28 @@ export default {
       }
     }
 
-    const addElement = ({ model, variable, indexGroup, indexRow, label, canJoin }) => {
-      let newItemIndex = 0
-      let newVariable = variable
-      // eslint-disable-next-line no-constant-condition
-      labelAddItem: while (true) {
-        const elem = schema[indexGroup].rows.find((item) => {
-          return item.name === newVariable
-        })
+    const addLine = async ({ model, variable, indexGroup, canJoin, copyLine = false }) => {
+      if (copyLine) {
+        let newItemIndex = 0
+        let newVariable = variable
+        // eslint-disable-next-line no-constant-condition
+        labelAddItem: while (true) {
+          const elem = schema[indexGroup].rows.find((item) => {
+            return item.name === newVariable
+          })
 
-        if (!elem) {
-          break labelAddItem
+          if (!elem) {
+            break labelAddItem
+          }
+          newItemIndex += 1
+          newVariable = variable + '_' + newItemIndex
         }
-        newItemIndex += 1
-        newVariable = variable + '_' + newItemIndex
+        variable = newVariable
       }
-      let newLabel = ''
-      if (newItemIndex) {
-        newLabel = label.charAt(0).toUpperCase() + label.slice(1) + ' ' + newItemIndex
-      } else {
-        newLabel = label.charAt(0).toUpperCase() + label.slice(1)
-      }
-      addLine({ model, variable: newVariable, indexGroup, indexRow, label: newLabel, canJoin })
-    }
-
-    const addLine = async ({ model, variable, indexGroup, indexRow, label, canJoin }) => {
       Object.keys(schema[indexGroup].headers).forEach((element) => {
         ruleForm[model.group][variable] = { [element]: null }
       })
 
-      const elements = Object.keys(schema[indexGroup].headers).map((item) => {
-        return {
-          type: item !== 'institution' ? 'number' : 'string',
-          placeholder: item !== 'institution' ? '$12345' : 'Enter Name',
-          name: item,
-          label: item,
-          disabled: false,
-          can_join: canJoin,
-          model: {
-            group: model.group,
-            model: variable,
-            item: item,
-          },
-        }
-      })
-      const dataSchema = {
-        label: label,
-        name: variable,
-        custom: true,
-        elements,
-        can_join: canJoin,
-      }
-      schema[indexGroup].rows.splice(indexRow, 0, dataSchema)
       const data = {
         group: model.group,
         row: variable,
@@ -328,6 +298,8 @@ export default {
         value: null,
       }
       await updateMemberAssets({ data, id: memberId })
+      await queryClient.invalidateQueries(['memberAssets', memberId])
+      await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
     }
 
     const changeInput = async (item) => {
@@ -416,11 +388,6 @@ export default {
       fieldName.value = ''
     }
 
-    const cancelDialog = () => {
-      dialogVisible.value = false
-      fieldName.value = ''
-    }
-
     const joinMember = async (item) => {
       const data = {
         group: item.model.group,
@@ -466,6 +433,7 @@ export default {
     }
 
     const updateSchema = () => {
+      console.log('updateSchema')
       Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value)))
     }
 
@@ -496,7 +464,6 @@ export default {
       confirmDelete,
       isLoadingDeleteRow,
       closeDialog,
-      cancelDialog,
       confirmCreateField,
       isLoadingCheck,
       dialogVisible,
@@ -508,7 +475,6 @@ export default {
       joinMember,
       disjoinMember,
       handleChange,
-      addElement,
       isCanJoin,
       remove,
     }
