@@ -10,7 +10,7 @@
     empty-text="No recently added opportunity"
     @sort-change="change"
   >
-    <el-table-column prop="name" label="Name" min-width="240" sortable>
+    <el-table-column prop="name" label="Name" min-width="230" sortable>
       <template #default="scope">
         <UserListName :user="scope.row" />
       </template>
@@ -47,7 +47,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column v-if="!isLead" label="net worth" min-width="85">
+    <el-table-column v-if="!isLead" label="net worth" min-width="95">
       <SwdStubForText text="" plug="&mdash;" class="text-xss text-main font-semibold" />
     </el-table-column>
 

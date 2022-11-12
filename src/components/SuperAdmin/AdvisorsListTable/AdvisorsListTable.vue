@@ -27,13 +27,6 @@
         <SwdStubForText :text="scope.row.position" plug="&mdash;" class="text-main" />
       </template>
     </el-table-column>
-
-    <el-table-column min-width="55">
-      <template #default="scope">
-        <SwdLeadActions v-if="scope.row.type === 'lead'" :user="scope.row" />
-        <SwdMemberActions v-else :user="scope.row" class="border rounded" />
-      </template>
-    </el-table-column>
   </el-table>
 </template>
 
