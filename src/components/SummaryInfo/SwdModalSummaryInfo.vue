@@ -13,7 +13,7 @@
 
     <div v-else>
       <GeneralInfo :member="member" />
-      <AnnualReviewsInfo :member="member" />
+      <AnnualReviewsInfo :annual-reviews="member.salesforce.annualReviews" />
       <HouseHoldInfo :member="member" />
     </div>
     <template #footer>
