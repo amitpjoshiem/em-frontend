@@ -616,6 +616,7 @@ import { rules } from '@/validationRules/basicRules.js'
 import { maska } from 'maska'
 import { scrollTop } from '@/utils/scrollTop'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
+import { useStateHook } from '@/hooks/use-state-hook'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
@@ -638,6 +639,8 @@ export default {
     const isFocusHouse = ref(false)
     const isFocusEmployment = ref(false)
     const isFocusOther = ref(false)
+
+    const { stateList } = useStateHook()
 
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
@@ -774,114 +777,6 @@ export default {
       if (type === 'employment') isFocusEmployment.value = false
       if (type === 'other') isFocusOther.value = false
     }
-
-    // const stateList = [
-    //   { value: 'Texas', label: 'Texas' },
-    //   { value: 'Alaska', label: 'Alaska' },
-    //   { value: 'Alabama', label: 'Alabama' },
-    //   { value: 'Arkansas', label: 'Arkansas' },
-    //   { value: 'Arizona', label: 'Arizona' },
-    //   { value: 'California', label: 'California' },
-    //   { value: 'Colorado', label: 'Colorado' },
-    //   { value: 'Connecticut', label: 'Connecticut' },
-    //   { value: 'District of Columbia', label: 'District of Columbia' },
-    //   { value: 'Delaware', label: 'Delaware' },
-    //   { value: 'Florida', label: 'Florida' },
-    //   { value: 'Georgia', label: 'Georgia' },
-    //   { value: 'Hawaii', label: 'Hawaii' },
-    //   { value: 'Iowa', label: 'Iowa' },
-    //   { value: 'Idaho', label: 'Idaho' },
-    //   { value: 'Illinois', label: 'Illinois' },
-    //   { value: 'Indiana', label: 'Indiana' },
-    //   { value: 'Kansas', label: 'Kansas' },
-    //   { value: 'Kentucky', label: 'Kentucky' },
-    //   { value: 'Louisiana', label: 'Louisiana' },
-    //   { value: 'Massachusetts', label: 'Massachusetts' },
-    //   { value: 'Maryland', label: 'Maryland' },
-    //   { value: 'Maine', label: 'Maine' },
-    //   { value: 'Michigan', label: 'Michigan' },
-    //   { value: 'Minnesota', label: 'Minnesota' },
-    //   { value: 'Missouri', label: 'Missouri' },
-    //   { value: 'Mississippi', label: 'Mississippi' },
-    //   { value: 'Montana', label: 'Montana' },
-    //   { value: 'North Carolina', label: 'North Carolina' },
-    //   { value: 'North Dakota', label: 'North Dakota' },
-    //   { value: 'Nebraska', label: 'Nebraska' },
-    //   { value: 'New Hampshir', label: 'New Hampshire' },
-    //   { value: 'New Jersey', label: 'New Jersey' },
-    //   { value: 'New Mexico', label: 'New Mexico' },
-    //   { value: 'Nevada', label: 'Nevada' },
-    //   { value: 'New York', label: 'New York' },
-    //   { value: 'Ohio', label: 'Ohio' },
-    //   { value: 'Oklahoma', label: 'Oklahoma' },
-    //   { value: 'Oregon', label: 'Oregon' },
-    //   { value: 'Pennsylvania', label: 'Pennsylvania' },
-    //   { value: 'Rhode Island', label: 'Rhode Island' },
-    //   { value: 'South Carolina', label: 'South Carolina' },
-    //   { value: 'South Dakota', label: 'South Dakota' },
-    //   { value: 'Tennessee', label: 'Tennessee' },
-    //   { value: 'Utah', label: 'Utah' },
-    //   { value: 'Virginia', label: 'Virginia' },
-    //   { value: 'Vermont', label: 'Vermont' },
-    //   { value: 'WWashingtonA', label: 'Washington' },
-    //   { value: 'Wisconsin', label: 'Wisconsin' },
-    //   { value: 'West Virginia', label: 'West Virginia' },
-    //   { value: 'Wyoming', label: 'Wyoming' },
-    // ]
-
-    const stateList = [
-      { value: 'TX', label: 'TX' },
-      { value: 'AK', label: 'AK' },
-      { value: 'AL', label: 'AL' },
-      { value: 'AR', label: 'AR' },
-      { value: 'AZ', label: 'AZ' },
-      { value: 'CA', label: 'CA' },
-      { value: 'CO', label: 'CO' },
-      { value: 'CT', label: 'CT' },
-      { value: 'DC', label: 'DC' },
-      { value: 'DE', label: 'DE' },
-      { value: 'FL', label: 'FL' },
-      { value: 'GA', label: 'GA' },
-      { value: 'HI', label: 'HI' },
-      { value: 'IA', label: 'IA' },
-      { value: 'ID', label: 'ID' },
-      { value: 'IL', label: 'IL' },
-      { value: 'IN', label: 'IN' },
-      { value: 'KS', label: 'KS' },
-      { value: 'KY', label: 'KY' },
-      { value: 'LA', label: 'LA' },
-      { value: 'MA', label: 'MA' },
-      { value: 'MD', label: 'MD' },
-      { value: 'ME', label: 'ME' },
-      { value: 'MI', label: 'MI' },
-      { value: 'MN', label: 'MN' },
-      { value: 'MO', label: 'MO' },
-      { value: 'MS', label: 'MS' },
-      { value: 'MT', label: 'MT' },
-      { value: 'NC', label: 'NC' },
-      { value: 'ND', label: 'ND' },
-      { value: 'NE', label: 'NE' },
-      { value: 'NH', label: 'NH' },
-      { value: 'NJ', label: 'NJ' },
-      { value: 'NM', label: 'NM' },
-      { value: 'NV', label: 'NV' },
-      { value: 'NY', label: 'NY' },
-      { value: 'OH', label: 'OH' },
-      { value: 'OK', label: 'OK' },
-      { value: 'OR', label: 'OR' },
-      { value: 'PA', label: 'PA' },
-      { value: 'RI', label: 'RI' },
-      { value: 'SC', label: 'SC' },
-      { value: 'SD', label: 'SD' },
-      { value: 'TN', label: 'TN' },
-      { value: 'UT', label: 'UT' },
-      { value: 'VA', label: 'VA' },
-      { value: 'VT', label: 'VT' },
-      { value: 'WA', label: 'WA' },
-      { value: 'WI', label: 'WI' },
-      { value: 'WV', label: 'WV' },
-      { value: 'WY', label: 'WY' },
-    ]
 
     return {
       ruleForm,
