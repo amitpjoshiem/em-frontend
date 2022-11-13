@@ -32,7 +32,7 @@
           </div>
 
           <div class="flex pb-2 mt-8">
-            <div class="w-[30.3%]" />
+            <div :class="member.married ? 'w-[30%]' : 'w-[25%]'" />
             <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
               <div v-if="indexHeader === 'owner' && member.married" />
               <div class="w-[15%] px-2 text-main text-xs font-semibold">
@@ -219,12 +219,13 @@ import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-import IconActive from '@/assets/svg/icon-active.svg'
-import IconNotActive from '@/assets/svg/icon-not-active.svg'
-import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
 import { currencyFormat } from '@/utils/currencyFormat'
+import { ElMessageBox } from 'element-plus'
+import IconActive from '@/assets/svg/icon-active.svg'
+import IconNotActive from '@/assets/svg/icon-not-active.svg'
+import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 
 export default {
   name: 'AddLeadAssets',
@@ -276,9 +277,6 @@ export default {
     watchEffect(() => {
       if (!isMemberAssetsLoading.value) {
         setInitValue({ ruleForm, memberAssets: memberAssets.value, id: leadId })
-      }
-      if (!isMemberAssetsSchemaLoading.value) {
-        updateSchema()
       }
     })
 
@@ -333,7 +331,8 @@ export default {
     const addLine = async ({ model, variable, indexGroup, canJoin, copyLine = false }) => {
       if (copyLine) {
         let newItemIndex = 0
-        let newVariable = variable
+        let newVariable = variable.split('_')[0]
+
         // eslint-disable-next-line no-constant-condition
         labelAddItem: while (true) {
           const elem = schema[indexGroup].rows.find((item) => {
@@ -344,7 +343,7 @@ export default {
             break labelAddItem
           }
           newItemIndex += 1
-          newVariable = variable + '_' + newItemIndex
+          newVariable = variable.split('_')[0] + '_' + newItemIndex
         }
         variable = newVariable
       }
@@ -358,11 +357,11 @@ export default {
         element: 'owner',
         type: 'string',
         can_join: canJoin,
-        value: null,
       }
       await updateMemberAssets({ data, id: leadId })
       await queryClient.invalidateQueries(['memberAssets', leadId])
       await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
+      updateSchema()
     }
 
     const changeInput = async (item) => {
@@ -393,6 +392,16 @@ export default {
       return !!elem
     }
 
+    const remove = ({ block, row, indexRow, indexGroup }) => {
+      ElMessageBox.confirm('Are you sure to delete this?', 'Info', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }).then(() => {
+        confirmDelete({ block, row, indexRow, indexGroup })
+      })
+    }
+
     const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
       const data = {
         row: row.name,
@@ -402,6 +411,7 @@ export default {
       const res = await deleteRow({ id: leadId, data })
       if (!('error' in res)) {
         schema[indexGroup].rows.splice(indexRow, 1)
+        await queryClient.invalidateQueries(['memberAssets', leadId])
         useAlert({
           title: 'Success',
           type: 'success',
@@ -544,6 +554,7 @@ export default {
       isReadOnlyLead,
       leadId,
       isCanJoin,
+      remove,
     }
   },
 }

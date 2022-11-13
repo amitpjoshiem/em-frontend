@@ -5,7 +5,7 @@
         <span class="text-main text-xl font-semibold">{{ block.title }}</span>
 
         <div class="flex pb-2 mt-8">
-          <div class="w-[30.3%]" />
+          <div :class="member.married ? 'w-[30%]' : 'w-[25%]'" />
           <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
             <div v-if="indexHeader === 'owner' && member.married" />
             <div class="w-[15%] px-2 text-main text-xs font-semibold">
@@ -235,9 +235,6 @@ export default {
       if (!isMemberAssetsLoading.value) {
         setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
       }
-      if (!isMemberAssetsSchemaLoading.value) {
-        updateSchema()
-      }
     })
 
     watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
@@ -270,7 +267,7 @@ export default {
     const addLine = async ({ model, variable, indexGroup, canJoin, copyLine = false }) => {
       if (copyLine) {
         let newItemIndex = 0
-        let newVariable = variable
+        let newVariable = variable.split('_')[0]
         // eslint-disable-next-line no-constant-condition
         labelAddItem: while (true) {
           const elem = schema[indexGroup].rows.find((item) => {
@@ -281,7 +278,7 @@ export default {
             break labelAddItem
           }
           newItemIndex += 1
-          newVariable = variable + '_' + newItemIndex
+          newVariable = variable.split('_')[0] + '_' + newItemIndex
         }
         variable = newVariable
       }
@@ -295,11 +292,12 @@ export default {
         element: 'owner',
         type: 'string',
         can_join: canJoin,
-        value: null,
       }
+
       await updateMemberAssets({ data, id: memberId })
       await queryClient.invalidateQueries(['memberAssets', memberId])
       await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+      updateSchema()
     }
 
     const changeInput = async (item) => {
@@ -349,6 +347,7 @@ export default {
       const res = await deleteRow({ id: memberId, data })
       if (!('error' in res)) {
         schema[indexGroup].rows.splice(indexRow, 1)
+        await queryClient.invalidateQueries(['memberAssets', memberId])
         useAlert({
           title: 'Success',
           type: 'success',
