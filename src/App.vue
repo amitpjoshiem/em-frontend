@@ -1,13 +1,13 @@
 <template>
   <router-view v-if="!loading" />
   <SwdFullScreenLoading v-else />
-  <VueQueryDevTools />
   <ModalReloadPage />
   <SwdShareDialog />
   <SwdModalExportSucces />
   <SwdModalTerms />
   <SwdPreviewPdfModal />
   <SwdModalSummaryInfo />
+  <VueQueryDevTools />
 </template>
 
 <script>

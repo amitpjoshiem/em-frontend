@@ -432,7 +432,6 @@ export default {
     }
 
     const updateSchema = () => {
-      console.log('updateSchema')
       Object.assign(schema, JSON.parse(JSON.stringify(memberAssetsSchema.value)))
     }
 

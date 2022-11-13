@@ -365,6 +365,7 @@
     </el-form>
   </div>
   <el-skeleton v-else :rows="10" animated />
+  <ModalRestoreDraft @restoreDraft="restoreDraft" @deleteDraft="deleteDraft" />
 </template>
 
 <script>
@@ -382,12 +383,18 @@ import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useStateHook } from '@/hooks/use-state-hook'
+import { onBeforeRouteLeave } from 'vue-router'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
+import { ElMessageBox } from 'element-plus'
+import ModalRestoreDraft from './Draft/ModalRestoreDraft.vue'
 
 export default {
   name: 'AddProspectBasicInfo',
   directives: { maska },
+  components: {
+    ModalRestoreDraft,
+  },
   setup() {
     const router = useRouter()
     const store = useStore()
@@ -489,6 +496,31 @@ export default {
         memberId = route.params.id
         refetchMember.value()
       }
+      if (store.state.draft.prospectBasicDraft !== null && !route.params.id) {
+        store.commit('globalComponents/setShowModal', {
+          destination: 'restoreDraft',
+          value: true,
+        })
+      }
+    })
+
+    onBeforeRouteLeave((to, from, next) => {
+      if (!isUpdateMember.value && JSON.stringify(ruleForm) !== JSON.stringify(initialBasicInformation)) {
+        ElMessageBox.confirm('Do you want to leave? Save data to draft?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+        })
+          .then(() => {
+            store.commit('draft/setProspectBasicDraft', ruleForm)
+            next()
+          })
+          .catch(() => {
+            next()
+          })
+      } else {
+        next()
+      }
     })
 
     watchEffect(() => {
@@ -534,6 +566,14 @@ export default {
       })
     }
 
+    const restoreDraft = () => {
+      Object.assign(ruleForm, JSON.parse(JSON.stringify(store.state.draft.prospectBasicDraft)))
+    }
+
+    const deleteDraft = () => {
+      store.commit('draft/setProspectBasicDraft', null)
+    }
+
     return {
       ruleForm,
       rules,
@@ -562,6 +602,8 @@ export default {
       member,
       refetchMember,
       stateList,
+      restoreDraft,
+      deleteDraft,
     }
   },
 }

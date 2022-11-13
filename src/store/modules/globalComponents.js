@@ -82,6 +82,7 @@ const getDefaultState = () => {
         modalInvestmentPackage: false,
         addChildOpportunity: false,
         modalSummaryInfo: false,
+        restoreDraft: false,
       },
     },
     sortMembers: {
