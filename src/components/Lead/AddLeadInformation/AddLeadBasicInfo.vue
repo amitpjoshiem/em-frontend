@@ -1,7 +1,7 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isFetchingMember && !isLoadingInfo" class="sm:p-5">
-      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top">
+      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isReadOnlyLead">
         <!-- GENERAL -->
         <div class="p-5">
           <div class="flex items-center mb-5">
@@ -89,13 +89,10 @@
                   />
                 </el-form-item>
 
-                <el-form-item label="Address" prop="address" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pr-2 mb-4">
-                  <el-input
-                    v-model="ruleForm.address"
-                    placeholder="Enter address"
-                    @focus="focus('general')"
-                    @blur="blur('general')"
-                  />
+                <el-form-item label="State" prop="state" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pl-0 lg:pr-2 mb-4">
+                  <el-select v-model="ruleForm.state" filterable placeholder="Select">
+                    <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
                 </el-form-item>
 
                 <el-form-item label="City" prop="city" class="sm:w-6/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
@@ -107,10 +104,10 @@
                   />
                 </el-form-item>
 
-                <el-form-item label="State" prop="state" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pl-0 lg:pr-2 mb-4">
+                <el-form-item label="Address" prop="address" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pr-2 mb-4">
                   <el-input
-                    v-model="ruleForm.state"
-                    placeholder="Enter state"
+                    v-model="ruleForm.address"
+                    placeholder="Enter address"
                     @focus="focus('general')"
                     @blur="blur('general')"
                   />
@@ -387,7 +384,7 @@
                   v-if="index === ruleForm.employment_history.length - 1"
                   primary
                   main
-                  :disabled="isLoadingUpdateMember"
+                  :disabled="isLoadingUpdateMember || isReadOnlyLead"
                   @click="addEmployment(ruleForm)"
                 >
                   Add job
@@ -471,7 +468,7 @@
                     v-if="index === ruleForm.spouse.employment_history.length - 1"
                     primary
                     main
-                    :disabled="isLoadingUpdateMember"
+                    :disabled="isLoadingUpdateMember || isReadOnlyLead"
                     @click="addEmploymentSpouse(ruleForm)"
                   >
                     Add job
@@ -581,9 +578,23 @@
         <!-- Other -->
 
         <div class="flex justify-end my-10">
-          <SwdButton primary main :disabled="isLoadingUpdateMember" @click="submitForm('ruleForm')">
+          <router-link
+            v-if="isReadOnlyLead"
+            :to="{ name: `lead-assets-information`, params: { id: leadId } }"
+            class="w-4/12"
+          >
+            <SwdButton primary main>Go to the assets &amp; income</SwdButton>
+          </router-link>
+          <SwdButton
+            v-else
+            primary
+            main
+            class="w-2/12"
+            :disabled="isLoadingUpdateMember"
+            @click="submitForm('ruleForm')"
+          >
             <SwdSpinner v-show="isLoadingUpdateMember" class="mr-2" />
-            Go to the assets &amp; income
+            Save
           </SwdButton>
         </div>
       </el-form>
@@ -597,7 +608,6 @@ import { reactive, ref, onMounted, computed, watchEffect } from 'vue'
 import { updateMembers } from '@/api/vueQuery/update-members'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useFetchMember } from '@/api/use-fetch-member.js'
-
 import { useMutation } from 'vue-query'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
@@ -605,16 +615,16 @@ import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/basicRules.js'
 import { maska } from 'maska'
 import { scrollTop } from '@/utils/scrollTop'
-import IconAdd from '@/assets/svg/icon-add.svg'
-import IconDelete from '@/assets/svg/icon-delete.svg'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
-
+import { useStateHook } from '@/hooks/use-state-hook'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
+import IconAdd from '@/assets/svg/icon-add.svg'
+import IconDelete from '@/assets/svg/icon-delete.svg'
 
 export default {
-  name: 'AddProspectBasicInfo',
+  name: 'AddLeadBasicInfo',
   directives: { maska },
   setup() {
     const router = useRouter()
@@ -622,12 +632,15 @@ export default {
     const form = ref(null)
     const route = useRoute()
     const step = computed(() => store.state.newClient.step)
+    const leadId = route.params.id
 
     const isFocusGeneral = ref(false)
     const isFocusSpouse = ref(false)
     const isFocusHouse = ref(false)
     const isFocusEmployment = ref(false)
     const isFocusOther = ref(false)
+
+    const { stateList } = useStateHook()
 
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
@@ -731,7 +744,7 @@ export default {
             })
             store.commit('newClient/setStep', step.value + 1)
             router.push({
-              name: 'client-assets-information',
+              name: 'lead-assets-information',
               params: { id: route.params.id },
             })
           }
@@ -743,6 +756,10 @@ export default {
 
     const isDoneCurrentStep = computed(() => {
       return clientsInfo.value.steps.completed_financial_fact_finder
+    })
+
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
     })
 
     const focus = (type) => {
@@ -780,24 +797,21 @@ export default {
       optionsCurrencyInput,
       isFetchingMember,
       member,
-      refetchMember,
-
       IconActive,
       IconNotActive,
       IconDoneStep,
-
       isFocusGeneral,
       isFocusSpouse,
       isFocusHouse,
       isFocusEmployment,
       isFocusOther,
-
       isLoadingInfo,
-
       isDoneCurrentStep,
-
       focus,
       blur,
+      isReadOnlyLead,
+      leadId,
+      stateList,
     }
   },
 }

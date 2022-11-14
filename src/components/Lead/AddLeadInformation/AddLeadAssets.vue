@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isMemberAssetsLoading && !isLoadingInfo && !isMemberAssetsSchemaLoading && !isLoadingMember">
-      <el-form ref="form" :model="ruleForm">
+      <el-form ref="form" :model="ruleForm" :disabled="isReadOnlyLead">
         <div
           v-for="(block, indexGroup) in schema"
           :key="indexGroup"
@@ -32,49 +32,49 @@
           </div>
 
           <div class="flex pb-2 mt-8">
-            <div class="w-[35.3%]" />
+            <div :class="member.married ? 'w-[30%]' : 'w-[25%]'" />
             <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
+              <div v-if="indexHeader === 'owner' && member.married" />
               <div class="w-[15%] px-2 text-main text-xs font-semibold">
                 {{ header.label }}
               </div>
-              <div v-if="indexHeader === 'owner' && member.married" class="w-[5%]" />
             </template>
           </div>
           <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
-            <div class="w-[35%] flex items-center">
+            <div class="w-[25%] flex items-center">
               <div v-if="row.label" class="text-main font-semibold text-xss">
                 {{ row.label }}
-              </div>
-              <div v-if="row.custom" class="flex items-center ml-2 cursor-pointer">
-                <el-popconfirm
-                  title="Are you sure to delete this?"
-                  @confirm="confirmDelete({ block, row, indexRow, indexGroup })"
-                >
-                  <template #reference>
-                    <el-icon color="red" class="cursor-pointer">
-                      <Delete />
-                    </el-icon>
-                  </template>
-                </el-popconfirm>
               </div>
             </div>
 
             <template v-for="(item, itemIndex) in row.elements" :key="item">
+              <div v-if="itemIndex === 0 && member.married" class="w-[5%] text-center">
+                <template v-if="row.name !== 'total' && item.type === 'number' && row.can_join">
+                  <el-checkbox
+                    v-model="row.joined"
+                    label="Joint"
+                    size="small"
+                    :disabled="isLoadingUpdate"
+                    class="top-[6px] left-[-3px]"
+                    @change="handleChange({ item, status: row.joined })"
+                  />
+                </template>
+              </div>
               <div
                 v-if="!(row.joined && item.name === 'spouse')"
                 class="px-2 mb-0 item-assets"
                 :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
               >
                 <el-form-item class="mb-4">
-                  <template v-if="row.name === 'total'">
+                  <template v-if="item.calculated">
                     <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                       <SwdSpinner />
                     </div>
-                    <div v-else-if="item.name !== 'institution'" class="font-semibold">
+                    <div v-else-if="item.name !== 'institution'" class="w-full font-semibold pl-2">
                       {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
                     </div>
                   </template>
-                  <template v-if="row.name !== 'total'">
+                  <template v-else>
                     <SwdCurrencyInput
                       v-if="item.type === 'number'"
                       v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
@@ -101,7 +101,7 @@
                       <el-radio :label="true">Yes</el-radio>
                       <el-radio :label="false">No</el-radio>
                     </el-radio-group>
-                    <el-dropdown v-if="item.type === 'dropdown'" trigger="click">
+                    <el-dropdown v-if="item.type === 'dropdown'" trigger="click" :disabled="isReadOnlyLead">
                       <el-button>
                         Add field
                         <el-icon class="el-icon--right">
@@ -119,8 +119,7 @@
                                 model: item.model,
                                 variable: option.name,
                                 indexGroup,
-                                indexRow,
-                                label: option.label,
+                                canJoin: row.can_join,
                               })
                             "
                           >
@@ -135,16 +134,31 @@
                   </template>
                 </el-form-item>
               </div>
-              <div v-if="itemIndex === 0 && member.married && item.type === 'number'" class="w-[5%] text-center">
-                <template v-if="row.name !== 'total'">
-                  <el-checkbox
-                    v-model="row.joined"
-                    label="Joint"
-                    size="small"
-                    class="top-[6px] left-[-3px]"
-                    @change="handleChange({ item, status: row.joined })"
-                  />
-                </template>
+              <div v-if="row.custom && row.elements.length - 1 === itemIndex" class="w-[10%] flex justify-between px-4">
+                <el-icon
+                  class="top-[5px] cursor-pointer"
+                  :size="20"
+                  color="red"
+                  @click="remove({ block, row, indexRow, indexGroup })"
+                >
+                  <Delete />
+                </el-icon>
+                <el-icon
+                  class="top-[5px] cursor-pointer"
+                  :size="20"
+                  color="green"
+                  @click="
+                    addLine({
+                      model: item.model,
+                      variable: item.model.model,
+                      indexGroup,
+                      canJoin: row.can_join,
+                      copyLine: true,
+                    })
+                  "
+                >
+                  <Plus />
+                </el-icon>
               </div>
             </template>
           </div>
@@ -154,28 +168,37 @@
           <div class="pr-3">
             <Button default-gray-btn text-btn="Back" @click="backStep" />
           </div>
-          <SwdButton primary main @click="submitForm()">Go to the monthly expense</SwdButton>
+          <router-link
+            v-if="isReadOnlyLead"
+            :to="{ name: `lead-expense-information`, params: { id: leadId } }"
+            class="w-4/12"
+          >
+            <SwdButton primary main>Go to the monthly expense</SwdButton>
+          </router-link>
+          <SwdButton v-else primary main @click="submitForm">Save</SwdButton>
         </div>
       </el-form>
     </div>
     <el-skeleton v-else :rows="15" animated />
 
     <el-dialog v-model="dialogVisible" title="Other" width="40%" lock-scroll :before-close="closeDialog">
-      <span>Field name</span>
-      <el-input v-model="fieldName" placeholder="Please input field name" autofocus />
+      <el-form-item class="mb-2">
+        <span>Field name</span>
+        <el-input v-model="fieldName" placeholder="Please input field name" />
+      </el-form-item>
+      <el-form-item v-if="member.married">
+        <el-checkbox v-model="isCanJoin" label="Can be Joint?" size="small" />
+      </el-form-item>
+
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="cancelDialog">Cancel</el-button>
-          <el-button
-            type="primary"
-            plain
-            :disabled="isLoadingCheck"
-            :loading="isLoadingCheck"
-            class="w-20"
-            @click="confirmCreateField"
-          >
-            Create
-          </el-button>
+          <div class="flex justify-end">
+            <SwdButton info main @click="closeDialog">Cancel</SwdButton>
+            <SwdButton class="ml-2" primary main :disabled="isLoadingCheck" @click="confirmCreateField">
+              <SwdSpinner v-show="isLoadingCheck" class="mr-2" />
+              Create
+            </SwdButton>
+          </div>
         </span>
       </template>
     </el-dialog>
@@ -196,18 +219,20 @@ import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
+import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
+import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
+import { currencyFormat } from '@/utils/currencyFormat'
+import { ElMessageBox } from 'element-plus'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
-import { ArrowDown, Delete } from '@element-plus/icons-vue'
-import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
-import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
-  name: 'AddAssets',
+  name: 'AddLeadAssets',
   components: {
     ArrowDown,
     Delete,
+    Plus,
   },
   setup() {
     const queryClient = useQueryClient()
@@ -222,22 +247,24 @@ export default {
     const dialogVisible = ref(false)
     const newField = ref([])
     const fieldName = ref()
+    const isCanJoin = ref()
+
     const step = computed(() => store.state.newClient.step)
 
     const ruleForm = reactive({})
     const schema = reactive([])
 
-    const memberId = route.params.id
+    const leadId = route.params.id
 
-    const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(memberId)
-    const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(memberId)
-    const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: memberId })
-
-    const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
-    const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
-
+    // FETCH
+    const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(leadId)
+    const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(leadId)
+    const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: leadId })
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
+    // MUTATION
+    const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
+    const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
     const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
 
     const { setInitValue } = useAssetsInfoHooks()
@@ -249,7 +276,7 @@ export default {
 
     watchEffect(() => {
       if (!isMemberAssetsLoading.value) {
-        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
+        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: leadId })
       }
     })
 
@@ -261,7 +288,7 @@ export default {
 
     const backStep = () => {
       store.commit('newClient/setStep', step.value - 1)
-      router.push({ name: 'client-basic-information', params: { id: memberId } })
+      router.push({ name: 'lead-basic-information', params: { id: leadId } })
     }
 
     const submitForm = async () => {
@@ -272,8 +299,8 @@ export default {
       })
       store.commit('newClient/setStep', step.value + 1)
       router.push({
-        name: 'client-expense-information',
-        params: { id: memberId },
+        name: 'lead-expense-information',
+        params: { id: leadId },
       })
     }
 
@@ -301,40 +328,40 @@ export default {
       })
     }
 
-    const addLine = async ({ model, variable, indexGroup, indexRow, label }) => {
+    const addLine = async ({ model, variable, indexGroup, canJoin, copyLine = false }) => {
+      if (copyLine) {
+        let newItemIndex = 0
+        let newVariable = variable.split('_')[0]
+
+        // eslint-disable-next-line no-constant-condition
+        labelAddItem: while (true) {
+          const elem = schema[indexGroup].rows.find((item) => {
+            return item.name === newVariable
+          })
+
+          if (!elem) {
+            break labelAddItem
+          }
+          newItemIndex += 1
+          newVariable = variable.split('_')[0] + '_' + newItemIndex
+        }
+        variable = newVariable
+      }
       Object.keys(schema[indexGroup].headers).forEach((element) => {
         ruleForm[model.group][variable] = { [element]: null }
       })
 
-      const elements = Object.keys(schema[indexGroup].headers).map((item) => {
-        return {
-          type: item !== 'institution' ? 'number' : 'string',
-          placeholder: item !== 'institution' ? '$12345' : 'Enter Name',
-          name: item,
-          label: item,
-          disabled: false,
-          model: {
-            group: model.group,
-            model: variable,
-            item: item,
-          },
-        }
-      })
-      const dataSchema = {
-        label: label,
-        name: variable,
-        custom: 'true',
-        elements,
-      }
-      schema[indexGroup].rows.splice(indexRow + 1, 0, dataSchema)
       const data = {
         group: model.group,
         row: variable,
         element: 'owner',
         type: 'string',
-        value: null,
+        can_join: canJoin,
       }
-      await updateMemberAssets({ data, id: memberId })
+      await updateMemberAssets({ data, id: leadId })
+      await queryClient.invalidateQueries(['memberAssets', leadId])
+      await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
+      updateSchema()
     }
 
     const changeInput = async (item) => {
@@ -343,11 +370,11 @@ export default {
           group: item.model.group,
           row: item.model.model,
           element: item.model.item,
-          type: 'string',
+          type: item.type,
           value: ruleForm[item.model.group][item.model.model][item.model.item],
         }
-        await updateMemberAssets({ data, id: memberId })
-        queryClient.invalidateQueries(['memberAssets', memberId])
+        await updateMemberAssets({ data, id: leadId })
+        queryClient.invalidateQueries(['memberAssets', leadId])
       }
     }
 
@@ -365,15 +392,26 @@ export default {
       return !!elem
     }
 
+    const remove = ({ block, row, indexRow, indexGroup }) => {
+      ElMessageBox.confirm('Are you sure to delete this?', 'Info', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }).then(() => {
+        confirmDelete({ block, row, indexRow, indexGroup })
+      })
+    }
+
     const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
       const data = {
         row: row.name,
         group: block.name,
       }
 
-      const res = await deleteRow({ id: memberId, data })
+      const res = await deleteRow({ id: leadId, data })
       if (!('error' in res)) {
         schema[indexGroup].rows.splice(indexRow, 1)
+        await queryClient.invalidateQueries(['memberAssets', leadId])
         useAlert({
           title: 'Success',
           type: 'success',
@@ -385,19 +423,21 @@ export default {
     const confirmCreateField = async () => {
       const { item, indexGroup, indexRow } = newField.value
       const data = {
-        row: fieldName.value,
+        row: fieldName.value.trim(),
         group: item.model.group,
+        can_join: isCanJoin.value,
       }
 
-      const res = await checkCreateField({ memberId, data })
+      const res = await checkCreateField({ id: leadId, data })
 
       if (res.succes) {
         const model = item.model
-        const variable = fieldName.value.toLowerCase().replace(/ /g, '_')
+        const variable = fieldName.value.trim().toLowerCase().replace(/ /g, '_')
         const label = fieldName.value
-        addLine({ model, variable, label, indexGroup, indexRow })
+        addLine({ model, variable, label, indexGroup, indexRow: indexRow + 1, canJoin: isCanJoin.value })
         dialogVisible.value = false
         fieldName.value = ''
+        isCanJoin.value = ''
       }
     }
 
@@ -411,11 +451,6 @@ export default {
       fieldName.value = ''
     }
 
-    const cancelDialog = () => {
-      dialogVisible.value = false
-      fieldName.value = ''
-    }
-
     const joinMember = async (item) => {
       const data = {
         group: item.model.group,
@@ -425,10 +460,10 @@ export default {
         joined: true,
       }
 
-      const res = await updateMemberAssets({ data, id: memberId })
+      const res = await updateMemberAssets({ data, id: leadId })
       if (!('error' in res)) {
-        await queryClient.invalidateQueries(['memberAssets', memberId])
-        await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        await queryClient.invalidateQueries(['memberAssets', leadId])
+        await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
         updateSchema()
         useAlert({
           title: 'Success',
@@ -447,10 +482,10 @@ export default {
         joined: false,
       }
 
-      const res = await updateMemberAssets({ data, id: memberId })
+      const res = await updateMemberAssets({ data, id: leadId })
       if (!('error' in res)) {
-        await queryClient.invalidateQueries(['memberAssets', memberId])
-        await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        await queryClient.invalidateQueries(['memberAssets', leadId])
+        await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
         updateSchema()
         useAlert({
           title: 'Success',
@@ -471,6 +506,10 @@ export default {
         disjoinMember(item)
       }
     }
+
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
+    })
 
     return {
       ruleForm,
@@ -505,8 +544,6 @@ export default {
       confirmCreateField,
       fieldName,
       closeDialog,
-      cancelDialog,
-
       isLoadingMember,
       member,
       joinMember,
@@ -514,6 +551,10 @@ export default {
       isFetching,
       currencyFormat,
       handleChange,
+      isReadOnlyLead,
+      leadId,
+      isCanJoin,
+      remove,
     }
   },
 }

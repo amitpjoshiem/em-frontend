@@ -19,7 +19,7 @@
             <el-timeline v-for="elem in activ.data" :key="elem.day">
               <el-timeline-item :timestamp="elem.date" placement="top" color="#66B9FF">
                 <el-card>
-                  <h4 v-html="elem.content" />
+                  <h4 class="activity-content" v-html="elem.content" />
                   <p>{{ elem.time }}</p>
                 </el-card>
               </el-timeline-item>
@@ -90,3 +90,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.activity-content p a {
+  color: #83ccf0;
+}
+</style>

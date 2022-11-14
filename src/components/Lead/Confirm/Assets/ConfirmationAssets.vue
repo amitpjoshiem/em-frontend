@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$can('lead', 'all')" class="flex justify-end mb-4">
-      <SwdButton primary small @click="edit">Edit</SwdButton>
+      <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full info' : 'Edit' }}</SwdButton>
     </div>
     <div v-if="!isAssetsLoading && !isAssetsSchemaLoading">
       <el-card v-for="(block, indexGroup) in assetsSchema.data" :key="indexGroup" class="rounded-md mb-10">
@@ -66,7 +66,13 @@ import { currencyFormat } from '@/utils/currencyFormat'
 
 export default {
   name: 'ConfirmationAssets',
-  components: {},
+  props: {
+    isReadOnlyLead: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -76,7 +82,7 @@ export default {
     const { data: assetsSchema, isLoading: isAssetsSchemaLoading } = useFetchMemberAssetsSchema(route.params.id)
 
     const edit = () => {
-      router.push({ name: 'client-assets-information', params: { id: route.params.id } })
+      router.push({ name: 'lead-assets-information', params: { id: route.params.id } })
     }
 
     const isShowRow = (row) => {

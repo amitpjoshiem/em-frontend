@@ -5,7 +5,7 @@
       <div class="mb-5">
         <el-checkbox
           v-model="state.availabilityDocuments"
-          label="I want to skip and submit"
+          label="I want to skip this document."
           size="large"
           @change="changeStatus"
         />
@@ -49,7 +49,6 @@
         <p>No recently added documents</p>
       </div>
       <div class="flex justify-end">
-        <SwdButton info main class="mr-4" @click="backStep">Back</SwdButton>
         <SwdButton primary main :disabled="disabledSaveBtn" @click="saveStep">Save</SwdButton>
       </div>
     </div>
@@ -83,7 +82,7 @@ export default {
     const upload = ref(null)
     const inChangeFile = ref(false)
 
-    const { getTitle } = useGetTile(collection)
+    const { getTitle } = useGetTile(attrs.context)
 
     const state = reactive({
       file: '',

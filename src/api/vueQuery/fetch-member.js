@@ -1,8 +1,10 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function fetchMember(id) {
+function fetchMember({ queryKey }) {
+  const id = queryKey[0][1]
+
   return fetcher({
-    url: `/members/` + id + '?include=salesforce',
+    url: `/members/${id}`,
     options: { method: 'GET' },
   })
 }

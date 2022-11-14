@@ -8,6 +8,7 @@ import notifications from './modules/notifications'
 import activity from './modules/activity'
 import logs from './modules/logs'
 import adminPanelUsers from './modules/adminPanelUsers'
+import draft from './modules/draft'
 
 import createPersistedState from 'vuex-persistedstate'
 
@@ -76,6 +77,12 @@ const dataStateTerms = createPersistedState({
   storage: window.sessionStorage,
 })
 
+const dataDraft = createPersistedState({
+  paths: ['draft'],
+  key: 'draft',
+  storage: window.sessionStorage,
+})
+
 export default createStore({
   modules: {
     auth,
@@ -87,6 +94,7 @@ export default createStore({
     activity,
     logs,
     adminPanelUsers,
+    draft,
   },
   plugins: [
     dataStateAuth,
@@ -100,5 +108,6 @@ export default createStore({
     dataStateLeadId,
     dataStateTerms,
     dataStateSupportId,
+    dataDraft,
   ],
 })

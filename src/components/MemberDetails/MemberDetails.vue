@@ -8,7 +8,7 @@
       :loading="isLoadingProspectDetails"
     />
     <div v-else-if="member?.name" class="flex justify-center w-full">
-      <span class="text-2xl font-semibold">Welcome, {{ member.name }}</span>
+      <span class="text-2xl font-semibold">Welcome {{ member.name }}</span>
     </div>
 
     <template v-if="$can('advisor', 'all') || $can('admin', 'all') || $can('ceo', 'all')">

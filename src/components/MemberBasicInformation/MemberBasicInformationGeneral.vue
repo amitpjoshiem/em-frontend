@@ -88,6 +88,26 @@
 
     <div class="flex mb-10">
       <div class="w-6/24">
+        <span class="text-xss text-main font-semibold">State</span>
+      </div>
+      <div class="w-18">
+        <span class="text-sm text-main" data-testid="member-basic-information-prospect-address">
+          {{ prospect.state }}
+        </span>
+      </div>
+    </div>
+    <div class="flex mb-10">
+      <div class="w-6/24">
+        <span class="text-xss text-main font-semibold">City</span>
+      </div>
+      <div class="w-18">
+        <span class="text-sm text-main" data-testid="member-basic-information-prospect-address">
+          {{ prospect.city }}
+        </span>
+      </div>
+    </div>
+    <div class="flex mb-10">
+      <div class="w-6/24">
         <span class="text-xss text-main font-semibold">Address</span>
       </div>
       <div class="w-18">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="border box-border color-main-gray rounded-lg h-[269px]">
+    <div class="border box-border color-main-gray rounded-lg h-[295px]">
       <div class="pt-5 pb-3 pl-5 flex justify-between px-5">
         <el-badge :value="getCount" :max="99" class="mr-8" :type="getCount ? 'primary' : 'info'" :hidden="isLoading">
           <SwdWidgetTitle text="Child Opportunities" />
