@@ -1,7 +1,6 @@
 import { computed } from 'vue'
 
 export function useGetTile(context) {
-  console.log('context - ', context)
   const getTitle = computed(() => {
     switch (true) {
       // case context === 'investment_and_retirement_accounts':

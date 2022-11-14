@@ -301,7 +301,6 @@ export default {
     }
 
     const changeInput = async (item) => {
-      console.log('item - ', item)
       if (ruleForm[item.model.group][item.model.model][item.model.item] !== null) {
         const data = {
           group: item.model.group,

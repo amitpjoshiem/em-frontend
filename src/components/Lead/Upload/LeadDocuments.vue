@@ -129,7 +129,6 @@ export default {
         await queryClient.invalidateQueries(['clientsDocuments', props.context])
       }
       if (!data.value.documents.length) changeStatus()
-      console.log(data.value.documents.length)
     }
 
     const handleSuccess = async (res) => {
