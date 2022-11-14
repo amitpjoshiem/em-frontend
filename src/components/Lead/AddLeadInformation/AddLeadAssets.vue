@@ -370,7 +370,7 @@ export default {
           group: item.model.group,
           row: item.model.model,
           element: item.model.item,
-          type: 'string',
+          type: item.type,
           value: ruleForm[item.model.group][item.model.model][item.model.item],
         }
         await updateMemberAssets({ data, id: leadId })
