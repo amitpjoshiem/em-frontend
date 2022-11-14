@@ -8,7 +8,7 @@
       <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
     </div>
     <div class="w-3/12 flex justify-end">
-      <SwdItemsPerPage :destination="'listOfHouseholds'" />
+      <SwdItemsPerPage destination="listOfHouseholds" />
     </div>
   </div>
 </template>
