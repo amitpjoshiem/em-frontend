@@ -505,7 +505,11 @@ export default {
     })
 
     onBeforeRouteLeave((to, from, next) => {
-      if (!isUpdateMember.value && JSON.stringify(ruleForm) !== JSON.stringify(initialBasicInformation)) {
+      if (
+        !isUpdateMember.value &&
+        JSON.stringify(ruleForm) !== JSON.stringify(initialBasicInformation) &&
+        to.name !== 'assets-information'
+      ) {
         ElMessageBox.confirm('You have unsaved changes. Do you want to save it as a draft?', 'Warning', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
