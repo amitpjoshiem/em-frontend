@@ -34,19 +34,19 @@ export default {
       switch (step.value) {
         case 1:
           router.push({
-            name: 'client-basic-information',
+            name: 'lead-basic-information',
             params: { id: route.params.id ? route.params.id : '' },
           })
           break
         case 2:
           router.push({
-            name: 'client-assets-information',
+            name: 'lead-assets-information',
             params: { id: route.params.id ? route.params.id : '' },
           })
           break
         case 3:
           router.push({
-            name: 'client-expense-information',
+            name: 'lead-expense-information',
             params: { id: route.params.id ? route.params.id : '' },
           })
           break

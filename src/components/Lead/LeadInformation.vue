@@ -23,7 +23,7 @@
         </div>
         <!-- Completed Financial Fact Finder -->
         <router-link
-          :to="{ name: 'client-basic-information', params: { id: clientsInfo.member_id } }"
+          :to="{ name: 'lead-basic-information', params: { id: clientsInfo.member_id } }"
           class="flex items-center"
         >
           <el-card class="mb-4 w-full">
@@ -37,78 +37,24 @@
                   "
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Completed Financial Fact Finder</div>
+              <div class="text-xs sm:text-base text-main">Step 1 - Completed Financial Fact Finder</div>
             </div>
           </el-card>
         </router-link>
 
-        <!-- Upload your Investment/Retirement Statements -->
-        <router-link :to="{ name: 'investment-retirement' }" class="flex items-center">
+        <!-- Upload Relevant Financial Documents -->
+        <router-link :to="{ name: 'relevant-financial-documents' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
-                <circle-check-filled
-                  :color="
-                    clientsInfo.steps.investment_and_retirement_accounts
-                      ? stepsColorSchema.active
-                      : stepsColorSchema.notActive
-                  "
-                />
+                <circle-check-filled :color="getStatusRelevant" />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload your Investment/Retirement Statements</div>
+              <div class="text-xs sm:text-base text-main">Step 2 - Upload Relevant Financial Documents</div>
             </div>
           </el-card>
         </router-link>
 
-        <!-- Upload your Life Insurance Statements -->
-        <router-link :to="{ name: 'life-insurance' }" class="flex items-center">
-          <el-card class="mb-4 w-full">
-            <div class="flex items-center">
-              <el-icon :size="25" class="mr-5">
-                <circle-check-filled
-                  :color="
-                    clientsInfo.steps.life_insurance_annuity_and_long_terms_care_policies
-                      ? stepsColorSchema.active
-                      : stepsColorSchema.notActive
-                  "
-                />
-              </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload your Life Insurance Statements</div>
-            </div>
-          </el-card>
-        </router-link>
-
-        <!-- Upload your Social Security Statements -->
-        <router-link :to="{ name: 'social-security' }" class="flex items-center">
-          <el-card class="mb-4 w-full">
-            <div class="flex items-center">
-              <el-icon :size="25" class="mr-5">
-                <circle-check-filled
-                  :color="
-                    clientsInfo.steps.social_security_information ? stepsColorSchema.active : stepsColorSchema.notActive
-                  "
-                />
-              </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload your Social Security Statements</div>
-            </div>
-          </el-card>
-        </router-link>
-
-        <!-- Upload your Medicare Details -->
-        <router-link :to="{ name: 'medicare-details' }" class="flex items-center">
-          <el-card class="mb-4 w-full">
-            <div class="flex items-center">
-              <el-icon :size="25" class="mr-5">
-                <circle-check-filled
-                  :color="clientsInfo.steps.medicare_details ? stepsColorSchema.active : stepsColorSchema.notActive"
-                />
-              </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload your Medicare Details</div>
-            </div>
-          </el-card>
-        </router-link>
-
-        <!-- Upload your Property Casualty statements -->
+        <!-- Upload Property & Casualty Documents -->
         <router-link :to="{ name: 'property-casualty' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
@@ -117,7 +63,21 @@
                   :color="clientsInfo.steps.property_casualty ? stepsColorSchema.active : stepsColorSchema.notActive"
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Upload your Property Casualty statements</div>
+              <div class="text-xs sm:text-base text-main">Step 3 - Upload Property & Casualty Documents</div>
+            </div>
+          </el-card>
+        </router-link>
+
+        <!-- Upload Medicare Documents -->
+        <router-link :to="{ name: 'medicare-details' }" class="flex items-center">
+          <el-card class="mb-4 w-full">
+            <div class="flex items-center">
+              <el-icon :size="25" class="mr-5">
+                <circle-check-filled
+                  :color="clientsInfo.steps.medicare_details ? stepsColorSchema.active : stepsColorSchema.notActive"
+                />
+              </el-icon>
+              <div class="text-xs sm:text-base text-main">Step 4 - Upload Medicare Documents</div>
             </div>
           </el-card>
         </router-link>
@@ -145,6 +105,7 @@
       </router-link>
     </div>
   </div>
+  <ModalReadOnly />
 </template>
 
 <script>
@@ -152,12 +113,15 @@ import { DocumentChecked, CircleCheckFilled } from '@element-plus/icons-vue'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
+import { computed } from 'vue'
+import ModalReadOnly from './ModalReadOnly.vue'
 
 export default {
-  name: 'ClientInformation',
+  name: 'LeadInformation',
   components: {
     CircleCheckFilled,
     DocumentChecked,
+    ModalReadOnly,
   },
   setup() {
     const stepsColorSchema = {
@@ -172,6 +136,17 @@ export default {
       data: clientsInfo,
     } = useFetchClietsInfo()
 
+    const getStatusRelevant = computed(() => {
+      if (
+        clientsInfo.value.steps.investment_and_retirement_accounts &&
+        clientsInfo.value.steps.life_insurance_annuity_and_long_terms_care_policies &&
+        clientsInfo.value.steps.social_security_information
+      ) {
+        return stepsColorSchema.active
+      }
+      return stepsColorSchema.notActive
+    })
+
     return {
       isLoadingInfo,
       fetchingInfo,
@@ -180,6 +155,7 @@ export default {
       IconSuccesChanged,
       IrisLogoStandart,
       stepsColorSchema,
+      getStatusRelevant,
     }
   },
 }

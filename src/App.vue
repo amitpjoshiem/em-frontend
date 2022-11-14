@@ -1,12 +1,13 @@
 <template>
   <router-view v-if="!loading" />
   <SwdFullScreenLoading v-else />
-  <VueQueryDevTools />
   <ModalReloadPage />
   <SwdShareDialog />
   <SwdModalExportSucces />
   <SwdModalTerms />
   <SwdPreviewPdfModal />
+  <SwdModalSummaryInfo />
+  <VueQueryDevTools />
 </template>
 
 <script>
@@ -21,6 +22,7 @@ import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
 import SwdModalTerms from '@/components/Global/SwdModalTerms.vue'
 import SwdPreviewPdfModal from '@/components/Global/SwdPreviewPdfModal.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
+import SwdModalSummaryInfo from '@/components/SummaryInfo/SwdModalSummaryInfo.vue'
 
 export default {
   components: {
@@ -30,6 +32,7 @@ export default {
     SwdModalExportSucces,
     SwdModalTerms,
     SwdPreviewPdfModal,
+    SwdModalSummaryInfo,
   },
   setup() {
     useQueryProvider({

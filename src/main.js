@@ -46,6 +46,8 @@ import SwdErrorBlock from '@/components/Global/SwdErrorBlock.vue'
 import SwdWrapper from '@/components/Global/SwdWrapper.vue'
 import SwdButton from '@/components/Global/SwdButton.vue'
 import SwdWidgetTitle from '@/components/Global/SwdWidgetTitle.vue'
+import SwdTag from '@/components/Global/SwdTag.vue'
+import SwdModalSummaryInfo from '@/components/SummaryInfo/SwdModalSummaryInfo.vue'
 
 import ElementPlus from 'element-plus'
 
@@ -83,6 +85,8 @@ const components = [
   SwdWrapper,
   SwdButton,
   SwdWidgetTitle,
+  SwdModalSummaryInfo,
+  SwdTag,
 ]
 
 components.forEach((component) => {

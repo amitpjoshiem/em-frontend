@@ -27,11 +27,11 @@ export const initialBasicInformation = {
   },
   house: {
     type: 'own',
-    market_value: '',
-    total_debt: '',
-    remaining_mortgage_amount: '',
-    monthly_payment: '',
-    total_monthly_expenses: '',
+    market_value: null,
+    monthly_payments: null,
+    remaining_mortgage_amount: null,
+    monthly_payment: null,
+    total_monthly_expenses: null,
   },
   employment_history: [
     {

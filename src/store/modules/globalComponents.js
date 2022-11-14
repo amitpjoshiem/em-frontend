@@ -13,6 +13,7 @@ const getDefaultState = () => {
     role: '',
     isLoadingApp: false,
     termsAndConditions: null,
+    showModalReadOnly: false,
     dateRangeClientReport: '',
     itemsPerPage: {
       options: [
@@ -80,6 +81,8 @@ const getDefaultState = () => {
         modalAddAnnuityIndex: false,
         modalInvestmentPackage: false,
         addChildOpportunity: false,
+        modalSummaryInfo: false,
+        restoreDraft: false,
       },
     },
     sortMembers: {
@@ -98,6 +101,7 @@ const getDefaultState = () => {
     ownerMember: null,
     onlyMyLead: false,
     ownerLead: null,
+    summaryInfoMemberId: null,
   }
 }
 
@@ -233,6 +237,14 @@ const mutations = {
 
   setOpportunityId(state, value) {
     state.opportunityId = value
+  },
+
+  setShowModalReadOnly(state, value) {
+    state.showModalReadOnly = value
+  },
+
+  setSummaryInfoMemberId(state, value) {
+    state.summaryInfoMemberId = value
   },
 
   resetState(state) {

@@ -197,12 +197,6 @@ export const advisorRoute = {
     },
 
     {
-      path: 'add-opportunity/:id',
-      name: 'add-opportunity',
-      component: () => import(/* webpackChunkName: "Opportunity" */ '../../components/Opportunity/AddOpportunity.vue'),
-    },
-
-    {
       path: 'new-prospect',
       name: 'newprospect',
       component: () => import(/* webpackChunkName: "NewProspect" */ '../../views/NewProspect.vue'),
