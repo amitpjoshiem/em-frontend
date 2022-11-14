@@ -36,7 +36,7 @@
             <div
               v-if="!(row.joined && item.name === 'spouse')"
               class="px-2 mb-0 item-assets"
-              :class="row.joined && item.name === 'owner' ? 'w-[25%]' : 'w-[15%]'"
+              :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
             >
               <el-form-item class="mb-4">
                 <template v-if="item.calculated">
@@ -301,6 +301,7 @@ export default {
     }
 
     const changeInput = async (item) => {
+      console.log('item - ', item)
       if (ruleForm[item.model.group][item.model.model][item.model.item] !== null) {
         const data = {
           group: item.model.group,
