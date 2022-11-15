@@ -121,7 +121,7 @@
                 >
                   <el-input
                     v-model="ruleForm.zip"
-                    placeholder="000000"
+                    placeholder="#####"
                     inputmode="numeric"
                     @focus="focus('general')"
                     @blur="blur('general')"

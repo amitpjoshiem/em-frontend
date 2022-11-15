@@ -69,13 +69,7 @@ const rules = {
     { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
 
-  zip: [
-    {
-      required: true,
-      validator: validateNumber,
-    },
-    { trigger: 'blur' },
-  ],
+  zip: [{ type: 'string', required: true, len: 5, message: 'Invalid zip', trigger: 'blur' }],
 
   channels: [
     {
