@@ -123,6 +123,7 @@
                     v-model="ruleForm.zip"
                     placeholder="#####"
                     inputmode="numeric"
+                    maxlength="5"
                     @focus="focus('general')"
                     @blur="blur('general')"
                   />

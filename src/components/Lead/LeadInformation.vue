@@ -23,6 +23,7 @@
         </div>
         <!-- Completed Financial Fact Finder -->
         <router-link
+          v-if="!isReadOnlyLead"
           :to="{ name: 'lead-basic-information', params: { id: clientsInfo.member_id } }"
           class="flex items-center"
         >
@@ -43,7 +44,7 @@
         </router-link>
 
         <!-- Upload Relevant Financial Documents -->
-        <router-link :to="{ name: 'relevant-financial-documents' }" class="flex items-center">
+        <router-link v-if="!isReadOnlyLead" :to="{ name: 'relevant-financial-documents' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
@@ -55,7 +56,7 @@
         </router-link>
 
         <!-- Upload Property & Casualty Documents -->
-        <router-link :to="{ name: 'property-casualty' }" class="flex items-center">
+        <router-link v-if="!isReadOnlyLead" :to="{ name: 'property-casualty' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
@@ -69,7 +70,7 @@
         </router-link>
 
         <!-- Upload Medicare Documents -->
-        <router-link :to="{ name: 'medicare-details' }" class="flex items-center">
+        <router-link v-if="!isReadOnlyLead" :to="{ name: 'medicare-details' }" class="flex items-center">
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
@@ -105,7 +106,6 @@
       </router-link>
     </div>
   </div>
-  <ModalReadOnly />
 </template>
 
 <script>
@@ -113,15 +113,14 @@ import { DocumentChecked, CircleCheckFilled } from '@element-plus/icons-vue'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
-import { computed } from 'vue'
-import ModalReadOnly from './ModalReadOnly.vue'
+import { computed, watchEffect } from 'vue'
+import router from '../../router'
 
 export default {
   name: 'LeadInformation',
   components: {
     CircleCheckFilled,
     DocumentChecked,
-    ModalReadOnly,
   },
   setup() {
     const stepsColorSchema = {
@@ -147,6 +146,16 @@ export default {
       return stepsColorSchema.notActive
     })
 
+    watchEffect(() => {
+      if (!isLoadingInfo.value && clientsInfo.value.readonly) {
+        router.push({ name: 'confirmation-page', params: { id: clientsInfo.value.member_id } })
+      }
+    })
+
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
+    })
+
     return {
       isLoadingInfo,
       fetchingInfo,
@@ -156,6 +165,7 @@ export default {
       IrisLogoStandart,
       stepsColorSchema,
       getStatusRelevant,
+      isReadOnlyLead,
     }
   },
 }

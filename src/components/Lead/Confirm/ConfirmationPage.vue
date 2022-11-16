@@ -120,9 +120,6 @@
             Submit
           </SwdButton>
         </template>
-        <router-link v-else :to="{ name: `${route.meta.type}/dashboard` }" class="w-2/12">
-          <SwdButton primary main>Dashboard</SwdButton>
-        </router-link>
       </div>
     </template>
     <div v-else class="flex justify-center items-center">
@@ -133,6 +130,7 @@
     </el-dialog>
   </div>
   <el-skeleton v-else :rows="15" animated />
+  <ModalReadOnly />
 </template>
 
 <script>
@@ -150,6 +148,7 @@ import { onMounted, computed, ref } from 'vue'
 import { scrollTop } from '@/utils/scrollTop'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useFetchMember } from '@/api/use-fetch-member.js'
+import ModalReadOnly from '../ModalReadOnly.vue'
 
 export default {
   name: 'ConfirmationPage',
@@ -158,6 +157,7 @@ export default {
     ConfirmationExpense,
     ConfirmationAssets,
     ListDocumentsClient,
+    ModalReadOnly,
   },
   setup() {
     const route = useRoute()
