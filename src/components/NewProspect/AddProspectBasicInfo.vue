@@ -69,7 +69,7 @@
           </el-form-item>
 
           <el-form-item label="ZIP" prop="zip" class="w-2/12">
-            <el-input v-model="ruleForm.zip" placeholder="#####" inputmode="numeric" />
+            <el-input v-model="ruleForm.zip" placeholder="#####" inputmode="numeric" maxlength="5" />
           </el-form-item>
         </div>
       </div>

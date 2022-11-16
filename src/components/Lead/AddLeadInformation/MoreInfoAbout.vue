@@ -69,7 +69,7 @@
       </el-form-item>
     </el-form>
   </div>
-  <div v-else class="flex items-center justify-center">
+  <div v-else class="flex items-center justify-center h-[150px]">
     <SwdSpinner large />
   </div>
 </template>
