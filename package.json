@@ -25,6 +25,7 @@
     "core-js": "3.19.1",
     "dayjs": "^1.10.6",
     "element-plus": "2.1.11",
+    "lodash-es": "^4.17.21",
     "maska": "^1.4.2",
     "pdfvuer": "^2.0.1",
     "postcss": "^7",

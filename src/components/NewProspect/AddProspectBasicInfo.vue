@@ -371,7 +371,7 @@
 <script>
 import { reactive, ref, onMounted, computed, watch, watchEffect } from 'vue'
 import { useMutation } from 'vue-query'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute, onBeforeRouteLeave } from 'vue-router'
 import { useStore } from 'vuex'
 import { createMembers } from '@/api/vueQuery/create-members'
 import { updateMembers } from '@/api/vueQuery/update-members'
@@ -383,11 +383,10 @@ import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useStateHook } from '@/hooks/use-state-hook'
-import { onBeforeRouteLeave } from 'vue-router'
-import IconAdd from '@/assets/svg/icon-add.svg'
-import IconDelete from '@/assets/svg/icon-delete.svg'
 import { ElMessageBox } from 'element-plus'
 import ModalRestoreDraft from './Draft/ModalRestoreDraft.vue'
+import IconAdd from '@/assets/svg/icon-add.svg'
+import IconDelete from '@/assets/svg/icon-delete.svg'
 
 export default {
   name: 'AddProspectBasicInfo',
