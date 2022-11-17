@@ -601,16 +601,17 @@
       </el-form>
     </div>
     <el-skeleton v-else :rows="10" animated />
+    <ModalRestoreDraft @restoreDraft="restoreDraft" @deleteDraft="deleteDraft" />
   </div>
 </template>
 
 <script>
-import { reactive, ref, onMounted, computed, watchEffect } from 'vue'
+import { reactive, ref, onMounted, computed, watch } from 'vue'
 import { updateMembers } from '@/api/vueQuery/update-members'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useMutation } from 'vue-query'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute, onBeforeRouteLeave } from 'vue-router'
 import { useStore } from 'vuex'
 import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/basicRules.js'
@@ -623,10 +624,16 @@ import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
+import { cloneDeep, isEqual } from 'lodash-unified'
+import { ElMessageBox } from 'element-plus'
+import ModalRestoreDraft from '@/components/NewProspect/Draft/ModalRestoreDraft'
 
 export default {
   name: 'AddLeadBasicInfo',
   directives: { maska },
+  components: {
+    ModalRestoreDraft,
+  },
   setup() {
     const router = useRouter()
     const store = useStore()
@@ -640,6 +647,7 @@ export default {
     const isFocusHouse = ref(false)
     const isFocusEmployment = ref(false)
     const isFocusOther = ref(false)
+    const initRuleForm = ref({})
 
     const { stateList } = useStateHook()
 
@@ -729,8 +737,49 @@ export default {
       }
     })
 
-    watchEffect(() => {
-      if (isFetchingMember.value === false) setInitValue(ruleForm, member)
+    watch(
+      isFetchingMember,
+      (newValue, oldValue) => {
+        if (newValue === false && oldValue === true) {
+          setInitValue(ruleForm, member)
+          initRuleForm.value = cloneDeep(ruleForm)
+        }
+        if (
+          newValue === false &&
+          oldValue === true &&
+          member.value.step === 'default' &&
+          store.state.draft.leadBasicDraft
+        ) {
+          store.commit('globalComponents/setShowModal', {
+            destination: 'restoreDraft',
+            value: true,
+          })
+        }
+      },
+      { immediate: true }
+    )
+
+    onBeforeRouteLeave((to, from, next) => {
+      if (
+        member.value.step === 'default' &&
+        !isEqual(ruleForm, initRuleForm.value) &&
+        to.name !== 'lead-assets-information'
+      ) {
+        ElMessageBox.confirm('You have unsaved changes. Do you want to save it as a draft?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+        })
+          .then(() => {
+            store.commit('draft/setLeadBasicDraft', ruleForm)
+            next()
+          })
+          .catch(() => {
+            next()
+          })
+      } else {
+        next()
+      }
     })
 
     const submitForm = async () => {
@@ -738,6 +787,7 @@ export default {
         if (valid) {
           const res = await updateMember({ form: ruleForm, id: route.params.id })
           if (!('error' in res)) {
+            deleteDraft()
             useAlert({
               title: 'Success',
               type: 'success',
@@ -762,6 +812,15 @@ export default {
     const isReadOnlyLead = computed(() => {
       return clientsInfo.value.readonly
     })
+
+    const restoreDraft = () => {
+      Object.assign(ruleForm, JSON.parse(JSON.stringify(store.state.draft.leadBasicDraft)))
+      deleteDraft()
+    }
+
+    const deleteDraft = () => {
+      store.commit('draft/setLeadBasicDraft', null)
+    }
 
     const focus = (type) => {
       if (type === 'general') isFocusGeneral.value = true
@@ -813,6 +872,8 @@ export default {
       isReadOnlyLead,
       leadId,
       stateList,
+      restoreDraft,
+      deleteDraft,
     }
   },
 }
