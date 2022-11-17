@@ -15,8 +15,12 @@
             </div>
             <div class="flex flex-col w-5/12">
               <div class="mb-1">
-                <span class="text-xss text-main font-semibold pr-2">Name:</span>
-                <SwdStubForText :text="item.name" plug="&mdash;" class="text-sm text-main inline-block" />
+                <span class="text-xss text-main font-semibold pr-2">First name:</span>
+                <SwdStubForText :text="item.first_name" plug="&mdash;" class="text-sm text-main inline-block" />
+              </div>
+              <div class="mb-1">
+                <span class="text-xss text-main font-semibold pr-2">Last name:</span>
+                <SwdStubForText :text="item.last_name" plug="&mdash;" class="text-sm text-main inline-block" />
               </div>
               <div class="mb-1">
                 <span class="text-xss text-main font-semibold pr-2">Email:</span>

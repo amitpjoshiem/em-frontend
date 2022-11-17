@@ -57,29 +57,7 @@
                   />
                 </el-form-item>
 
-                <el-form-item
-                  v-if="ruleForm.retired"
-                  prop="retirement_date"
-                  label="Retirement date"
-                  class="sm:w-4/12 sm:pl-2 lg:w-3/12 mb-4 lg:pl-0 lg:pr-2"
-                >
-                  <el-date-picker
-                    v-model="ruleForm.retirement_date"
-                    type="date"
-                    :placeholder="getPlaceholder"
-                    format="MM/DD/YYYY"
-                    value-format="MM/DD/YYYY"
-                    @focus="focus('general')"
-                    @blur="blur('general')"
-                  />
-                </el-form-item>
-
-                <el-form-item
-                  label="Phone"
-                  prop="phone"
-                  class="sm:w-6/12 sm:pr-2 lg:w-3/12 mb-4"
-                  :class="{ 'sm:pr-2 lg:px-2': ruleForm.retired }"
-                >
+                <el-form-item label="Phone" prop="phone" class="sm:w-6/12 sm:pr-2 lg:w-3/12 mb-4">
                   <el-input
                     v-model="ruleForm.phone"
                     v-maska="'(###) ###-####'"
@@ -113,17 +91,29 @@
                   />
                 </el-form-item>
 
-                <el-form-item
-                  label="ZIP"
-                  prop="zip"
-                  class="sm:w-6/12 lg:w-3/12 mb-4"
-                  :class="{ 'sm:pr-2 lg:px-2': ruleForm.retired }"
-                >
+                <el-form-item label="ZIP" prop="zip" class="sm:w-6/12 lg:w-3/12 mb-4 pr-2">
                   <el-input
                     v-model="ruleForm.zip"
                     placeholder="#####"
                     inputmode="numeric"
                     maxlength="5"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
+                  />
+                </el-form-item>
+
+                <el-form-item
+                  v-if="ruleForm.retired"
+                  prop="retirement_date"
+                  label="Retirement date"
+                  class="sm:w-4/12 sm:pl-2 lg:w-3/12 mb-4 lg:pl-2"
+                >
+                  <el-date-picker
+                    v-model="ruleForm.retirement_date"
+                    type="date"
+                    :placeholder="getPlaceholder"
+                    format="MM/DD/YYYY"
+                    value-format="MM/DD/YYYY"
                     @focus="focus('general')"
                     @blur="blur('general')"
                   />
@@ -150,19 +140,27 @@
               </el-radio-group>
             </el-form-item>
             <div class="sm:flex sm:flex-wrap">
-              <el-form-item label="Name" prop="spouse.name" class="sm:w-8/12 sm:pr-2 lg:w-6/12 lg:pr-2 mb-4">
+              <el-form-item
+                label="First name"
+                prop="spouse.first_name"
+                class="sm:w-8/12 sm:pr-2 lg:w-5/12 lg:pr-2 mb-4"
+              >
                 <el-input
-                  v-model="ruleForm.spouse.name"
-                  placeholder="Enter spouse’s name"
+                  v-model="ruleForm.spouse.first_name"
+                  placeholder="Enter spouse’s first name"
                   @focus="focus('spouse')"
                   @blur="blur('spouse')"
                 />
               </el-form-item>
-              <el-form-item
-                prop="spouse.birthday"
-                label="Date of birth"
-                class="sm:w-4/12 sm:pl-2 lg:w-3/12 lg:px-2 mb-4"
-              >
+              <el-form-item label="Last name" prop="spouse.last_name" class="sm:w-8/12 sm:pr-2 lg:w-5/12 lg:pr-2 mb-4">
+                <el-input
+                  v-model="ruleForm.spouse.last_name"
+                  placeholder="Enter spouse’s lastt name"
+                  @focus="focus('spouse')"
+                  @blur="blur('spouse')"
+                />
+              </el-form-item>
+              <el-form-item prop="spouse.birthday" label="Date of birth" class="sm:w-4/12 sm:pl-2 lg:w-2/12 mb-4">
                 <el-date-picker
                   v-model="ruleForm.spouse.birthday"
                   type="date"
@@ -173,14 +171,24 @@
                   @blur="blur('spouse')"
                 />
               </el-form-item>
-              <el-form-item label="E-mail" prop="spouse.email" class="sm:w-6/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
+              <el-form-item label="E-mail" prop="spouse.email" class="sm:w-6/12 sm:pr-2 lg:w-5/12 mb-4">
                 <el-input v-model.email="ruleForm.spouse.email" placeholder="Enter spouse’s e-mail" />
+              </el-form-item>
+              <el-form-item label="Phone" prop="spouse.phone" class="sm:w-6/12 lg:w-3/12 mb-4 pr-2">
+                <el-input
+                  v-model="ruleForm.spouse.phone"
+                  v-maska="'(###) ###-####'"
+                  placeholder="Enter spouse’s phone number"
+                  inputmode="numeric"
+                  @focus="focus('spouse')"
+                  @blur="blur('spouse')"
+                />
               </el-form-item>
               <el-form-item
                 v-if="ruleForm.spouse.retired"
                 prop="spouse.retirement_date"
                 label="Retirement date"
-                class="sm:w-6/12 sm:pl-2 lg:w-3/12 mb-4 lg:pl-0 lg:pr-2"
+                class="sm:w-6/12 sm:pl-2 lg:w-4/12 mb-4 lg:pl-2"
               >
                 <el-date-picker
                   v-model="ruleForm.spouse.retirement_date"
@@ -188,21 +196,6 @@
                   :placeholder="getPlaceholder"
                   format="MM/DD/YYYY"
                   value-format="MM/DD/YYYY"
-                  @focus="focus('spouse')"
-                  @blur="blur('spouse')"
-                />
-              </el-form-item>
-              <el-form-item
-                label="Phone"
-                prop="spouse.phone"
-                class="sm:w-6/12 lg:w-3/12 mb-4"
-                :class="{ 'sm:pr-2 lg:px-2': ruleForm.retired }"
-              >
-                <el-input
-                  v-model="ruleForm.spouse.phone"
-                  v-maska="'(###) ###-####'"
-                  placeholder="Enter spouse’s phone number"
-                  inputmode="numeric"
                   @focus="focus('spouse')"
                   @blur="blur('spouse')"
                 />

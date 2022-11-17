@@ -20,8 +20,8 @@
         </div>
 
         <div class="flex">
-          <el-form-item label="Name" prop="name" class="w-8/12 pr-5">
-            <el-input v-model="ruleForm.name" placeholder="Enter prospect’s name" />
+          <el-form-item label="Account name" prop="name" class="w-8/12 pr-5">
+            <el-input v-model="ruleForm.name" placeholder="Enter account name" />
           </el-form-item>
           <el-form-item prop="birthday" label="Date of birth" class="w-4/12">
             <el-date-picker
@@ -35,11 +35,11 @@
         </div>
 
         <div class="flex mt-6">
-          <el-form-item label="E-mail" prop="email" class="w-7/12">
+          <el-form-item label="E-mail" prop="email" class="w-6/12">
             <el-input v-model.email="ruleForm.email" placeholder="Enter prospect’s e-mail" />
           </el-form-item>
 
-          <el-form-item label="Phone" prop="phone" class="w-5/12 px-5">
+          <el-form-item label="Phone" prop="phone" class="w-4/12 px-5">
             <el-input v-model="ruleForm.phone" v-maska="'(###) ###-####'" placeholder="Enter prospect’s phone number" />
           </el-form-item>
           <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retirement date" class="w-2/12">
@@ -87,10 +87,13 @@
           </el-form-item>
         </div>
         <div class="flex">
-          <el-form-item label="Name" prop="spouse.name" class="w-9/12 pr-5">
-            <el-input v-model="ruleForm.spouse.name" placeholder="Enter spouse’s name" />
+          <el-form-item label="First name" prop="spouse.first_name" class="w-5/12 pr-5">
+            <el-input v-model="ruleForm.spouse.first_name" placeholder="Enter spouse’s first name" />
           </el-form-item>
-          <el-form-item prop="spouse.birthday" label="Date of birth" class="w-3/12">
+          <el-form-item label="Last name" prop="spouse.last_name" class="w-5/12 pr-5">
+            <el-input v-model="ruleForm.spouse.last_name" placeholder="Enter spouse’s last_name" />
+          </el-form-item>
+          <el-form-item prop="spouse.birthday" label="Date of birth" class="w-2/12">
             <el-date-picker
               v-model="ruleForm.spouse.birthday"
               type="date"
@@ -101,11 +104,11 @@
           </el-form-item>
         </div>
         <div class="flex my-5">
-          <el-form-item label="E-mail" prop="spouse.email" class="w-5/12">
+          <el-form-item label="E-mail" prop="spouse.email" class="w-5/12 pr-5">
             <el-input v-model.email="ruleForm.spouse.email" placeholder="Enter spouse’s e-mail" />
           </el-form-item>
 
-          <el-form-item label="Phone" prop="spouse.phone" class="w-5/12 px-5">
+          <el-form-item label="Phone" prop="spouse.phone" class="w-5/12 pr-5">
             <el-input
               v-model="ruleForm.spouse.phone"
               v-maska="'(###) ###-####'"
@@ -450,7 +453,8 @@ export default {
       zip: '',
       phone: '',
       spouse: {
-        name: '',
+        last_name: '',
+        first_name: '',
         email: '',
         birthday: '',
         retired: false,
@@ -603,7 +607,6 @@ export default {
       optionsCurrencyInput,
       isFetchingMember,
       member,
-      refetchMember,
       stateList,
       restoreDraft,
       deleteDraft,

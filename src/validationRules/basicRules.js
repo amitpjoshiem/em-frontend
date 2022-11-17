@@ -84,10 +84,21 @@ const rules = {
   ],
 
   spouse: {
-    name: [
+    first_name: [
       {
         required: true,
-        message: 'Please input spouse name',
+        message: 'Please input spouse first name',
+        trigger: 'blur',
+        transform(value) {
+          return value.trim()
+        },
+      },
+      { min: 1, message: 'Length should be min 1', trigger: 'blur' },
+    ],
+    last_name: [
+      {
+        required: true,
+        message: 'Please input spouse last name',
         trigger: 'blur',
         transform(value) {
           return value.trim()
