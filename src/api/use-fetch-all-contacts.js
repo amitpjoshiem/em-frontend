@@ -4,7 +4,7 @@ import { fetchAllContacts } from './vueQuery/fetch-all-contacts'
 
 export const useFetchAllContacts = (id) => {
   const { isLoading, isError, isFetching, data, isFetched, refetch } = useQuery(
-    ['contactsAll', id],
+    ['contacts-all', id],
     () => {
       return fetchAllContacts(id)
     },

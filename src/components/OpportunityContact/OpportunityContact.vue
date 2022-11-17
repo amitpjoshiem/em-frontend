@@ -7,8 +7,8 @@
       </SwdButton>
     </div>
     <div v-if="!isLoading">
-      <template v-if="state.length">
-        <el-card v-for="(item, index) in state" :key="item.id" class="box-card mb-5">
+      <template v-if="contacts.length">
+        <el-card v-for="(item, index) in contacts" :key="item.id" class="box-card mb-5">
           <div class="flex">
             <div class="w-2/12 flex items-center justify-center">
               <SwdAvatar size="large" />
@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { computed, reactive, watchEffect } from 'vue'
+import { computed } from 'vue'
 import { useFetchAllContacts } from '@/api/use-fetch-all-contacts.js'
 import { useRoute } from 'vue-router'
 import { Edit, Delete, InfoFilled } from '@element-plus/icons-vue'
@@ -121,9 +121,9 @@ import { deleteContacts } from '@/api/vueQuery/delete-contacts'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { useStore } from 'vuex'
+import { useAbility } from '@casl/vue'
 import ModalContact from '@/components/OpportunityContact/ModalContact.vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
-import { useAbility } from '@casl/vue'
 
 export default {
   name: 'OpportunityContact',
@@ -136,22 +136,15 @@ export default {
     const store = useStore()
     const queryClient = useQueryClient()
     const memberId = route.params.id
-    const state = reactive([])
     const { can } = useAbility()
 
-    const { isLoading, isError, isFetching, data: contacts, isFetched, refetch } = useFetchAllContacts(memberId)
+    const { isLoading, isFetching, data: contacts } = useFetchAllContacts(memberId)
     const { mutateAsync: updateContact, isLoading: loadingUpdateContact } = useMutation(updateContacts)
-    const { mutateAsync: deleteContact, isLoading: loadingDeleteContact } = useMutation(deleteContacts)
+    const { mutateAsync: deleteContact } = useMutation(deleteContacts)
 
     const getTitle = computed(() => {
       if (route.meta.type === 'client') return 'Client Contacts'
       return 'Opportunity contacts'
-    })
-
-    watchEffect(() => {
-      if (!isLoading.value) {
-        Object.assign(state, JSON.parse(JSON.stringify(contacts.value)))
-      }
     })
 
     const addContact = () => {
@@ -166,9 +159,7 @@ export default {
         destination: 'modalContact',
         value: true,
       })
-
-      const contact = state.find((item) => item.id === id)
-
+      const contact = contacts.value.find((item) => item.id === id)
       store.commit('globalComponents/setContact', contact)
     }
 
@@ -180,13 +171,13 @@ export default {
           type: 'success',
           message: 'Delete successfully',
         })
-        queryClient.invalidateQueries(['contactsAll', memberId])
+        queryClient.invalidateQueries(['contacts-all', memberId])
       }
     }
 
     const changeSpouse = async (id, index) => {
       const form = {
-        is_spouse: state[index].is_spouse,
+        is_spouse: !contacts.value[index].is_spouse,
       }
       const res = await updateContact({ form, id })
       responseUpdate(res)
@@ -199,7 +190,7 @@ export default {
           type: 'success',
           message: 'Update successfully',
         })
-        queryClient.invalidateQueries(['contactsAll', memberId])
+        queryClient.invalidateQueries(['contacts-all', memberId])
       }
     }
 
@@ -210,19 +201,13 @@ export default {
     })
 
     return {
-      state,
-
       isLoading,
-      isError,
       contacts,
-      isFetched,
-      refetch,
       addContact,
       editContact,
       removeContact,
       changeSpouse,
       deleteContact,
-      loadingDeleteContact,
       Edit,
       Delete,
       InfoFilled,
