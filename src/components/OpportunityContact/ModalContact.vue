@@ -22,8 +22,17 @@
         </el-form-item>
       </div>
 
-      <el-form-item label="Name" prop="name" class="w-full mb-4">
-        <el-input v-model="contact.name" placeholder="Enter name" />
+      <el-form-item label="First name" prop="first_name" class="w-full mb-4">
+        <el-input v-model="contact.first_name" placeholder="Enter first name" />
+      </el-form-item>
+      <el-form-item label="Last name" prop="last_name" class="w-full mb-4">
+        <el-input v-model="contact.last_name" placeholder="Enter last name" />
+      </el-form-item>
+      <el-form-item label="Email" class="w-full mb-4" prop="email">
+        <el-input v-model="contact.email" placeholder="Enter email" />
+      </el-form-item>
+      <el-form-item label="Phone" class="w-full mb-4" prop="phone">
+        <el-input v-model="contact.phone" v-maska="'(###) ###-####'" placeholder="Enter phone" />
       </el-form-item>
       <el-form-item label="Birthday" class="w-full mb-4">
         <el-date-picker
@@ -42,12 +51,6 @@
           format="MM/DD/YYYY"
           value-format="MM/DD/YYYY"
         />
-      </el-form-item>
-      <el-form-item label="Email" class="w-full mb-4" prop="email">
-        <el-input v-model="contact.email" placeholder="Enter email" />
-      </el-form-item>
-      <el-form-item label="Phone" class="w-full mb-4" prop="phone">
-        <el-input v-model="contact.phone" v-maska="'(###) ###-####'" placeholder="Enter phone" />
       </el-form-item>
     </el-form>
 
@@ -78,7 +81,8 @@ function setInitValue(contact, data) {
   contact.birthday = data.birthday
   contact.email = data.email
   contact.is_spouse = data.is_spouse
-  contact.name = data.name
+  contact.first_name = data.first_name
+  contact.last_name = data.last_name
   contact.phone = data.phone
   contact.retired = data.retired !== null ? data.retired : false
   contact.retirement_date = data.retirement_date
@@ -88,7 +92,8 @@ function resetInitValue(contact) {
   contact.birthday = ''
   contact.email = ''
   contact.is_spouse = false
-  contact.name = ''
+  contact.first_name = ''
+  contact.last_name = ''
   contact.phone = ''
   contact.retired = false
   contact.retirement_date = ''
@@ -176,15 +181,11 @@ export default {
       contact,
       rules,
       form,
-
       closeDialog,
       getTitleModal,
       saveContact,
       getPlaceholder,
-      updateContact,
       loadingUpdateContact,
-
-      createContact,
       loadingCreateContact,
     }
   },

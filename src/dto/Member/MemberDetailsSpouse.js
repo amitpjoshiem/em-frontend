@@ -3,7 +3,8 @@ class MemberDetailsSpouse {
   constructor({
     id,
     type,
-    name,
+    first_name,
+    last_name,
     email,
     birthday,
     age,
@@ -21,7 +22,8 @@ class MemberDetailsSpouse {
   }) {
     this.id = id
     this.type = type
-    this.name = name
+    this.name = first_name
+    this.name = last_name
     this.email = email
     this.birthday = birthday
     this.age = age
