@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isLoadingInfo" class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto lg:w-[960px]">
-    <SwdSubHeader title="Confirmation Information" />
+    <SwdSubHeader :title="getTitle" :with-back-btn="!isReadOnlyLead" />
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
       <div class="flex items-center mb-5">
@@ -227,6 +227,11 @@ export default {
       return clientsInfo.value.readonly
     })
 
+    const getTitle = computed(() => {
+      if (clientsInfo.value.readonly) return 'Submitted Info'
+      return 'Confirmation Information'
+    })
+
     return {
       isLoadingConvert,
       convert,
@@ -244,6 +249,7 @@ export default {
       dialogVisible,
       route,
       isReadOnlyLead,
+      getTitle,
     }
   },
 }
