@@ -167,7 +167,7 @@ export default {
           type: 'success',
           message: 'Update successfully',
         })
-        queryClient.invalidateQueries(['contactsAll', memberId])
+        queryClient.invalidateQueries(['contacts-all', memberId])
         closeDialog()
       }
     }
