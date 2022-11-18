@@ -614,7 +614,7 @@ import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
-import { cloneDeep, isEqual } from 'lodash-unified'
+import { cloneDeep, isEqual } from 'lodash-es'
 import { ElMessageBox } from 'element-plus'
 import ModalRestoreDraft from '@/components/NewProspect/Draft/ModalRestoreDraft'
 
@@ -817,18 +817,20 @@ export default {
     })
 
     const changeInput = async () => {
-      form.value.validate(async (valid) => {
-        if (valid && member.value.step !== 'default') {
-          const res = await updateMember({ form: ruleForm, id: leadId })
-          if (!('error' in res)) {
-            useAlert({
-              title: 'Success',
-              type: 'success',
-              message: 'Update successfully',
-            })
+      if (member.value.step !== 'default') {
+        form.value.validate(async (valid) => {
+          if (valid) {
+            const res = await updateMember({ form: ruleForm, id: leadId })
+            if (!('error' in res)) {
+              useAlert({
+                title: 'Success',
+                type: 'success',
+                message: 'Update successfully',
+              })
+            }
           }
-        }
-      })
+        })
+      }
     }
 
     const focus = (type) => {
