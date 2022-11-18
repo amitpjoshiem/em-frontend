@@ -180,7 +180,7 @@ import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
-import { fetchAssetsIncomeConfirm } from '@/api/vueQuery/fetch-assets-income-confirm'
+import { updateStepAssetsIncome } from '@/api/vueQuery/update-step-assets-income'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
@@ -222,7 +222,7 @@ export default {
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
     const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
-    const { mutateAsync: assetsIncomeConfirm } = useMutation(fetchAssetsIncomeConfirm)
+    const { mutateAsync: updateStep } = useMutation(updateStepAssetsIncome)
 
     const { setInitValue } = useAssetsInfoHooks()
 
@@ -249,7 +249,7 @@ export default {
     }
 
     const nextPage = async () => {
-      const res = await assetsIncomeConfirm(memberId)
+      const res = await updateStep(memberId)
       if (!('error' in res)) {
         useAlert({
           title: 'Success',

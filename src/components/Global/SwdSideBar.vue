@@ -52,15 +52,17 @@
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'leads' }"
       >
-        <InlineSvg
+        <span
           v-if="
             getRouteName === `${route.meta.type}/all-leads` ||
             getRouteName === `${route.meta.type}/active-leads` ||
             getRouteName === `${route.meta.type}/deactivated-leads`
           "
-          :src="IconLeadsActive"
-        />
-        <InlineSvg v-else :src="IconLeads" />
+          class="text-white font-semibold"
+        >
+          LL
+        </span>
+        <span v-else class="text-icon-not-active">LL</span>
       </router-link>
 
       <router-link

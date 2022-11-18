@@ -591,7 +591,7 @@ import { scrollTop } from '@/utils/scrollTop'
 import { useExpenseInfoHooks } from '@/hooks/use-expense-info-hooks'
 
 export default {
-  name: 'AddMonthlyExpense',
+  name: 'AddProspectExpense',
   setup() {
     const store = useStore()
     const router = useRouter()

@@ -115,31 +115,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.cycle-active {
-  width: 9px;
-  height: 9px;
-  background-color: #83ccf0;
-  border-radius: 50%;
-}
-.cycle-next {
-  width: 13px;
-  height: 13px;
-  background-color: #83ccf0;
-  border-radius: 50%;
-  border: 2px solid white;
-}
-
-.cycle-default {
-  width: 9px;
-  height: 9px;
-  background: white;
-  border: 2px solid #f58833;
-  border-radius: 50%;
-}
-
-.disabled-link {
-  pointer-events: none;
-}
-</style>
