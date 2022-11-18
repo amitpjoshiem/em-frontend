@@ -26,7 +26,7 @@
             :auto-upload="true"
             :show-file-block="true"
             :disabled="state.availabilityDocuments || isReadOnlyLead"
-            :with-remove-btn="false"
+            with-remove-btn
             @upload-change="handleChange"
             @upload-success="handleSuccess"
             @upload-mounted="bindRef"
