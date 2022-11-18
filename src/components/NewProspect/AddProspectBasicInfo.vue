@@ -159,7 +159,7 @@
         <span class="text-main text-xl font-semibold">Housing Information</span>
         <div class="flex pt-5">
           <el-form-item label="Type" class="w-5/12">
-            <el-radio-group v-model="ruleForm.house.type">
+            <el-radio-group v-model="ruleForm.house.type" @change="changeInput">
               <el-radio label="own">Own</el-radio>
               <el-radio label="rent">Rent</el-radio>
               <el-radio label="family">Live with family</el-radio>
