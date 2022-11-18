@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isFetchingMember">
-    <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top">
+    <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isDisabledForm">
       <!-- GENERAL -->
       <div class="border-b px-16 pb-5">
         <span class="text-main text-xl font-semibold">General</span>
@@ -21,7 +21,7 @@
 
         <div class="flex">
           <el-form-item label="Account name" prop="name" class="w-8/12 pr-5">
-            <el-input v-model="ruleForm.name" placeholder="Enter account name" />
+            <el-input v-model="ruleForm.name" placeholder="Enter account name" @blur="changeInput" />
           </el-form-item>
           <el-form-item prop="birthday" label="Date of birth" class="w-4/12">
             <el-date-picker
@@ -30,17 +30,23 @@
               :placeholder="getPlaceholder"
               format="MM/DD/YYYY"
               value-format="MM/DD/YYYY"
+              @change="changeInput"
             />
           </el-form-item>
         </div>
 
         <div class="flex mt-6">
           <el-form-item label="E-mail" prop="email" class="w-6/12">
-            <el-input v-model.email="ruleForm.email" placeholder="Enter prospect’s e-mail" />
+            <el-input v-model.email="ruleForm.email" placeholder="Enter prospect’s e-mail" @blur="changeInput" />
           </el-form-item>
 
           <el-form-item label="Phone" prop="phone" class="w-4/12 px-5">
-            <el-input v-model="ruleForm.phone" v-maska="'(###) ###-####'" placeholder="Enter prospect’s phone number" />
+            <el-input
+              v-model="ruleForm.phone"
+              v-maska="'(###) ###-####'"
+              placeholder="Enter prospect’s phone number"
+              @blur="changeInput"
+            />
           </el-form-item>
           <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retirement date" class="w-2/12">
             <el-date-picker
@@ -49,27 +55,34 @@
               :placeholder="getPlaceholder"
               format="MM/DD/YYYY"
               value-format="MM/DD/YYYY"
+              @change="changeInput"
             />
           </el-form-item>
         </div>
 
         <div class="flex my-5">
           <el-form-item label="State" prop="state" class="w-5/12 pr-5">
-            <el-select v-model="ruleForm.state" filterable placeholder="Select">
+            <el-select v-model="ruleForm.state" filterable placeholder="Select" @change="changeInput">
               <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
 
           <el-form-item label="City" prop="city" class="w-5/12 pr-5">
-            <el-input v-model="ruleForm.city" placeholder="Enter prospect’s city" />
+            <el-input v-model="ruleForm.city" placeholder="Enter prospect’s city" @blur="changeInput" />
           </el-form-item>
 
           <el-form-item label="Address" prop="address" class="w-5/12 pr-5">
-            <el-input v-model="ruleForm.address" placeholder="Enter prospect’s address" />
+            <el-input v-model="ruleForm.address" placeholder="Enter prospect’s address" @blur="changeInput" />
           </el-form-item>
 
           <el-form-item label="ZIP" prop="zip" class="w-2/12">
-            <el-input v-model="ruleForm.zip" placeholder="#####" inputmode="numeric" maxlength="5" />
+            <el-input
+              v-model="ruleForm.zip"
+              placeholder="#####"
+              inputmode="numeric"
+              maxlength="5"
+              @blur="changeInput"
+            />
           </el-form-item>
         </div>
       </div>
@@ -88,10 +101,14 @@
         </div>
         <div class="flex">
           <el-form-item label="First name" prop="spouse.first_name" class="w-5/12 pr-5">
-            <el-input v-model="ruleForm.spouse.first_name" placeholder="Enter spouse’s first name" />
+            <el-input
+              v-model="ruleForm.spouse.first_name"
+              placeholder="Enter spouse’s first name"
+              @blur="changeInput"
+            />
           </el-form-item>
           <el-form-item label="Last name" prop="spouse.last_name" class="w-5/12 pr-5">
-            <el-input v-model="ruleForm.spouse.last_name" placeholder="Enter spouse’s last_name" />
+            <el-input v-model="ruleForm.spouse.last_name" placeholder="Enter spouse’s last_name" @blur="changeInput" />
           </el-form-item>
           <el-form-item prop="spouse.birthday" label="Date of birth" class="w-2/12">
             <el-date-picker
@@ -100,12 +117,13 @@
               :placeholder="getPlaceholder"
               format="MM/DD/YYYY"
               value-format="MM/DD/YYYY"
+              @change="changeInput"
             />
           </el-form-item>
         </div>
         <div class="flex my-5">
           <el-form-item label="E-mail" prop="spouse.email" class="w-5/12 pr-5">
-            <el-input v-model.email="ruleForm.spouse.email" placeholder="Enter spouse’s e-mail" />
+            <el-input v-model.email="ruleForm.spouse.email" placeholder="Enter spouse’s e-mail" @blur="changeInput" />
           </el-form-item>
 
           <el-form-item label="Phone" prop="spouse.phone" class="w-5/12 pr-5">
@@ -114,6 +132,7 @@
               v-maska="'(###) ###-####'"
               placeholder="Enter spouse’s phone number"
               inputmode="numeric"
+              @blur="changeInput"
             />
           </el-form-item>
           <el-form-item
@@ -128,6 +147,7 @@
               :placeholder="getPlaceholder"
               format="MM/DD/YYYY"
               value-format="MM/DD/YYYY"
+              @change="changeInput"
             />
           </el-form-item>
         </div>
@@ -135,7 +155,7 @@
       <!-- Spouse -->
 
       <!-- Housing Information -->
-      <div class="px-16 my-5 border-b">
+      <div class="px-16 py-5 border-b">
         <span class="text-main text-xl font-semibold">Housing Information</span>
         <div class="flex pt-5">
           <el-form-item label="Type" class="w-5/12">
@@ -155,6 +175,7 @@
               v-model="ruleForm.house.market_value"
               :options="optionsCurrencyInput"
               placeholder="$12345"
+              @blur="changeInput"
             />
           </el-form-item>
         </div>
@@ -164,6 +185,7 @@
               v-model="ruleForm.house.total_debt"
               :options="optionsCurrencyInput"
               placeholder="$12345"
+              @blur="changeInput"
             />
           </el-form-item>
           <el-form-item
@@ -176,20 +198,7 @@
               v-model="ruleForm.house.remaining_mortgage_amount"
               :options="optionsCurrencyInput"
               placeholder="$12345"
-            />
-          </el-form-item>
-        </div>
-        <div class="flex mb-5">
-          <el-form-item
-            v-if="ruleForm.house.type === 'rent'"
-            label="Monthly payments"
-            prop="house.monthly_payment"
-            class="w-5/12 pr-5"
-          >
-            <SwdCurrencyInput
-              v-model="ruleForm.house.monthly_payment"
-              :options="optionsCurrencyInput"
-              placeholder="$12345"
+              @blur="changeInput"
             />
           </el-form-item>
           <el-form-item
@@ -197,11 +206,13 @@
             label="Total monthly expences"
             prop="house.total_monthly_expenses"
             class="w-5/12 pr-5"
+            @blur="changeInput"
           >
             <SwdCurrencyInput
               v-model="ruleForm.house.total_monthly_expenses"
               :options="optionsCurrencyInput"
               placeholder="$12345"
+              @blur="changeInput"
             />
           </el-form-item>
         </div>
@@ -210,8 +221,8 @@
 
       <div class="px-16 mt-7 border-b">
         <span class="text-main text-xl font-semibold">Employment history</span>
-        <div class="my-5">
-          <span class="text-main text-xs uppercase">Contact opportunity</span>
+        <div class="pt-5 pb-2">
+          <span class="text-main text-xs uppercase font-semibold">Contact opportunity</span>
         </div>
 
         <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-6">
@@ -224,12 +235,13 @@
               v-model="eh.company_name"
               placeholder="Enter company name"
               @change="changeCompanyNameMember({ ruleForm, index })"
+              @blur="changeInput"
             />
           </el-form-item>
 
           <template v-if="!!ruleForm.employment_history[index].company_name.trim().length">
             <el-form-item :prop="'employment_history.' + index + '.occupation'" label="Occupation" class="w-7/24 mr-4">
-              <el-input v-model="eh.occupation" placeholder="Company occupation" />
+              <el-input v-model="eh.occupation" placeholder="Company occupation" @blur="changeInput" />
             </el-form-item>
             <el-form-item
               v-if="ruleForm.employment_history[index].company_name.length"
@@ -237,7 +249,7 @@
               label="Years"
               class="w-7/24 mr-4"
             >
-              <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
+              <el-input v-model="eh.years" placeholder="00" inputmode="numeric" @blur="changeInput" />
             </el-form-item>
           </template>
 
@@ -268,8 +280,8 @@
         </el-form-item>
 
         <div v-if="ruleForm.married" class="mt-5">
-          <div class="my-5">
-            <span class="text-main text-xs uppercase">Spouse/Partner</span>
+          <div class="pt-5 pb-2">
+            <span class="text-main text-xs uppercase font-semibold">Spouse/Partner</span>
           </div>
 
           <el-form-item v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-10">
@@ -282,6 +294,7 @@
                 v-model="eh.company_name"
                 placeholder="Enter company name"
                 @change="changeCompanyNameSpouse({ ruleForm, index })"
+                @blur="changeInput"
               />
             </el-form-item>
 
@@ -291,10 +304,10 @@
                 label="Occupation"
                 class="w-7/24 mr-4"
               >
-                <el-input v-model="eh.occupation" placeholder="Company occupation" />
+                <el-input v-model="eh.occupation" placeholder="Company occupation" @blur="changeInput" />
               </el-form-item>
               <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-7/24 mr-4">
-                <el-input v-model="eh.years" placeholder="00" inputmode="numeric" />
+                <el-input v-model="eh.years" placeholder="00" inputmode="numeric" @blur="changeInput" />
               </el-form-item>
             </template>
 
@@ -329,7 +342,7 @@
       <div class="px-16 my-5">
         <span class="text-main text-xl font-semibold">Other</span>
         <el-form-item label="Risk tolerance?" class="my-5">
-          <el-radio-group v-model="ruleForm.other.risk">
+          <el-radio-group v-model="ruleForm.other.risk" @change="changeInput">
             <el-radio label="conservative">Conservative</el-radio>
             <el-radio label="moderately_conservative"> Moderately Conservative </el-radio>
             <el-radio label="moderate">Moderate</el-radio>
@@ -342,17 +355,17 @@
           prop="questions"
           class="mb-4"
         >
-          <el-input v-model="ruleForm.other.questions" type="textarea" />
+          <el-input v-model="ruleForm.other.questions" type="textarea" @blur="changeInput" />
         </el-form-item>
         <el-form-item label="Goal for retiretment" prop="retirement" class="mb-4">
-          <el-input v-model="ruleForm.other.retirement" type="textarea" />
+          <el-input v-model="ruleForm.other.retirement" type="textarea" @blur="changeInput" />
         </el-form-item>
         <el-form-item label="Goal for retiretment money" prop="retirement_money" class="mb-4">
-          <el-input v-model="ruleForm.other.retirement_money" type="textarea" />
+          <el-input v-model="ruleForm.other.retirement_money" type="textarea" @blur="changeInput" />
         </el-form-item>
 
         <el-form-item label="Does the opportunity currently work with the advisor?">
-          <el-radio-group v-model="ruleForm.other.work_with_advisor">
+          <el-radio-group v-model="ruleForm.other.work_with_advisor" @change="changeInput">
             <el-radio :label="true">Yes</el-radio>
             <el-radio :label="false">No</el-radio>
           </el-radio-group>
@@ -581,6 +594,25 @@ export default {
       store.commit('draft/setProspectBasicDraft', null)
     }
 
+    const changeInput = async () => {
+      form.value.validate(async (valid) => {
+        if (valid && isUpdateMember.value) {
+          const res = await updateMember({ form: ruleForm, id: memberId })
+          if (!('error' in res)) {
+            useAlert({
+              title: 'Success',
+              type: 'success',
+              message: 'Opportunity update successfully',
+            })
+          }
+        }
+      })
+    }
+
+    const isDisabledForm = computed(() => {
+      return isLoadingUpdateMember.value
+    })
+
     return {
       ruleForm,
       rules,
@@ -610,6 +642,8 @@ export default {
       stateList,
       restoreDraft,
       deleteDraft,
+      changeInput,
+      isDisabledForm,
     }
   },
 }
