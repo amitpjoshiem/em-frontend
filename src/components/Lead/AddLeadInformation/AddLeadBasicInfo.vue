@@ -1,7 +1,7 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isFetchingMember && !isLoadingInfo" class="sm:p-5">
-      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isReadOnlyLead">
+      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isDisabledForm">
         <!-- GENERAL -->
         <div class="p-5">
           <div class="flex items-center mb-5">
@@ -215,7 +215,7 @@
           </div>
           <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusHouse }">
             <el-form-item label="Type" class="mb-4">
-              <el-radio-group v-model="ruleForm.house.type">
+              <el-radio-group v-model="ruleForm.house.type" @change="changeInput">
                 <el-radio label="own">Own</el-radio>
                 <el-radio label="rent">Rent</el-radio>
                 <el-radio label="family">Live with family</el-radio>
@@ -378,7 +378,7 @@
                   v-if="index === ruleForm.employment_history.length - 1"
                   primary
                   main
-                  :disabled="isLoadingUpdateMember || isReadOnlyLead"
+                  :disabled="isLoadingUpdateMember || isDisabledForm"
                   @click="addEmployment(ruleForm)"
                 >
                   Add job
@@ -462,7 +462,7 @@
                     v-if="index === ruleForm.spouse.employment_history.length - 1"
                     primary
                     main
-                    :disabled="isLoadingUpdateMember || isReadOnlyLead"
+                    :disabled="isLoadingUpdateMember || isDisabledForm"
                     @click="addEmploymentSpouse(ruleForm)"
                   >
                     Add job
@@ -508,7 +508,11 @@
             </el-form-item>
 
             <el-form-item label="I have saved the following amount for retirement" class="mb-4">
-              <el-radio-group v-model="ruleForm.amount_for_retirement" class="flex sm:flex-wrap w-full">
+              <el-radio-group
+                v-model="ruleForm.amount_for_retirement"
+                class="flex sm:flex-wrap w-full"
+                @change="changeInput"
+              >
                 <el-radio label="150000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$150,000 - $250,000</el-radio>
                 <el-radio label="250000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$250,000 - $500,000</el-radio>
                 <el-radio label="500000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$500,000 - $1,000,000</el-radio>
@@ -526,7 +530,7 @@
             </el-form-item>
 
             <el-form-item label="Risk tolerance?" class="my-5">
-              <el-radio-group v-model="ruleForm.other.risk">
+              <el-radio-group v-model="ruleForm.other.risk" @change="changeInput">
                 <div class="flex flex-col sm:flex-row sm:flex-wrap">
                   <el-radio label="conservative" class="sm:w-3/12">Conservative</el-radio>
                   <el-radio label="moderate" class="sm:w-3/12">Moderate</el-radio>
@@ -562,7 +566,7 @@
             </el-form-item>
 
             <el-form-item label="Are you currently working with an Advisor?" class="mb-4">
-              <el-radio-group v-model="ruleForm.other.work_with_advisor">
+              <el-radio-group v-model="ruleForm.other.work_with_advisor" @change="changeInput">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
@@ -579,14 +583,7 @@
           >
             <SwdButton primary main>Go to the assets &amp; income</SwdButton>
           </router-link>
-          <SwdButton
-            v-else
-            primary
-            main
-            class="w-2/12"
-            :disabled="isLoadingUpdateMember"
-            @click="submitForm('ruleForm')"
-          >
+          <SwdButton v-else primary main class="w-2/12" :disabled="isLoadingUpdateMember" @click="submitForm">
             <SwdSpinner v-show="isLoadingUpdateMember" class="mr-2" />
             Save
           </SwdButton>
@@ -777,6 +774,7 @@ export default {
 
     const submitForm = async () => {
       form.value.validate(async (valid) => {
+        console.log('valid - ', valid)
         if (valid) {
           const res = await updateMember({ form: ruleForm, id: route.params.id })
           if (!('error' in res)) {
@@ -802,10 +800,6 @@ export default {
       return clientsInfo.value.steps.completed_financial_fact_finder
     })
 
-    const isReadOnlyLead = computed(() => {
-      return clientsInfo.value.readonly
-    })
-
     const restoreDraft = () => {
       Object.assign(ruleForm, JSON.parse(JSON.stringify(store.state.draft.leadBasicDraft)))
       deleteDraft()
@@ -813,6 +807,29 @@ export default {
 
     const deleteDraft = () => {
       store.commit('draft/setLeadBasicDraft', null)
+    }
+
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
+    })
+
+    const isDisabledForm = computed(() => {
+      return isLoadingUpdateMember.value || clientsInfo.value.readonly
+    })
+
+    const changeInput = async () => {
+      form.value.validate(async (valid) => {
+        if (valid && member.value.step !== 'default') {
+          const res = await updateMember({ form: ruleForm, id: leadId })
+          if (!('error' in res)) {
+            useAlert({
+              title: 'Success',
+              type: 'success',
+              message: 'Update successfully',
+            })
+          }
+        }
+      })
     }
 
     const focus = (type) => {
@@ -829,6 +846,7 @@ export default {
       if (type === 'house') isFocusHouse.value = false
       if (type === 'employment') isFocusEmployment.value = false
       if (type === 'other') isFocusOther.value = false
+      changeInput()
     }
 
     return {
@@ -862,11 +880,13 @@ export default {
       isDoneCurrentStep,
       focus,
       blur,
-      isReadOnlyLead,
+      isDisabledForm,
       leadId,
       stateList,
       restoreDraft,
       deleteDraft,
+      changeInput,
+      isReadOnlyLead,
     }
   },
 }

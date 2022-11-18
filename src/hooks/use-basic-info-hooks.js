@@ -13,11 +13,11 @@ export function useBasicInfoHooks() {
       if (member.value.retirement_date)
         ruleForm.retirement_date = dayjs(member.value.retirement_date).format('MM/DD/YYYY')
       ruleForm.email = member.value.email
-      ruleForm.address = member.value.address
-      ruleForm.city = member.value.city
-      ruleForm.state = member.value.state
-      ruleForm.zip = member.value.zip
-      ruleForm.phone = member.value.phone
+      ruleForm.address = member.value.address !== null ? member.value.address : ''
+      ruleForm.city = member.value.city !== null ? member.value.city : ''
+      ruleForm.state = member.value.state !== null ? member.value.state : ''
+      ruleForm.zip = member.value.zip !== null ? member.value.zip : ''
+      ruleForm.phone = member.value.phone !== null ? member.value.phone : ''
       ruleForm.is_watch = member.value.is_watch
       ruleForm.channels = member.value.channels
 
