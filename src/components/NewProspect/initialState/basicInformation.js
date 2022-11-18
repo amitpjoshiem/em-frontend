@@ -11,7 +11,8 @@ export const initialBasicInformation = {
   zip: '',
   phone: '',
   spouse: {
-    name: '',
+    first_name: '',
+    last_name: '',
     email: '',
     birthday: '',
     retired: false,

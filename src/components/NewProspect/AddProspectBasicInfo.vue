@@ -403,6 +403,7 @@ import { ElMessageBox } from 'element-plus'
 import ModalRestoreDraft from './Draft/ModalRestoreDraft.vue'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
+import { isEqual } from 'lodash-es'
 
 export default {
   name: 'AddProspectBasicInfo',
@@ -521,11 +522,7 @@ export default {
     })
 
     onBeforeRouteLeave((to, from, next) => {
-      if (
-        !isUpdateMember.value &&
-        JSON.stringify(ruleForm) !== JSON.stringify(initialBasicInformation) &&
-        to.name !== 'assets-information'
-      ) {
+      if (!isUpdateMember.value && !isEqual(ruleForm, initialBasicInformation) && to.name !== 'assets-information') {
         ElMessageBox.confirm('You have unsaved changes. Do you want to save it as a draft?', 'Warning', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
@@ -595,18 +592,20 @@ export default {
     }
 
     const changeInput = async () => {
-      form.value.validate(async (valid) => {
-        if (valid && isUpdateMember.value) {
-          const res = await updateMember({ form: ruleForm, id: memberId })
-          if (!('error' in res)) {
-            useAlert({
-              title: 'Success',
-              type: 'success',
-              message: 'Opportunity update successfully',
-            })
+      if (isUpdateMember.value) {
+        form.value.validate(async (valid) => {
+          if (valid) {
+            const res = await updateMember({ form: ruleForm, id: memberId })
+            if (!('error' in res)) {
+              useAlert({
+                title: 'Success',
+                type: 'success',
+                message: 'Opportunity update successfully',
+              })
+            }
           }
-        }
-      })
+        })
+      }
     }
 
     const isDisabledForm = computed(() => {
