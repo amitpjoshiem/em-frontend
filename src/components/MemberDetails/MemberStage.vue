@@ -6,9 +6,9 @@
       v-loading="isLoadingUpdateStage && newStage === item.value"
       class="signpost"
       :class="{
-        'step-complet': active > index + 1,
-        'step-no-complet': active < index + 1,
-        'step-current': active === index + 1,
+        'step-complet': active > index,
+        'step-no-complet': active < index,
+        'step-current': active === index,
       }"
       @click="setActive(item.value)"
     >
@@ -152,6 +152,7 @@ export default {
 
     const closeDialog = () => {
       dialogVisible.value = false
+      for (let index in ruleForm) delete ruleForm[index]
     }
 
     const initState = () => {
@@ -234,7 +235,7 @@ export default {
   word-break: break-word;
 }
 .signpost p {
-  font-size: 11px;
+  font-size: 10px;
   text-align: center;
 }
 
