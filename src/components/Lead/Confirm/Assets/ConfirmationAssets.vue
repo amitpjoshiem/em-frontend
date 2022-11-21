@@ -4,7 +4,7 @@
       <SwdButton primary small @click="edit">{{ isReadOnlyLead ? 'Show full info' : 'Edit' }}</SwdButton>
     </div>
     <div v-if="!isAssetsLoading && !isAssetsSchemaLoading">
-      <el-card v-for="(block, indexGroup) in assetsSchema.data" :key="indexGroup" class="rounded-md mb-10">
+      <el-card v-for="(block, indexGroup) in assetsSchema" :key="indexGroup" class="rounded-md mb-10">
         <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
         <div class="flex pb-2 mt-8">
           <div class="w-4/12"></div>
