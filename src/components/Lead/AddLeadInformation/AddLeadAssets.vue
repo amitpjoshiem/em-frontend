@@ -175,7 +175,7 @@
           >
             <SwdButton primary main>Go to the monthly expense</SwdButton>
           </router-link>
-          <SwdButton v-else primary main @click="submitForm">Save</SwdButton>
+          <SwdButton v-else primary main @click="nextPage">Save</SwdButton>
         </div>
       </el-form>
     </div>
@@ -210,18 +210,23 @@ import { watchEffect, ref, computed, reactive, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
+
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { checkCreateAssetsIncomeField } from '@/api/vueQuery/check-create-assets-income-field'
 import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
+import { updateStepAssetsIncome } from '@/api/vueQuery/update-step-assets-income'
+import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
+
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
-import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
-import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
 import { currencyFormat } from '@/utils/currencyFormat'
+
+import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
+
+import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
@@ -266,6 +271,7 @@ export default {
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
     const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
+    const { mutateAsync: updateStep } = useMutation(updateStepAssetsIncome)
 
     const { setInitValue } = useAssetsInfoHooks()
 
@@ -291,17 +297,20 @@ export default {
       router.push({ name: 'lead-basic-information', params: { id: leadId } })
     }
 
-    const submitForm = async () => {
-      useAlert({
-        title: 'Success',
-        type: 'success',
-        message: 'Information updated successfully',
-      })
-      store.commit('newClient/setStep', step.value + 1)
-      router.push({
-        name: 'lead-expense-information',
-        params: { id: leadId },
-      })
+    const nextPage = async () => {
+      const res = await updateStep(leadId)
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Information updated successfully',
+        })
+        store.commit('newClient/setStep', step.value + 1)
+        router.push({
+          name: 'lead-expense-information',
+          params: { id: leadId },
+        })
+      }
     }
 
     const isDoneCurrentStep = computed(() => {
@@ -514,7 +523,7 @@ export default {
     return {
       ruleForm,
       backStep,
-      submitForm,
+      nextPage,
       isMemberAssetsLoading,
       form,
       isLoadingUpdate,

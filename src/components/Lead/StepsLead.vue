@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-main-gray rounded-lg px-5 mb-5 lg:max-w-5xl lg:mx-auto">
+  <div v-if="!isLoading" class="bg-main-gray rounded-lg px-5 mb-5 lg:max-w-5xl lg:mx-auto">
     <div class="flex w-full pt-2">
       <router-link
         :to="{ name: 'lead-basic-information', params: { id: memberId } }"
@@ -11,6 +11,7 @@
         :to="{ name: 'lead-assets-information', params: { id: memberId } }"
         class="w-4/12 text-center text-xs ml-4"
         :class="{
+          'disabled-link text-gray-400': isDisabledLink,
           'text-title-gray': step < 2,
           'font-medium text-main': step > 1,
         }"
@@ -21,6 +22,7 @@
         :to="{ name: 'lead-expense-information', params: { id: memberId } }"
         class="w-4/12 text-center text-xs"
         :class="{
+          'disabled-link text-gray-400': isDisabledLink,
           'text-title-gray': step < 3,
           'font-medium text-main': step > 2,
         }"
@@ -45,6 +47,7 @@
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useFetchMember } from '@/api/use-fetch-member.js'
 
 export default {
   name: 'StepsLead',
@@ -53,14 +56,24 @@ export default {
     const route = useRoute()
     const step = computed(() => store.state.newClient.step)
 
+    const { isLoading, data: member } = useFetchMember({ id: route.params.id })
+
     const memberId = computed(() => {
       if (route.params.id) return route.params.id
       return ''
     })
 
+    const isDisabledLink = computed(() => {
+      if (member.value.step === 'default') return true
+      return false
+    })
+
     return {
       step,
       memberId,
+      isDisabledLink,
+      isLoading,
+      member,
     }
   },
 }
@@ -87,9 +100,5 @@ export default {
   background: white;
   border: 2px solid #f58833;
   border-radius: 50%;
-}
-
-.disabled-link {
-  pointer-events: none;
 }
 </style>

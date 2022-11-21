@@ -1,20 +1,29 @@
 const rules = {
-  name: [
+  first_name: [
     {
       required: true,
-      message: 'Please input name',
+      message: 'Please input first name',
+      trigger: 'blur',
+    },
+    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
+  ],
+  last_name: [
+    {
+      required: true,
+      message: 'Please input last name',
       trigger: 'blur',
     },
     { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
   email: [
     {
+      required: true,
       type: 'email',
       message: 'Please enter valid email ID',
       trigger: 'blur',
     },
   ],
-  phone: [{ len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
+  phone: [{ required: true, len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
 }
 
 export { rules }

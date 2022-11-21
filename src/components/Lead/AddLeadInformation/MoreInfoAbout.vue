@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isFetchingConfirmationClient && !isFetchingConfirmationAdvisor" class="my-4 px-5">
+  <div v-if="!isFetchingConfirmationClient && !isFetchingConfirmationAdvisor && !isLoadingInfo" class="my-4 px-5">
     <el-form ref="form" :model="ruleForm" label-position="top">
       <!-- I Want More Info About: -->
       <el-form-item label="I Want More Info About ">
@@ -69,7 +69,7 @@
       </el-form-item>
     </el-form>
   </div>
-  <div v-else class="flex items-center justify-center">
+  <div v-else class="flex items-center justify-center h-[150px]">
     <SwdSpinner large />
   </div>
 </template>
@@ -81,6 +81,7 @@ import { updateConfirmation } from '@/api/vueQuery/clients/fetch-update-confirma
 import { useConfirmationInfoHooks } from '@/hooks/use-confirmation-info-hooks'
 import { useFetchClietsConfirmation } from '@/api/clients/use-fetch-confirmation.js'
 import { useFetchGetClietsConfirmation } from '@/api/use-fetch-get-clients-confirmation.js'
+import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -102,6 +103,8 @@ export default {
       data: confirmationDataAdvisor,
       refetch: refetchAdvisor,
     } = useFetchGetClietsConfirmation(route.params.id, { enabled: false })
+
+    const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
     const { mutateAsync: updateCinfirmationInfo } = useMutation(updateConfirmation)
 
@@ -144,7 +147,8 @@ export default {
     })
 
     const disabledForm = computed(() => {
-      return store.state.globalComponents.role !== 'lead'
+      if (store.state.globalComponents.role !== 'lead' || clientsInfo.value.readonly) return true
+      return false
     })
 
     const handleChange = async () => {
@@ -174,6 +178,7 @@ export default {
       confirmationDataAdvisor,
       refetchAdvisor,
       disabledForm,
+      isLoadingInfo,
     }
   },
 }

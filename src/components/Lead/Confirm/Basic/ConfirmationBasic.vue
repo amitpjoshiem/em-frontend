@@ -23,7 +23,7 @@
         <template v-if="member.married">
           <div class="flex text-main mb-2 sm:w-6/12">
             <div class="pr-2 text-gray-500">Spouse/Partner Name:</div>
-            <div class="text-main">{{ member.spouse.name }}</div>
+            <div class="text-main">{{ member.spouse.first_name + ' ' + member.spouse.last_name }}</div>
           </div>
           <div class="flex text-main mb-2 sm:w-6/12">
             <div class="pr-2 text-gray-500">Spouse/Partner e-mail:</div>

@@ -1,7 +1,7 @@
 <template>
   <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isFetchingMember && !isLoadingInfo" class="sm:p-5">
-      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isReadOnlyLead">
+      <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isDisabledForm">
         <!-- GENERAL -->
         <div class="p-5">
           <div class="flex items-center mb-5">
@@ -57,29 +57,7 @@
                   />
                 </el-form-item>
 
-                <el-form-item
-                  v-if="ruleForm.retired"
-                  prop="retirement_date"
-                  label="Retirement date"
-                  class="sm:w-4/12 sm:pl-2 lg:w-3/12 mb-4 lg:pl-0 lg:pr-2"
-                >
-                  <el-date-picker
-                    v-model="ruleForm.retirement_date"
-                    type="date"
-                    :placeholder="getPlaceholder"
-                    format="MM/DD/YYYY"
-                    value-format="MM/DD/YYYY"
-                    @focus="focus('general')"
-                    @blur="blur('general')"
-                  />
-                </el-form-item>
-
-                <el-form-item
-                  label="Phone"
-                  prop="phone"
-                  class="sm:w-6/12 sm:pr-2 lg:w-3/12 mb-4"
-                  :class="{ 'sm:pr-2 lg:px-2': ruleForm.retired }"
-                >
+                <el-form-item label="Phone" prop="phone" class="sm:w-6/12 sm:pr-2 lg:w-3/12 mb-4">
                   <el-input
                     v-model="ruleForm.phone"
                     v-maska="'(###) ###-####'"
@@ -113,16 +91,29 @@
                   />
                 </el-form-item>
 
-                <el-form-item
-                  label="ZIP"
-                  prop="zip"
-                  class="sm:w-6/12 lg:w-3/12 mb-4"
-                  :class="{ 'sm:pr-2 lg:px-2': ruleForm.retired }"
-                >
+                <el-form-item label="ZIP" prop="zip" class="sm:w-6/12 lg:w-3/12 mb-4 pr-2">
                   <el-input
                     v-model="ruleForm.zip"
-                    placeholder="000000"
+                    placeholder="#####"
                     inputmode="numeric"
+                    maxlength="5"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
+                  />
+                </el-form-item>
+
+                <el-form-item
+                  v-if="ruleForm.retired"
+                  prop="retirement_date"
+                  label="Retirement date"
+                  class="sm:w-4/12 sm:pl-2 lg:w-3/12 mb-4 lg:pl-2"
+                >
+                  <el-date-picker
+                    v-model="ruleForm.retirement_date"
+                    type="date"
+                    :placeholder="getPlaceholder"
+                    format="MM/DD/YYYY"
+                    value-format="MM/DD/YYYY"
                     @focus="focus('general')"
                     @blur="blur('general')"
                   />
@@ -149,19 +140,27 @@
               </el-radio-group>
             </el-form-item>
             <div class="sm:flex sm:flex-wrap">
-              <el-form-item label="Name" prop="spouse.name" class="sm:w-8/12 sm:pr-2 lg:w-6/12 lg:pr-2 mb-4">
+              <el-form-item
+                label="First name"
+                prop="spouse.first_name"
+                class="sm:w-8/12 sm:pr-2 lg:w-5/12 lg:pr-2 mb-4"
+              >
                 <el-input
-                  v-model="ruleForm.spouse.name"
-                  placeholder="Enter spouse’s name"
+                  v-model="ruleForm.spouse.first_name"
+                  placeholder="Enter spouse’s first name"
                   @focus="focus('spouse')"
                   @blur="blur('spouse')"
                 />
               </el-form-item>
-              <el-form-item
-                prop="spouse.birthday"
-                label="Date of birth"
-                class="sm:w-4/12 sm:pl-2 lg:w-3/12 lg:px-2 mb-4"
-              >
+              <el-form-item label="Last name" prop="spouse.last_name" class="sm:w-8/12 sm:pr-2 lg:w-5/12 lg:pr-2 mb-4">
+                <el-input
+                  v-model="ruleForm.spouse.last_name"
+                  placeholder="Enter spouse’s lastt name"
+                  @focus="focus('spouse')"
+                  @blur="blur('spouse')"
+                />
+              </el-form-item>
+              <el-form-item prop="spouse.birthday" label="Date of birth" class="sm:w-4/12 sm:pl-2 lg:w-2/12 mb-4">
                 <el-date-picker
                   v-model="ruleForm.spouse.birthday"
                   type="date"
@@ -172,14 +171,24 @@
                   @blur="blur('spouse')"
                 />
               </el-form-item>
-              <el-form-item label="E-mail" prop="spouse.email" class="sm:w-6/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
+              <el-form-item label="E-mail" prop="spouse.email" class="sm:w-6/12 sm:pr-2 lg:w-5/12 mb-4">
                 <el-input v-model.email="ruleForm.spouse.email" placeholder="Enter spouse’s e-mail" />
+              </el-form-item>
+              <el-form-item label="Phone" prop="spouse.phone" class="sm:w-6/12 lg:w-3/12 mb-4 pr-2">
+                <el-input
+                  v-model="ruleForm.spouse.phone"
+                  v-maska="'(###) ###-####'"
+                  placeholder="Enter spouse’s phone number"
+                  inputmode="numeric"
+                  @focus="focus('spouse')"
+                  @blur="blur('spouse')"
+                />
               </el-form-item>
               <el-form-item
                 v-if="ruleForm.spouse.retired"
                 prop="spouse.retirement_date"
                 label="Retirement date"
-                class="sm:w-6/12 sm:pl-2 lg:w-3/12 mb-4 lg:pl-0 lg:pr-2"
+                class="sm:w-6/12 sm:pl-2 lg:w-4/12 mb-4 lg:pl-2"
               >
                 <el-date-picker
                   v-model="ruleForm.spouse.retirement_date"
@@ -187,21 +196,6 @@
                   :placeholder="getPlaceholder"
                   format="MM/DD/YYYY"
                   value-format="MM/DD/YYYY"
-                  @focus="focus('spouse')"
-                  @blur="blur('spouse')"
-                />
-              </el-form-item>
-              <el-form-item
-                label="Phone"
-                prop="spouse.phone"
-                class="sm:w-6/12 lg:w-3/12 mb-4"
-                :class="{ 'sm:pr-2 lg:px-2': ruleForm.retired }"
-              >
-                <el-input
-                  v-model="ruleForm.spouse.phone"
-                  v-maska="'(###) ###-####'"
-                  placeholder="Enter spouse’s phone number"
-                  inputmode="numeric"
                   @focus="focus('spouse')"
                   @blur="blur('spouse')"
                 />
@@ -221,7 +215,7 @@
           </div>
           <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusHouse }">
             <el-form-item label="Type" class="mb-4">
-              <el-radio-group v-model="ruleForm.house.type">
+              <el-radio-group v-model="ruleForm.house.type" @change="changeInput">
                 <el-radio label="own">Own</el-radio>
                 <el-radio label="rent">Rent</el-radio>
                 <el-radio label="family">Live with family</el-radio>
@@ -384,7 +378,7 @@
                   v-if="index === ruleForm.employment_history.length - 1"
                   primary
                   main
-                  :disabled="isLoadingUpdateMember || isReadOnlyLead"
+                  :disabled="isLoadingUpdateMember || isDisabledForm"
                   @click="addEmployment(ruleForm)"
                 >
                   Add job
@@ -468,7 +462,7 @@
                     v-if="index === ruleForm.spouse.employment_history.length - 1"
                     primary
                     main
-                    :disabled="isLoadingUpdateMember || isReadOnlyLead"
+                    :disabled="isLoadingUpdateMember || isDisabledForm"
                     @click="addEmploymentSpouse(ruleForm)"
                   >
                     Add job
@@ -514,7 +508,11 @@
             </el-form-item>
 
             <el-form-item label="I have saved the following amount for retirement" class="mb-4">
-              <el-radio-group v-model="ruleForm.amount_for_retirement" class="flex sm:flex-wrap w-full">
+              <el-radio-group
+                v-model="ruleForm.amount_for_retirement"
+                class="flex sm:flex-wrap w-full"
+                @change="changeInput"
+              >
                 <el-radio label="150000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$150,000 - $250,000</el-radio>
                 <el-radio label="250000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$250,000 - $500,000</el-radio>
                 <el-radio label="500000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$500,000 - $1,000,000</el-radio>
@@ -532,7 +530,7 @@
             </el-form-item>
 
             <el-form-item label="Risk tolerance?" class="my-5">
-              <el-radio-group v-model="ruleForm.other.risk">
+              <el-radio-group v-model="ruleForm.other.risk" @change="changeInput">
                 <div class="flex flex-col sm:flex-row sm:flex-wrap">
                   <el-radio label="conservative" class="sm:w-3/12">Conservative</el-radio>
                   <el-radio label="moderate" class="sm:w-3/12">Moderate</el-radio>
@@ -568,7 +566,7 @@
             </el-form-item>
 
             <el-form-item label="Are you currently working with an Advisor?" class="mb-4">
-              <el-radio-group v-model="ruleForm.other.work_with_advisor">
+              <el-radio-group v-model="ruleForm.other.work_with_advisor" @change="changeInput">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
@@ -585,14 +583,7 @@
           >
             <SwdButton primary main>Go to the assets &amp; income</SwdButton>
           </router-link>
-          <SwdButton
-            v-else
-            primary
-            main
-            class="w-2/12"
-            :disabled="isLoadingUpdateMember"
-            @click="submitForm('ruleForm')"
-          >
+          <SwdButton v-else primary main class="w-2/12" :disabled="isLoadingUpdateMember" @click="submitForm">
             <SwdSpinner v-show="isLoadingUpdateMember" class="mr-2" />
             Save
           </SwdButton>
@@ -600,16 +591,17 @@
       </el-form>
     </div>
     <el-skeleton v-else :rows="10" animated />
+    <ModalRestoreDraft @restoreDraft="restoreDraft" @deleteDraft="deleteDraft" />
   </div>
 </template>
 
 <script>
-import { reactive, ref, onMounted, computed, watchEffect } from 'vue'
+import { reactive, ref, onMounted, computed, watch } from 'vue'
 import { updateMembers } from '@/api/vueQuery/update-members'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useMutation } from 'vue-query'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute, onBeforeRouteLeave } from 'vue-router'
 import { useStore } from 'vuex'
 import { useAlert } from '@/utils/use-alert'
 import { rules } from '@/validationRules/basicRules.js'
@@ -622,10 +614,16 @@ import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
+import { cloneDeep, isEqual } from 'lodash-es'
+import { ElMessageBox } from 'element-plus'
+import ModalRestoreDraft from '@/components/NewProspect/Draft/ModalRestoreDraft'
 
 export default {
   name: 'AddLeadBasicInfo',
   directives: { maska },
+  components: {
+    ModalRestoreDraft,
+  },
   setup() {
     const router = useRouter()
     const store = useStore()
@@ -639,6 +637,7 @@ export default {
     const isFocusHouse = ref(false)
     const isFocusEmployment = ref(false)
     const isFocusOther = ref(false)
+    const initRuleForm = ref({})
 
     const { stateList } = useStateHook()
 
@@ -728,8 +727,49 @@ export default {
       }
     })
 
-    watchEffect(() => {
-      if (isFetchingMember.value === false) setInitValue(ruleForm, member)
+    watch(
+      isFetchingMember,
+      (newValue, oldValue) => {
+        if (newValue === false && oldValue === true) {
+          setInitValue(ruleForm, member)
+          initRuleForm.value = cloneDeep(ruleForm)
+        }
+        if (
+          newValue === false &&
+          oldValue === true &&
+          member.value.step === 'default' &&
+          store.state.draft.leadBasicDraft
+        ) {
+          store.commit('globalComponents/setShowModal', {
+            destination: 'restoreDraft',
+            value: true,
+          })
+        }
+      },
+      { immediate: true }
+    )
+
+    onBeforeRouteLeave((to, from, next) => {
+      if (
+        member.value.step === 'default' &&
+        !isEqual(ruleForm, initRuleForm.value) &&
+        to.name !== 'lead-assets-information'
+      ) {
+        ElMessageBox.confirm('You have unsaved changes. Do you want to save it as a draft?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+        })
+          .then(() => {
+            store.commit('draft/setLeadBasicDraft', ruleForm)
+            next()
+          })
+          .catch(() => {
+            next()
+          })
+      } else {
+        next()
+      }
     })
 
     const submitForm = async () => {
@@ -737,6 +777,7 @@ export default {
         if (valid) {
           const res = await updateMember({ form: ruleForm, id: route.params.id })
           if (!('error' in res)) {
+            deleteDraft()
             useAlert({
               title: 'Success',
               type: 'success',
@@ -758,9 +799,39 @@ export default {
       return clientsInfo.value.steps.completed_financial_fact_finder
     })
 
+    const restoreDraft = () => {
+      Object.assign(ruleForm, JSON.parse(JSON.stringify(store.state.draft.leadBasicDraft)))
+      deleteDraft()
+    }
+
+    const deleteDraft = () => {
+      store.commit('draft/setLeadBasicDraft', null)
+    }
+
     const isReadOnlyLead = computed(() => {
       return clientsInfo.value.readonly
     })
+
+    const isDisabledForm = computed(() => {
+      return isLoadingUpdateMember.value || clientsInfo.value.readonly
+    })
+
+    const changeInput = async () => {
+      if (member.value.step !== 'default') {
+        form.value.validate(async (valid) => {
+          if (valid) {
+            const res = await updateMember({ form: ruleForm, id: leadId })
+            if (!('error' in res)) {
+              useAlert({
+                title: 'Success',
+                type: 'success',
+                message: 'Update successfully',
+              })
+            }
+          }
+        })
+      }
+    }
 
     const focus = (type) => {
       if (type === 'general') isFocusGeneral.value = true
@@ -776,6 +847,7 @@ export default {
       if (type === 'house') isFocusHouse.value = false
       if (type === 'employment') isFocusEmployment.value = false
       if (type === 'other') isFocusOther.value = false
+      changeInput()
     }
 
     return {
@@ -809,9 +881,13 @@ export default {
       isDoneCurrentStep,
       focus,
       blur,
-      isReadOnlyLead,
+      isDisabledForm,
       leadId,
       stateList,
+      restoreDraft,
+      deleteDraft,
+      changeInput,
+      isReadOnlyLead,
     }
   },
 }

@@ -105,7 +105,6 @@
       </router-link>
     </div>
   </div>
-  <ModalReadOnly />
 </template>
 
 <script>
@@ -113,15 +112,14 @@ import { DocumentChecked, CircleCheckFilled } from '@element-plus/icons-vue'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
-import { computed } from 'vue'
-import ModalReadOnly from './ModalReadOnly.vue'
+import { computed, watchEffect } from 'vue'
+import router from '../../router'
 
 export default {
   name: 'LeadInformation',
   components: {
     CircleCheckFilled,
     DocumentChecked,
-    ModalReadOnly,
   },
   setup() {
     const stepsColorSchema = {
@@ -147,6 +145,16 @@ export default {
       return stepsColorSchema.notActive
     })
 
+    watchEffect(() => {
+      if (!isLoadingInfo.value && clientsInfo.value.readonly) {
+        router.push({ name: 'confirmation-page', params: { id: clientsInfo.value.member_id } })
+      }
+    })
+
+    const isReadOnlyLead = computed(() => {
+      return clientsInfo.value.readonly
+    })
+
     return {
       isLoadingInfo,
       fetchingInfo,
@@ -156,6 +164,7 @@ export default {
       IrisLogoStandart,
       stepsColorSchema,
       getStatusRelevant,
+      isReadOnlyLead,
     }
   },
 }

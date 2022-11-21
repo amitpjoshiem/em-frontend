@@ -217,9 +217,7 @@ export const advisorRoute = {
           path: 'monthly-expense/:id?',
           name: 'monthly-expense',
           component: () =>
-            import(
-              /* webpackChunkName: "NewProspect" */ '../../components/NewProspect/AddMonthlyExpense/AddMonthlyExpense.vue'
-            ),
+            import(/* webpackChunkName: "NewProspect" */ '../../components/NewProspect/AddProspectExpense.vue'),
         },
         {
           path: 'assets-account/:id?',

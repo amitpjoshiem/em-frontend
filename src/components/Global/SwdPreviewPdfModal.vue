@@ -11,7 +11,7 @@
     <template #footer>
       <span class="dialog-footer">
         <div class="flex justify-end">
-          <SwdButton class="ml-2" info @click="closeDialog">Close</SwdButton>
+          <SwdButton class="px-4 py-1" info @click="closeDialog">Close</SwdButton>
         </div>
       </span>
     </template>
