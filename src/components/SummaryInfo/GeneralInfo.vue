@@ -57,16 +57,6 @@
       </div>
       <div class="flex">
         <div class="flex mb-4 w-6/12">
-          <div class="pr-2">Medicare Client:</div>
-          <SwdTag :status="!!member.salesforce.medicare_client" />
-        </div>
-        <div class="flex mb-4 w-6/12">
-          <div class="pr-2">P&C Client:</div>
-          <SwdTag :status="!!member.salesforce.p_c_client" />
-        </div>
-      </div>
-      <div class="flex">
-        <div class="flex mb-4 w-6/12">
           <div class="pr-2">Tax Conversion Client:</div>
           <SwdTag :status="!!member.salesforce.tax_conversion_client" />
         </div>
