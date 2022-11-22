@@ -3,7 +3,7 @@
     <div v-if="!isFetchingMember && !isLoadingInfo" class="sm:p-5">
       <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isDisabledForm">
         <!-- GENERAL -->
-        <div class="p-5">
+        <div class="sm:p-5">
           <div class="flex items-center mb-5">
             <InlineSvg v-show="isFocusGeneral && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusGeneral && !isDoneCurrentStep" :src="IconNotActive" />
@@ -28,7 +28,7 @@
               </div>
 
               <div class="sm:flex sm:flex-wrap">
-                <el-form-item label="Name" prop="name" class="sm:w-8/12 sm:pr-2 lg:w-6/12 lg:pr-2 mb-4">
+                <el-form-item label="Name" prop="name" class="mb-3 lg:w-6/12 lg:pr-2 sm:w-6/12 sm:pr-2">
                   <el-input
                     v-model="ruleForm.name"
                     placeholder="Enter name"
@@ -36,7 +36,15 @@
                     @blur="blur('general')"
                   />
                 </el-form-item>
-                <el-form-item prop="birthday" label="Date of birth" class="sm:w-4/12 sm:pl-2 lg:w-3/12 lg:px-2 mb-4">
+                <el-form-item label="E-mail" prop="email" class="mb-3 lg:w-6/12 lg:pl-2 sm:w-6/12 sm:pl-2">
+                  <el-input
+                    v-model.email="ruleForm.email"
+                    placeholder="Enter e-mail"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
+                  />
+                </el-form-item>
+                <el-form-item prop="birthday" label="Date of birth" class="mb-3 lg:w-4/12 lg:pr-2 sm:w-6/12 sm:pr-2">
                   <el-date-picker
                     v-model="ruleForm.birthday"
                     type="date"
@@ -48,16 +56,7 @@
                   />
                 </el-form-item>
 
-                <el-form-item label="E-mail" prop="email" class="sm:w-8/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
-                  <el-input
-                    v-model.email="ruleForm.email"
-                    placeholder="Enter e-mail"
-                    @focus="focus('general')"
-                    @blur="blur('general')"
-                  />
-                </el-form-item>
-
-                <el-form-item label="Phone" prop="phone" class="sm:w-6/12 sm:pr-2 lg:w-3/12 mb-4">
+                <el-form-item label="Phone" prop="phone" class="mb-3 lg:w-4/12 lg:px-2 sm:w-6/12 sm:pl-2">
                   <el-input
                     v-model="ruleForm.phone"
                     v-maska="'(###) ###-####'"
@@ -67,13 +66,26 @@
                   />
                 </el-form-item>
 
-                <el-form-item label="State" prop="state" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pl-0 lg:pr-2 mb-4">
-                  <el-select v-model="ruleForm.state" filterable placeholder="Select">
+                <div class="hidden mb-3 lg:w-4/12 lg:pl-2 lg:block sm:w-6/12">
+                  <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retirement date">
+                    <el-date-picker
+                      type="date"
+                      :placeholder="getPlaceholder"
+                      format="MM/DD/YYYY"
+                      value-format="MM/DD/YYYY"
+                      @focus="focus('general')"
+                      @blur="blur('general')"
+                    />
+                  </el-form-item>
+                </div>
+
+                <el-form-item label="State" prop="state" class="mb-3 lg:w-3/12 lg:pr-2 sm:w-6/12 sm:pr-2">
+                  <el-select v-model="ruleForm.state" filterable placeholder="Select" class="w-full">
                     <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value" />
                   </el-select>
                 </el-form-item>
 
-                <el-form-item label="City" prop="city" class="sm:w-6/12 sm:pr-2 lg:w-3/12 lg:pl-2 mb-4">
+                <el-form-item label="City" prop="city" class="mb-3 lg:w-3/12 lg:px-2 sm:w-6/12 sm:pl-2">
                   <el-input
                     v-model="ruleForm.city"
                     placeholder="Enter city"
@@ -82,7 +94,7 @@
                   />
                 </el-form-item>
 
-                <el-form-item label="Address" prop="address" class="sm:w-6/12 sm:pl-2 lg:w-3/12 lg:pr-2 mb-4">
+                <el-form-item label="Address" prop="address" class="mb-3 lg:w-3/12 lg:px-2 sm:w-6/12 sm:pr-2">
                   <el-input
                     v-model="ruleForm.address"
                     placeholder="Enter address"
@@ -91,7 +103,7 @@
                   />
                 </el-form-item>
 
-                <el-form-item label="ZIP" prop="zip" class="sm:w-6/12 lg:w-3/12 mb-4 pr-2">
+                <el-form-item label="ZIP" prop="zip" class="mb-3 lg:w-3/12 lg:pl-2 sm:w-6/12 sm:pl-2">
                   <el-input
                     v-model="ruleForm.zip"
                     placeholder="#####"
@@ -102,22 +114,18 @@
                   />
                 </el-form-item>
 
-                <el-form-item
-                  v-if="ruleForm.retired"
-                  prop="retirement_date"
-                  label="Retirement date"
-                  class="sm:w-4/12 sm:pl-2 lg:w-3/12 mb-4 lg:pl-2"
-                >
-                  <el-date-picker
-                    v-model="ruleForm.retirement_date"
-                    type="date"
-                    :placeholder="getPlaceholder"
-                    format="MM/DD/YYYY"
-                    value-format="MM/DD/YYYY"
-                    @focus="focus('general')"
-                    @blur="blur('general')"
-                  />
-                </el-form-item>
+                <div class="hidden mb-3 lg:w-4/12 lg:pl-2 lg:pr-0 lg:hidden sm:w-6/12 sm:pr-2 sm:block">
+                  <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retirement date">
+                    <el-date-picker
+                      type="date"
+                      :placeholder="getPlaceholder"
+                      format="MM/DD/YYYY"
+                      value-format="MM/DD/YYYY"
+                      @focus="focus('general')"
+                      @blur="blur('general')"
+                    />
+                  </el-form-item>
+                </div>
               </div>
             </div>
           </div>
@@ -125,8 +133,8 @@
         <!-- GENERAL -->
 
         <!-- Spouse -->
-        <div v-if="ruleForm.married" class="p-5">
-          <div class="flex items-center mb-5">
+        <div v-if="ruleForm.married" class="sm:p-5">
+          <div class="flex items-center my-5">
             <InlineSvg v-show="isFocusSpouse && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusSpouse && !isDoneCurrentStep" :src="IconNotActive" />
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
@@ -143,7 +151,7 @@
               <el-form-item
                 label="First name"
                 prop="spouse.first_name"
-                class="sm:w-8/12 sm:pr-2 lg:w-5/12 lg:pr-2 mb-4"
+                class="mb-3 lg:w-6/12 lg:pr-2 sm:w-6/12 sm:pr-2"
               >
                 <el-input
                   v-model="ruleForm.spouse.first_name"
@@ -152,7 +160,7 @@
                   @blur="blur('spouse')"
                 />
               </el-form-item>
-              <el-form-item label="Last name" prop="spouse.last_name" class="sm:w-8/12 sm:pr-2 lg:w-5/12 lg:pr-2 mb-4">
+              <el-form-item label="Last name" prop="spouse.last_name" class="mb-3 lg:w-6/12 lg:pl-2 sm:w-6/12 sm:pl-2">
                 <el-input
                   v-model="ruleForm.spouse.last_name"
                   placeholder="Enter spouse’s lastt name"
@@ -160,7 +168,14 @@
                   @blur="blur('spouse')"
                 />
               </el-form-item>
-              <el-form-item prop="spouse.birthday" label="Date of birth" class="sm:w-4/12 sm:pl-2 lg:w-2/12 mb-4">
+              <el-form-item label="E-mail" prop="spouse.email" class="mb-3 lg:w-6/12 lg:pr-2 sm:w-6/12 sm:pr-2">
+                <el-input v-model.email="ruleForm.spouse.email" placeholder="Enter spouse’s e-mail" />
+              </el-form-item>
+              <el-form-item
+                prop="spouse.birthday"
+                label="Date of birth"
+                class="mb-3 lg:w-3/12 lg:px-2 sm:w-6/12 sm:pl-2"
+              >
                 <el-date-picker
                   v-model="ruleForm.spouse.birthday"
                   type="date"
@@ -171,10 +186,8 @@
                   @blur="blur('spouse')"
                 />
               </el-form-item>
-              <el-form-item label="E-mail" prop="spouse.email" class="sm:w-6/12 sm:pr-2 lg:w-5/12 mb-4">
-                <el-input v-model.email="ruleForm.spouse.email" placeholder="Enter spouse’s e-mail" />
-              </el-form-item>
-              <el-form-item label="Phone" prop="spouse.phone" class="sm:w-6/12 lg:w-3/12 mb-4 pr-2">
+
+              <el-form-item label="Phone" prop="spouse.phone" class="mb-3 lg:w-3/12 lg:pl-2 sm:w-6/12 sm:pr-2">
                 <el-input
                   v-model="ruleForm.spouse.phone"
                   v-maska="'(###) ###-####'"
@@ -188,7 +201,7 @@
                 v-if="ruleForm.spouse.retired"
                 prop="spouse.retirement_date"
                 label="Retirement date"
-                class="sm:w-6/12 sm:pl-2 lg:w-4/12 mb-4 lg:pl-2"
+                class="mb-3 lg:w-4/12 sm:w-6/12 sm:pl-2 lg:pl-0"
               >
                 <el-date-picker
                   v-model="ruleForm.spouse.retirement_date"
@@ -206,8 +219,8 @@
         <!-- Spouse -->
 
         <!-- Housing Information -->
-        <div class="p-5">
-          <div class="flex items-center mb-5">
+        <div class="sm:p-5">
+          <div class="flex items-center my-5">
             <InlineSvg v-show="isFocusHouse && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusHouse && !isDoneCurrentStep" :src="IconNotActive" />
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
@@ -297,7 +310,7 @@
         <!-- Housing Information -->
 
         <!-- Employment history -->
-        <div class="p-5 mt-5">
+        <div class="sm:p-5 mt-5">
           <div class="flex items-center mb-5">
             <InlineSvg v-show="isFocusEmployment && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusEmployment && !isDoneCurrentStep" :src="IconNotActive" />
@@ -478,7 +491,7 @@
         <!-- Employment history -->
 
         <!-- Other -->
-        <div class="my-5 p-5">
+        <div class="my-5 sm:p-5">
           <div class="flex items-center mb-5">
             <InlineSvg v-show="isFocusOther && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusOther && !isDoneCurrentStep" :src="IconNotActive" />
