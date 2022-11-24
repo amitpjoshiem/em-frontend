@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="state.dialogVisible" title="Succes" :before-close="closeDialog" custom-class="modal-succes-style">
+  <el-dialog v-model="state.dialogVisible" title="Succes" :before-close="closeDialog" class="modal-succes-style">
     <div class="flex flex-col items-center">
       <InlineSvg :src="IconSuccesChanged" />
       <span class="my-5 text-center">

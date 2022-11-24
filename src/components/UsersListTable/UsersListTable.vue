@@ -16,7 +16,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column v-if="isLead" label="E-mail" min-width="195">
+    <el-table-column v-if="isLead" label="E-mail" min-width="210">
       <template #default="scope">
         {{ scope.row.email }}
       </template>
@@ -34,7 +34,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column label="Onboarding" prop="step" min-width="130" sortable>
+    <el-table-column label="Onboarding" prop="step" min-width="115" sortable>
       <template #default="scope">
         <SwdLinearProgress :percentage="scope.row.onboarding" :show-text="true" />
       </template>

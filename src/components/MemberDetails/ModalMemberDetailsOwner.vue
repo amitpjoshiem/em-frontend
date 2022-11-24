@@ -3,7 +3,7 @@
     v-model="state.dialogVisible"
     title="Owner member details"
     width="80%"
-    custom-class="dialog-style pdf-viewer"
+    class="dialog-style pdf-viewer"
     :before-close="closeDialog"
   >
     <div>

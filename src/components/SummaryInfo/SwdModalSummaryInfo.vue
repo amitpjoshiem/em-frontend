@@ -4,7 +4,7 @@
     title="Summary Info"
     :before-close="closeDialog"
     width="75%"
-    custom-class="summary-info"
+    class="summary-info"
     destroy-on-close
   >
     <div v-if="isLoadingMember" class="flex justify-center items-center">
