@@ -241,12 +241,12 @@ export const advisorRoute = {
               /* webpackChunkName: "NewProspect" */ '../../components/NewProspect/StressTestResult/NewProspectPdf.vue'
             ),
         },
-        {
-          path: '',
-          redirect: () => {
-            return { name: 'basic-information' }
-          },
-        },
+        // {
+        //   path: '',
+        //   redirect: () => {
+        //     return { name: 'basic-information' }
+        //   },
+        // },
       ],
     },
 

@@ -28,25 +28,6 @@
       </router-link>
 
       <router-link
-        v-if="$can('advisor', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
-        :to="{ name: 'activity' }"
-        class="item flex justify-center items-center cursor-pointer w-full h-14"
-        :class="{ active: getRouteName === 'activity' }"
-      >
-        <InlineSvg v-if="getRouteName === 'activity'" :src="IconAssetsActive" />
-        <InlineSvg v-else :src="IconAssets" />
-      </router-link>
-
-      <router-link
-        v-if="$can('advisor', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
-        :to="{ name: 'pipeline' }"
-        class="item flex justify-center items-center cursor-pointer w-full h-14"
-        :class="{ active: getRouteName === 'pipeline' }"
-      >
-        <InlineSvg v-if="getRouteName === 'pipeline'" :src="IconActivityPipeLine" />
-        <InlineSvg v-else :src="IconPipeLine" />
-      </router-link>
-      <router-link
         v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: `${route.meta.type}/all-leads` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
@@ -67,6 +48,27 @@
 
       <router-link
         v-if="$can('advisor', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
+        :to="{ name: 'pipeline' }"
+        class="item flex justify-center items-center cursor-pointer w-full h-14"
+        :class="{ active: getRouteName === 'pipeline' }"
+      >
+        <InlineSvg v-if="getRouteName === 'pipeline'" :src="IconActivityPipeLine" />
+        <InlineSvg v-else :src="IconPipeLine" />
+      </router-link>
+
+      <router-link
+        v-if="$can('advisor', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
+        :to="{ name: 'activity' }"
+        class="item flex justify-center items-center cursor-pointer w-full h-14"
+        :class="{ active: getRouteName === 'activity' }"
+      >
+        <!-- <InlineSvg v-if="getRouteName === 'activity'" :src="IconAssetsActive" /> -->
+        <!-- <InlineSvg v-else :src="IconAssets" /> -->
+        <el-icon :color="getRouteName === 'activity' ? 'white' : '#677494'" :size="24"><Clock /></el-icon>
+      </router-link>
+
+      <router-link
+        v-if="$can('advisor', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: 'logs' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'logs' }"
@@ -82,6 +84,8 @@
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { Clock } from '@element-plus/icons-vue'
+
 import IconList from '@/assets/svg/icon-list.svg'
 import IconListActive from '@/assets/svg/list-sidebar-active.svg'
 import IconAssets from '@/assets/svg/icon-assets.svg'
@@ -100,6 +104,9 @@ import IrisIconReverse from '@/assets/svg/iris-icon-reverse.svg'
 
 export default {
   name: 'SwdSideBar',
+  components: {
+    Clock,
+  },
   setup() {
     const store = useStore()
     const route = useRoute()

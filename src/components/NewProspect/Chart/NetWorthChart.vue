@@ -38,7 +38,7 @@ export default {
       () => {
         doughnutChart.data.datasets = [
           {
-            backgroundColor: ['#53576A', '#66B6FF', '#FF92A5'],
+            backgroundColor: ['#53576A', '#66B6FF', '#f58833'],
             data: [props.values.liquid.percent, props.values.market.percent, props.values.income_safe.percent],
           },
         ]
@@ -59,7 +59,7 @@ export default {
       data: {
         datasets: [
           {
-            backgroundColor: props.values.total !== 0 ? ['#53576A', '#66B6FF', '#FF92A5'] : ['#D3D3D3'],
+            backgroundColor: props.values.total !== 0 ? ['#53576A', '#66B6FF', '#f58833'] : ['#D3D3D3'],
             data:
               props.values.total !== 0
                 ? [props.values.liquid.percent, props.values.market.percent, props.values.income_safe.percent]

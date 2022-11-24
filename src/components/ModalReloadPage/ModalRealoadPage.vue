@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="isShowModal" title="Info" width="50%" center custom-class="dialog-reload">
+  <el-dialog v-model="isShowModal" title="Info" width="50%" center class="dialog-reload">
     <p>The application has a new version available.</p>
     <p>Please refresh the page to get latest updates</p>
     <template #footer>

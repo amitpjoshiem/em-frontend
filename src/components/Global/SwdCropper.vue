@@ -4,7 +4,7 @@
     title="Change avatar"
     :before-close="handleClose"
     width="40%"
-    custom-class="dialog-style"
+    class="dialog-style"
     @closed="closeCropper"
   >
     <vue-cropper ref="cropper" :src="state.imgSrc" :container-style="{ 'max-width': '450px', 'max-height': '700px' }" />
