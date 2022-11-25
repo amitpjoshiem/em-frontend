@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UsersListTable v-if="!isLoading" :users-list="data" is-show-onboarding />
+    <UsersListTable v-if="!isLoading" :users-list="data" is-show-onboarding is-show-email />
     <el-skeleton v-else :rows="rows" animated class="p-5" />
     <div class="flex items-center justify-center border-color-grey py-6">
       <div class="w-3/12" />
