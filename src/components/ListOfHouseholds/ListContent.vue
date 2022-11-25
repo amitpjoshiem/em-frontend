@@ -31,7 +31,7 @@
         <TabAllPreLeads
           v-if="visibleTab.includes('all-pre-leads')"
           :is-loading="isLoading"
-          :count="!isLoading ? data.leads.inactive : 0"
+          :count="!isLoading ? data.count.pre_lead : 0"
         />
       </div>
       <div v-if="$can('advisor', 'all')" class="flex items-center">
