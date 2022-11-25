@@ -16,7 +16,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column v-if="isLead" label="E-mail" min-width="210">
+    <el-table-column v-if="isShowEmail" label="E-mail" min-width="210">
       <template #default="scope">
         {{ scope.row.email }}
       </template>
@@ -28,13 +28,13 @@
       </template>
     </el-table-column>
 
-    <el-table-column v-if="!isLead" label="Type" min-width="110">
+    <el-table-column v-if="isShowLabel" label="Type" min-width="110">
       <template #default="scope">
         <SwdTypeUserLabel :user-type="scope.row.type" class="text-xss" />
       </template>
     </el-table-column>
 
-    <el-table-column label="Onboarding" prop="step" min-width="115" sortable>
+    <el-table-column v-if="isShowOnboarding" label="Onboarding" prop="step" min-width="115" sortable>
       <template #default="scope">
         <SwdLinearProgress :percentage="scope.row.onboarding" :show-text="true" />
       </template>
@@ -47,16 +47,21 @@
       </template>
     </el-table-column>
 
-    <el-table-column v-if="!isLead" label="net worth" min-width="95">
+    <el-table-column v-if="isShowNetWorth" label="net worth" min-width="95">
       <SwdStubForText text="" plug="&mdash;" class="text-xss text-main font-semibold" />
     </el-table-column>
 
     <el-table-column min-width="55">
       <template #default="scope">
         <SwdLeadActions v-if="scope.row.type === 'lead'" :user="scope.row" />
-        <SwdMemberActions v-else :user="scope.row" class="border rounded" />
+        <SwdMemberActions
+          v-if="scope.row.type === 'client' || scope.row.type === 'prospect'"
+          :user="scope.row"
+          class="border rounded"
+        />
       </template>
     </el-table-column>
+    <div>isShowNetWorth - {{ isShowNetWorth }}</div>
   </el-table>
 </template>
 
@@ -83,7 +88,22 @@ export default {
       require: true,
       default: () => [],
     },
-    isLead: {
+    isShowEmail: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    isShowLabel: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    isShowNetWorth: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    isShowOnboarding: {
       type: Boolean,
       require: false,
       default: false,

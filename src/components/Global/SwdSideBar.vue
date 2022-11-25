@@ -47,6 +47,16 @@
       </router-link>
 
       <router-link
+        v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
+        :to="{ name: `${route.meta.type}/all-pre-leads` }"
+        class="item flex justify-center items-center cursor-pointer w-full h-14"
+        :class="{ active: getRouteName === 'pre-leads' }"
+      >
+        <span v-if="getRouteName === `${route.meta.type}/all-pre-leads`" class="text-white font-semibold"> PL </span>
+        <span v-else class="text-icon-not-active">PL</span>
+      </router-link>
+
+      <router-link
         v-if="$can('advisor', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: 'pipeline' }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
@@ -62,8 +72,6 @@
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'activity' }"
       >
-        <!-- <InlineSvg v-if="getRouteName === 'activity'" :src="IconAssetsActive" /> -->
-        <!-- <InlineSvg v-else :src="IconAssets" /> -->
         <el-icon :color="getRouteName === 'activity' ? 'white' : '#677494'" :size="24"><Clock /></el-icon>
       </router-link>
 
