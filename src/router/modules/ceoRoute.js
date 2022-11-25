@@ -77,21 +77,20 @@ export const ceoRoute = {
         {
           path: 'all-leads',
           name: `${type}/all-leads`,
-          component: () =>
-            import(/* webpackChunkName: "ListOfLeads" */ '../../components/ListOfLeads/ListAllLeads.vue'),
+          component: () => import(/* webpackChunkName: "ListLeads" */ '../../components/ListLeads/ListAllLeads.vue'),
         },
         {
           path: 'active-leads',
           name: `${type}/active-leads`,
           component: () =>
-            import(/* webpackChunkName: "ListActiveLeads" */ '../../components/ListOfLeads/ListActiveLeads.vue'),
+            import(/* webpackChunkName: "ListActiveLeads" */ '../../components/ListLeads/ListActiveLeads.vue'),
         },
         {
           path: 'deactivated-leads',
           name: `${type}/deactivated-leads`,
           component: () =>
             import(
-              /* webpackChunkName: "ListDeactivatedLeads" */ '../../components/ListOfLeads/ListDeactivatedLeads.vue'
+              /* webpackChunkName: "ListDeactivatedLeads" */ '../../components/ListLeads/ListDeactivatedLeads.vue'
             ),
         },
       ],

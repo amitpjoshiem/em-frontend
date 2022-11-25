@@ -1,7 +1,7 @@
 <template>
   <el-skeleton v-if="isLoading" :rows="rows" animated class="p-5" />
   <SwdErrorBlock v-else-if="isError" />
-  <UsersListTable v-else-if="data" :users-list="data" />
+  <UsersListTable v-else-if="data" :users-list="data" is-show-net-worth is-show-onboarding />
   <div class="flex items-center justify-center border-color-grey py-6">
     <div class="w-3/12" />
     <div class="w-6/12 flex justify-center">
