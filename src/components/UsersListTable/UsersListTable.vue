@@ -18,7 +18,7 @@
 
     <el-table-column v-if="isShowEmail" label="E-mail" min-width="210">
       <template #default="scope">
-        {{ scope.row.email }}
+        <a class="text-main-blue" href="mailto:{{scope.row.email}}">{{ scope.row.email }}</a>
       </template>
     </el-table-column>
 
@@ -61,7 +61,6 @@
         />
       </template>
     </el-table-column>
-    <div>isShowNetWorth - {{ isShowNetWorth }}</div>
   </el-table>
 </template>
 
