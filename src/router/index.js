@@ -28,6 +28,12 @@ const routes = [
   loginRoute,
 
   {
+    path: '/telegram-login',
+    name: 'telegram-login',
+    component: () => import(/* webpackChunkName: "Forbidden" */ '../views/TelegramLogin.vue'),
+  },
+
+  {
     path: '/403',
     name: '403',
     component: () => import(/* webpackChunkName: "Forbidden" */ '../views/Forbidden.vue'),
