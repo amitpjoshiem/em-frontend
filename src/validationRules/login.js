@@ -7,10 +7,7 @@ const rules = {
       trigger: ['blur'],
     },
   ],
-  password: [
-    { type: 'string', required: true, message: 'Please input password' },
-    { min: 6, message: 'Length should be min 6', trigger: 'blur' },
-  ],
+  password: [{ type: 'string', required: true, message: 'Please input password' }],
   code: [
     { required: true, message: 'Please input OTP code', trigger: 'blur' },
     { validator: checkOtp, trigger: 'blur' },
