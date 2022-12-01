@@ -1,6 +1,6 @@
 <template>
   <SwdWrapper>
-    <SwdSubHeader title="List of Pre-Leads" />
+    <SwdSubHeader title="List of Prospects with 1st appointment stage" />
     <ListContent :visible-tab="['all-pre-leads']" destination="pre_lead" />
   </SwdWrapper>
 </template>

@@ -41,9 +41,9 @@
           "
           class="text-white font-semibold"
         >
-          LL
+          Pr.
         </span>
-        <span v-else class="text-icon-not-active">LL</span>
+        <span v-else class="text-icon-not-active">Pr.</span>
       </router-link>
 
       <router-link
@@ -52,8 +52,8 @@
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'pre-leads' }"
       >
-        <span v-if="getRouteName === `${route.meta.type}/all-pre-leads`" class="text-white font-semibold"> PL </span>
-        <span v-else class="text-icon-not-active">PL</span>
+        <span v-if="getRouteName === `${route.meta.type}/all-pre-leads`" class="text-white font-semibold"> LP </span>
+        <span v-else class="text-icon-not-active">LP</span>
       </router-link>
 
       <router-link
