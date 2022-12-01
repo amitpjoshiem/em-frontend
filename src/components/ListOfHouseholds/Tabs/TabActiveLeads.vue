@@ -5,7 +5,7 @@
       class="text-main text-smm cursor-pointer"
       :class="{ active: getType === 'primary' }"
     >
-      Active Leads
+      Active Prospects
     </router-link>
   </el-badge>
 </template>
