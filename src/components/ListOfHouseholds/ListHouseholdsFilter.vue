@@ -43,7 +43,7 @@ import { useSearchUsers } from '@/api/use-search-users.js'
 import { useStore } from 'vuex'
 
 export default {
-  name: 'ListOfHouseholdsFilter',
+  name: 'ListHouseholdsFilter',
   components: {
     Search,
   },
@@ -89,6 +89,16 @@ export default {
           state.value = store.state.globalComponents.ownerLead.name
         }
       }
+
+      if (props.listType === 'pre_lead') {
+        if (store.state.globalComponents.onlyMyPreLead === 'my') {
+          ruleForm.owner = true
+        }
+
+        if (store.state.globalComponents.ownerPreLead?.name) {
+          state.value = store.state.globalComponents.ownerPreLead.name
+        }
+      }
     })
 
     const querySearchAsync = async (_, callback) => {
@@ -119,7 +129,7 @@ export default {
           store.commit('globalComponents/setOnlyMyMember', '')
         }
       }
-      if (props.listType === 'lead') {
+      if (props.listType === 'leads') {
         if (ruleForm.owner) {
           state.value = ''
           store.commit('globalComponents/setOnlyMyLead', 'my')
@@ -130,11 +140,23 @@ export default {
           store.commit('globalComponents/setOnlyMyLead', '')
         }
       }
+      if (props.listType === 'pre_lead') {
+        if (ruleForm.owner) {
+          state.value = ''
+          store.commit('globalComponents/setOnlyMyPreLead', 'my')
+          store.commit('globalComponents/setOwnerPreLead', null)
+        }
+
+        if (!ruleForm.owner) {
+          store.commit('globalComponents/setOnlyMyPreLead', '')
+        }
+      }
     }
 
     const handleSelect = (item) => {
       state.value = item.name
       ruleForm.owner = false
+
       if (props.listType === 'member') {
         store.commit('globalComponents/setOwnerMember', item)
         store.commit('globalComponents/setOnlyMyMember', 'selected')
@@ -142,6 +164,10 @@ export default {
       if (props.listType === 'lead') {
         store.commit('globalComponents/setOwnerLead', item)
         store.commit('globalComponents/setOnlyMyLead', 'selected')
+      }
+      if (props.listType === 'pre_lead') {
+        store.commit('globalComponents/setOwnerPreLead', item)
+        store.commit('globalComponents/setOnlyMyPreLead', 'selected')
       }
     }
 
@@ -153,6 +179,10 @@ export default {
       if (props.listType === 'lead') {
         store.commit('globalComponents/setOwnerLead', null)
         store.commit('globalComponents/setOnlyMyLead', '')
+      }
+      if (props.listType === 'pre_lead') {
+        store.commit('globalComponents/setOwnerPreLead', null)
+        store.commit('globalComponents/setOnlyMyPreLead', '')
       }
     }
 

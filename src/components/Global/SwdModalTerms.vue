@@ -5,7 +5,7 @@
     width="80%"
     center
     :show-close="false"
-    custom-class="dialog-terms"
+    class="dialog-terms"
     :close-on-press-escape="false"
     :close-on-click-modal="false"
   >

@@ -28,9 +28,14 @@
           :is-loading="isLoading"
           :count="!isLoading ? data.leads.inactive : 0"
         />
+        <TabAllPreLeads
+          v-if="visibleTab.includes('all-pre-leads')"
+          :is-loading="isLoading"
+          :count="!isLoading ? data.count.pre_lead : 0"
+        />
       </div>
       <div v-if="$can('advisor', 'all')" class="flex items-center">
-        <ListOfHouseholdsFilter class="pr-2" :list-type="listType" />
+        <ListHouseholdsFilter class="pr-2" :list-type="listType" />
       </div>
     </div>
     <router-view />
@@ -45,7 +50,8 @@ import TabClients from './Tabs/TabClients.vue'
 import TabAllLeads from './Tabs/TabAllLeads.vue'
 import TabActiveLeads from './Tabs/TabActiveLeads.vue'
 import TabDeactivatedLeads from './Tabs/TabDeactivatedLeads.vue'
-import ListOfHouseholdsFilter from './ListOfHouseholdsFilter.vue'
+import TabAllPreLeads from './Tabs/TabAllPreLeads.vue'
+import ListHouseholdsFilter from './ListHouseholdsFilter.vue'
 import { computed } from 'vue'
 import { useFetchStatsMembers } from '@/api/use-fetch-stats-members.js'
 
@@ -58,7 +64,8 @@ export default {
     TabAllLeads,
     TabActiveLeads,
     TabDeactivatedLeads,
-    ListOfHouseholdsFilter,
+    TabAllPreLeads,
+    ListHouseholdsFilter,
   },
   props: {
     visibleTab: {
@@ -75,12 +82,12 @@ export default {
   setup(props) {
     const getMembersStats = computed(() => {
       if (props.destination === 'households') return 'client,prospect'
-      return 'lead'
+      return props.destination
     })
 
     const listType = computed(() => {
       if (props.destination === 'households') return 'member'
-      return 'lead'
+      return props.destination
     })
 
     const { isLoading, isFetching, isError, data } = useFetchStatsMembers(getMembersStats)

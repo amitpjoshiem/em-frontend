@@ -17,6 +17,7 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
     if (store.state.globalComponents.sortMembers.sortedBy === 'descending') return 'desc'
     return undefined
   })
+
   const onlyMy = computed(() => {
     if (store.state.globalComponents.role === 'assistant') {
       return 'selected'
@@ -27,8 +28,12 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
     if (type === 'lead') {
       return store.state.globalComponents.onlyMyLead
     }
+    if (type === 'pre_lead') {
+      return store.state.globalComponents.onlyMyPreLead
+    }
     return ''
   })
+
   const ownerIdMember = computed(() => {
     if (store.state.globalComponents.role === 'assistant') {
       return store.state.globalComponents.advisorId
@@ -38,6 +43,9 @@ export const useListHouseholders = ({ type, page, status = '', include }) => {
     }
     if (type === 'lead') {
       return store.state.globalComponents.ownerLead?.id
+    }
+    if (type === 'pre_lead') {
+      return store.state.globalComponents.ownerPreLead?.id
     }
     return ''
   })

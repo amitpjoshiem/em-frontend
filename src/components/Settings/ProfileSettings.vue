@@ -117,7 +117,7 @@ export default {
     const userFullName = computed(() => {
       const lastName = user.value.lastName !== null ? user.value.lastName : '...'
       const firstName = user.value.firstName !== null ? user.value.firstName : '...'
-      return lastName + ' ' + firstName
+      return firstName + ' ' + lastName
     })
 
     const handleChange = (file) => {

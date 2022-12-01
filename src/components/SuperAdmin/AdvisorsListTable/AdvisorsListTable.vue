@@ -51,11 +51,6 @@ export default {
       require: true,
       default: () => [],
     },
-    isLead: {
-      type: Boolean,
-      require: false,
-      default: false,
-    },
   },
   setup() {
     const store = useStore()

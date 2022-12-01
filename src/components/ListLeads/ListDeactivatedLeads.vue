@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UsersListTable v-if="!isLoading" :users-list="data" is-lead />
+    <UsersListTable v-if="!isLoading" :users-list="data" is-show-onboarding is-show-email />
     <el-skeleton v-else :rows="rows" animated class="p-5" />
     <div class="flex items-center justify-center border-color-grey py-6">
       <SwdPagination v-if="pagination.value" :options="pagination.value" @selectPage="handlePaginationChange" />
@@ -16,7 +16,7 @@ import { useStore } from 'vuex'
 import { usePaginationData } from '@/utils/use-pagination-data.js'
 
 export default {
-  name: 'ListActiveLeads',
+  name: 'ListDeactivatedLeads',
   components: {
     UsersListTable,
   },
@@ -29,7 +29,7 @@ export default {
 
     const { isLoading, isError, data, pagination } = useListHouseholders({
       type: 'lead',
-      status: 'active',
+      status: 'inactive',
       page: paginationData,
     })
 

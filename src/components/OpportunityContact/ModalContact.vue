@@ -3,7 +3,7 @@
     v-model="state.dialogVisible"
     :title="getTitleModal"
     width="55%"
-    custom-class="dialog-style pdf-viewer"
+    class="dialog-style pdf-viewer"
     :before-close="closeDialog"
   >
     <el-form ref="form" :model="contact" label-position="top" :rules="rules">

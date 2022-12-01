@@ -234,12 +234,12 @@ export default {
     const step = computed(() => store.state.newProspect.step)
 
     const saveStep = () => {
-      router.push({ name: 'blueprint-report', params: { id: route.params.id } })
+      router.push({ name: `${route.meta.type}/blueprint-report`, params: { id: route.params.id } })
     }
 
     const backStep = () => {
       store.commit('newProspect/setStep', step.value - 1)
-      router.push({ name: 'add-assets-consolidations', params: { id: route.params.id } })
+      router.push({ name: `${route.meta.type}/assets-consolidations`, params: { id: route.params.id } })
     }
 
     return {

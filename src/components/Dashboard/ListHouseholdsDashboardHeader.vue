@@ -17,7 +17,7 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 
 export default {
-  name: 'ListOfHouseholdsHeader',
+  name: 'ListHouseholdsDashboardHeader',
   setup() {
     const store = useStore()
     const route = useRoute()

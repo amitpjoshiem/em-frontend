@@ -6,11 +6,14 @@
     <InlineSvg :src="IrisLogoStandart" width="100" height="40" />
   </div>
   <div class="w-5/12 flex justify-end">
-    <NewLeadBtn class="mr-4" />
+    <template v-if="showContent.showNewLeadBtn">
+      <NewLeadBtn class="mr-4" />
+      <NewLeadModal />
+    </template>
+
     <NewOpportunityBtn class="mr-4" />
     <HeaderNotificationsBlock class="mr-4" />
     <UserAction />
-    <NewLeadModal />
   </div>
 </template>
 
@@ -22,6 +25,7 @@ import UserAction from '@/components/UserAction.vue'
 import SwdRemoteSearch from '@/components/Global/SwdRemoteSearch.vue'
 import HeaderNotificationsBlock from '@/components/Header/HeaderNotificationsBlock.vue'
 import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
+import { useShowContentEnv } from '@/hooks/use-show-content-env'
 
 export default {
   name: 'AdvisorHeader',
@@ -34,8 +38,11 @@ export default {
     NewOpportunityBtn,
   },
   setup() {
+    const { showContent } = useShowContentEnv()
+
     return {
       IrisLogoStandart,
+      showContent,
     }
   },
 }
