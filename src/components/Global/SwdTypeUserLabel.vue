@@ -4,7 +4,7 @@
     :class="{
       'text-activity border-blue-primary bg-blue-primary-light': userType === 'prospect',
       'text-orange-primary border-orange-primary bg-orange-primary-light': userType === 'client',
-      'text-main-orange border-main-blue': userType === 'lead',
+      'text-main-green border-main-blue': userType === 'lead',
       'text-main border-main-blue': userType === 'pre_lead',
     }"
   >
@@ -29,6 +29,7 @@ export default {
     const title = computed(() => {
       if (props.userType === 'prospect') return 'Opportunity'
       if (props.userType === 'pre_lead') return 'Pre-Lead'
+      if (props.userType === 'lead') return 'Prospect'
       return props.userType
     })
 
