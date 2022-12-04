@@ -1,13 +1,13 @@
 <template>
-  <div class="flex justify-between">
-    <WidgetAmountUser class="mr-2" title="Client" :loading="isLoading" :amount="isLoading ? 0 : data.count.client" />
+  <div class="flex">
+    <WidgetAmountUser title="Client" :loading="isLoading" :amount="isLoading ? 0 : data.count.client" />
     <WidgetAmountUser
       class="mr-2"
       title="Opportunity"
       :loading="isLoading"
       :amount="isLoading ? 0 : data.count.prospect"
     />
-    <WidgetAmountUser class="mr-2" title="Prospect" :loading="isLoading" :amount="isLoading ? 0 : data.count.lead" />
+    <WidgetAmountUser title="Prospect" :loading="isLoading" :amount="isLoading ? 0 : data.count.lead" />
     <WidgetAmountUser
       title="Prospect 1st appointment stage"
       :loading="isLoading"

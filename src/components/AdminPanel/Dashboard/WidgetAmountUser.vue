@@ -1,17 +1,20 @@
 <template>
-  <el-card v-loading="loading" class="w-3/12" shadow="always">
-    <div class="flex flex-col justify-center items-center py-2">
-      <el-icon color="#83ccf0" :size="30"><Avatar /></el-icon>
-      <span class="font-semibold text-main py-4 text-center">{{ title }}</span>
-      <span class="font-semibold text-main">
-        {{ amount }}
-      </span>
-    </div>
-  </el-card>
+  <router-link :to="{ name: `${route.meta.type}/ap-users` }">
+    <el-card v-loading="loading" class="w-[200px] h-[180px] mr-2" shadow="always">
+      <div class="flex flex-col justify-center items-center py-2 text-sm">
+        <el-icon color="#83ccf0" :size="30"><Avatar /></el-icon>
+        <span class="font-semibold text-main py-4 text-center">{{ title }}</span>
+        <span class="font-semibold text-main">
+          {{ amount }}
+        </span>
+      </div>
+    </el-card>
+  </router-link>
 </template>
 
 <script>
 import { Avatar } from '@element-plus/icons-vue'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'WidgetAmountUser',
@@ -35,6 +38,11 @@ export default {
       default: 0,
     },
   },
-  setup() {},
+  setup() {
+    const route = useRoute()
+    return {
+      route,
+    }
+  },
 }
 </script>
