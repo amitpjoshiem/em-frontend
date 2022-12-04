@@ -101,10 +101,8 @@ const getDefaultState = () => {
     ownerMember: null,
     onlyMyLead: false,
     ownerLead: null,
-
     onlyMyPreLead: false,
     ownerPreLead: null,
-
     summaryInfoMemberId: null,
   }
 }
