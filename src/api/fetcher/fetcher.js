@@ -21,6 +21,5 @@ export const fetcher = async ({ url, data, options }) => {
   } catch (error) {
     showErrorResponse(error)
     throw new Error(body)
-    // return { error }
   }
 }
