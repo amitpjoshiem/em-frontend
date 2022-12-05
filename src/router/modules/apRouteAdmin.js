@@ -4,10 +4,10 @@ const type = 'admin'
 
 export const apRouteAdmin = {
   path: '/admin-panel',
-  name: 'admin-panel',
+  name: 'ap-admin',
   component: AdminPanelHome,
   meta: {
-    resource: [{ admin: 'all' }, { ceo: 'all' }],
+    resource: [{ admin: 'all' }],
     type,
   },
   children: [

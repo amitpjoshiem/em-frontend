@@ -4,10 +4,10 @@ const type = 'ceo'
 
 export const apRouteCeo = {
   path: '/admin-panel',
-  name: 'admin-panel',
+  name: 'ap-ceo',
   component: AdminPanelHome,
   meta: {
-    resource: [{ admin: 'all' }, { ceo: 'all' }],
+    resource: [{ ceo: 'all' }],
     type,
   },
   children: [
