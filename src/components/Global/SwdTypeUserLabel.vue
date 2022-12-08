@@ -28,7 +28,7 @@ export default {
   setup(props) {
     const title = computed(() => {
       if (props.userType === 'prospect') return 'Opportunity'
-      if (props.userType === 'pre_lead') return 'Pre-Lead'
+      if (props.userType === 'pre_lead') return 'Prospect 1app'
       if (props.userType === 'lead') return 'Prospect'
       return props.userType
     })
