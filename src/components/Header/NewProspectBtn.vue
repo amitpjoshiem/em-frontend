@@ -1,7 +1,7 @@
 <template>
   <SwdButton primary small class="mr-2" @click="newLead">
     <InlineSvg :src="IconPlus" class="mr-1.5" />
-    New lead
+    New prospect
   </SwdButton>
 </template>
 
@@ -10,7 +10,7 @@ import IconPlus from '@/assets/svg/icon-plus.svg'
 import { useStore } from 'vuex'
 
 export default {
-  name: 'NewLeadBtn',
+  name: 'NewProspectBtn',
   setup() {
     const store = useStore()
 
