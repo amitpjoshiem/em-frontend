@@ -323,3 +323,12 @@ input::-webkit-inner-spin-button {
 .disabled-link {
   pointer-events: none;
 }
+
+.client-report-range .el-range-editor--small.el-input__wrapper {
+  height: 28px;
+}
+
+
+.el-form-item__label{
+  color: #282828;
+}

@@ -6,11 +6,8 @@ import { fetchClientReport } from './vueQuery/fetch-client-report'
 import { dataFactory } from '@/utils/dataFactory'
 import { reactive } from 'vue'
 
-export const useClientReport = (id) => {
+export const useClientReport = (id, options = {}) => {
   let clientReport = reactive({})
-  let clientReportYear = reactive({})
-  let clientReportSince = reactive({})
-
   const queryKey = reactive(['clientReport', id])
 
   const query = useQuery(
@@ -20,17 +17,17 @@ export const useClientReport = (id) => {
     },
     {
       select: (data) => {
-        clientReportYear.value = dataFactory(ClientReportYear, data.data.current_year)
-        clientReportSince.value = dataFactory(ClientReportSince, data.data.since_inception)
-        return new ClientReport(data.data)
+        clientReport = new ClientReport(data.data)
+        clientReport.current_year = dataFactory(ClientReportYear, data.data.current_year)
+        clientReport.since_inception = dataFactory(ClientReportSince, data.data.since_inception)
+        return clientReport
       },
+      ...options,
     }
   )
 
   return {
     clientReport,
-    clientReportYear,
-    clientReportSince,
     ...query,
   }
 }
