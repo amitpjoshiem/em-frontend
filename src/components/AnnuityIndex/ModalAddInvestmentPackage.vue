@@ -3,7 +3,7 @@
     v-model="dialogVisible"
     title="Add Investment Package"
     width="55%"
-    custom-class="dialog-style pdf-viewer"
+    class="dialog-style pdf-viewer"
     :before-close="closeDialog"
     destroy-on-close
   >

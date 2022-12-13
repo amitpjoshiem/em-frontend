@@ -1,11 +1,11 @@
 <template>
   <el-badge :value="count" :max="99" class="mr-8" :type="getType" :hidden="isLoading">
     <router-link
-      :to="{ name: `${route.meta.type}/all-leads` }"
+      :to="{ name: `${route.meta.type}/all-pre-leads` }"
       class="text-main text-smm cursor-pointer"
       :class="{ active: getType === 'primary' }"
     >
-      All Prospects
+      All
     </router-link>
   </el-badge>
 </template>
@@ -14,7 +14,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 export default {
-  name: 'TabAllLeads',
+  name: 'TabAllPreLeads',
   props: {
     count: {
       type: Number,
@@ -31,7 +31,7 @@ export default {
     const route = useRoute()
 
     const getType = computed(() => {
-      if (route.name === route.meta.type + '/all-leads') return 'primary'
+      if (route.name === route.meta.type + '/all-pre-leads') return 'primary'
       return 'info'
     })
 

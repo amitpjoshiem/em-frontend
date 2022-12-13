@@ -16,19 +16,13 @@
       </template>
     </el-table-column>
 
-    <el-table-column v-if="isLead" label="E-mail" min-width="195">
-      <template #default="scope">
-        {{ scope.row.email }}
-      </template>
-    </el-table-column>
-
     <el-table-column prop="created_at" label="created At" min-width="110">
       <template #default="scope">
         <span class="text-xss">{{ scope.row.createdAtFormatted }}</span>
       </template>
     </el-table-column>
 
-    <el-table-column v-if="!isLead" label="Type" min-width="125">
+    <el-table-column label="Type" min-width="125">
       <template #default="scope">
         <SwdTypeUserLabel :user-type="scope.row.type" class="text-xss" />
       </template>
@@ -79,11 +73,6 @@ export default {
       type: Array,
       require: true,
       default: () => [],
-    },
-    isLead: {
-      type: Boolean,
-      require: false,
-      default: false,
     },
   },
   setup() {

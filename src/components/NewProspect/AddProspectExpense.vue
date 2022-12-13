@@ -17,6 +17,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             class="w-2/12 mr-2"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -25,6 +26,7 @@
             :disabled="isLoadingCreate"
             placeholder="$12345"
             class="w-2/12 ml-2"
+            prepend
             @blur="change()"
           />
         </div>
@@ -37,6 +39,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -45,6 +48,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -57,6 +61,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -65,6 +70,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -77,6 +83,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -85,6 +92,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -97,6 +105,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -105,6 +114,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -121,6 +131,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -129,6 +140,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -141,6 +153,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -149,6 +162,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -161,6 +175,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -169,6 +184,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -181,6 +197,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -189,6 +206,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -201,6 +219,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -209,6 +228,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -221,6 +241,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -229,6 +250,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -245,6 +267,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -253,6 +276,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -265,6 +289,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -273,6 +298,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -285,6 +311,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -293,6 +320,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -305,6 +333,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -313,6 +342,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -329,6 +359,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -337,6 +368,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -349,6 +381,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -357,6 +390,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -369,6 +403,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -377,6 +412,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -389,6 +425,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -397,6 +434,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -413,6 +451,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -421,6 +460,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -433,6 +473,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -453,6 +494,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -461,6 +503,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -473,6 +516,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -481,6 +525,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -493,6 +538,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -501,6 +547,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -513,6 +560,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -521,6 +569,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>
@@ -533,6 +582,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
           <SwdCurrencyInput
@@ -541,6 +591,7 @@
             :options="optionsCurrencyInput"
             :disabled="isLoadingCreate"
             placeholder="$12345"
+            prepend
             @blur="change()"
           />
         </div>

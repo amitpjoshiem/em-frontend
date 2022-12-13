@@ -30,7 +30,7 @@
   </el-dialog>
 
   <!-- DEACTIVATED LINK -->
-  <el-dialog v-model="dialogVisibleDeactivatedLink" title="Info" width="40%" lock-scroll>
+  <!-- <el-dialog v-model="dialogVisibleDeactivatedLink" title="Info" width="40%" lock-scroll>
     <div class="text-center">
       <el-icon :size="80">
         <info-filled color="#E6A23C" />
@@ -57,7 +57,7 @@
         </el-button>
       </span>
     </template>
-  </el-dialog>
+  </el-dialog> -->
 
   <!-- DEACTIVATED ACC -->
   <el-dialog v-model="dialogVisibleDeactivatedAcc" width="40%" lock-scroll title="Info">
@@ -129,7 +129,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { convertLeadToOpportunity } from '@/api/vueQuery/fetch-convert-lead-to-opportunity'
 import { deactivatedAccLead } from '@/api/vueQuery/fetch-deactivated-acc-lead'
 import { restoreAccLead } from '@/api/vueQuery/fetch-restore-acc-lead'
-import { deactivatedLinkLead } from '@/api/vueQuery/fetch-deactivated-link-lead'
+// import { deactivatedLinkLead } from '@/api/vueQuery/fetch-deactivated-link-lead'
 import { useAlert } from '@/utils/use-alert'
 import { InfoFilled } from '@element-plus/icons-vue'
 
@@ -154,7 +154,7 @@ export default {
     const { mutateAsync: convertLead, isLoading: isLoadingConvertLead } = useMutation(convertLeadToOpportunity)
     const { mutateAsync: fetchDeactivatedAcc, isLoading: isLoadingDeactivatedAcc } = useMutation(deactivatedAccLead)
     const { mutateAsync: fetchRestoreAcc, isLoading: isLoadingRestoreAcc } = useMutation(restoreAccLead)
-    const { mutateAsync: fetchDeactivatedLink, isLoading: isLoadingDeactivatedLink } = useMutation(deactivatedLinkLead)
+    // const { mutateAsync: fetchDeactivatedLink, isLoading: isLoadingDeactivatedLink } = useMutation(deactivatedLinkLead)
 
     const dialogVisibleDeactivatedLink = ref(false)
     const dialogVisibleDeactivatedAcc = ref(false)
@@ -178,12 +178,12 @@ export default {
         })
       }
 
-      if (props.user.is_activated && !props.user.can_convert) {
-        options.push({
-          title: 'Deactivate link',
-          command: 'deactivated-link',
-        })
-      }
+      // if (props.user.is_activated && !props.user.can_convert) {
+      //   options.push({
+      //     title: 'Deactivate link',
+      //     command: 'deactivated-link',
+      //   })
+      // }
 
       if (props.user.can_convert) {
         options.push({
@@ -197,7 +197,7 @@ export default {
 
     const actionsMap = {
       'convert-opportunity': () => convert(),
-      'deactivated-link': () => deactivatedLink(),
+      // 'deactivated-link': () => deactivatedLink(),
       'deactivated-account': () => deactivatedAcc(),
       'restore-account': () => restoreAcc(),
     }
@@ -215,9 +215,9 @@ export default {
       dialogVisibleConvertLead.value = true
     }
 
-    const deactivatedLink = () => {
-      dialogVisibleDeactivatedLink.value = true
-    }
+    // const deactivatedLink = () => {
+    //   dialogVisibleDeactivatedLink.value = true
+    // }
 
     const deactivatedAcc = () => {
       dialogVisibleDeactivatedAcc.value = true
@@ -227,18 +227,18 @@ export default {
       dialogVisibleRestoreAcc.value = true
     }
 
-    const confirmDeactivatedLink = async () => {
-      const res = await fetchDeactivatedLink(props.user.id)
-      if (!('error' in res)) {
-        useAlert({
-          title: 'Success',
-          type: 'success',
-          message: 'Lead link deactivated successfully',
-        })
-        queryClient.invalidateQueries(['householders-list'])
-        dialogVisibleDeactivatedLink.value = false
-      }
-    }
+    // const confirmDeactivatedLink = async () => {
+    //   const res = await fetchDeactivatedLink(props.user.id)
+    //   if (!('error' in res)) {
+    //     useAlert({
+    //       title: 'Success',
+    //       type: 'success',
+    //       message: 'Lead link deactivated successfully',
+    //     })
+    //     queryClient.invalidateQueries(['householders-list'])
+    //     dialogVisibleDeactivatedLink.value = false
+    //   }
+    // }
 
     const confirmDeactivatedAcc = async () => {
       const res = await fetchDeactivatedAcc(props.user.id)
@@ -287,7 +287,7 @@ export default {
       getNameUserModal,
       getActionsOptions,
 
-      confirmDeactivatedLink,
+      // confirmDeactivatedLink,
       confirmDeactivatedAcc,
       confirmRestoredAcc,
       confirmConvertLead,
@@ -299,7 +299,7 @@ export default {
 
       isLoadingDeactivatedAcc,
       isLoadingRestoreAcc,
-      isLoadingDeactivatedLink,
+      // isLoadingDeactivatedLink,
       isLoadingConvertLead,
 
       IconSuccesChanged,

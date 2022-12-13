@@ -5,7 +5,7 @@
       class="text-main text-smm cursor-pointer"
       :class="{ active: getType === 'primary' }"
     >
-      Deactivated Leads
+      Deactivated Prospects
     </router-link>
   </el-badge>
 </template>

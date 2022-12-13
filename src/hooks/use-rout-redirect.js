@@ -1,8 +1,6 @@
-import { useRouter } from 'vue-router'
+import router from '../router/index'
 
 export function useRoutRedirect() {
-  const router = useRouter()
-
   const routRedirect = async ({ role, userId }) => {
     if (role === 'advisor') router.push({ name: 'advisor/dashboard' })
     if (role === 'lead') router.push({ name: 'lead/dashboard' })

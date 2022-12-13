@@ -6,7 +6,7 @@
       </div>
       <el-menu
         active-text-color="#fff"
-        background-color="#042D52"
+        background-color="#073763"
         class="el-menu-vertical-demo"
         :default-active="defaultActive"
         text-color="#677494"

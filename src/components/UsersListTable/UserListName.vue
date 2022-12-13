@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center">
     <SwdAvatar :link="getAvatarUrl" />
-    <div class="pl-2.5 text-main text-xss font-semibold cursor-pointer" @click="showSummary">
+    <div class="pl-2.5 text-main text-xss font-semibold" :class="{ 'cursor-pointer': isCursor }" @click="showSummary">
       {{ user.name }}
     </div>
   </div>
@@ -23,17 +23,12 @@ export default {
   },
   setup(props) {
     const router = useRouter()
-    // const route = useRoute()
     const store = useStore()
 
     const getAvatarUrl = computed(() => {
       if (props.user.avatar?.url) return props.user.avatar.url
       return ''
     })
-
-    // const getCurrentTypeUser = computed(() => {
-    //   return store.state.globalComponents.currentTypeUser
-    // })
 
     const showSummary = () => {
       if (props.user.type === 'client' || props.user.type === 'prospect') {
@@ -49,31 +44,17 @@ export default {
         router.push({ name: 'confirmation-page', params: { id: props.user.id } })
         return
       }
-
-      // if (getCurrentTypeUser.value === 'ceo' || getCurrentTypeUser.value === 'admin') {
-      //   store.commit('globalComponents/setAdvisorId', props.user.owner_id)
-      //   router.push({ name: `${route.meta.type}/member-details`, params: { id: props.user.id } })
-      //   return
-      // }
-
-      // if (props.user.type === 'client') {
-      //   router.push({ name: `${route.meta.type}/member-details`, params: { id: props.user.id } })
-      //   return
-      // }
-
-      // if (props.user.step === 'default') {
-      //   router.push({ name: 'basic-information', params: { id: props.user.id } })
-      //   return
-      // }
-      // if (props.user.step !== 'default') {
-      //   router.push({ name: `${route.meta.type}/member-details`, params: { id: props.user.id } })
-      //   return
-      // }
     }
+
+    const isCursor = computed(() => {
+      if (props.user.type === 'pre_lead') return false
+      return true
+    })
 
     return {
       getAvatarUrl,
       showSummary,
+      isCursor,
     }
   },
 }

@@ -11,7 +11,7 @@
         <LastActivity />
       </div>
     </div>
-    <ListOfHouseholds />
+    <ListHouseholdsDashboard />
   </div>
 </template>
 
@@ -21,7 +21,7 @@ import HeaderDashboard from '@/components/Dashboard/HeaderDashboard.vue'
 import LastActivity from '@/components/Dashboard/LastActivity/LastActivity.vue'
 import OpportunitiesBlock from '@/components/Dashboard/OpportunitiesBlock/OpportunitiesBlock.vue'
 import TopMembers from '@/components/Dashboard/TopMembers/TopMembers.vue'
-import ListOfHouseholds from '@/components/Dashboard/ListOfHouseholds.vue'
+import ListHouseholdsDashboard from '@/components/Dashboard/ListHouseholdsDashboard.vue'
 
 export default {
   name: 'AdvisorDashboard',
@@ -31,7 +31,7 @@ export default {
     OpportunitiesBlock,
     TopMembers,
     HeaderDashboard,
-    ListOfHouseholds,
+    ListHouseholdsDashboard,
   },
 }
 </script>

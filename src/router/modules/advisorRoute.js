@@ -83,22 +83,35 @@ export const advisorRoute = {
         {
           path: 'all-leads',
           name: `${type}/all-leads`,
-          component: () =>
-            import(/* webpackChunkName: "ListOfLeads" */ '../../components/ListOfLeads/ListAllLeads.vue'),
+          component: () => import(/* webpackChunkName: "LisAllLeads" */ '../../components/ListLeads/ListAllLeads.vue'),
         },
         {
           path: 'active-leads',
           name: `${type}/active-leads`,
           component: () =>
-            import(/* webpackChunkName: "ListActiveLeads" */ '../../components/ListOfLeads/ListActiveLeads.vue'),
+            import(/* webpackChunkName: "ListActiveLeads" */ '../../components/ListLeads/ListActiveLeads.vue'),
         },
         {
           path: 'deactivated-leads',
           name: `${type}/deactivated-leads`,
           component: () =>
             import(
-              /* webpackChunkName: "ListDeactivatedLeads" */ '../../components/ListOfLeads/ListDeactivatedLeads.vue'
+              /* webpackChunkName: "ListDeactivatedLeads" */ '../../components/ListLeads/ListDeactivatedLeads.vue'
             ),
+        },
+      ],
+    },
+
+    {
+      path: 'pre-leads',
+      name: `${type}/pre-leads`,
+      component: () => import(/* webpackChunkName: "Pre-Leads" */ '../../views/PreLeads.vue'),
+      children: [
+        {
+          path: 'all-pre-leads',
+          name: `${type}/all-pre-leads`,
+          component: () =>
+            import(/* webpackChunkName: "ListAllPreLeads" */ '../../components/ListPreLeads/ListAllPreLeads.vue'),
         },
       ],
     },
@@ -241,12 +254,12 @@ export const advisorRoute = {
               /* webpackChunkName: "NewProspect" */ '../../components/NewProspect/StressTestResult/NewProspectPdf.vue'
             ),
         },
-        {
-          path: '',
-          redirect: () => {
-            return { name: 'basic-information' }
-          },
-        },
+        // {
+        //   path: '',
+        //   redirect: () => {
+        //     return { name: 'basic-information' }
+        //   },
+        // },
       ],
     },
 

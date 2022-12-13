@@ -18,7 +18,10 @@
   >
     <slot name="main" />
     <template v-if="showFileBlock" #file="{ file }">
-      <div v-if="file.status !== 'uploading' && file.status !== 'ready'" class="sm:flex items-center justify-between">
+      <div
+        v-if="file.status !== 'uploading' && file.status !== 'ready'"
+        class="sm:flex items-center justify-between w-full"
+      >
         <div class="flex items-center">
           <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
           <div class="flex flex-col ml-3">
@@ -42,7 +45,7 @@
             class="mr-5"
             @click="handlePictureCardPreview(file)"
           >
-            Prewiev
+            Preview
           </el-button>
           <el-popconfirm
             v-if="withRemoveBtn"

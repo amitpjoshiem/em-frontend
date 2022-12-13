@@ -5,7 +5,7 @@
     width="50%"
     :before-close="closeDialog"
     destroy-on-close
-    custom-class="dialog-admin-panel-user"
+    class="dialog-admin-panel-user"
   >
     <div class="h-[430px]">
       <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules" class="px-4 pt-4">
