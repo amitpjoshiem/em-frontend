@@ -45,6 +45,7 @@
           <SwdButton info main @click="closeDialog">Cancel</SwdButton>
           <SwdButton class="ml-2" primary main :disabled="confirmBtnDisabled" @click="confirm">
             <SwdSpinner v-show="confirmBtnLoading" class="mr-2" />
+            Share
           </SwdButton>
         </div>
       </span>
@@ -68,11 +69,9 @@ import SwdDialogSucces from '@/components/Global/SwdDialogSucces.vue'
 
 export default defineComponent({
   name: 'SwdShareDialog',
-
   components: {
     SwdDialogSucces,
   },
-
   props: {
     showDialog: {
       type: Boolean,
