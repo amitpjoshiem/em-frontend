@@ -11,21 +11,21 @@
         :default-active="defaultActive"
         text-color="#677494"
       >
-        <router-link :to="{ name: 'ap-dashboard' }">
+        <router-link :to="{ name: `${route.meta.type}/ap-dashboard` }">
           <el-menu-item index="1">
             <el-icon><DataAnalysis /></el-icon>
             <span>Dashboard</span>
           </el-menu-item>
         </router-link>
 
-        <router-link :to="{ name: 'ap-users' }">
+        <router-link :to="{ name: `${route.meta.type}/ap-users` }">
           <el-menu-item index="2">
             <el-icon><User /></el-icon>
             <span>Users</span>
           </el-menu-item>
         </router-link>
 
-        <router-link v-if="$can('ceo', 'all')" :to="{ name: 'ap-companies' }">
+        <router-link v-if="$can('ceo', 'all')" :to="{ name: `${route.meta.type}/ap-companies` }">
           <el-menu-item index="3">
             <el-icon><OfficeBuilding /></el-icon>
             <span>Companies</span>
@@ -56,14 +56,15 @@ export default {
     const defaultActive = ref('1')
 
     onMounted(() => {
-      if (route.name === 'ap-dashboard') defaultActive.value = '1'
-      if (route.name === 'ap-users') defaultActive.value = '2'
-      if (route.name === 'ap-companies') defaultActive.value = '3'
+      if (route.name === `${route.meta.type}/ap-dashboard`) defaultActive.value = '1'
+      if (route.name === `${route.meta.type}/ap-users`) defaultActive.value = '2'
+      if (route.name === `${route.meta.type}/ap-companies`) defaultActive.value = '3'
     })
 
     return {
       defaultActive,
       IconLogo,
+      route,
     }
   },
 }
