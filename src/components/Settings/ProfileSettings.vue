@@ -18,39 +18,39 @@
       </SwdUpload>
       <div class="text-main text-xl ml-12 font-medium">My profile</div>
     </div>
-    <div class="pt-12">
+    <div class="pt-12 text-sm text-main">
       <div class="flex items-center">
-        <div class="text-xss text-title-gray w-2/12">Full name</div>
-        <div class="text-main text-base mr-3">{{ userFullName }}</div>
+        <div class="w-2/12 font-semibold">Full name:</div>
+        <div class="mr-3">{{ userFullName }}</div>
         <ChangeName />
       </div>
       <div v-if="$can('ceo', 'all')" class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">Default Company</div>
+        <div class="w-2/12 font-semibold">Default Company:</div>
         <ChangeCompany :default-company="user.company" />
       </div>
       <div v-if="$can('advisor', 'all')" class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">Position</div>
-        <div class="text-main text-base mr-3">{{ user.position ? user.position : 'Position not added' }}</div>
+        <div class="w-2/12 font-semibold">Position:</div>
+        <div class="mr-3">{{ user.position ? user.position : 'Position not added' }}</div>
       </div>
       <div v-if="$can('advisor', 'all')" class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">NPN</div>
-        <div class="text-main text-base mr-3">{{ user.npn ? user.npn : 'NPN not added' }}</div>
+        <div class="w-2/12 font-semibold">NPN:</div>
+        <div class="mr-3">{{ user.npn ? user.npn : 'NPN not added' }}</div>
       </div>
       <div class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">Phone</div>
-        <div class="text-main text-base mr-3">{{ user.phone ? user.phone : 'Phone number not added' }}</div>
+        <div class="w-2/12 font-semibold">Phone:</div>
+        <div class="mr-3">{{ user.phone ? user.phone : 'Phone number not added' }}</div>
         <div v-if="user.phone" class="mr-2" :class="getClassStatusPhone">
           {{ user.phone_status }}
         </div>
         <!-- <ChangePhone /> -->
       </div>
       <div class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">E-mail</div>
-        <div class="text-main text-base mr-3">{{ user.email }}</div>
+        <div class="w-2/12 font-semibold">E-mail:</div>
+        <div class="mr-3">{{ user.email }}</div>
       </div>
-      <div class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">Password</div>
-        <div class="text-main text-base mr-3">...............</div>
+      <div class="flex items-center pt-11 font-semibold">
+        <div class="w-2/12">Password:</div>
+        <div class="mr-3">...............</div>
         <ChangePassword />
       </div>
     </div>
@@ -95,7 +95,6 @@ export default {
       file: '',
       imgSrc: '',
       croppedFile: '',
-      uploadRef: null,
     })
 
     const handleAvatarSuccess = async (res) => {
@@ -161,7 +160,6 @@ export default {
       upload,
       change,
       bindRef,
-      uploadRef: state.uploadRef,
       userFullName,
       getClassStatusPhone,
     }
