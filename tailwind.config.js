@@ -37,6 +37,8 @@ module.exports = {
 
         'icon-not-active': '#677494',
 
+        'ad-btn-border': '#c8c9cc',
+
         // gray03: '#AAB5CF',
         // 'input-border': '#D4DDEB',
         // 'widget-bg': '#F2F5FA',

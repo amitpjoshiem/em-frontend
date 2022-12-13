@@ -1,46 +1,51 @@
 <template>
   <SwdRemoteSearch class="w-2/12" />
   <div class="flex justify-end items-center text-sm w-8/12">
-    <el-button
-      :type="getRouteName === 'admin/dashboard' || getRouteName === 'ceo/dashboard' ? 'primary' : 'info'"
-      size="small"
-      plain
+    <SwdButton
+      :primary="getRouteName === 'admin/dashboard' || getRouteName === 'ceo/dashboard'"
+      :plain="getRouteName !== 'admin/dashboard' && getRouteName !== 'ceo/dashboard'"
+      small
+      class="mr-4"
       @click="goDashboard"
     >
       Dashboard
-    </el-button>
-    <el-button
-      :type="getRouteName === 'admin/all-advisors' || getRouteName === 'ceo/all-advisors' ? 'primary' : 'info'"
-      size="small"
-      plain
+    </SwdButton>
+    <SwdButton
+      :primary="getRouteName === 'admin/all-advisors' || getRouteName === 'ceo/all-advisors'"
+      :plain="getRouteName !== 'admin/all-advisors' && getRouteName !== 'ceo/all-advisors'"
+      small
+      class="mr-4"
       @click="goAdvisors"
     >
       Advisors
-    </el-button>
-    <el-button
-      plain
-      size="small"
-      :type="getRouteName === 'admin/all' || getRouteName === 'ceo/all' ? 'primary' : 'info'"
+    </SwdButton>
+    <SwdButton
+      :primary="getRouteName === 'admin/all' || getRouteName === 'ceo/all'"
+      :plain="getRouteName !== 'admin/all' && getRouteName !== 'ceo/all'"
+      small
+      class="mr-4"
       @click="goMembers"
     >
       Members
-    </el-button>
-    <el-button
-      plain
-      size="small"
-      :type="getRouteName === 'admin/activity' || getRouteName === 'ceo/activity' ? 'primary' : 'info'"
+    </SwdButton>
+    <SwdButton
+      :primary="getRouteName === 'admin/activity' || getRouteName === 'ceo/activity'"
+      :plain="getRouteName !== 'admin/activity' && getRouteName !== 'ceo/activity'"
+      small
+      class="mr-4"
       @click="goActivity"
     >
       Activity
-    </el-button>
-    <el-button
-      plain
-      size="small"
-      :type="getRouteName === 'admin/pipeline' || getRouteName === 'ceo/pipeline' ? 'primary' : 'info'"
+    </SwdButton>
+    <SwdButton
+      :primary="getRouteName === 'admin/pipeline' || getRouteName === 'ceo/pipeline'"
+      :plain="getRouteName !== 'admin/pipeline' && getRouteName !== 'ceo/pipeline'"
+      small
+      class="mr-4"
       @click="goPipeLine"
     >
       PipeLine
-    </el-button>
+    </SwdButton>
     <SelectCompany v-if="$can('ceo', 'all')" />
   </div>
   <div class="w-2/12 flex justify-end">
