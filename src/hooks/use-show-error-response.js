@@ -1,7 +1,8 @@
 import { ElNotification } from 'element-plus'
+import { isEqual } from 'lodash-es'
 
 export function showErrorResponse(error) {
-  if (error.errors.length) {
+  if (!isEqual(error.errors)) {
     const messages = []
     const errors = Object.values(error.errors)
     errors.forEach((items) => {
@@ -24,11 +25,12 @@ export function showErrorResponse(error) {
         })
       }, 100)
     })
+  } else {
+    ElNotification({
+      title: 'Error',
+      message: error.message,
+      type: 'error',
+      dangerouslyUseHTMLString: true,
+    })
   }
-  ElNotification({
-    title: 'Error',
-    message: error.message,
-    type: 'error',
-    dangerouslyUseHTMLString: true,
-  })
 }
