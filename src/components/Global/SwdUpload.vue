@@ -45,7 +45,7 @@
             class="mr-5"
             @click="handlePictureCardPreview(file)"
           >
-            Prewiev
+            Preview
           </el-button>
           <el-popconfirm
             v-if="withRemoveBtn"
