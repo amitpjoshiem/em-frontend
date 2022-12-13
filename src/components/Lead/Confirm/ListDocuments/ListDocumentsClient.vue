@@ -31,7 +31,7 @@
               small
               @click="handlePictureCardPreview(item.url)"
             >
-              Prewiev
+              Preview
             </SwdButton>
           </div>
         </div>

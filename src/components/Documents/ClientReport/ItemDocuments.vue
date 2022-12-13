@@ -20,7 +20,7 @@
         small
         @click="handlePictureCardPreview(document)"
       >
-        Prewiev
+        Preview
       </SwdButton>
       <SwdButton
         v-if="document.status === 'success' && !$can('client', 'all') && !$can('support', 'all')"

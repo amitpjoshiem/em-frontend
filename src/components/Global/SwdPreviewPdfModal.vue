@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="state.dialogVisible"
-    title="Prewiev PDF"
+    title="Preview PDF"
     width="90%"
     class="dialog-style pdf-viewer"
     :before-close="closeDialog"
