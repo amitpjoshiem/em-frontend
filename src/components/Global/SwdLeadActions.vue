@@ -187,7 +187,7 @@ export default {
 
       if (props.user.can_convert) {
         options.push({
-          title: 'Convert to opportunity',
+          title: 'Convert To Opportunity',
           command: 'convert-opportunity',
         })
       }
