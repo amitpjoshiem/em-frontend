@@ -79,7 +79,7 @@ router.beforeEach(async (to) => {
   const { setUpdateAbility } = useSetUpdateAbility()
 
   if (store.state.auth.isAuth && !store.state.globalComponents.currentCompanyId && !store.state.globalComponents.role) {
-    await setInit()
+    await setInit({ route: to })
   }
 
   if (!ability.rules.length) {
