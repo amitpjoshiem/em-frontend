@@ -16,7 +16,8 @@ export function useSetInit() {
     return response.value.data.user_id
   })
 
-  const setInit = async ({ route }) => {
+  const setInit = async () => {
+    // const setInit = async ({ route = {} }) => {
     store.commit('globalComponents/setIsLoadingApp', true)
     await getInit()
 
@@ -49,9 +50,10 @@ export function useSetInit() {
 
       await setUpdateAbility()
 
-      if (route.name !== 'telegram-login') {
-        routRedirect({ role, userId: getUserId.value })
-      }
+      // if (route && route.name !== 'telegram-login') {
+      //   routRedirect({ role, userId: getUserId.value })
+      // }
+      routRedirect({ role, userId: getUserId.value })
 
       setTimeout(function () {
         store.commit('globalComponents/setIsLoadingApp', false)
