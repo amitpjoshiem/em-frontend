@@ -6,7 +6,12 @@
       <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
         <AddNewContract />
         <template v-if="clientReport">
-          <ContractListItem v-for="item in clientReport" :key="item.id" :contract="item" />
+          <ContractListItem
+            v-for="item in clientReport"
+            :key="item.id"
+            :contract="item"
+            @refetch-list="refetchAllList"
+          />
         </template>
       </div>
       <ClientReportTotal />
@@ -33,13 +38,18 @@ export default {
   setup() {
     const route = useRoute()
 
-    const { isLoading, isError, data: clientReport } = useClientReportsAll(route.params.id)
+    const { isLoading, isError, data: clientReport, refetch } = useClientReportsAll(route.params.id)
+
+    const refetchAllList = () => {
+      refetch.value()
+    }
 
     return {
       isLoading,
       isError,
       clientReport,
       IconEmptyUsers,
+      refetchAllList,
     }
   },
 }
