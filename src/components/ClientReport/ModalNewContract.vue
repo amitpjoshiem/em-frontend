@@ -9,7 +9,7 @@
           <SwdButton primary main class="mr-2 w-28" @click="closeDialog">Cancel</SwdButton>
           <SwdButton primary main class="w-28" :disabled="isLoading" @click="createNewContract">
             <SwdSpinner v-if="isLoading" />
-            Send
+            Create
           </SwdButton>
         </div>
       </el-form>
@@ -78,7 +78,6 @@ export default {
         destination: 'newContract',
         value: false,
       })
-      // router.push({ name: `${route.meta.type}/client-reports-list`, params: { id: route.params.id } })
     }
 
     return {

@@ -29,3 +29,10 @@ export default {
   },
 }
 </script>
+
+<style>
+.item-not-custom {
+  @apply font-semibold bg-main-gray w-full pl-2 rounded flex items-center;
+  height: 32px;
+}
+</style>

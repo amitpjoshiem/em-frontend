@@ -16,7 +16,7 @@
             <div class="flex items-center w-5/12">
               <span class="font-semibold pr-2">Carrier:</span>
               <el-form-item v-if="isCustom">
-                <el-input v-model="ruleForm.carrier" placeholder="Enter Carrier" />
+                <el-input v-model="ruleForm.carrier" placeholder="Enter Carrier" @blur="updateDataContract" />
               </el-form-item>
               <span v-else>
                 <SwdSpinner v-if="isFetching" />
@@ -43,11 +43,12 @@
               <el-form-item class="w-6/12">
                 <el-date-picker
                   v-if="isCustom"
-                  v-model="ruleForm.issue_date"
+                  v-model="ruleForm.origination_date"
                   type="date"
                   format="MM/DD/YYYY"
                   value-format="MM/DD/YYYY"
                   placeholder="Select Date"
+                  @change="updateDataContract"
                 />
                 <span v-else>
                   <SwdSpinner v-if="isFetching" />
@@ -61,13 +62,14 @@
           <div class="border border-main-gray border-dashed p-4">
             <div class="text-center pb-2 font-semibold">Current Year</div>
             <div class="flex justify-between">
-              <el-form-item label="Beginning Balance" prop="address" class="w-2/10 pr-1">
+              <el-form-item label="Beginning Balance" class="w-2/10 pr-1">
                 <SwdCurrencyInput
                   v-if="isCustom"
-                  v-model="ruleForm.beginning_balance"
+                  v-model="ruleForm.current_year.beginning_balance"
                   :options="optionsCurrencyInput"
                   placeholder="000000"
                   prepend
+                  :disabled="loadingUpdate"
                   @blur="updateDataContract"
                 />
                 <NotCustomValue
@@ -76,13 +78,15 @@
                   :is-fetching="isFetching"
                 />
               </el-form-item>
-              <el-form-item label="Interest credited" prop="address" class="w-2/10 px-1">
+              <el-form-item label="Interest credited" class="w-2/10 px-1">
                 <SwdCurrencyInput
                   v-if="isCustom"
-                  v-model="ruleForm.interest_credited"
+                  v-model="ruleForm.current_year.interest_credited"
                   :options="optionsCurrencyInput"
                   placeholder="000000"
                   prepend
+                  :disabled="loadingUpdate"
+                  @blur="updateDataContract"
                 />
                 <NotCustomValue
                   v-else
@@ -90,28 +94,21 @@
                   :is-fetching="isFetching"
                 />
               </el-form-item>
-              <el-form-item label="Growth" prop="address" class="w-2/10 px-1">
-                <SwdCurrencyInput
-                  v-if="isCustom"
-                  v-model="ruleForm.growth"
-                  :options="optionsCurrencyInput"
-                  placeholder="000000"
-                  :disabled="true"
-                  prepend
-                />
+              <el-form-item label="Growth" class="w-2/10 px-1">
                 <NotCustomValue
-                  v-else
-                  :value="isFetching ? 0 : clientReport.current_year.growth"
-                  :is-fetching="isFetching"
+                  :value="isFetching ? 0 : ruleForm.current_year.growth"
+                  :is-fetching="isFetching || loadingUpdate"
                 />
               </el-form-item>
-              <el-form-item label="Withdrawals" prop="address" class="w-2/10 px-1">
+              <el-form-item label="Withdrawals" class="w-2/10 px-1">
                 <SwdCurrencyInput
                   v-if="isCustom"
-                  v-model="ruleForm.withdrawals"
+                  v-model="ruleForm.current_year.withdrawals"
                   :options="optionsCurrencyInput"
                   placeholder="000000"
                   prepend
+                  :disabled="loadingUpdate"
+                  @blur="updateDataContract"
                 />
                 <NotCustomValue
                   v-else
@@ -119,19 +116,10 @@
                   :is-fetching="isFetching"
                 />
               </el-form-item>
-              <el-form-item label="Contract value" prop="address" class="w-2/10 pl-1">
-                <SwdCurrencyInput
-                  v-if="isCustom"
-                  v-model="ruleForm.contract_value"
-                  :options="optionsCurrencyInput"
-                  placeholder="000000"
-                  :disabled="true"
-                  prepend
-                />
+              <el-form-item label="Contract value" class="w-2/10 pl-1">
                 <NotCustomValue
-                  v-else
-                  :value="isFetching ? 0 : clientReport.current_year.contract_value"
-                  :is-fetching="isFetching"
+                  :value="isFetching ? 0 : ruleForm.current_year.contract_value"
+                  :is-fetching="isFetching || loadingUpdate"
                 />
               </el-form-item>
             </div>
@@ -139,15 +127,12 @@
 
           <!-- Since Inception -->
           <div class="flex justify-between pt-10 mb-2">
-            <div class="flex items-center">
-              <span class="font-semibold pr-2">Contract Years:</span>
-              <el-form-item v-if="isCustom">
-                <el-input v-model="ruleForm.contract_years" type="number" placeholder="Enter Contract Years" />
-              </el-form-item>
-              <span v-else>
-                <SwdSpinner v-if="isFetching" />
-                <span v-else class="font-semibold">{{ clientReport.contract_year }}</span>
-              </span>
+            <div class="flex items-center w-full">
+              <div class="font-semibold pr-2 w-3/12">
+                <span> Contract Years: </span>
+                <SwdSpinner v-if="isFetching || loadingUpdate" />
+                <span v-else>{{ ruleForm.contract_year }}</span>
+              </div>
             </div>
           </div>
 
@@ -157,10 +142,12 @@
               <el-form-item label="Total Premiums" prop="address" class="w-2/10 pr-1">
                 <SwdCurrencyInput
                   v-if="isCustom"
-                  v-model="ruleForm.total_premiums"
+                  v-model="ruleForm.since_inception.total_premiums"
                   :options="optionsCurrencyInput"
                   placeholder="000000"
                   prepend
+                  :disabled="loadingUpdate"
+                  @blur="updateDataContract"
                 />
                 <NotCustomValue
                   v-else
@@ -171,10 +158,12 @@
               <el-form-item label="Bonus Received" prop="address" class="w-2/10 px-1">
                 <SwdCurrencyInput
                   v-if="isCustom"
-                  v-model="ruleForm.bonus_received"
+                  v-model="ruleForm.since_inception.bonus_received"
                   :options="optionsCurrencyInput"
                   placeholder="000000"
                   prepend
+                  :disabled="loadingUpdate"
+                  @blur="updateDataContract"
                 />
                 <NotCustomValue
                   v-else
@@ -185,10 +174,12 @@
               <el-form-item label="Interest credited" prop="address" class="w-2/10 px-1">
                 <SwdCurrencyInput
                   v-if="isCustom"
-                  v-model="ruleForm.interest_credited"
+                  v-model="ruleForm.since_inception.interest_credited"
                   :options="optionsCurrencyInput"
                   placeholder="000000"
                   prepend
+                  :disabled="loadingUpdate"
+                  @blur="updateDataContract"
                 />
                 <NotCustomValue
                   v-else
@@ -199,10 +190,12 @@
               <el-form-item label="Total Withdrawals" prop="address" class="w-2/10 px-1">
                 <SwdCurrencyInput
                   v-if="isCustom"
-                  v-model="ruleForm.total_withdrawals"
+                  v-model="ruleForm.since_inception.total_withdrawals"
                   :options="optionsCurrencyInput"
                   placeholder="000000"
                   prepend
+                  :disabled="loadingUpdate"
+                  @blur="updateDataContract"
                 />
                 <NotCustomValue
                   v-else
@@ -211,18 +204,9 @@
                 />
               </el-form-item>
               <el-form-item label="Average Growth" prop="address" class="w-2/10 pl-1">
-                <SwdCurrencyInput
-                  v-if="isCustom"
-                  v-model="ruleForm.average_growth"
-                  :options="optionsCurrencyInput"
-                  placeholder="000000"
-                  prepend
-                  :disabled="true"
-                />
                 <NotCustomValue
-                  v-else
-                  :value="isFetching ? 0 : clientReport.since_inception.average_growth"
-                  :is-fetching="isFetching"
+                  :value="isFetching ? 0 : ruleForm.since_inception.average_growth"
+                  :is-fetching="isFetching || loadingUpdate"
                 />
               </el-form-item>
             </div>
@@ -250,8 +234,9 @@ import { onMounted, ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { updateContract } from '@/api/vueQuery/update-contract'
 import { useMutation } from 'vue-query'
-
+import dayjs from 'dayjs'
 import NotCustomValue from './NotCustomValue.vue'
+
 export default {
   name: 'ContractDetails',
   components: {
@@ -280,6 +265,7 @@ export default {
         await refetch.value()
         isCustom.value = clientReport.value.is_custom
         Object.assign(ruleForm, JSON.parse(JSON.stringify(clientReport.value)))
+        setDate(clientReport.value.origination_date)
       }
       loading.value = false
     })
@@ -288,7 +274,12 @@ export default {
       const res = await update({ id: route.params.contract_id, form: ruleForm })
       if (!('error' in res)) {
         Object.assign(ruleForm, JSON.parse(JSON.stringify(res.data)))
+        setDate(res.date.origination_date)
       }
+    }
+
+    const setDate = (date) => {
+      ruleForm.origination_date = dayjs(date).format('MM/DD/YYYY')
     }
 
     const optionsCurrencyInput = {
@@ -309,17 +300,9 @@ export default {
       isFetching,
       loading,
       updateDataContract,
-
       update,
       loadingUpdate,
     }
   },
 }
 </script>
-
-<style>
-.item-not-custom {
-  @apply font-semibold bg-main-gray w-full pl-2 rounded flex items-center;
-  height: 32px;
-}
-</style>

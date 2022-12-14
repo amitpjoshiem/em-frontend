@@ -56,16 +56,17 @@
 
 <script>
 import IconCurrentYear from '@/assets/svg/icon-current-year.svg'
+import dayjs from 'dayjs'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { computed } from 'vue'
-import dayjs from 'dayjs'
 import { useRouter, useRoute } from 'vue-router'
-import { useMutation } from 'vue-query'
+import { useMutation, useQueryClient } from 'vue-query'
 import { generatePdfClientReports } from '@/api/vueQuery/generate-pdf-client-reports'
 import { generateExcelClientReports } from '@/api/vueQuery/generate-excel-client-reports'
 import { useStore } from 'vuex'
 import { Delete } from '@element-plus/icons-vue'
 import { deleteContract } from '@/api/vueQuery/delete-contract'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'ContractListItem',
@@ -84,6 +85,7 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const store = useStore()
+    const queryClient = useQueryClient()
 
     const memberId = route.params.id
 
@@ -131,7 +133,15 @@ export default {
     }
 
     const confirmEvent = (id) => {
-      deleteReport(id)
+      const res = deleteReport(id)
+      if (!('error' in res)) {
+        queryClient.invalidateQueries(['client-report-list', memberId])
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Delete successfully',
+        })
+      }
     }
 
     return {

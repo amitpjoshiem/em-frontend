@@ -11,7 +11,7 @@ class ClientReport {
   }
 
   get originationDateFormatted() {
-    return dayjs(this.originationDate).format('MM/DD/YYYY')
+    return dayjs(this.origination_date).format('MM/DD/YYYY')
   }
 }
 
