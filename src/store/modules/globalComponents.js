@@ -83,6 +83,7 @@ const getDefaultState = () => {
         addChildOpportunity: false,
         modalSummaryInfo: false,
         restoreDraft: false,
+        newContract: false,
       },
     },
     sortMembers: {

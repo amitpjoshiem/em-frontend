@@ -8,13 +8,13 @@ class ClientReportYear {
     surrender_value,
     origination_value,
   }) {
-    this.beginningBalance = beginning_balance
-    this.interestCredited = interest_credited
+    this.beginning_balance = beginning_balance
+    this.interest_credited = interest_credited
     this.growth = growth
     this.withdrawals = withdrawals
-    this.currentValue = current_value
-    this.surrenderValue = surrender_value
-    this.originationValue = origination_value
+    this.current_value = current_value
+    this.surrender_value = surrender_value
+    this.origination_value = origination_value
   }
 }
 
