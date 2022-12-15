@@ -422,7 +422,6 @@ export default {
     const { stateList } = useStateHook()
 
     const { mutateAsync: createMember, isLoading: isLoadingCreateMember } = useMutation(createMembers)
-
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
     const {

@@ -274,7 +274,7 @@ export default {
       const res = await update({ id: route.params.contract_id, form: ruleForm })
       if (!('error' in res)) {
         Object.assign(ruleForm, JSON.parse(JSON.stringify(res.data)))
-        setDate(res.date.origination_date)
+        setDate(res.data.origination_date)
       }
     }
 

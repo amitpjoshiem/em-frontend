@@ -135,12 +135,12 @@
           <SwdButton primary small class="mr-2">Blueprint report</SwdButton>
         </router-link>
       </div>
-      <div v-else class="flex justify-end pt-5">
+      <div v-else class="flex justify-end py-3">
         <router-link
-          :to="{ name: `${route.meta.type}/clientreport`, params: { id: member.id } }"
-          class="pl-2.5 font-medium"
+          :to="{ name: `${route.meta.type}/client-reports-list`, params: { id: member.id } }"
+          class="font-medium"
         >
-          <SwdButton primary small class="mr-2">Client report</SwdButton>
+          <SwdButton primary small>Client report</SwdButton>
         </router-link>
       </div>
     </template>
