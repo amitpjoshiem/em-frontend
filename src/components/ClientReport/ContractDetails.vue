@@ -279,7 +279,7 @@ export default {
     }
 
     const setDate = (date) => {
-      ruleForm.origination_date = dayjs(date).format('MM/DD/YYYY')
+      if (date) ruleForm.origination_date = dayjs(date).format('MM/DD/YYYY')
     }
 
     const optionsCurrencyInput = {
