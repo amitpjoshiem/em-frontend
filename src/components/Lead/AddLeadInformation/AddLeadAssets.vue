@@ -374,17 +374,15 @@ export default {
     }
 
     const changeInput = async (item) => {
-      if (ruleForm[item.model.group][item.model.model][item.model.item] !== null) {
-        const data = {
-          group: item.model.group,
-          row: item.model.model,
-          element: item.model.item,
-          type: item.type,
-          value: ruleForm[item.model.group][item.model.model][item.model.item],
-        }
-        await updateMemberAssets({ data, id: leadId })
-        queryClient.invalidateQueries(['memberAssets', leadId])
+      const data = {
+        group: item.model.group,
+        row: item.model.model,
+        element: item.model.item,
+        type: item.type,
+        value: ruleForm[item.model.group][item.model.model][item.model.item],
       }
+      await updateMemberAssets({ data, id: leadId })
+      queryClient.invalidateQueries(['memberAssets', leadId])
     }
 
     const optionsCurrencyInput = {

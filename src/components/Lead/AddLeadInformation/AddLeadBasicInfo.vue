@@ -69,6 +69,7 @@
                 <div class="hidden mb-3 lg:w-4/12 lg:pl-2 lg:block sm:w-6/12">
                   <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retirement date">
                     <el-date-picker
+                      v-model="ruleForm.retirement_date"
                       type="date"
                       :placeholder="getPlaceholder"
                       format="MM/DD/YYYY"
@@ -108,7 +109,8 @@
                     v-model="ruleForm.zip"
                     placeholder="#####"
                     inputmode="numeric"
-                    maxlength="5"
+                    type="number"
+                    max="99999"
                     @focus="focus('general')"
                     @blur="blur('general')"
                   />
@@ -117,6 +119,7 @@
                 <div class="hidden mb-3 lg:w-4/12 lg:pl-2 lg:pr-0 lg:hidden sm:w-6/12 sm:pr-2 sm:block">
                   <el-form-item v-if="ruleForm.retired" prop="retirement_date" label="Retirement date">
                     <el-date-picker
+                      v-if="ruleForm.spouse.retired"
                       type="date"
                       :placeholder="getPlaceholder"
                       format="MM/DD/YYYY"
