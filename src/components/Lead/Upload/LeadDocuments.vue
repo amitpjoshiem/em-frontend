@@ -3,11 +3,11 @@
     <div v-if="!isLoading && !isLoadingInfo">
       <div class="mb-5">
         <el-checkbox
-          v-model="state.availabilityDocuments"
+          v-model="state.skipUpload"
           label="I want to skip this document."
           size="large"
           :disabled="isReadOnlyLead"
-          @change="changeStatus"
+          @change="changeSkip"
         />
       </div>
 
@@ -17,7 +17,7 @@
         by clicking this link
       </div>
 
-      <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-main-gray rounded-md">
+      <div v-if="!state.skipUpload" class="min-h-[175px] mb-5 p-5 border border-main-gray rounded-md">
         <div v-if="!isFetching">
           <SwdUpload
             :upload-data="{ collection: context }"
@@ -25,7 +25,7 @@
             :show-file-list="true"
             :auto-upload="true"
             :show-file-block="true"
-            :disabled="state.availabilityDocuments || isReadOnlyLead"
+            :disabled="state.skipUpload || isReadOnlyLead"
             with-remove-btn
             @upload-change="handleChange"
             @upload-success="handleSuccess"
@@ -87,7 +87,7 @@ export default {
     const state = reactive({
       file: '',
       uploadRef: null,
-      availabilityDocuments: false,
+      skipUpload: false,
     })
 
     const { isLoading, isFetching, isError, refetch, data } = useFetchClientDocuments({
@@ -100,27 +100,23 @@ export default {
     const { mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
     watchEffect(() => {
-      if (isFetching.value === false && data.value.status === 'no_documents') state.availabilityDocuments = true
+      if (isFetching.value === false && data.value.status === 'no_documents') state.skipUpload = true
     })
 
     const bindRef = (ref) => {
       upload.value = ref.value
     }
 
-    const changeStatus = async () => {
-      let status = 'not_completed'
-
-      if (state.availabilityDocuments) {
-        status = 'no_documents'
-      }
-      if (!state.availabilityDocuments && data.value.documents.length) {
-        status = 'completed'
-      }
-
+    const changeStatus = async ({ status }) => {
       const res = await updateSteps({ [props.context]: status })
       if (!('error' in res)) {
         queryClient.invalidateQueries(['clients-info'])
       }
+    }
+
+    const changeSkip = () => {
+      if (state.skipUpload) changeStatus({ status: 'no_documents' })
+      changeStatus({ status: 'not_completed' })
     }
 
     const removeMedia = async (media) => {
@@ -128,7 +124,7 @@ export default {
       if (!('error' in res)) {
         await queryClient.invalidateQueries(['clientsDocuments', props.context])
       }
-      if (!data.value.documents.length) changeStatus()
+      if (!data.value.documents.length) changeStatus({ status: 'not_completed' })
     }
 
     const handleSuccess = async (res) => {
@@ -137,7 +133,7 @@ export default {
       if (!('error' in response)) {
         inChangeFile.value = false
         queryClient.invalidateQueries(['clientsDocuments', props.context])
-        changeStatus()
+        changeStatus({ status: 'completed' })
       }
     }
 
@@ -180,6 +176,7 @@ export default {
       isLoadingInfo,
       clientsInfo,
       isReadOnlyLead,
+      changeSkip,
     }
   },
 }
