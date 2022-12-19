@@ -11,7 +11,8 @@ import { leadRoute } from './modules/leadRoute'
 import { adminRoute } from './modules/adminRoute'
 import { ceoRoute } from './modules/ceoRoute'
 import { advisorRoute } from './modules/advisorRoute'
-import { adminPanelRoute } from './modules/adminPanelRoute'
+import { apRouteAdmin } from './modules/apRouteAdmin'
+import { apRouteCeo } from './modules/apRouteCeo'
 import { supportRoute } from './modules/supportRoute'
 import { settingsRoute } from './modules/settingsRoute'
 import { loginRoute } from './modules/loginRoute'
@@ -22,7 +23,8 @@ const routes = [
   adminRoute,
   ceoRoute,
   advisorRoute,
-  adminPanelRoute,
+  apRouteAdmin,
+  apRouteCeo,
   supportRoute,
   settingsRoute,
   loginRoute,
@@ -77,7 +79,7 @@ router.beforeEach(async (to) => {
   const { setUpdateAbility } = useSetUpdateAbility()
 
   if (store.state.auth.isAuth && !store.state.globalComponents.currentCompanyId && !store.state.globalComponents.role) {
-    await setInit()
+    await setInit(to)
   }
 
   if (!ability.rules.length) {

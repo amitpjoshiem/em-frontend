@@ -1,17 +1,19 @@
 import AdminPanelHome from '@/layouts/AdminPanelHome.vue'
 
-export const adminPanelRoute = {
+const type = 'admin'
+
+export const apRouteAdmin = {
   path: '/admin-panel',
-  name: 'admin-panel',
+  name: 'ap-admin',
   component: AdminPanelHome,
   meta: {
-    resource: [{ admin: 'all' }, { ceo: 'all' }],
-    type: 'advisor',
+    resource: [{ admin: 'all' }],
+    type,
   },
   children: [
     {
       path: 'dashboard',
-      name: 'ap-dashboard',
+      name: `${type}/ap-dashboard`,
       component: () =>
         import(
           /* webpackChunkName: "AdminPanelDashboard" */ '../../components/AdminPanel/Dashboard/AdminPanelDashboard.vue'
@@ -19,12 +21,12 @@ export const adminPanelRoute = {
     },
     {
       path: 'users',
-      name: 'ap-users',
+      name: `${type}/ap-users`,
       component: () => import(/* webpackChunkName: "AdminPanelUsers" */ '../../components/AdminPanel/Users/Users.vue'),
     },
     {
       path: 'companies',
-      name: 'ap-companies',
+      name: `${type}/ap-companies`,
       component: () =>
         import(/* webpackChunkName: "AdminPanelCompanies" */ '../../components/AdminPanel/Companies/Companies.vue'),
     },

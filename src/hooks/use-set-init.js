@@ -1,8 +1,8 @@
 import { computed } from 'vue'
 import { useFetchInit } from '@/api/use-fetch-init'
 import { useSetUpdateAbility } from '@/hooks/use-set-update-ability'
-import store from '@/store'
 import { useRoutRedirect } from '@/hooks/use-rout-redirect'
+import store from '@/store'
 
 export function useSetInit() {
   const { response, error, getInit } = useFetchInit()
@@ -16,7 +16,7 @@ export function useSetInit() {
     return response.value.data.user_id
   })
 
-  const setInit = async () => {
+  const setInit = async (to = {}) => {
     store.commit('globalComponents/setIsLoadingApp', true)
     await getInit()
 
@@ -49,7 +49,9 @@ export function useSetInit() {
 
       await setUpdateAbility()
 
-      routRedirect({ role, userId: getUserId.value })
+      if (to && to.name !== 'telegram-login') {
+        routRedirect({ role, userId: getUserId.value })
+      }
 
       setTimeout(function () {
         store.commit('globalComponents/setIsLoadingApp', false)

@@ -6,14 +6,12 @@ import { computed, reactive, ref } from 'vue'
 
 export const useClientReportsAll = (id) => {
   const store = useStore()
-
   const dateRange = computed(() => store.state.globalComponents.dateRangeClientReport)
-
   const reactiveDateRange = ref(dateRange)
   const reactiveId = ref(id)
 
   const queryKey = reactive([
-    ['report'],
+    ['client-report-list'],
     {
       reactiveId,
       reactiveDateRange,

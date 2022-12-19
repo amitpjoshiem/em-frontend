@@ -83,6 +83,7 @@ const getDefaultState = () => {
         addChildOpportunity: false,
         modalSummaryInfo: false,
         restoreDraft: false,
+        newContract: false,
       },
     },
     sortMembers: {
@@ -101,10 +102,8 @@ const getDefaultState = () => {
     ownerMember: null,
     onlyMyLead: false,
     ownerLead: null,
-
     onlyMyPreLead: false,
     ownerPreLead: null,
-
     summaryInfoMemberId: null,
   }
 }

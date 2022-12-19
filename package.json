@@ -24,7 +24,7 @@
     "chart.js": "3.7.0",
     "core-js": "3.19.1",
     "dayjs": "^1.10.6",
-    "element-plus": "2.2.22",
+    "element-plus": "2.2.26",
     "lodash-es": "^4.17.21",
     "maska": "^1.4.2",
     "pdfvuer": "^2.0.1",

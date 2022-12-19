@@ -421,16 +421,7 @@ export default {
 
     const { stateList } = useStateHook()
 
-    const {
-      mutateAsync: createMember,
-      isLoading: isLoadingCreateMember,
-      isError,
-      isFetching,
-      data,
-      error,
-      refetch,
-    } = useMutation(createMembers)
-
+    const { mutateAsync: createMember, isLoading: isLoadingCreateMember } = useMutation(createMembers)
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
     const {
@@ -623,12 +614,6 @@ export default {
       removeEmploymentSpouse,
       isLoadingCreateMember,
       isLoadingUpdateMember,
-      isError,
-      isFetching,
-      data,
-      error,
-      refetch,
-      isUpdateMember,
       IconAdd,
       IconDelete,
       getPlaceholder,

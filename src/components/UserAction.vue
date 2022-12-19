@@ -18,7 +18,7 @@
 </template>
 <script>
 import IconUserAction from '@/assets/svg/icon-user-action.svg'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
@@ -34,6 +34,7 @@ export default {
   },
   setup(props) {
     const router = useRouter()
+    const route = useRoute()
     const store = useStore()
 
     const actionsOptions = [
@@ -112,7 +113,7 @@ export default {
       profile: () => router.push({ name: 'profile' }),
       'admin-panel': () => {
         showLoading()
-        router.push({ name: 'admin-panel' })
+        router.push({ name: `${route.meta.type}/ap-dashboard` })
       },
       'sdw-platform': () => {
         showLoading()

@@ -145,7 +145,8 @@ export default {
           name: `${route.meta.type}/blueprint-report`,
           params: { id: props.user.id },
         }),
-      'client-report': () => router.push({ name: `${route.meta.type}/clientreport`, params: { id: props.user.id } }),
+      'client-report': () =>
+        router.push({ name: `${route.meta.type}/client-reports-list`, params: { id: props.user.id } }),
       onboarding: () => getOnboarding(),
 
       'assets-accounts': () =>

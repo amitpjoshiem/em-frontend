@@ -43,13 +43,34 @@ export const advisorRoute = {
       path: 'client-report/:id',
       name: `${type}/clientreport`,
       component: () => import(/* webpackChunkName: "Clientreport" */ '../../components/ClientReport/ClientReport.vue'),
+      children: [
+        {
+          path: 'client-reports-list',
+          name: `${type}/client-reports-list`,
+          component: () =>
+            import(/* webpackChunkName: "ClientReport" */ '../../components/ClientReport/ClientReportList.vue'),
+        },
+        {
+          path: 'contract-info/:contract_id?',
+          name: `${type}/contract-info`,
+          component: () =>
+            import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractDetails.vue'),
+        },
+      ],
     },
+    // {
+    //   path: 'client-report/:id',
+    //   name: `${type}/clientreport`,
+    //   component: () =>
+    //     import(/* webpackChunkName: "Clientreport" */ '../../components/ClientReport/ClientReportList.vue'),
+    // },
 
-    {
-      path: 'contract-info/:id',
-      name: `${type}/contract-info`,
-      component: () => import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractInfo.vue'),
-    },
+    // {
+    //   path: 'contract-info/:id?',
+    //   name: `${type}/contract-info`,
+    //   component: () =>
+    //     import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractDetails.vue'),
+    // },
 
     {
       path: 'activity',
@@ -254,12 +275,6 @@ export const advisorRoute = {
               /* webpackChunkName: "NewProspect" */ '../../components/NewProspect/StressTestResult/NewProspectPdf.vue'
             ),
         },
-        // {
-        //   path: '',
-        //   redirect: () => {
-        //     return { name: 'basic-information' }
-        //   },
-        // },
       ],
     },
 
