@@ -107,10 +107,8 @@
                 <el-form-item label="ZIP" prop="zip" class="mb-3 lg:w-3/12 lg:pl-2 sm:w-6/12 sm:pl-2">
                   <el-input
                     v-model="ruleForm.zip"
+                    v-maska="'#####'"
                     placeholder="#####"
-                    inputmode="numeric"
-                    type="number"
-                    max="99999"
                     @focus="focus('general')"
                     @blur="blur('general')"
                   />
