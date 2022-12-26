@@ -7,6 +7,7 @@
       :auto-upload="true"
       :show-file-block="true"
       :disabled="isDisabledUpload"
+      :upload-before-hook="hookBeforeUploadFile"
       @upload-success="handleSuccess"
       @upload-change="handleChange"
       @upload-mounted="bindRef"
@@ -18,7 +19,7 @@
           <div class="w-2/12">
             <SwdButton primary small>Click to upload</SwdButton>
           </div>
-          <div class="el-upload__tip">PDF files only</div>
+          <div class="el-upload__tip">PDF files only (max file size 20Mb)</div>
         </div>
         <div v-if="!assetsConsolidationDocs.data.length && !inChangeFile" class="text-main text-center pb-5">
           No documents uploaded
@@ -40,6 +41,7 @@ import { createAssetsConsolidationDocs } from '@/api/vueQuery/create-assets-cons
 import { useFetchAssetsConsolidationDocs } from '@/api/use-fetch-assets-consolidation-docs'
 import { useMutation, useQueryClient } from 'vue-query'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
+import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
 
 export default {
   name: 'AccountStatementsPdf',
@@ -53,6 +55,8 @@ export default {
     const queryClient = useQueryClient()
     const inChangeFile = ref(false)
     const id = route.params.id
+
+    const { beforeUploadFile } = useBeforeUploadFile()
 
     const { isLoading, isFetching, isError, data: assetsConsolidationDocs } = useFetchAssetsConsolidationDocs(id)
     const { mutateAsync: createDoc, error } = useMutation(createAssetsConsolidationDocs)
@@ -104,6 +108,10 @@ export default {
       return true
     })
 
+    const hookBeforeUploadFile = (rawFile) => {
+      return beforeUploadFile(rawFile)
+    }
+
     return {
       IconDownRisk,
       IconUpRisk,
@@ -122,6 +130,7 @@ export default {
       isShowNoDocuments,
       inChangeFile,
       isDisabledUpload,
+      hookBeforeUploadFile,
     }
   },
 }

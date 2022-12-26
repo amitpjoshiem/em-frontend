@@ -7,6 +7,7 @@
       :auto-upload="true"
       :show-file-block="true"
       :disabled="disbaledUpload"
+      :upload-before-hook="hookBeforeUploadFile"
       @upload-change="handleChange"
       @upload-success="handleSuccess"
       @upload-mounted="bindRef"
@@ -14,10 +15,10 @@
       @remove-media="removeMedia"
     >
       <template v-if="!disbaledUpload" #main>
-        <div class="flex my-5">
-          <SwdButton primary small class="w-2/12 mr-4">Click to upload</SwdButton>
-          <div class="el-upload__tip">PDF files only</div>
+        <div class="w-2/12">
+          <SwdButton primary small>Click to upload</SwdButton>
         </div>
+        <div class="el-upload__tip">PDF files only (max file size 20Mb)</div>
         <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
       </template>
     </SwdUpload>
@@ -45,6 +46,7 @@ import { deleteMedia } from '@/api/vueQuery/delete-media'
 import { useQueryClient } from 'vue-query'
 import { fetchStressTestConfirm } from '@/api/vueQuery/fetch-stress-test-confirm'
 import { useAlert } from '@/utils/use-alert'
+import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
 
 export default {
   name: 'NewProspectPdf',
@@ -66,6 +68,8 @@ export default {
     const inChangeFile = ref(false)
     const queryClient = useQueryClient()
     const id = route.params.id
+
+    const { beforeUploadFile } = useBeforeUploadFile()
 
     const { isLoading, isFetching, isError, data: stressTestDocument } = useFetchStressTest(id)
     const { mutateAsync: create, error } = useMutation(createStressTest)
@@ -142,6 +146,10 @@ export default {
       return false
     })
 
+    const hookBeforeUploadFile = (rawFile) => {
+      return beforeUploadFile(rawFile)
+    }
+
     return {
       IconDownRisk,
       IconUpRisk,
@@ -161,6 +169,7 @@ export default {
       handleChange,
       isShowNoDocuments,
       disbaledUpload,
+      hookBeforeUploadFile,
     }
   },
 }

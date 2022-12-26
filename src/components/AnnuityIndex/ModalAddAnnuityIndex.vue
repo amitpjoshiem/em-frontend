@@ -53,7 +53,7 @@
         <template #main>
           <div class="my-5">
             <SwdButton :disabled="fileList.length > 0" class="mr-5" primary small>Attach a document</SwdButton>
-            <div class="el-upload__tip">PDF files only (max file size 10Mb)</div>
+            <div class="el-upload__tip">PDF files only (max file size 20Mb)</div>
           </div>
           <div v-if="!inChangeFile" class="text-main text-center pt-6">No documents uploaded</div>
         </template>

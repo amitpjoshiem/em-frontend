@@ -26,6 +26,7 @@
             :auto-upload="true"
             :show-file-block="true"
             :disabled="state.skipUpload || isReadOnlyLead"
+            :upload-before-hook="hookBeforeUploadFile"
             with-remove-btn
             @upload-change="handleChange"
             @upload-success="handleSuccess"
@@ -34,8 +35,9 @@
             @open-prewiev="openPrewiev"
           >
             <template #main>
-              <div class="flex my-5 w-2/12">
-                <SwdButton primary small :disabled="isReadOnlyLead">Click to upload</SwdButton>
+              <div class="my-5 flex items-center">
+                <SwdButton primary small :disabled="isReadOnlyLead" class="w-2/12 mr-2">Click to upload</SwdButton>
+                <p class="text-xxs">PDF files only (max file size 20Mb)</p>
               </div>
               <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
             </template>
@@ -63,6 +65,7 @@ import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
+import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
@@ -83,6 +86,8 @@ export default {
     const queryClient = useQueryClient()
     const upload = ref(null)
     const inChangeFile = ref(false)
+
+    const { beforeUploadFile } = useBeforeUploadFile()
 
     const state = reactive({
       file: '',
@@ -157,6 +162,10 @@ export default {
       return clientsInfo.value.readonly
     })
 
+    const hookBeforeUploadFile = (rawFile) => {
+      return beforeUploadFile(rawFile)
+    }
+
     return {
       state,
       bindRef,
@@ -177,6 +186,7 @@ export default {
       clientsInfo,
       isReadOnlyLead,
       changeSkip,
+      hookBeforeUploadFile,
     }
   },
 }
