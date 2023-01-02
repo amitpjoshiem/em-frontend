@@ -105,6 +105,11 @@ const getDefaultState = () => {
     onlyMyPreLead: false,
     ownerPreLead: null,
     summaryInfoMemberId: null,
+    uploadMedicareDocsStatus: null,
+    uploadPropertyDocsStatus: null,
+    uploadInvestmentDocsStatus: null,
+    uploadLifeDocsStatus: null,
+    uploadSocialDocsStatus: null,
   }
 }
 
@@ -256,6 +261,26 @@ const mutations = {
 
   setSummaryInfoMemberId(state, value) {
     state.summaryInfoMemberId = value
+  },
+
+  setUploadMedicareDocsStatus(state, value) {
+    state.uploadMedicareDocsStatus = value
+  },
+
+  setUploadPropertyDocsStatus(state, value) {
+    state.uploadPropertyDocsStatus = value
+  },
+
+  setUploadInvestmentDocsStatus(state, value) {
+    state.uploadInvestmentDocsStatus = value
+  },
+
+  setUploadLifeDocsStatus(state, value) {
+    state.uploadLifeDocsStatus = value
+  },
+
+  setUploadSocialDocsStatus(state, value) {
+    state.uploadSocialDocsStatus = value
   },
 
   resetState(state) {

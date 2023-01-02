@@ -31,7 +31,10 @@
         <router-link :to="{ name: `lead/dashboard` }" class="w-1/12">
           <SwdButton info main>Back</SwdButton>
         </router-link>
-        <SwdButton primary main :disabled="!isStepCompleated" class="ml-4" @click="saveStep">Save</SwdButton>
+        <SwdButton primary main :disabled="!isStepCompleated || isLoadingUpdateSteps" class="ml-4" @click="saveStep">
+          <SwdSpinner v-show="isLoadingUpdateSteps" class="mr-2" />
+          Save
+        </SwdButton>
       </template>
     </div>
   </SwdWrapper>
@@ -42,7 +45,9 @@ import LeadDocuments from './Upload/LeadDocuments.vue'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
-
+import { useStore } from 'vuex'
+import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
+import { useMutation, useQueryClient } from 'vue-query'
 export default {
   name: 'RelevantFinancialDocuments',
   components: {
@@ -50,7 +55,11 @@ export default {
   },
   setup() {
     const router = useRouter()
+    const store = useStore()
+    const queryClient = useQueryClient()
+
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
+    const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
 
     const isReadOnlyLead = computed(() => {
       return clientsInfo.value.readonly
@@ -58,14 +67,26 @@ export default {
 
     const isStepCompleated = computed(() => {
       return (
-        clientsInfo.value.steps.investment_and_retirement_accounts &&
-        clientsInfo.value.steps.life_insurance_annuity_and_long_terms_care_policies &&
-        clientsInfo.value.steps.social_security_information
+        store.state.globalComponents.uploadInvestmentDocsStatus &&
+        store.state.globalComponents.uploadLifeDocsStatus &&
+        store.state.globalComponents.uploadSocialDocsStatus
       )
     })
 
-    const saveStep = () => {
-      if (isStepCompleated.value) router.push({ name: `lead/dashboard` })
+    const saveStep = async () => {
+      const res_investment = await updateSteps({
+        ['investment_and_retirement_accounts']: store.state.globalComponents.uloadInvestmentDocsStatus,
+      })
+      const res_life = await updateSteps({
+        ['life_insurance_annuity_and_long_terms_care_policies']: store.state.globalComponents.uploadLifeDocsStatus,
+      })
+      const res_social = await updateSteps({
+        ['social_security_information']: store.state.globalComponents.uploadSocialDocsStatus,
+      })
+      if (!('error' in res_investment) && !('error' in res_life) && !('error' in res_social)) {
+        queryClient.invalidateQueries(['clients-info'])
+        router.push({ name: `lead/dashboard` })
+      }
     }
 
     return {
@@ -74,6 +95,7 @@ export default {
       isLoadingInfo,
       isStepCompleated,
       saveStep,
+      isLoadingUpdateSteps,
     }
   },
 }

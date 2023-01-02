@@ -32,7 +32,6 @@ export default defineComponent({
   name: 'ModalReadOnly',
   setup() {
     const store = useStore()
-
     const dialogVisible = ref(false)
 
     watchEffect(() => {
