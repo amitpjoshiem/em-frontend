@@ -9,7 +9,7 @@
         <router-link :to="{ name: `lead/dashboard` }" class="w-1/12">
           <SwdButton info main>Back</SwdButton>
         </router-link>
-        <SwdButton primary main :disabled="!isStepCompleated || isLoadingUpdateSteps" class="ml-4" @click="saveStep">
+        <SwdButton primary main :disabled="isDisabledSaveBtn" class="ml-4" @click="saveStep">
           <SwdSpinner v-show="isLoadingUpdateSteps" class="mr-2" />
           Save
         </SwdButton>
@@ -44,23 +44,25 @@ export default {
       return clientsInfo.value.readonly
     })
 
-    const isStepCompleated = computed(() => {
-      return store.state.globalComponents.uploadMedicareDocsStatus
-    })
-
     const saveStep = async () => {
-      const res = await updateSteps({ ['medicare_details']: store.state.globalComponents.uploadMedicareDocsStatus })
-      if (!('error' in res)) {
-        queryClient.invalidateQueries(['clients-info'])
-        router.push({ name: `lead/dashboard` })
+      if (!isDisabledSaveBtn.value) {
+        const res = await updateSteps({ ['medicare_details']: store.state.globalComponents.uploadMedicareDocsStatus })
+        if (!('error' in res)) {
+          queryClient.invalidateQueries(['clients-info'])
+          router.push({ name: `lead/dashboard` })
+        }
       }
     }
+
+    const isDisabledSaveBtn = computed(() => {
+      return isLoadingUpdateSteps.value || store.state.globalComponents.uploadMedicareDocsStatus === null
+    })
 
     return {
       isReadOnlyLead,
       clientsInfo,
       isLoadingInfo,
-      isStepCompleated,
+      isDisabledSaveBtn,
       saveStep,
       isLoadingUpdateSteps,
     }

@@ -31,7 +31,7 @@
         <router-link :to="{ name: `lead/dashboard` }" class="w-1/12">
           <SwdButton info main>Back</SwdButton>
         </router-link>
-        <SwdButton primary main :disabled="!isStepCompleated || isLoadingUpdateSteps" class="ml-4" @click="saveStep">
+        <SwdButton primary main :disabled="isDisabledSaveBtn" class="ml-4" @click="saveStep">
           <SwdSpinner v-show="isLoadingUpdateSteps" class="mr-2" />
           Save
         </SwdButton>
@@ -65,35 +65,38 @@ export default {
       return clientsInfo.value.readonly
     })
 
-    const isStepCompleated = computed(() => {
-      return (
-        store.state.globalComponents.uploadInvestmentDocsStatus &&
-        store.state.globalComponents.uploadLifeDocsStatus &&
-        store.state.globalComponents.uploadSocialDocsStatus
-      )
-    })
-
     const saveStep = async () => {
-      const res_investment = await updateSteps({
-        ['investment_and_retirement_accounts']: store.state.globalComponents.uloadInvestmentDocsStatus,
-      })
-      const res_life = await updateSteps({
-        ['life_insurance_annuity_and_long_terms_care_policies']: store.state.globalComponents.uploadLifeDocsStatus,
-      })
-      const res_social = await updateSteps({
-        ['social_security_information']: store.state.globalComponents.uploadSocialDocsStatus,
-      })
-      if (!('error' in res_investment) && !('error' in res_life) && !('error' in res_social)) {
-        queryClient.invalidateQueries(['clients-info'])
-        router.push({ name: `lead/dashboard` })
+      if (!isDisabledSaveBtn.value) {
+        const res_investment = await updateSteps({
+          ['investment_and_retirement_accounts']: store.state.globalComponents.uploadInvestmentDocsStatus,
+        })
+        const res_life = await updateSteps({
+          ['life_insurance_annuity_and_long_terms_care_policies']: store.state.globalComponents.uploadLifeDocsStatus,
+        })
+        const res_social = await updateSteps({
+          ['social_security_information']: store.state.globalComponents.uploadSocialDocsStatus,
+        })
+        if (!('error' in res_investment) && !('error' in res_life) && !('error' in res_social)) {
+          queryClient.invalidateQueries(['clients-info'])
+          router.push({ name: `lead/dashboard` })
+        }
       }
     }
+
+    const isDisabledSaveBtn = computed(() => {
+      return (
+        isLoadingUpdateSteps.value ||
+        store.state.globalComponents.uploadInvestmentDocsStatus === null ||
+        store.state.globalComponents.uploadLifeDocsStatus === null ||
+        store.state.globalComponents.uploadSocialDocsStatus === null
+      )
+    })
 
     return {
       isReadOnlyLead,
       clientsInfo,
       isLoadingInfo,
-      isStepCompleated,
+      isDisabledSaveBtn,
       saveStep,
       isLoadingUpdateSteps,
     }
