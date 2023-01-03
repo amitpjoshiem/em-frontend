@@ -37,7 +37,9 @@
             <template #main>
               <div class="my-5 flex items-center">
                 <SwdButton primary small :disabled="isReadOnlyLead" class="w-2/12 mr-2">Click to upload</SwdButton>
-                <p class="text-xxs">PDF files only (max file size 20Mb)</p>
+                <p v-if="!isLoadingMediaRules" class="text-xxs">
+                  {{ mediaRules.data.allowed_types.join() }} files only (max file size {{ mediaRules.data.size }}Mb)
+                </p>
               </div>
               <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
             </template>
@@ -61,6 +63,7 @@ import { computed, reactive, ref, watchEffect } from 'vue'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
+import { useFetchMediaRules } from '@/api/use-fetch-media-rules.js'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
@@ -100,6 +103,7 @@ export default {
       collection: props.context,
     })
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
+    const { isLoading: isLoadingMediaRules, data: mediaRules } = useFetchMediaRules({ collection: props.context })
     const { mutateAsync: deleteDocument } = useMutation(deleteMedia)
     const { mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
@@ -156,7 +160,7 @@ export default {
     })
 
     const hookBeforeUploadFile = (rawFile) => {
-      return beforeUploadFile(rawFile)
+      return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
     }
 
     return {
@@ -178,6 +182,8 @@ export default {
       isReadOnlyLead,
       changeSkip,
       hookBeforeUploadFile,
+      isLoadingMediaRules,
+      mediaRules,
     }
   },
 }
