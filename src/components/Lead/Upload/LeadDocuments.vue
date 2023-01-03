@@ -62,10 +62,10 @@ import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
-import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
 import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
+import { useSetStatus } from '../use-set-status'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 
@@ -88,6 +88,7 @@ export default {
     const inChangeFile = ref(false)
 
     const { beforeUploadFile } = useBeforeUploadFile()
+    const { setStatus } = useSetStatus()
 
     const state = reactive({
       file: '',
@@ -99,8 +100,6 @@ export default {
       collection: props.context,
     })
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
-
-    const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
     const { mutateAsync: deleteDocument } = useMutation(deleteMedia)
     const { mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
@@ -112,16 +111,10 @@ export default {
       upload.value = ref.value
     }
 
-    const changeStatus = async ({ status }) => {
-      const res = await updateSteps({ [props.context]: status })
-      if (!('error' in res)) {
-        queryClient.invalidateQueries(['clients-info'])
-      }
-    }
-
     const changeSkip = () => {
-      if (state.skipUpload) changeStatus({ status: 'no_documents' })
-      changeStatus({ status: 'not_completed' })
+      if (state.skipUpload) setStatus({ status: 'no_documents', context: props.context })
+      if (!state.skipUpload && data.value.documents.length) setStatus({ status: 'completed', context: props.context })
+      if (!state.skipUpload && !data.value.documents.length) setStatus({ status: null, context: props.context })
     }
 
     const removeMedia = async (media) => {
@@ -129,7 +122,7 @@ export default {
       if (!('error' in res)) {
         await queryClient.invalidateQueries(['clientsDocuments', props.context])
       }
-      if (!data.value.documents.length) changeStatus({ status: 'not_completed' })
+      if (!data.value.documents.length) setStatus({ status: null, context: props.context })
     }
 
     const handleSuccess = async (res) => {
@@ -138,7 +131,7 @@ export default {
       if (!('error' in response)) {
         inChangeFile.value = false
         queryClient.invalidateQueries(['clientsDocuments', props.context])
-        changeStatus({ status: 'completed' })
+        setStatus({ status: 'completed', context: props.context })
       }
     }
 
@@ -175,13 +168,11 @@ export default {
       refetch,
       data,
       IconEmptyUsers,
-      changeStatus,
       handleChange,
       removeMedia,
       handleSuccess,
       isShowNoDocuments,
       openPrewiev,
-      isLoadingUpdateSteps,
       isLoadingInfo,
       clientsInfo,
       isReadOnlyLead,
