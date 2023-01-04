@@ -14,141 +14,140 @@
   <div class="flex py-5">
     <div class="w-10/12 text-xss text-main font-medium">Google Authenticator</div>
     <div class="w-2/12 flex justify-between">
-      <el-switch v-model="googleOtp" :loading="loadingGoogle" :before-change="beforeChange" />
+      <el-switch
+        v-model="state.googleOtp"
+        :loading="isLoading"
+        inline-prompt
+        active-color="#13ce66"
+        inactive-color="#ff4949"
+        active-text="Y"
+        inactive-text="N"
+        @change="changeGoogle"
+      />
     </div>
   </div>
 
-  <div v-if="response && response.data" class="mt-5">
-    <div v-show="showForm" class="w-5/12">
-      <img ref="qrCode" :src="response.data.url" class="pb-5" />
-      <el-form ref="form" :model="ruleForm" state-icon label-position="top">
-        <el-form-item label="Code" prop="code" class="w-full">
+  <div v-if="!isLoading && googleQr?.data && isShowQr" class="flex justify-center items-center flex-col">
+    <QRCodeVue3
+      :value="googleQr.data"
+      :dots-options="{
+        type: 'dots',
+        color: '#000000',
+      }"
+    />
+    <div class="w-5/12 flex justify-between">
+      <el-form ref="form" :model="ruleForm" state-icon>
+        <el-form-item prop="code" class="w-full">
           <el-input v-model="ruleForm.code" placeholder="Enter OTP code" />
         </el-form-item>
-        <div class="pt-3 text-right">
-          <Button default-blue-btn text-btn="Save" @click="saveOtp" />
-        </div>
       </el-form>
+      <SwdButton class="ml-2 w-[100px]" primary main @click="saveOtp">
+        <SwdSpinner v-show="loadingChange" class="mr-2" />
+        Save
+      </SwdButton>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, reactive, toRefs, onMounted } from 'vue'
-import { useGoogleQr } from '@/api/use-google-qr'
-import { useOtpsChange } from '@/api/use-otps-change'
-import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { otpsChange } from '@/api/use-otps-change'
+import { useFetchGoogleQr } from '@/api/use-fetch-google-qr'
 import { useAlert } from '@/utils/use-alert'
-import { useUserProfile } from '@/api/use-user-profile.js'
+import { useStore } from 'vuex'
+import { useMutation } from 'vue-query'
+import QRCodeVue3 from 'qrcode-vue3'
 
 export default {
   name: 'TwoFA',
+  components: {
+    QRCodeVue3,
+  },
   setup() {
     const store = useStore()
-    const { response, error, fetching, getGoogleQr } = useGoogleQr()
-    const { isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
-    const { otpsChange } = useOtpsChange()
-    const qrCode = ref(null)
     const form = ref(null)
+    const isShowQr = ref(true)
+
+    const { mutateAsync: changeOtps, isLoading: loadingChange } = useMutation(otpsChange)
+
+    const { isLoading, refetch, data: googleQr } = useFetchGoogleQr({ enabled: false })
 
     const ruleForm = reactive({
       code: '',
-      googleOtp: false,
-      smsOtp: false,
-      loadingGoogle: false,
-      loadingPhone: false,
     })
 
     const state = reactive({
       googleOtp: false,
       smsOtp: false,
-      loadingGoogle: false,
-      loadingPhone: false,
     })
 
     onMounted(() => {
       if (store.state.auth.otpType === 'google') state.googleOtp = true
-      if (store.state.auth.otpType === 'phone') state.smsOtp = true
     })
 
-    const beforeChange = () => {
-      state.loadingGoogle = true
-      if (!state.googleOtp) {
-        return new Promise((resolve) => {
-          return getGoogleQr().then(() => {
-            qrCode.value.addEventListener('load', () => {
-              state.loadingGoogle = false
-            })
-            return resolve(true)
-          })
-        })
+    const changeGoogle = async () => {
+      if (state.googleOtp) {
+        isShowQr.value = true
+        refetch.value()
       } else {
-        return new Promise((resolve) => {
-          otpsChange({ service: 'email' })
-          state.loadingGoogle = false
-          return resolve(true)
-        })
+        const res = await changeOtps({ service: 'email' })
+        if (!('error' in res)) {
+          setTypeOtp('email')
+          useAlert({
+            title: 'Success',
+            type: 'success',
+            message: 'OTP has been changed successfully.',
+          })
+        }
       }
     }
 
     const saveOtp = async (e) => {
       e.preventDefault()
-      otpsChange({ service: 'google', code: ruleForm.code })
-        .then(() => {
-          useAlert({
-            title: 'Success',
-            type: 'success',
-            message: 'OTP has been changed successfully.',
-          })
-          state.smsOtp = false
+      const res = await changeOtps({ service: 'google', code: ruleForm.code })
+      if (!('error' in res)) {
+        setTypeOtp('google')
+        isShowQr.value = false
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'OTP has been changed successfully.',
         })
-        .catch((error) => {
-          console.error(error)
-        })
+      }
     }
 
-    const otpType = computed(() => {
-      return store.state.auth.otpType
-    })
+    // const changePhoneOtp = () => {
+    //   changeOtps({ service: state.smsOtp ? 'email' : 'phone' })
+    //     .then(() => {
+    //       useAlert({
+    //         title: 'Success',
+    //         type: 'success',
+    //         message: 'OTP has been changed successfully.',
+    //       })
+    //       state.smsOtp = true
+    //       state.googleOtp = false
+    //     })
+    //     .catch((error) => {
+    //       console.error(error)
+    //     })
+    // }
 
-    const showForm = computed(() => {
-      return !state.loadingGoogle && otpType.value !== 'google' && state.googleOtp
-    })
-
-    const changePhoneOtp = () => {
-      otpsChange({ service: state.smsOtp ? 'email' : 'phone' })
-        .then(() => {
-          useAlert({
-            title: 'Success',
-            type: 'success',
-            message: 'OTP has been changed successfully.',
-          })
-          state.smsOtp = true
-          state.googleOtp = false
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+    const setTypeOtp = (type) => {
+      store.commit('auth/setOtpType', type)
+      localStorage.setItem('otp-type', type)
     }
 
     return {
-      ...toRefs(state),
-      beforeChange,
-      response,
-      error,
-      fetching,
-      getGoogleQr,
-      qrCode,
-      otpType,
-      showForm,
+      state,
+      changeGoogle,
       ruleForm,
       form,
       saveOtp,
-      changePhoneOtp,
-      isErrorUserProfile,
-      user,
-      isFetched,
+      googleQr,
+      isLoading,
+      loadingChange,
+      changeOtps,
+      isShowQr,
     }
   },
 }
