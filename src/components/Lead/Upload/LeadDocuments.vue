@@ -108,7 +108,9 @@ export default {
     const { mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
     watchEffect(() => {
-      if (isFetching.value === false && data.value.status === 'no_documents') state.skipUpload = true
+      if (isFetching.value === false && data.value.status === 'no_documents' && !data.value.documents.length) {
+        state.skipUpload = true
+      }
     })
 
     const bindRef = (ref) => {
@@ -126,7 +128,10 @@ export default {
       if (!('error' in res)) {
         await queryClient.invalidateQueries(['clientsDocuments', props.context])
       }
-      if (!data.value.documents.length) setStatus({ status: null, context: props.context })
+      if (!data.value.documents.length) {
+        state.skipUpload = false
+        setStatus({ status: null, context: props.context })
+      }
     }
 
     const handleSuccess = async (res) => {
