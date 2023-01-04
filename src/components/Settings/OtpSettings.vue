@@ -9,7 +9,7 @@
         inactive-color="#ff4949"
         active-text="Y"
         inactive-text="N"
-        :loading="loading"
+        :loading="loadingChange"
         :before-change="beforeChange"
       />
     </div>
@@ -24,8 +24,8 @@
     </span>
     <template #footer>
       <div class="flex justify-end">
-        <SwdButton info main @click="Cancel">Cancel</SwdButton>
-        <SwdButton class="ml-2" primary main @click="Confirm">Confirm</SwdButton>
+        <SwdButton info main @click="cancel">Cancel</SwdButton>
+        <SwdButton class="ml-2" primary main @click="confirm">Confirm</SwdButton>
       </div>
     </template>
   </el-dialog>
@@ -34,8 +34,9 @@
 <script>
 import { ref, onMounted } from 'vue'
 import TwoFA from '@/components/Settings/TwoFA.vue'
-import { useOtpsChange } from '@/api/use-otps-change'
+import { otpsChange } from '@/api/use-otps-change'
 import { useAlert } from '@/utils/use-alert'
+import { useMutation } from 'vue-query'
 
 export default {
   name: 'OtpSettings',
@@ -45,12 +46,9 @@ export default {
   setup() {
     const statusOtp = ref(null)
     const dialogVisible = ref(false)
-    const loading = ref(false)
-
-    const { otpsChange } = useOtpsChange()
+    const { mutateAsync: changeOtps, isLoading: loadingChange } = useMutation(otpsChange)
 
     const beforeChange = () => {
-      loading.value = true
       return new Promise(() => {
         if (statusOtp.value) {
           dialogVisible.value = true
@@ -68,25 +66,20 @@ export default {
 
     const cancel = () => {
       dialogVisible.value = !dialogVisible.value
-      loading.value = false
     }
 
-    const confirm = () => {
+    const confirm = async () => {
       let service = null
       if (!statusOtp.value) service = localStorage.getItem('otp-type')
-      otpsChange({ service })
-        .then(() => {
-          useAlert({
-            title: 'Success',
-            type: 'success',
-            message: 'OTP has been changed successfully.',
-          })
+      const res = await changeOtps({ service })
+      if (!('error' in res)) {
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'OTP has been changed successfully.',
         })
-        .catch((error) => {
-          console.error(error)
-        })
+      }
       dialogVisible.value = false
-      loading.value = false
       statusOtp.value = !statusOtp.value
       localStorage.setItem('otp-enabled', statusOtp.value)
     }
@@ -94,10 +87,11 @@ export default {
     return {
       statusOtp,
       dialogVisible,
-      loading,
       beforeChange,
       cancel,
       confirm,
+      changeOtps,
+      loadingChange,
     }
   },
 }
