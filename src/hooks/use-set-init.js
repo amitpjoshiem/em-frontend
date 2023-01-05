@@ -11,8 +11,6 @@ export function useSetInit() {
   const { routRedirect } = useRoutRedirect()
 
   const getUserId = computed(() => {
-    const role = response.value.data.roles[0]
-    if (role === 'client') return response.value.data.member_id
     return response.value.data.user_id
   })
 
