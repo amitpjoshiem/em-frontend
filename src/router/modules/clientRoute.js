@@ -57,12 +57,27 @@ export const clientRoute = {
       name: `${type}/blueprint-report`,
       component: () => import(/* webpackChunkName: "BlueprintReport" */ '../../components/Report/BlueprintReport.vue'),
     },
+
     {
       path: 'client-report/:id',
       name: `${type}/clientreport`,
-      component: () =>
-        import(/* webpackChunkName: "Clientreport" */ '../../components/ClientReport/ClientReportList.vue'),
+      component: () => import(/* webpackChunkName: "Clientreport" */ '../../components/ClientReport/ClientReport.vue'),
+      children: [
+        {
+          path: 'client-reports-list',
+          name: `${type}/client-reports-list`,
+          component: () =>
+            import(/* webpackChunkName: "ClientReport" */ '../../components/ClientReport/ClientReportList.vue'),
+        },
+        {
+          path: 'contract-info/:contract_id?',
+          name: `${type}/contract-info`,
+          component: () =>
+            import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractDetails.vue'),
+        },
+      ],
     },
+
     {
       path: 'past-stress-test/:id',
       name: `${type}/past-stress-test`,
