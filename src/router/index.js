@@ -54,6 +54,12 @@ const routes = [
   },
 
   {
+    path: '/terms',
+    name: 'terms',
+    component: () => import(/* webpackChunkName: "TermsConditions" */ '../views/TermsConditions.vue'),
+  },
+
+  {
     path: '/',
     name: 'home',
     component: Home,

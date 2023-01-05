@@ -14,8 +14,8 @@
       @open-prewiev="openPrewiev"
       @remove-media="removeMedia"
     >
-      <template v-if="!disabledUpload" #main>
-        <div class="my-5 flex items-center">
+      <template #main>
+        <div v-if="!disabledUpload" class="my-5 flex items-center">
           <SwdButton primary small class="w-2/12 mr-2">Click to upload</SwdButton>
           <p v-if="!isLoadingMediaRules" class="text-xxs">
             <span v-if="mediaRules.data.allowed_types">{{ mediaRules.data.allowed_types.join() }} files only</span>

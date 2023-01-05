@@ -66,11 +66,13 @@ import { useLogout } from '@/api/authentication/use-logout'
 import { updateClients } from '@/api/vueQuery/clients/update-clients'
 import { useMutation } from 'vue-query'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'SwdModalTerms',
   setup() {
     const store = useStore()
+    const router = useRouter()
 
     const { isLoading: isLoadingUpdate, mutateAsync: update } = useMutation(updateClients)
 
@@ -90,6 +92,14 @@ export default defineComponent({
       const res = await update({ terms_and_conditions: true })
       if (!('error' in res)) {
         store.commit('globalComponents/setTermsAndConditions', true)
+        store.commit('globalComponents/setIsLoadingApp', false)
+        if (store.state.globalComponents.role === 'lead') {
+          router.push({ name: 'lead/dashboard' })
+        }
+
+        if (store.state.globalComponents.role === 'client') {
+          router.push({ name: `client/member-details`, params: { id: store.state.globalComponents.clientId } })
+        }
       }
     }
 
