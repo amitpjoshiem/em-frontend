@@ -38,7 +38,10 @@
               <div class="my-5 flex items-center">
                 <SwdButton primary small :disabled="isReadOnlyLead" class="w-2/12 mr-2">Click to upload</SwdButton>
                 <p v-if="!isLoadingMediaRules" class="text-xxs">
-                  {{ mediaRules.data.allowed_types.join() }} files only (max file size {{ mediaRules.data.size }}Mb)
+                  <span v-if="mediaRules.data.allowed_types">
+                    {{ mediaRules.data.allowed_types.join() }} files only
+                  </span>
+                  (max file size {{ mediaRules.data.size }}Mb)
                 </p>
               </div>
               <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
