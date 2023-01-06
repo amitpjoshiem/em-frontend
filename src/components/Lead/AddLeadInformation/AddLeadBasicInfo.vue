@@ -630,6 +630,7 @@ import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import { cloneDeep, isEqual } from 'lodash-es'
 import { ElMessageBox } from 'element-plus'
+import { useValidBasicInfo } from '@/hooks/use-valid-basic-info'
 import ModalRestoreDraft from '@/components/NewProspect/Draft/ModalRestoreDraft'
 
 export default {
@@ -654,6 +655,7 @@ export default {
     const initRuleForm = ref({})
 
     const { stateList } = useStateHook()
+    const { validBasicInfo } = useValidBasicInfo()
 
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
 
@@ -787,7 +789,7 @@ export default {
     })
 
     const submitForm = async () => {
-      form.value.validate(async (valid) => {
+      form.value.validate(async (valid, fields) => {
         if (valid) {
           const res = await updateMember({ form: ruleForm, id: route.params.id })
           if (!('error' in res)) {
@@ -804,6 +806,7 @@ export default {
             })
           }
         } else {
+          validBasicInfo(fields)
           return false
         }
       })
