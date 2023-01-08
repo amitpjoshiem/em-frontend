@@ -31,10 +31,13 @@
     <div class="flex mb-5">
       <WidgetFixedAnnuity />
     </div>
-    <div class="flex">
+    <div class="flex mb-5">
       <WidgetPastStress />
       <WidgetAssetsAllocation />
       <WidgetOther />
+    </div>
+    <div v-if="$can('client', 'all')" class="border rounded-lg p-5">
+      <ClientReportListContent />
     </div>
   </SwdWrapper>
 </template>
@@ -50,6 +53,7 @@ import InfoSalesforceStatus from '@/components/MemberDetails/InfoSalesforceStatu
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
 import { useShowContentEnv } from '@/hooks/use-show-content-env'
+import ClientReportListContent from '@/components/ClientReport/ClientReportListContent.vue'
 
 export default {
   name: 'MemberDetails',
@@ -62,6 +66,7 @@ export default {
     InfoSalesforceStatus,
     WidgetFixedAnnuity,
     MemberStage,
+    ClientReportListContent,
   },
 
   setup() {
