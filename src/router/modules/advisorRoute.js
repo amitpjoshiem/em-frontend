@@ -42,7 +42,7 @@ export const advisorRoute = {
     {
       path: 'client-report/:id',
       name: `${type}/clientreport`,
-      component: () => import(/* webpackChunkName: "Clientreport" */ '../../components/ClientReport/ClientReport.vue'),
+      component: () => import(/* webpackChunkName: "Clientreport" */ '../../views/ClientReport.vue'),
       children: [
         {
           path: 'client-reports-list',
@@ -54,23 +54,10 @@ export const advisorRoute = {
           path: 'contract-info/:contract_id?',
           name: `${type}/contract-info`,
           component: () =>
-            import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractDetails.vue'),
+            import(/* webpackChunkName: "ClientReport" */ '../../components/ClientReport/ContractDetails.vue'),
         },
       ],
     },
-    // {
-    //   path: 'client-report/:id',
-    //   name: `${type}/clientreport`,
-    //   component: () =>
-    //     import(/* webpackChunkName: "Clientreport" */ '../../components/ClientReport/ClientReportList.vue'),
-    // },
-
-    // {
-    //   path: 'contract-info/:id?',
-    //   name: `${type}/contract-info`,
-    //   component: () =>
-    //     import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractDetails.vue'),
-    // },
 
     {
       path: 'activity',
