@@ -37,6 +37,7 @@
       <WidgetOther />
     </div>
     <div v-if="$can('client', 'all')" class="border rounded-lg p-5">
+      <div class="text-sm sm:text-title text-primary font-semibold text-center mb-5">Client report</div>
       <ClientReportListContent />
     </div>
   </SwdWrapper>

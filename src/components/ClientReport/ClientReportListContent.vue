@@ -3,11 +3,14 @@
   <div v-else>
     <div class="flex w-full flex-wrap justify-between" data-pdf-region="client-report">
       <AddNewContract v-if="!$can('client', 'all')" />
-      <template v-if="clientReport">
+      <template v-if="clientReport.length">
         <ContractListItem v-for="item in clientReport" :key="item.id" :contract="item" @refetch-list="refetchAllList" />
       </template>
     </div>
-    <ClientReportTotal />
+    <ClientReportTotal v-if="clientReport.length" />
+    <div v-if="!isLoading && !clientReport.length" class="text-center">
+      <p class="text-main text-xss py-5">No recently added documents</p>
+    </div>
   </div>
 </template>
 
