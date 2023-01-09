@@ -38,7 +38,7 @@
       </div>
       <ListDocumentsClient
         doc-collections="investment_and_retirement_accounts"
-        page="investment-retirement"
+        page="relevant-financial-documents"
         :is-read-only-lead="isReadOnlyLead"
       />
     </div>
@@ -52,7 +52,7 @@
       </div>
       <ListDocumentsClient
         doc-collections="life_insurance_annuity_and_long_terms_care_policies"
-        page="life-insurance"
+        page="relevant-financial-documents"
         :is-read-only-lead="isReadOnlyLead"
       />
     </div>
@@ -64,7 +64,7 @@
       </div>
       <ListDocumentsClient
         doc-collections="social_security_information"
-        page="social-security"
+        page="relevant-financial-documents"
         :is-read-only-lead="isReadOnlyLead"
       />
     </div>
