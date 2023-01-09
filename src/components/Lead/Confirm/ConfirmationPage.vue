@@ -103,7 +103,7 @@
       <div v-if="$can('advisor', 'all')" class="flex justify-end mt-4 mb-4">
         <SwdButton v-if="member.can_convert" primary main :disabled="isLoadingConvert" @click="convert">
           <SwdSpinner v-show="isLoadingConvert" class="mr-2" />
-          Convert to
+          Convert
         </SwdButton>
         <SwdButton v-else info main @click="goLeadsList">
           <SwdSpinner v-show="isLoadingConvert" class="mr-2" />
