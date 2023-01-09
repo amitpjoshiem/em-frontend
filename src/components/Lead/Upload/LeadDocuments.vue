@@ -38,9 +38,7 @@
               <div class="my-5 flex items-center">
                 <SwdButton primary small :disabled="isReadOnlyLead" class="w-2/12 mr-2">Click to upload</SwdButton>
                 <p v-if="!isLoadingMediaRules" class="text-xxs">
-                  <span v-if="mediaRules.data.allowed_types">
-                    {{ mediaRules.data.allowed_types.join() }} files only
-                  </span>
+                  <span v-if="getRulesFormat.length"> {{ getRulesFormat.join() }} files only </span>
                   (max file size {{ mediaRules.data.size }}Mb)
                 </p>
               </div>
@@ -57,6 +55,7 @@
         <p>No recently added documents</p>
       </div>
     </div>
+
     <el-skeleton v-else :rows="5" animated />
   </SwdWrapper>
 </template>
@@ -171,6 +170,15 @@ export default {
       return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
     }
 
+    const getRulesFormat = computed(() => {
+      if (mediaRules.value.data.allowed_types) {
+        return mediaRules.value.data.allowed_types.map((element) => {
+          return element.extension
+        })
+      }
+      return []
+    })
+
     return {
       state,
       bindRef,
@@ -192,6 +200,7 @@ export default {
       hookBeforeUploadFile,
       isLoadingMediaRules,
       mediaRules,
+      getRulesFormat,
     }
   },
 }

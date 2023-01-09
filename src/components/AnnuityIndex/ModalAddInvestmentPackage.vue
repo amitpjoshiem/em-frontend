@@ -32,7 +32,7 @@
           <div class="my-5 flex items-center">
             <SwdButton primary small class="w-4/12 mr-2">Attach a document</SwdButton>
             <p v-if="!isLoadingMediaRules" class="text-xxs">
-              <span v-if="mediaRules.data.allowed_types">{{ mediaRules.data.allowed_types.join() }} files only</span>
+              <span v-if="getRulesFormat.length"> {{ getRulesFormat.join() }} files only </span>
               (max file size {{ mediaRules.data.size }}Mb)
             </p>
           </div>
@@ -57,7 +57,7 @@
 
 <script>
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { watchEffect, ref, reactive } from 'vue'
+import { watchEffect, ref, reactive, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { rules } from '@/validationRules/addAnnuityIndex.js'
@@ -181,6 +181,15 @@ export default {
       return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
     }
 
+    const getRulesFormat = computed(() => {
+      if (mediaRules.value.data.allowed_types) {
+        return mediaRules.value.data.allowed_types.map((element) => {
+          return element.extension
+        })
+      }
+      return []
+    })
+
     return {
       dialogVisible,
       closeDialog,
@@ -202,6 +211,7 @@ export default {
       mediaRules,
       handleExceed,
       hookBeforeUploadFile,
+      getRulesFormat,
     }
   },
 }
