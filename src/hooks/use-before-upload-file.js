@@ -2,10 +2,19 @@ import { ElMessage } from 'element-plus'
 
 export function useBeforeUploadFile() {
   const beforeUploadFile = ({ rawFile, rules }) => {
-    if (rawFile.type !== 'application/pdf') {
-      ElMessage.error(`Document must be ${rules.allowed_types.join()} format!`)
-      return false
-    } else if (rawFile.size / 1024 / 1024 > rules.size) {
+    if (rules.allowed_types) {
+      const mimeTypes = []
+      const extensions = []
+      rules.allowed_types.forEach((element) => {
+        mimeTypes.push(element.mimy_type)
+        extensions.push(element.extension)
+      })
+      if (!mimeTypes.includes(rawFile.type)) {
+        ElMessage.error(`Document must be ${extensions.join()} format!`)
+        return false
+      }
+    }
+    if (rawFile.size / 1024 / 1024 > rules.size) {
       ElMessage.error(`Document size can not exceed ${rules.size}MB!`)
       return false
     }
