@@ -44,10 +44,12 @@
 import LeadDocuments from './Upload/LeadDocuments.vue'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useRouter } from 'vue-router'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
 import { useMutation, useQueryClient } from 'vue-query'
+import { useWindowScrollTo } from '@/hooks/use-window-scroll'
+
 export default {
   name: 'RelevantFinancialDocuments',
   components: {
@@ -57,9 +59,14 @@ export default {
     const router = useRouter()
     const store = useStore()
     const queryClient = useQueryClient()
+    const { scrollTo } = useWindowScrollTo()
 
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
     const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
+
+    onMounted(() => {
+      scrollTo()
+    })
 
     const isReadOnlyLead = computed(() => {
       return clientsInfo.value.readonly
