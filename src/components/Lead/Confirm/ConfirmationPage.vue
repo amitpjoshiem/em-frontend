@@ -184,7 +184,7 @@ export default {
           type: 'success',
           message: 'Convert to opportunity successfully',
         })
-        router.push({ name: `${route.meta.type}/member-details`, params: { id } })
+        router.push({ name: `advisor/all` })
       }
     }
 

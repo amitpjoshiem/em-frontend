@@ -125,7 +125,7 @@ import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 import { useMutation } from 'vue-query'
 import { ref, computed } from 'vue'
 import { useQueryClient } from 'vue-query'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { convertLeadToOpportunity } from '@/api/vueQuery/fetch-convert-lead-to-opportunity'
 import { deactivatedAccLead } from '@/api/vueQuery/fetch-deactivated-acc-lead'
 import { restoreAccLead } from '@/api/vueQuery/fetch-restore-acc-lead'
@@ -149,7 +149,6 @@ export default {
   setup(props) {
     const queryClient = useQueryClient()
     const router = useRouter()
-    const route = useRoute()
 
     const { mutateAsync: convertLead, isLoading: isLoadingConvertLead } = useMutation(convertLeadToOpportunity)
     const { mutateAsync: fetchDeactivatedAcc, isLoading: isLoadingDeactivatedAcc } = useMutation(deactivatedAccLead)
@@ -276,7 +275,7 @@ export default {
           type: 'success',
           message: 'Convert to opportunity successfully',
         })
-        router.push({ name: `${route.meta.type}/member-details`, params: { id: props.user.id } })
+        router.push({ name: `advisor/all` })
         dialogVisibleConvertLead.value = false
       }
     }
