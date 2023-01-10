@@ -94,6 +94,7 @@ export default {
     const { mutateAsync: deleteReport } = useMutation(deleteContract)
 
     const getIssueDate = computed(() => {
+      if (!props.contract.origination_date) return '---'
       return dayjs(props.contract.origination_date).format('MM/DD/YYYY')
     })
 

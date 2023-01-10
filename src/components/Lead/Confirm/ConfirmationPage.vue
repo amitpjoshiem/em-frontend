@@ -38,7 +38,7 @@
       </div>
       <ListDocumentsClient
         doc-collections="investment_and_retirement_accounts"
-        page="investment-retirement"
+        page="relevant-financial-documents"
         :is-read-only-lead="isReadOnlyLead"
       />
     </div>
@@ -52,7 +52,7 @@
       </div>
       <ListDocumentsClient
         doc-collections="life_insurance_annuity_and_long_terms_care_policies"
-        page="life-insurance"
+        page="relevant-financial-documents"
         :is-read-only-lead="isReadOnlyLead"
       />
     </div>
@@ -64,7 +64,7 @@
       </div>
       <ListDocumentsClient
         doc-collections="social_security_information"
-        page="social-security"
+        page="relevant-financial-documents"
         :is-read-only-lead="isReadOnlyLead"
       />
     </div>
@@ -103,7 +103,7 @@
       <div v-if="$can('advisor', 'all')" class="flex justify-end mt-4 mb-4">
         <SwdButton v-if="member.can_convert" primary main :disabled="isLoadingConvert" @click="convert">
           <SwdSpinner v-show="isLoadingConvert" class="mr-2" />
-          Convert to
+          Convert
         </SwdButton>
         <SwdButton v-else info main @click="goLeadsList">
           <SwdSpinner v-show="isLoadingConvert" class="mr-2" />
@@ -184,7 +184,7 @@ export default {
           type: 'success',
           message: 'Convert to opportunity successfully',
         })
-        router.push({ name: `${route.meta.type}/member-details`, params: { id } })
+        router.push({ name: `advisor/all` })
       }
     }
 

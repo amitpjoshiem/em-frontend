@@ -394,10 +394,11 @@ import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useStateHook } from '@/hooks/use-state-hook'
 import { ElMessageBox } from 'element-plus'
+import { isEqual } from 'lodash-es'
+import { useValidBasicInfo } from '@/hooks/use-valid-basic-info'
 import ModalRestoreDraft from './Draft/ModalRestoreDraft.vue'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
-import { isEqual } from 'lodash-es'
 
 export default {
   name: 'AddProspectBasicInfo',
@@ -414,6 +415,7 @@ export default {
     const isUpdateMember = computed(() => !!route.params.id)
 
     const { stateList } = useStateHook()
+    const { validBasicInfo } = useValidBasicInfo()
 
     const { mutateAsync: createMember, isLoading: isLoadingCreateMember } = useMutation(createMembers)
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
@@ -542,7 +544,7 @@ export default {
     })
 
     const submitForm = async () => {
-      form.value.validate(async (valid) => {
+      form.value.validate(async (valid, fields) => {
         if (valid) {
           let res
           if (isUpdateMember.value) {
@@ -563,6 +565,7 @@ export default {
             })
           }
         } else {
+          validBasicInfo(fields)
           return false
         }
       })

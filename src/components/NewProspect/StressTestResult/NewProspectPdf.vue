@@ -1,22 +1,26 @@
 <template>
-  <div v-if="!isFetching">
+  <div v-if="!isLoading">
     <SwdUpload
       :upload-data="{ collection: 'stress_test' }"
       :doc-list="stressTestDocument.data"
       :show-file-list="true"
       :auto-upload="true"
       :show-file-block="true"
-      :disabled="disbaledUpload"
+      :disabled="disabledUpload"
+      :upload-before-hook="hookBeforeUploadFile"
       @upload-change="handleChange"
       @upload-success="handleSuccess"
       @upload-mounted="bindRef"
       @open-prewiev="openPrewiev"
       @remove-media="removeMedia"
     >
-      <template v-if="!disbaledUpload" #main>
-        <div class="flex my-5">
-          <SwdButton primary small class="w-2/12 mr-4">Click to upload</SwdButton>
-          <div class="el-upload__tip">PDF files only</div>
+      <template v-if="!disabledUpload" #main>
+        <div class="my-5 flex items-center">
+          <SwdButton primary small class="w-2/12 mr-2">Click to upload</SwdButton>
+          <p v-if="!isLoadingMediaRules" class="text-xxs">
+            <span v-if="getRulesFormat.length"> {{ getRulesFormat.join() }} files only </span>
+            (max file size {{ mediaRules.data.size }}Mb)
+          </p>
         </div>
         <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
       </template>
@@ -45,6 +49,8 @@ import { deleteMedia } from '@/api/vueQuery/delete-media'
 import { useQueryClient } from 'vue-query'
 import { fetchStressTestConfirm } from '@/api/vueQuery/fetch-stress-test-confirm'
 import { useAlert } from '@/utils/use-alert'
+import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
+import { useFetchMediaRules } from '@/api/use-fetch-media-rules.js'
 
 export default {
   name: 'NewProspectPdf',
@@ -67,7 +73,10 @@ export default {
     const queryClient = useQueryClient()
     const id = route.params.id
 
-    const { isLoading, isFetching, isError, data: stressTestDocument } = useFetchStressTest(id)
+    const { beforeUploadFile } = useBeforeUploadFile()
+
+    const { isLoading, isError, data: stressTestDocument } = useFetchStressTest(id)
+    const { isLoading: isLoadingMediaRules, data: mediaRules } = useFetchMediaRules({ collection: 'stress_test' })
     const { mutateAsync: create, error } = useMutation(createStressTest)
     const { mutateAsync: deletePdf } = useMutation(deleteMedia)
     const { mutateAsync: stressTestConfirm } = useMutation(fetchStressTestConfirm)
@@ -134,12 +143,25 @@ export default {
     }
 
     const isShowNoDocuments = computed(() => {
-      return !stressTestDocument.value.data.length && !inChangeFile.value && !isFetching.value
+      return !stressTestDocument.value.data.length && !inChangeFile.value && !isLoading.value
     })
 
-    const disbaledUpload = computed(() => {
+    const disabledUpload = computed(() => {
       if (store.state.globalComponents.role === 'client') return true
       return false
+    })
+
+    const hookBeforeUploadFile = (rawFile) => {
+      return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
+    }
+
+    const getRulesFormat = computed(() => {
+      if (mediaRules.value.data.allowed_types) {
+        return mediaRules.value.data.allowed_types.map((element) => {
+          return element.extension
+        })
+      }
+      return []
     })
 
     return {
@@ -153,14 +175,17 @@ export default {
       create,
       error,
       isLoading,
-      isFetching,
       isError,
       stressTestDocument,
       openPrewiev,
       removeMedia,
       handleChange,
       isShowNoDocuments,
-      disbaledUpload,
+      disabledUpload,
+      hookBeforeUploadFile,
+      isLoadingMediaRules,
+      mediaRules,
+      getRulesFormat,
     }
   },
 }

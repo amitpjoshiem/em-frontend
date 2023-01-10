@@ -312,3 +312,11 @@ input::-webkit-inner-spin-button {
 .el-form-item__label{
   color: #282828;
 }
+
+.el-notification{
+  width: 350px;
+}
+
+.el-notification__content{
+  text-align: start;
+}

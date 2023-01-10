@@ -21,16 +21,20 @@
         :auto-upload="true"
         :show-file-block="true"
         :limit="1"
-        :disabled="!!fileList.length"
+        :on-exceed="handleExceed"
+        :upload-before-hook="hookBeforeUploadFile"
         @upload-success="handleSuccess"
         @upload-change="handleChange"
         @upload-mounted="bindRef"
         @remove-media="removeMedia"
       >
         <template #main>
-          <div class="my-5">
-            <SwdButton :disabled="fileList.length > 0" class="mr-5" primary small>Attach a document</SwdButton>
-            <div class="el-upload__tip">PDF files only (max file size 10Mb)</div>
+          <div class="my-5 flex items-center">
+            <SwdButton primary small class="w-4/12 mr-2">Attach a document</SwdButton>
+            <p v-if="!isLoadingMediaRules" class="text-xxs">
+              <span v-if="getRulesFormat.length"> {{ getRulesFormat.join() }} files only </span>
+              (max file size {{ mediaRules.data.size }}Mb)
+            </p>
           </div>
           <div v-if="!inChangeFile" class="text-main text-center pt-6">No documents uploaded</div>
         </template>
@@ -52,15 +56,17 @@
 </template>
 
 <script>
-import { watchEffect, ref, reactive } from 'vue'
+import SwdUpload from '@/components/Global/SwdUpload.vue'
+import { watchEffect, ref, reactive, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { ElMessageBox } from 'element-plus'
 import { rules } from '@/validationRules/addAnnuityIndex.js'
-import SwdUpload from '@/components/Global/SwdUpload.vue'
 import { createInvestmentPackage } from '@/api/vueQuery/create-investment-package'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { useFetchMediaRules } from '@/api/use-fetch-media-rules.js'
+import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
 
 export default {
   name: 'ModalAddInvestmentPackage',
@@ -77,12 +83,16 @@ export default {
     const upload = ref(null)
     const inChangeFile = ref(false)
     const validUpload = ref(true)
+    const fileList = reactive([])
 
     const memberId = route.params.id
     const fixedIndexAnnuitiesId = route.params.annuityId
 
-    const fileList = reactive([])
+    const { beforeUploadFile } = useBeforeUploadFile()
 
+    const { isLoading: isLoadingMediaRules, data: mediaRules } = useFetchMediaRules({
+      collection: 'investment_package',
+    })
     const { mutateAsync: create, isLoading: loadingCreate } = useMutation(createInvestmentPackage)
 
     const ruleForm = reactive({
@@ -117,12 +127,13 @@ export default {
     const initialState = () => {
       ruleForm.name = ''
       ruleForm.uuids = []
+      inChangeFile.value = false
       removeMedia()
     }
 
     const save = (e) => {
       e.preventDefault()
-      if (!fileList.length) validUpload.value = false
+      if (!ruleForm.uuids.length) validUpload.value = false
       form.value.validate(async (valid) => {
         if (valid && validUpload.value) {
           const res = await create({ id: fixedIndexAnnuitiesId, data: ruleForm })
@@ -158,6 +169,27 @@ export default {
       ruleForm.uuids.push(res.data.uuid)
     }
 
+    const handleExceed = (files, uploadFiles) => {
+      ElMessage.warning(
+        `The limit is 1, you selected ${files.length} files this time, add up to ${
+          files.length + uploadFiles.length
+        } totally`
+      )
+    }
+
+    const hookBeforeUploadFile = (rawFile) => {
+      return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
+    }
+
+    const getRulesFormat = computed(() => {
+      if (mediaRules.value.data.allowed_types) {
+        return mediaRules.value.data.allowed_types.map((element) => {
+          return element.extension
+        })
+      }
+      return []
+    })
+
     return {
       dialogVisible,
       closeDialog,
@@ -175,6 +207,11 @@ export default {
       create,
       loadingCreate,
       validUpload,
+      isLoadingMediaRules,
+      mediaRules,
+      handleExceed,
+      hookBeforeUploadFile,
+      getRulesFormat,
     }
   },
 }

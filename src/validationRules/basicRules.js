@@ -2,7 +2,7 @@ const rules = {
   name: [
     {
       required: true,
-      message: 'Please input prospect name',
+      message: 'Please input name',
       trigger: 'change',
       transform(value) {
         return value.trim()
@@ -14,7 +14,7 @@ const rules = {
     {
       type: 'date',
       required: true,
-      message: 'Please pick a date',
+      message: 'Please pick a Date of birth',
       trigger: 'change',
     },
   ],
@@ -31,14 +31,14 @@ const rules = {
     {
       type: 'date',
       required: true,
-      message: 'Please pick a date',
+      message: 'Please pick a Retirement date',
       trigger: 'blur',
     },
   ],
   state: [
     {
       required: true,
-      message: 'Please input prospect state',
+      message: 'Please input state',
       trigger: 'change',
       transform(value) {
         return value.trim()
@@ -49,7 +49,7 @@ const rules = {
   city: [
     {
       required: true,
-      message: 'Please input prospect city',
+      message: 'Please input city',
       trigger: 'change',
       transform(value) {
         return value.trim()
@@ -60,7 +60,7 @@ const rules = {
   address: [
     {
       required: true,
-      message: 'Please input prospect address',
+      message: 'Please input address',
       trigger: 'change',
       transform(value) {
         return value.trim()
@@ -110,7 +110,7 @@ const rules = {
       {
         type: 'date',
         required: true,
-        message: 'Please pick a date',
+        message: 'Please pick a Date of birth',
         trigger: 'blur',
       },
     ],
@@ -131,7 +131,7 @@ const rules = {
       {
         type: 'date',
         required: true,
-        message: 'Please pick a date',
+        message: 'Please pick a Retirement date',
         trigger: 'blur',
       },
     ],

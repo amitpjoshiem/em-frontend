@@ -16,7 +16,12 @@
             <div class="flex items-center w-5/12">
               <span class="font-semibold pr-2">Carrier:</span>
               <el-form-item v-if="isCustom">
-                <el-input v-model="ruleForm.carrier" placeholder="Enter Carrier" @blur="updateDataContract" />
+                <el-input
+                  v-model="ruleForm.carrier"
+                  placeholder="Enter Carrier"
+                  :disabled="$can('client', 'all')"
+                  @blur="updateDataContract"
+                />
               </el-form-item>
               <span v-else>
                 <SwdSpinner v-if="isFetching" />
@@ -25,7 +30,7 @@
             </div>
           </div>
         </template>
-        <el-form ref="form" :model="ruleForm" label-position="top">
+        <el-form ref="form" :model="ruleForm" label-position="top" :disabled="$can('client', 'all')">
           <div class="flex justify-between mb-2 w-full">
             <div class="flex items-center w-4/12">
               <span class="font-semibold pr-2">Contract ID:</span>
