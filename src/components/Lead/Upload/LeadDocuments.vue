@@ -26,7 +26,6 @@
             :auto-upload="true"
             :show-file-block="true"
             :disabled="state.skipUpload || isReadOnlyLead"
-            :upload-before-hook="hookBeforeUploadFile"
             with-remove-btn
             @upload-change="handleChange"
             @upload-success="handleSuccess"
@@ -34,15 +33,8 @@
             @remove-media="removeMedia"
             @open-prewiev="openPrewiev"
           >
-            <template #main>
-              <div class="my-5 flex items-center">
-                <SwdButton primary small :disabled="isReadOnlyLead" class="w-2/12 mr-2">Click to upload</SwdButton>
-                <p v-if="!isLoadingMediaRules" class="text-xxs">
-                  <span v-if="getRulesFormat.length"> {{ getRulesFormat.join() }} files only </span>
-                  (max file size {{ mediaRules.data.size }}Mb)
-                </p>
-              </div>
-              <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
+            <template #noDocuments>
+              <div v-if="isShowNoDocuments" class="text-main text-center pt-5">No documents uploaded</div>
             </template>
           </SwdUpload>
         </div>
@@ -65,11 +57,9 @@ import { computed, reactive, ref, watchEffect } from 'vue'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
-import { useFetchMediaRules } from '@/api/use-fetch-media-rules.js'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
-import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
 import { useSetStatus } from '../use-set-status'
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
@@ -92,7 +82,6 @@ export default {
     const upload = ref(null)
     const inChangeFile = ref(false)
 
-    const { beforeUploadFile } = useBeforeUploadFile()
     const { setStatus } = useSetStatus()
 
     const state = reactive({
@@ -105,7 +94,6 @@ export default {
       collection: props.context,
     })
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
-    const { isLoading: isLoadingMediaRules, data: mediaRules } = useFetchMediaRules({ collection: props.context })
     const { mutateAsync: deleteDocument } = useMutation(deleteMedia)
     const { mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
@@ -166,19 +154,6 @@ export default {
       return clientsInfo.value.readonly
     })
 
-    const hookBeforeUploadFile = (rawFile) => {
-      return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
-    }
-
-    const getRulesFormat = computed(() => {
-      if (mediaRules.value.data.allowed_types) {
-        return mediaRules.value.data.allowed_types.map((element) => {
-          return element.extension
-        })
-      }
-      return []
-    })
-
     return {
       state,
       bindRef,
@@ -197,10 +172,6 @@ export default {
       clientsInfo,
       isReadOnlyLead,
       changeSkip,
-      hookBeforeUploadFile,
-      isLoadingMediaRules,
-      mediaRules,
-      getRulesFormat,
     }
   },
 }

@@ -166,10 +166,10 @@
 .dialog-style {
   margin-top: 10vh !important;
 }
-
+/* 
 .el-upload  {
   display: block;
-}
+} */
 
 .el-form-item--mini .el-form-item__label{
   line-height: normal;

@@ -6,17 +6,25 @@
     :action="getUrlMedia"
     :show-file-list="showFileList"
     :on-success="($event) => $emit('upload-success', $event)"
-    :before-upload="uploadBeforeHook"
-    with-credentials
+    :before-upload="hookBeforeUploadFile"
     :headers="headers"
     :data="uploadData"
     :on-change="($event) => $emit('upload-change', $event)"
     :auto-upload="autoUpload"
-    list-type="picture"
     :disabled="disabled"
+    with-credentials
+    list-type="picture"
     @on-change="($event) => $emit('upload-change', $event)"
   >
-    <slot name="main" />
+    <SwdButton v-if="showUploadBtn" primary small :disabled="disabled">Click to upload</SwdButton>
+    <template v-if="showTip" #tip>
+      <p v-if="!isLoadingMediaRules" class="text-xxs">
+        <span v-if="getRulesFormat.length"> {{ getRulesFormat.join() }} files only </span>
+        (max file size {{ mediaRules.data.size }}Mb)
+      </p>
+      <SwdSpinner v-else />
+    </template>
+
     <template v-if="showFileBlock" #file="{ file }">
       <div
         v-if="file.status !== 'uploading' && file.status !== 'ready'"
@@ -64,12 +72,15 @@
       </div>
     </template>
   </el-upload>
+  <slot name="noDocuments" />
 </template>
 
 <script>
 import { tokenStorage } from '@/api/api-client/TokenStorage'
 import { computed, ref, onMounted, nextTick } from 'vue'
 import { useStore } from 'vuex'
+import { useFetchMediaRules } from '@/api/use-fetch-media-rules.js'
+import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
 
 export default {
   name: 'SwdUpload',
@@ -120,6 +131,16 @@ export default {
       required: false,
       default: 10,
     },
+    showTip: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    showUploadBtn: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   emits: [
     'upload-success',
@@ -137,6 +158,11 @@ export default {
 
     const fileList = ref([])
 
+    const { isLoading: isLoadingMediaRules, data: mediaRules } = useFetchMediaRules({
+      collection: props.uploadData.collection,
+    })
+
+    const { beforeUploadFile } = useBeforeUploadFile()
     const uploadRefFn = () => props.uploadRef
     const headers = computed(() => {
       const customHeader = {}
@@ -197,6 +223,19 @@ export default {
       }
     }
 
+    const getRulesFormat = computed(() => {
+      if (mediaRules.value.data.allowed_types) {
+        return mediaRules.value.data.allowed_types.map((element) => {
+          return element.extension
+        })
+      }
+      return []
+    })
+
+    const hookBeforeUploadFile = (rawFile) => {
+      return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
+    }
+
     return {
       headers,
       uploadRefFn,
@@ -206,6 +245,10 @@ export default {
       handleRemove,
       idFileRemove,
       fileList,
+      hookBeforeUploadFile,
+      isLoadingMediaRules,
+      mediaRules,
+      getRulesFormat,
     }
   },
 }
