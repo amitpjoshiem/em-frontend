@@ -90,9 +90,9 @@ export default {
     const { isLoading: isLoadingUpload, mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
     const ruleForm = reactive({
-      first_name: 'yarmachok',
-      last_name: 'dmytro',
-      description: 'description',
+      first_name: '',
+      last_name: '',
+      description: '',
       uuids: [],
     })
 

@@ -164,7 +164,7 @@
               <el-form-item label="Last name" prop="spouse.last_name" class="mb-3 lg:w-6/12 lg:pl-2 sm:w-6/12 sm:pl-2">
                 <el-input
                   v-model="ruleForm.spouse.last_name"
-                  placeholder="Enter spouse’s lastt name"
+                  placeholder="Enter spouse’s last name"
                   @focus="focus('spouse')"
                   @blur="blur('spouse')"
                 />
