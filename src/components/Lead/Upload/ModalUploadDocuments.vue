@@ -19,7 +19,6 @@
         :show-file-list="true"
         :auto-upload="true"
         :show-file-block="true"
-        :on-exceed="handleExceed"
         :limit="1"
         @upload-success="handleSuccess"
         @upload-change="handleChange"
@@ -57,9 +56,7 @@ import SwdUpload from '@/components/Global/SwdUpload.vue'
 import { watchEffect, ref, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { rules } from '@/validationRules/rulesModalUploadDocuments.js'
-// import { createAnnuityIndex } from '@/api/vueQuery/create-annuity-index'
-// import { useMutation } from 'vue-query'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useSetStatus } from '../use-set-status'
@@ -165,14 +162,6 @@ export default {
       ruleForm.uuids.push(res.data.uuid)
     }
 
-    const handleExceed = (files, uploadFiles) => {
-      ElMessage.warning(
-        `The limit is 1, you selected ${files.length} files this time, add up to ${
-          files.length + uploadFiles.length
-        } totally`
-      )
-    }
-
     return {
       dialogVisible,
       closeDialog,
@@ -187,8 +176,6 @@ export default {
       handleSuccess,
       inChangeFile,
       validUpload,
-      handleExceed,
-
       isLoadingUpload,
     }
   },

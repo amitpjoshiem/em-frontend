@@ -93,6 +93,9 @@ export default {
         state.skipUpload = false
         setStatus({ status: null, context: props.context })
       }
+      if (!isFetching.value && !isLoading.value && data.value.documents.length) {
+        setStatus({ status: 'completed', context: props.context })
+      }
     })
 
     const bindRef = (ref) => {

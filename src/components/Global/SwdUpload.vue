@@ -10,6 +10,7 @@
     :headers="headers"
     :data="uploadData"
     :on-change="($event) => $emit('upload-change', $event)"
+    :on-exceed="handleExceed"
     :auto-upload="autoUpload"
     :disabled="disabled"
     with-credentials
@@ -81,6 +82,7 @@ import { computed, ref, onMounted, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import { useFetchMediaRules } from '@/api/use-fetch-media-rules.js'
 import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
+import { ElMessage } from 'element-plus'
 
 export default {
   name: 'SwdUpload',
@@ -236,6 +238,14 @@ export default {
       return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
     }
 
+    const handleExceed = (files, uploadFiles) => {
+      ElMessage.warning(
+        `The limit is ${props.limit}, you selected ${files.length} files this time, add up to ${
+          files.length + uploadFiles.length
+        } totally`
+      )
+    }
+
     return {
       headers,
       uploadRefFn,
@@ -249,6 +259,7 @@ export default {
       isLoadingMediaRules,
       mediaRules,
       getRulesFormat,
+      handleExceed,
     }
   },
 }
