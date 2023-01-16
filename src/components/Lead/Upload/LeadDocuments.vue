@@ -42,7 +42,6 @@
       <p>No recently added documents</p>
     </div>
   </SwdWrapper>
-  <ModalUploadDocuments :collection="context" />
 </template>
 
 <script>
@@ -52,13 +51,11 @@ import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documen
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useSetStatus } from '../use-set-status'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
-import ModalUploadDocuments from './ModalUploadDocuments.vue'
 import DocItem from './DocItem.vue'
 
 export default {
   name: 'LeadDocuments',
   components: {
-    ModalUploadDocuments,
     DocItem,
   },
   props: {
@@ -116,11 +113,13 @@ export default {
       return clientsInfo.value.readonly
     })
 
-    const showModalAttachDoc = () =>
+    const showModalAttachDoc = () => {
       store.commit('globalComponents/setShowModal', {
         destination: 'modalUploadDocuments',
         value: true,
       })
+      store.commit('globalComponents/setCollectionUploadMedia', props.context)
+    }
 
     return {
       state,

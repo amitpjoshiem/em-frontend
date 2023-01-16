@@ -45,6 +45,7 @@
         </div>
       </span>
     </template>
+    <div>{{ collection }}</div>
   </el-dialog>
 </template>
 
@@ -56,29 +57,21 @@ import { rules } from '@/validationRules/rulesModalUploadDocuments.js'
 import { ElMessageBox } from 'element-plus'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { useMutation, useQueryClient } from 'vue-query'
-import { useSetStatus } from '../use-set-status'
+import { useSetStatus } from '../Lead/use-set-status'
 
 export default {
-  name: 'ModalUploadDocuments',
+  name: 'SwdModalUploadDocuments',
   components: {
     SwdUpload,
   },
-  props: {
-    collection: {
-      type: String,
-      required: true,
-      default: () => '',
-    },
-  },
-  setup(props) {
+  setup() {
     const store = useStore()
-
     const form = ref(null)
     const dialogVisible = ref(false)
     const upload = ref(null)
     const inChangeFile = ref(false)
     const validUpload = ref(true)
-    // const fileList = ref([])
+    const collection = ref(null)
 
     const { setStatus } = useSetStatus()
 
@@ -95,6 +88,7 @@ export default {
 
     watchEffect(() => {
       dialogVisible.value = store.state.globalComponents.dialog.showDialog.modalUploadDocuments
+      collection.value = store.state.globalComponents.collectionUploadMedia
     })
 
     const closeDialog = () => {
@@ -129,11 +123,11 @@ export default {
       if (!ruleForm.uuids.length) validUpload.value = false
       form.value.validate(async (valid) => {
         if (valid && validUpload.value) {
-          const response = await uploadDoc({ collection: props.collection, data: ruleForm })
+          const response = await uploadDoc({ collection: collection.value, data: ruleForm })
           if (!('error' in response)) {
             inChangeFile.value = false
-            queryClient.invalidateQueries(['clientsDocuments', props.collection])
-            setStatus({ status: 'completed', context: props.collection })
+            queryClient.invalidateQueries(['clientsDocuments', collection.value])
+            setStatus({ status: 'completed', context: collection.value })
             doneCloceDialog()
           } else {
             return false
@@ -174,6 +168,7 @@ export default {
       inChangeFile,
       validUpload,
       isLoadingUpload,
+      collection,
     }
   },
 }
