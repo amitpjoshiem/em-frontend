@@ -393,9 +393,9 @@ import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useStateHook } from '@/hooks/use-state-hook'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElNotification } from 'element-plus'
 import { isEqual } from 'lodash-es'
-import { useValidBasicInfo } from '@/hooks/use-valid-basic-info'
+import { useWindowScrollTo } from '@/hooks/use-window-scroll'
 import ModalRestoreDraft from './Draft/ModalRestoreDraft.vue'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
@@ -415,7 +415,7 @@ export default {
     const isUpdateMember = computed(() => !!route.params.id)
 
     const { stateList } = useStateHook()
-    const { validBasicInfo } = useValidBasicInfo()
+    const { scrollTo } = useWindowScrollTo()
 
     const { mutateAsync: createMember, isLoading: isLoadingCreateMember } = useMutation(createMembers)
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
@@ -544,7 +544,7 @@ export default {
     })
 
     const submitForm = async () => {
-      form.value.validate(async (valid, fields) => {
+      form.value.validate(async (valid) => {
         if (valid) {
           let res
           if (isUpdateMember.value) {
@@ -565,7 +565,13 @@ export default {
             })
           }
         } else {
-          validBasicInfo(fields)
+          ElNotification({
+            title: 'Error',
+            message: 'Please enter all required information',
+            type: 'error',
+            dangerouslyUseHTMLString: true,
+          })
+          scrollTo()
           return false
         }
       })
