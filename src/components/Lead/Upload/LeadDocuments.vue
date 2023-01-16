@@ -74,7 +74,7 @@ export default {
     const state = reactive({
       file: '',
       uploadRef: null,
-      skipUpload: false,
+      skipUpload: null,
     })
 
     const { isLoading, isFetching, isError, refetch, data } = useFetchClientDocuments({
@@ -83,7 +83,12 @@ export default {
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
     watchEffect(() => {
-      if (isFetching.value === false && data.value.status === 'no_documents' && !data.value.documents.length) {
+      if (
+        isLoading.value === false &&
+        data.value.status === 'no_documents' &&
+        !data.value.documents.length &&
+        state.skipUpload === null
+      ) {
         state.skipUpload = true
       }
       if (isFetching.value === false && !data.value.documents.length && !state.skipUpload) {
