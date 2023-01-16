@@ -42,7 +42,6 @@
       <p>No recently added documents</p>
     </div>
   </SwdWrapper>
-  <ModalUploadDocuments :collection="context" />
 </template>
 
 <script>
@@ -52,13 +51,11 @@ import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documen
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useSetStatus } from '../use-set-status'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
-import ModalUploadDocuments from './ModalUploadDocuments.vue'
 import DocItem from './DocItem.vue'
 
 export default {
   name: 'LeadDocuments',
   components: {
-    ModalUploadDocuments,
     DocItem,
   },
   props: {
@@ -77,7 +74,7 @@ export default {
     const state = reactive({
       file: '',
       uploadRef: null,
-      skipUpload: false,
+      skipUpload: null,
     })
 
     const { isLoading, isFetching, isError, refetch, data } = useFetchClientDocuments({
@@ -86,7 +83,12 @@ export default {
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
     watchEffect(() => {
-      if (isFetching.value === false && data.value.status === 'no_documents' && !data.value.documents.length) {
+      if (
+        isLoading.value === false &&
+        data.value.status === 'no_documents' &&
+        !data.value.documents.length &&
+        state.skipUpload === null
+      ) {
         state.skipUpload = true
       }
       if (isFetching.value === false && !data.value.documents.length && !state.skipUpload) {
@@ -116,11 +118,13 @@ export default {
       return clientsInfo.value.readonly
     })
 
-    const showModalAttachDoc = () =>
+    const showModalAttachDoc = () => {
       store.commit('globalComponents/setShowModal', {
         destination: 'modalUploadDocuments',
         value: true,
       })
+      store.commit('globalComponents/setCollectionUploadMedia', props.context)
+    }
 
     return {
       state,

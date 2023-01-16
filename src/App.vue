@@ -7,6 +7,7 @@
   <SwdModalTerms />
   <SwdPreviewPdfModal />
   <SwdModalSummaryInfo />
+  <SwdModalUploadDocuments />
   <VueQueryDevTools />
 </template>
 
@@ -21,6 +22,7 @@ import ModalReloadPage from '@/components/ModalReloadPage/ModalRealoadPage.vue'
 import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
 import SwdModalTerms from '@/components/Global/SwdModalTerms.vue'
 import SwdPreviewPdfModal from '@/components/Global/SwdPreviewPdfModal.vue'
+import SwdModalUploadDocuments from '@/components/Global/SwdModalUploadDocuments.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
 import SwdModalSummaryInfo from '@/components/SummaryInfo/SwdModalSummaryInfo.vue'
 
@@ -33,6 +35,7 @@ export default {
     SwdModalTerms,
     SwdPreviewPdfModal,
     SwdModalSummaryInfo,
+    SwdModalUploadDocuments,
   },
   setup() {
     useQueryProvider({
