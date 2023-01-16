@@ -1,7 +1,7 @@
 <template>
   <el-dialog v-model="dialogVisible" title="Upload documents" width="55%" :before-close="closeDialog" destroy-on-close>
     <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
-      <el-form-item label="Fisrt Name" prop="first_name" class="w-full mb-4">
+      <el-form-item label="First Name" prop="first_name" class="w-full mb-4">
         <el-input v-model="ruleForm.first_name" placeholder="Enter first name" />
       </el-form-item>
       <el-form-item label="Last Name" prop="last_name" class="w-full mb-4">
@@ -11,7 +11,12 @@
         <el-input v-model="ruleForm.description" placeholder="Enter description" type="textarea" />
       </el-form-item>
     </el-form>
-
+    <div class="pb-4 text-main">
+      <p>
+        This could be the account type of a statement you are submitting, or a personal document such as a driver’s
+        license. Examples Include: Fidelity 401k Statement or KY Driver’s License.
+      </p>
+    </div>
     <div class="h-[170px] border rounded p-2" :class="validUpload ? 'border-main-gray' : 'border-color-error'">
       <SwdUpload
         :upload-data="{ collection }"
@@ -30,13 +35,6 @@
         </template>
       </SwdUpload>
     </div>
-    <div class="pt-4 text-main">
-      <p>
-        This could be the account type of a statement you are submitting, or a personal document such as a driver’s
-        license. Examples Include: Fidelity 401k Statement or KY Driver’s License.
-      </p>
-    </div>
-
     <template #footer>
       <span class="dialog-footer">
         <div class="flex justify-end">
