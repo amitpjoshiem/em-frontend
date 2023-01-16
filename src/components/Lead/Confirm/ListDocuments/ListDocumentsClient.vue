@@ -23,7 +23,8 @@
               <span class="mt-1">{{ item.created_at }}</span>
             </div>
           </div>
-          <div class="flex justify-end sm:block">
+          <div class="flex justify-end">
+            <SwdButton class="mr-5" primary small @click="handleDescriptionPreview(item)">Description</SwdButton>
             <SwdButton
               v-if="item.extension === 'pdf'"
               class="mr-5"
@@ -52,6 +53,7 @@ import { useFetchGetClientDocuments } from '@/api/use-fetch-get-clients-document
 import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
+import { ElMessageBox } from 'element-plus'
 
 export default {
   name: 'ListDocumentsClient',
@@ -125,6 +127,16 @@ export default {
       router.push({ name: props.page })
     }
 
+    const handleDescriptionPreview = (item) => {
+      ElMessageBox.alert(
+        item.additional_info.description ? item.additional_info.description : 'No description',
+        'Description',
+        {
+          confirmButtonText: 'OK',
+        }
+      )
+    }
+
     return {
       isLoadingClient,
       isFetchingClient,
@@ -137,6 +149,7 @@ export default {
       handlePictureCardPreview,
       edit,
       data,
+      handleDescriptionPreview,
     }
   },
 }

@@ -45,21 +45,13 @@
         :show-file-block="true"
         :on-exceed="handleExceed"
         :limit="1"
-        :upload-before-hook="hookBeforeUploadFile"
         @upload-success="handleSuccess"
         @upload-change="handleChange"
         @upload-mounted="bindRef"
         @remove-media="removeMedia"
       >
-        <template #main>
-          <div class="my-5 flex items-center">
-            <SwdButton primary small class="w-4/12 mr-2">Attach a document</SwdButton>
-            <p v-if="!isLoadingMediaRules" class="text-xxs">
-              <span v-if="getRulesFormat.length"> {{ getRulesFormat.join() }} files only </span>
-              (max file size {{ mediaRules.data.size }}Mb)
-            </p>
-          </div>
-          <div v-if="!inChangeFile" class="text-main text-center pt-6">No documents uploaded</div>
+        <template #noDocuments>
+          <div v-if="!inChangeFile" class="text-main text-center pt-5">No documents uploaded</div>
         </template>
       </SwdUpload>
     </div>
@@ -80,7 +72,7 @@
 
 <script>
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { watchEffect, ref, reactive, computed } from 'vue'
+import { watchEffect, ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useFetchTaxQualificationInit } from '@/api/use-fetch-tax-qualification-init.js'
@@ -89,8 +81,6 @@ import { createAnnuityIndex } from '@/api/vueQuery/create-annuity-index'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { useFetchMediaRules } from '@/api/use-fetch-media-rules.js'
-import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
 
 export default {
   name: 'ModalAddAnnuityIndex',
@@ -111,11 +101,6 @@ export default {
     const fileList = reactive([])
 
     const memberId = route.params.id
-    const { beforeUploadFile } = useBeforeUploadFile()
-
-    const { isLoading: isLoadingMediaRules, data: mediaRules } = useFetchMediaRules({
-      collection: 'fixed_index_annuities',
-    })
     const { mutateAsync: create, isLoading: loadingCreate } = useMutation(createAnnuityIndex)
 
     const ruleForm = reactive({
@@ -231,19 +216,6 @@ export default {
       )
     }
 
-    const hookBeforeUploadFile = (rawFile) => {
-      return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
-    }
-
-    const getRulesFormat = computed(() => {
-      if (mediaRules.value.data.allowed_types) {
-        return mediaRules.value.data.allowed_types.map((element) => {
-          return element.extension
-        })
-      }
-      return []
-    })
-
     return {
       dialogVisible,
       closeDialog,
@@ -266,10 +238,6 @@ export default {
       loadingCreate,
       validUpload,
       handleExceed,
-      isLoadingMediaRules,
-      mediaRules,
-      hookBeforeUploadFile,
-      getRulesFormat,
     }
   },
 }

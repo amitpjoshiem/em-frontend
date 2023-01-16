@@ -6,6 +6,8 @@
       <SwdUpload
         :upload-data="{ collection: 'avatar' }"
         :upload-before-hook="beforeAvatarUpload"
+        :show-upload-btn="false"
+        :show-tip="false"
         @upload-change="handleChange"
         @upload-success="handleAvatarSuccess"
         @upload-mounted="bindRef"

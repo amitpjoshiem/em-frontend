@@ -1,45 +1,47 @@
 <template>
-  <el-dialog
-    v-model="dialogVisible"
-    title="Add Investment Package"
-    width="55%"
-    class="dialog-style pdf-viewer"
-    :before-close="closeDialog"
-    destroy-on-close
-  >
+  <el-dialog v-model="dialogVisible" title="Upload documents" width="55%" :before-close="closeDialog" destroy-on-close>
     <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
-      <el-form-item label="Name" prop="name" class="w-full mb-4">
-        <el-input v-model="ruleForm.name" placeholder="Enter name" />
+      <el-form-item label="First Name" prop="first_name" class="w-full mb-4">
+        <el-input v-model="ruleForm.first_name" placeholder="Enter first name" />
+      </el-form-item>
+      <el-form-item label="Last Name" prop="last_name" class="w-full mb-4">
+        <el-input v-model="ruleForm.last_name" placeholder="Enter last name" />
+      </el-form-item>
+      <el-form-item label="Description" prop="description" class="w-full mb-4">
+        <el-input v-model="ruleForm.description" placeholder="Enter description" type="textarea" />
       </el-form-item>
     </el-form>
-
-    <div class="h-[200px] border rounded p-2" :class="validUpload ? 'border-main-gray' : 'border-color-error'">
+    <div class="pb-4 text-main">
+      <p>
+        This could be the account type of a statement you are submitting, or a personal document such as a driver’s
+        license. Examples Include: Fidelity 401k Statement or KY Driver’s License.
+      </p>
+    </div>
+    <div class="h-[170px] border rounded p-2" :class="validUpload ? 'border-main-gray' : 'border-color-error'">
       <SwdUpload
-        :upload-data="{ collection: 'investment_package' }"
+        :upload-data="{ collection }"
         :doc-list="fileList"
         :show-file-list="true"
         :auto-upload="true"
         :show-file-block="true"
         :limit="1"
-        :on-exceed="handleExceed"
         @upload-success="handleSuccess"
         @upload-change="handleChange"
         @upload-mounted="bindRef"
         @remove-media="removeMedia"
       >
         <template #noDocuments>
-          <div v-if="!inChangeFile" class="text-main text-center pt-9">No documents uploaded</div>
+          <div v-if="!inChangeFile" class="text-main text-center pt-5">No documents uploaded</div>
         </template>
       </SwdUpload>
     </div>
-
     <template #footer>
       <span class="dialog-footer">
         <div class="flex justify-end">
           <SwdButton info main @click="closeDialog">Close</SwdButton>
-          <SwdButton class="ml-2" primary main @click="save">
+          <SwdButton class="ml-2 w-[100px]" primary main @click="save">
             Save
-            <SwdSpinner v-show="loadingCreate" class="mr-2" />
+            <SwdSpinner v-show="isLoadingUpload" class="mr-2" />
           </SwdButton>
         </div>
       </span>
@@ -50,23 +52,27 @@
 <script>
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import { watchEffect, ref, reactive } from 'vue'
-import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { rules } from '@/validationRules/addAnnuityIndex.js'
-import { createInvestmentPackage } from '@/api/vueQuery/create-investment-package'
+import { rules } from '@/validationRules/rulesModalUploadDocuments.js'
+import { ElMessageBox } from 'element-plus'
+import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { useMutation, useQueryClient } from 'vue-query'
-import { useAlert } from '@/utils/use-alert'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { useSetStatus } from '../use-set-status'
 
 export default {
-  name: 'ModalAddInvestmentPackage',
+  name: 'ModalUploadDocuments',
   components: {
     SwdUpload,
   },
-  setup() {
+  props: {
+    collection: {
+      type: String,
+      required: true,
+      default: () => '',
+    },
+  },
+  setup(props) {
     const store = useStore()
-    const route = useRoute()
-    const queryClient = useQueryClient()
 
     const form = ref(null)
     const dialogVisible = ref(false)
@@ -75,22 +81,25 @@ export default {
     const validUpload = ref(true)
     const fileList = reactive([])
 
-    const memberId = route.params.id
-    const fixedIndexAnnuitiesId = route.params.annuityId
+    const { setStatus } = useSetStatus()
 
-    const { mutateAsync: create, isLoading: loadingCreate } = useMutation(createInvestmentPackage)
+    const queryClient = useQueryClient()
+
+    const { isLoading: isLoadingUpload, mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
     const ruleForm = reactive({
-      name: '',
+      first_name: '',
+      last_name: '',
+      description: '',
       uuids: [],
     })
 
     watchEffect(() => {
-      dialogVisible.value = store.state.globalComponents.dialog.showDialog.modalInvestmentPackage
+      dialogVisible.value = store.state.globalComponents.dialog.showDialog.modalUploadDocuments
     })
 
     const closeDialog = () => {
-      if (ruleForm.name || ruleForm.uuids.length) {
+      if (ruleForm.first_name || ruleForm.last_name || ruleForm.description) {
         ElMessageBox.confirm('Are you sure to close this dialog?')
           .then(() => {
             doneCloceDialog()
@@ -103,36 +112,33 @@ export default {
 
     const doneCloceDialog = () => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'modalInvestmentPackage',
+        destination: 'modalUploadDocuments',
         value: false,
       })
       initialState()
     }
 
     const initialState = () => {
-      ruleForm.name = ''
+      ruleForm.description = ''
       ruleForm.uuids = []
       inChangeFile.value = false
       removeMedia()
     }
 
-    const save = (e) => {
+    const save = async (e) => {
       e.preventDefault()
       if (!ruleForm.uuids.length) validUpload.value = false
       form.value.validate(async (valid) => {
         if (valid && validUpload.value) {
-          const res = await create({ id: fixedIndexAnnuitiesId, data: ruleForm })
-          if (!('error' in res)) {
-            useAlert({
-              title: 'Success',
-              type: 'success',
-              message: 'Annuity Index created',
-            })
-            queryClient.invalidateQueries(['investment-package-all', fixedIndexAnnuitiesId])
+          const response = await uploadDoc({ collection: props.collection, data: ruleForm })
+          if (!('error' in response)) {
+            inChangeFile.value = false
+            queryClient.invalidateQueries(['clientsDocuments', props.collection])
+            setStatus({ status: 'completed', context: props.collection })
             doneCloceDialog()
+          } else {
+            return false
           }
-        } else {
-          return false
         }
       })
     }
@@ -154,18 +160,9 @@ export default {
       ruleForm.uuids.push(res.data.uuid)
     }
 
-    const handleExceed = (files, uploadFiles) => {
-      ElMessage.warning(
-        `The limit is 1, you selected ${files.length} files this time, add up to ${
-          files.length + uploadFiles.length
-        } totally`
-      )
-    }
-
     return {
       dialogVisible,
       closeDialog,
-      memberId,
       form,
       ruleForm,
       save,
@@ -176,10 +173,8 @@ export default {
       removeMedia,
       handleSuccess,
       inChangeFile,
-      create,
-      loadingCreate,
       validUpload,
-      handleExceed,
+      isLoadingUpload,
     }
   },
 }

@@ -84,6 +84,7 @@ const getDefaultState = () => {
         modalSummaryInfo: false,
         restoreDraft: false,
         newContract: false,
+        modalUploadDocuments: false,
       },
     },
     sortMembers: {

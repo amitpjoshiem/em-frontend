@@ -102,7 +102,7 @@
             />
           </el-form-item>
           <el-form-item label="Last name" prop="spouse.last_name" class="w-5/12 pr-5">
-            <el-input v-model="ruleForm.spouse.last_name" placeholder="Enter spouse’s last_name" @blur="changeInput" />
+            <el-input v-model="ruleForm.spouse.last_name" placeholder="Enter spouse’s last name" @blur="changeInput" />
           </el-form-item>
           <el-form-item prop="spouse.birthday" label="Date of birth" class="w-2/12">
             <el-date-picker
