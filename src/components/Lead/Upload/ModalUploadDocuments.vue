@@ -20,7 +20,6 @@
     <div class="h-[170px] border rounded p-2" :class="validUpload ? 'border-main-gray' : 'border-color-error'">
       <SwdUpload
         :upload-data="{ collection }"
-        :doc-list="fileList"
         :show-file-list="true"
         :auto-upload="true"
         :show-file-block="true"
@@ -79,7 +78,7 @@ export default {
     const upload = ref(null)
     const inChangeFile = ref(false)
     const validUpload = ref(true)
-    const fileList = reactive([])
+    // const fileList = ref([])
 
     const { setStatus } = useSetStatus()
 
@@ -152,7 +151,8 @@ export default {
     }
 
     const removeMedia = () => {
-      fileList.splice(0, 1)
+      inChangeFile.value = false
+      ruleForm.uuids = []
     }
 
     const handleSuccess = (res) => {
@@ -167,7 +167,6 @@ export default {
       ruleForm,
       save,
       rules,
-      fileList,
       handleChange,
       bindRef,
       removeMedia,

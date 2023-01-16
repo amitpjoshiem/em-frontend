@@ -1,8 +1,8 @@
 <template>
   <el-upload
     ref="innerRef"
+    v-model:file-list="fileList"
     :limit="limit"
-    :file-list="fileList"
     :action="getUrlMedia"
     :show-file-list="showFileList"
     :on-success="($event) => $emit('upload-success', $event)"
@@ -216,6 +216,12 @@ export default {
     }
 
     const handleRemove = (media) => {
+      if (media.uid) {
+        const index = fileList.value.findIndex((elem) => {
+          return elem.uid === media.uid
+        })
+        fileList.value.splice(index, 1)
+      }
       if (media.id) {
         idFileRemove.value = media.id
         emit('remove-media', media.id)
