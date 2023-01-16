@@ -111,6 +111,7 @@ const getDefaultState = () => {
     uploadInvestmentDocsStatus: null,
     uploadLifeDocsStatus: null,
     uploadSocialDocsStatus: null,
+    collectionUploadMedia: null,
   }
 }
 
@@ -282,6 +283,10 @@ const mutations = {
 
   setUploadSocialDocsStatus(state, value) {
     state.uploadSocialDocsStatus = value
+  },
+
+  setCollectionUploadMedia(state, value) {
+    state.collectionUploadMedia = value
   },
 
   resetState(state) {
