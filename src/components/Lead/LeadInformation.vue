@@ -43,7 +43,10 @@
         </router-link>
 
         <!-- Upload Relevant Financial Documents -->
-        <router-link :to="{ name: 'relevant-financial-documents' }" class="flex items-center">
+        <router-link
+          :to="{ name: 'relevant-financial-documents', params: { id: clientsInfo.member_id } }"
+          class="flex items-center"
+        >
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
@@ -55,7 +58,10 @@
         </router-link>
 
         <!-- Upload Property & Casualty Documents -->
-        <router-link :to="{ name: 'property-casualty' }" class="flex items-center">
+        <router-link
+          :to="{ name: 'property-casualty', params: { id: clientsInfo.member_id } }"
+          class="flex items-center"
+        >
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
@@ -69,7 +75,10 @@
         </router-link>
 
         <!-- Upload Medicare Documents -->
-        <router-link :to="{ name: 'medicare-details' }" class="flex items-center">
+        <router-link
+          :to="{ name: 'medicare-details', params: { id: clientsInfo.member_id } }"
+          class="flex items-center"
+        >
           <el-card class="mb-4 w-full">
             <div class="flex items-center">
               <el-icon :size="25" class="mr-5">
