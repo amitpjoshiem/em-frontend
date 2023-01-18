@@ -41,6 +41,7 @@
       </div>
       <p>No recently added documents</p>
     </div>
+    <SwdModalUploadDocuments />
   </SwdWrapper>
 </template>
 
@@ -52,11 +53,13 @@ import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { useSetStatus } from '../use-set-status'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
 import DocItem from './DocItem.vue'
+import SwdModalUploadDocuments from '@/components/Global/SwdModalUploadDocuments.vue'
 
 export default {
   name: 'LeadDocuments',
   components: {
     DocItem,
+    SwdModalUploadDocuments,
   },
   props: {
     context: {

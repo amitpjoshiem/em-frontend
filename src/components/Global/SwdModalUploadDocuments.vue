@@ -1,11 +1,21 @@
 <template>
   <el-dialog v-model="dialogVisible" title="Upload documents" width="55%" :before-close="closeDialog" destroy-on-close>
     <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
-      <el-form-item label="First Name" prop="first_name" class="w-full mb-4">
-        <el-input v-model="ruleForm.first_name" placeholder="Enter first name" />
+      <el-form-item prop="only_my" class="only-my-filter pb-2 h-[40px]">
+        <el-switch
+          v-if="!isFetchingMember"
+          v-model="ruleForm.is_spouse"
+          active-text="Spouse/Partner"
+          :loading="isFetchingMember"
+          inactive-text="Owner"
+          style="--el-switch-on-color: #f58833; --el-switch-off-color: #83ccf0"
+          :disabled="!member.married"
+        />
+        <SwdSpinner v-else />
       </el-form-item>
-      <el-form-item label="Last Name" prop="last_name" class="w-full mb-4">
-        <el-input v-model="ruleForm.last_name" placeholder="Enter last name" />
+
+      <el-form-item label="Name" prop="name" class="w-full mb-4">
+        <el-input v-model="ruleForm.name" placeholder="Enter name" />
       </el-form-item>
       <el-form-item label="Description" prop="description" class="w-full mb-4">
         <el-input v-model="ruleForm.description" placeholder="Enter description" type="textarea" />
@@ -45,7 +55,6 @@
         </div>
       </span>
     </template>
-    <div>{{ collection }}</div>
   </el-dialog>
 </template>
 
@@ -58,6 +67,8 @@ import { ElMessageBox } from 'element-plus'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useSetStatus } from '../Lead/use-set-status'
+import { useRoute } from 'vue-router'
+import { useFetchMember } from '@/api/use-fetch-member.js'
 
 export default {
   name: 'SwdModalUploadDocuments',
@@ -66,41 +77,60 @@ export default {
   },
   setup() {
     const store = useStore()
+    const route = useRoute()
     const form = ref(null)
     const dialogVisible = ref(false)
     const upload = ref(null)
     const inChangeFile = ref(false)
     const validUpload = ref(true)
     const collection = ref(null)
+    const isDisabledSwitcher = ref(true)
 
     const { setStatus } = useSetStatus()
-
     const queryClient = useQueryClient()
+
+    const {
+      isFetching: isFetchingMember,
+      data: member,
+      refetch: refetchMember,
+    } = useFetchMember({ id: route.params.id }, { enabled: false })
 
     const { isLoading: isLoadingUpload, mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
     const ruleForm = reactive({
-      first_name: '',
-      last_name: '',
+      name: '',
       description: '',
+      is_spouse: false,
       uuids: [],
     })
 
     watchEffect(() => {
       dialogVisible.value = store.state.globalComponents.dialog.showDialog.modalUploadDocuments
       collection.value = store.state.globalComponents.collectionUploadMedia
+      if (dialogVisible.value) {
+        refetchMember.value()
+      }
+      if (member.value && ruleForm.is_spouse) {
+        ruleForm.name = member.value.spouse.first_name + ' ' + member.value.spouse.last_name
+      }
+      if (member.value && !ruleForm.is_spouse) {
+        ruleForm.name = member.value.name
+      }
+      if (member.value && !member.value.married) {
+        isDisabledSwitcher.value = true
+      }
     })
 
     const closeDialog = () => {
-      if (ruleForm.first_name || ruleForm.last_name || ruleForm.description) {
-        ElMessageBox.confirm('Are you sure to close this dialog?')
-          .then(() => {
-            doneCloceDialog()
-          })
-          .catch(() => {})
-      } else {
-        doneCloceDialog()
-      }
+      // if (ruleForm.name || ruleForm.description) {
+      // ElMessageBox.confirm('Are you sure to close this dialog?')
+      // .then(() => {
+      // doneCloceDialog()
+      // })
+      // .catch(() => {})
+      // } else {
+      doneCloceDialog()
+      // }
     }
 
     const doneCloceDialog = () => {
@@ -112,6 +142,7 @@ export default {
     }
 
     const initialState = () => {
+      ruleForm.name = ''
       ruleForm.description = ''
       ruleForm.uuids = []
       inChangeFile.value = false
@@ -169,7 +200,15 @@ export default {
       validUpload,
       isLoadingUpload,
       collection,
+      isFetchingMember,
+      member,
     }
   },
 }
 </script>
+
+<style>
+.only-my-filter .el-switch__label.el-switch__label--right.is-active {
+  color: #f58833;
+}
+</style>
