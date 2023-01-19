@@ -1,4 +1,15 @@
 const rules = {
+  name: [
+    {
+      required: true,
+      message: 'Please input name',
+      trigger: 'blur',
+      transform(value) {
+        return value.trim()
+      },
+    },
+    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
+  ],
   first_name: [
     {
       required: true,
@@ -21,17 +32,6 @@ const rules = {
     },
     { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
-  // description: [
-  //   {
-  //     required: true,
-  //     message: 'Please input description',
-  //     trigger: 'blur',
-  //     transform(value) {
-  //       return value.trim()
-  //     },
-  //   },
-  //   { min: 1, message: 'Length should be min 1', trigger: 'blur' },
-  // ],
 }
 
 export { rules }
