@@ -1,6 +1,6 @@
 <template>
-  <div class="sm:flex items-center justify-between w-full border rounded my-4 p-4">
-    <div class="flex items-center">
+  <div class="md:flex items-center justify-between w-full border rounded my-4 p-4">
+    <div class="flex items-center text-xs sm:text-sm">
       <img class="w-[70px]" src="../../../assets/img/icon-pdf.png" alt="" />
       <div class="flex flex-col ml-3">
         <div>
@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="flex justify-end pt-4 sm:pt-0 sm:block">
+    <div class="flex justify-end pt-4 md:pt-0 md:block">
       <el-popconfirm
         v-if="withRemoveBtn"
         confirm-button-text="Yes"
