@@ -18,7 +18,9 @@
       </div>
 
       <div v-if="!state.skipUpload && !isFetching" class="min-h-[175px] mb-5 p-5 border border-main-gray rounded-md">
-        <SwdButton primary small class="w-3/12" @click="showModalAttachDoc">Attach document</SwdButton>
+        <SwdButton primary small class="w-full sm:w-4/12 lg:w-3/12" @click="showModalAttachDoc">
+          Attach document
+        </SwdButton>
         <div v-if="!data.documents.length" class="text-center pt-12">
           <p>No recently added documents</p>
         </div>
