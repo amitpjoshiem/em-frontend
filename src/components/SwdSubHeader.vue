@@ -9,7 +9,7 @@
     </div>
     <div class="w-2/12 flex justify-end">
       <ShareBtn v-if="withShareBtn" :pdf-region="region" />
-      <SwdInfoBtn v-if="witchInfoBtn" :destination="infoBtnDestination" />
+      <SwdInfoBtn v-if="witchInfoBtn" />
       <slot name="change-assistent" />
       <slot name="add-user" />
       <slot name="add-company" />
@@ -42,11 +42,6 @@ export default {
       type: Boolean,
       require: false,
       default: false,
-    },
-    infoBtnDestination: {
-      type: String,
-      require: false,
-      default: '',
     },
     region: {
       type: String,

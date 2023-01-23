@@ -112,6 +112,7 @@ const getDefaultState = () => {
     uploadLifeDocsStatus: null,
     uploadSocialDocsStatus: null,
     collectionUploadMedia: null,
+    pageClientsHelp: null,
   }
 }
 
@@ -287,6 +288,10 @@ const mutations = {
 
   setCollectionUploadMedia(state, value) {
     state.collectionUploadMedia = value
+  },
+
+  setPageClientsHelp(state, value) {
+    state.pageClientsHelp = value
   },
 
   resetState(state) {
