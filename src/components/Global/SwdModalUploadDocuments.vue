@@ -7,8 +7,11 @@
     :before-close="closeDialog"
     destroy-on-close
   >
-    <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
-      <el-form-item prop="only_my" class="only-my-filter pb-2 h-[40px]">
+    <SwdTriStateToggle />
+
+    <div v-loading="isFetchingMember || isLoadingMember">
+      <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
+        <!-- <el-form-item prop="only_my" class="only-my-filter pb-2 h-[40px]">
         <el-switch
           v-model="ruleForm.is_spouse"
           active-text="Spouse/Partner"
@@ -17,8 +20,10 @@
           style="--el-switch-on-color: #f58833; --el-switch-off-color: #83ccf0"
           :disabled="isDisabledSwitcher"
         />
-      </el-form-item>
-      <div v-loading="isFetchingMember || isLoadingMember">
+      </el-form-item> -->
+        <el-form-item prop="only_my" class="only-my-filter pb-2 h-[40px]">
+          <!-- <SwdTriStateToggle /> -->
+        </el-form-item>
         <div v-if="!ruleForm.is_spouse">
           <el-form-item label="Name" prop="name" class="w-full mb-4">
             <el-input v-model="ruleForm.name" placeholder="Enter name" />
@@ -59,8 +64,9 @@
             </template>
           </SwdUpload>
         </div>
-      </div>
-    </el-form>
+      </el-form>
+    </div>
+
     <template #footer>
       <span class="dialog-footer">
         <div class="flex justify-end">
@@ -77,7 +83,7 @@
 
 <script>
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { watchEffect, ref, reactive, computed } from 'vue'
+import { watchEffect, ref, reactive, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import { rules } from '@/validationRules/rulesModalUploadDocuments.js'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
@@ -85,6 +91,7 @@ import { useMutation, useQueryClient } from 'vue-query'
 import { useSetStatus } from '../Lead/use-set-status'
 import { useRoute } from 'vue-router'
 import { useFetchMember } from '@/api/use-fetch-member.js'
+import { useFetchClientsDocsTypes } from '@/api/use-fetch-clients-docs-types.js'
 import { useBreakpoints } from '@/hooks/useBreakpoints'
 
 export default {
@@ -114,6 +121,13 @@ export default {
       isLoading: isLoadingMember,
     } = useFetchMember({ id: route.params.id }, { enabled: false })
 
+    const {
+      isFetching: isFetchingClientsDocsTypes,
+      data: clientsDocsTypes,
+      refetch: refetchClientsDocsTypes,
+      isLoading: isLoadingClientsDocsTypes,
+    } = useFetchClientsDocsTypes({ enabled: false })
+
     const { isLoading: isLoadingUpload, mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
     const ruleForm = reactive({
@@ -125,12 +139,20 @@ export default {
       uuids: [],
     })
 
+    watch(
+      dialogVisible,
+      (newValue, oldValue) => {
+        if (newValue === true && oldValue === false) {
+          refetchMember.value()
+          if (collection.value === 'investment_and_retirement_accounts') refetchClientsDocsTypes.value()
+        }
+      },
+      { immediate: true }
+    )
+
     watchEffect(() => {
       dialogVisible.value = store.state.globalComponents.dialog.showDialog.modalUploadDocuments
       collection.value = store.state.globalComponents.collectionUploadMedia
-      if (dialogVisible.value) {
-        refetchMember.value()
-      }
       if (member.value && ruleForm.is_spouse) {
         ruleForm.first_name = member.value.spouse.first_name
         ruleForm.last_name = member.value.spouse.last_name
@@ -164,6 +186,9 @@ export default {
 
     const save = async (e) => {
       e.preventDefault()
+      if (ruleForm) {
+        console.log('ruleForm - ', ruleForm)
+      }
       if (!ruleForm.uuids.length) validUpload.value = false
       form.value.validate(async (valid) => {
         if (valid && validUpload.value) {
@@ -230,6 +255,11 @@ export default {
       isFullScreen,
       isDisabledSwitcher,
       isLoadingMember,
+
+      isFetchingClientsDocsTypes,
+      clientsDocsTypes,
+      refetchClientsDocsTypes,
+      isLoadingClientsDocsTypes,
     }
   },
 }
