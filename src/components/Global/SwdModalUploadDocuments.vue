@@ -9,39 +9,41 @@
   >
     <div v-loading="isFetchingMember || isLoadingMember">
       <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
-        <el-form-item prop="only_my" class="only-my-filter pb-4">
-          <div class="flex justify-center w-full" :class="{ 'no-valid-switcher': !validSwitcher }">
-            <span
-              class="three-switch-item rounded-tl-md rounded-bl-md"
-              :class="{
-                active: ruleForm.is_spouse === false,
-                'cursor-not-allowed': isDisabledSwitcher,
-                'cursor-pointer': !isDisabledSwitcher,
-              }"
-              @click="changeOwner(false)"
-            >
-              Owner
-            </span>
-            <span
-              class="three-switch-item cursor-not-allowed"
-              :class="{ active: ruleForm.is_spouse === null }"
-              @click="changeOwner(null)"
-            >
-              N/a
-            </span>
-            <span
-              class="three-switch-item rounded-tr-md rounded-br-md"
-              :class="{
-                active: ruleForm.is_spouse === true,
-                'cursor-not-allowed': isDisabledSwitcher,
-                'cursor-pointer': !isDisabledSwitcher,
-              }"
-              @click="changeOwner(true)"
-            >
-              Spouse/Partner
-            </span>
-          </div>
-        </el-form-item>
+        <div class="w-full flex justify-center">
+          <el-form-item prop="only_my" class="pb-4">
+            <div class="flex w-[420px]" :class="{ 'no-valid-switcher': !validSwitcher }">
+              <span
+                class="three-switch-item rounded-tl-md rounded-bl-md"
+                :class="{
+                  active: ruleForm.is_spouse === false,
+                  'cursor-not-allowed': isDisabledSwitcher,
+                  'cursor-pointer': !isDisabledSwitcher,
+                }"
+                @click="changeOwner(false)"
+              >
+                Owner
+              </span>
+              <span
+                class="three-switch-item cursor-not-allowed"
+                :class="{ active: ruleForm.is_spouse === null }"
+                @click="changeOwner(null)"
+              >
+                N/a
+              </span>
+              <span
+                class="three-switch-item rounded-tr-md rounded-br-md"
+                :class="{
+                  active: ruleForm.is_spouse === true,
+                  'cursor-not-allowed': isDisabledSwitcher,
+                  'cursor-pointer': !isDisabledSwitcher,
+                }"
+                @click="changeOwner(true)"
+              >
+                Spouse/Partner
+              </span>
+            </div>
+          </el-form-item>
+        </div>
         <div v-if="!ruleForm.is_spouse">
           <el-form-item label="Name" prop="name" class="w-full mb-4">
             <el-input v-model="ruleForm.name" placeholder="Enter name" />
@@ -62,14 +64,15 @@
           prop="type"
           class="w-full mb-4"
         >
-          <el-select v-model="ruleForm.type" class="w-full" placeholder="Select">
-            <el-option
-              v-for="item in clientsDocsTypes"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              @change="changeFileType"
-            />
+          <el-select
+            v-model="ruleForm.type"
+            class="w-full"
+            placeholder="Select"
+            allow-create
+            filterable
+            :loading="isFetchingClientsDocsTypes"
+          >
+            <el-option v-for="item in clientsDocsTypes" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
 
@@ -161,7 +164,6 @@ export default {
       isFetching: isFetchingClientsDocsTypes,
       data: clientsDocsTypes,
       refetch: refetchClientsDocsTypes,
-      isLoading: isLoadingClientsDocsTypes,
     } = useFetchClientsDocsTypes({ enabled: false })
 
     const { isLoading: isLoadingUpload, mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
@@ -283,10 +285,6 @@ export default {
       validSwitcher.value = true
     }
 
-    const changeFileType = (value) => {
-      console.log('value - ', value)
-    }
-
     return {
       dialogVisible,
       closeDialog,
@@ -308,26 +306,16 @@ export default {
       isFullScreen,
       isDisabledSwitcher,
       isLoadingMember,
-
-      isFetchingClientsDocsTypes,
       clientsDocsTypes,
-      refetchClientsDocsTypes,
-      isLoadingClientsDocsTypes,
-
       changeOwner,
-
-      changeFileType,
       validSwitcher,
+      isFetchingClientsDocsTypes,
     }
   },
 }
 </script>
 
 <style>
-.only-my-filter .el-switch__label.el-switch__label--right.is-active {
-  color: #f58833;
-}
-
 .three-switch-item {
   width: 140px;
   @apply text-center bg-main-gray text-main;
@@ -338,6 +326,6 @@ export default {
 }
 
 .no-valid-switcher {
-  @apply border border-red-500;
+  @apply border border-red-500 rounded-md;
 }
 </style>
