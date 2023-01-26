@@ -32,6 +32,13 @@ const rules = {
     },
     { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
+  type: [
+    {
+      required: true,
+      message: 'Please select file type',
+      trigger: 'change',
+    },
+  ],
 }
 
 export { rules }

@@ -7,22 +7,40 @@
     :before-close="closeDialog"
     destroy-on-close
   >
-    <SwdTriStateToggle />
-
     <div v-loading="isFetchingMember || isLoadingMember">
       <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
-        <!-- <el-form-item prop="only_my" class="only-my-filter pb-2 h-[40px]">
-        <el-switch
-          v-model="ruleForm.is_spouse"
-          active-text="Spouse/Partner"
-          :loading="isFetchingMember || isLoadingMember"
-          inactive-text="Owner"
-          style="--el-switch-on-color: #f58833; --el-switch-off-color: #83ccf0"
-          :disabled="isDisabledSwitcher"
-        />
-      </el-form-item> -->
-        <el-form-item prop="only_my" class="only-my-filter pb-2 h-[40px]">
-          <!-- <SwdTriStateToggle /> -->
+        <el-form-item prop="only_my" class="only-my-filter pb-4">
+          <div class="flex justify-center w-full" :class="{ 'no-valid-switcher': !validSwitcher }">
+            <span
+              class="three-switch-item rounded-tl-md rounded-bl-md"
+              :class="{
+                active: ruleForm.is_spouse === false,
+                'cursor-not-allowed': isDisabledSwitcher,
+                'cursor-pointer': !isDisabledSwitcher,
+              }"
+              @click="changeOwner(false)"
+            >
+              Owner
+            </span>
+            <span
+              class="three-switch-item cursor-not-allowed"
+              :class="{ active: ruleForm.is_spouse === null }"
+              @click="changeOwner(null)"
+            >
+              N/a
+            </span>
+            <span
+              class="three-switch-item rounded-tr-md rounded-br-md"
+              :class="{
+                active: ruleForm.is_spouse === true,
+                'cursor-not-allowed': isDisabledSwitcher,
+                'cursor-pointer': !isDisabledSwitcher,
+              }"
+              @click="changeOwner(true)"
+            >
+              Spouse/Partner
+            </span>
+          </div>
         </el-form-item>
         <div v-if="!ruleForm.is_spouse">
           <el-form-item label="Name" prop="name" class="w-full mb-4">
@@ -37,6 +55,23 @@
             <el-input v-model="ruleForm.last_name" placeholder="Enter name" />
           </el-form-item>
         </div>
+
+        <el-form-item
+          v-if="collection === 'investment_and_retirement_accounts'"
+          label="File type"
+          prop="type"
+          class="w-full mb-4"
+        >
+          <el-select v-model="ruleForm.type" class="w-full" placeholder="Select">
+            <el-option
+              v-for="item in clientsDocsTypes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              @change="changeFileType"
+            />
+          </el-select>
+        </el-form-item>
 
         <el-form-item label="Description" prop="description" class="w-full mb-4">
           <el-input v-model="ruleForm.description" placeholder="Enter description" type="textarea" />
@@ -109,6 +144,7 @@ export default {
     const validUpload = ref(true)
     const collection = ref(null)
     const isDisabledSwitcher = ref(true)
+    const validSwitcher = ref(true)
 
     const { setStatus } = useSetStatus()
     const { screenType } = useBreakpoints()
@@ -135,7 +171,8 @@ export default {
       last_name: '',
       first_name: '',
       description: '',
-      is_spouse: false,
+      is_spouse: null,
+      type: '',
       uuids: [],
     })
 
@@ -160,8 +197,9 @@ export default {
       if (member.value && !ruleForm.is_spouse) {
         ruleForm.name = member.value.name
       }
-      if (!isLoadingMember.value && member.value && member.value.married) {
-        isDisabledSwitcher.value = false
+      if (!isLoadingMember.value && member.value && !member.value.married) {
+        ruleForm.is_spouse = false
+        isDisabledSwitcher.value = true
       }
     })
 
@@ -180,16 +218,19 @@ export default {
       ruleForm.description = ''
       ruleForm.uuids = []
       inChangeFile.value = false
-      ruleForm.is_spouse = false
+      ruleForm.is_spouse = null
+      ruleForm.type = null
+      validUpload.value = true
+      validSwitcher.value = true
       removeMedia()
     }
 
     const save = async (e) => {
       e.preventDefault()
-      if (ruleForm) {
-        console.log('ruleForm - ', ruleForm)
-      }
       if (!ruleForm.uuids.length) validUpload.value = false
+      if (ruleForm.is_spouse === null) {
+        validSwitcher.value = false
+      }
       form.value.validate(async (valid) => {
         if (valid && validUpload.value) {
           const data = {
@@ -197,6 +238,9 @@ export default {
             describe: ruleForm.description,
             is_spouse: ruleForm.is_spouse,
             name: ruleForm.is_spouse ? ruleForm.last_name + ' ' + ruleForm.first_name : ruleForm.name,
+          }
+          if (ruleForm.type !== null) {
+            data.type = ruleForm.type
           }
           const response = await uploadDoc({ collection: collection.value, data })
           if (!('error' in response)) {
@@ -234,6 +278,15 @@ export default {
       return false
     })
 
+    const changeOwner = (value) => {
+      ruleForm.is_spouse = value
+      validSwitcher.value = true
+    }
+
+    const changeFileType = (value) => {
+      console.log('value - ', value)
+    }
+
     return {
       dialogVisible,
       closeDialog,
@@ -260,6 +313,11 @@ export default {
       clientsDocsTypes,
       refetchClientsDocsTypes,
       isLoadingClientsDocsTypes,
+
+      changeOwner,
+
+      changeFileType,
+      validSwitcher,
     }
   },
 }
@@ -268,5 +326,18 @@ export default {
 <style>
 .only-my-filter .el-switch__label.el-switch__label--right.is-active {
   color: #f58833;
+}
+
+.three-switch-item {
+  width: 140px;
+  @apply text-center bg-main-gray text-main;
+}
+
+.active {
+  @apply bg-primary text-white font-semibold border border-main-blue;
+}
+
+.no-valid-switcher {
+  @apply border border-red-500;
 }
 </style>
