@@ -220,7 +220,7 @@ export default {
     })
 
     const goLeadsList = () => {
-      router.push({ name: `${route.meta.type}/all-leads` })
+      router.push({ name: `advisor/all-leads` })
     }
 
     const isReadOnlyLead = computed(() => {
