@@ -43,54 +43,46 @@
         </router-link>
 
         <!-- Upload Relevant Financial Documents -->
-        <router-link
-          :to="{ name: 'relevant-financial-documents', params: { id: clientsInfo.member_id } }"
-          class="flex items-center"
+        <el-card class="w-full mb-4 cursor-pointer" @click="openUploadRelevantDocuments">
+          <div class="flex items-center">
+            <el-icon :size="25" class="mr-5">
+              <circle-check-filled :color="getStatusRelevant" />
+            </el-icon>
+            <div class="text-xs sm:text-base text-main">Step 2 - Upload Relevant Financial Documents</div>
+          </div>
+        </el-card>
+        <el-card
+          class="w-full mb-4"
+          :class="{ 'bg-main-gray cursor-not-allowed': isDasbledSteps, 'cursor-pointer': !isDasbledSteps }"
+          @click="openUploadPropertyDocuments"
         >
-          <el-card class="mb-4 w-full">
-            <div class="flex items-center">
-              <el-icon :size="25" class="mr-5">
-                <circle-check-filled :color="getStatusRelevant" />
-              </el-icon>
-              <div class="text-xs sm:text-base text-main">Step 2 - Upload Relevant Financial Documents</div>
-            </div>
-          </el-card>
-        </router-link>
-
-        <!-- Upload Property & Casualty Documents -->
-        <router-link
-          :to="{ name: 'property-casualty', params: { id: clientsInfo.member_id } }"
-          class="flex items-center"
-        >
-          <el-card class="mb-4 w-full">
-            <div class="flex items-center">
-              <el-icon :size="25" class="mr-5">
-                <circle-check-filled
-                  :color="clientsInfo.steps.property_casualty ? stepsColorSchema.active : stepsColorSchema.notActive"
-                />
-              </el-icon>
-              <div class="text-xs sm:text-base text-main">Step 3 - Upload Property & Casualty Documents</div>
-            </div>
-          </el-card>
-        </router-link>
+          <div class="flex items-center">
+            <el-icon :size="25" class="mr-5">
+              <circle-check-filled
+                :color="clientsInfo.steps.property_casualty ? stepsColorSchema.active : stepsColorSchema.notActive"
+              />
+            </el-icon>
+            <div class="text-xs sm:text-base text-main">Step 3 - Upload Property & Casualty Documents</div>
+          </div>
+        </el-card>
 
         <!-- Upload Medicare Documents -->
-        <router-link
-          :to="{ name: 'medicare-details', params: { id: clientsInfo.member_id } }"
-          class="flex items-center"
+        <el-card
+          class="w-full mb-4"
+          :class="{ 'bg-main-gray cursor-not-allowed': isDasbledSteps, 'cursor-pointer': !isDasbledSteps }"
+          @click="openUploadMedicareDocuments"
         >
-          <el-card class="mb-4 w-full">
-            <div class="flex items-center">
-              <el-icon :size="25" class="mr-5">
-                <circle-check-filled
-                  :color="clientsInfo.steps.medicare_details ? stepsColorSchema.active : stepsColorSchema.notActive"
-                />
-              </el-icon>
-              <div class="text-xs sm:text-base text-main">Step 4 - Upload Medicare Documents</div>
-            </div>
-          </el-card>
-        </router-link>
+          <div class="flex items-center">
+            <el-icon :size="25" class="mr-5">
+              <circle-check-filled
+                :color="clientsInfo.steps.medicare_details ? stepsColorSchema.active : stepsColorSchema.notActive"
+              />
+            </el-icon>
+            <div class="text-xs sm:text-base text-main">Step 4 - Upload Medicare Documents</div>
+          </div>
+        </el-card>
       </template>
+
       <template v-else>
         <div class="flex flex-col items-center my-8">
           <InlineSvg :src="IconSuccesChanged" />
@@ -102,16 +94,18 @@
         </div>
       </template>
 
-      <router-link :to="{ name: 'confirmation-page', params: { id: clientsInfo.member_id } }" class="flex">
-        <el-card class="mb-4 w-full">
-          <div class="flex items-center">
-            <el-icon :size="25" class="mr-5">
-              <document-checked color="#073763" />
-            </el-icon>
-            <div class="text-xs sm:text-base text-main">Confirmation Information</div>
-          </div>
-        </el-card>
-      </router-link>
+      <el-card
+        class="w-full mb-4"
+        :class="{ 'bg-main-gray cursor-not-allowed': isDasbledSteps, 'cursor-pointer': !isDasbledSteps }"
+        @click="openConfirmationInformation"
+      >
+        <div class="flex items-center">
+          <el-icon :size="25" class="mr-5">
+            <document-checked color="#073763" />
+          </el-icon>
+          <div class="text-xs sm:text-base text-main">Confirmation Information</div>
+        </div>
+      </el-card>
     </div>
   </div>
 </template>
@@ -164,6 +158,35 @@ export default {
       return clientsInfo.value.readonly
     })
 
+    const isDasbledSteps = computed(() => {
+      if (
+        clientsInfo.value.steps.completed_financial_fact_finder &&
+        clientsInfo.value.steps.investment_and_retirement_accounts &&
+        clientsInfo.value.steps.life_insurance_annuity_and_long_terms_care_policies &&
+        clientsInfo.value.steps.social_security_information
+      ) {
+        return false
+      }
+
+      return true
+    })
+
+    const openConfirmationInformation = () => {
+      if (!isDasbledSteps.value) router.push({ name: 'confirmation-page', params: { id: clientsInfo.value.member_id } })
+    }
+
+    const openUploadRelevantDocuments = () => {
+      router.push({ name: 'relevant-financial-documents', params: { id: clientsInfo.value.member_id } })
+    }
+
+    const openUploadPropertyDocuments = () => {
+      if (!isDasbledSteps.value) router.push({ name: 'property-casualty', params: { id: clientsInfo.value.member_id } })
+    }
+
+    const openUploadMedicareDocuments = () => {
+      if (!isDasbledSteps.value) router.push({ name: 'medicare-details', params: { id: clientsInfo.value.member_id } })
+    }
+
     return {
       isLoadingInfo,
       fetchingInfo,
@@ -174,6 +197,11 @@ export default {
       stepsColorSchema,
       getStatusRelevant,
       isReadOnlyLead,
+      openUploadMedicareDocuments,
+      openUploadPropertyDocuments,
+      openUploadRelevantDocuments,
+      openConfirmationInformation,
+      isDasbledSteps,
     }
   },
 }

@@ -143,7 +143,7 @@ export default {
     const inChangeFile = ref(false)
     const validUpload = ref(true)
     const collection = ref(null)
-    const isDisabledSwitcher = ref(true)
+    const isDisabledSwitcher = ref(false)
     const validSwitcher = ref(true)
 
     const { setStatus } = useSetStatus()
