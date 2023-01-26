@@ -7,18 +7,43 @@
     :before-close="closeDialog"
     destroy-on-close
   >
-    <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
-      <el-form-item prop="only_my" class="only-my-filter pb-2 h-[40px]">
-        <el-switch
-          v-model="ruleForm.is_spouse"
-          active-text="Spouse/Partner"
-          :loading="isFetchingMember || isLoadingMember"
-          inactive-text="Owner"
-          style="--el-switch-on-color: #f58833; --el-switch-off-color: #83ccf0"
-          :disabled="isDisabledSwitcher"
-        />
-      </el-form-item>
-      <div v-loading="isFetchingMember || isLoadingMember">
+    <div v-loading="isFetchingMember || isLoadingMember">
+      <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
+        <div class="w-full flex justify-center">
+          <el-form-item prop="only_my" class="pb-4">
+            <div class="flex w-[420px]" :class="{ 'no-valid-switcher': !validSwitcher }">
+              <span
+                class="three-switch-item rounded-tl-md rounded-bl-md"
+                :class="{
+                  active: ruleForm.is_spouse === false,
+                  'cursor-not-allowed': isDisabledSwitcher,
+                  'cursor-pointer': !isDisabledSwitcher,
+                }"
+                @click="changeOwner(false)"
+              >
+                Owner
+              </span>
+              <span
+                class="three-switch-item cursor-not-allowed"
+                :class="{ active: ruleForm.is_spouse === null }"
+                @click="changeOwner(null)"
+              >
+                N/a
+              </span>
+              <span
+                class="three-switch-item rounded-tr-md rounded-br-md"
+                :class="{
+                  active: ruleForm.is_spouse === true,
+                  'cursor-not-allowed': isDisabledSwitcher,
+                  'cursor-pointer': !isDisabledSwitcher,
+                }"
+                @click="changeOwner(true)"
+              >
+                Spouse/Partner
+              </span>
+            </div>
+          </el-form-item>
+        </div>
         <div v-if="!ruleForm.is_spouse">
           <el-form-item label="Name" prop="name" class="w-full mb-4">
             <el-input v-model="ruleForm.name" placeholder="Enter name" />
@@ -32,6 +57,24 @@
             <el-input v-model="ruleForm.last_name" placeholder="Enter name" />
           </el-form-item>
         </div>
+
+        <el-form-item
+          v-if="collection === 'investment_and_retirement_accounts'"
+          label="File type"
+          prop="type"
+          class="w-full mb-4"
+        >
+          <el-select
+            v-model="ruleForm.type"
+            class="w-full"
+            placeholder="Select"
+            allow-create
+            filterable
+            :loading="isFetchingClientsDocsTypes"
+          >
+            <el-option v-for="item in clientsDocsTypes" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </el-form-item>
 
         <el-form-item label="Description" prop="description" class="w-full mb-4">
           <el-input v-model="ruleForm.description" placeholder="Enter description" type="textarea" />
@@ -59,8 +102,9 @@
             </template>
           </SwdUpload>
         </div>
-      </div>
-    </el-form>
+      </el-form>
+    </div>
+
     <template #footer>
       <span class="dialog-footer">
         <div class="flex justify-end">
@@ -77,7 +121,7 @@
 
 <script>
 import SwdUpload from '@/components/Global/SwdUpload.vue'
-import { watchEffect, ref, reactive, computed } from 'vue'
+import { watchEffect, ref, reactive, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import { rules } from '@/validationRules/rulesModalUploadDocuments.js'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
@@ -85,6 +129,7 @@ import { useMutation, useQueryClient } from 'vue-query'
 import { useSetStatus } from '../Lead/use-set-status'
 import { useRoute } from 'vue-router'
 import { useFetchMember } from '@/api/use-fetch-member.js'
+import { useFetchClientsDocsTypes } from '@/api/use-fetch-clients-docs-types.js'
 import { useBreakpoints } from '@/hooks/useBreakpoints'
 
 export default {
@@ -101,7 +146,8 @@ export default {
     const inChangeFile = ref(false)
     const validUpload = ref(true)
     const collection = ref(null)
-    const isDisabledSwitcher = ref(true)
+    const isDisabledSwitcher = ref(false)
+    const validSwitcher = ref(true)
 
     const { setStatus } = useSetStatus()
     const { screenType } = useBreakpoints()
@@ -114,6 +160,12 @@ export default {
       isLoading: isLoadingMember,
     } = useFetchMember({ id: route.params.id }, { enabled: false })
 
+    const {
+      isFetching: isFetchingClientsDocsTypes,
+      data: clientsDocsTypes,
+      refetch: refetchClientsDocsTypes,
+    } = useFetchClientsDocsTypes({ enabled: false })
+
     const { isLoading: isLoadingUpload, mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
 
     const ruleForm = reactive({
@@ -121,16 +173,25 @@ export default {
       last_name: '',
       first_name: '',
       description: '',
-      is_spouse: false,
+      is_spouse: null,
+      type: '',
       uuids: [],
     })
+
+    watch(
+      dialogVisible,
+      (newValue, oldValue) => {
+        if (newValue === true && oldValue === false) {
+          refetchMember.value()
+          if (collection.value === 'investment_and_retirement_accounts') refetchClientsDocsTypes.value()
+        }
+      },
+      { immediate: true }
+    )
 
     watchEffect(() => {
       dialogVisible.value = store.state.globalComponents.dialog.showDialog.modalUploadDocuments
       collection.value = store.state.globalComponents.collectionUploadMedia
-      if (dialogVisible.value) {
-        refetchMember.value()
-      }
       if (member.value && ruleForm.is_spouse) {
         ruleForm.first_name = member.value.spouse.first_name
         ruleForm.last_name = member.value.spouse.last_name
@@ -138,8 +199,9 @@ export default {
       if (member.value && !ruleForm.is_spouse) {
         ruleForm.name = member.value.name
       }
-      if (!isLoadingMember.value && member.value && member.value.married) {
-        isDisabledSwitcher.value = false
+      if (!isLoadingMember.value && member.value && !member.value.married) {
+        ruleForm.is_spouse = false
+        isDisabledSwitcher.value = true
       }
     })
 
@@ -158,13 +220,19 @@ export default {
       ruleForm.description = ''
       ruleForm.uuids = []
       inChangeFile.value = false
-      ruleForm.is_spouse = false
+      ruleForm.is_spouse = null
+      ruleForm.type = null
+      validUpload.value = true
+      validSwitcher.value = true
       removeMedia()
     }
 
     const save = async (e) => {
       e.preventDefault()
       if (!ruleForm.uuids.length) validUpload.value = false
+      if (ruleForm.is_spouse === null) {
+        validSwitcher.value = false
+      }
       form.value.validate(async (valid) => {
         if (valid && validUpload.value) {
           const data = {
@@ -172,6 +240,9 @@ export default {
             describe: ruleForm.description,
             is_spouse: ruleForm.is_spouse,
             name: ruleForm.is_spouse ? ruleForm.last_name + ' ' + ruleForm.first_name : ruleForm.name,
+          }
+          if (ruleForm.type) {
+            data.type = ruleForm.type
           }
           const response = await uploadDoc({ collection: collection.value, data })
           if (!('error' in response)) {
@@ -209,6 +280,11 @@ export default {
       return false
     })
 
+    const changeOwner = (value) => {
+      ruleForm.is_spouse = value
+      validSwitcher.value = true
+    }
+
     return {
       dialogVisible,
       closeDialog,
@@ -230,13 +306,26 @@ export default {
       isFullScreen,
       isDisabledSwitcher,
       isLoadingMember,
+      clientsDocsTypes,
+      changeOwner,
+      validSwitcher,
+      isFetchingClientsDocsTypes,
     }
   },
 }
 </script>
 
 <style>
-.only-my-filter .el-switch__label.el-switch__label--right.is-active {
-  color: #f58833;
+.three-switch-item {
+  width: 140px;
+  @apply text-center bg-main-gray text-main;
+}
+
+.active {
+  @apply bg-primary text-white font-semibold border border-main-blue;
+}
+
+.no-valid-switcher {
+  @apply border border-red-500 rounded-md;
 }
 </style>
