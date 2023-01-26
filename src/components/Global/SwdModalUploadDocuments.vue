@@ -241,7 +241,7 @@ export default {
             is_spouse: ruleForm.is_spouse,
             name: ruleForm.is_spouse ? ruleForm.last_name + ' ' + ruleForm.first_name : ruleForm.name,
           }
-          if (ruleForm.type !== null) {
+          if (ruleForm.type) {
             data.type = ruleForm.type
           }
           const response = await uploadDoc({ collection: collection.value, data })
