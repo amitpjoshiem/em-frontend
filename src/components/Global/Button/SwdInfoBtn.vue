@@ -64,6 +64,12 @@ export default {
       if (route.name === 'lead-basic-information') {
         await store.commit('globalComponents/setPageClientsHelp', 'prospect_basic')
       }
+      if (route.name === 'lead-assets-information') {
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_assets_income')
+      }
+      if (route.name === 'lead-expense-information') {
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_monthly_expenses')
+      }
       refetch.value()
     }
 
