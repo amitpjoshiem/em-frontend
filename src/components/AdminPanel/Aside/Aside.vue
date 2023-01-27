@@ -21,6 +21,7 @@
         <router-link :to="{ name: `${route.meta.type}/ap-users` }">
           <el-menu-item index="2">
             <el-icon><User /></el-icon>
+
             <span>Users</span>
           </el-menu-item>
         </router-link>
@@ -31,13 +32,20 @@
             <span>Companies</span>
           </el-menu-item>
         </router-link>
+
+        <router-link :to="{ name: `${route.meta.type}/ap-help` }">
+          <el-menu-item index="4">
+            <el-icon><Help /></el-icon>
+            <span>Help</span>
+          </el-menu-item>
+        </router-link>
       </el-menu>
     </el-aside>
   </div>
 </template>
 
 <script>
-import { OfficeBuilding, DataAnalysis, User } from '@element-plus/icons-vue'
+import { OfficeBuilding, DataAnalysis, User, Help } from '@element-plus/icons-vue'
 import IconLogo from '@/assets/svg/icon-logo.svg'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -49,16 +57,17 @@ export default {
     DataAnalysis,
     User,
     OfficeBuilding,
+    Help,
   },
   setup() {
     const route = useRoute()
-
     const defaultActive = ref('1')
 
     onMounted(() => {
       if (route.name === `${route.meta.type}/ap-dashboard`) defaultActive.value = '1'
       if (route.name === `${route.meta.type}/ap-users`) defaultActive.value = '2'
       if (route.name === `${route.meta.type}/ap-companies`) defaultActive.value = '3'
+      if (route.name === `${route.meta.type}/ap-help`) defaultActive.value = '4'
     })
 
     return {
