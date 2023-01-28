@@ -2,7 +2,7 @@
   <SwdWrapper class="text-main">
     <SwdSubHeader title="Help" :with-back-btn="false" />
     <div class="mt-4 el-form-item__label -mb-3">Text</div>
-    <el-form ref="form" :model="ruleForm" class="p-5 border rounded-md">
+    <el-form ref="form" v-loading="isLoading" :model="ruleForm" class="p-5 border rounded-md">
       <el-form-item class="mb-4">
         <el-input v-model="ruleForm.text" autocomplete="off" placeholder="Add help text" />
       </el-form-item>
@@ -13,6 +13,7 @@
     </el-form>
 
     <div class="mt-4 el-form-item__label -mb-3">Video</div>
+    <div v-if="isLoading" v-loading="isLoading" class="p-5 border rounded-md h-[400px]" />
     <div v-if="!isLoading" class="p-5 border rounded-md">
       <template v-if="itemHelp.url">
         <video controls style="width: 100%; height: 100%">
