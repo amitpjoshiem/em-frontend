@@ -2,7 +2,7 @@
   <el-dialog
     v-model="dialogVisible"
     title="Upload documents"
-    width="55%"
+    width="60%"
     :fullscreen="isFullScreen"
     :before-close="closeDialog"
     destroy-on-close
@@ -11,9 +11,9 @@
       <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
         <div class="w-full flex justify-center">
           <el-form-item prop="only_my" class="pb-4">
-            <div class="flex w-[420px]" :class="{ 'no-valid-switcher': !validSwitcher }">
+            <div class="flex" :class="{ 'no-valid-switcher': !validSwitcher }">
               <span
-                class="three-switch-item rounded-tl-md rounded-bl-md"
+                class="w-32 three-switch-item rounded-tl-md rounded-bl-md"
                 :class="{
                   active: ruleForm.is_spouse === false,
                   'cursor-not-allowed': isDisabledSwitcher,
@@ -24,14 +24,14 @@
                 Owner
               </span>
               <span
-                class="three-switch-item cursor-not-allowed"
+                class="three-switch-item cursor-not-allowed w-16"
                 :class="{ active: ruleForm.is_spouse === null }"
                 @click="changeOwner(null)"
               >
-                N/a
+                N/A
               </span>
               <span
-                class="three-switch-item rounded-tr-md rounded-br-md"
+                class="w-32 three-switch-item rounded-tr-md rounded-br-md"
                 :class="{
                   active: ruleForm.is_spouse === true,
                   'cursor-not-allowed': isDisabledSwitcher,
@@ -317,7 +317,6 @@ export default {
 
 <style>
 .three-switch-item {
-  width: 140px;
   @apply text-center bg-main-gray text-main;
 }
 
