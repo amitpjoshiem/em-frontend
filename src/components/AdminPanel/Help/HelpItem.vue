@@ -1,18 +1,21 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <SwdWrapper class="text-main">
     <SwdSubHeader title="Help" :with-back-btn="false" />
-    <div class="mt-4 el-form-item__label -mb-3">Text</div>
-    <el-form ref="form" v-loading="isLoading" :model="ruleForm" class="p-5 border rounded-md">
-      <el-form-item class="mb-4">
-        <el-input v-model="ruleForm.text" autocomplete="off" placeholder="Add help text" />
-      </el-form-item>
 
+    <div class="mb-10">
+      <div class="font-semibold mb-2">Text editor</div>
+      <QuillEditor v-model:content="dataProperty" content-type="html" theme="snow" toolbar="minimal" />
+      <div class="font-semibold mb-2 mt-4">Text preview</div>
+      <el-scrollbar height="300px" class="px-2 border">
+        <div class="help-text-content" v-html="dataProperty" />
+      </el-scrollbar>
       <div class="flex justify-end mt-4">
         <SwdButton primary main @click="saveText">Save</SwdButton>
       </div>
-    </el-form>
+    </div>
 
-    <div class="mt-4 el-form-item__label -mb-3">Video</div>
+    <div class="font-semibold mb-2">Video</div>
     <div v-if="isLoading" v-loading="isLoading" class="p-5 border rounded-md h-[400px]" />
     <div v-if="!isLoading" class="p-5 border rounded-md">
       <template v-if="itemHelp.url">
@@ -53,10 +56,14 @@ import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { ElMessageBox } from 'element-plus'
 
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
+
 export default {
   name: 'HelpItem',
   components: {
     SwdUpload,
+    QuillEditor,
   },
   setup() {
     const route = useRoute()
@@ -66,8 +73,11 @@ export default {
     const upload = ref(null)
     const queryClient = useQueryClient()
 
+    const dataProperty = ref('')
+
     const ruleForm = reactive({
       text: '',
+      helpText: '',
     })
 
     const { isLoading, isError, data: itemHelp } = useFetchApClientsHelpFind(id)
@@ -100,7 +110,7 @@ export default {
     }
 
     const saveText = async () => {
-      const res = await updateHelp({ type: itemHelp.value.type, data: { text: ruleForm.text } })
+      const res = await updateHelp({ type: itemHelp.value.type, data: { text: dataProperty.value } })
       if (!('error' in res)) {
         useAlert({
           title: 'Success',
@@ -143,7 +153,15 @@ export default {
       handleChange,
       saveText,
       removeVideo,
+
+      dataProperty,
     }
   },
 }
 </script>
+
+<style>
+.ql-editor {
+  height: 300px;
+}
+</style>

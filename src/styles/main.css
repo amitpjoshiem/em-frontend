@@ -320,3 +320,20 @@ input::-webkit-inner-spin-button {
 .el-notification__content{
   text-align: start;
 }
+
+.help-text-content ol {
+  @apply list-decimal;
+}
+.help-text-content ul {
+  @apply list-disc;
+}
+
+.help-text-content h1 {
+  @apply text-2xl;
+}
+.help-text-content h2 {
+  @apply text-xl;
+}
+.help-text-content h3 {
+  @apply text-lg;
+}
