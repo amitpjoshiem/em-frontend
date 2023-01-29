@@ -58,27 +58,42 @@
           </el-form-item>
         </div>
 
-        <el-form-item
-          v-if="collection === 'investment_and_retirement_accounts'"
-          label="File type"
-          prop="type"
-          class="w-full mb-4"
-        >
-          <el-select
-            v-model="ruleForm.type"
-            class="w-full"
-            placeholder="Select"
-            allow-create
-            filterable
-            :loading="isFetchingClientsDocsTypes"
+        <div class="flex">
+          <el-form-item
+            v-if="collection === 'investment_and_retirement_accounts'"
+            label="File type"
+            prop="type"
+            class="w-6/12 pr-2 pb-5"
           >
-            <el-option v-for="item in clientsDocsTypes" :key="item.value" :label="item.label" :value="item.value" />
-          </el-select>
-        </el-form-item>
+            <el-select
+              v-model="ruleForm.type"
+              class="w-full"
+              placeholder="Select"
+              allow-create
+              filterable
+              :loading="isFetchingClientsDocsTypes"
+            >
+              <el-option v-for="item in docsTypesList" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
+          </el-form-item>
+          <div v-if="ruleForm.type === 'custom'" class="w-6/12 pl-2 flex flex-col">
+            <el-form-item label="Custom type" prop="custom_type" class="w-full">
+              <el-input v-model="ruleForm.custom_type" placeholder="Enter custom type" maxlength="30" />
+            </el-form-item>
+            <div class="text-gray-500 flex justify-end text-xxs">
+              <span>{{ 30 - ruleForm.custom_type.length }}</span>
+              <span class="pl-1">characters remaining</span>
+            </div>
+          </div>
+        </div>
 
-        <el-form-item label="Description" prop="description" class="w-full mb-4">
-          <el-input v-model="ruleForm.description" placeholder="Enter description" type="textarea" />
+        <el-form-item label="Description" prop="description" class="w-full">
+          <el-input v-model="ruleForm.description" placeholder="Enter description" maxlength="30" />
         </el-form-item>
+        <div class="mb-4 text-gray-500 flex justify-end text-xxs">
+          <span>{{ 30 - ruleForm.description.length }}</span>
+          <span class="pl-1">characters remaining</span>
+        </div>
         <div class="pb-4 text-main">
           <p>
             This could be the account type of a statement you are submitting, or a personal document such as a driver’s
@@ -131,6 +146,7 @@ import { useRoute } from 'vue-router'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useFetchClientsDocsTypes } from '@/api/use-fetch-clients-docs-types.js'
 import { useBreakpoints } from '@/hooks/useBreakpoints'
+import { ElNotification } from 'element-plus'
 
 export default {
   name: 'SwdModalUploadDocuments',
@@ -176,6 +192,7 @@ export default {
       is_spouse: null,
       type: '',
       uuids: [],
+      custom_type: '',
     })
 
     watch(
@@ -219,6 +236,7 @@ export default {
       ruleForm.first_nama = ''
       ruleForm.description = ''
       ruleForm.uuids = []
+      ruleForm.custom_type = ''
       inChangeFile.value = false
       ruleForm.is_spouse = null
       ruleForm.type = null
@@ -234,16 +252,16 @@ export default {
         validSwitcher.value = false
       }
       form.value.validate(async (valid) => {
-        if (valid && validUpload.value) {
+        if (valid && validUpload.value && validSwitcher.value) {
           const data = {
             uuids: ruleForm.uuids,
             describe: ruleForm.description,
             is_spouse: ruleForm.is_spouse,
             name: ruleForm.is_spouse ? ruleForm.last_name + ' ' + ruleForm.first_name : ruleForm.name,
           }
-          if (ruleForm.type) {
-            data.type = ruleForm.type
-          }
+          if (ruleForm.type && ruleForm.type === 'custom') data.type = ruleForm.custom_type
+          if (ruleForm.type && ruleForm.type !== 'custom') data.type = ruleForm.type
+
           const response = await uploadDoc({ collection: collection.value, data })
           if (!('error' in response)) {
             inChangeFile.value = false
@@ -253,6 +271,13 @@ export default {
           } else {
             return false
           }
+        } else {
+          ElNotification({
+            title: 'Error',
+            message: 'Please enter all required information',
+            type: 'error',
+            dangerouslyUseHTMLString: true,
+          })
         }
       })
     }
@@ -285,6 +310,11 @@ export default {
       validSwitcher.value = true
     }
 
+    const docsTypesList = computed(() => {
+      if (!clientsDocsTypes.value) return []
+      return [...clientsDocsTypes.value, ...[{ value: 'custom', label: 'Custom' }]]
+    })
+
     return {
       dialogVisible,
       closeDialog,
@@ -306,10 +336,10 @@ export default {
       isFullScreen,
       isDisabledSwitcher,
       isLoadingMember,
-      clientsDocsTypes,
       changeOwner,
       validSwitcher,
       isFetchingClientsDocsTypes,
+      docsTypesList,
     }
   },
 }
