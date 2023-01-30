@@ -623,14 +623,14 @@ import { maska } from 'maska'
 import { scrollTop } from '@/utils/scrollTop'
 import { useBasicInfoHooks } from '@/hooks/use-basic-info-hooks'
 import { useStateHook } from '@/hooks/use-state-hook'
+import { cloneDeep, isEqual } from 'lodash-es'
+import { ElMessageBox, ElNotification } from 'element-plus'
+import { useWindowScrollTo } from '@/hooks/use-window-scroll'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
-import { cloneDeep, isEqual } from 'lodash-es'
-import { ElMessageBox, ElNotification } from 'element-plus'
-import { useWindowScrollTo } from '@/hooks/use-window-scroll'
 import ModalRestoreDraft from '@/components/NewProspect/Draft/ModalRestoreDraft'
 
 export default {
@@ -697,7 +697,8 @@ export default {
       is_watch: false,
       channels: '',
       spouse: {
-        name: '',
+        first_name: '',
+        last_name: '',
         email: '',
         birthday: '',
         retired: false,
@@ -789,6 +790,7 @@ export default {
     })
 
     const submitForm = async () => {
+      console.log('ruleForm - ', ruleForm.spouse)
       form.value.validate(async (valid) => {
         if (valid) {
           const res = await updateMember({ form: ruleForm, id: route.params.id })
