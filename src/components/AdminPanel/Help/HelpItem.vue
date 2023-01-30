@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <SwdWrapper class="text-main">
     <SwdSubHeader title="Help" :with-back-btn="false" />
@@ -6,10 +5,6 @@
     <div class="mb-10">
       <div class="font-semibold mb-2">Text editor</div>
       <QuillEditor v-model:content="dataProperty" content-type="html" theme="snow" toolbar="minimal" />
-      <div class="font-semibold mb-2 mt-4">Text preview</div>
-      <el-scrollbar height="300px" class="px-2 border">
-        <div class="help-text-content" v-html="dataProperty" />
-      </el-scrollbar>
       <div class="flex justify-end mt-4">
         <SwdButton primary main @click="saveText">Save</SwdButton>
       </div>
@@ -89,7 +84,7 @@ export default {
 
     watch(isLoading, (newValue, oldValue) => {
       if (oldValue && !newValue) {
-        ruleForm.text = itemHelp.value.text
+        dataProperty.value = itemHelp.value.text
       }
     })
 

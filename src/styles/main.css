@@ -321,19 +321,36 @@ input::-webkit-inner-spin-button {
   text-align: start;
 }
 
-.help-text-content ol {
-  @apply list-decimal;
+.help-text-content {
+  @apply text-main;
 }
+
+.help-text-content ol {
+  @apply list-decimal pl-5;
+}
+
 .help-text-content ul {
-  @apply list-disc;
+  @apply list-disc pl-5;
 }
 
 .help-text-content h1 {
-  @apply text-2xl;
+  @apply text-2xl text-primary;
 }
+
 .help-text-content h2 {
   @apply text-xl;
 }
+
 .help-text-content h3 {
   @apply text-lg;
 }
+
+.help-text-content .ql-align-center {
+  text-align: center;
+}
+
+.help-text-content .ql-align-right {
+  text-align: right;
+}
+
+

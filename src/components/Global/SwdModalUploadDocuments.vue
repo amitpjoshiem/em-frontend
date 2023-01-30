@@ -130,7 +130,7 @@ import { useSetStatus } from '../Lead/use-set-status'
 import { useRoute } from 'vue-router'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useFetchClientsDocsTypes } from '@/api/use-fetch-clients-docs-types.js'
-import { useBreakpoints } from '@/hooks/useBreakpoints'
+import { useBreakpoints } from '@/hooks/use-breakpoints'
 
 export default {
   name: 'SwdModalUploadDocuments',
