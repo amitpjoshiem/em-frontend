@@ -79,7 +79,7 @@
             </el-icon>
             <div>
               <span class="text-xs sm:text-base text-main">Step 3 - Upload Property & Casualty Documents</span>
-              <span class="text-gray-400"> (Optional)</span>
+              <span class="text-gray-400"> [Optional]</span>
             </div>
           </div>
         </el-card>
@@ -98,7 +98,7 @@
             </el-icon>
             <div>
               <span class="text-xs sm:text-base text-main">Step 4 - Upload Medicare Documents</span>
-              <span class="text-gray-400"> (Optional)</span>
+              <span class="text-gray-400"> [Optional]</span>
             </div>
           </div>
         </el-card>
@@ -234,7 +234,7 @@ export default {
       useAlert({
         title: 'Error',
         type: 'error',
-        message: 'Step 1 & Step 2 are mandatory',
+        message: 'Step 1 & Step 2 are mandatory.',
       })
     }
 
