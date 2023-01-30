@@ -37,7 +37,10 @@
                   "
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Step 1 - Completed Financial Fact Finder*</div>
+              <div class="text-xs sm:text-base text-main">
+                <span>Step 1 - Completed Financial Fact Finder</span>
+                <span class="text-red-500">*</span>
+              </div>
             </div>
           </el-card>
         </router-link>
@@ -55,7 +58,10 @@
             <el-icon :size="25" class="mr-5">
               <circle-check-filled :color="getStatusRelevant" />
             </el-icon>
-            <div class="text-xs sm:text-base text-main">Step 2 - Upload Relevant Financial Documents*</div>
+            <div class="text-xs sm:text-base text-main">
+              <span>Step 2 - Upload Relevant Financial Documents</span>
+              <span class="text-red-500">*</span>
+            </div>
           </div>
         </el-card>
 
