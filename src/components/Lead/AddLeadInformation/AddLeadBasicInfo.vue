@@ -790,7 +790,6 @@ export default {
     })
 
     const submitForm = async () => {
-      console.log('ruleForm - ', ruleForm.spouse)
       form.value.validate(async (valid) => {
         if (valid) {
           const res = await updateMember({ form: ruleForm, id: route.params.id })
