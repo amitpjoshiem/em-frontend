@@ -10,7 +10,7 @@ export function useBeforeUploadFile() {
         extensions.push(element.extension)
       })
       if (!mimeTypes.includes(rawFile.type)) {
-        ElMessage.error(`Document must be ${extensions.join()} format!`)
+        ElMessage.error(`Document must be ${extensions.join(', ')} format!`)
         return false
       }
     }

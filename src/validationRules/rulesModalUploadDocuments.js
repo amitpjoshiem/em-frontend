@@ -32,6 +32,17 @@ const rules = {
     },
     { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
+  custom_type: [
+    {
+      required: true,
+      message: 'Please input custom type',
+      trigger: 'blur',
+      transform(value) {
+        return value.trim()
+      },
+    },
+    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
+  ],
   type: [
     {
       required: true,

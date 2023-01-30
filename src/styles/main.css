@@ -320,3 +320,7 @@ input::-webkit-inner-spin-button {
 .el-notification__content{
   text-align: start;
 }
+
+.el-select-dropdown__list{
+  margin: 0!important;
+}
