@@ -353,4 +353,6 @@ input::-webkit-inner-spin-button {
   text-align: right;
 }
 
-
+.el-select-dropdown__list{
+  margin: 0!important;
+}

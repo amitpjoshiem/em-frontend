@@ -20,7 +20,7 @@
     <SwdButton v-if="showUploadBtn" primary small :disabled="disabled">Click to upload</SwdButton>
     <template v-if="showTip" #tip>
       <p v-if="!isLoadingMediaRules" class="text-xxs">
-        <span v-if="getRulesFormat.length"> {{ getRulesFormat.join() }} files only </span>
+        <span v-if="getRulesFormat.length"> {{ getRulesFormat.join(', ') }} files only </span>
         (max file size {{ mediaRules.data.size }}Mb)
       </p>
       <SwdSpinner v-else />
@@ -32,7 +32,31 @@
         class="sm:flex items-center justify-between w-full"
       >
         <div class="flex items-center">
-          <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+          <img
+            v-if="getExtension(file) === 'pdf'"
+            class="el-upload-list__item-thumbnail"
+            src="../../assets/img/icon-new-pdf.png"
+            alt="icon-pdf"
+          />
+          <img
+            v-if="getExtension(file) === 'png'"
+            class="el-upload-list__item-thumbnail"
+            src="../../assets/img/icon-png.png"
+            alt="icon-png"
+          />
+          <img
+            v-if="getExtension(file) === 'jpg'"
+            class="el-upload-list__item-thumbnail"
+            src="../../assets/img/icon-jpg.png"
+            alt="icon-jpg"
+          />
+          <img
+            v-if="getExtension(file) === 'jpeg'"
+            class="el-upload-list__item-thumbnail"
+            src="../../assets/img/icon-jpeg.png"
+            alt="icon-jpeg"
+          />
+
           <div class="flex flex-col ml-3">
             <div>
               <span class="text-main">File name: </span>
@@ -245,12 +269,14 @@ export default {
       return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
     }
 
-    const handleExceed = (files, uploadFiles) => {
+    const handleExceed = () => {
       ElMessage.warning(
-        `The limit is ${props.limit}, you selected ${files.length} files this time, add up to ${
-          files.length + uploadFiles.length
-        } totally`
+        `In one time, only ${props.limit} ${props.limit === 1 ? 'file' : 'files'} uploading is allowed.`
       )
+    }
+
+    const getExtension = (file) => {
+      return file.name.match(/\.([^.]+)$|$/)[1]
     }
 
     return {
@@ -267,6 +293,7 @@ export default {
       mediaRules,
       getRulesFormat,
       handleExceed,
+      getExtension,
     }
   },
 }
