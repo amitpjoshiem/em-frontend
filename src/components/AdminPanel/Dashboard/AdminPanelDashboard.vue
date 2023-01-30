@@ -1,7 +1,7 @@
 <template>
   <div class="p-5">
     <SwdSubHeader title="Dashboard" :with-back-btn="false" />
-    <el-select v-model="selectCompany" class="m-2" placeholder="Select" @change="handleChange">
+    <el-select v-model="selectCompany" class="mb-4" placeholder="Select" @change="handleChange">
       <el-option v-for="item in optionsCompany" :key="item.value" :label="item.label" :value="item.value" />
     </el-select>
     <div class="p-5 border rounded mb-4">

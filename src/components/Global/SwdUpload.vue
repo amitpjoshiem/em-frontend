@@ -190,6 +190,7 @@ export default {
 
     const { beforeUploadFile } = useBeforeUploadFile()
     const uploadRefFn = () => props.uploadRef
+
     const headers = computed(() => {
       const customHeader = {}
 
