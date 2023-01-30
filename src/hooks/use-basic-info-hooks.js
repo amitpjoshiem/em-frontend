@@ -112,7 +112,8 @@ export function useBasicInfoHooks() {
   const changeMarried = (ruleForm) => {
     if (ruleForm.married && !ruleForm.spouse.length) {
       ruleForm.spouse = {
-        name: '',
+        first_name: '',
+        last_name: '',
         email: '',
         birthday: '',
         retired: false,

@@ -95,10 +95,11 @@
           <span class="pl-1">characters remaining</span>
         </div>
         <div class="pb-4 text-main">
-          <p>
+          <p style="word-break: break-word">
             <b>
-              This could be the account type of a statement you are submitting, or a personal document such as a driver’s
-            license. Examples Include: Fidelity 401k Statement or KY Driver’s License.</b>
+              This could be the account type of a statement you are submitting, or a personal document such as a
+              driver’s license. Examples Include: Fidelity 401k Statement or KY Driver’s License.
+            </b>
           </p>
         </div>
         <div class="h-[170px] border rounded p-2" :class="validUpload ? 'border-main-gray' : 'border-color-error'">
