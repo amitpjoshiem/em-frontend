@@ -31,7 +31,15 @@
             <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
           </div>
 
-          <div class="flex pb-2 mt-8">
+          <div class="flex pb-2 mt-8 text-gray-500 text-xs">
+            <div class="w-1/5">Joint</div>
+            <template v-for="header in block.headers" :key="header + indexGroup">
+              <div class="w-1/5">
+                {{ header.label }}
+              </div>
+            </template>
+          </div>
+          <!-- <div class="flex pb-2 mt-8">
             <div :class="member.married ? 'w-[30%]' : 'w-[25%]'" />
             <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
               <div v-if="indexHeader === 'owner' && member.married" />
@@ -39,128 +47,138 @@
                 {{ header.label }}
               </div>
             </template>
-          </div>
-          <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
-            <div class="w-[25%] flex items-center">
+          </div> -->
+          <div v-for="(row, indexRow) in block.rows" :key="row">
+            <div class="flex items-center">
               <div v-if="row.label" class="text-main font-semibold text-xss">
                 {{ row.label }}
               </div>
             </div>
 
-            <template v-for="(item, itemIndex) in row.elements" :key="item">
-              <div v-if="itemIndex === 0 && member.married" class="w-[5%] text-center">
-                <template v-if="row.name !== 'total' && item.type === 'number' && row.can_join">
-                  <el-checkbox
-                    v-model="row.joined"
-                    label="Joint"
-                    size="small"
-                    :disabled="isLoadingUpdate"
-                    class="top-[6px] left-[-3px]"
-                    @change="handleChange({ item, status: row.joined })"
-                  />
-                </template>
-              </div>
-              <div
-                v-if="!(row.joined && item.name === 'spouse')"
-                class="px-2 mb-0 item-assets"
-                :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
-              >
-                <el-form-item class="mb-4">
-                  <template v-if="item.calculated">
-                    <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
-                      <SwdSpinner />
-                    </div>
-                    <div v-else-if="item.name !== 'institution'" class="w-full font-semibold pl-2">
-                      {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
-                    </div>
-                  </template>
-                  <template v-else>
-                    <SwdCurrencyInput
-                      v-if="item.type === 'number'"
-                      v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                      :options="optionsCurrencyInput"
-                      :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
-                      :placeholder="item.placeholder"
-                      prepend
-                      @blur="changeInput(item)"
-                      @focus="focus(item.model.group)"
+            <!-- <div class="flex pb-2 mt-8 text-gray-500 text-xs">
+              <div class="w-1/5">Joint</div>
+              <template v-for="header in block.headers" :key="header + indexGroup">
+                <div class="w-1/5">
+                  {{ header.label }}
+                </div>
+              </template>
+            </div> -->
+
+            <div class="flex">
+              <template v-for="(item, itemIndex) in row.elements" :key="item">
+                <div v-if="itemIndex === 0 && member.married" class="w-1/5">
+                  <template v-if="row.name !== 'total' && item.type === 'number' && row.can_join">
+                    <el-checkbox
+                      v-model="row.joined"
+                      label="Joint"
+                      size="small"
+                      :disabled="isLoadingUpdate"
+                      class="top-[6px]"
+                      @change="handleChange({ item, status: row.joined })"
                     />
-                    <el-input
-                      v-if="item.type === 'string'"
-                      v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                      :placeholder="item.placeholder"
-                      :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
-                      @blur="changeInput(item)"
-                      @focus="focus(item.model.group)"
-                    />
-                    <el-radio-group
-                      v-if="item.type === 'radio'"
-                      v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                      @change="changeInput(item)"
-                    >
-                      <el-radio :label="true">Yes</el-radio>
-                      <el-radio :label="false">No</el-radio>
-                    </el-radio-group>
-                    <el-dropdown v-if="item.type === 'dropdown'" trigger="click" :disabled="isReadOnlyLead">
-                      <el-button>
-                        Add field
-                        <el-icon class="el-icon--right">
-                          <arrow-down />
-                        </el-icon>
-                      </el-button>
-                      <template #dropdown>
-                        <el-dropdown-menu>
-                          <el-dropdown-item
-                            v-for="option in item.options"
-                            :key="option"
-                            :disabled="isDisabled({ option, indexGroup })"
-                            @click="
-                              addLine({
-                                model: item.model,
-                                variable: option.name,
-                                indexGroup,
-                                canJoin: row.can_join,
-                              })
-                            "
-                          >
-                            {{ option.label }}
-                          </el-dropdown-item>
-                          <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })">
-                            Custom
-                          </el-dropdown-item>
-                        </el-dropdown-menu>
-                      </template>
-                    </el-dropdown>
                   </template>
-                </el-form-item>
-              </div>
-              <div v-if="row.custom && row.elements.length - 1 === itemIndex" class="w-[10%] flex justify-between px-4">
-                <el-icon
-                  class="top-[5px] cursor-pointer"
-                  :size="20"
-                  color="red"
-                  @click="remove({ block, row, indexRow, indexGroup })"
+                </div>
+                <div v-if="!(row.joined && item.name === 'spouse')" class="mb-0 item-assets w-1/5">
+                  <el-form-item class="mb-4">
+                    <template v-if="item.calculated">
+                      <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
+                        <SwdSpinner />
+                      </div>
+                      <div v-else-if="item.name !== 'institution'" class="w-full font-semibold pl-2">
+                        {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
+                      </div>
+                    </template>
+                    <template v-else>
+                      <SwdCurrencyInput
+                        v-if="item.type === 'number'"
+                        v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                        :options="optionsCurrencyInput"
+                        :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
+                        :placeholder="item.placeholder"
+                        prepend
+                        @blur="changeInput(item)"
+                        @focus="focus(item.model.group)"
+                      />
+                      <el-input
+                        v-if="item.type === 'string'"
+                        v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                        :placeholder="item.placeholder"
+                        :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
+                        @blur="changeInput(item)"
+                        @focus="focus(item.model.group)"
+                      />
+                      <el-radio-group
+                        v-if="item.type === 'radio'"
+                        v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
+                        @change="changeInput(item)"
+                      >
+                        <el-radio :label="true">Yes</el-radio>
+                        <el-radio :label="false">No</el-radio>
+                      </el-radio-group>
+                      <el-dropdown v-if="item.type === 'dropdown'" trigger="click" :disabled="isReadOnlyLead">
+                        <el-button>
+                          Add field
+                          <el-icon class="el-icon--right">
+                            <arrow-down />
+                          </el-icon>
+                        </el-button>
+                        <template #dropdown>
+                          <el-dropdown-menu>
+                            <el-dropdown-item
+                              v-for="option in item.options"
+                              :key="option"
+                              :disabled="isDisabled({ option, indexGroup })"
+                              @click="
+                                addLine({
+                                  model: item.model,
+                                  variable: option.name,
+                                  indexGroup,
+                                  canJoin: row.can_join,
+                                })
+                              "
+                            >
+                              {{ option.label }}
+                            </el-dropdown-item>
+                            <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })">
+                              Custom
+                            </el-dropdown-item>
+                          </el-dropdown-menu>
+                        </template>
+                      </el-dropdown>
+                    </template>
+                  </el-form-item>
+                </div>
+                <div
+                  v-if="row.custom && row.elements.length - 1 === itemIndex"
+                  class="w-[10%] flex justify-between px-4"
                 >
-                  <Delete />
-                </el-icon>
-                <el-icon
-                  class="top-[5px] cursor-pointer"
-                  :size="20"
-                  color="green"
-                  @click="
-                    addLine({
-                      model: item.model,
-                      variable: item.model.model,
-                      indexGroup,
-                      canJoin: row.can_join,
-                      copyLine: true,
-                    })
-                  "
-                >
-                  <Plus />
-                </el-icon>
-              </div>
-            </template>
+                  <el-icon
+                    class="top-[5px] cursor-pointer"
+                    :size="20"
+                    color="red"
+                    @click="remove({ block, row, indexRow, indexGroup })"
+                  >
+                    <Delete />
+                  </el-icon>
+                  <el-icon
+                    class="top-[5px] cursor-pointer"
+                    :size="20"
+                    color="green"
+                    @click="
+                      addLine({
+                        model: item.model,
+                        variable: item.model.model,
+                        indexGroup,
+                        canJoin: row.can_join,
+                        copyLine: true,
+                      })
+                    "
+                  >
+                    <Plus />
+                  </el-icon>
+                </div>
+              </template>
+            </div>
           </div>
         </div>
 
