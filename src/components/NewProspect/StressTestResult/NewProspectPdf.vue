@@ -86,7 +86,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Opportunity update successfully',
+          message: 'Opportunity update successfully.',
         })
         router.push({ name: `${route.meta.type}/blueprint-report`, params: { id: route.params.id } })
       }

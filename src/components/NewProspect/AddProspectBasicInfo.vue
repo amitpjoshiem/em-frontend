@@ -556,7 +556,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: isUpdateMember.value ? 'Opportunity update successfully' : 'Opportunity created successfully',
+              message: isUpdateMember.value ? 'Opportunity update successfully.' : 'Opportunity created successfully.',
             })
             store.commit('newProspect/setStep', step.value + 1)
             router.push({

@@ -169,7 +169,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Delete successfully',
+          message: 'Delete successfully.',
         })
         queryClient.invalidateQueries(['contacts-all', memberId])
       }
@@ -188,7 +188,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Update successfully',
+          message: 'Update successfully.',
         })
         queryClient.invalidateQueries(['contacts-all', memberId])
       }

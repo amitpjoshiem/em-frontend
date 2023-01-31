@@ -169,7 +169,7 @@ export default defineComponent({
           useAlert({
             title: 'Success',
             type: 'success',
-            message: 'Success',
+            message: 'Success.',
           })
         }
       }

@@ -126,7 +126,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Annuity Index created',
+              message: 'Annuity Index created.',
             })
             queryClient.invalidateQueries(['investment-package-all', fixedIndexAnnuitiesId])
             doneCloceDialog()

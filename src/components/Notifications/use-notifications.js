@@ -17,7 +17,7 @@ export const useNotification = () => {
     useAlert({
       title: 'Success',
       type: 'success',
-      message: 'All notifications have been read',
+      message: 'All notifications have been read.',
     })
   }
 

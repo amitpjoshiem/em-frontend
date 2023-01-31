@@ -226,7 +226,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Update successfully',
+              message: 'Update successfully.',
             })
           }
         }
@@ -263,7 +263,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Update successfully',
+          message: 'Update successfully.',
         })
       }
     }
@@ -283,7 +283,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Delete successfully',
+          message: 'Delete successfully.',
         })
       }
     }

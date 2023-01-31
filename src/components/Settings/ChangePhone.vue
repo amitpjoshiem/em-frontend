@@ -82,7 +82,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Send code. Check sms',
+              message: 'Send code. Check sms.',
             })
           }
         } else {
@@ -101,7 +101,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Phone verified',
+              message: 'Phone verified.',
             })
             closeDialog()
           }

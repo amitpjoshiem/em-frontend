@@ -198,17 +198,13 @@ export default {
       return true
     })
 
-    const openConfirmationInformation = () => {
-      if (isDasbledSteps.value) {
-        showMessageMandatory()
-        return
-      }
-      router.push({ name: 'confirmation-page', params: { id: clientsInfo.value.member_id } })
-    }
-
     const openUploadRelevantDocuments = () => {
       if (isDisabledRelevantDocuments.value) {
-        showMessageMandatory()
+        useAlert({
+          title: 'Error',
+          type: 'error',
+          message: 'Please fill out the required information in Step 1.',
+        })
         return
       }
       router.push({ name: 'relevant-financial-documents', params: { id: clientsInfo.value.member_id } })
@@ -228,6 +224,14 @@ export default {
         return
       }
       router.push({ name: 'medicare-details', params: { id: clientsInfo.value.member_id } })
+    }
+
+    const openConfirmationInformation = () => {
+      if (isDasbledSteps.value) {
+        showMessageMandatory()
+        return
+      }
+      router.push({ name: 'confirmation-page', params: { id: clientsInfo.value.member_id } })
     }
 
     const showMessageMandatory = () => {

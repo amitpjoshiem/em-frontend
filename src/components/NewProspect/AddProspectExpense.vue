@@ -812,7 +812,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Opportunity update successfully',
+          message: 'Opportunity update successfully.',
         })
         store.commit('newProspect/setStep', step.value + 1)
         router.push({
