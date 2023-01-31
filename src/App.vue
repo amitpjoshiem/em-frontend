@@ -5,7 +5,7 @@
   <SwdShareDialog />
   <SwdModalExportSucces />
   <SwdModalTerms />
-  <SwdPreviewPdfModal />
+  <SwdPreviewModal />
   <SwdModalSummaryInfo />
   <VueQueryDevTools />
 </template>
@@ -20,7 +20,7 @@ import { useSockets } from './sockets/use-sockets'
 import ModalReloadPage from '@/components/ModalReloadPage/ModalRealoadPage.vue'
 import SwdShareDialog from '@/components/Global/SwdShareDialog.vue'
 import SwdModalTerms from '@/components/Global/SwdModalTerms.vue'
-import SwdPreviewPdfModal from '@/components/Global/SwdPreviewPdfModal.vue'
+import SwdPreviewModal from '@/components/Global/SwdPreviewModal.vue'
 import SwdModalExportSucces from '@/components/Documents/ClientReport/ModalExportSucces.vue'
 import SwdModalSummaryInfo from '@/components/SummaryInfo/SwdModalSummaryInfo.vue'
 
@@ -31,7 +31,7 @@ export default {
     SwdShareDialog,
     SwdModalExportSucces,
     SwdModalTerms,
-    SwdPreviewPdfModal,
+    SwdPreviewModal,
     SwdModalSummaryInfo,
   },
   setup() {

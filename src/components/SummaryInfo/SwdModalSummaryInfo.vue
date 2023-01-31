@@ -19,10 +19,10 @@
     <template #footer>
       <span class="dialog-footer">
         <div v-if="!isLoadingMember" class="flex justify-end">
-          <SwdButton primary main class="w-2/12 mr-4" @click="details">
+          <SwdButton primary main class="mr-4" @click="details">
             {{ getTextBtn }}
           </SwdButton>
-          <SwdButton info main class="w-2/12" @click="closeDialog">Close</SwdButton>
+          <SwdButton info main @click="closeDialog">Close</SwdButton>
         </div>
       </span>
     </template>

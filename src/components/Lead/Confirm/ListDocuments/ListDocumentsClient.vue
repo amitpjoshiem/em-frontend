@@ -26,11 +26,11 @@
           <div class="flex justify-end">
             <SwdButton class="mr-5" primary small @click="handleDescriptionPreview(item)">Description</SwdButton>
             <SwdButton
-              v-if="item.extension === 'pdf'"
+              v-if="configExtensionPreview.includes(item.extension)"
               class="mr-5"
               primary
               small
-              @click="handlePictureCardPreview(item.url)"
+              @click="handlePictureCardPreview(item)"
             >
               Preview
             </SwdButton>
@@ -79,6 +79,7 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const data = ref({})
+    const configExtensionPreview = ['jpeg', 'jpg', 'png', 'pdf']
 
     const {
       isLoading: isLoadingClient,
@@ -115,12 +116,12 @@ export default {
       }
     })
 
-    const handlePictureCardPreview = (url) => {
+    const handlePictureCardPreview = (file) => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', url)
+      store.commit('globalComponents/setPreviewFile', file)
     }
 
     const edit = () => {
@@ -150,6 +151,7 @@ export default {
       edit,
       data,
       handleDescriptionPreview,
+      configExtensionPreview,
     }
   },
 }
