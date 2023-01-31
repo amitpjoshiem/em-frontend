@@ -31,7 +31,7 @@
           <el-button type="danger" size="small" plain :loading="isLoadingRemove">Remove</el-button>
         </template>
       </el-popconfirm>
-      <el-button v-if="doc.extension === 'pdf'" type="primary" size="small" plain @click="handlePrewiev">
+      <el-button v-if="doc.extension === 'pdf' || doc.extension === 'png' || doc.extension === 'jpg' || doc.extension === 'jpeg'" type="primary" size="small" plain @click="handlePrewiev">
         Preview
       </el-button>
     </div>

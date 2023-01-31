@@ -112,7 +112,7 @@ export default {
       useAlert({
         title: 'Success',
         type: 'success',
-        message: 'Delete completed',
+        message: 'Delete completed.',
       })
       queryClient.invalidateQueries(['admin-panel-users'])
       closeDialog()

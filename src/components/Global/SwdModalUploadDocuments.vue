@@ -96,7 +96,7 @@
         </div>
         <div class="pb-4 text-main">
           <p style="word-break: break-word">
-            <b>
+            Note:<b>
               This could be the account type of a statement you are submitting, or a personal document such as a
               driver’s license. Examples Include: Fidelity 401k Statement or KY Driver’s License.
             </b>
@@ -115,7 +115,7 @@
             @remove-media="removeMedia"
           >
             <template #noDocuments>
-              <div v-if="!inChangeFile" class="text-main text-center pt-5">No documents uploaded</div>
+              <div v-if="!inChangeFile" class="text-main text-center pt-5">No documents uploaded.</div>
             </template>
           </SwdUpload>
         </div>
@@ -276,7 +276,7 @@ export default {
         } else {
           ElNotification({
             title: 'Error',
-            message: 'Please enter all required information',
+            message: 'Please enter all required information.',
             type: 'error',
             dangerouslyUseHTMLString: true,
           })
