@@ -303,7 +303,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Information updated successfully',
+          message: 'Information updated successfully.',
         })
         store.commit('newClient/setStep', step.value + 1)
         router.push({
@@ -422,7 +422,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Remove success',
+          message: 'Remove success.',
         })
       }
     }
@@ -475,7 +475,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Joint success',
+          message: 'Joint success.',
         })
       }
     }
@@ -497,7 +497,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Unjoint success',
+          message: 'Unjoint success.',
         })
       }
     }

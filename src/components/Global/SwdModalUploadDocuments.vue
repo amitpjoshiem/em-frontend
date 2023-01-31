@@ -215,7 +215,7 @@ export default {
         ruleForm.first_name = member.value.spouse.first_name
         ruleForm.last_name = member.value.spouse.last_name
       }
-      if (member.value && !ruleForm.is_spouse) {
+      if (member.value && ruleForm.is_spouse === false) {
         ruleForm.name = member.value.name
       }
       if (!isLoadingMember.value && member.value && !member.value.married) {

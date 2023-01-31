@@ -93,7 +93,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Delete successfully',
+          message: 'Delete successfully.',
         })
       }
     }

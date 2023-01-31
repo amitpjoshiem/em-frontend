@@ -82,7 +82,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Send link success',
+              message: 'Send link success.',
             })
             if (
               route.name === `${route.meta.type}/all-leads` ||

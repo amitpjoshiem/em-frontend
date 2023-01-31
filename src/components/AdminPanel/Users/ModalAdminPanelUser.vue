@@ -234,7 +234,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: isEditModal.value ? 'User update' : 'User created',
+              message: isEditModal.value ? 'User update.' : 'User created.',
             })
             queryClient.invalidateQueries(['admin-panel-users'])
             dialogFormVisible.value = false

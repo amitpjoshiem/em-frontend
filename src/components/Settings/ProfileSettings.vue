@@ -107,7 +107,7 @@ export default {
       useAlert({
         title: 'Success',
         type: 'success',
-        message: 'Avatar image changed successfully',
+        message: 'Avatar image changed successfully.',
       })
     }
 
