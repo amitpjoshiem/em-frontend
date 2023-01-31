@@ -237,7 +237,7 @@ export default {
     })
 
     const handlePictureCardPreview = (file) => {
-      emit('open-prewiev', file.url)
+      emit('open-prewiev', file)
     }
 
     const handleRemove = (media) => {

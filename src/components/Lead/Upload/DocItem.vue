@@ -31,7 +31,15 @@
           <el-button type="danger" size="small" plain :loading="isLoadingRemove">Remove</el-button>
         </template>
       </el-popconfirm>
-      <el-button v-if="isShowBtnPrewiev" type="primary" size="small" plain @click="handlePrewiev"> Preview </el-button>
+      <el-button
+        v-if="configExtensionPreview.includes(doc.extension)"
+        type="primary"
+        size="small"
+        plain
+        @click="handlePrewiev"
+      >
+        Preview
+      </el-button>
     </div>
   </div>
 </template>
@@ -64,15 +72,16 @@ export default {
   setup(props) {
     const store = useStore()
     const queryClient = useQueryClient()
+    const configExtensionPreview = ['jpeg', 'jpg', 'png', 'pdf']
 
     const { isLoading: isLoadingRemove, mutateAsync: deleteDocument } = useMutation(deleteMedia)
 
     const handlePrewiev = () => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', props.doc.url)
+      store.commit('globalComponents/setPreviewFile', props.doc)
     }
 
     const handleRemove = async () => {
@@ -91,6 +100,7 @@ export default {
       handleRemove,
       isLoadingRemove,
       isShowBtnPrewiev,
+      configExtensionPreview,
     }
   },
 }

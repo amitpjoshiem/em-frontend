@@ -268,12 +268,12 @@ export default {
       }
     }
 
-    const handlePreview = (url) => {
+    const handlePreview = (file) => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', url)
+      store.commit('globalComponents/setPreviewFile', file)
     }
 
     const confirmDelete = async () => {

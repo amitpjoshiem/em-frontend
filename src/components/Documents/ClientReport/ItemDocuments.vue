@@ -103,12 +103,12 @@ export default {
       }, 100)
     }
 
-    const handlePictureCardPreview = (url) => {
+    const handlePictureCardPreview = (file) => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', url.link)
+      store.commit('globalComponents/setPreviewFile', file)
     }
 
     return {
