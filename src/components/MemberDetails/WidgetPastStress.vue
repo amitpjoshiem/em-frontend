@@ -11,7 +11,7 @@
           @click="openPrewiev(stressTestDocument.data[0])"
         >
           <div class="w-[35px] mr-2">
-            <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+            <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="icon-pdf" />
           </div>
           <div class="flex flex-col">
             <span class="text-xs">{{ stressTestDocument.data[0].name }}</span>
@@ -24,7 +24,7 @@
           @click="openPrewiev(stressTestDocument.data[1])"
         >
           <div class="w-[35px] mr-2">
-            <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+            <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="icon-pdf" />
           </div>
           <div class="flex flex-col">
             <span class="text-xs">{{ stressTestDocument.data[1].name }}</span>

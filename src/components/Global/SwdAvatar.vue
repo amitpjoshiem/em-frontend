@@ -1,6 +1,6 @@
 <template>
   <div :class="avatarClass">
-    <img :src="getAvatar" class="h-full w-full object-cover rounded-[100px]" />
+    <img :src="getAvatar" class="h-full w-full object-cover rounded-[100px]" alt="avatar" />
   </div>
 </template>
 <script>
