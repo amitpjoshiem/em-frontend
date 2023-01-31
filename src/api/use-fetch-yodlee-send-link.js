@@ -19,7 +19,7 @@ const useFetchYodleeSendLink = (id) => {
     useAlert({
       title: 'Success',
       type: 'success',
-      message: 'Link sent successfully',
+      message: 'Link sent successfully.',
     })
   }
 

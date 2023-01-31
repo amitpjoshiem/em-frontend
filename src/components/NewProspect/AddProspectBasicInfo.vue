@@ -567,7 +567,7 @@ export default {
         } else {
           ElNotification({
             title: 'Error',
-            message: 'Please enter all required information',
+            message: 'Please enter all required information.',
             type: 'error',
             dangerouslyUseHTMLString: true,
           })
