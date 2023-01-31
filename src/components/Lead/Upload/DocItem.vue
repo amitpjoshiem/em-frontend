@@ -31,9 +31,7 @@
           <el-button type="danger" size="small" plain :loading="isLoadingRemove">Remove</el-button>
         </template>
       </el-popconfirm>
-      <el-button v-if="doc.extension === 'pdf' || doc.extension === 'png' || doc.extension === 'jpg' || doc.extension === 'jpeg'" type="primary" size="small" plain @click="handlePrewiev">
-        Preview
-      </el-button>
+      <el-button v-if="isShowBtnPrewiev" type="primary" size="small" plain @click="handlePrewiev"> Preview </el-button>
     </div>
   </div>
 </template>
@@ -42,6 +40,7 @@
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
+import { computed } from 'vue'
 
 export default {
   name: 'DocItem',
@@ -83,10 +82,15 @@ export default {
       }
     }
 
+    const isShowBtnPrewiev = computed(() => {
+      return props.doc.extension === 'pdf'
+    })
+
     return {
       handlePrewiev,
       handleRemove,
       isLoadingRemove,
+      isShowBtnPrewiev,
     }
   },
 }
