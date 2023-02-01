@@ -7,12 +7,16 @@
     destroy-on-close
     class="mt-10 sm:mt-40 lg:mt-40"
   >
-    <div class="h-[600px]">
-      <iframe :src="getSrcMicrosoft" width="100%" height="100%" frameborder="0" />
-    </div>
-    <div v-if="previewFile && false" class="overflow-y-scroll max-h-[500px]">
+    <div v-if="previewFile" class="overflow-y-scroll max-h-[500px]">
       <img v-if="configImageExtension.includes(previewFile.extension)" :src="previewFile.url" alt="preview-image" />
       <SwdPdfViewer v-if="previewFile.extension === 'pdf'" type="application/pdf" :src="previewFile.url" :page="1" />
+      <iframe
+        v-if="configMicrosoftExtension.includes(previewFile.extension)"
+        :src="getSrcMicrosoft"
+        width="100%"
+        height="500px;"
+        frameborder="0"
+      />
     </div>
     <template #footer>
       <span class="dialog-footer">
@@ -38,6 +42,7 @@ export default {
     const store = useStore()
     const dialogVisible = ref(false)
     const configImageExtension = ['jpeg', 'jpg', 'png']
+    const configMicrosoftExtension = ['doc', 'docx', 'xls', 'xlsx']
 
     const previewFile = computed(() => {
       return store.state.globalComponents.previewFile
@@ -65,6 +70,7 @@ export default {
       previewFile,
       dialogVisible,
       configImageExtension,
+      configMicrosoftExtension,
       getSrcMicrosoft,
     }
   },

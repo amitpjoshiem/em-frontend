@@ -46,7 +46,14 @@
         </div>
 
         <div class="flex justify-end pt-4 sm:pt-0 sm:block">
-          <el-button type="primary" size="small" plain class="mr-5" @click="handlePictureCardPreview(file)">
+          <el-button
+            v-if="configExtensionPreview.includes(file.extension)"
+            type="primary"
+            size="small"
+            plain
+            class="mr-5"
+            @click="handlePictureCardPreview(file)"
+          >
             Preview
           </el-button>
           <el-popconfirm
@@ -153,8 +160,8 @@ export default {
     const store = useStore()
     const innerRef = ref(null)
     const idFileRemove = ref(null)
-
     const fileList = ref([])
+    const configExtensionPreview = ['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx']
 
     const { isLoading: isLoadingMediaRules, data: mediaRules } = useFetchMediaRules({
       collection: props.uploadData.collection,
@@ -266,6 +273,7 @@ export default {
       getRulesFormat,
       handleExceed,
       getExtension,
+      configExtensionPreview,
     }
   },
 }
