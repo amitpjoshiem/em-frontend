@@ -7,7 +7,10 @@
     destroy-on-close
     class="mt-10 sm:mt-40 lg:mt-40"
   >
-    <div v-if="previewFile" class="overflow-y-scroll max-h-[500px]">
+    <div class="h-[600px]">
+      <iframe :src="getSrcMicrosoft" width="100%" height="100%" frameborder="0" />
+    </div>
+    <div v-if="previewFile && false" class="overflow-y-scroll max-h-[500px]">
       <img v-if="configImageExtension.includes(previewFile.extension)" :src="previewFile.url" alt="preview-image" />
       <SwdPdfViewer v-if="previewFile.extension === 'pdf'" type="application/pdf" :src="previewFile.url" :page="1" />
     </div>
@@ -53,11 +56,16 @@ export default {
       store.commit('globalComponents/setPreviewFile', null)
     }
 
+    const getSrcMicrosoft = computed(() => {
+      return 'https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(previewFile.value.url)
+    })
+
     return {
       closeDialog,
       previewFile,
       dialogVisible,
       configImageExtension,
+      getSrcMicrosoft,
     }
   },
 }
