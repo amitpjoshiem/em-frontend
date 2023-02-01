@@ -1,10 +1,6 @@
 <template>
   <div class="md:flex items-center justify-between w-full border rounded my-4 p-4">
     <div class="flex items-center text-xs sm:text-sm">
-      <!-- <img v-if="doc.extension === 'pdf'" class="w-[70px]" src="../../../assets/img/icon-new-pdf.png" alt="icon-pdf" />
-      <img v-if="doc.extension === 'png'" class="w-[70px]" src="../../../assets/img/icon-png.png" alt="icon-png" />
-      <img v-if="doc.extension === 'jpeg'" class="w-[70px]" src="../../../assets/img/icon-jpeg.png" alt="icon-jpeg" />
-      <img v-if="doc.extension === 'jpg'" class="w-[70px]" src="../../../assets/img/icon-jpg.png" alt="icon-jpg" /> -->
       <SwdThumbnail :extension="doc.extension" class="w-[70px]" />
       <div class="flex flex-col ml-3">
         <div>
