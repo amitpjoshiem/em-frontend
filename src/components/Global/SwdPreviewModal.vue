@@ -10,6 +10,13 @@
     <div v-if="previewFile" class="overflow-y-scroll max-h-[500px]">
       <img v-if="configImageExtension.includes(previewFile.extension)" :src="previewFile.url" alt="preview-image" />
       <SwdPdfViewer v-if="previewFile.extension === 'pdf'" type="application/pdf" :src="previewFile.url" :page="1" />
+      <iframe
+        v-if="configMicrosoftExtension.includes(previewFile.extension)"
+        :src="getSrcMicrosoft"
+        width="100%"
+        height="500px;"
+        frameborder="0"
+      />
     </div>
     <template #footer>
       <span class="dialog-footer">
@@ -35,6 +42,7 @@ export default {
     const store = useStore()
     const dialogVisible = ref(false)
     const configImageExtension = ['jpeg', 'jpg', 'png']
+    const configMicrosoftExtension = ['doc', 'docx', 'xls', 'xlsx']
 
     const previewFile = computed(() => {
       return store.state.globalComponents.previewFile
@@ -53,11 +61,17 @@ export default {
       store.commit('globalComponents/setPreviewFile', null)
     }
 
+    const getSrcMicrosoft = computed(() => {
+      return 'https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(previewFile.value.url)
+    })
+
     return {
       closeDialog,
       previewFile,
       dialogVisible,
       configImageExtension,
+      configMicrosoftExtension,
+      getSrcMicrosoft,
     }
   },
 }
