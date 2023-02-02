@@ -182,7 +182,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Convert to opportunity successfully',
+          message: 'Convert to opportunity successfully.',
         })
         router.push({ name: `advisor/all` })
       }

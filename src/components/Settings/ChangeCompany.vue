@@ -62,7 +62,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Change default company successfully',
+          message: 'Change default company successfully.',
         })
       })
     }

@@ -94,7 +94,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Video uploaded successfully',
+          message: 'Video uploaded successfully.',
         })
         queryClient.invalidateQueries(['admin-panel-clients-help-find'])
       }
@@ -110,7 +110,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Help text updated',
+          message: 'Help text updated.',
         })
         queryClient.invalidateQueries(['admin-panel-clients-help-find'])
       }
@@ -128,7 +128,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Delete completed',
+              message: 'Delete completed.',
             })
             queryClient.invalidateQueries(['admin-panel-clients-help-find'])
           }

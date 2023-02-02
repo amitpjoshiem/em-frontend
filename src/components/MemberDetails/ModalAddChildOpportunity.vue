@@ -157,7 +157,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Opportunity created successfully',
+              message: 'Opportunity created successfully.',
             })
             queryClient.invalidateQueries(['opportunityList', id])
             closeDialog()

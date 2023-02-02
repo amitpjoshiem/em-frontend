@@ -77,7 +77,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: isEditModal.value ? 'Company update' : 'Company created',
+              message: isEditModal.value ? 'Company update.' : 'Company created.',
             })
             doneCloceDialog()
             queryClient.invalidateQueries(['admin-panel-companies'])

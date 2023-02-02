@@ -957,7 +957,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Information updated successfully',
+          message: 'Information updated successfully.',
         })
         router.push({
           name: 'lead/dashboard',

@@ -25,7 +25,7 @@
     </div>
     <div class="flex items-center">
       <div class="w-[35px] mr-2">
-        <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+        <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="icon-pdf" />
       </div>
       <div class="texy-main text-xss">{{ item.media.file_name }}</div>
     </div>
@@ -93,17 +93,17 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Delete successfully',
+          message: 'Delete successfully.',
         })
       }
     }
 
-    const handlePreview = (url) => {
+    const handlePreview = (file) => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', url)
+      store.commit('globalComponents/setPreviewFile', file)
     }
 
     return {

@@ -44,7 +44,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Salesforce account created successfully',
+          message: 'Salesforce account created successfully.',
         })
         queryClient.invalidateQueries(['salesforce/status', id])
       }

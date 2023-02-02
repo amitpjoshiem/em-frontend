@@ -1,11 +1,11 @@
-name: Stage CI/CD
+name: Prod CI/CD
 
 on:
   # Trigger the workflow on push or pull request,
   # but only for the develop branch
   push:
     branches:
-      - stage
+      - prod
 
 jobs:
   primary:
@@ -32,12 +32,12 @@ jobs:
       - name: build
         run: yarn build
         env:
-          VUE_APP_API_URL: ${{ secrets.VUE_APP_API_URL_STAGE }}
+          VUE_APP_API_URL: ${{ secrets.VUE_APP_API_URL_PROD }}
           VUE_APP_ENV: production
           VUE_APP_BASE_URL: ${{ secrets.VUE_APP_BASE_URL }}
-          VUE_APP_API_MEDIA_URL: ${{ secrets.VUE_APP_API_MEDIA_URL_STAGE }}
-          VUE_APP_WEBSOCKETS_SERVER: ${{ secrets.VUE_APP_WEBSOCKETS_SERVER_STAGE }}
-          VUE_APP_WEBSOCKETS_PORT: ${{ secrets.VUE_APP_WEBSOCKETS_PORT_STAGE }}
+          VUE_APP_API_MEDIA_URL: ${{ secrets.VUE_APP_API_MEDIA_URL_PROD }}
+          VUE_APP_WEBSOCKETS_SERVER: ${{ secrets.VUE_APP_WEBSOCKETS_SERVER_PROD }}
+          VUE_APP_WEBSOCKETS_PORT: ${{ secrets.VUE_APP_WEBSOCKETS_PORT_PROD }}
       - name: set AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -46,7 +46,8 @@ jobs:
           aws-region: us-east-1
       - name: aws deploy
         run: |
-          aws s3 sync ./dist s3://swd-web-stage --delete
+          aws s3 sync ./dist s3://swd-web-prod --delete
       - name: aws cloudfront invalidation
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_STAGE }} --paths "/*"
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_PROD }} --paths "/*"
+          

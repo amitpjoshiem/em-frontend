@@ -61,7 +61,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Contract created',
+              message: 'Contract created.',
             })
             store.commit('globalComponents/setShowModal', {
               destination: 'newContract',

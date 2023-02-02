@@ -8,10 +8,10 @@
       <div v-else-if="isAvailableDocument" class="flex flex-col">
         <div
           class="flex border-main-gray border rounded-md p-3 w-full mb-3.5 cursor-pointer"
-          @click="openPrewiev(stressTestDocument.data[0].url)"
+          @click="openPrewiev(stressTestDocument.data[0])"
         >
           <div class="w-[35px] mr-2">
-            <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+            <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="icon-pdf" />
           </div>
           <div class="flex flex-col">
             <span class="text-xs">{{ stressTestDocument.data[0].name }}</span>
@@ -21,10 +21,10 @@
         <div
           v-if="stressTestDocument.data[1]"
           class="flex border-main-gray border rounded-md p-3 w-full mb-3.5 cursor-pointer"
-          @click="openPrewiev(stressTestDocument.data[1].url)"
+          @click="openPrewiev(stressTestDocument.data[1])"
         >
           <div class="w-[35px] mr-2">
-            <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+            <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="icon-pdf" />
           </div>
           <div class="flex flex-col">
             <span class="text-xs">{{ stressTestDocument.data[1].name }}</span>
@@ -81,12 +81,12 @@ export default {
       router.push({ name: `${route.meta.type}/past-stress-test`, params: { id } })
     }
 
-    const openPrewiev = (url) => {
+    const openPrewiev = (file) => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', url)
+      store.commit('globalComponents/setPreviewFile', file)
     }
 
     return {

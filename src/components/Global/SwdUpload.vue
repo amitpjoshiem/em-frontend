@@ -32,31 +32,7 @@
         class="sm:flex items-center justify-between w-full"
       >
         <div class="flex items-center">
-          <img
-            v-if="getExtension(file) === 'pdf'"
-            class="el-upload-list__item-thumbnail"
-            src="../../assets/img/icon-new-pdf.png"
-            alt="icon-pdf"
-          />
-          <img
-            v-if="getExtension(file) === 'png'"
-            class="el-upload-list__item-thumbnail"
-            src="../../assets/img/icon-png.png"
-            alt="icon-png"
-          />
-          <img
-            v-if="getExtension(file) === 'jpg'"
-            class="el-upload-list__item-thumbnail"
-            src="../../assets/img/icon-jpg.png"
-            alt="icon-jpg"
-          />
-          <img
-            v-if="getExtension(file) === 'jpeg'"
-            class="el-upload-list__item-thumbnail"
-            src="../../assets/img/icon-jpeg.png"
-            alt="icon-jpeg"
-          />
-
+          <SwdThumbnail :extension="getExtension(file)" />
           <div class="flex flex-col ml-3">
             <div>
               <span class="text-main">File name: </span>
@@ -71,7 +47,7 @@
 
         <div class="flex justify-end pt-4 sm:pt-0 sm:block">
           <el-button
-            v-if="file.extension === 'pdf'"
+            v-if="configExtensionPreview.includes(file.extension)"
             type="primary"
             size="small"
             plain
@@ -107,10 +83,13 @@ import { useStore } from 'vuex'
 import { useFetchMediaRules } from '@/api/use-fetch-media-rules.js'
 import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
 import { ElMessage } from 'element-plus'
+import SwdThumbnail from '@/components/Global/SwdThumbnail.vue'
 
 export default {
   name: 'SwdUpload',
-
+  components: {
+    SwdThumbnail,
+  },
   props: {
     uploadData: {
       type: Object,
@@ -181,8 +160,8 @@ export default {
     const store = useStore()
     const innerRef = ref(null)
     const idFileRemove = ref(null)
-
     const fileList = ref([])
+    const configExtensionPreview = ['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx']
 
     const { isLoading: isLoadingMediaRules, data: mediaRules } = useFetchMediaRules({
       collection: props.uploadData.collection,
@@ -237,7 +216,7 @@ export default {
     })
 
     const handlePictureCardPreview = (file) => {
-      emit('open-prewiev', file.url)
+      emit('open-prewiev', file)
     }
 
     const handleRemove = (media) => {
@@ -294,6 +273,7 @@ export default {
       getRulesFormat,
       handleExceed,
       getExtension,
+      configExtensionPreview,
     }
   },
 }
