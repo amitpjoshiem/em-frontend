@@ -42,7 +42,7 @@ export const advisorRoute = {
     {
       path: 'client-report/:id',
       name: `${type}/clientreport`,
-      component: () => import(/* webpackChunkName: "Clientreport" */ '../../views/ClientReport.vue'),
+      component: () => import(/* webpackChunkName: "ClientReport" */ '../../views/ClientReport.vue'),
       children: [
         {
           path: 'client-reports-list',
