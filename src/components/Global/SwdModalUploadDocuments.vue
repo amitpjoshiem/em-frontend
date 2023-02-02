@@ -76,31 +76,32 @@
               <el-option v-for="item in docsTypesList" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
-          <div v-if="ruleForm.type === 'custom'" class="w-6/12 pl-2 flex flex-col">
-            <el-form-item label="Custom type" prop="custom_type" class="w-full">
-              <el-input v-model="ruleForm.custom_type" placeholder="Enter custom type" maxlength="30" />
+          <div v-if="ruleForm.type === 'other'" class="w-6/12 pl-2 flex flex-col">
+            <el-form-item label="Other type" prop="custom_type" class="w-full">
+              <el-input v-model="ruleForm.custom_type" placeholder="Enter other type" maxlength="60" />
             </el-form-item>
             <div class="text-gray-500 flex justify-end text-xxs">
-              <span>{{ 30 - ruleForm.custom_type.length }}</span>
+              <span>{{ 60 - ruleForm.custom_type.length }}</span>
               <span class="pl-1">characters remaining</span>
             </div>
           </div>
         </div>
 
-        <el-form-item label="Description" prop="description" class="w-full">
-          <el-input v-model="ruleForm.description" placeholder="Enter description" maxlength="30" />
+        <el-form-item label="File Description" prop="description" class="w-full">
+          <div class="pb-4 text-main">
+            <p class="leading-5" style="word-break: break-word">
+              Note:
+              <b>
+                Please briefly describe the file you are uploading by listing the carrier or institution below. Examples
+                include Fidelity, Amazon Employer Sponsored Plan, or KY Driver’s License.
+              </b>
+            </p>
+          </div>
+          <el-input v-model="ruleForm.description" placeholder="Enter description" maxlength="60" />
         </el-form-item>
         <div class="mb-4 text-gray-500 flex justify-end text-xxs">
-          <span>{{ 30 - ruleForm.description.length }}</span>
+          <span>{{ 60 - ruleForm.description.length }}</span>
           <span class="pl-1">characters remaining</span>
-        </div>
-        <div class="pb-4 text-main">
-          <p style="word-break: break-word">
-            Note:<b>
-              This could be the account type of a statement you are submitting, or a personal document such as a
-              driver’s license. Examples Include: Fidelity 401k Statement or KY Driver’s License.
-            </b>
-          </p>
         </div>
         <div class="h-[170px] border rounded p-2" :class="validUpload ? 'border-main-gray' : 'border-color-error'">
           <SwdUpload
@@ -261,8 +262,8 @@ export default {
             is_spouse: ruleForm.is_spouse,
             name: ruleForm.is_spouse ? ruleForm.last_name + ' ' + ruleForm.first_name : ruleForm.name,
           }
-          if (ruleForm.type && ruleForm.type === 'custom') data.type = ruleForm.custom_type
-          if (ruleForm.type && ruleForm.type !== 'custom') data.type = ruleForm.type
+          if (ruleForm.type && ruleForm.type === 'other') data.type = ruleForm.custom_type
+          if (ruleForm.type && ruleForm.type !== 'other') data.type = ruleForm.type
 
           const response = await uploadDoc({ collection: collection.value, data })
           if (!('error' in response)) {
@@ -314,7 +315,7 @@ export default {
 
     const docsTypesList = computed(() => {
       if (!clientsDocsTypes.value) return []
-      return [...clientsDocsTypes.value, ...[{ value: 'custom', label: 'Custom' }]]
+      return [...clientsDocsTypes.value, ...[{ value: 'other', label: 'Other' }]]
     })
 
     return {
