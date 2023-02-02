@@ -88,20 +88,20 @@
         </div>
 
         <el-form-item label="File Description" prop="description" class="w-full">
-          <el-input v-model="ruleForm.description" placeholder="Enter description" maxlength="30" />
+          <div class="pb-4 text-main">
+            <p class="leading-5" style="word-break: break-word">
+              Note:
+              <b>
+                Please briefly describe the file you are uploading by listing the carrier or institution below. Examples
+                include Fidelity, Amazon Employer Sponsored Plan, or KY Driver’s License.
+              </b>
+            </p>
+          </div>
+          <el-input v-model="ruleForm.description" placeholder="Enter description" maxlength="60" />
         </el-form-item>
         <div class="mb-4 text-gray-500 flex justify-end text-xxs">
-          <span>{{ 30 - ruleForm.description.length }}</span>
+          <span>{{ 60 - ruleForm.description.length }}</span>
           <span class="pl-1">characters remaining</span>
-        </div>
-        <div class="pb-4 text-main">
-          <p style="word-break: break-word">
-            Note:
-            <b>
-              Please briefly describe the file you are uploading by listing the carrier or institution below. Examples
-              include Fidelity, Amazon Employer Sponsored Plan, or KY Driver’s License.
-            </b>
-          </p>
         </div>
         <div class="h-[170px] border rounded p-2" :class="validUpload ? 'border-main-gray' : 'border-color-error'">
           <SwdUpload
