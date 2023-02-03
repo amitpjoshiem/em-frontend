@@ -359,3 +359,11 @@ input::-webkit-inner-spin-button {
 .el-button.el-button--primary.el-button--small:hover{
   color: white;
 }
+
+.el-button.el-button--primary{
+  color: #409eff;
+}
+
+.el-button.el-button--primary:hover{
+  color: white;
+}
