@@ -31,38 +31,45 @@
             <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
           </div>
 
-          <div class="flex pb-2 mt-8 text-gray-500 text-xs">
+          <div v-for="(row, indexRows) in block.rows" :key="indexRows">
+            <div class="text-main font-semibold text-xss">{{ row.label }}</div>
+            <div class="flex pb-2 mt-8 text-gray-500 text-xs">
+              <div class="w-1/5">Joint</div>
+              <div v-for="(header, indexHeader) in block.headers" :key="indexHeader" class="w-1/5">
+                {{ header.label }}
+              </div>
+            </div>
+            <div class="flex">
+              <div v-for="(itemRow, indexRow) in row.elements" :key="indexRow">
+                <SwdCurrencyInput
+                  v-if="itemRow.type === 'number'"
+                  v-model="ruleForm[itemRow.model.group][itemRow.model.model][itemRow.model.item]"
+                  :options="optionsCurrencyInput"
+                  :disabled="itemRow.disabled || isLoadingUpdate || isLoadingDeleteRow"
+                  :placeholder="itemRow.placeholder"
+                  prepend
+                  @blur="changeInput(itemRow)"
+                  @focus="focus(itemRow.model.group)"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="flex pb-2 mt-8 text-gray-500 text-xs">
             <div class="w-1/5">Joint</div>
             <template v-for="header in block.headers" :key="header + indexGroup">
               <div class="w-1/5">
                 {{ header.label }}
               </div>
             </template>
-          </div>
-          <!-- <div class="flex pb-2 mt-8">
-            <div :class="member.married ? 'w-[30%]' : 'w-[25%]'" />
-            <template v-for="(header, indexHeader) in block.headers" :key="header + indexGroup">
-              <div v-if="indexHeader === 'owner' && member.married" />
-              <div class="w-[15%] px-2 text-main text-xs font-semibold">
-                {{ header.label }}
-              </div>
-            </template>
           </div> -->
-          <div v-for="(row, indexRow) in block.rows" :key="row">
+
+          <!-- <div v-for="(row, indexRow) in block.rows" :key="row">
             <div class="flex items-center">
               <div v-if="row.label" class="text-main font-semibold text-xss">
                 {{ row.label }}
               </div>
             </div>
-
-            <!-- <div class="flex pb-2 mt-8 text-gray-500 text-xs">
-              <div class="w-1/5">Joint</div>
-              <template v-for="header in block.headers" :key="header + indexGroup">
-                <div class="w-1/5">
-                  {{ header.label }}
-                </div>
-              </template>
-            </div> -->
 
             <div class="flex">
               <template v-for="(item, itemIndex) in row.elements" :key="item">
@@ -179,7 +186,7 @@
                 </div>
               </template>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <div class="flex justify-end my-10">
@@ -244,7 +251,7 @@ import { currencyFormat } from '@/utils/currencyFormat'
 
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 
-import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
+// import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
@@ -253,9 +260,9 @@ import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 export default {
   name: 'AddLeadAssets',
   components: {
-    ArrowDown,
-    Delete,
-    Plus,
+    // ArrowDown,
+    // Delete,
+    // Plus,
   },
   setup() {
     const queryClient = useQueryClient()
