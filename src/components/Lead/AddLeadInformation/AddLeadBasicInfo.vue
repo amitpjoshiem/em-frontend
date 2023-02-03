@@ -3,7 +3,7 @@
     <div v-if="!isFetchingMember && !isLoadingInfo" class="sm:p-5">
       <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isDisabledForm">
         <!-- GENERAL -->
-        <div class="sm:p-5">
+        <div>
           <div class="flex items-center mb-5">
             <InlineSvg v-show="isFocusGeneral && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusGeneral && !isDoneCurrentStep" :src="IconNotActive" />
@@ -134,7 +134,7 @@
         <!-- GENERAL -->
 
         <!-- Spouse -->
-        <div v-if="ruleForm.married" class="sm:p-5">
+        <div v-if="ruleForm.married">
           <div class="flex items-center my-5">
             <InlineSvg v-show="isFocusSpouse && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusSpouse && !isDoneCurrentStep" :src="IconNotActive" />
@@ -188,11 +188,11 @@
                 />
               </el-form-item>
 
-              <el-form-item label="Phone" prop="spouse.phone" class="mb-3 lg:w-3/12 lg:pl-2 sm:w-6/12 sm:pr-2">
+              <el-form-item label="Phone" prop="spouse.phone" class="mb-3 lg:w-3/12 lg:pl-2 sm:w-6/12">
                 <el-input
                   v-model="ruleForm.spouse.phone"
                   v-maska="'(###) ###-####'"
-                  placeholder="Enter spouse’s phone number"
+                  placeholder="Enter phone number"
                   inputmode="numeric"
                   @focus="focus('spouse')"
                   @blur="blur('spouse')"
@@ -220,7 +220,7 @@
         <!-- Spouse -->
 
         <!-- Housing Information -->
-        <div class="sm:p-5">
+        <div>
           <div class="flex items-center my-5">
             <InlineSvg v-show="isFocusHouse && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusHouse && !isDoneCurrentStep" :src="IconNotActive" />
@@ -229,7 +229,7 @@
           </div>
           <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusHouse }">
             <el-form-item label="Type" class="mb-4">
-              <el-radio-group v-model="ruleForm.house.type" @change="changeInput">
+              <el-radio-group v-model="ruleForm.house.type" @change="handleChange">
                 <el-radio label="own">Own</el-radio>
                 <el-radio label="rent">Rent</el-radio>
                 <el-radio label="family">Live with family</el-radio>
@@ -311,7 +311,7 @@
         <!-- Housing Information -->
 
         <!-- Employment history -->
-        <div class="sm:p-5 mt-5">
+        <div class="mt-5">
           <div class="flex items-center mb-5">
             <InlineSvg v-show="isFocusEmployment && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusEmployment && !isDoneCurrentStep" :src="IconNotActive" />
@@ -352,7 +352,7 @@
                 </el-form-item>
                 <el-form-item
                   v-if="!!ruleForm.employment_history[index].company_name.trim().length"
-                  class="sm:w-4/12 mb-4"
+                  class="sm:w-2/12 mb-4"
                   :prop="'employment_history.' + index + '.years'"
                   label="Years"
                 >
@@ -378,7 +378,7 @@
                 <el-form-item
                   v-if="!ruleForm.employment_history[index].company_name.trim().length"
                   label="Years"
-                  class="sm:w-4/12 mb-4"
+                  class="sm:w-2/12 mb-4"
                 >
                   <el-input
                     placeholder="00"
@@ -386,6 +386,21 @@
                     :disabled="!ruleForm.employment_history[index].company_name.trim().length"
                   />
                 </el-form-item>
+
+                <div class="sm:w-2/12 mt-[22px] text-right">
+                  <el-button
+                    v-if="
+                      ruleForm.employment_history[index].company_name.trim().length &&
+                      ruleForm.employment_history[index].occupation.trim().length &&
+                      ruleForm.employment_history[index].years
+                    "
+                    type="danger"
+                    plain
+                    @click="handleRemoveEmployment(index)"
+                  >
+                    Remove job
+                  </el-button>
+                </div>
               </div>
               <div class="flex justify-end mt-4">
                 <SwdButton
@@ -397,9 +412,6 @@
                 >
                   Add job
                 </SwdButton>
-                <el-button v-else type="danger" plain @click="removeEmployment({ ruleForm, index })">
-                  Remove job
-                </el-button>
               </div>
             </div>
 
@@ -436,7 +448,7 @@
                   </el-form-item>
                   <el-form-item
                     v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
-                    class="sm:w-4/12 mb-4"
+                    class="sm:w-2/12 mb-4"
                     :prop="'spouse.employment_history.' + index + '.years'"
                     label="Years"
                   >
@@ -462,7 +474,7 @@
                   <el-form-item
                     v-if="!ruleForm.spouse.employment_history[index].company_name.trim().length"
                     label="Years"
-                    class="sm:w-4/12 mb-4"
+                    class="sm:w-2/12 mb-4"
                   >
                     <el-input
                       placeholder="00"
@@ -470,6 +482,20 @@
                       :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
                     />
                   </el-form-item>
+                  <div class="sm:w-2/12 mt-[22px] text-center">
+                    <el-button
+                      v-if="
+                        ruleForm.spouse.employment_history[index].company_name.trim().length &&
+                        ruleForm.spouse.employment_history[index].occupation.trim().length &&
+                        ruleForm.spouse.employment_history[index].years
+                      "
+                      type="danger"
+                      plain
+                      @click="handleRemoveEmploymentSpouse(index)"
+                    >
+                      Remove job
+                    </el-button>
+                  </div>
                 </div>
                 <div class="flex justify-end mt-4">
                   <SwdButton
@@ -481,9 +507,6 @@
                   >
                     Add job
                   </SwdButton>
-                  <el-button v-else type="danger" plain @click="removeEmploymentSpouse({ ruleForm, index })">
-                    Remove job
-                  </el-button>
                 </div>
               </div>
             </div>
@@ -492,7 +515,7 @@
         <!-- Employment history -->
 
         <!-- Other -->
-        <div class="my-5 sm:p-5">
+        <div class="my-5">
           <div class="flex items-center mb-5">
             <InlineSvg v-show="isFocusOther && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusOther && !isDoneCurrentStep" :src="IconNotActive" />
@@ -525,7 +548,7 @@
               <el-radio-group
                 v-model="ruleForm.amount_for_retirement"
                 class="flex sm:flex-wrap w-full"
-                @change="changeInput"
+                @change="handleChange"
               >
                 <el-radio label="150000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$150,000 - $250,000</el-radio>
                 <el-radio label="250000" class="w-full sm:w-6/12 lg:w-3/12 mr-0">$250,000 - $500,000</el-radio>
@@ -544,7 +567,7 @@
             </el-form-item>
 
             <el-form-item label="Risk tolerance?" class="my-5">
-              <el-radio-group v-model="ruleForm.other.risk" @change="changeInput">
+              <el-radio-group v-model="ruleForm.other.risk" @change="handleChange">
                 <div class="flex flex-col sm:flex-row sm:flex-wrap">
                   <el-radio label="conservative" class="sm:w-3/12">Conservative</el-radio>
                   <el-radio label="moderate" class="sm:w-3/12">Moderate</el-radio>
@@ -580,7 +603,7 @@
             </el-form-item>
 
             <el-form-item label="Are you currently working with an Advisor?" class="mb-4">
-              <el-radio-group v-model="ruleForm.other.work_with_advisor" @change="changeInput">
+              <el-radio-group v-model="ruleForm.other.work_with_advisor" @change="handleChange">
                 <el-radio :label="true">Yes</el-radio>
                 <el-radio :label="false">No</el-radio>
               </el-radio-group>
@@ -671,10 +694,8 @@ export default {
       setInitValue,
       addEmployment,
       addEmploymentSpouse,
-      removeEmployment,
       changeCompanyNameMember,
       changeCompanyNameSpouse,
-      removeEmploymentSpouse,
       getPlaceholder,
       optionsCurrencyInput,
       changeMarried,
@@ -840,7 +861,7 @@ export default {
       return isLoadingUpdateMember.value || clientsInfo.value.readonly
     })
 
-    const changeInput = async () => {
+    const handleChange = async () => {
       if (member.value.step !== 'default') {
         form.value.validate(async (valid) => {
           if (valid) {
@@ -871,7 +892,24 @@ export default {
       if (type === 'house') isFocusHouse.value = false
       if (type === 'employment') isFocusEmployment.value = false
       if (type === 'other') isFocusOther.value = false
-      changeInput()
+      handleChange()
+    }
+
+    const handleRemoveEmployment = (index) => {
+      ruleForm.employment_history.splice(index, 1)
+      if (!ruleForm.employment_history.length) {
+        ruleForm.employment_history.push({
+          company_name: '',
+          occupation: '',
+          years: '',
+        })
+      }
+      handleChange()
+    }
+
+    const handleRemoveEmploymentSpouse = (index) => {
+      ruleForm.spouse.employment_history.splice(index, 1)
+      handleChange()
     }
 
     return {
@@ -879,10 +917,8 @@ export default {
       rules,
       form,
       submitForm,
-      removeEmployment,
       addEmployment,
       addEmploymentSpouse,
-      removeEmploymentSpouse,
       isLoadingUpdateMember,
       IconAdd,
       IconDelete,
@@ -910,8 +946,10 @@ export default {
       stateList,
       restoreDraft,
       deleteDraft,
-      changeInput,
+      handleChange,
       isReadOnlyLead,
+      handleRemoveEmployment,
+      handleRemoveEmploymentSpouse,
     }
   },
 }

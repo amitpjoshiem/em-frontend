@@ -171,7 +171,7 @@
           <router-link
             v-if="isReadOnlyLead"
             :to="{ name: `lead-expense-information`, params: { id: leadId } }"
-            class="w-4/12"
+            class="w-3/12"
           >
             <SwdButton primary main>Go to the monthly expense</SwdButton>
           </router-link>
