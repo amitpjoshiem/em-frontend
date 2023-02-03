@@ -124,7 +124,7 @@
             <el-input
               v-model="ruleForm.spouse.phone"
               v-maska="'(###) ###-####'"
-              placeholder="Enter spouse’s phone number"
+              placeholder="Enter phone number"
               inputmode="numeric"
               @blur="changeInput"
             />

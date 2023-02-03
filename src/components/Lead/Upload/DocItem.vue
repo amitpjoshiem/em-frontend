@@ -19,8 +19,6 @@
         v-if="withRemoveBtn"
         confirm-button-text="Yes"
         cancel-button-text="No"
-        icon="el-icon-info"
-        icon-color="red"
         title="Are you sure to delete this?"
         @confirm="handleRemove"
       >
@@ -29,7 +27,7 @@
         </template>
       </el-popconfirm>
       <el-button
-        v-if="configExtensionPreview.includes(doc.extension)"
+        v-if="configExtensionPreview.includes(doc.extension.toLowerCase())"
         type="primary"
         size="small"
         plain
@@ -45,7 +43,6 @@
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
-import { computed } from 'vue'
 import SwdThumbnail from '@/components/Global/SwdThumbnail.vue'
 
 export default {
@@ -92,15 +89,10 @@ export default {
       }
     }
 
-    const isShowBtnPrewiev = computed(() => {
-      return props.doc.extension === 'pdf'
-    })
-
     return {
       handlePrewiev,
       handleRemove,
       isLoadingRemove,
-      isShowBtnPrewiev,
       configExtensionPreview,
     }
   },

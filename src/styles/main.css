@@ -166,10 +166,6 @@
 .dialog-style {
   margin-top: 10vh !important;
 }
-/* 
-.el-upload  {
-  display: block;
-} */
 
 .el-form-item--mini .el-form-item__label{
   line-height: normal;
@@ -308,7 +304,6 @@ input::-webkit-inner-spin-button {
   height: 28px;
 }
 
-
 .el-form-item__label{
   color: #282828;
 }
@@ -355,4 +350,20 @@ input::-webkit-inner-spin-button {
 
 .el-select-dropdown__list{
   margin: 0!important;
+}
+
+.el-button.el-button--primary.el-button--small{
+  color: #409eff;
+}
+
+.el-button.el-button--primary.el-button--small:hover{
+  color: white;
+}
+
+.el-button.el-button--primary{
+  color: #409eff;
+}
+
+.el-button.el-button--primary:hover{
+  color: white;
 }

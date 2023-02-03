@@ -1,47 +1,51 @@
 <template>
-  <SwdDialog title="Change password" confirm-action="changePassword" destination-dialog="changePassword">
-    <template #buttonDialog>
-      <div class="flex items-center">
-        <InlineSvg :src="IconPencil" class="mb-1" />
-      </div>
-    </template>
-    <template #contentDialog>
-      <el-form v-if="data.isShowForm" ref="form" :model="ruleForm" :rules="rules" label-position="top">
-        <el-form-item label="Current password" prop="current_password" class="mb-4">
-          <el-input
-            v-model="ruleForm.current_password"
-            type="password"
-            autocomplete="off"
-            placeholder="Please input password"
-          />
-        </el-form-item>
+  <el-dialog v-model="dialogVisible" :title="getDialogTitle" :before-close="closeDialog" destroy-on-close>
+    <el-form v-if="isShowForm" ref="form" :model="ruleForm" :rules="rules" label-position="top">
+      <el-form-item label="Current password" prop="current_password" class="mb-4">
+        <el-input
+          v-model="ruleForm.current_password"
+          type="password"
+          autocomplete="off"
+          placeholder="Please input current password"
+          show-password
+        />
+      </el-form-item>
 
-        <el-form-item label="Password" prop="password" class="mb-4">
-          <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
-        </el-form-item>
+      <el-form-item label="New Password" prop="password" class="mb-4">
+        <el-input
+          v-model="ruleForm.password"
+          type="password"
+          autocomplete="off"
+          placeholder="Please input new password"
+          show-password
+        />
+      </el-form-item>
 
-        <el-form-item label="Confirm" prop="password_confirmation">
-          <el-input
-            v-model="ruleForm.password_confirmation"
-            type="password"
-            autocomplete="off"
-            placeholder="Please input password"
-          />
-        </el-form-item>
-
-        <div class="pt-3 text-right">
-          <Button default-blue-btn text-btn="Save" @click="savePass" />
+      <el-form-item label="Confirm new password" prop="password_confirmation">
+        <el-input
+          v-model="ruleForm.password_confirmation"
+          type="password"
+          autocomplete="off"
+          placeholder="Please input confirm password"
+          show-password
+        />
+      </el-form-item>
+    </el-form>
+    <SwdDialogSucces v-else text="The password was succesfully changed!" @closeDialog="closeDialog" />
+    <template #footer>
+      <span class="dialog-footer">
+        <div class="flex justify-end">
+          <el-button @click="closeDialog">Cancel</el-button>
+          <SwdButton class="ml-4" primary main @click="savePass">Save</SwdButton>
         </div>
-      </el-form>
-      <SwdDialogSucces v-else text="The password was succesfully changed!" @closeDialog="closeDialog" />
+      </span>
     </template>
-  </SwdDialog>
+  </el-dialog>
 </template>
 <script>
-import IconPencil from '@/assets/svg/icon-pencil.svg'
 import SwdDialogSucces from '@/components/Global/SwdDialogSucces.vue'
 import { useChangePassword } from '@/api/authentication/use-change-password'
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, watchEffect, computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -50,6 +54,9 @@ export default {
     SwdDialogSucces,
   },
   setup() {
+    const dialogVisible = ref(false)
+    const form = ref(null)
+    const isShowForm = ref(true)
     const store = useStore()
     const { response, error, fetching, changePassword } = useChangePassword()
 
@@ -58,21 +65,24 @@ export default {
       password: '',
       password_confirmation: '',
     })
-    const form = ref(null)
 
-    const data = reactive({
-      isShowForm: true,
+    watchEffect(() => {
+      dialogVisible.value = store.state.globalComponents.dialog.showDialog.changePassword
     })
 
     const savePass = async (e) => {
       e.preventDefault()
-      changePassword(ruleForm)
-        .then(() => {
-          data.isShowForm = false
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      form.value.validate(async (valid) => {
+        if (valid) {
+          changePassword(ruleForm)
+            .then(() => {
+              isShowForm.value = false
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+        }
+      })
     }
 
     const closeDialog = () => {
@@ -83,7 +93,7 @@ export default {
     }
 
     const getDialogTitle = computed(() => {
-      if (data.isShowForm) return 'Change name'
+      if (isShowForm.value) return 'Change password'
       return 'Succes'
     })
 
@@ -117,14 +127,14 @@ export default {
       error,
       fetching,
       changePassword,
-      IconPencil,
       savePass,
       ruleForm,
       form,
       rules,
-      data,
+      isShowForm,
       closeDialog,
       getDialogTitle,
+      dialogVisible,
     }
   },
 }

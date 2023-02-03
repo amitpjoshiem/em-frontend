@@ -748,7 +748,7 @@
           <Button default-gray-btn text-btn="Back" @click="backStep" />
         </div>
 
-        <SwdButton v-if="!isReadOnlyLead" primary main :disabled="isLoadingUpdateSteps" class="w-2/12" @click="save">
+        <SwdButton v-if="!isReadOnlyLead" primary main :disabled="isLoadingUpdateSteps" class="w-3/12" @click="save">
           <SwdSpinner v-show="isLoadingUpdateSteps" class="mr-2" />
           Save
         </SwdButton>
