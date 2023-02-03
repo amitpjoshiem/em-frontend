@@ -87,16 +87,16 @@
           </div>
         </div>
 
-        <el-form-item label="File Description" prop="description" class="w-full">
-          <div class="pb-4 text-main">
-            <p class="leading-5" style="word-break: break-word">
-              Note:
-              <b>
-                Please briefly describe the file you are uploading by listing the carrier or institution below. Examples
-                include Fidelity, Amazon Employer Sponsored Plan, or KY Driver’s License.
-              </b>
-            </p>
+        <div class="el-form-item__label h-0">File Description</div>
+        <div class="flex pb-4 text-main">
+          <div class="w-1/12">Note:</div>
+          <div class="w-11/12 font-semibold leading-5" style="word-break: break-word">
+            Please briefly describe the file you are uploading by listing the carrier or institution below. Examples
+            include Fidelity, Amazon Employer Sponsored Plan, or KY Driver’s License.
           </div>
+        </div>
+
+        <el-form-item prop="description" class="w-full">
           <el-input v-model="ruleForm.description" placeholder="Enter description" maxlength="60" />
         </el-form-item>
         <div class="mb-4 text-gray-500 flex justify-end text-xxs">

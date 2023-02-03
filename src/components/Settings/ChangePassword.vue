@@ -12,20 +12,25 @@
             v-model="ruleForm.current_password"
             type="password"
             autocomplete="off"
-            placeholder="Please input password"
+            placeholder="Please input current password"
           />
         </el-form-item>
 
-        <el-form-item label="Password" prop="password" class="mb-4">
-          <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
+        <el-form-item label="New Password" prop="password" class="mb-4">
+          <el-input
+            v-model="ruleForm.password"
+            type="password"
+            autocomplete="off"
+            placeholder="Please input new password"
+          />
         </el-form-item>
 
-        <el-form-item label="Confirm" prop="password_confirmation">
+        <el-form-item label="Confirm new password" prop="password_confirmation">
           <el-input
             v-model="ruleForm.password_confirmation"
             type="password"
             autocomplete="off"
-            placeholder="Please input password"
+            placeholder="Please input confirm password"
           />
         </el-form-item>
 

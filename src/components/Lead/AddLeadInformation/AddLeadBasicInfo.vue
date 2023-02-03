@@ -3,7 +3,7 @@
     <div v-if="!isFetchingMember && !isLoadingInfo" class="sm:p-5">
       <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isDisabledForm">
         <!-- GENERAL -->
-        <div class="sm:p-5">
+        <div>
           <div class="flex items-center mb-5">
             <InlineSvg v-show="isFocusGeneral && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusGeneral && !isDoneCurrentStep" :src="IconNotActive" />
@@ -134,7 +134,7 @@
         <!-- GENERAL -->
 
         <!-- Spouse -->
-        <div v-if="ruleForm.married" class="sm:p-5">
+        <div v-if="ruleForm.married">
           <div class="flex items-center my-5">
             <InlineSvg v-show="isFocusSpouse && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusSpouse && !isDoneCurrentStep" :src="IconNotActive" />
@@ -188,11 +188,11 @@
                 />
               </el-form-item>
 
-              <el-form-item label="Phone" prop="spouse.phone" class="mb-3 lg:w-3/12 lg:pl-2 sm:w-6/12 sm:pr-2">
+              <el-form-item label="Phone" prop="spouse.phone" class="mb-3 lg:w-3/12 lg:pl-2 sm:w-6/12">
                 <el-input
                   v-model="ruleForm.spouse.phone"
                   v-maska="'(###) ###-####'"
-                  placeholder="Enter spouse’s phone number"
+                  placeholder="Enter phone number"
                   inputmode="numeric"
                   @focus="focus('spouse')"
                   @blur="blur('spouse')"
@@ -220,7 +220,7 @@
         <!-- Spouse -->
 
         <!-- Housing Information -->
-        <div class="sm:p-5">
+        <div>
           <div class="flex items-center my-5">
             <InlineSvg v-show="isFocusHouse && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusHouse && !isDoneCurrentStep" :src="IconNotActive" />
@@ -311,7 +311,7 @@
         <!-- Housing Information -->
 
         <!-- Employment history -->
-        <div class="sm:p-5 mt-5">
+        <div class="mt-5">
           <div class="flex items-center mb-5">
             <InlineSvg v-show="isFocusEmployment && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusEmployment && !isDoneCurrentStep" :src="IconNotActive" />
@@ -492,7 +492,7 @@
         <!-- Employment history -->
 
         <!-- Other -->
-        <div class="my-5 sm:p-5">
+        <div class="my-5">
           <div class="flex items-center mb-5">
             <InlineSvg v-show="isFocusOther && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusOther && !isDoneCurrentStep" :src="IconNotActive" />
