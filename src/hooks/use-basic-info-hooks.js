@@ -21,8 +21,9 @@ export function useBasicInfoHooks() {
       ruleForm.is_watch = member.value.is_watch
       ruleForm.channels = member.value.channels
 
-      if (member.value.employment_history.length)
+      if (member.value.employment_history.length) {
         Object.assign(ruleForm.employment_history, JSON.parse(JSON.stringify(member.value.employment_history)))
+      }
 
       if (member.value.married) {
         Object.assign(ruleForm.spouse, JSON.parse(JSON.stringify(member.value.spouse)))
@@ -53,10 +54,6 @@ export function useBasicInfoHooks() {
     }
   }
 
-  const removeEmployment = ({ ruleForm, index }) => {
-    ruleForm.employment_history.splice(index, 1)
-  }
-
   const addEmployment = (ruleForm) => {
     const length = ruleForm.employment_history.length
     ruleForm.employment_history.push({
@@ -83,10 +80,6 @@ export function useBasicInfoHooks() {
       occupation: [employmentHistoryRule.occupation],
       years: [employmentHistoryRule.years],
     }
-  }
-
-  const removeEmploymentSpouse = ({ ruleForm, index }) => {
-    ruleForm.spouse.employment_history.splice(index, 1)
   }
 
   const changeCompanyNameMember = ({ ruleForm, index }) => {
@@ -147,12 +140,10 @@ export function useBasicInfoHooks() {
 
   return {
     setInitValue,
-    removeEmployment,
     addEmployment,
     addEmploymentSpouse,
     changeCompanyNameMember,
     changeCompanyNameSpouse,
-    removeEmploymentSpouse,
     resetState,
     changeMarried,
     getPlaceholder,
