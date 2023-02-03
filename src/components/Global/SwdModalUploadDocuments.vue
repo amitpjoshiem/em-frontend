@@ -89,7 +89,7 @@
 
         <div class="el-form-item__label h-0">File Description</div>
         <div class="flex pb-4 text-main">
-          <div class="w-1/12">Note:</div>
+          <div class="w-12">Note:</div>
           <div class="w-11/12 font-semibold leading-5" style="word-break: break-word">
             Please briefly describe the file you are uploading by listing the carrier or institution below. Examples
             include Fidelity, Amazon Employer Sponsored Plan, or KY Driver’s License.
