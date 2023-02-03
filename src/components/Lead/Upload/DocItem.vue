@@ -19,8 +19,6 @@
         v-if="withRemoveBtn"
         confirm-button-text="Yes"
         cancel-button-text="No"
-        icon="el-icon-info"
-        icon-color="red"
         title="Are you sure to delete this?"
         @confirm="handleRemove"
       >
