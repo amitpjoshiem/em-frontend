@@ -258,7 +258,7 @@ export default {
         if (valid && validUpload.value && validSwitcher.value) {
           const data = {
             uuids: ruleForm.uuids,
-            describe: ruleForm.description,
+            description: ruleForm.description,
             is_spouse: ruleForm.is_spouse,
             name: ruleForm.is_spouse ? ruleForm.last_name + ' ' + ruleForm.first_name : ruleForm.name,
           }
