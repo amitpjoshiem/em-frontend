@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isMemberAssetsLoading && !isLoadingInfo && !isMemberAssetsSchemaLoading && !isLoadingMember">
-      <el-form ref="form" :model="ruleForm" :disabled="isReadOnlyLead">
+      <el-form ref="form" :model="ruleForm" :disabled="isReadOnlyLead" :rules="customRules">
         <div
           v-for="(block, indexGroup) in schema"
           :key="indexGroup"
@@ -65,7 +65,13 @@
                 class="px-2 mb-0 item-assets"
                 :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
               >
-                <el-form-item class="mb-4">
+                <el-form-item
+                  class="mb-4"
+                  :prop="
+                    item.name === 'institution' ? item.model.group + '.' + item.model.model + '.' + item.model.item : ''
+                  "
+                >
+                  <div v-if="item.name === 'institution'"></div>
                   <template v-if="item.calculated">
                     <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                       <SwdSpinner />
@@ -210,7 +216,6 @@ import { watchEffect, ref, computed, reactive, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
-
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member.js'
@@ -219,18 +224,28 @@ import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { updateStepAssetsIncome } from '@/api/vueQuery/update-step-assets-income'
 import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
-
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { currencyFormat } from '@/utils/currencyFormat'
-
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-
 import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
+
+function customValidate(rule, value, callback) {
+  // eslint-disable-next-line no-useless-escape
+  if (/[^\w|\/,\(\)\-|\s]/g.test(value)) {
+    callback(new Error('The field is not valid'))
+  }
+
+  if (rule.required && !value) {
+    callback(new Error(rule.errorText))
+  }
+
+  callback()
+}
 
 export default {
   name: 'AddLeadAssets',
@@ -253,6 +268,7 @@ export default {
     const newField = ref([])
     const fieldName = ref()
     const isCanJoin = ref()
+    const customRules = ref()
 
     const step = computed(() => store.state.newClient.step)
 
@@ -289,6 +305,7 @@ export default {
     watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
       if (oldValue && !newValue) {
         updateSchema()
+        updateRules()
       }
     })
 
@@ -371,18 +388,25 @@ export default {
       await queryClient.invalidateQueries(['memberAssets', leadId])
       await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
       updateSchema()
+      updateRules()
     }
 
     const changeInput = async (item) => {
-      const data = {
-        group: item.model.group,
-        row: item.model.model,
-        element: item.model.item,
-        type: item.type,
-        value: ruleForm[item.model.group][item.model.model][item.model.item],
-      }
-      await updateMemberAssets({ data, id: leadId })
-      queryClient.invalidateQueries(['memberAssets', leadId])
+      form.value.validate(async (valid) => {
+        if (valid) {
+          const data = {
+            group: item.model.group,
+            row: item.model.model,
+            element: item.model.item,
+            type: item.type,
+            value: ruleForm[item.model.group][item.model.model][item.model.item],
+          }
+          await updateMemberAssets({ data, id: leadId })
+          queryClient.invalidateQueries(['memberAssets', leadId])
+        } else {
+          return false
+        }
+      })
     }
 
     const optionsCurrencyInput = {
@@ -518,6 +542,35 @@ export default {
       return clientsInfo.value.readonly
     })
 
+    const updateRules = () => {
+      customRules.value = {
+        liquid_assets: {},
+        other_assets_investments: {},
+      }
+
+      Object.keys(ruleForm.liquid_assets).forEach((item) => {
+        customRules.value.liquid_assets[item] = {
+          institution: {
+            errorText: 'Please input name',
+            required: false,
+            trigger: 'change',
+            validator: customValidate,
+          },
+        }
+      })
+
+      Object.keys(ruleForm.other_assets_investments).forEach((item) => {
+        customRules.value.other_assets_investments[item] = {
+          institution: {
+            errorText: 'Please input name',
+            required: false,
+            trigger: 'change',
+            validator: customValidate,
+          },
+        }
+      })
+    }
+
     return {
       ruleForm,
       backStep,
@@ -562,6 +615,7 @@ export default {
       leadId,
       isCanJoin,
       remove,
+      customRules,
     }
   },
 }
