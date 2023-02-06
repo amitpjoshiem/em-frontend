@@ -11,13 +11,7 @@
       <el-card v-for="item in data.value.documents" :key="item.id" class="mb-4">
         <div class="sm:flex sm:justify-between sm:items-center">
           <div class="flex">
-            <img
-              v-if="item.extension === 'excel'"
-              src="../../../../assets/img/icon-excel.png"
-              alt="excel"
-              class="w-[50px] mr-5"
-            />
-            <img v-else src="../../../../assets/img/icon-pdf.png" alt="excel" class="w-[50px] mr-5" />
+            <SwdThumbnail :extension="item.extension" class="w-[70px] mr-4" />
             <div class="flex flex-col justify-center">
               <span>{{ item.name }}</span>
               <span class="mt-1">{{ item.created_at }}</span>
@@ -26,7 +20,7 @@
           <div class="flex justify-end">
             <SwdButton class="mr-5" primary small @click="handleDescriptionPreview(item)">Description</SwdButton>
             <SwdButton
-              v-if="configExtensionPreview.includes(item.extension)"
+              v-if="configExtensionPreview.includes(item.extension.toLowerCase())"
               class="mr-5"
               primary
               small
@@ -54,9 +48,13 @@ import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
+import SwdThumbnail from '@/components/Global/SwdThumbnail.vue'
 
 export default {
   name: 'ListDocumentsClient',
+  components: {
+    SwdThumbnail,
+  },
   props: {
     docCollections: {
       type: String,
@@ -79,7 +77,7 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const data = ref({})
-    const configExtensionPreview = ['jpeg', 'jpg', 'png', 'pdf']
+    const configExtensionPreview = ['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx']
 
     const {
       isLoading: isLoadingClient,

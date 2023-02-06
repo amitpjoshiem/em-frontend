@@ -7,8 +7,8 @@
       <div class="lg:max-w-5xl lg:my-0 lg:mx-auto">
         <div class="hidden pb-2 mt-8 md:flex">
           <div class="md:w-8/12" />
-          <div class="md:w-2/12 text-main text-xs">ESSENTIAL</div>
-          <div class="md:w-2/12 text-main text-xs">DISCRETIONARY</div>
+          <div class="md:w-2/12 text-main text-xs font-semibold ml-[-9px]">ESSENTIAL</div>
+          <div class="md:w-2/12 text-main text-xs font-semibold ml-[-9px]">DISCRETIONARY</div>
         </div>
         <div>
           <!-- HOUSING -->
