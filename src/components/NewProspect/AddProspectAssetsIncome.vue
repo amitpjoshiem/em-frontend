@@ -189,22 +189,10 @@ import { updateStepAssetsIncome } from '@/api/vueQuery/update-step-assets-income
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
+import { useHookCustomValidate } from '@/hooks/use-hook-custom-validate'
 import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { ElMessageBox } from 'element-plus'
-
-function customValidate(rule, value, callback) {
-  // eslint-disable-next-line no-useless-escape
-  if (/[^\w|\/,\(\)\-|\s]/g.test(value)) {
-    callback(new Error('The field is not valid'))
-  }
-
-  if (rule.required && !value) {
-    callback(new Error(rule.errorText))
-  }
-
-  callback()
-}
 
 export default {
   name: 'AddProspectAssetsIncome',
@@ -245,6 +233,7 @@ export default {
     const { mutateAsync: updateStep } = useMutation(updateStepAssetsIncome)
 
     const { setInitValue } = useAssetsInfoHooks()
+    const { setCustomValidate } = useHookCustomValidate()
 
     onMounted(async () => {
       store.commit('newProspect/setStep', 2)
@@ -260,7 +249,7 @@ export default {
     watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
       if (oldValue && !newValue) {
         updateSchema()
-        updateRules()
+        setCustomValidate(ruleForm, customRules)
       }
     })
 
@@ -319,7 +308,7 @@ export default {
       await queryClient.invalidateQueries(['memberAssets', memberId])
       await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
       updateSchema()
-      updateRules()
+      setCustomValidate(ruleForm, customRules)
     }
 
     const changeInput = async (item) => {
@@ -467,35 +456,6 @@ export default {
       } else {
         disjoinMember(item)
       }
-    }
-
-    const updateRules = () => {
-      customRules.value = {
-        liquid_assets: {},
-        other_assets_investments: {},
-      }
-
-      Object.keys(ruleForm.liquid_assets).forEach((item) => {
-        customRules.value.liquid_assets[item] = {
-          institution: {
-            errorText: 'Please input name',
-            required: false,
-            trigger: 'change',
-            validator: customValidate,
-          },
-        }
-      })
-
-      Object.keys(ruleForm.other_assets_investments).forEach((item) => {
-        customRules.value.other_assets_investments[item] = {
-          institution: {
-            errorText: 'Please input name',
-            required: false,
-            trigger: 'change',
-            validator: customValidate,
-          },
-        }
-      })
     }
 
     return {
