@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isMemberAssetsLoading && !isMemberAssetsSchemaLoading && !isLoadingMember">
-    <el-form ref="form" :model="ruleForm">
+    <el-form ref="form" :model="ruleForm" :rules="customRules">
       <div v-for="(block, indexGroup) in schema" :key="indexGroup" class="p-5 mb-10">
         <span class="text-main text-xl font-semibold">{{ block.title }}</span>
 
@@ -38,7 +38,12 @@
               class="px-2 mb-0 item-assets"
               :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
             >
-              <el-form-item class="mb-4">
+              <el-form-item
+                class="mb-4"
+                :prop="
+                  item.name === 'institution' ? item.model.group + '.' + item.model.model + '.' + item.model.item : ''
+                "
+              >
                 <template v-if="item.calculated">
                   <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                     <SwdSpinner />
@@ -188,6 +193,19 @@ import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { ElMessageBox } from 'element-plus'
 
+function customValidate(rule, value, callback) {
+  // eslint-disable-next-line no-useless-escape
+  if (/[^\w|\/,\(\)\-|\s]/g.test(value)) {
+    callback(new Error('The field is not valid'))
+  }
+
+  if (rule.required && !value) {
+    callback(new Error(rule.errorText))
+  }
+
+  callback()
+}
+
 export default {
   name: 'AddProspectAssetsIncome',
   components: {
@@ -205,6 +223,8 @@ export default {
     const newField = ref([])
     const fieldName = ref()
     const isCanJoin = ref()
+    const customRules = ref()
+
     const step = computed(() => store.state.newProspect.step)
 
     const ruleForm = reactive({})
@@ -240,6 +260,7 @@ export default {
     watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
       if (oldValue && !newValue) {
         updateSchema()
+        updateRules()
       }
     })
 
@@ -298,18 +319,25 @@ export default {
       await queryClient.invalidateQueries(['memberAssets', memberId])
       await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
       updateSchema()
+      updateRules()
     }
 
     const changeInput = async (item) => {
-      const data = {
-        group: item.model.group,
-        row: item.model.model,
-        element: item.model.item,
-        type: item.type,
-        value: ruleForm[item.model.group][item.model.model][item.model.item],
-      }
-      await updateMemberAssets({ data, id: memberId })
-      queryClient.invalidateQueries(['memberAssets', memberId])
+      form.value.validate(async (valid) => {
+        if (valid) {
+          const data = {
+            group: item.model.group,
+            row: item.model.model,
+            element: item.model.item,
+            type: item.type,
+            value: ruleForm[item.model.group][item.model.model][item.model.item],
+          }
+          await updateMemberAssets({ data, id: memberId })
+          queryClient.invalidateQueries(['memberAssets', memberId])
+        } else {
+          return false
+        }
+      })
     }
 
     const optionsCurrencyInput = {
@@ -441,6 +469,35 @@ export default {
       }
     }
 
+    const updateRules = () => {
+      customRules.value = {
+        liquid_assets: {},
+        other_assets_investments: {},
+      }
+
+      Object.keys(ruleForm.liquid_assets).forEach((item) => {
+        customRules.value.liquid_assets[item] = {
+          institution: {
+            errorText: 'Please input name',
+            required: false,
+            trigger: 'change',
+            validator: customValidate,
+          },
+        }
+      })
+
+      Object.keys(ruleForm.other_assets_investments).forEach((item) => {
+        customRules.value.other_assets_investments[item] = {
+          institution: {
+            errorText: 'Please input name',
+            required: false,
+            trigger: 'change',
+            validator: customValidate,
+          },
+        }
+      })
+    }
+
     return {
       ruleForm,
       schema,
@@ -473,6 +530,7 @@ export default {
       handleChange,
       isCanJoin,
       remove,
+      customRules,
     }
   },
 }
