@@ -422,7 +422,7 @@
                   <el-form-item
                     :prop="'spouse.employment_history.' + index + '.company_name'"
                     label="Company name"
-                    class="sm:w-4/12 mb-4"
+                    class="sm:w-4/12 mb-4 pr-2"
                   >
                     <el-input
                       v-model="eh.company_name"
@@ -435,7 +435,7 @@
 
                   <el-form-item
                     v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
-                    class="sm:w-4/12 mb-4"
+                    class="sm:w-4/12 mb-4 px-2"
                     :prop="'spouse.employment_history.' + index + '.occupation'"
                     label="Occupation"
                   >
@@ -448,7 +448,7 @@
                   </el-form-item>
                   <el-form-item
                     v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
-                    class="sm:w-2/12 mb-4"
+                    class="sm:w-2/12 mb-4 pl-2"
                     :prop="'spouse.employment_history.' + index + '.years'"
                     label="Years"
                   >
@@ -482,7 +482,7 @@
                       :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
                     />
                   </el-form-item>
-                  <div class="sm:w-2/12 mt-[22px] text-center">
+                  <div class="sm:w-2/12 mt-[22px] text-right">
                     <el-button
                       v-if="
                         ruleForm.spouse.employment_history[index].company_name.trim().length &&
@@ -557,7 +557,7 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="My biggest financial concerns are:" class="mb-4">
+            <el-form-item label="My biggest financial concerns are:" class="mb-4" prop="biggest_financial_concern">
               <el-input
                 v-model="ruleForm.biggest_financial_concern"
                 type="textarea"
@@ -577,7 +577,7 @@
                 </div>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="Do you have any specific question to discuss?" prop="questions" class="mb-4">
+            <el-form-item label="Do you have any specific question to discuss?" prop="other.questions" class="mb-4">
               <el-input
                 v-model="ruleForm.other.questions"
                 type="textarea"
@@ -585,7 +585,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="What are your goals for Retirement?" prop="retirement" class="mb-4">
+            <el-form-item label="What are your goals for Retirement?" prop="other.retirement" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement"
                 type="textarea"
@@ -593,7 +593,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="What are your goals for Retirement money?" prop="retirement_money" class="mb-4">
+            <el-form-item label="What are your goals for Retirement money?" prop="other.retirement_money" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement_money"
                 type="textarea"
@@ -649,6 +649,7 @@ import { useStateHook } from '@/hooks/use-state-hook'
 import { cloneDeep, isEqual } from 'lodash-es'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import { useWindowScrollTo } from '@/hooks/use-window-scroll'
+import { deleteEmploymentHistory } from '@/api/vueQuery/delete-employment-history'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
@@ -689,6 +690,8 @@ export default {
     } = useFetchMember({ id: route.params.id }, { enabled: false })
 
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
+
+    const { mutateAsync: deleteEmployment } = useMutation(deleteEmploymentHistory)
 
     const {
       setInitValue,
@@ -769,7 +772,7 @@ export default {
       isFetchingMember,
       (newValue, oldValue) => {
         if (newValue === false && oldValue === true) {
-          setInitValue(ruleForm, member)
+          setInitValue(ruleForm, member.value)
           initRuleForm.value = cloneDeep(ruleForm)
         }
         if (
@@ -867,15 +870,50 @@ export default {
           if (valid) {
             const res = await updateMember({ form: ruleForm, id: leadId })
             if (!('error' in res)) {
-              useAlert({
-                title: 'Success',
-                type: 'success',
-                message: 'Update successfully.',
-              })
+              setInitValue(ruleForm, res.data)
+              showSuccessMessage()
             }
           }
         })
       }
+    }
+
+    const handleRemoveEmployment = async (index) => {
+      const res = await deleteEmployment(ruleForm.employment_history[index].id)
+      if (!('error' in res)) {
+        ruleForm.employment_history.splice(index, 1)
+        if (!ruleForm.employment_history.length) {
+          ruleForm.employment_history.push({
+            company_name: '',
+            occupation: '',
+            years: '',
+          })
+        }
+        showSuccessMessage()
+      }
+    }
+
+    const handleRemoveEmploymentSpouse = async (index) => {
+      const res = await deleteEmployment(ruleForm.employment_history[index].id)
+      if (!('error' in res)) {
+        ruleForm.spouse.employment_history.splice(index, 1)
+        if (!ruleForm.spouse.employment_history.length) {
+          ruleForm.spouse.employment_history.push({
+            company_name: '',
+            occupation: '',
+            years: '',
+          })
+        }
+        showSuccessMessage()
+      }
+    }
+
+    const showSuccessMessage = () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Update successfully.',
+      })
     }
 
     const focus = (type) => {
@@ -892,23 +930,6 @@ export default {
       if (type === 'house') isFocusHouse.value = false
       if (type === 'employment') isFocusEmployment.value = false
       if (type === 'other') isFocusOther.value = false
-      handleChange()
-    }
-
-    const handleRemoveEmployment = (index) => {
-      ruleForm.employment_history.splice(index, 1)
-      if (!ruleForm.employment_history.length) {
-        ruleForm.employment_history.push({
-          company_name: '',
-          occupation: '',
-          years: '',
-        })
-      }
-      handleChange()
-    }
-
-    const handleRemoveEmploymentSpouse = (index) => {
-      ruleForm.spouse.employment_history.splice(index, 1)
       handleChange()
     }
 

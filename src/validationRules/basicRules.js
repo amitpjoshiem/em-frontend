@@ -1,14 +1,12 @@
+/* eslint-disable no-useless-escape */
 const rules = {
   name: [
     {
+      errorText: 'Please input name',
       required: true,
-      message: 'Please input name',
       trigger: 'change',
-      transform(value) {
-        return value.trim()
-      },
+      validator: customValidate,
     },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
   birthday: [
     {
@@ -48,70 +46,117 @@ const rules = {
   ],
   city: [
     {
+      errorText: 'Please input city',
       required: true,
-      message: 'Please input city',
       trigger: 'change',
-      transform(value) {
-        return value.trim()
-      },
+      validator: customValidate,
     },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
   address: [
     {
+      errorText: 'Please input address',
       required: true,
-      message: 'Please input address',
       trigger: 'change',
-      transform(value) {
-        return value.trim()
-      },
+      validator: customValidate,
     },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
-
   zip: [{ type: 'string', required: true, len: 5, message: 'Invalid zip', trigger: 'blur' }],
-
   channels: [
     {
+      errorText: 'Please input channels',
       required: true,
-      message: 'Please input channels',
-      trigger: 'blur',
-      transform(value) {
-        return value.trim()
-      },
+      trigger: 'change',
+      validator: customValidate,
     },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
+  employment_history: [
+    {
+      company_name: [
+        {
+          type: 'string',
+          errorText: 'The field cannot be empty',
+          required: false,
+          trigger: 'change',
+          validator: customValidate,
+        },
+      ],
+      occupation: [
+        {
+          type: 'string',
+          errorText: 'The field cannot be empty',
+          required: false,
+          trigger: 'change',
+          validator: customValidate,
+        },
+      ],
+      years: [
+        {
+          validator: validateNumber,
+          trigger: 'change',
+          required: false,
+        },
+      ],
+    },
+  ],
+  biggest_financial_concern: [
+    {
+      errorText: 'Please input field',
+      required: false,
+      trigger: 'change',
+      validator: customValidate,
+    },
+  ],
+  other: {
+    questions: [
+      {
+        errorText: 'Please input field',
+        required: false,
+        trigger: 'change',
+        validator: customValidate,
+      },
+    ],
+    retirement: [
+      {
+        errorText: 'Please input field',
+        required: false,
+        trigger: 'change',
+        validator: customValidate,
+      },
+    ],
+    retirement_money: [
+      {
+        errorText: 'Please input field',
+        required: false,
+        trigger: 'change',
+        validator: customValidate,
+      },
+    ],
+  },
 
+  // SPOUSE
   spouse: {
     first_name: [
       {
+        errorText: 'Please input spouse first name',
         required: true,
-        message: 'Please input spouse first name',
-        trigger: 'blur',
-        transform(value) {
-          return value.trim()
-        },
+        trigger: 'change',
+        validator: customValidate,
       },
-      { min: 1, message: 'Length should be min 1', trigger: 'blur' },
     ],
     last_name: [
       {
+        errorText: 'Please input spouse last name',
         required: true,
-        message: 'Please input spouse last name',
-        trigger: 'blur',
-        transform(value) {
-          return value.trim()
-        },
+        trigger: 'change',
+        validator: customValidate,
       },
-      { min: 1, message: 'Length should be min 1', trigger: 'blur' },
     ],
     birthday: [
       {
         type: 'date',
         required: true,
         message: 'Please pick a Date of birth',
-        trigger: 'blur',
+        trigger: 'change',
       },
     ],
     email: [
@@ -140,111 +185,54 @@ const rules = {
         company_name: [
           {
             type: 'string',
+            errorText: 'The field cannot be empty',
             required: false,
-            message: 'The field cannot be empty',
-            trigger: 'blur',
+            trigger: 'change',
+            validator: customValidate,
           },
         ],
         occupation: [
           {
             type: 'string',
+            errorText: 'The field cannot be empty',
             required: false,
-            message: 'The field cannot be empty',
-            trigger: 'blur',
+            trigger: 'change',
+            validator: customValidate,
           },
         ],
         years: [
           {
             validator: validateNumber,
-            trigger: 'blur',
+            trigger: 'change',
             required: false,
           },
         ],
       },
     ],
   },
-  // house: {
-  //   market_value: [
-  //     {
-  //       validator: validateNumber,
-  //       trigger: 'blur',
-  //       required: true,
-  //     },
-  //   ],
-  //   total_debt: [
-  //     {
-  //       validator: validateNumber,
-  //       trigger: 'blur',
-  //       required: true,
-  //     },
-  //   ],
-  //   remaining_mortgage_amount: [
-  //     {
-  //       validator: validateNumber,
-  //       trigger: 'blur',
-  //       required: true,
-  //     },
-  //   ],
-  //   monthly_payment: [
-  //     {
-  //       validator: validateNumber,
-  //       trigger: 'blur',
-  //       required: true,
-  //     },
-  //   ],
-  //   total_monthly_expenses: [
-  //     {
-  //       validator: validateNumber,
-  //       trigger: 'blur',
-  //       required: true,
-  //     },
-  //   ],
-  // },
-
-  employment_history: [
-    {
-      company_name: [
-        {
-          type: 'string',
-          required: false,
-          message: 'The field cannot be empty',
-          trigger: 'blur',
-        },
-      ],
-      occupation: [
-        {
-          type: 'string',
-          required: false,
-          message: 'The field cannot be empty',
-          trigger: 'blur',
-        },
-      ],
-      years: [
-        {
-          validator: validateNumber,
-          trigger: 'blur',
-          required: false,
-        },
-      ],
-    },
-  ],
 }
 
 const employmentHistoryRule = {
   company_name: {
+    type: 'string',
+    errorText: 'The field cannot be empty',
     required: false,
-    message: 'Company name can not be null',
-    trigger: 'blur',
+    trigger: 'change',
+    validator: customValidate,
   },
   occupation: {
+    type: 'string',
+    errorText: 'The field cannot be empty',
     required: false,
-    message: 'Occupation can not be null',
-    trigger: 'blur',
+    trigger: 'change',
+    validator: customValidate,
   },
   years: {
+    type: 'string',
+    errorText: 'The field cannot be empty',
     required: false,
-    message: 'Years can not be null',
-    trigger: 'blur',
+    trigger: 'change',
+    validator: customValidate,
   },
 }
 
@@ -255,6 +243,18 @@ function validateNumber(rule, value, callback) {
 
   if (rule.required && !value) {
     callback(new Error('The field cannot be empty'))
+  }
+
+  callback()
+}
+
+function customValidate(rule, value, callback) {
+  if (/[^\w|\/,\(\)\-|\s]/g.test(value)) {
+    callback(new Error('Unsupported symbol'))
+  }
+
+  if (rule.required && !value) {
+    callback(new Error(rule.errorText))
   }
 
   callback()

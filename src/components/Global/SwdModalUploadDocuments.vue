@@ -23,11 +23,7 @@
               >
                 Owner
               </span>
-              <span
-                class="three-switch-item cursor-not-allowed w-16"
-                :class="{ active: ruleForm.is_spouse === null }"
-                @click="changeOwner(null)"
-              >
+              <span class="three-switch-item cursor-not-allowed w-16" :class="{ active: ruleForm.is_spouse === null }">
                 N/A
               </span>
               <span
@@ -221,6 +217,7 @@ export default {
       }
       if (!isLoadingMember.value && member.value && !member.value.married) {
         ruleForm.is_spouse = false
+        ruleForm.name = member.value.name
         isDisabledSwitcher.value = true
       }
     })
@@ -258,7 +255,7 @@ export default {
         if (valid && validUpload.value && validSwitcher.value) {
           const data = {
             uuids: ruleForm.uuids,
-            describe: ruleForm.description,
+            description: ruleForm.description,
             is_spouse: ruleForm.is_spouse,
             name: ruleForm.is_spouse ? ruleForm.last_name + ' ' + ruleForm.first_name : ruleForm.name,
           }
