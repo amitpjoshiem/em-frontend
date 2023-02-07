@@ -75,7 +75,7 @@ const rules = {
         {
           type: 'string',
           errorText: 'The field cannot be empty',
-          required: true,
+          required: false,
           trigger: 'change',
           validator: customValidate,
         },
@@ -84,7 +84,7 @@ const rules = {
         {
           type: 'string',
           errorText: 'The field cannot be empty',
-          required: true,
+          required: false,
           trigger: 'change',
           validator: customValidate,
         },
@@ -186,7 +186,7 @@ const rules = {
           {
             type: 'string',
             errorText: 'The field cannot be empty',
-            required: true,
+            required: false,
             trigger: 'change',
             validator: customValidate,
           },
@@ -195,7 +195,7 @@ const rules = {
           {
             type: 'string',
             errorText: 'The field cannot be empty',
-            required: true,
+            required: false,
             trigger: 'change',
             validator: customValidate,
           },
@@ -216,21 +216,21 @@ const employmentHistoryRule = {
   company_name: {
     type: 'string',
     errorText: 'The field cannot be empty',
-    required: true,
+    required: false,
     trigger: 'change',
     validator: customValidate,
   },
   occupation: {
     type: 'string',
     errorText: 'The field cannot be empty',
-    required: true,
+    required: false,
     trigger: 'change',
     validator: customValidate,
   },
   years: {
     type: 'string',
     errorText: 'The field cannot be empty',
-    required: true,
+    required: false,
     trigger: 'change',
     validator: customValidate,
   },

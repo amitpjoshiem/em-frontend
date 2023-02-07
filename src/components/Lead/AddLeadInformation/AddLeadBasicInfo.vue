@@ -649,6 +649,7 @@ import { useStateHook } from '@/hooks/use-state-hook'
 import { cloneDeep, isEqual } from 'lodash-es'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import { useWindowScrollTo } from '@/hooks/use-window-scroll'
+import { deleteEmploymentHistory } from '@/api/vueQuery/delete-employment-history'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
@@ -689,6 +690,8 @@ export default {
     } = useFetchMember({ id: route.params.id }, { enabled: false })
 
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
+
+    const { mutateAsync: deleteEmployment } = useMutation(deleteEmploymentHistory)
 
     const {
       setInitValue,
@@ -769,7 +772,7 @@ export default {
       isFetchingMember,
       (newValue, oldValue) => {
         if (newValue === false && oldValue === true) {
-          setInitValue(ruleForm, member)
+          setInitValue(ruleForm, member.value)
           initRuleForm.value = cloneDeep(ruleForm)
         }
         if (
@@ -867,15 +870,50 @@ export default {
           if (valid) {
             const res = await updateMember({ form: ruleForm, id: leadId })
             if (!('error' in res)) {
-              useAlert({
-                title: 'Success',
-                type: 'success',
-                message: 'Update successfully.',
-              })
+              setInitValue(ruleForm, res.data)
+              showSuccessMessage()
             }
           }
         })
       }
+    }
+
+    const handleRemoveEmployment = async (index) => {
+      const res = await deleteEmployment(ruleForm.employment_history[index].id)
+      if (!('error' in res)) {
+        ruleForm.employment_history.splice(index, 1)
+        if (!ruleForm.employment_history.length) {
+          ruleForm.employment_history.push({
+            company_name: '',
+            occupation: '',
+            years: '',
+          })
+        }
+        showSuccessMessage()
+      }
+    }
+
+    const handleRemoveEmploymentSpouse = async (index) => {
+      const res = await deleteEmployment(ruleForm.employment_history[index].id)
+      if (!('error' in res)) {
+        ruleForm.spouse.employment_history.splice(index, 1)
+        if (!ruleForm.spouse.employment_history.length) {
+          ruleForm.spouse.employment_history.push({
+            company_name: '',
+            occupation: '',
+            years: '',
+          })
+        }
+        showSuccessMessage()
+      }
+    }
+
+    const showSuccessMessage = () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Update successfully.',
+      })
     }
 
     const focus = (type) => {
@@ -892,23 +930,6 @@ export default {
       if (type === 'house') isFocusHouse.value = false
       if (type === 'employment') isFocusEmployment.value = false
       if (type === 'other') isFocusOther.value = false
-      handleChange()
-    }
-
-    const handleRemoveEmployment = (index) => {
-      ruleForm.employment_history.splice(index, 1)
-      if (!ruleForm.employment_history.length) {
-        ruleForm.employment_history.push({
-          company_name: '',
-          occupation: '',
-          years: '',
-        })
-      }
-      handleChange()
-    }
-
-    const handleRemoveEmploymentSpouse = (index) => {
-      ruleForm.spouse.employment_history.splice(index, 1)
       handleChange()
     }
 
