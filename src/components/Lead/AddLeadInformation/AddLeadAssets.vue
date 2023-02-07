@@ -256,7 +256,7 @@ export default {
     const newField = ref([])
     const fieldName = ref()
     const isCanJoin = ref()
-    const customRules = ref()
+    const customRules = ref({})
 
     const step = computed(() => store.state.newClient.step)
 
@@ -285,16 +285,16 @@ export default {
       scrollTop()
     })
 
-    watchEffect(() => {
+    watchEffect(async () => {
       if (!isMemberAssetsLoading.value) {
-        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: leadId })
+        await setInitValue({ ruleForm, memberAssets: memberAssets.value, id: leadId })
+        await setCustomValidate(ruleForm, customRules)
       }
     })
 
     watch(isMemberAssetsSchemaLoading, (newValue, oldValue) => {
       if (oldValue && !newValue) {
         updateSchema()
-        setCustomValidate(ruleForm, customRules)
       }
     })
 

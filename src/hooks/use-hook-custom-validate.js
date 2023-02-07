@@ -18,27 +18,31 @@ export function useHookCustomValidate() {
       other_assets_investments: {},
     }
 
-    Object.keys(ruleForm.liquid_assets).forEach((item) => {
-      customRules.value.liquid_assets[item] = {
-        institution: {
-          errorText: 'Please input name',
-          required: false,
-          trigger: 'change',
-          validator: customValidate,
-        },
-      }
-    })
+    if (ruleForm.liquid_assets) {
+      Object.keys(ruleForm.liquid_assets).forEach((item) => {
+        customRules.value.liquid_assets[item] = {
+          institution: {
+            errorText: 'Please input name',
+            required: false,
+            trigger: 'change',
+            validator: customValidate,
+          },
+        }
+      })
+    }
 
-    Object.keys(ruleForm.other_assets_investments).forEach((item) => {
-      customRules.value.other_assets_investments[item] = {
-        institution: {
-          errorText: 'Please input name',
-          required: false,
-          trigger: 'change',
-          validator: customValidate,
-        },
-      }
-    })
+    if (ruleForm.other_assets_investments) {
+      Object.keys(ruleForm.other_assets_investments).forEach((item) => {
+        customRules.value.other_assets_investments[item] = {
+          institution: {
+            errorText: 'Please input name',
+            required: false,
+            trigger: 'change',
+            validator: customValidate,
+          },
+        }
+      })
+    }
   }
 
   return {
