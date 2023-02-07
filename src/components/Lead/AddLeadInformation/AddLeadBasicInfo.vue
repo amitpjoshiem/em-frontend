@@ -422,7 +422,7 @@
                   <el-form-item
                     :prop="'spouse.employment_history.' + index + '.company_name'"
                     label="Company name"
-                    class="sm:w-4/12 mb-4"
+                    class="sm:w-4/12 mb-4 pr-2"
                   >
                     <el-input
                       v-model="eh.company_name"
@@ -435,7 +435,7 @@
 
                   <el-form-item
                     v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
-                    class="sm:w-4/12 mb-4"
+                    class="sm:w-4/12 mb-4 px-2"
                     :prop="'spouse.employment_history.' + index + '.occupation'"
                     label="Occupation"
                   >
@@ -448,7 +448,7 @@
                   </el-form-item>
                   <el-form-item
                     v-if="!!ruleForm.spouse.employment_history[index].company_name.trim().length"
-                    class="sm:w-2/12 mb-4"
+                    class="sm:w-2/12 mb-4 pl-2"
                     :prop="'spouse.employment_history.' + index + '.years'"
                     label="Years"
                   >
@@ -482,7 +482,7 @@
                       :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
                     />
                   </el-form-item>
-                  <div class="sm:w-2/12 mt-[22px] text-center">
+                  <div class="sm:w-2/12 mt-[22px] text-right">
                     <el-button
                       v-if="
                         ruleForm.spouse.employment_history[index].company_name.trim().length &&
@@ -557,7 +557,7 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="My biggest financial concerns are:" class="mb-4">
+            <el-form-item label="My biggest financial concerns are:" class="mb-4" prop="biggest_financial_concern">
               <el-input
                 v-model="ruleForm.biggest_financial_concern"
                 type="textarea"
@@ -577,7 +577,7 @@
                 </div>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="Do you have any specific question to discuss?" prop="questions" class="mb-4">
+            <el-form-item label="Do you have any specific question to discuss?" prop="other.questions" class="mb-4">
               <el-input
                 v-model="ruleForm.other.questions"
                 type="textarea"
@@ -585,7 +585,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="What are your goals for Retirement?" prop="retirement" class="mb-4">
+            <el-form-item label="What are your goals for Retirement?" prop="other.retirement" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement"
                 type="textarea"
@@ -593,7 +593,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="What are your goals for Retirement money?" prop="retirement_money" class="mb-4">
+            <el-form-item label="What are your goals for Retirement money?" prop="other.retirement_money" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement_money"
                 type="textarea"

@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isMemberAssetsLoading && !isLoadingInfo && !isMemberAssetsSchemaLoading && !isLoadingMember">
-      <el-form ref="form" :model="ruleForm" :disabled="isReadOnlyLead">
+      <el-form ref="form" :model="ruleForm" :disabled="isReadOnlyLead" :rules="customRules">
         <div
           v-for="(block, indexGroup) in schema"
           :key="indexGroup"
@@ -65,7 +65,13 @@
                 class="px-2 mb-0 item-assets"
                 :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
               >
-                <el-form-item class="mb-4">
+                <el-form-item
+                  class="mb-4"
+                  :prop="
+                    item.name === 'institution' ? item.model.group + '.' + item.model.model + '.' + item.model.item : ''
+                  "
+                >
+                  <div v-if="item.name === 'institution'"></div>
                   <template v-if="item.calculated">
                     <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                       <SwdSpinner />
@@ -210,7 +216,6 @@ import { watchEffect, ref, computed, reactive, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
-
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member.js'
@@ -219,13 +224,11 @@ import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { updateStepAssetsIncome } from '@/api/vueQuery/update-step-assets-income'
 import { deleteAssetsIncomeRow } from '@/api/vueQuery/fetch-remove-assets-income-row'
-
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { currencyFormat } from '@/utils/currencyFormat'
-
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-
+import { useHookCustomValidate } from '@/hooks/use-hook-custom-validate'
 import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
 import IconActive from '@/assets/svg/icon-active.svg'
@@ -253,6 +256,7 @@ export default {
     const newField = ref([])
     const fieldName = ref()
     const isCanJoin = ref()
+    const customRules = ref({})
 
     const step = computed(() => store.state.newClient.step)
 
@@ -274,15 +278,17 @@ export default {
     const { mutateAsync: updateStep } = useMutation(updateStepAssetsIncome)
 
     const { setInitValue } = useAssetsInfoHooks()
+    const { setCustomValidate } = useHookCustomValidate()
 
     onMounted(async () => {
       store.commit('newClient/setStep', 2)
       scrollTop()
     })
 
-    watchEffect(() => {
+    watchEffect(async () => {
       if (!isMemberAssetsLoading.value) {
-        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: leadId })
+        await setInitValue({ ruleForm, memberAssets: memberAssets.value, id: leadId })
+        await setCustomValidate(ruleForm, customRules)
       }
     })
 
@@ -371,18 +377,25 @@ export default {
       await queryClient.invalidateQueries(['memberAssets', leadId])
       await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
       updateSchema()
+      setCustomValidate(ruleForm, customRules)
     }
 
     const changeInput = async (item) => {
-      const data = {
-        group: item.model.group,
-        row: item.model.model,
-        element: item.model.item,
-        type: item.type,
-        value: ruleForm[item.model.group][item.model.model][item.model.item],
-      }
-      await updateMemberAssets({ data, id: leadId })
-      queryClient.invalidateQueries(['memberAssets', leadId])
+      form.value.validate(async (valid) => {
+        if (valid) {
+          const data = {
+            group: item.model.group,
+            row: item.model.model,
+            element: item.model.item,
+            type: item.type,
+            value: ruleForm[item.model.group][item.model.model][item.model.item],
+          }
+          await updateMemberAssets({ data, id: leadId })
+          queryClient.invalidateQueries(['memberAssets', leadId])
+        } else {
+          return false
+        }
+      })
     }
 
     const optionsCurrencyInput = {
@@ -562,6 +575,7 @@ export default {
       leadId,
       isCanJoin,
       remove,
+      customRules,
     }
   },
 }
