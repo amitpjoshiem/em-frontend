@@ -1,7 +1,7 @@
 function customValidate(rule, value, callback) {
   // eslint-disable-next-line no-useless-escape
   if (/[^\w|\/,\(\)\-|\s]/g.test(value)) {
-    callback(new Error('The field is not valid'))
+    callback(new Error('Unsupported symbol'))
   }
 
   if (rule.required && !value) {
