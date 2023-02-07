@@ -5,7 +5,7 @@ import { computed } from 'vue'
 
 export function useBasicInfoHooks() {
   const setInitValue = (ruleForm, member) => {
-    if (member.id) {
+    if (member && member.id) {
       ruleForm.retired = member.retired
       ruleForm.married = member.married
       ruleForm.name = member.name

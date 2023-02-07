@@ -269,7 +269,7 @@
               :src="IconAdd"
               @click="addEmployment(ruleForm)"
             />
-            <InlineSvg v-else :src="IconDelete" @click="removeEmployment({ ruleForm, index })" />
+            <InlineSvg v-else :src="IconDelete" @click="handleRemoveEmployment(index)" />
           </div>
         </el-form-item>
 
@@ -327,7 +327,7 @@
                 :src="IconAdd"
                 @click="addEmploymentSpouse(ruleForm)"
               />
-              <InlineSvg v-else :src="IconDelete" @click="removeEmploymentSpouse({ ruleForm, index })" />
+              <InlineSvg v-else :src="IconDelete" @click="handleRemoveEmploymentSpouse(index)" />
             </div>
           </el-form-item>
         </div>
@@ -386,6 +386,7 @@ import { useStore } from 'vuex'
 import { createMembers } from '@/api/vueQuery/create-members'
 import { updateMembers } from '@/api/vueQuery/update-members'
 import { useFetchMember } from '@/api/use-fetch-member.js'
+import { deleteEmploymentHistory } from '@/api/vueQuery/delete-employment-history'
 import { rules } from '@/validationRules/basicRules.js'
 import { maska } from 'maska'
 import { initialBasicInformation } from '@/components/NewProspect/initialState/basicInformation'
@@ -419,6 +420,7 @@ export default {
 
     const { mutateAsync: createMember, isLoading: isLoadingCreateMember } = useMutation(createMembers)
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
+    const { mutateAsync: deleteEmployment } = useMutation(deleteEmploymentHistory)
 
     const {
       isFetching: isFetchingMember,
@@ -430,10 +432,8 @@ export default {
       setInitValue,
       addEmployment,
       addEmploymentSpouse,
-      removeEmployment,
       changeCompanyNameMember,
       changeCompanyNameSpouse,
-      removeEmploymentSpouse,
       getPlaceholder,
       optionsCurrencyInput,
       changeMarried,
@@ -529,7 +529,7 @@ export default {
 
     watchEffect(() => {
       if (isFetchingMember.value === false) {
-        setInitValue(ruleForm, member)
+        setInitValue(ruleForm, member.value)
       }
     })
 
@@ -591,11 +591,7 @@ export default {
           if (valid) {
             const res = await updateMember({ form: ruleForm, id: memberId })
             if (!('error' in res)) {
-              useAlert({
-                title: 'Success',
-                type: 'success',
-                message: 'Opportunity update successfully',
-              })
+              showSuccessMessage()
             }
           }
         })
@@ -606,15 +602,73 @@ export default {
       return isLoadingUpdateMember.value
     })
 
+    const handleRemoveEmployment = async (index) => {
+      if (ruleForm.employment_history[index].id) {
+        const res = await deleteEmployment(ruleForm.employment_history[index].id)
+        if (!('error' in res)) {
+          ruleForm.employment_history.splice(index, 1)
+          if (!ruleForm.employment_history.length) {
+            ruleForm.employment_history.push({
+              company_name: '',
+              occupation: '',
+              years: '',
+            })
+          }
+          showSuccessMessage()
+        }
+      } else {
+        ruleForm.employment_history.splice(index, 1)
+        if (!ruleForm.employment_history.length) {
+          ruleForm.employment_history.push({
+            company_name: '',
+            occupation: '',
+            years: '',
+          })
+        }
+      }
+    }
+
+    const handleRemoveEmploymentSpouse = async (index) => {
+      if (ruleForm.employment_history[index].id) {
+        const res = await deleteEmployment(ruleForm.employment_history[index].id)
+        if (!('error' in res)) {
+          ruleForm.spouse.employment_history.splice(index, 1)
+          if (!ruleForm.spouse.employment_history.length) {
+            ruleForm.spouse.employment_history.push({
+              company_name: '',
+              occupation: '',
+              years: '',
+            })
+          }
+          showSuccessMessage()
+        }
+      } else {
+        ruleForm.spouse.employment_history.splice(index, 1)
+        if (!ruleForm.spouse.employment_history.length) {
+          ruleForm.spouse.employment_history.push({
+            company_name: '',
+            occupation: '',
+            years: '',
+          })
+        }
+      }
+    }
+
+    const showSuccessMessage = () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Update successfully.',
+      })
+    }
+
     return {
       ruleForm,
       rules,
       form,
       submitForm,
-      removeEmployment,
       addEmployment,
       addEmploymentSpouse,
-      removeEmploymentSpouse,
       isLoadingCreateMember,
       isLoadingUpdateMember,
       IconAdd,
@@ -631,6 +685,8 @@ export default {
       deleteDraft,
       changeInput,
       isDisabledForm,
+      handleRemoveEmployment,
+      handleRemoveEmploymentSpouse,
     }
   },
 }
