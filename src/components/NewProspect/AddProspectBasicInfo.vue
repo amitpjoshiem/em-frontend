@@ -412,8 +412,6 @@ import { ElMessageBox, ElNotification } from 'element-plus'
 import { isEqual } from 'lodash-es'
 import { useWindowScrollTo } from '@/hooks/use-window-scroll'
 import ModalRestoreDraft from './Draft/ModalRestoreDraft.vue'
-import IconAdd from '@/assets/svg/icon-add.svg'
-import IconDelete from '@/assets/svg/icon-delete.svg'
 
 export default {
   name: 'AddProspectBasicInfo',
@@ -679,8 +677,6 @@ export default {
       addEmploymentSpouse,
       isLoadingCreateMember,
       isLoadingUpdateMember,
-      IconAdd,
-      IconDelete,
       getPlaceholder,
       changeMarried,
       changeCompanyNameMember,
