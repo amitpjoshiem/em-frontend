@@ -98,15 +98,15 @@ const rules = {
       ],
     },
   ],
+  biggest_financial_concern: [
+    {
+      errorText: 'Please input field',
+      required: false,
+      trigger: 'change',
+      validator: customValidate,
+    },
+  ],
   other: {
-    biggest_financial_concern: [
-      {
-        errorText: 'Please input field',
-        required: false,
-        trigger: 'change',
-        validator: customValidate,
-      },
-    ],
     questions: [
       {
         errorText: 'Please input field',
