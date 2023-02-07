@@ -655,6 +655,7 @@ import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import ModalRestoreDraft from '@/components/NewProspect/Draft/ModalRestoreDraft'
+import { deleteEmploymentHistory } from '@/api/vueQuery/delete-employment-history'
 
 export default {
   name: 'AddLeadBasicInfo',
@@ -689,6 +690,8 @@ export default {
     } = useFetchMember({ id: route.params.id }, { enabled: false })
 
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
+
+    const { mutateAsync: deleteEmployment } = useMutation(deleteEmploymentHistory)
 
     const {
       setInitValue,
@@ -896,6 +899,7 @@ export default {
     }
 
     const handleRemoveEmployment = (index) => {
+      deleteEmployment(ruleForm.employment_history[index].id)
       ruleForm.employment_history.splice(index, 1)
       if (!ruleForm.employment_history.length) {
         ruleForm.employment_history.push({
@@ -904,12 +908,18 @@ export default {
           years: '',
         })
       }
-      handleChange()
     }
 
     const handleRemoveEmploymentSpouse = (index) => {
+      deleteEmployment(ruleForm.spouse.employment_history[index].id)
       ruleForm.spouse.employment_history.splice(index, 1)
-      handleChange()
+      if (!ruleForm.spouse.employment_history.length) {
+        ruleForm.spouse.employment_history.push({
+          company_name: '',
+          occupation: '',
+          years: '',
+        })
+      }
     }
 
     return {

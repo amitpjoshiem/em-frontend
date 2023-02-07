@@ -171,9 +171,7 @@
         </div>
 
         <div class="flex justify-end my-10">
-          <div class="pr-3">
-            <Button default-gray-btn text-btn="Back" @click="backStep" />
-          </div>
+          <SwdButton info main class="mr-4" @click="backStep">Back</SwdButton>
           <router-link
             v-if="isReadOnlyLead"
             :to="{ name: `lead-expense-information`, params: { id: leadId } }"
