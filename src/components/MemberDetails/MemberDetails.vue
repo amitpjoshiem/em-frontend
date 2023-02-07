@@ -3,8 +3,6 @@
     <SwdSubHeader
       v-if="!$can('client', 'all') && !$can('support', 'all')"
       :title="getTitle"
-      witch-info-btn
-      info-btn-destination="MemberDetails"
       :loading="isLoadingProspectDetails"
     />
     <div v-else-if="member?.name" class="flex justify-center w-full">

@@ -68,7 +68,7 @@ const getDefaultState = () => {
         changeName: false,
         changePassword: false,
         shareFileEmailDialog: false,
-        prewievPdf: false,
+        previewModal: false,
         moreOtherInfo: false,
         moreOwnerInfo: false,
         changePhone: false,
@@ -97,7 +97,7 @@ const getDefaultState = () => {
     needUpdateContent: null,
     docShare: null,
     contact: null,
-    previewUrl: null,
+    previewFile: null,
     opportunityId: null,
     onlyMyMember: false,
     ownerMember: null,
@@ -112,6 +112,7 @@ const getDefaultState = () => {
     uploadLifeDocsStatus: null,
     uploadSocialDocsStatus: null,
     collectionUploadMedia: null,
+    pageClientsHelp: null,
   }
 }
 
@@ -225,8 +226,8 @@ const mutations = {
     state.dateRangeClientReport = value
   },
 
-  setPreviewUrlPdf(state, value) {
-    state.previewUrl = value
+  setPreviewFile(state, value) {
+    state.previewFile = value
   },
 
   setOnlyMyMember(state, value) {
@@ -287,6 +288,10 @@ const mutations = {
 
   setCollectionUploadMedia(state, value) {
     state.collectionUploadMedia = value
+  },
+
+  setPageClientsHelp(state, value) {
+    state.pageClientsHelp = value
   },
 
   resetState(state) {

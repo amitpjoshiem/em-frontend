@@ -5,7 +5,7 @@
         <InlineSvg :src="IrisIconReverse" width="50" height="50" />
       </div>
     </router-link>
-    <div v-if="isShowSideBar" class="flex flex-col items-center flex-grow w-[68px] fixed top-1/3">
+    <div v-if="isShowSideBar" class="flex flex-col items-center flex-grow w-[65px] fixed top-1/3">
       <router-link
         v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: `${route.meta.type}/dashboard` }"

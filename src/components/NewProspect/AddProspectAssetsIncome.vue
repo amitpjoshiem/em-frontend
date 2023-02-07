@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isMemberAssetsLoading && !isMemberAssetsSchemaLoading && !isLoadingMember">
-    <el-form ref="form" :model="ruleForm">
+    <el-form ref="form" :model="ruleForm" :rules="customRules">
       <div v-for="(block, indexGroup) in schema" :key="indexGroup" class="p-5 mb-10">
         <span class="text-main text-xl font-semibold">{{ block.title }}</span>
 
@@ -38,7 +38,12 @@
               class="px-2 mb-0 item-assets"
               :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
             >
-              <el-form-item class="mb-4">
+              <el-form-item
+                class="mb-4"
+                :prop="
+                  item.name === 'institution' ? item.model.group + '.' + item.model.model + '.' + item.model.item : ''
+                "
+              >
                 <template v-if="item.calculated">
                   <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                     <SwdSpinner />
@@ -184,6 +189,7 @@ import { updateStepAssetsIncome } from '@/api/vueQuery/update-step-assets-income
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
+import { useHookCustomValidate } from '@/hooks/use-hook-custom-validate'
 import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { ElMessageBox } from 'element-plus'
@@ -205,6 +211,8 @@ export default {
     const newField = ref([])
     const fieldName = ref()
     const isCanJoin = ref()
+    const customRules = ref({})
+
     const step = computed(() => store.state.newProspect.step)
 
     const ruleForm = reactive({})
@@ -225,15 +233,17 @@ export default {
     const { mutateAsync: updateStep } = useMutation(updateStepAssetsIncome)
 
     const { setInitValue } = useAssetsInfoHooks()
+    const { setCustomValidate } = useHookCustomValidate()
 
     onMounted(async () => {
       store.commit('newProspect/setStep', 2)
       scrollTop()
     })
 
-    watchEffect(() => {
+    watchEffect(async () => {
       if (!isMemberAssetsLoading.value) {
-        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
+        await setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
+        await setCustomValidate(ruleForm, customRules)
       }
     })
 
@@ -254,7 +264,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Opportunity update successfully',
+          message: 'Opportunity update successfully.',
         })
         store.commit('newProspect/setStep', step.value + 1)
         router.push({
@@ -298,18 +308,25 @@ export default {
       await queryClient.invalidateQueries(['memberAssets', memberId])
       await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
       updateSchema()
+      setCustomValidate(ruleForm, customRules)
     }
 
     const changeInput = async (item) => {
-      const data = {
-        group: item.model.group,
-        row: item.model.model,
-        element: item.model.item,
-        type: item.type,
-        value: ruleForm[item.model.group][item.model.model][item.model.item],
-      }
-      await updateMemberAssets({ data, id: memberId })
-      queryClient.invalidateQueries(['memberAssets', memberId])
+      form.value.validate(async (valid) => {
+        if (valid) {
+          const data = {
+            group: item.model.group,
+            row: item.model.model,
+            element: item.model.item,
+            type: item.type,
+            value: ruleForm[item.model.group][item.model.model][item.model.item],
+          }
+          await updateMemberAssets({ data, id: memberId })
+          queryClient.invalidateQueries(['memberAssets', memberId])
+        } else {
+          return false
+        }
+      })
     }
 
     const optionsCurrencyInput = {
@@ -349,7 +366,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Remove success',
+          message: 'Remove success.',
         })
       }
     }
@@ -402,7 +419,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Joint success',
+          message: 'Joint success.',
         })
       }
     }
@@ -424,7 +441,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Unjoint success',
+          message: 'Unjoint success.',
         })
       }
     }
@@ -473,6 +490,7 @@ export default {
       handleChange,
       isCanJoin,
       remove,
+      customRules,
     }
   },
 }

@@ -232,7 +232,7 @@ export default {
     //     useAlert({
     //       title: 'Success',
     //       type: 'success',
-    //       message: 'Lead link deactivated successfully',
+    //       message: 'Lead link deactivated successfully.',
     //     })
     //     queryClient.invalidateQueries(['householders-list'])
     //     dialogVisibleDeactivatedLink.value = false
@@ -245,7 +245,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Lead deactivated successfully',
+          message: 'Lead deactivated successfully.',
         })
         queryClient.invalidateQueries(['householders-list'])
         queryClient.invalidateQueries(['stats-members'])
@@ -273,7 +273,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Convert to opportunity successfully',
+          message: 'Convert to opportunity successfully.',
         })
         router.push({ name: `advisor/all` })
         dialogVisibleConvertLead.value = false

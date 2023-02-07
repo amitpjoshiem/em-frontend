@@ -1,7 +1,11 @@
 <template>
   <div class="flex items-center">
-    <SwdAvatar :link="getAvatarUrl" />
-    <div class="pl-2.5 text-main text-xss font-semibold" :class="{ 'cursor-pointer': isCursor }" @click="showSummary">
+    <SwdAvatar :link="getAvatarUrl" class="w-2/12" />
+    <div
+      class="w-10/12 pl-2.5 text-main text-xss font-semibold break-words"
+      :class="{ 'cursor-pointer': isCursor }"
+      @click="showSummary"
+    >
       {{ user.name }}
     </div>
   </div>

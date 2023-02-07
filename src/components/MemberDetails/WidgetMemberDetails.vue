@@ -222,7 +222,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Convert successfully',
+              message: 'Convert successfully.',
             })
             updateMemberInfo()
           } else {
@@ -248,7 +248,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Opportunity update successfully',
+          message: 'Opportunity update successfully.',
         })
       }
     }

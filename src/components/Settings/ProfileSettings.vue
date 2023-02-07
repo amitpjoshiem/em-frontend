@@ -50,14 +50,17 @@
         <div class="w-2/12 font-semibold">E-mail:</div>
         <div class="mr-3">{{ user.email }}</div>
       </div>
-      <div class="flex items-center pt-11 font-semibold">
-        <div class="w-2/12">Password:</div>
-        <div class="mr-3">...............</div>
-        <ChangePassword />
+      <div class="flex items-center pt-11">
+        <div class="w-2/12 font-semibold">Password:</div>
+        <div class="mr-3 font-semibold">...............</div>
+        <div class="flex items-center cursor-pointer">
+          <InlineSvg :src="IconPencil" class="mb-1" @click="showModalChangePassword" />
+        </div>
       </div>
     </div>
   </div>
   <el-skeleton v-else :rows="10" animated class="p-5" />
+  <ChangePassword />
 </template>
 
 <script>
@@ -75,6 +78,7 @@ import { computed, reactive, ref } from 'vue'
 import { updateUserAvatar } from '@/api/vueQuery/update-user-avatar'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ProfileSettings',
@@ -87,10 +91,12 @@ export default {
     ChangeCompany,
   },
   setup() {
-    const { isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
-    const { mutateAsync: updateUser } = useMutation(updateUserAvatar)
+    const store = useStore()
     const queryClient = useQueryClient()
     const upload = ref(null)
+
+    const { isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
+    const { mutateAsync: updateUser } = useMutation(updateUserAvatar)
 
     const state = reactive({
       isShowCropper: false,
@@ -107,7 +113,7 @@ export default {
       useAlert({
         title: 'Success',
         type: 'success',
-        message: 'Avatar image changed successfully',
+        message: 'Avatar image changed successfully.',
       })
     }
 
@@ -149,6 +155,14 @@ export default {
       return 'text-green-500'
     })
 
+    const showModalChangePassword = () => {
+      console.log('showModalChangePassword')
+      store.commit('globalComponents/setShowModal', {
+        destination: 'changePassword',
+        value: true,
+      })
+    }
+
     return {
       IconPencil,
       IconEditAvatar,
@@ -164,6 +178,7 @@ export default {
       bindRef,
       userFullName,
       getClassStatusPhone,
+      showModalChangePassword,
     }
   },
 }

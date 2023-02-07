@@ -20,7 +20,7 @@
     <SwdButton v-if="showUploadBtn" primary small :disabled="disabled">Click to upload</SwdButton>
     <template v-if="showTip" #tip>
       <p v-if="!isLoadingMediaRules" class="text-xxs">
-        <span v-if="getRulesFormat.length"> {{ getRulesFormat.join() }} files only </span>
+        <span v-if="getRulesFormat.length"> {{ getRulesFormat.join(', ') }} files only </span>
         (max file size {{ mediaRules.data.size }}Mb)
       </p>
       <SwdSpinner v-else />
@@ -32,7 +32,7 @@
         class="sm:flex items-center justify-between w-full"
       >
         <div class="flex items-center">
-          <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+          <SwdThumbnail :extension="getExtension(file)" />
           <div class="flex flex-col ml-3">
             <div>
               <span class="text-main">File name: </span>
@@ -47,7 +47,7 @@
 
         <div class="flex justify-end pt-4 sm:pt-0 sm:block">
           <el-button
-            v-if="file.extension === 'pdf'"
+            v-if="configExtensionPreview.includes(file.extension)"
             type="primary"
             size="small"
             plain
@@ -83,10 +83,13 @@ import { useStore } from 'vuex'
 import { useFetchMediaRules } from '@/api/use-fetch-media-rules.js'
 import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
 import { ElMessage } from 'element-plus'
+import SwdThumbnail from '@/components/Global/SwdThumbnail.vue'
 
 export default {
   name: 'SwdUpload',
-
+  components: {
+    SwdThumbnail,
+  },
   props: {
     uploadData: {
       type: Object,
@@ -157,8 +160,8 @@ export default {
     const store = useStore()
     const innerRef = ref(null)
     const idFileRemove = ref(null)
-
     const fileList = ref([])
+    const configExtensionPreview = ['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx']
 
     const { isLoading: isLoadingMediaRules, data: mediaRules } = useFetchMediaRules({
       collection: props.uploadData.collection,
@@ -166,6 +169,7 @@ export default {
 
     const { beforeUploadFile } = useBeforeUploadFile()
     const uploadRefFn = () => props.uploadRef
+
     const headers = computed(() => {
       const customHeader = {}
 
@@ -212,7 +216,7 @@ export default {
     })
 
     const handlePictureCardPreview = (file) => {
-      emit('open-prewiev', file.url)
+      emit('open-prewiev', file)
     }
 
     const handleRemove = (media) => {
@@ -244,12 +248,14 @@ export default {
       return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
     }
 
-    const handleExceed = (files, uploadFiles) => {
+    const handleExceed = () => {
       ElMessage.warning(
-        `The limit is ${props.limit}, you selected ${files.length} files this time, add up to ${
-          files.length + uploadFiles.length
-        } totally`
+        `In one time, only ${props.limit} ${props.limit === 1 ? 'file' : 'files'} uploading is allowed.`
       )
+    }
+
+    const getExtension = (file) => {
+      return file.name.match(/\.([^.]+)$|$/)[1]
     }
 
     return {
@@ -266,6 +272,8 @@ export default {
       mediaRules,
       getRulesFormat,
       handleExceed,
+      getExtension,
+      configExtensionPreview,
     }
   },
 }

@@ -226,7 +226,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Update successfully',
+              message: 'Update successfully.',
             })
           }
         }
@@ -263,17 +263,17 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Update successfully',
+          message: 'Update successfully.',
         })
       }
     }
 
-    const handlePreview = (url) => {
+    const handlePreview = (file) => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', url)
+      store.commit('globalComponents/setPreviewFile', file)
     }
 
     const confirmDelete = async () => {
@@ -283,7 +283,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Delete successfully',
+          message: 'Delete successfully.',
         })
       }
     }

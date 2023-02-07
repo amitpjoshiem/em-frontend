@@ -56,7 +56,7 @@ export const leadRoute = {
     },
 
     {
-      path: 'relevant-financial-documents',
+      path: 'relevant-financial-documents/:id',
       name: 'relevant-financial-documents',
       component: () =>
         import(
@@ -64,14 +64,14 @@ export const leadRoute = {
         ),
     },
     {
-      path: 'medicare-details',
+      path: 'medicare-details/:id',
       name: 'medicare-details',
       props: { context: 'medicare_details' },
       component: () =>
         import(/* webpackChunkName: "MedicareDocuments" */ '../../components/Lead/MedicareDocuments.vue'),
     },
     {
-      path: 'property-casualty',
+      path: 'property-casualty/:id',
       name: 'property-casualty',
       props: { context: 'property_casualty' },
       component: () => import(/* webpackChunkName: "PropertyCasualty" */ '../../components/Lead/PropertyCasualty.vue'),

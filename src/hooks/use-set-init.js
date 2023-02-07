@@ -38,6 +38,7 @@ export function useSetInit() {
       if (typeUser === 'advisor') store.commit('globalComponents/setAdvisorId', getUserId.value)
       if (typeUser === 'client') store.commit('globalComponents/setClientId', getUserId.value)
       if (typeUser === 'lead') store.commit('globalComponents/setLeadId', getUserId.value)
+      if (typeUser === 'lead') store.commit('globalComponents/setMemberId', response.value.data.member_id)
       if (typeUser === 'assistant') store.commit('globalComponents/setAdvisorId', advisorId)
       if (typeUser === 'support') store.commit('globalComponents/setSupportId', getUserId.value)
 

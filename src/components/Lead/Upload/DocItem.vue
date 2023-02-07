@@ -1,7 +1,7 @@
 <template>
-  <div class="sm:flex items-center justify-between w-full border rounded my-4 p-4">
-    <div class="flex items-center">
-      <img class="w-[70px]" src="../../../assets/img/icon-pdf.png" alt="" />
+  <div class="md:flex items-center justify-between w-full border rounded my-4 p-4">
+    <div class="flex items-center text-xs sm:text-sm">
+      <SwdThumbnail :extension="doc.extension" class="w-[70px]" />
       <div class="flex flex-col ml-3">
         <div>
           <span class="text-main">File name: </span>
@@ -14,13 +14,11 @@
       </div>
     </div>
 
-    <div class="flex justify-end pt-4 sm:pt-0 sm:block">
+    <div class="flex justify-end pt-4 md:pt-0 md:block">
       <el-popconfirm
         v-if="withRemoveBtn"
         confirm-button-text="Yes"
         cancel-button-text="No"
-        icon="el-icon-info"
-        icon-color="red"
         title="Are you sure to delete this?"
         @confirm="handleRemove"
       >
@@ -28,7 +26,13 @@
           <el-button type="danger" size="small" plain :loading="isLoadingRemove">Remove</el-button>
         </template>
       </el-popconfirm>
-      <el-button v-if="doc.extension === 'pdf'" type="primary" size="small" plain @click="handlePrewiev">
+      <el-button
+        v-if="configExtensionPreview.includes(doc.extension.toLowerCase())"
+        type="primary"
+        size="small"
+        plain
+        @click="handlePrewiev"
+      >
         Preview
       </el-button>
     </div>
@@ -39,9 +43,13 @@
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
 import { deleteMedia } from '@/api/vueQuery/delete-media'
+import SwdThumbnail from '@/components/Global/SwdThumbnail.vue'
 
 export default {
   name: 'DocItem',
+  components: {
+    SwdThumbnail,
+  },
   props: {
     doc: {
       type: Object,
@@ -62,15 +70,16 @@ export default {
   setup(props) {
     const store = useStore()
     const queryClient = useQueryClient()
+    const configExtensionPreview = ['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx']
 
     const { isLoading: isLoadingRemove, mutateAsync: deleteDocument } = useMutation(deleteMedia)
 
     const handlePrewiev = () => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', props.doc.url)
+      store.commit('globalComponents/setPreviewFile', props.doc)
     }
 
     const handleRemove = async () => {
@@ -84,6 +93,7 @@ export default {
       handlePrewiev,
       handleRemove,
       isLoadingRemove,
+      configExtensionPreview,
     }
   },
 }

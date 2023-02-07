@@ -5,32 +5,30 @@ import { computed } from 'vue'
 
 export function useBasicInfoHooks() {
   const setInitValue = (ruleForm, member) => {
-    if (member?.value?.id) {
-      ruleForm.retired = member.value.retired
-      ruleForm.married = member.value.married
-      ruleForm.name = member.value.name
-      if (member.value.birthday) ruleForm.birthday = dayjs(member.value.birthday).format('MM/DD/YYYY')
-      if (member.value.retirement_date)
-        ruleForm.retirement_date = dayjs(member.value.retirement_date).format('MM/DD/YYYY')
-      ruleForm.email = member.value.email
-      ruleForm.address = member.value.address !== null ? member.value.address : ''
-      ruleForm.city = member.value.city !== null ? member.value.city : ''
-      ruleForm.state = member.value.state !== null ? member.value.state : ''
-      ruleForm.zip = member.value.zip !== null ? member.value.zip : ''
-      ruleForm.phone = member.value.phone !== null ? member.value.phone : ''
-      ruleForm.is_watch = member.value.is_watch
-      ruleForm.channels = member.value.channels
+    if (member && member.id) {
+      ruleForm.retired = member.retired
+      ruleForm.married = member.married
+      ruleForm.name = member.name
+      if (member.birthday) ruleForm.birthday = dayjs(member.birthday).format('MM/DD/YYYY')
+      if (member.retirement_date) ruleForm.retirement_date = dayjs(member.retirement_date).format('MM/DD/YYYY')
+      ruleForm.email = member.email
+      ruleForm.address = member.address !== null ? member.address : ''
+      ruleForm.city = member.city !== null ? member.city : ''
+      ruleForm.state = member.state !== null ? member.state : ''
+      ruleForm.zip = member.zip !== null ? member.zip : ''
+      ruleForm.phone = member.phone !== null ? member.phone : ''
+      ruleForm.is_watch = member.is_watch
+      ruleForm.channels = member.channels
 
-      if (member.value.employment_history.length)
-        Object.assign(ruleForm.employment_history, JSON.parse(JSON.stringify(member.value.employment_history)))
+      if (member.employment_history.length) {
+        Object.assign(ruleForm.employment_history, JSON.parse(JSON.stringify(member.employment_history)))
+      }
 
-      if (member.value.married) {
-        Object.assign(ruleForm.spouse, JSON.parse(JSON.stringify(member.value.spouse)))
-        ruleForm.spouse.birthday = dayjs(member.value.spouse.birthday).format('MM/DD/YYYY')
+      if (member.married) {
+        Object.assign(ruleForm.spouse, JSON.parse(JSON.stringify(member.spouse)))
+        ruleForm.spouse.birthday = dayjs(member.spouse.birthday).format('MM/DD/YYYY')
         ruleForm.spouse.retirement_date =
-          member.value.spouse.retirement_date !== null
-            ? dayjs(member.value.spouse.retirement_date).format('MM/DD/YYYY')
-            : ''
+          member.spouse.retirement_date !== null ? dayjs(member.spouse.retirement_date).format('MM/DD/YYYY') : ''
 
         if (!ruleForm.spouse.employment_history.length) {
           ruleForm.spouse.employment_history.push({
@@ -41,20 +39,16 @@ export function useBasicInfoHooks() {
         }
       }
 
-      if (member.value.house.type) Object.assign(ruleForm.house, JSON.parse(JSON.stringify(member.value.house)))
+      if (member.house.type) Object.assign(ruleForm.house, JSON.parse(JSON.stringify(member.house)))
 
-      if (member.value.other.id) Object.assign(ruleForm.other, JSON.parse(JSON.stringify(member.value.other)))
+      if (member.other.id) Object.assign(ruleForm.other, JSON.parse(JSON.stringify(member.other)))
 
-      if (member.value.type === 'lead') {
-        ruleForm.amount_for_retirement = member.value.amount_for_retirement
-        ruleForm.biggest_financial_concern = member.value.biggest_financial_concern
-        ruleForm.wttv4_or_fox59 = member.value.wttv4_or_fox59
+      if (member.type === 'lead') {
+        ruleForm.amount_for_retirement = member.amount_for_retirement
+        ruleForm.biggest_financial_concern = member.biggest_financial_concern
+        ruleForm.wttv4_or_fox59 = member.wttv4_or_fox59
       }
     }
-  }
-
-  const removeEmployment = ({ ruleForm, index }) => {
-    ruleForm.employment_history.splice(index, 1)
   }
 
   const addEmployment = (ruleForm) => {
@@ -85,10 +79,6 @@ export function useBasicInfoHooks() {
     }
   }
 
-  const removeEmploymentSpouse = ({ ruleForm, index }) => {
-    ruleForm.spouse.employment_history.splice(index, 1)
-  }
-
   const changeCompanyNameMember = ({ ruleForm, index }) => {
     if (ruleForm.employment_history[index].company_name.trim().length) {
       rules.employment_history[index].occupation[0].required = true
@@ -112,7 +102,8 @@ export function useBasicInfoHooks() {
   const changeMarried = (ruleForm) => {
     if (ruleForm.married && !ruleForm.spouse.length) {
       ruleForm.spouse = {
-        name: '',
+        first_name: '',
+        last_name: '',
         email: '',
         birthday: '',
         retired: false,
@@ -146,12 +137,10 @@ export function useBasicInfoHooks() {
 
   return {
     setInitValue,
-    removeEmployment,
     addEmployment,
     addEmploymentSpouse,
     changeCompanyNameMember,
     changeCompanyNameSpouse,
-    removeEmploymentSpouse,
     resetState,
     changeMarried,
     getPlaceholder,

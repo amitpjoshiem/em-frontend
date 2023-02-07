@@ -128,7 +128,7 @@ export const supportRoute = {
       path: 'client-report/:id',
       name: `${type}/clientreport`,
       component: () =>
-        import(/* webpackChunkName: "Clientreport" */ '../../components/ClientReport/ClientReportList.vue'),
+        import(/* webpackChunkName: "ClientReport" */ '../../components/ClientReport/ClientReportList.vue'),
     },
     {
       path: 'asset-accounts/:id',

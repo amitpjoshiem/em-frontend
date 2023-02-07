@@ -2,7 +2,7 @@
   <div v-if="!isFetchingMember">
     <el-form ref="form" :model="ruleForm" :rules="rules" label-position="top" :disabled="isDisabledForm">
       <!-- GENERAL -->
-      <div class="border-b px-16 pb-5">
+      <div class="border-b px-8 pb-5">
         <span class="text-main text-xl font-semibold">General</span>
         <div class="flex py-5">
           <el-form-item label="Retired?" class="mr-20">
@@ -20,7 +20,7 @@
         </div>
 
         <div class="flex">
-          <el-form-item label="Account name" prop="name" class="w-8/12 pr-5">
+          <el-form-item label="Account name" prop="name" class="w-8/12 pr-4">
             <el-input v-model="ruleForm.name" placeholder="Enter account name" @blur="changeInput" />
           </el-form-item>
           <el-form-item prop="birthday" label="Date of birth" class="w-4/12">
@@ -61,17 +61,17 @@
         </div>
 
         <div class="flex my-5">
-          <el-form-item label="State" prop="state" class="w-5/12 pr-5">
-            <el-select v-model="ruleForm.state" filterable placeholder="Select" @change="changeInput">
+          <el-form-item label="State" prop="state" class="w-5/12 pr-4">
+            <el-select v-model="ruleForm.state" filterable placeholder="Select" class="w-full" @change="changeInput">
               <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
 
-          <el-form-item label="City" prop="city" class="w-5/12 pr-5">
+          <el-form-item label="City" prop="city" class="w-5/12 pr-4">
             <el-input v-model="ruleForm.city" placeholder="Enter prospect’s city" @blur="changeInput" />
           </el-form-item>
 
-          <el-form-item label="Address" prop="address" class="w-5/12 pr-5">
+          <el-form-item label="Address" prop="address" class="w-5/12 pr-4">
             <el-input v-model="ruleForm.address" placeholder="Enter prospect’s address" @blur="changeInput" />
           </el-form-item>
 
@@ -83,7 +83,7 @@
       <!-- GENERAL -->
 
       <!-- Spouse -->
-      <div v-if="ruleForm.married" class="px-16 border-b py-5">
+      <div v-if="ruleForm.married" class="px-8 border-b py-5">
         <span class="text-main text-xl font-semibold">Spouse/Partner</span>
         <div class="my-5">
           <el-form-item label="Retired?">
@@ -94,14 +94,14 @@
           </el-form-item>
         </div>
         <div class="flex">
-          <el-form-item label="First name" prop="spouse.first_name" class="w-5/12 pr-5">
+          <el-form-item label="First name" prop="spouse.first_name" class="w-5/12 pr-4">
             <el-input
               v-model="ruleForm.spouse.first_name"
               placeholder="Enter spouse’s first name"
               @blur="changeInput"
             />
           </el-form-item>
-          <el-form-item label="Last name" prop="spouse.last_name" class="w-5/12 pr-5">
+          <el-form-item label="Last name" prop="spouse.last_name" class="w-5/12 pr-4">
             <el-input v-model="ruleForm.spouse.last_name" placeholder="Enter spouse’s last name" @blur="changeInput" />
           </el-form-item>
           <el-form-item prop="spouse.birthday" label="Date of birth" class="w-2/12">
@@ -116,15 +116,15 @@
           </el-form-item>
         </div>
         <div class="flex my-5">
-          <el-form-item label="E-mail" prop="spouse.email" class="w-5/12 pr-5">
+          <el-form-item label="E-mail" prop="spouse.email" class="w-5/12 pr-4">
             <el-input v-model.email="ruleForm.spouse.email" placeholder="Enter spouse’s e-mail" @blur="changeInput" />
           </el-form-item>
 
-          <el-form-item label="Phone" prop="spouse.phone" class="w-5/12 pr-5">
+          <el-form-item label="Phone" prop="spouse.phone" class="w-5/12 pr-4">
             <el-input
               v-model="ruleForm.spouse.phone"
               v-maska="'(###) ###-####'"
-              placeholder="Enter spouse’s phone number"
+              placeholder="Enter phone number"
               inputmode="numeric"
               @blur="changeInput"
             />
@@ -149,7 +149,7 @@
       <!-- Spouse -->
 
       <!-- Housing Information -->
-      <div class="px-16 py-5 border-b">
+      <div class="px-8 py-5 border-b">
         <span class="text-main text-xl font-semibold">Housing Information</span>
         <div class="flex pt-5">
           <el-form-item label="Type" class="w-5/12">
@@ -163,7 +163,7 @@
             v-if="ruleForm.house.type !== 'rent'"
             label="Market value"
             prop="house.market_value"
-            class="w-5/12 pr-5"
+            class="w-5/12 pr-4"
           >
             <SwdCurrencyInput
               v-model="ruleForm.house.market_value"
@@ -174,7 +174,7 @@
           </el-form-item>
         </div>
         <div class="flex mt-5">
-          <el-form-item label="Monthly payments" prop="house.total_debt" class="w-5/12 pr-5">
+          <el-form-item label="Monthly payments" prop="house.total_debt" class="w-5/12 pr-4">
             <SwdCurrencyInput
               v-model="ruleForm.house.total_debt"
               :options="optionsCurrencyInput"
@@ -186,7 +186,7 @@
             v-if="ruleForm.house.type !== 'rent'"
             label="Remaining mortgage amount"
             prop="house.remaining_mortgage_amount"
-            class="w-5/12 pr-5"
+            class="w-5/12 pr-4"
           >
             <SwdCurrencyInput
               v-model="ruleForm.house.remaining_mortgage_amount"
@@ -199,7 +199,7 @@
             v-if="ruleForm.house.type === 'rent'"
             label="Total monthly expences"
             prop="house.total_monthly_expenses"
-            class="w-5/12 pr-5"
+            class="w-5/12 pr-4"
             @blur="changeInput"
           >
             <SwdCurrencyInput
@@ -213,18 +213,14 @@
       </div>
       <!-- Housing Information -->
 
-      <div class="px-16 mt-7 border-b">
+      <div class="px-8 mt-7 border-b">
         <span class="text-main text-xl font-semibold">Employment history</span>
         <div class="pt-5 pb-2">
           <span class="text-main text-xs uppercase font-semibold">Contact opportunity</span>
         </div>
 
-        <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-6">
-          <el-form-item
-            :prop="'employment_history.' + index + '.company_name'"
-            label="Company name"
-            class="w-7/24 mr-4"
-          >
+        <el-form-item v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-2">
+          <el-form-item :prop="'employment_history.' + index + '.company_name'" label="Company name" class="w-4/12">
             <el-input
               v-model="eh.company_name"
               placeholder="Enter company name"
@@ -234,27 +230,27 @@
           </el-form-item>
 
           <template v-if="!!ruleForm.employment_history[index].company_name.trim().length">
-            <el-form-item :prop="'employment_history.' + index + '.occupation'" label="Occupation" class="w-7/24 mr-4">
+            <el-form-item :prop="'employment_history.' + index + '.occupation'" label="Occupation" class="w-4/12 px-2">
               <el-input v-model="eh.occupation" placeholder="Company occupation" @blur="changeInput" />
             </el-form-item>
             <el-form-item
               v-if="ruleForm.employment_history[index].company_name.length"
               :prop="'employment_history.' + index + '.years'"
               label="Years"
-              class="w-7/24 mr-4"
+              class="w-2/12"
             >
               <el-input v-model="eh.years" placeholder="00" inputmode="numeric" @blur="changeInput" />
             </el-form-item>
           </template>
 
           <template v-else>
-            <el-form-item label="Occupation" class="w-7/24 mr-4">
+            <el-form-item label="Occupation" class="w-4/12 px-2">
               <el-input
                 placeholder="Company occupation"
                 :disabled="!ruleForm.employment_history[index].company_name.trim().length"
               />
             </el-form-item>
-            <el-form-item label="Years" class="w-7/24 mr-4">
+            <el-form-item label="Years" class="w-2/12">
               <el-input
                 placeholder="00"
                 inputmode="numeric"
@@ -263,26 +259,36 @@
             </el-form-item>
           </template>
 
-          <div class="w-5 pt-5 ml-3 cursor-pointer">
-            <InlineSvg
-              v-if="index === ruleForm.employment_history.length - 1"
-              :src="IconAdd"
-              @click="addEmployment(ruleForm)"
-            />
-            <InlineSvg v-else :src="IconDelete" @click="removeEmployment({ ruleForm, index })" />
+          <div class="w-2/12 mt-[20px] text-right">
+            <el-button
+              v-if="
+                ruleForm.employment_history[index].company_name.trim().length &&
+                ruleForm.employment_history[index].occupation.trim().length &&
+                ruleForm.employment_history[index].years
+              "
+              type="danger"
+              plain
+              @click="handleRemoveEmployment(index)"
+            >
+              Remove job
+            </el-button>
           </div>
         </el-form-item>
 
-        <div v-if="ruleForm.married" class="mt-5">
-          <div class="pt-5 pb-2">
+        <div class="flex justify-end">
+          <SwdButton primary main @click="addEmployment(ruleForm)">Add job</SwdButton>
+        </div>
+
+        <div v-if="ruleForm.married" class="my-5">
+          <div class="pb-2">
             <span class="text-main text-xs uppercase font-semibold">Spouse/Partner</span>
           </div>
 
-          <el-form-item v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-10">
+          <el-form-item v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-2">
             <el-form-item
               :prop="'spouse.employment_history.' + index + '.company_name'"
               label="Company name"
-              class="w-7/24 mr-4"
+              class="w-4/12"
             >
               <el-input
                 v-model="eh.company_name"
@@ -296,23 +302,23 @@
               <el-form-item
                 :prop="'spouse.employment_history.' + index + '.occupation'"
                 label="Occupation"
-                class="w-7/24 mr-4"
+                class="w-4/12 px-2"
               >
                 <el-input v-model="eh.occupation" placeholder="Company occupation" @blur="changeInput" />
               </el-form-item>
-              <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-7/24 mr-4">
+              <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-2/12">
                 <el-input v-model="eh.years" placeholder="00" inputmode="numeric" @blur="changeInput" />
               </el-form-item>
             </template>
 
             <template v-else>
-              <el-form-item label="Occupation" class="w-7/24 mr-4">
+              <el-form-item label="Occupation" class="w-4/12 px-2">
                 <el-input
                   placeholder="Company occupation"
                   :disabled="!ruleForm.spouse.employment_history[index].company_name.trim().length"
                 />
               </el-form-item>
-              <el-form-item label="Years" class="w-7/24 mr-4">
+              <el-form-item label="Years" class="w-2/12">
                 <el-input
                   placeholder="00"
                   inputmode="numeric"
@@ -320,20 +326,28 @@
                 />
               </el-form-item>
             </template>
-
-            <div class="w-5 pt-5 ml-3 cursor-pointer">
-              <InlineSvg
-                v-if="index === ruleForm.spouse.employment_history.length - 1"
-                :src="IconAdd"
-                @click="addEmploymentSpouse(ruleForm)"
-              />
-              <InlineSvg v-else :src="IconDelete" @click="removeEmploymentSpouse({ ruleForm, index })" />
+            <div class="w-2/12 mt-[20px] text-right">
+              <el-button
+                v-if="
+                  ruleForm.spouse.employment_history[index].company_name.trim().length &&
+                  ruleForm.spouse.employment_history[index].occupation.trim().length &&
+                  ruleForm.spouse.employment_history[index].years
+                "
+                type="danger"
+                plain
+                @click="handleRemoveEmploymentSpouse(index)"
+              >
+                Remove job
+              </el-button>
             </div>
           </el-form-item>
+          <div class="flex justify-end">
+            <SwdButton primary main @click="addEmploymentSpouse(ruleForm)">Add job</SwdButton>
+          </div>
         </div>
       </div>
 
-      <div class="px-16 my-5">
+      <div class="px-8 my-5">
         <span class="text-main text-xl font-semibold">Other</span>
         <el-form-item label="Risk tolerance?" class="my-5">
           <el-radio-group v-model="ruleForm.other.risk" @change="changeInput">
@@ -386,6 +400,7 @@ import { useStore } from 'vuex'
 import { createMembers } from '@/api/vueQuery/create-members'
 import { updateMembers } from '@/api/vueQuery/update-members'
 import { useFetchMember } from '@/api/use-fetch-member.js'
+import { deleteEmploymentHistory } from '@/api/vueQuery/delete-employment-history'
 import { rules } from '@/validationRules/basicRules.js'
 import { maska } from 'maska'
 import { initialBasicInformation } from '@/components/NewProspect/initialState/basicInformation'
@@ -397,8 +412,6 @@ import { ElMessageBox, ElNotification } from 'element-plus'
 import { isEqual } from 'lodash-es'
 import { useWindowScrollTo } from '@/hooks/use-window-scroll'
 import ModalRestoreDraft from './Draft/ModalRestoreDraft.vue'
-import IconAdd from '@/assets/svg/icon-add.svg'
-import IconDelete from '@/assets/svg/icon-delete.svg'
 
 export default {
   name: 'AddProspectBasicInfo',
@@ -419,6 +432,7 @@ export default {
 
     const { mutateAsync: createMember, isLoading: isLoadingCreateMember } = useMutation(createMembers)
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
+    const { mutateAsync: deleteEmployment } = useMutation(deleteEmploymentHistory)
 
     const {
       isFetching: isFetchingMember,
@@ -430,10 +444,8 @@ export default {
       setInitValue,
       addEmployment,
       addEmploymentSpouse,
-      removeEmployment,
       changeCompanyNameMember,
       changeCompanyNameSpouse,
-      removeEmploymentSpouse,
       getPlaceholder,
       optionsCurrencyInput,
       changeMarried,
@@ -529,7 +541,7 @@ export default {
 
     watchEffect(() => {
       if (isFetchingMember.value === false) {
-        setInitValue(ruleForm, member)
+        setInitValue(ruleForm, member.value)
       }
     })
 
@@ -556,7 +568,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: isUpdateMember.value ? 'Opportunity update successfully' : 'Opportunity created successfully',
+              message: isUpdateMember.value ? 'Opportunity update successfully.' : 'Opportunity created successfully.',
             })
             store.commit('newProspect/setStep', step.value + 1)
             router.push({
@@ -567,7 +579,7 @@ export default {
         } else {
           ElNotification({
             title: 'Error',
-            message: 'Please enter all required information',
+            message: 'Please enter all required information.',
             type: 'error',
             dangerouslyUseHTMLString: true,
           })
@@ -591,11 +603,7 @@ export default {
           if (valid) {
             const res = await updateMember({ form: ruleForm, id: memberId })
             if (!('error' in res)) {
-              useAlert({
-                title: 'Success',
-                type: 'success',
-                message: 'Opportunity update successfully',
-              })
+              showSuccessMessage()
             }
           }
         })
@@ -606,19 +614,69 @@ export default {
       return isLoadingUpdateMember.value
     })
 
+    const handleRemoveEmployment = async (index) => {
+      if (ruleForm.employment_history[index].id) {
+        const res = await deleteEmployment(ruleForm.employment_history[index].id)
+        if (!('error' in res)) {
+          removeMemberEmployment(index)
+          showSuccessMessage()
+        }
+      } else {
+        removeMemberEmployment(index)
+      }
+    }
+
+    const removeMemberEmployment = (index) => {
+      ruleForm.employment_history.splice(index, 1)
+      if (!ruleForm.employment_history.length) {
+        ruleForm.employment_history.push({
+          company_name: '',
+          occupation: '',
+          years: '',
+        })
+      }
+    }
+
+    const handleRemoveEmploymentSpouse = async (index) => {
+      if (ruleForm.employment_history[index].id) {
+        const res = await deleteEmployment(ruleForm.employment_history[index].id)
+        if (!('error' in res)) {
+          removeSpouseEmployment(index)
+          showSuccessMessage()
+        }
+      } else {
+        removeSpouseEmployment(index)
+      }
+    }
+
+    const removeSpouseEmployment = (index) => {
+      ruleForm.spouse.employment_history.splice(index, 1)
+      if (!ruleForm.spouse.employment_history.length) {
+        ruleForm.spouse.employment_history.push({
+          company_name: '',
+          occupation: '',
+          years: '',
+        })
+      }
+    }
+
+    const showSuccessMessage = () => {
+      useAlert({
+        title: 'Success',
+        type: 'success',
+        message: 'Update successfully.',
+      })
+    }
+
     return {
       ruleForm,
       rules,
       form,
       submitForm,
-      removeEmployment,
       addEmployment,
       addEmploymentSpouse,
-      removeEmploymentSpouse,
       isLoadingCreateMember,
       isLoadingUpdateMember,
-      IconAdd,
-      IconDelete,
       getPlaceholder,
       changeMarried,
       changeCompanyNameMember,
@@ -631,6 +689,8 @@ export default {
       deleteDraft,
       changeInput,
       isDisabledForm,
+      handleRemoveEmployment,
+      handleRemoveEmploymentSpouse,
     }
   },
 }

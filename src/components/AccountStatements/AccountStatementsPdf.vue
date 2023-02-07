@@ -14,7 +14,7 @@
       @remove-media="removeMedia"
     >
       <template #noDocuments>
-        <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
+        <div v-if="isShowNoDocuments" class="text-main text-center pt-5 pb-10">No documents uploaded</div>
       </template>
     </SwdUpload>
   </div>
@@ -72,12 +72,12 @@ export default {
       upload.value = ref.value
     }
 
-    const openPrewiev = (url) => {
+    const openPrewiev = (file) => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', url)
+      store.commit('globalComponents/setPreviewFile', file)
     }
 
     const removeMedia = async (media) => {

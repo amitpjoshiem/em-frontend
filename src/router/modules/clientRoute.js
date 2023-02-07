@@ -61,7 +61,7 @@ export const clientRoute = {
     {
       path: 'client-report/:id',
       name: `${type}/clientreport`,
-      component: () => import(/* webpackChunkName: "Clientreport" */ '../../views/ClientReport.vue'),
+      component: () => import(/* webpackChunkName: "ClientReport" */ '../../views/ClientReport.vue'),
       children: [
         {
           path: 'client-reports-list',
@@ -73,7 +73,7 @@ export const clientRoute = {
           path: 'contract-info/:contract_id?',
           name: `${type}/contract-info`,
           component: () =>
-            import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractDetails.vue'),
+            import(/* webpackChunkName: "ClientReport" */ '../../components/ClientReport/ContractDetails.vue'),
         },
       ],
     },

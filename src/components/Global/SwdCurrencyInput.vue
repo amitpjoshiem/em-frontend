@@ -39,11 +39,6 @@ export default {
       require: false,
       default: '$12345',
     },
-    prop: {
-      type: String,
-      require: false,
-      default: '',
-    },
   },
   setup(props) {
     const { inputRef, formattedValue } = useCurrencyInput(props.options)

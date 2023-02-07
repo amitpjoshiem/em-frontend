@@ -744,11 +744,8 @@
       </div>
 
       <div class="flex justify-end my-10">
-        <div class="pr-3">
-          <Button default-gray-btn text-btn="Back" @click="backStep" />
-        </div>
-
-        <SwdButton v-if="!isReadOnlyLead" primary main :disabled="isLoadingUpdateSteps" class="w-2/12" @click="save">
+        <SwdButton info main class="mr-4" @click="backStep">Back</SwdButton>
+        <SwdButton v-if="!isReadOnlyLead" primary main :disabled="isLoadingUpdateSteps" @click="save">
           <SwdSpinner v-show="isLoadingUpdateSteps" class="mr-2" />
           Save
         </SwdButton>
@@ -957,7 +954,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Information updated successfully',
+          message: 'Information updated successfully.',
         })
         router.push({
           name: 'lead/dashboard',

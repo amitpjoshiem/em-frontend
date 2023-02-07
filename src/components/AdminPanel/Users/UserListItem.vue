@@ -121,7 +121,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Send create password success',
+          message: 'Send create password success.',
         })
       }
     }
@@ -146,7 +146,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Restore user success',
+              message: 'Restore user success.',
             })
             queryClient.invalidateQueries(['admin-panel-users'])
           }
