@@ -246,6 +246,7 @@
                   v-model="ruleForm.house.market_value"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
+                  prepend
                   @focus="focus('house')"
                   @blur="blur('house')"
                 />
@@ -260,6 +261,7 @@
                   v-model="ruleForm.house.total_debt"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
+                  prepend
                   @focus="focus('house')"
                   @blur="blur('house')"
                 />
@@ -273,6 +275,7 @@
                 <SwdCurrencyInput
                   v-model="ruleForm.house.remaining_mortgage_amount"
                   :options="optionsCurrencyInput"
+                  prepend
                   @focus="focus('house')"
                   @blur="blur('house')"
                 />
@@ -287,6 +290,7 @@
                   v-model="ruleForm.house.monthly_payment"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
+                  prepend
                   @focus="focus('house')"
                   @blur="blur('house')"
                 />
@@ -301,6 +305,7 @@
                   v-model="ruleForm.house.total_monthly_expenses"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
+                  prepend
                   @focus="focus('house')"
                   @blur="blur('house')"
                 />

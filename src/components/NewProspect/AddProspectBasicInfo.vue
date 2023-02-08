@@ -275,11 +275,11 @@
           </div>
         </el-form-item>
 
-        <div class="flex justify-end">
+        <div class="flex justify-end mb-5">
           <SwdButton primary main @click="addEmployment(ruleForm)">Add job</SwdButton>
         </div>
 
-        <div v-if="ruleForm.married" class="my-5">
+        <div v-if="ruleForm.married" class="mb-5">
           <div class="pb-2">
             <span class="text-main text-xs uppercase font-semibold">Spouse/Partner</span>
           </div>
