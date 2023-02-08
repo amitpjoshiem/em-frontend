@@ -51,6 +51,36 @@
                   @blur="changeInput(itemRow)"
                   @focus="focus(itemRow.model.group)"
                 />
+                <el-dropdown v-if="itemRow.type === 'dropdown'" trigger="click" :disabled="isReadOnlyLead">
+                  <el-button>
+                    Add field
+                    <el-icon class="el-icon--right">
+                      <arrow-down />
+                    </el-icon>
+                  </el-button>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item
+                        v-for="option in itemRow.options"
+                        :key="option"
+                        :disabled="isDisabled({ option, indexGroup })"
+                        @click="
+                          addLine({
+                            model: item.model,
+                            variable: option.name,
+                            indexGroup,
+                            canJoin: row.can_join,
+                          })
+                        "
+                      >
+                        {{ option.label }}
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="showDialog({ item: itemRow, indexGroup, indexRow })">
+                        Custom
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
               </div>
             </div>
           </div>
@@ -247,6 +277,7 @@ import { currencyFormat } from '@/utils/currencyFormat'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 
 // import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
+import { ArrowDown } from '@element-plus/icons-vue'
 import { useHookCustomValidate } from '@/hooks/use-hook-custom-validate'
 import { ElMessageBox } from 'element-plus'
 import IconActive from '@/assets/svg/icon-active.svg'
@@ -256,7 +287,7 @@ import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 export default {
   name: 'AddLeadAssets',
   components: {
-    // ArrowDown,
+    ArrowDown,
     // Delete,
     // Plus,
   },
