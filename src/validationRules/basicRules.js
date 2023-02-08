@@ -61,14 +61,14 @@ const rules = {
     },
   ],
   zip: [{ type: 'string', required: true, len: 5, message: 'Invalid zip', trigger: 'blur' }],
-  channels: [
-    {
-      errorText: 'Please input channels',
-      required: true,
-      trigger: 'change',
-      validator: customValidate,
-    },
-  ],
+  // channels: [
+  //   {
+  //     errorText: 'Please input channels',
+  //     required: true,
+  //     trigger: 'change',
+  //     validator: customValidate,
+  //   },
+  // ],
   employment_history: [
     {
       company_name: [
@@ -98,40 +98,40 @@ const rules = {
       ],
     },
   ],
-  biggest_financial_concern: [
-    {
-      errorText: 'Please input field',
-      required: false,
-      trigger: 'change',
-      validator: customValidate,
-    },
-  ],
-  other: {
-    questions: [
-      {
-        errorText: 'Please input field',
-        required: false,
-        trigger: 'change',
-        validator: customValidate,
-      },
-    ],
-    retirement: [
-      {
-        errorText: 'Please input field',
-        required: false,
-        trigger: 'change',
-        validator: customValidate,
-      },
-    ],
-    retirement_money: [
-      {
-        errorText: 'Please input field',
-        required: false,
-        trigger: 'change',
-        validator: customValidate,
-      },
-    ],
-  },
+  // biggest_financial_concern: [
+  //   {
+  //     errorText: 'Please input field',
+  //     required: false,
+  //     trigger: 'change',
+  //     validator: customValidate,
+  //   },
+  // ],
+  // other: {
+  //   questions: [
+  //     {
+  //       errorText: 'Please input field',
+  //       required: false,
+  //       trigger: 'change',
+  //       validator: customValidate,
+  //     },
+  //   ],
+  //   retirement: [
+  //     {
+  //       errorText: 'Please input field',
+  //       required: false,
+  //       trigger: 'change',
+  //       validator: customValidate,
+  //     },
+  //   ],
+  //   retirement_money: [
+  //     {
+  //       errorText: 'Please input field',
+  //       required: false,
+  //       trigger: 'change',
+  //       validator: customValidate,
+  //     },
+  //   ],
+  // },
 
   // SPOUSE
   spouse: {
