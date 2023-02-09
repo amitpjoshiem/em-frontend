@@ -13,6 +13,7 @@
               type="password"
               autocomplete="off"
               placeholder="Please input password"
+              show-password
               @keyup.enter="submit"
             />
           </el-form-item>
@@ -22,6 +23,7 @@
               type="password"
               autocomplete="off"
               placeholder="Please input password"
+              show-password
               @keyup.enter="submit"
             />
           </el-form-item>
