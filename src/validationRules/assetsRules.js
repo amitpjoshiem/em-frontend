@@ -572,7 +572,7 @@ function validateNumber(rule, value, callback) {
   if (isNaN(value)) {
     callback(new Error('Data is not a number'))
   } else if (Number(value) > 9999999.99) {
-    callback(new Error('Еhe value cannot be greater than 9999999.99'))
+    callback(new Error('The value cannot be greater than 9999999.99'))
   } else {
     callback()
   }
