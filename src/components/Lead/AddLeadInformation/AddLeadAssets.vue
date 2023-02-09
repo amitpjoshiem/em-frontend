@@ -40,7 +40,7 @@
               </div>
             </template>
           </div>
-          <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
+          <div v-for="(row, indexRow) in block.rows" :key="row" class="flex mb-3">
             <div class="w-[25%] flex items-center">
               <div v-if="row.label" class="text-main font-semibold text-xss">
                 {{ row.label }}
@@ -65,13 +65,7 @@
                 class="px-2 mb-0 item-assets"
                 :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
               >
-                <el-form-item
-                  class="mb-4"
-                  :prop="
-                    item.name === 'institution' ? item.model.group + '.' + item.model.model + '.' + item.model.item : ''
-                  "
-                >
-                  <div v-if="item.name === 'institution'"></div>
+                <el-form-item class="mb-4" :prop="item.model.group + '.' + item.model.model + '.' + item.model.item">
                   <template v-if="item.calculated">
                     <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                       <SwdSpinner />
@@ -286,7 +280,9 @@ export default {
     watchEffect(async () => {
       if (!isMemberAssetsLoading.value) {
         await setInitValue({ ruleForm, memberAssets: memberAssets.value, id: leadId })
-        await setCustomValidate(ruleForm, customRules)
+      }
+      if (!isMemberAssetsLoading.value && !isLoadingMember.value) {
+        await setCustomValidate({ ruleForm, customRules })
       }
     })
 

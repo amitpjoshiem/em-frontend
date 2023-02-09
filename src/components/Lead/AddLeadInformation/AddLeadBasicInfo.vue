@@ -251,14 +251,9 @@
                   @blur="blur('house')"
                 />
               </el-form-item>
-              <el-form-item
-                v-if="ruleForm.house.type !== 'rent'"
-                label="Monthly payments"
-                prop="house.total_debt"
-                class="mb-4 sm:w-4/12 sm:px-2"
-              >
+              <el-form-item label="Monthly payments" prop="house.monthly_payments" class="mb-4 sm:w-4/12 sm:px-2">
                 <SwdCurrencyInput
-                  v-model="ruleForm.house.total_debt"
+                  v-model="ruleForm.house.monthly_payments"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
                   prepend
@@ -275,21 +270,6 @@
                 <SwdCurrencyInput
                   v-model="ruleForm.house.remaining_mortgage_amount"
                   :options="optionsCurrencyInput"
-                  prepend
-                  @focus="focus('house')"
-                  @blur="blur('house')"
-                />
-              </el-form-item>
-              <el-form-item
-                v-if="ruleForm.house.type === 'rent'"
-                label="Monthly payments"
-                prop="house.monthly_payment"
-                class="mb-4 sm:w-4/12"
-              >
-                <SwdCurrencyInput
-                  v-model="ruleForm.house.monthly_payment"
-                  :options="optionsCurrencyInput"
-                  placeholder="$12345"
                   prepend
                   @focus="focus('house')"
                   @blur="blur('house')"
@@ -744,9 +724,8 @@ export default {
       house: {
         type: 'own',
         market_value: null,
-        monthly_payments: null,
         remaining_mortgage_amount: null,
-        monthly_payment: null,
+        monthly_payments: null,
         total_monthly_expenses: null,
       },
       employment_history: [

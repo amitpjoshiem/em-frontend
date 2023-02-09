@@ -13,7 +13,7 @@
             </div>
           </template>
         </div>
-        <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
+        <div v-for="(row, indexRow) in block.rows" :key="row" class="flex mb-3">
           <div class="w-[25%] flex items-center">
             <div v-if="row.label" class="text-main font-semibold text-xss">
               {{ row.label }}
@@ -38,12 +38,7 @@
               class="px-2 mb-0 item-assets"
               :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
             >
-              <el-form-item
-                class="mb-4"
-                :prop="
-                  item.name === 'institution' ? item.model.group + '.' + item.model.model + '.' + item.model.item : ''
-                "
-              >
+              <el-form-item class="mb-4" :prop="item.model.group + '.' + item.model.model + '.' + item.model.item">
                 <template v-if="item.calculated">
                   <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                     <SwdSpinner />
@@ -221,9 +216,9 @@ export default {
     const memberId = route.params.id
 
     // FETCH
+    const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: memberId })
     const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(memberId)
     const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(memberId)
-    const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: memberId })
 
     // MUTATION
     const { mutateAsync: create, data } = useMutation(createAssetsIncome)
@@ -243,7 +238,7 @@ export default {
     watchEffect(async () => {
       if (!isMemberAssetsLoading.value) {
         await setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
-        await setCustomValidate(ruleForm, customRules)
+        await setCustomValidate({ ruleForm, customRules })
       }
     })
 
