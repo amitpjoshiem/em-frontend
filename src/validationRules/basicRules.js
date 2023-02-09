@@ -61,14 +61,6 @@ const rules = {
     },
   ],
   zip: [{ type: 'string', required: true, len: 5, message: 'Invalid zip', trigger: 'blur' }],
-  // channels: [
-  //   {
-  //     errorText: 'Please input channels',
-  //     required: true,
-  //     trigger: 'change',
-  //     validator: customValidate,
-  //   },
-  // ],
   employment_history: [
     {
       company_name: [
@@ -98,40 +90,6 @@ const rules = {
       ],
     },
   ],
-  // biggest_financial_concern: [
-  //   {
-  //     errorText: 'Please input field',
-  //     required: false,
-  //     trigger: 'change',
-  //     validator: customValidate,
-  //   },
-  // ],
-  // other: {
-  //   questions: [
-  //     {
-  //       errorText: 'Please input field',
-  //       required: false,
-  //       trigger: 'change',
-  //       validator: customValidate,
-  //     },
-  //   ],
-  //   retirement: [
-  //     {
-  //       errorText: 'Please input field',
-  //       required: false,
-  //       trigger: 'change',
-  //       validator: customValidate,
-  //     },
-  //   ],
-  //   retirement_money: [
-  //     {
-  //       errorText: 'Please input field',
-  //       required: false,
-  //       trigger: 'change',
-  //       validator: customValidate,
-  //     },
-  //   ],
-  // },
 
   // SPOUSE
   spouse: {
@@ -269,6 +227,10 @@ function validateNumber(rule, value, callback) {
 
   if (value < 0) {
     callback(new Error('Unsupported negative value'))
+  }
+
+  if (Number(value) > 9999999.99) {
+    callback(new Error('The value cannot be greater than 9999999.99'))
   }
 
   if (rule.required && !value) {
