@@ -123,11 +123,6 @@ const rules = {
         message: 'Please input email address',
         trigger: 'blur',
       },
-      {
-        type: 'email',
-        message: 'Please input correct email address',
-        trigger: 'change',
-      },
     ],
     phone: [{ len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
     retirement_date: [
