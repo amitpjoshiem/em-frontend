@@ -247,9 +247,9 @@ export default {
 
     const getNameData = computed(() => {
       if (ruleForm.is_spouse) {
-        return (ruleForm.last_name + ' ' + ruleForm.first_name).replace(/ /gi, ',')
+        return (ruleForm.last_name + ' ' + ruleForm.first_name).replace(/\s+/g, ' ').trim().replace(/ /gi, ',')
       }
-      return ruleForm.name.replace(/ /gi, ',')
+      return ruleForm.name.replace(/\s+/g, ' ').trim().replace(/ /gi, ',')
     })
 
     const save = async (e) => {
