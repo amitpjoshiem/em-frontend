@@ -174,9 +174,9 @@
           </el-form-item>
         </div>
         <div class="flex mt-5">
-          <el-form-item label="Monthly payments" prop="house.total_debt" class="w-5/12 pr-4">
+          <el-form-item label="Monthly payments" prop="house.monthly_payments" class="w-5/12 pr-4">
             <SwdCurrencyInput
-              v-model="ruleForm.house.total_debt"
+              v-model="ruleForm.house.monthly_payments"
               :options="optionsCurrencyInput"
               placeholder="$12345"
               @blur="changeInput"
@@ -275,11 +275,11 @@
           </div>
         </el-form-item>
 
-        <div class="flex justify-end">
+        <div class="flex justify-end mb-5">
           <SwdButton primary main @click="addEmployment(ruleForm)">Add job</SwdButton>
         </div>
 
-        <div v-if="ruleForm.married" class="my-5">
+        <div v-if="ruleForm.married" class="mb-5">
           <div class="pb-2">
             <span class="text-main text-xs uppercase font-semibold">Spouse/Partner</span>
           </div>
@@ -412,8 +412,6 @@ import { ElMessageBox, ElNotification } from 'element-plus'
 import { isEqual } from 'lodash-es'
 import { useWindowScrollTo } from '@/hooks/use-window-scroll'
 import ModalRestoreDraft from './Draft/ModalRestoreDraft.vue'
-import IconAdd from '@/assets/svg/icon-add.svg'
-import IconDelete from '@/assets/svg/icon-delete.svg'
 
 export default {
   name: 'AddProspectBasicInfo',
@@ -486,9 +484,8 @@ export default {
       house: {
         type: 'own',
         market_value: null,
-        monthly_payments: null,
         remaining_mortgage_amount: null,
-        monthly_payment: null,
+        monthly_payments: null,
         total_monthly_expenses: null,
       },
       employment_history: [
@@ -679,8 +676,6 @@ export default {
       addEmploymentSpouse,
       isLoadingCreateMember,
       isLoadingUpdateMember,
-      IconAdd,
-      IconDelete,
       getPlaceholder,
       changeMarried,
       changeCompanyNameMember,

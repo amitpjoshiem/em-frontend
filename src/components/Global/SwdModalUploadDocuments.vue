@@ -245,6 +245,13 @@ export default {
       removeMedia()
     }
 
+    const getNameData = computed(() => {
+      if (ruleForm.is_spouse) {
+        return (ruleForm.last_name + ' ' + ruleForm.first_name).replace(/\s+/g, ' ').trim().replace(/ /gi, ',')
+      }
+      return ruleForm.name.replace(/\s+/g, ' ').trim().replace(/ /gi, ',')
+    })
+
     const save = async (e) => {
       e.preventDefault()
       if (!ruleForm.uuids.length) validUpload.value = false
@@ -257,7 +264,7 @@ export default {
             uuids: ruleForm.uuids,
             description: ruleForm.description,
             is_spouse: ruleForm.is_spouse,
-            name: ruleForm.is_spouse ? ruleForm.last_name + ' ' + ruleForm.first_name : ruleForm.name,
+            name: getNameData.value,
           }
           if (ruleForm.type && ruleForm.type === 'other') data.type = ruleForm.custom_type
           if (ruleForm.type && ruleForm.type !== 'other') data.type = ruleForm.type

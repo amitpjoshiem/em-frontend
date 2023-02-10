@@ -124,7 +124,7 @@
           <el-icon :size="25" class="mr-5">
             <document-checked color="#073763" />
           </el-icon>
-          <div class="text-xs sm:text-base text-main">Confirmation Information</div>
+          <div class="text-xs sm:text-base text-main">Confirm Information</div>
         </div>
       </el-card>
     </div>

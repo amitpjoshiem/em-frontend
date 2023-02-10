@@ -17,7 +17,7 @@ const rules = {
     },
   ],
   email: [
-    { required: true, message: 'The field cannot be empty', trigger: 'blur' },
+    { required: true, message: 'The field cannot be empty', trigger: 'change' },
     {
       type: 'email',
       message: 'Please enter valid email ID',
@@ -30,7 +30,7 @@ const rules = {
       type: 'date',
       required: true,
       message: 'Please pick a Retirement date',
-      trigger: 'blur',
+      trigger: 'change',
     },
   ],
   state: [
@@ -42,7 +42,7 @@ const rules = {
         return value.trim()
       },
     },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
+    { min: 1, message: 'Length should be min 1', trigger: 'change' },
   ],
   city: [
     {
@@ -61,14 +61,6 @@ const rules = {
     },
   ],
   zip: [{ type: 'string', required: true, len: 5, message: 'Invalid zip', trigger: 'blur' }],
-  channels: [
-    {
-      errorText: 'Please input channels',
-      required: true,
-      trigger: 'change',
-      validator: customValidate,
-    },
-  ],
   employment_history: [
     {
       company_name: [
@@ -98,40 +90,6 @@ const rules = {
       ],
     },
   ],
-  biggest_financial_concern: [
-    {
-      errorText: 'Please input field',
-      required: false,
-      trigger: 'change',
-      validator: customValidate,
-    },
-  ],
-  other: {
-    questions: [
-      {
-        errorText: 'Please input field',
-        required: false,
-        trigger: 'change',
-        validator: customValidate,
-      },
-    ],
-    retirement: [
-      {
-        errorText: 'Please input field',
-        required: false,
-        trigger: 'change',
-        validator: customValidate,
-      },
-    ],
-    retirement_money: [
-      {
-        errorText: 'Please input field',
-        required: false,
-        trigger: 'change',
-        validator: customValidate,
-      },
-    ],
-  },
 
   // SPOUSE
   spouse: {
@@ -165,11 +123,6 @@ const rules = {
         message: 'Please input email address',
         trigger: 'blur',
       },
-      {
-        type: 'email',
-        message: 'Please input correct email address',
-        trigger: ['blur'],
-      },
     ],
     phone: [{ len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
     retirement_date: [
@@ -177,7 +130,7 @@ const rules = {
         type: 'date',
         required: true,
         message: 'Please pick a Retirement date',
-        trigger: 'blur',
+        trigger: 'change',
       },
     ],
     employment_history: [
@@ -210,6 +163,32 @@ const rules = {
       },
     ],
   },
+  house: {
+    market_value: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+      },
+    ],
+    remaining_mortgage_amount: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+      },
+    ],
+    monthly_payments: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+      },
+    ],
+    total_monthly_expenses: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+      },
+    ],
+  },
 }
 
 const employmentHistoryRule = {
@@ -239,6 +218,14 @@ const employmentHistoryRule = {
 function validateNumber(rule, value, callback) {
   if (isNaN(value)) {
     callback(new Error('Data is not a number'))
+  }
+
+  if (value < 0) {
+    callback(new Error('Unsupported negative value'))
+  }
+
+  if (Number(value) > 9999999.99) {
+    callback(new Error('The value cannot be greater than 9999999.99'))
   }
 
   if (rule.required && !value) {

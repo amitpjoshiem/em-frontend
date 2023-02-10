@@ -337,7 +337,9 @@ export default {
     watchEffect(async () => {
       if (!isMemberAssetsLoading.value) {
         await setInitValue({ ruleForm, memberAssets: memberAssets.value, id: leadId })
-        await setCustomValidate(ruleForm, customRules)
+      }
+      if (!isMemberAssetsLoading.value && !isLoadingMember.value) {
+        await setCustomValidate({ ruleForm, customRules })
       }
     })
 
