@@ -229,7 +229,7 @@ export default {
 
     const getTitle = computed(() => {
       if (clientsInfo.value.readonly) return 'Submitted Info'
-      return 'Confirmation Information'
+      return 'Confirm Information'
     })
 
     return {
