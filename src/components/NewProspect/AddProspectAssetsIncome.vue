@@ -90,6 +90,7 @@
                             addLine({
                               model: item.model,
                               variable: option.name,
+                              name: option.label,
                               indexGroup,
                               canJoin: row.can_join,
                             })
@@ -115,17 +116,20 @@
               >
                 <Delete />
               </el-icon>
+
               <el-icon
                 class="top-[5px] cursor-pointer"
                 :size="20"
                 color="green"
                 @click="
-                  addLine({
+                  copyLine({
                     model: item.model,
                     variable: item.model.model,
+                    name: row.label,
                     indexGroup,
                     canJoin: row.can_join,
-                    copyLine: true,
+                    row,
+                    item,
                   })
                 "
               >
@@ -269,41 +273,92 @@ export default {
       }
     }
 
-    const addLine = async ({ model, variable, indexGroup, canJoin, copyLine = false }) => {
-      if (copyLine) {
-        let newItemIndex = 0
-        let newVariable = variable.split('_')[0]
-        // eslint-disable-next-line no-constant-condition
-        labelAddItem: while (true) {
-          const elem = schema[indexGroup].rows.find((item) => {
-            return item.name === newVariable
-          })
+    const copyLine = ({ model, name, canJoin, indexGroup, row, item }) => {
+      console.log('name  - ', name)
+      console.log('row  - ', row)
+      console.log('item  - ', item)
+      let newItemIndex = 0
+      let newRow = name.toLowerCase().replace(/ /gi, '_').split('_')
+      console.log('newRow - ,', newRow)
+      // eslint-disable-next-line no-constant-condition
+      labelAddItem: while (true) {
+        const elem = schema[indexGroup].rows.find((item) => {
+          return item.name === newRow
+        })
 
-          if (!elem) {
-            break labelAddItem
-          }
-          newItemIndex += 1
-          newVariable = variable.split('_')[0] + '_' + newItemIndex
+        if (!elem) {
+          break labelAddItem
         }
-        variable = newVariable
+        newItemIndex += 1
+        newRow = name.split('_')[0] + '_' + '(copy' + newItemIndex + ')'
       }
-      Object.keys(schema[indexGroup].headers).forEach((element) => {
-        ruleForm[model.group][variable] = { [element]: null }
-      })
+      // variable = newVariable
 
       const data = {
         group: model.group,
-        row: variable,
+        row: newRow,
         element: 'owner',
         type: 'string',
         can_join: canJoin,
       }
 
+      console.log('data - ', data)
+    }
+
+    const addLine = async ({ model, name, canJoin }) => {
+      // console.log('name - ', name)
+      // if (copyLine) {
+      //   let newItemIndex = 0
+      //   let newVariable = name.split('_')[0]
+      //   // eslint-disable-next-line no-constant-condition
+      //   labelAddItem: while (true) {
+      //     const elem = schema[indexGroup].rows.find((item) => {
+      //       return item.name === newVariable
+      //     })
+
+      //     if (!elem) {
+      //       break labelAddItem
+      //     }
+      //     newItemIndex += 1
+      //     newVariable = name.split('_')[0] + '_' + '(copy' + newItemIndex + ')'
+      //   }
+      //   variable = newVariable
+      // }
+      // Object.keys(schema[indexGroup].headers).forEach((element) => {
+      //   ruleForm[model.group][variable] = { [element]: null }
+      // })
+
+      // console.log('====', name.toLowerCase().replace(/ /gi, '_'))
+
+      const nameLine = name.toLowerCase().replace(/ /gi, '_')
+
+      //  Object.keys(schema[indexGroup].headers).forEach((element) => {
+      //   ruleForm[model.group][variable] = { [element]: null }
+      // })
+
+      const data = {
+        group: model.group,
+        row: nameLine,
+        element: 'owner',
+        type: 'string',
+        can_join: canJoin,
+      }
+
+      console.log('data - ', data)
+
+      // const data = {
+      //   group: model.group,
+      //   row: 'simple_ira_1',
+      //   element: 'owner',
+      //   type: 'string',
+      //   can_join: canJoin,
+      // }
+
       await updateMemberAssets({ data, id: memberId })
       await queryClient.invalidateQueries(['memberAssets', memberId])
       await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
       updateSchema()
-      setCustomValidate(ruleForm, customRules)
+      // setCustomValidate(ruleForm, customRules)
     }
 
     const changeInput = async (item) => {
@@ -332,6 +387,8 @@ export default {
     }
 
     const isDisabled = ({ option, indexGroup }) => {
+      // console.log('option - ', option)
+      // console.log('indexGroup - ', indexGroup)
       const elem = schema[indexGroup].rows.find((item) => {
         return item.name === option.name
       })
@@ -486,6 +543,8 @@ export default {
       isCanJoin,
       remove,
       customRules,
+
+      copyLine,
     }
   },
 }
