@@ -11,7 +11,10 @@
           <SwdButton primary small class="mr-4">Assets & Income</SwdButton>
         </router-link>
         <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'prospect_monthly_expenses' } }">
-          <SwdButton primary small class="">Expenses</SwdButton>
+          <SwdButton primary small class="mr-4">Expenses</SwdButton>
+        </router-link>
+        <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'email_help' } }">
+          <SwdButton primary small class="">Email Help</SwdButton>
         </router-link>
       </div>
     </el-card>
