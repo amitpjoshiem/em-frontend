@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
+  <div class="md:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto">
     <div v-if="!isMemberAssetsLoading && !isLoadingInfo && !isMemberAssetsSchemaLoading && !isLoadingMember">
       <el-form ref="form" :model="ruleForm" :disabled="isReadOnlyLead" :rules="customRules">
         <div
@@ -10,43 +10,47 @@
               if (el) blocks[indexGroup] = el
             }
           "
-          class="border border-main-gray p-5 rounded-md mb-10"
+          class="border border-main-gray p-2 md:p-5 rounded-md mb-10"
         >
           <div v-if="block.name === 'current_income'" class="flex items-center mb-5">
             <InlineSvg v-show="isFocusCurrentIncome && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusCurrentIncome && !isDoneCurrentStep" :src="IconNotActive" />
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
-            <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
+            <span class="text-primary text-xl font-semibold ml-2">{{ block.title }}</span>
           </div>
           <div v-if="block.name === 'liquid_assets'" class="flex items-center mb-5">
             <InlineSvg v-show="isFocusLiquidAssets && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusLiquidAssets && !isDoneCurrentStep" :src="IconNotActive" />
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
-            <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
+            <span class="text-primary text-xl font-semibold ml-2">{{ block.title }}</span>
           </div>
           <div v-if="block.name === 'other_assets_investments'" class="flex items-center mb-5">
             <InlineSvg v-show="isFocusNonLiquidAssets && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusNonLiquidAssets && !isDoneCurrentStep" :src="IconNotActive" />
             <InlineSvg v-show="isDoneCurrentStep" :src="IconDoneStep" />
-            <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
+            <span class="text-primary text-xl font-semibold ml-2">{{ block.title }}</span>
           </div>
 
           <el-form label-position="top">
-            <div v-for="(row, indexRows) in block.rows" :key="indexRows" class="border rounded px-3 pt-2 pb-4 mb-8">
-              <div class="text-main font-semibold text-xss mb-2">{{ row.label }}</div>
-              <div class="md:flex md:justify-between">
-                <el-form-item label="Joint" class="w-[15%] mb-4 md:mb-0">
+            <div
+              v-for="(row, indexRows) in block.rows"
+              :key="indexRows"
+              class="border rounded px-3 pt-2 md:pb-4 mb-2 md:mb-8"
+            >
+              <div class="text-primary font-semibold text-xss mb-2">{{ row.label }}</div>
+              <div class="md:flex">
+                <el-form-item label="Joint" class="mb-4 md:mb-0 md:pr-2">
                   <el-checkbox
                     v-model="row.joined"
                     class="top-[5px] text-main"
-                    label="Joint"
+                    :label="getLabelJoint"
                     size="small"
                     :disabled="isLoadingUpdate || !row.can_join"
                     @change="handleChange({ item, status: row.joined })"
                   />
                 </el-form-item>
                 <template v-for="(itemRow, indexRow) in row.elements" :key="indexRow">
-                  <el-form-item v-if="itemRow.type === 'number'" :label="itemRow.label" class="w-[15%] mb-4 md:mb-0">
+                  <el-form-item v-if="itemRow.type === 'number'" :label="itemRow.label" class="mb-4 md:mb-0 md:px-2">
                     <SwdCurrencyInput
                       v-model="ruleForm[itemRow.model.group][itemRow.model.model][itemRow.model.item]"
                       :options="optionsCurrencyInput"
@@ -58,7 +62,7 @@
                     />
                   </el-form-item>
 
-                  <el-form-item v-if="itemRow.type === 'string'" :label="itemRow.label" class="w-[15%] mb-4 md:mb-0">
+                  <el-form-item v-if="itemRow.type === 'string'" :label="itemRow.label" class="mb-4 md:mb-0 md:px-2">
                     <el-input
                       v-model="ruleForm[itemRow.model.group][itemRow.model.model][itemRow.model.item]"
                       :placeholder="itemRow.placeholder"
@@ -68,7 +72,7 @@
                     />
                   </el-form-item>
 
-                  <el-form-item v-if="itemRow.type === 'dropdown'" class="w-[15%] mb-4 md:mb-0">
+                  <el-form-item v-if="itemRow.type === 'dropdown'" class="mb-4 md:mb-0">
                     <el-dropdown trigger="click" :disabled="isReadOnlyLead">
                       <el-button>
                         Add field
@@ -101,7 +105,7 @@
                     </el-dropdown>
                   </el-form-item>
                 </template>
-                <el-form-item v-if="row.custom" label="Action" class="w-[15%]">
+                <el-form-item v-if="row.custom" label="Action" class="">
                   <div class="flex justify-between">
                     <el-icon
                       class="top-[5px] cursor-pointer mr-2"
@@ -132,139 +136,6 @@
               </div>
             </div>
           </el-form>
-
-          <!-- <div class="flex pb-2 mt-8 text-gray-500 text-xs">
-            <div class="w-1/5">Joint</div>
-            <template v-for="header in block.headers" :key="header + indexGroup">
-              <div class="w-1/5">
-                {{ header.label }}
-              </div>
-            </template>
-          </div> -->
-
-          <!-- <div v-for="(row, indexRow) in block.rows" :key="row">
-            <div class="flex items-center">
-              <div v-if="row.label" class="text-main font-semibold text-xss">
-                {{ row.label }}
-              </div>
-            </div>
-
-            <div class="flex">
-              <template v-for="(item, itemIndex) in row.elements" :key="item">
-                <div v-if="itemIndex === 0 && member.married" class="w-1/5">
-                  <template v-if="row.name !== 'total' && item.type === 'number' && row.can_join">
-                    <el-checkbox
-                      v-model="row.joined"
-                      label="Joint"
-                      size="small"
-                      :disabled="isLoadingUpdate"
-                      class="top-[6px]"
-                      @change="handleChange({ item, status: row.joined })"
-                    />
-                  </template>
-                </div>
-                <div v-if="!(row.joined && item.name === 'spouse')" class="mb-0 item-assets w-1/5">
-                  <el-form-item class="mb-4">
-                    <template v-if="item.calculated">
-                      <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
-                        <SwdSpinner />
-                      </div>
-                      <div v-else-if="item.name !== 'institution'" class="w-full font-semibold pl-2">
-                        {{ currencyFormat(ruleForm[item.model.group][item.model.model][item.model.item]) }}
-                      </div>
-                    </template>
-                    <template v-else>
-                      <SwdCurrencyInput
-                        v-if="item.type === 'number'"
-                        v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                        :options="optionsCurrencyInput"
-                        :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
-                        :placeholder="item.placeholder"
-                        prepend
-                        @blur="changeInput(item)"
-                        @focus="focus(item.model.group)"
-                      />
-                      <el-input
-                        v-if="item.type === 'string'"
-                        v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                        :placeholder="item.placeholder"
-                        :disabled="item.disabled || isLoadingUpdate || isLoadingDeleteRow"
-                        @blur="changeInput(item)"
-                        @focus="focus(item.model.group)"
-                      />
-                      <el-radio-group
-                        v-if="item.type === 'radio'"
-                        v-model="ruleForm[item.model.group][item.model.model][item.model.item]"
-                        @change="changeInput(item)"
-                      >
-                        <el-radio :label="true">Yes</el-radio>
-                        <el-radio :label="false">No</el-radio>
-                      </el-radio-group>
-                      <el-dropdown v-if="item.type === 'dropdown'" trigger="click" :disabled="isReadOnlyLead">
-                        <el-button>
-                          Add field
-                          <el-icon class="el-icon--right">
-                            <arrow-down />
-                          </el-icon>
-                        </el-button>
-                        <template #dropdown>
-                          <el-dropdown-menu>
-                            <el-dropdown-item
-                              v-for="option in item.options"
-                              :key="option"
-                              :disabled="isDisabled({ option, indexGroup })"
-                              @click="
-                                addLine({
-                                  model: item.model,
-                                  variable: option.name,
-                                  indexGroup,
-                                  canJoin: row.can_join,
-                                })
-                              "
-                            >
-                              {{ option.label }}
-                            </el-dropdown-item>
-                            <el-dropdown-item @click="showDialog({ item, indexGroup, indexRow })">
-                              Custom
-                            </el-dropdown-item>
-                          </el-dropdown-menu>
-                        </template>
-                      </el-dropdown>
-                    </template>
-                  </el-form-item>
-                </div>
-                <div
-                  v-if="row.custom && row.elements.length - 1 === itemIndex"
-                  class="w-[10%] flex justify-between px-4"
-                >
-                  <el-icon
-                    class="top-[5px] cursor-pointer"
-                    :size="20"
-                    color="red"
-                    @click="remove({ block, row, indexRow, indexGroup })"
-                  >
-                    <Delete />
-                  </el-icon>
-                  <el-icon
-                    class="top-[5px] cursor-pointer"
-                    :size="20"
-                    color="green"
-                    @click="
-                      addLine({
-                        model: item.model,
-                        variable: item.model.model,
-                        indexGroup,
-                        canJoin: row.can_join,
-                        copyLine: true,
-                      })
-                    "
-                  >
-                    <Plus />
-                  </el-icon>
-                </div>
-              </template>
-            </div>
-          </div> -->
         </div>
 
         <div class="flex justify-end my-10">
@@ -323,11 +194,10 @@ import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
-
 import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
-// import { ArrowDown } from '@element-plus/icons-vue'
 import { useHookCustomValidate } from '@/hooks/use-hook-custom-validate'
 import { ElMessageBox } from 'element-plus'
+import { useBreakpoints } from '@/hooks/use-breakpoints'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
@@ -376,6 +246,7 @@ export default {
 
     const { setInitValue } = useAssetsInfoHooks()
     const { setCustomValidate } = useHookCustomValidate()
+    const { screenType } = useBreakpoints()
 
     onMounted(async () => {
       store.commit('newClient/setStep', 2)
@@ -630,6 +501,12 @@ export default {
       return clientsInfo.value.readonly
     })
 
+    const getLabelJoint = computed(() => {
+      console.log('----', screenType.value)
+      if (screenType.value === 'md' || screenType.value === 'sm') return 'Joint(Owner join Spouse)'
+      return 'Joint'
+    })
+
     return {
       ruleForm,
       backStep,
@@ -675,6 +552,7 @@ export default {
       isCanJoin,
       remove,
       customRules,
+      getLabelJoint,
     }
   },
 }

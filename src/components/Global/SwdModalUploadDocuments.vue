@@ -308,7 +308,7 @@ export default {
     }
 
     const isFullScreen = computed(() => {
-      if (screenType.value === 'xs') return true
+      if (screenType.value === 'sm') return true
       return false
     })
 
