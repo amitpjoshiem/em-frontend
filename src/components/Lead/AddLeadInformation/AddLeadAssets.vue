@@ -31,59 +31,107 @@
             <span class="text-main text-xl font-semibold ml-2">{{ block.title }}</span>
           </div>
 
-          <div v-for="(row, indexRows) in block.rows" :key="indexRows">
-            <div class="text-main font-semibold text-xss">{{ row.label }}</div>
-            <div class="flex pb-2 mt-8 text-gray-500 text-xs">
-              <div class="w-1/5">Joint</div>
-              <div v-for="(header, indexHeader) in block.headers" :key="indexHeader" class="w-1/5">
-                {{ header.label }}
-              </div>
-            </div>
-            <div class="flex">
-              <div v-for="(itemRow, indexRow) in row.elements" :key="indexRow">
-                <SwdCurrencyInput
-                  v-if="itemRow.type === 'number'"
-                  v-model="ruleForm[itemRow.model.group][itemRow.model.model][itemRow.model.item]"
-                  :options="optionsCurrencyInput"
-                  :disabled="itemRow.disabled || isLoadingUpdate || isLoadingDeleteRow"
-                  :placeholder="itemRow.placeholder"
-                  prepend
-                  @blur="changeInput(itemRow)"
-                  @focus="focus(itemRow.model.group)"
-                />
-                <el-dropdown v-if="itemRow.type === 'dropdown'" trigger="click" :disabled="isReadOnlyLead">
-                  <el-button>
-                    Add field
-                    <el-icon class="el-icon--right">
-                      <arrow-down />
+          <el-form label-position="top">
+            <div v-for="(row, indexRows) in block.rows" :key="indexRows" class="border rounded px-3 pt-2 pb-4 mb-8">
+              <div class="text-main font-semibold text-xss mb-2">{{ row.label }}</div>
+              <div class="md:flex md:justify-between">
+                <el-form-item label="Joint" class="w-[15%] mb-4 md:mb-0">
+                  <el-checkbox
+                    v-model="row.joined"
+                    class="top-[5px] text-main"
+                    label="Joint"
+                    size="small"
+                    :disabled="isLoadingUpdate || !row.can_join"
+                    @change="handleChange({ item, status: row.joined })"
+                  />
+                </el-form-item>
+                <template v-for="(itemRow, indexRow) in row.elements" :key="indexRow">
+                  <el-form-item v-if="itemRow.type === 'number'" :label="itemRow.label" class="w-[15%] mb-4 md:mb-0">
+                    <SwdCurrencyInput
+                      v-model="ruleForm[itemRow.model.group][itemRow.model.model][itemRow.model.item]"
+                      :options="optionsCurrencyInput"
+                      :disabled="itemRow.disabled || isLoadingUpdate || isLoadingDeleteRow"
+                      :placeholder="itemRow.placeholder"
+                      prepend
+                      @blur="changeInput(itemRow)"
+                      @focus="focus(itemRow.model.group)"
+                    />
+                  </el-form-item>
+
+                  <el-form-item v-if="itemRow.type === 'string'" :label="itemRow.label" class="w-[15%] mb-4 md:mb-0">
+                    <el-input
+                      v-model="ruleForm[itemRow.model.group][itemRow.model.model][itemRow.model.item]"
+                      :placeholder="itemRow.placeholder"
+                      :disabled="itemRow.disabled || isLoadingUpdate || isLoadingDeleteRow"
+                      @blur="changeInput(itemRow)"
+                      @focus="focus(itemRow.model.group)"
+                    />
+                  </el-form-item>
+
+                  <el-form-item v-if="itemRow.type === 'dropdown'" class="w-[15%] mb-4 md:mb-0">
+                    <el-dropdown trigger="click" :disabled="isReadOnlyLead">
+                      <el-button>
+                        Add field
+                        <el-icon class="el-icon--right">
+                          <arrow-down />
+                        </el-icon>
+                      </el-button>
+                      <template #dropdown>
+                        <el-dropdown-menu>
+                          <el-dropdown-item
+                            v-for="option in itemRow.options"
+                            :key="option"
+                            :disabled="isDisabled({ option, indexGroup })"
+                            @click="
+                              addLine({
+                                model: item.model,
+                                variable: option.name,
+                                indexGroup,
+                                canJoin: row.can_join,
+                              })
+                            "
+                          >
+                            {{ option.label }}
+                          </el-dropdown-item>
+                          <el-dropdown-item @click="showDialog({ item: itemRow, indexGroup, indexRow })">
+                            Custom
+                          </el-dropdown-item>
+                        </el-dropdown-menu>
+                      </template>
+                    </el-dropdown>
+                  </el-form-item>
+                </template>
+                <el-form-item v-if="row.custom" label="Action" class="w-[15%]">
+                  <div class="flex justify-between">
+                    <el-icon
+                      class="top-[5px] cursor-pointer mr-2"
+                      :size="20"
+                      color="red"
+                      @click="remove({ block, row, indexRow, indexGroup })"
+                    >
+                      <Delete />
                     </el-icon>
-                  </el-button>
-                  <template #dropdown>
-                    <el-dropdown-menu>
-                      <el-dropdown-item
-                        v-for="option in itemRow.options"
-                        :key="option"
-                        :disabled="isDisabled({ option, indexGroup })"
-                        @click="
-                          addLine({
-                            model: item.model,
-                            variable: option.name,
-                            indexGroup,
-                            canJoin: row.can_join,
-                          })
-                        "
-                      >
-                        {{ option.label }}
-                      </el-dropdown-item>
-                      <el-dropdown-item @click="showDialog({ item: itemRow, indexGroup, indexRow })">
-                        Custom
-                      </el-dropdown-item>
-                    </el-dropdown-menu>
-                  </template>
-                </el-dropdown>
+                    <el-icon
+                      class="top-[5px] cursor-pointer ml-2"
+                      :size="20"
+                      color="green"
+                      @click="
+                        addLine({
+                          model: item.model,
+                          variable: item.model.model,
+                          indexGroup,
+                          canJoin: row.can_join,
+                          copyLine: true,
+                        })
+                      "
+                    >
+                      <Plus />
+                    </el-icon>
+                  </div>
+                </el-form-item>
               </div>
             </div>
-          </div>
+          </el-form>
 
           <!-- <div class="flex pb-2 mt-8 text-gray-500 text-xs">
             <div class="w-1/5">Joint</div>
@@ -276,8 +324,8 @@ import { useAlert } from '@/utils/use-alert'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
 
-// import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
-import { ArrowDown } from '@element-plus/icons-vue'
+import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
+// import { ArrowDown } from '@element-plus/icons-vue'
 import { useHookCustomValidate } from '@/hooks/use-hook-custom-validate'
 import { ElMessageBox } from 'element-plus'
 import IconActive from '@/assets/svg/icon-active.svg'
@@ -288,8 +336,8 @@ export default {
   name: 'AddLeadAssets',
   components: {
     ArrowDown,
-    // Delete,
-    // Plus,
+    Delete,
+    Plus,
   },
   setup() {
     const queryClient = useQueryClient()
