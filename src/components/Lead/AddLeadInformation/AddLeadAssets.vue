@@ -32,11 +32,7 @@
           </div>
 
           <el-form label-position="top">
-            <div
-              v-for="(row, indexRows) in block.rows"
-              :key="indexRows"
-              class="border rounded px-3 pt-2 md:pb-4 mb-2 md:mb-8"
-            >
+            <div v-for="(row, indexRows) in block.rows" :key="indexRows" class="px-3 pt-2 md:pb-4 mb-2 md:mb-8">
               <div class="text-primary font-semibold text-xss mb-2">{{ row.label }}</div>
               <div class="md:flex">
                 <el-form-item label="Joint" class="mb-4 md:mb-0 md:pr-2">
@@ -502,7 +498,6 @@ export default {
     })
 
     const getLabelJoint = computed(() => {
-      console.log('----', screenType.value)
       if (screenType.value === 'md' || screenType.value === 'sm') return 'Joint(Owner join Spouse)'
       return 'Joint'
     })
