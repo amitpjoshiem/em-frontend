@@ -10,6 +10,7 @@
               if (el) blocks[indexGroup] = el
             }
           "
+          v-loading="isLoadingUpdateModel"
           class="border border-main-gray p-5 rounded-md mb-10"
         >
           <div v-if="block.name === 'current_income'" class="flex items-center mb-5">
@@ -116,10 +117,9 @@
                             :disabled="isDisabled({ option, indexGroup })"
                             @click="
                               addLine({
-                                model: item.model,
-                                variable: option.name,
-                                indexGroup,
-                                canJoin: row.can_join,
+                                group: item.model.group,
+                                row: option.name,
+                                can_join: row.can_join,
                               })
                             "
                           >
@@ -149,11 +149,9 @@
                   color="green"
                   @click="
                     addLine({
-                      model: item.model,
-                      variable: item.model.model,
-                      indexGroup,
-                      canJoin: row.can_join,
-                      copyLine: true,
+                      group: item.model.group,
+                      row: item.model.model,
+                      can_join: row.can_join,
                     })
                   "
                 >
@@ -212,6 +210,7 @@ import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { updateMembersAssets } from '@/api/vueQuery/update-members-assets'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { checkCreateAssetsIncomeField } from '@/api/vueQuery/check-create-assets-income-field'
+import { createAssetsIncomeRow } from '@/api/vueQuery/create-assets-income-row'
 import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
 import { updateStepAssetsIncome } from '@/api/vueQuery/update-step-assets-income'
@@ -247,8 +246,9 @@ export default {
     const dialogVisible = ref(false)
     const newField = ref([])
     const fieldName = ref()
-    const isCanJoin = ref()
+    const isCanJoin = ref(false)
     const customRules = ref({})
+    const isLoadingUpdateModel = ref(false)
 
     const step = computed(() => store.state.newClient.step)
 
@@ -266,6 +266,7 @@ export default {
     // MUTATION
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
+    const { isLoading: isLoadingCreate, mutateAsync: createRow } = useMutation(createAssetsIncomeRow)
     const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
     const { mutateAsync: updateStep } = useMutation(updateStepAssetsIncome)
 
@@ -337,41 +338,50 @@ export default {
       })
     }
 
-    const addLine = async ({ model, variable, indexGroup, canJoin, copyLine = false }) => {
-      if (copyLine) {
-        let newItemIndex = 0
-        let newVariable = variable.split('_')[0]
-
-        // eslint-disable-next-line no-constant-condition
-        labelAddItem: while (true) {
-          const elem = schema[indexGroup].rows.find((item) => {
-            return item.name === newVariable
-          })
-
-          if (!elem) {
-            break labelAddItem
-          }
-          newItemIndex += 1
-          newVariable = variable.split('_')[0] + '_' + newItemIndex
-        }
-        variable = newVariable
+    const addLine = async ({ group, can_join, row }) => {
+      isLoadingUpdateModel.value = true
+      const data = {
+        group,
+        row,
+        can_join,
       }
-      Object.keys(schema[indexGroup].headers).forEach((element) => {
-        ruleForm[model.group][variable] = { [element]: null }
-      })
+
+      const res = await createRow({ id: leadId, data })
+      if (!('error' in res)) {
+        await queryClient.invalidateQueries(['memberAssets', leadId])
+        await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
+        updateSchema()
+        // setCustomValidate(ruleForm, customRules)
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Successfully created.',
+        })
+      }
+      isLoadingUpdateModel.value = false
+    }
+
+    const confirmCreateField = async () => {
+      const { item } = newField.value
+
+      const row = fieldName.value
+      const group = item.model.group
+      const can_join = isCanJoin.value
 
       const data = {
-        group: model.group,
-        row: variable,
-        element: 'owner',
-        type: 'string',
-        can_join: canJoin,
+        row,
+        group,
+        can_join,
       }
-      await updateMemberAssets({ data, id: leadId })
-      await queryClient.invalidateQueries(['memberAssets', leadId])
-      await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
-      updateSchema()
-      setCustomValidate(ruleForm, customRules)
+
+      const res = await checkCreateField({ id: leadId, data })
+
+      if (res.succes) {
+        addLine({ row, group, can_join })
+        dialogVisible.value = false
+        fieldName.value = ''
+        isCanJoin.value = ''
+      }
     }
 
     const changeInput = async (item) => {
@@ -431,27 +441,6 @@ export default {
           type: 'success',
           message: 'Remove success.',
         })
-      }
-    }
-
-    const confirmCreateField = async () => {
-      const { item, indexGroup, indexRow } = newField.value
-      const data = {
-        row: fieldName.value.trim(),
-        group: item.model.group,
-        can_join: isCanJoin.value,
-      }
-
-      const res = await checkCreateField({ id: leadId, data })
-
-      if (res.succes) {
-        const model = item.model
-        const variable = fieldName.value.trim().toLowerCase().replace(/ /g, '_')
-        const label = fieldName.value
-        addLine({ model, variable, label, indexGroup, indexRow: indexRow + 1, canJoin: isCanJoin.value })
-        dialogVisible.value = false
-        fieldName.value = ''
-        isCanJoin.value = ''
       }
     }
 
@@ -570,6 +559,9 @@ export default {
       isCanJoin,
       remove,
       customRules,
+      isLoadingCreate,
+      createRow,
+      isLoadingUpdateModel,
     }
   },
 }
