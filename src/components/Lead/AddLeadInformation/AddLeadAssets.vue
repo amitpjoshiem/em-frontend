@@ -258,8 +258,8 @@ export default {
     const leadId = route.params.id
 
     // FETCH
-    const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(leadId)
-    const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(leadId)
+    const { isLoading: isMemberAssetsLoading, data: memberAssets, isFetching } = useFetchMemberAssets(leadId)
+    const { isLoading: isMemberAssetsSchemaLoading, data: memberAssetsSchema } = useFetchMemberAssetsSchema(leadId)
     const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: leadId })
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
@@ -267,7 +267,7 @@ export default {
     const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
     const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
     const { isLoading: isLoadingCreate, mutateAsync: createRow } = useMutation(createAssetsIncomeRow)
-    const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
+    const { isLoading: isLoadingDeleteRow, mutateAsync: deleteRow } = useMutation(deleteAssetsIncomeRow)
     const { mutateAsync: updateStep } = useMutation(updateStepAssetsIncome)
 
     const { setInitValue } = useAssetsInfoHooks()
@@ -380,7 +380,7 @@ export default {
         addLine({ row, group, can_join })
         dialogVisible.value = false
         fieldName.value = ''
-        isCanJoin.value = ''
+        isCanJoin.value = false
       }
     }
 
@@ -428,7 +428,6 @@ export default {
 
     const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
       isLoadingUpdateModel.value = true
-
       const data = {
         row: row.name,
         group: block.name,
