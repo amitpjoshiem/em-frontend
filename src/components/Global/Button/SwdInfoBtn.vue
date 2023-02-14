@@ -71,9 +71,6 @@ export default {
       if (route.name === 'lead-expense-information') {
         await store.commit('globalComponents/setPageClientsHelp', 'prospect_monthly_expenses')
       }
-      if (route.name === 'email-help-information') {
-        await store.commit('globalComponents/setPageClientsHelp', 'email_help')
-      }
       refetch.value()
     }
 
