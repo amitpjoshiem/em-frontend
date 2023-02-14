@@ -427,6 +427,8 @@ export default {
     }
 
     const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
+      isLoadingUpdateModel.value = true
+
       const data = {
         row: row.name,
         group: block.name,
@@ -442,6 +444,7 @@ export default {
           message: 'Remove success.',
         })
       }
+      isLoadingUpdateModel.value = false
     }
 
     const showDialog = ({ item, indexGroup, indexRow }) => {
