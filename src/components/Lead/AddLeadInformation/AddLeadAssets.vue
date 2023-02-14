@@ -350,8 +350,8 @@ export default {
       if (!('error' in res)) {
         await queryClient.invalidateQueries(['memberAssets', leadId])
         await queryClient.invalidateQueries(['memberAssetsSchema', leadId])
-        updateSchema()
-        // setCustomValidate(ruleForm, customRules)
+        await updateSchema()
+        await setCustomValidate({ ruleForm, customRules })
         useAlert({
           title: 'Success',
           type: 'success',
