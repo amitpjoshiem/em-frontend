@@ -275,11 +275,11 @@
           </div>
         </el-form-item>
 
-        <div class="flex justify-end mb-5">
+        <div v-if="isShowAddJobOwnerBtn" class="flex justify-end mb-5 mt-2">
           <SwdButton primary main @click="addEmployment(ruleForm)">Add job</SwdButton>
         </div>
 
-        <div v-if="ruleForm.married" class="mb-5">
+        <div v-if="ruleForm.married" class="my-8">
           <div class="pb-2">
             <span class="text-main text-xs uppercase font-semibold">Spouse/Partner</span>
           </div>
@@ -341,7 +341,7 @@
               </el-button>
             </div>
           </el-form-item>
-          <div class="flex justify-end">
+          <div v-if="isShowAddJobSpouseBtn" class="flex justify-end mt-2">
             <SwdButton primary main @click="addEmploymentSpouse(ruleForm)">Add job</SwdButton>
           </div>
         </div>
@@ -667,6 +667,26 @@ export default {
       })
     }
 
+    const isShowAddJobOwnerBtn = computed(() => {
+      const index = ruleForm.employment_history.length - 1
+      if (
+        ruleForm.employment_history[index].company_name &&
+        ruleForm.employment_history[index].occupation &&
+        ruleForm.employment_history[index].years
+      ) {
+        return true
+      }
+      return false
+    })
+
+    const isShowAddJobSpouseBtn = computed(() => {
+      const index = ruleForm.spouse.employment_history.length - 1
+      if (ruleForm.spouse.employment_history[index].id) {
+        return true
+      }
+      return false
+    })
+
     return {
       ruleForm,
       rules,
@@ -690,6 +710,8 @@ export default {
       isDisabledForm,
       handleRemoveEmployment,
       handleRemoveEmploymentSpouse,
+      isShowAddJobOwnerBtn,
+      isShowAddJobSpouseBtn,
     }
   },
 }
