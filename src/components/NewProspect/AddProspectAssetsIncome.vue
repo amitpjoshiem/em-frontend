@@ -91,6 +91,7 @@
                               group: item.model.group,
                               row: option.name,
                               can_join: row.can_join,
+                              parent: item.name,
                             })
                           "
                         >
@@ -267,13 +268,14 @@ export default {
       }
     }
 
-    const addLine = async ({ group, can_join, row }) => {
+    const addLine = async ({ group, can_join, row, parent = null }) => {
       isLoadingUpdateModel.value = true
       const data = {
         group,
         row,
         can_join,
       }
+      if (parent) data.parent = parent
 
       const res = await createRow({ id: memberId, data })
       if (!('error' in res)) {
@@ -292,21 +294,19 @@ export default {
 
     const confirmCreateField = async () => {
       const { item } = newField.value
-
       const row = fieldName.value
       const group = item.model.group
       const can_join = isCanJoin.value
-
+      const parent = item.name
       const data = {
         row,
         group,
         can_join,
       }
-
       const res = await checkCreateField({ id: memberId, data })
 
       if (res.succes) {
-        addLine({ row, group, can_join })
+        addLine({ row, group, can_join, parent })
         dialogVisible.value = false
         fieldName.value = ''
         isCanJoin.value = false
