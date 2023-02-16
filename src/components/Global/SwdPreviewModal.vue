@@ -5,9 +5,9 @@
     width="90%"
     :before-close="closeDialog"
     destroy-on-close
-    class="mt-10 sm:mt-40 lg:mt-40"
+    class="mt-10 sm:mt-40 lg:mt-16"
   >
-    <div v-if="previewFile" class="overflow-y-scroll max-h-[500px]">
+    <div v-if="previewFile" class="overflow-y-scroll max-h-[65vh]">
       <img
         v-if="configImageExtension.includes(previewFile.extension.toLowerCase())"
         :src="previewFile.url"
