@@ -1,6 +1,6 @@
 <template>
   <SwdWrapper class="text-main">
-    <SwdSubHeader title="Help" :with-back-btn="false" />
+    <SwdSubHeader title="Help" with-back-btn />
     <div class="mb-10">
       <div class="font-semibold mb-2">Text editor</div>
       <QuillEditor v-model:content="dataProperty" content-type="html" theme="snow" toolbar="minimal" />
