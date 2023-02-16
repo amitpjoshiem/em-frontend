@@ -393,7 +393,7 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted, computed, watch, watchEffect } from 'vue'
+import { reactive, ref, onMounted, computed, watch } from 'vue'
 import { useMutation } from 'vue-query'
 import { useRouter, useRoute, onBeforeRouteLeave } from 'vue-router'
 import { useStore } from 'vuex'
@@ -538,15 +538,19 @@ export default {
       }
     })
 
-    watchEffect(() => {
-      if (isFetchingMember.value === false) {
-        setInitValue(ruleForm, member.value)
-      }
-    })
-
     const resetState = () => {
       Object.assign(ruleForm, initialBasicInformation)
     }
+
+    watch(
+      isFetchingMember,
+      (newValue, oldValue) => {
+        if (newValue === false && oldValue === true) {
+          setInitValue(ruleForm, member.value)
+        }
+      },
+      { immediate: true }
+    )
 
     watch(isUpdateMember, (newValue, oldValue) => {
       if (newValue !== oldValue && newValue === false) {
@@ -681,7 +685,11 @@ export default {
 
     const isShowAddJobSpouseBtn = computed(() => {
       const index = ruleForm.spouse.employment_history.length - 1
-      if (ruleForm.spouse.employment_history[index].id) {
+      if (
+        ruleForm.spouse.employment_history[index].company_name &&
+        ruleForm.spouse.employment_history[index].occupation &&
+        ruleForm.spouse.employment_history[index].years
+      ) {
         return true
       }
       return false
