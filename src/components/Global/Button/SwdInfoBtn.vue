@@ -76,10 +76,10 @@ export default {
         await store.commit('globalComponents/setPageClientsHelp', 'prospect_monthly_expenses')
       }
       if (route.name === 'relevant-financial-documents') {
-        await store.commit('globalComponents/setPageClientsHelp', 'step_2')
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_step_2')
       }
       if (route.name === 'confirmation-page') {
-        await store.commit('globalComponents/setPageClientsHelp', 'confirm')
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_confirm')
       }
       refetch.value()
     }

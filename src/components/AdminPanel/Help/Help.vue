@@ -21,10 +21,10 @@
         <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'prospect_monthly_expenses' } }">
           <SwdButton primary small class="mr-4">Expenses</SwdButton>
         </router-link>
-        <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'step_2' } }">
+        <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'prospect_step_2' } }">
           <SwdButton primary small class="mr-4">Step 2</SwdButton>
         </router-link>
-        <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'confirm' } }">
+        <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'prospect_confirm' } }">
           <SwdButton primary small class="mr-4">Confirmation page</SwdButton>
         </router-link>
       </div>
