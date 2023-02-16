@@ -47,7 +47,7 @@
 
         <div class="flex justify-end pt-4 sm:pt-0 sm:block">
           <el-button
-            v-if="configExtensionPreview.includes(file.extension.toLowerCase())"
+            v-if="configExtensionPreview.includes(file.extension)"
             type="primary"
             size="small"
             plain
