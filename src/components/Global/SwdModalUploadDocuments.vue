@@ -110,6 +110,7 @@
             @upload-change="handleChange"
             @upload-mounted="bindRef"
             @remove-media="removeMedia"
+            @upload-progress="uploadProgress"
           >
             <template #noDocuments>
               <div v-if="!inChangeFile" class="text-main text-center pt-5">No documents uploaded.</div>
@@ -123,7 +124,7 @@
       <span class="dialog-footer">
         <div class="flex justify-end">
           <SwdButton info main @click="closeDialog">Close</SwdButton>
-          <SwdButton class="ml-2 w-[100px]" primary main @click="save">
+          <SwdButton class="ml-2 w-[100px]" primary main :disabled="isLoadingMedia" @click="save">
             Save
             <SwdSpinner v-show="isLoadingUpload" class="mr-2" />
           </SwdButton>
@@ -163,6 +164,7 @@ export default {
     const collection = ref(null)
     const isDisabledSwitcher = ref(false)
     const validSwitcher = ref(true)
+    const isLoadingMedia = ref(false)
 
     const { setStatus } = useSetStatus()
     const { screenType } = useBreakpoints()
@@ -322,6 +324,14 @@ export default {
       return [...clientsDocsTypes.value, ...[{ value: 'other', label: 'Other' }]]
     })
 
+    const uploadProgress = (e) => {
+      if (e.percent !== 100) {
+        isLoadingMedia.value = true
+      } else {
+        isLoadingMedia.value = false
+      }
+    }
+
     return {
       dialogVisible,
       closeDialog,
@@ -347,6 +357,8 @@ export default {
       validSwitcher,
       isFetchingClientsDocsTypes,
       docsTypesList,
+      uploadProgress,
+      isLoadingMedia,
     }
   },
 }

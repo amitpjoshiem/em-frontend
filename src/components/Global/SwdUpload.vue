@@ -11,11 +11,11 @@
     :data="uploadData"
     :on-change="($event) => $emit('upload-change', $event)"
     :on-exceed="handleExceed"
+    :on-progress="handleProgress"
     :auto-upload="autoUpload"
     :disabled="disabled"
     with-credentials
     list-type="picture"
-    @on-change="($event) => $emit('upload-change', $event)"
   >
     <SwdButton v-if="showUploadBtn" primary small :disabled="disabled">Click to upload</SwdButton>
     <template v-if="showTip" #tip>
@@ -47,7 +47,7 @@
 
         <div class="flex justify-end pt-4 sm:pt-0 sm:block">
           <el-button
-            v-if="configExtensionPreview.includes(file.extension)"
+            v-if="file.extension && configExtensionPreview.includes(file.extension.toLowerCase())"
             type="primary"
             size="small"
             plain
@@ -153,6 +153,7 @@ export default {
     'upload-before',
     'upload-change',
     'upload-mounted',
+    'upload-progress',
     'open-prewiev',
     'remove-media',
   ],
@@ -254,6 +255,10 @@ export default {
       )
     }
 
+    const handleProgress = (e) => {
+      emit('upload-progress', e)
+    }
+
     const getExtension = (file) => {
       return file.name.match(/\.([^.]+)$|$/)[1]
     }
@@ -274,6 +279,7 @@ export default {
       handleExceed,
       getExtension,
       configExtensionPreview,
+      handleProgress,
     }
   },
 }
