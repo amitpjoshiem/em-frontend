@@ -51,6 +51,23 @@ export function useBasicInfoHooks() {
     }
   }
 
+  const setInitRules = (ruleForm) => {
+    for (let index = 0; index < ruleForm.employment_history.length; index++) {
+      rules.employment_history.push({
+        company_name: [employmentHistoryRule.company_name],
+        occupation: [employmentHistoryRule.occupation],
+        years: [employmentHistoryRule.years],
+      })
+    }
+    for (let index = 0; index < ruleForm.spouse.employment_history.length; index++) {
+      rules.spouse.employment_history.push({
+        company_name: [employmentHistoryRule.company_name],
+        occupation: [employmentHistoryRule.occupation],
+        years: [employmentHistoryRule.years],
+      })
+    }
+  }
+
   const addEmployment = (ruleForm) => {
     const length = ruleForm.employment_history.length
     ruleForm.employment_history.push({
@@ -143,6 +160,7 @@ export function useBasicInfoHooks() {
     changeCompanyNameSpouse,
     resetState,
     changeMarried,
+    setInitRules,
     getPlaceholder,
     optionsCurrencyInput,
   }
