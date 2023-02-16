@@ -449,6 +449,7 @@ export default {
       getPlaceholder,
       optionsCurrencyInput,
       changeMarried,
+      setInitRules,
     } = useBasicInfoHooks()
 
     let memberId
@@ -547,6 +548,7 @@ export default {
       (newValue, oldValue) => {
         if (newValue === false && oldValue === true) {
           setInitValue(ruleForm, member.value)
+          setInitRules(ruleForm)
         }
       },
       { immediate: true }

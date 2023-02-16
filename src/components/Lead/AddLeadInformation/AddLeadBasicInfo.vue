@@ -686,6 +686,7 @@ export default {
       getPlaceholder,
       optionsCurrencyInput,
       changeMarried,
+      setInitRules,
     } = useBasicInfoHooks()
 
     const ruleForm = reactive({
@@ -756,6 +757,7 @@ export default {
       (newValue, oldValue) => {
         if (newValue === false && oldValue === true) {
           setInitValue(ruleForm, member.value)
+          setInitRules(ruleForm)
           initRuleForm.value = cloneDeep(ruleForm)
         }
         if (
