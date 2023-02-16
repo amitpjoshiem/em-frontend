@@ -1,6 +1,6 @@
 <template>
   <SwdWrapper>
-    <SwdSubHeader title="Upload Relevant Financial Documents" />
+    <SwdSubHeader title="Upload Relevant Financial Documents" witch-info-btn />
     <!-- Investment/Retirement Statements -->
     <div class="border border-main-blue rounded p-4 my-8">
       <div class="text-center text-main font-semibold py-4">Investment/Retirement Statements</div>
