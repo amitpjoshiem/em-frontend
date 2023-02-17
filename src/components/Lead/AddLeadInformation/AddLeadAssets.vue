@@ -36,18 +36,28 @@
             <div v-for="(row, indexRows) in block.rows" :key="indexRows" class="px-3 pt-2 md:pb-4 mb-2 md:mb-8">
               <div class="text-primary font-semibold text-xss mb-2">{{ row.label }}</div>
               <div class="md:flex">
-                <el-form-item label="Joint" class="mb-4 md:mb-0 md:pr-2">
-                  <el-checkbox
-                    v-model="row.joined"
-                    class="top-[5px] text-main"
-                    :label="getLabelJoint"
-                    size="small"
-                    :disabled="isLoadingUpdate || !row.can_join"
-                    @change="handleChange({ item, status: row.joined })"
-                  />
-                </el-form-item>
+                <div class="md:w-[14%] mb-4 md:mb-0 md:pr-2">
+                  <el-form-item
+                    v-if="row.elements[0].type !== 'dropdown' && row.elements[0].type !== 'total'"
+                    label="Joint"
+                  >
+                    <el-checkbox
+                      v-model="row.joined"
+                      class="top-[5px] text-main"
+                      :label="getLabelJoint"
+                      size="small"
+                      :disabled="isLoadingUpdate || !row.can_join"
+                      @change="handleChange({ item, status: row.joined })"
+                    />
+                  </el-form-item>
+                </div>
+
                 <template v-for="(itemRow, indexRow) in row.elements" :key="indexRow">
-                  <el-form-item v-if="itemRow.type === 'number'" :label="itemRow.label" class="mb-4 md:mb-0 md:px-2">
+                  <el-form-item
+                    v-if="itemRow.type === 'number'"
+                    :label="itemRow.label"
+                    class="mb-4 md:mb-0 md:px-2 md:w-[18%]"
+                  >
                     <SwdCurrencyInput
                       v-model="ruleForm[itemRow.model.group][itemRow.model.model][itemRow.model.item]"
                       :options="optionsCurrencyInput"
@@ -59,7 +69,11 @@
                     />
                   </el-form-item>
 
-                  <el-form-item v-if="itemRow.type === 'string'" :label="itemRow.label" class="mb-4 md:mb-0 md:px-2">
+                  <el-form-item
+                    v-if="itemRow.type === 'string'"
+                    :label="itemRow.label"
+                    class="mb-4 md:mb-0 md:px-2 md:w-[18%]"
+                  >
                     <el-input
                       v-model="ruleForm[itemRow.model.group][itemRow.model.model][itemRow.model.item]"
                       :placeholder="itemRow.placeholder"
@@ -69,7 +83,17 @@
                     />
                   </el-form-item>
 
-                  <el-form-item v-if="itemRow.type === 'dropdown'" class="mb-4 md:mb-0">
+                  <el-form-item
+                    v-if="itemRow.type === 'total'"
+                    :label="itemRow.label"
+                    class="mb-4 md:mb-0 md:px-2 md:w-[18%]"
+                  >
+                    <div>
+                      {{ ruleForm[itemRow.model.group][itemRow.model.model][itemRow.model.item] }}
+                    </div>
+                  </el-form-item>
+
+                  <el-form-item v-if="itemRow.type === 'dropdown'" class="mb-4 md:mb-0 md:w-[14%]">
                     <el-dropdown trigger="click" :disabled="isReadOnlyLead">
                       <el-button>
                         Add field
@@ -102,7 +126,7 @@
                     </el-dropdown>
                   </el-form-item>
                 </template>
-                <el-form-item v-if="row.custom" label="Action" class="">
+                <el-form-item v-if="row.custom" label="Action">
                   <div class="flex justify-between">
                     <el-icon
                       class="top-[5px] cursor-pointer mr-2"
