@@ -110,6 +110,7 @@
             @upload-change="handleChange"
             @upload-mounted="bindRef"
             @remove-media="removeMedia"
+            @upload-progress="uploadProgress"
           >
             <template #noDocuments>
               <div v-if="!inChangeFile" class="text-main text-center pt-5">No documents uploaded.</div>
@@ -123,7 +124,7 @@
       <span class="dialog-footer">
         <div class="flex justify-end">
           <SwdButton info main @click="closeDialog">Close</SwdButton>
-          <SwdButton class="ml-2 w-[100px]" primary main @click="save">
+          <SwdButton class="ml-2 w-[100px]" primary main :disabled="isLoadingMedia" @click="save">
             Save
             <SwdSpinner v-show="isLoadingUpload" class="mr-2" />
           </SwdButton>
@@ -163,6 +164,7 @@ export default {
     const collection = ref(null)
     const isDisabledSwitcher = ref(false)
     const validSwitcher = ref(true)
+    const isLoadingMedia = ref(false)
 
     const { setStatus } = useSetStatus()
     const { screenType } = useBreakpoints()
@@ -245,6 +247,13 @@ export default {
       removeMedia()
     }
 
+    const getNameData = computed(() => {
+      if (ruleForm.is_spouse) {
+        return (ruleForm.last_name + ' ' + ruleForm.first_name).replace(/\s+/g, ' ').trim().replace(/ /gi, ',')
+      }
+      return ruleForm.name.replace(/\s+/g, ' ').trim().replace(/ /gi, ',')
+    })
+
     const save = async (e) => {
       e.preventDefault()
       if (!ruleForm.uuids.length) validUpload.value = false
@@ -257,7 +266,7 @@ export default {
             uuids: ruleForm.uuids,
             description: ruleForm.description,
             is_spouse: ruleForm.is_spouse,
-            name: ruleForm.is_spouse ? ruleForm.last_name + ' ' + ruleForm.first_name : ruleForm.name,
+            name: getNameData.value,
           }
           if (ruleForm.type && ruleForm.type === 'other') data.type = ruleForm.custom_type
           if (ruleForm.type && ruleForm.type !== 'other') data.type = ruleForm.type
@@ -315,6 +324,14 @@ export default {
       return [...clientsDocsTypes.value, ...[{ value: 'other', label: 'Other' }]]
     })
 
+    const uploadProgress = (e) => {
+      if (e.percent !== 100) {
+        isLoadingMedia.value = true
+      } else {
+        isLoadingMedia.value = false
+      }
+    }
+
     return {
       dialogVisible,
       closeDialog,
@@ -340,6 +357,8 @@ export default {
       validSwitcher,
       isFetchingClientsDocsTypes,
       docsTypesList,
+      uploadProgress,
+      isLoadingMedia,
     }
   },
 }

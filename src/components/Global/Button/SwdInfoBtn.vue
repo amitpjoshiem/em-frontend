@@ -8,8 +8,13 @@
       <InfoFilled color="#66B6FF" />
     </el-icon>
   </div>
-
-  <el-dialog v-model="dialogVisible" title="Info" :width="getModalWidth" :fullscreen="getFullScreenModal">
+  <el-dialog
+    v-model="dialogVisible"
+    title="Info"
+    :width="getModalWidth"
+    :fullscreen="getFullScreenModal"
+    destroy-on-close
+  >
     <el-scrollbar v-loading="isFetching" class="pr-[15px]">
       <div v-if="!isFetching && data" class="text-main">
         <div v-if="data.url" class="mb-4">
@@ -26,7 +31,6 @@
         </div>
       </div>
     </el-scrollbar>
-
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Close</el-button>
@@ -70,6 +74,12 @@ export default {
       }
       if (route.name === 'lead-expense-information') {
         await store.commit('globalComponents/setPageClientsHelp', 'prospect_monthly_expenses')
+      }
+      if (route.name === 'relevant-financial-documents') {
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_step_2')
+      }
+      if (route.name === 'confirmation-page') {
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_confirm')
       }
       refetch.value()
     }

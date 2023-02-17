@@ -251,14 +251,9 @@
                   @blur="blur('house')"
                 />
               </el-form-item>
-              <el-form-item
-                v-if="ruleForm.house.type !== 'rent'"
-                label="Monthly payments"
-                prop="house.total_debt"
-                class="mb-4 sm:w-4/12 sm:px-2"
-              >
+              <el-form-item label="Monthly payments" prop="house.monthly_payments" class="mb-4 sm:w-4/12 sm:px-2">
                 <SwdCurrencyInput
-                  v-model="ruleForm.house.total_debt"
+                  v-model="ruleForm.house.monthly_payments"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
                   prepend
@@ -275,21 +270,6 @@
                 <SwdCurrencyInput
                   v-model="ruleForm.house.remaining_mortgage_amount"
                   :options="optionsCurrencyInput"
-                  prepend
-                  @focus="focus('house')"
-                  @blur="blur('house')"
-                />
-              </el-form-item>
-              <el-form-item
-                v-if="ruleForm.house.type === 'rent'"
-                label="Monthly payments"
-                prop="house.monthly_payment"
-                class="mb-4 sm:w-4/12"
-              >
-                <SwdCurrencyInput
-                  v-model="ruleForm.house.monthly_payment"
-                  :options="optionsCurrencyInput"
-                  placeholder="$12345"
                   prepend
                   @focus="focus('house')"
                   @blur="blur('house')"
@@ -407,17 +387,16 @@
                   </el-button>
                 </div>
               </div>
-              <div class="flex justify-end mt-4">
-                <SwdButton
-                  v-if="index === ruleForm.employment_history.length - 1"
-                  primary
-                  main
-                  :disabled="isLoadingUpdateMember || isDisabledForm"
-                  @click="addEmployment(ruleForm)"
-                >
-                  Add job
-                </SwdButton>
-              </div>
+            </div>
+            <div v-if="isShowAddJobOwnerBtn" class="flex justify-end mt-4">
+              <SwdButton
+                primary
+                main
+                :disabled="isLoadingUpdateMember || isDisabledForm"
+                @click="addEmployment(ruleForm)"
+              >
+                Add job
+              </SwdButton>
             </div>
 
             <div v-if="ruleForm.married" class="mt-5">
@@ -502,17 +481,17 @@
                     </el-button>
                   </div>
                 </div>
-                <div class="flex justify-end mt-4">
-                  <SwdButton
-                    v-if="index === ruleForm.spouse.employment_history.length - 1"
-                    primary
-                    main
-                    :disabled="isLoadingUpdateMember || isDisabledForm"
-                    @click="addEmploymentSpouse(ruleForm)"
-                  >
-                    Add job
-                  </SwdButton>
-                </div>
+              </div>
+              <div class="flex justify-end mt-4">
+                <SwdButton
+                  v-if="isShowAddJobSpouseBtn"
+                  primary
+                  main
+                  :disabled="isLoadingUpdateMember || isDisabledForm"
+                  @click="addEmploymentSpouse(ruleForm)"
+                >
+                  Add job
+                </SwdButton>
               </div>
             </div>
           </div>
@@ -707,6 +686,7 @@ export default {
       getPlaceholder,
       optionsCurrencyInput,
       changeMarried,
+      setInitRules,
     } = useBasicInfoHooks()
 
     const ruleForm = reactive({
@@ -744,9 +724,8 @@ export default {
       house: {
         type: 'own',
         market_value: null,
-        monthly_payments: null,
         remaining_mortgage_amount: null,
-        monthly_payment: null,
+        monthly_payments: null,
         total_monthly_expenses: null,
       },
       employment_history: [
@@ -778,6 +757,7 @@ export default {
       (newValue, oldValue) => {
         if (newValue === false && oldValue === true) {
           setInitValue(ruleForm, member.value)
+          setInitRules(ruleForm)
           initRuleForm.value = cloneDeep(ruleForm)
         }
         if (
@@ -884,33 +864,45 @@ export default {
     }
 
     const handleRemoveEmployment = async (index) => {
-      const res = await deleteEmployment(ruleForm.employment_history[index].id)
-      if (!('error' in res)) {
-        ruleForm.employment_history.splice(index, 1)
-        if (!ruleForm.employment_history.length) {
-          ruleForm.employment_history.push({
-            company_name: '',
-            occupation: '',
-            years: '',
-          })
+      ElMessageBox.confirm('Are you sure to delete this?', 'Info', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }).then(async () => {
+        const res = await deleteEmployment(ruleForm.employment_history[index].id)
+        if (!('error' in res)) {
+          ruleForm.employment_history.splice(index, 1)
+          if (!ruleForm.employment_history.length) {
+            ruleForm.employment_history.push({
+              company_name: '',
+              occupation: '',
+              years: '',
+            })
+          }
+          showSuccessMessage()
         }
-        showSuccessMessage()
-      }
+      })
     }
 
     const handleRemoveEmploymentSpouse = async (index) => {
-      const res = await deleteEmployment(ruleForm.employment_history[index].id)
-      if (!('error' in res)) {
-        ruleForm.spouse.employment_history.splice(index, 1)
-        if (!ruleForm.spouse.employment_history.length) {
-          ruleForm.spouse.employment_history.push({
-            company_name: '',
-            occupation: '',
-            years: '',
-          })
+      ElMessageBox.confirm('Are you sure to delete this?', 'Info', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }).then(async () => {
+        const res = await deleteEmployment(ruleForm.spouse.employment_history[index].id)
+        if (!('error' in res)) {
+          ruleForm.spouse.employment_history.splice(index, 1)
+          if (!ruleForm.spouse.employment_history.length) {
+            ruleForm.spouse.employment_history.push({
+              company_name: '',
+              occupation: '',
+              years: '',
+            })
+          }
+          showSuccessMessage()
         }
-        showSuccessMessage()
-      }
+      })
     }
 
     const showSuccessMessage = () => {
@@ -937,6 +929,22 @@ export default {
       if (type === 'other') isFocusOther.value = false
       handleChange()
     }
+
+    const isShowAddJobOwnerBtn = computed(() => {
+      const index = ruleForm.employment_history.length - 1
+      if (ruleForm.employment_history[index].id) {
+        return true
+      }
+      return false
+    })
+
+    const isShowAddJobSpouseBtn = computed(() => {
+      const index = ruleForm.spouse.employment_history.length - 1
+      if (ruleForm.spouse.employment_history[index].id) {
+        return true
+      }
+      return false
+    })
 
     return {
       ruleForm,
@@ -976,6 +984,8 @@ export default {
       isReadOnlyLead,
       handleRemoveEmployment,
       handleRemoveEmploymentSpouse,
+      isShowAddJobOwnerBtn,
+      isShowAddJobSpouseBtn,
     }
   },
 }

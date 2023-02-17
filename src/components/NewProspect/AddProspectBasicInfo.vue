@@ -174,9 +174,9 @@
           </el-form-item>
         </div>
         <div class="flex mt-5">
-          <el-form-item label="Monthly payments" prop="house.total_debt" class="w-5/12 pr-4">
+          <el-form-item label="Monthly payments" prop="house.monthly_payments" class="w-5/12 pr-4">
             <SwdCurrencyInput
-              v-model="ruleForm.house.total_debt"
+              v-model="ruleForm.house.monthly_payments"
               :options="optionsCurrencyInput"
               placeholder="$12345"
               @blur="changeInput"
@@ -275,11 +275,11 @@
           </div>
         </el-form-item>
 
-        <div class="flex justify-end mb-5">
+        <div v-if="isShowAddJobOwnerBtn" class="flex justify-end mb-5 mt-2">
           <SwdButton primary main @click="addEmployment(ruleForm)">Add job</SwdButton>
         </div>
 
-        <div v-if="ruleForm.married" class="mb-5">
+        <div v-if="ruleForm.married" class="my-8">
           <div class="pb-2">
             <span class="text-main text-xs uppercase font-semibold">Spouse/Partner</span>
           </div>
@@ -341,7 +341,7 @@
               </el-button>
             </div>
           </el-form-item>
-          <div class="flex justify-end">
+          <div v-if="isShowAddJobSpouseBtn" class="flex justify-end mt-2">
             <SwdButton primary main @click="addEmploymentSpouse(ruleForm)">Add job</SwdButton>
           </div>
         </div>
@@ -393,7 +393,7 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted, computed, watch, watchEffect } from 'vue'
+import { reactive, ref, onMounted, computed, watch } from 'vue'
 import { useMutation } from 'vue-query'
 import { useRouter, useRoute, onBeforeRouteLeave } from 'vue-router'
 import { useStore } from 'vuex'
@@ -449,6 +449,7 @@ export default {
       getPlaceholder,
       optionsCurrencyInput,
       changeMarried,
+      setInitRules,
     } = useBasicInfoHooks()
 
     let memberId
@@ -484,9 +485,8 @@ export default {
       house: {
         type: 'own',
         market_value: null,
-        monthly_payments: null,
         remaining_mortgage_amount: null,
-        monthly_payment: null,
+        monthly_payments: null,
         total_monthly_expenses: null,
       },
       employment_history: [
@@ -539,15 +539,20 @@ export default {
       }
     })
 
-    watchEffect(() => {
-      if (isFetchingMember.value === false) {
-        setInitValue(ruleForm, member.value)
-      }
-    })
-
     const resetState = () => {
       Object.assign(ruleForm, initialBasicInformation)
     }
+
+    watch(
+      isFetchingMember,
+      (newValue, oldValue) => {
+        if (newValue === false && oldValue === true) {
+          setInitValue(ruleForm, member.value)
+          setInitRules(ruleForm)
+        }
+      },
+      { immediate: true }
+    )
 
     watch(isUpdateMember, (newValue, oldValue) => {
       if (newValue !== oldValue && newValue === false) {
@@ -668,6 +673,30 @@ export default {
       })
     }
 
+    const isShowAddJobOwnerBtn = computed(() => {
+      const index = ruleForm.employment_history.length - 1
+      if (
+        ruleForm.employment_history[index].company_name &&
+        ruleForm.employment_history[index].occupation &&
+        ruleForm.employment_history[index].years
+      ) {
+        return true
+      }
+      return false
+    })
+
+    const isShowAddJobSpouseBtn = computed(() => {
+      const index = ruleForm.spouse.employment_history.length - 1
+      if (
+        ruleForm.spouse.employment_history[index].company_name &&
+        ruleForm.spouse.employment_history[index].occupation &&
+        ruleForm.spouse.employment_history[index].years
+      ) {
+        return true
+      }
+      return false
+    })
+
     return {
       ruleForm,
       rules,
@@ -691,6 +720,8 @@ export default {
       isDisabledForm,
       handleRemoveEmployment,
       handleRemoveEmploymentSpouse,
+      isShowAddJobOwnerBtn,
+      isShowAddJobSpouseBtn,
     }
   },
 }

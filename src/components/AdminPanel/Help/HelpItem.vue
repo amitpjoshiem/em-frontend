@@ -1,7 +1,6 @@
 <template>
   <SwdWrapper class="text-main">
-    <SwdSubHeader title="Help" :with-back-btn="false" />
-
+    <SwdSubHeader title="Help" with-back-btn />
     <div class="mb-10">
       <div class="font-semibold mb-2">Text editor</div>
       <QuillEditor v-model:content="dataProperty" content-type="html" theme="snow" toolbar="minimal" />
@@ -9,7 +8,6 @@
         <SwdButton primary main @click="saveText">Save</SwdButton>
       </div>
     </div>
-
     <div class="font-semibold mb-2">Video</div>
     <div v-if="isLoading" v-loading="isLoading" class="p-5 border rounded-md h-[400px]" />
     <div v-if="!isLoading" class="p-5 border rounded-md">
@@ -45,12 +43,12 @@
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import { useFetchApClientsHelpFind } from '@/api/admin-panel/use-fetch-ap-clients-help-find.js'
 import { updateAdminPanelHelp } from '@/api/vueQuery/admin-panel/update-admin-panel-help'
+import { deleteAdminPanelHelpVideo } from '@/api/vueQuery/admin-panel/delete-help-video'
 import { useRoute } from 'vue-router'
 import { ref, reactive, watch } from 'vue'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
 import { ElMessageBox } from 'element-plus'
-
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
@@ -77,6 +75,7 @@ export default {
 
     const { isLoading, isError, data: itemHelp } = useFetchApClientsHelpFind(id)
     const { mutateAsync: updateHelp } = useMutation(updateAdminPanelHelp)
+    const { mutateAsync: handleDeleteVideo } = useMutation(deleteAdminPanelHelpVideo)
 
     const bindRef = (ref) => {
       upload.value = ref.value
@@ -123,7 +122,7 @@ export default {
         type: 'warning',
       })
         .then(async () => {
-          const res = await updateHelp({ type: itemHelp.value.type, data: { url: '' } })
+          const res = await handleDeleteVideo({ section: itemHelp.value.type })
           if (!('error' in res)) {
             useAlert({
               title: 'Success',
@@ -148,7 +147,6 @@ export default {
       handleChange,
       saveText,
       removeVideo,
-
       dataProperty,
     }
   },
