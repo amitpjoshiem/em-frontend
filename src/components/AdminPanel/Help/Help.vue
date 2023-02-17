@@ -2,14 +2,6 @@
   <SwdWrapper>
     <SwdSubHeader title="Help" :with-back-btn="false" />
     <el-card class="mb-4">
-      <div class="text-center font-semibold text-main">General</div>
-      <div class="flex flex-wrap mt-4">
-        <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'email_help' } }">
-          <SwdButton primary small class="">Email Help</SwdButton>
-        </router-link>
-      </div>
-    </el-card>
-    <el-card class="mb-4">
       <div class="text-center font-semibold text-main">Lead portal</div>
       <div class="flex flex-wrap mt-4">
         <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'prospect_basic' } }">
@@ -26,6 +18,9 @@
         </router-link>
         <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'prospect_confirm' } }">
           <SwdButton primary small class="mr-4">Confirmation page</SwdButton>
+        </router-link>
+        <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'prospect_email_help' } }">
+          <SwdButton primary small class="">Email Help</SwdButton>
         </router-link>
       </div>
     </el-card>
