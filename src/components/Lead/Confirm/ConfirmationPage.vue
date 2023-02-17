@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isLoadingInfo" class="p-2 sm:p-5 lg:max-w-5xl lg:my-0 lg:mx-auto lg:w-[960px]">
-    <SwdSubHeader :title="getTitle" :with-back-btn="!isReadOnlyLead" />
+    <SwdSubHeader :title="getTitle" :with-back-btn="!isReadOnlyLead" :witch-info-btn="$can('lead', 'all')" />
 
     <div class="border border-border-blue rounded-md p-5 mb-4">
       <div class="flex items-center mb-4">

@@ -62,33 +62,33 @@ const rules = {
   ],
   zip: [{ type: 'string', required: true, len: 5, message: 'Invalid zip', trigger: 'blur' }],
   employment_history: [
-    {
-      company_name: [
-        {
-          type: 'string',
-          errorText: 'The field cannot be empty',
-          required: false,
-          trigger: 'change',
-          validator: customValidate,
-        },
-      ],
-      occupation: [
-        {
-          type: 'string',
-          errorText: 'The field cannot be empty',
-          required: false,
-          trigger: 'change',
-          validator: customValidate,
-        },
-      ],
-      years: [
-        {
-          validator: validateNumber,
-          trigger: 'change',
-          required: false,
-        },
-      ],
-    },
+    // {
+    //   company_name: [
+    //     {
+    //       type: 'string',
+    //       errorText: 'The field cannot be empty',
+    //       required: false,
+    //       trigger: 'change',
+    //       validator: customValidate,
+    //     },
+    //   ],
+    //   occupation: [
+    //     {
+    //       type: 'string',
+    //       errorText: 'The field cannot be empty',
+    //       required: true,
+    //       trigger: 'change',
+    //       validator: customValidate,
+    //     },
+    //   ],
+    //   years: [
+    //     {
+    //       validator: validateNumber,
+    //       trigger: 'change',
+    //       required: true,
+    //     },
+    //   ],
+    // },
   ],
 
   // SPOUSE
@@ -134,33 +134,33 @@ const rules = {
       },
     ],
     employment_history: [
-      {
-        company_name: [
-          {
-            type: 'string',
-            errorText: 'The field cannot be empty',
-            required: false,
-            trigger: 'change',
-            validator: customValidate,
-          },
-        ],
-        occupation: [
-          {
-            type: 'string',
-            errorText: 'The field cannot be empty',
-            required: false,
-            trigger: 'change',
-            validator: customValidate,
-          },
-        ],
-        years: [
-          {
-            validator: validateNumber,
-            trigger: 'change',
-            required: false,
-          },
-        ],
-      },
+      // {
+      //   company_name: [
+      //     {
+      //       type: 'string',
+      //       errorText: 'The field cannot be empty',
+      //       required: false,
+      //       trigger: 'change',
+      //       validator: customValidate,
+      //     },
+      //   ],
+      //   occupation: [
+      //     {
+      //       type: 'string',
+      //       errorText: 'The field cannot be empty',
+      //       required: true,
+      //       trigger: 'change',
+      //       validator: customValidate,
+      //     },
+      //   ],
+      //   years: [
+      //     {
+      //       validator: validateNumber,
+      //       trigger: 'change',
+      //       required: true,
+      //     },
+      //   ],
+      // },
     ],
   },
   house: {
@@ -202,14 +202,14 @@ const employmentHistoryRule = {
   occupation: {
     type: 'string',
     errorText: 'The field cannot be empty',
-    required: false,
+    required: true,
     trigger: 'change',
     validator: customValidate,
   },
   years: {
     type: 'string',
     errorText: 'The field cannot be empty',
-    required: false,
+    required: true,
     trigger: 'change',
     validator: customValidate,
   },

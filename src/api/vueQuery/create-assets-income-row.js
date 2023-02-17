@@ -1,11 +1,11 @@
 import { fetcher } from '@/api/fetcher/fetcher'
 
-function createAssetsIncome(data) {
+function createAssetsIncomeRow({ id, data }) {
   return fetcher({
-    url: `/assets_income`,
+    url: `/assets_income/row/${id}`,
     data,
     options: { method: 'POST' },
   })
 }
 
-export { createAssetsIncome }
+export { createAssetsIncomeRow }

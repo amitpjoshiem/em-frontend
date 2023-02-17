@@ -1,5 +1,8 @@
 <template>
   <div class="border-b border-color-grey flex h-14">
+    <div class="mx-2">
+      <BackButton class="flex items-center justify-center mt-5" text="Back" @click="$router.go(-1)" />
+    </div>
     <router-link :to="{ name: 'profile' }">
       <div class="p-5 text-sm text-main cursor-pointer" :class="{ active: getActiveTab === 'profile' }">
         Profile settings

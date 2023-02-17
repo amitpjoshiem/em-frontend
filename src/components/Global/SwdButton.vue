@@ -1,7 +1,5 @@
 <template>
   <div
-    :disabled="disabled"
-    :loading="loading"
     class="flex items-center justify-center rounded cursor-pointer"
     :class="{
       'opacity-60': disabled,
@@ -34,11 +32,6 @@ export default defineComponent({
   name: 'SwdButton',
   props: {
     disabled: {
-      type: Boolean,
-      require: false,
-      default: false,
-    },
-    loading: {
       type: Boolean,
       require: false,
       default: false,
