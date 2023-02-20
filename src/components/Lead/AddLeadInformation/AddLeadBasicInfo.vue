@@ -381,6 +381,8 @@
                       ruleForm.employment_history[index].years
                     "
                     type="danger"
+                    :disabled="isLoadingDeleteEmployment || isLoadingUpdateMember"
+                    :loading="isLoadingDeleteEmployment"
                     plain
                     @click="handleRemoveEmployment(index)"
                   >
@@ -476,6 +478,8 @@
                         ruleForm.spouse.employment_history[index].years
                       "
                       type="danger"
+                      :disabled="isLoadingDeleteEmployment || isLoadingUpdateMember"
+                      :loading="isLoadingDeleteEmployment"
                       plain
                       @click="handleRemoveEmploymentSpouse(index)"
                     >
@@ -677,7 +681,7 @@ export default {
 
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
-    const { mutateAsync: deleteEmployment } = useMutation(deleteEmploymentHistory)
+    const { isLoading: isLoadingDeleteEmployment, mutateAsync: deleteEmployment } = useMutation(deleteEmploymentHistory)
 
     const {
       setInitValue,
@@ -689,6 +693,8 @@ export default {
       optionsCurrencyInput,
       changeMarried,
       setInitRules,
+      removeEmployment,
+      removeEmploymentSpouse,
     } = useBasicInfoHooks()
 
     const ruleForm = reactive({
@@ -866,45 +872,39 @@ export default {
     }
 
     const handleRemoveEmployment = async (index) => {
-      ElMessageBox.confirm('Are you sure to delete this?', 'Info', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-      }).then(async () => {
-        const res = await deleteEmployment(ruleForm.employment_history[index].id)
-        if (!('error' in res)) {
-          ruleForm.employment_history.splice(index, 1)
-          if (!ruleForm.employment_history.length) {
-            ruleForm.employment_history.push({
-              company_name: '',
-              occupation: '',
-              years: '',
-            })
+      if (member.value.step !== 'default') {
+        ElMessageBox.confirm('Are you sure to delete this?', 'Info', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+        }).then(async () => {
+          const res = await deleteEmployment(ruleForm.employment_history[index].id)
+          if (!('error' in res)) {
+            removeEmployment({ ruleForm, index })
+            showSuccessMessage()
           }
-          showSuccessMessage()
-        }
-      })
+        })
+      } else {
+        removeEmployment({ ruleForm, index })
+      }
     }
 
     const handleRemoveEmploymentSpouse = async (index) => {
-      ElMessageBox.confirm('Are you sure to delete this?', 'Info', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-      }).then(async () => {
-        const res = await deleteEmployment(ruleForm.spouse.employment_history[index].id)
-        if (!('error' in res)) {
-          ruleForm.spouse.employment_history.splice(index, 1)
-          if (!ruleForm.spouse.employment_history.length) {
-            ruleForm.spouse.employment_history.push({
-              company_name: '',
-              occupation: '',
-              years: '',
-            })
+      if (member.value.step !== 'default') {
+        ElMessageBox.confirm('Are you sure to delete this?', 'Info', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+        }).then(async () => {
+          const res = await deleteEmployment(ruleForm.spouse.employment_history[index].id)
+          if (!('error' in res)) {
+            removeEmploymentSpouse({ ruleForm, index })
+            showSuccessMessage()
           }
-          showSuccessMessage()
-        }
-      })
+        })
+      } else {
+        removeEmploymentSpouse({ ruleForm, index })
+      }
     }
 
     const showSuccessMessage = () => {
@@ -934,17 +934,28 @@ export default {
 
     const isShowAddJobOwnerBtn = computed(() => {
       const index = ruleForm.employment_history.length - 1
-      if (ruleForm.employment_history[index].id) {
+      if (
+        ruleForm.employment_history[index].company_name &&
+        ruleForm.employment_history[index].occupation &&
+        ruleForm.employment_history[index].years
+      ) {
         return true
       }
+
       return false
     })
 
     const isShowAddJobSpouseBtn = computed(() => {
       const index = ruleForm.spouse.employment_history.length - 1
-      if (ruleForm.spouse.employment_history[index].id) {
+
+      if (
+        ruleForm.spouse.employment_history[index].company_name &&
+        ruleForm.spouse.employment_history[index].occupation &&
+        ruleForm.spouse.employment_history[index].years
+      ) {
         return true
       }
+
       return false
     })
 
@@ -988,6 +999,7 @@ export default {
       handleRemoveEmploymentSpouse,
       isShowAddJobOwnerBtn,
       isShowAddJobSpouseBtn,
+      isLoadingDeleteEmployment,
     }
   },
 }
