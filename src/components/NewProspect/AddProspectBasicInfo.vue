@@ -43,7 +43,7 @@
           <el-form-item label="Phone" prop="phone" class="w-4/12 px-5">
             <el-input
               v-model="ruleForm.phone"
-              v-maska="'(###) ###-####'"
+              v-maska="'(###)###-####'"
               placeholder="Enter prospect’s phone number"
               @blur="changeInput"
             />
@@ -123,7 +123,7 @@
           <el-form-item label="Phone" prop="spouse.phone" class="w-5/12 pr-4">
             <el-input
               v-model="ruleForm.spouse.phone"
-              v-maska="'(###) ###-####'"
+              v-maska="'(###)###-####'"
               placeholder="Enter phone number"
               inputmode="numeric"
               @blur="changeInput"

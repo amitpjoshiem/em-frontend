@@ -32,7 +32,7 @@
         <el-input v-model="contact.email" placeholder="Enter email" />
       </el-form-item>
       <el-form-item label="Phone" class="w-full mb-4" prop="phone">
-        <el-input v-model="contact.phone" v-maska="'(###) ###-####'" placeholder="Enter phone" />
+        <el-input v-model="contact.phone" v-maska="'(###)###-####'" placeholder="Enter phone" />
       </el-form-item>
       <el-form-item label="Birthday" class="w-full mb-4">
         <el-date-picker
