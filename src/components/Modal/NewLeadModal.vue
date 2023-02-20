@@ -11,7 +11,7 @@
         <el-form-item label="Phone" prop="phone">
           <el-input
             v-model="ruleForm.phone"
-            v-maska="'(###) ###-####'"
+            v-maska="'(###)###-####'"
             placeholder="Enter phone number"
             @keyup.enter="submit"
           />
