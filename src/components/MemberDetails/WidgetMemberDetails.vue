@@ -127,12 +127,12 @@
       </div>
 
       <div v-if="member.type === 'prospect'" class="flex justify-between pt-3">
-        <SwdButton v-if="!$can('client', 'all') && !$can('support', 'all')" primary small class="mr-2" @click="convert">
+        <SwdButton v-if="!$can('client', 'all') && !$can('support', 'all')" primary small @click="convert">
           Convert to client
         </SwdButton>
 
         <router-link :to="{ name: `${route.meta.type}/blueprint-report`, params: { id: member.id } }">
-          <SwdButton primary small class="mr-2">Blueprint report</SwdButton>
+          <SwdButton primary small>Blueprint report</SwdButton>
         </router-link>
       </div>
       <div v-else class="flex justify-end py-3">
