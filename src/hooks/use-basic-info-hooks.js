@@ -137,6 +137,28 @@ export function useBasicInfoHooks() {
     }
   }
 
+  const removeEmployment = ({ ruleForm, index }) => {
+    ruleForm.employment_history.splice(index, 1)
+    if (!ruleForm.employment_history.length) {
+      ruleForm.employment_history.push({
+        company_name: '',
+        occupation: '',
+        years: '',
+      })
+    }
+  }
+
+  const removeEmploymentSpouse = ({ ruleForm, index }) => {
+    ruleForm.spouse.employment_history.splice(index, 1)
+    if (!ruleForm.spouse.employment_history.length) {
+      ruleForm.spouse.employment_history.push({
+        company_name: '',
+        occupation: '',
+        years: '',
+      })
+    }
+  }
+
   const resetState = (ruleForm) => {
     Object.assign(ruleForm, initialBasicInformation)
   }
@@ -163,5 +185,7 @@ export function useBasicInfoHooks() {
     setInitRules,
     getPlaceholder,
     optionsCurrencyInput,
+    removeEmployment,
+    removeEmploymentSpouse,
   }
 }

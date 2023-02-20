@@ -267,6 +267,8 @@
                 ruleForm.employment_history[index].years
               "
               type="danger"
+              :disabled="isLoadingDeleteEmploynent"
+              :loading="isLoadingDeleteEmploynent"
               plain
               @click="handleRemoveEmployment(index)"
             >
@@ -335,6 +337,8 @@
                 "
                 type="danger"
                 plain
+                :disabled="isLoadingDeleteEmploynent"
+                :loading="isLoadingDeleteEmploynent"
                 @click="handleRemoveEmploymentSpouse(index)"
               >
                 Remove job
@@ -432,7 +436,7 @@ export default {
 
     const { mutateAsync: createMember, isLoading: isLoadingCreateMember } = useMutation(createMembers)
     const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
-    const { mutateAsync: deleteEmployment } = useMutation(deleteEmploymentHistory)
+    const { isLoading: isLoadingDeleteEmploynent, mutateAsync: deleteEmployment } = useMutation(deleteEmploymentHistory)
 
     const {
       isFetching: isFetchingMember,
@@ -722,6 +726,7 @@ export default {
       handleRemoveEmploymentSpouse,
       isShowAddJobOwnerBtn,
       isShowAddJobSpouseBtn,
+      isLoadingDeleteEmploynent,
     }
   },
 }
