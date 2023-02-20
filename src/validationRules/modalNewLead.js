@@ -18,7 +18,7 @@ const rules = {
       trigger: 'blur',
     },
   ],
-  phone: [{ required: true, len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
+  phone: [{ required: true, len: 13, trigger: 'blur', message: 'Incorrect phone number' }],
 }
 
 export { rules }
