@@ -345,6 +345,7 @@
                     v-model="eh.years"
                     placeholder="00"
                     inputmode="numeric"
+                    type="number"
                     @focus="focus('employment')"
                     @blur="blur('employment')"
                   />
@@ -440,6 +441,7 @@
                       v-model="eh.years"
                       placeholder="00"
                       inputmode="numeric"
+                      type="number"
                       @focus="focus('employment')"
                       @blur="blur('employment')"
                     />
