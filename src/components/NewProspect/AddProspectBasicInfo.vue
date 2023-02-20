@@ -239,7 +239,7 @@
               label="Years"
               class="w-2/12"
             >
-              <el-input v-model="eh.years" placeholder="00" inputmode="numeric" @blur="changeInput" />
+              <el-input v-model="eh.years" placeholder="00" inputmode="numeric" type="number" @blur="changeInput" />
             </el-form-item>
           </template>
 
@@ -307,7 +307,7 @@
                 <el-input v-model="eh.occupation" placeholder="Company occupation" @blur="changeInput" />
               </el-form-item>
               <el-form-item :prop="'spouse.employment_history.' + index + '.years'" label="Years" class="w-2/12">
-                <el-input v-model="eh.years" placeholder="00" inputmode="numeric" @blur="changeInput" />
+                <el-input v-model="eh.years" placeholder="00" inputmode="numeric" type="number" @blur="changeInput" />
               </el-form-item>
             </template>
 
@@ -643,8 +643,8 @@ export default {
     }
 
     const handleRemoveEmploymentSpouse = async (index) => {
-      if (ruleForm.employment_history[index].id) {
-        const res = await deleteEmployment(ruleForm.employment_history[index].id)
+      if (ruleForm.spouse.employment_history[index].id) {
+        const res = await deleteEmployment(ruleForm.spouse.employment_history[index].id)
         if (!('error' in res)) {
           removeSpouseEmployment(index)
           showSuccessMessage()
