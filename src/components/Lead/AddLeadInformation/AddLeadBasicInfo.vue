@@ -80,10 +80,13 @@
                   </el-form-item>
                 </div>
 
-                <el-form-item label="State" prop="state" class="mb-3 lg:w-3/12 lg:pr-2 sm:w-6/12 sm:pr-2">
-                  <el-select v-model="ruleForm.state" filterable placeholder="Select" class="w-full">
-                    <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value" />
-                  </el-select>
+                <el-form-item label="Address" prop="address" class="mb-3 lg:w-3/12 lg:pr-2 sm:w-6/12 sm:pr-2">
+                  <el-input
+                    v-model="ruleForm.address"
+                    placeholder="Enter address"
+                    @focus="focus('general')"
+                    @blur="blur('general')"
+                  />
                 </el-form-item>
 
                 <el-form-item label="City" prop="city" class="mb-3 lg:w-3/12 lg:px-2 sm:w-6/12 sm:pl-2">
@@ -95,13 +98,10 @@
                   />
                 </el-form-item>
 
-                <el-form-item label="Address" prop="address" class="mb-3 lg:w-3/12 lg:px-2 sm:w-6/12 sm:pr-2">
-                  <el-input
-                    v-model="ruleForm.address"
-                    placeholder="Enter address"
-                    @focus="focus('general')"
-                    @blur="blur('general')"
-                  />
+                <el-form-item label="State" prop="state" class="mb-3 lg:w-3/12 lg:px-2 sm:w-6/12 sm:pr-2">
+                  <el-select v-model="ruleForm.state" filterable placeholder="Select" class="w-full">
+                    <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
                 </el-form-item>
 
                 <el-form-item label="ZIP" prop="zip" class="mb-3 lg:w-3/12 lg:pl-2 sm:w-6/12 sm:pl-2">
