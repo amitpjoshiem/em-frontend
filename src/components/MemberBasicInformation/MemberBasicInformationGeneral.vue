@@ -88,11 +88,11 @@
 
     <div class="flex mb-10">
       <div class="w-6/24">
-        <span class="text-xss text-main font-semibold">State</span>
+        <span class="text-xss text-main font-semibold">Address</span>
       </div>
       <div class="w-18">
         <span class="text-sm text-main" data-testid="member-basic-information-prospect-address">
-          {{ prospect.state }}
+          {{ prospect.address }}
         </span>
       </div>
     </div>
@@ -108,11 +108,11 @@
     </div>
     <div class="flex mb-10">
       <div class="w-6/24">
-        <span class="text-xss text-main font-semibold">Address</span>
+        <span class="text-xss text-main font-semibold">State</span>
       </div>
       <div class="w-18">
         <span class="text-sm text-main" data-testid="member-basic-information-prospect-address">
-          {{ prospect.address }}
+          {{ prospect.state }}
         </span>
       </div>
     </div>

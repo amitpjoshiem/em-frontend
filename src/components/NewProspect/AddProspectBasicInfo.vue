@@ -61,21 +61,21 @@
         </div>
 
         <div class="flex my-5">
-          <el-form-item label="State" prop="state" class="w-5/12 pr-4">
+          <el-form-item label="Address" prop="address" class="w-5/12 pr-4">
+            <el-input v-model="ruleForm.address" placeholder="Enter prospect’s address" @blur="handleChange" />
+          </el-form-item>
+
+          <el-form-item label="City" prop="city" class="lg:w-3/12 pr-4">
+            <el-input v-model="ruleForm.city" placeholder="Enter prospect’s city" @blur="handleChange" />
+          </el-form-item>
+
+          <el-form-item label="State" prop="state" class="lg:w-2/12 pr-4">
             <el-select v-model="ruleForm.state" filterable placeholder="Select" class="w-full" @change="handleChange">
               <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
 
-          <el-form-item label="City" prop="city" class="w-5/12 pr-4">
-            <el-input v-model="ruleForm.city" placeholder="Enter prospect’s city" @blur="handleChange" />
-          </el-form-item>
-
-          <el-form-item label="Address" prop="address" class="w-5/12 pr-4">
-            <el-input v-model="ruleForm.address" placeholder="Enter prospect’s address" @blur="handleChange" />
-          </el-form-item>
-
-          <el-form-item label="ZIP" prop="zip" class="w-2/12">
+          <el-form-item label="ZIP" prop="zip" class="lg:w-2/12">
             <el-input v-model="ruleForm.zip" v-maska="'#####'" placeholder="#####" @blur="handleChange" />
           </el-form-item>
         </div>
