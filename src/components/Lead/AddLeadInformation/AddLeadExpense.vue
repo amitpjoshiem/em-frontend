@@ -797,23 +797,25 @@
             />
           </el-form-item>
         </div>
-        <div class="md:flex mb-4">
-          <div class="w-3/12" />
-          <div class="md:w-5/12 text-main text-xss flex items-center">SUBTOTAL</div>
-          <div class="w-6/12 md:w-2/12 pl-1 text-sm font-semibold inline-flex">
-            <SwdSpinner v-if="isLoadingCreate || isFetching" />
-            <span v-else>{{ currencyFormat(ruleForm.subtotal.essential) }}</span>
-          </div>
-          <div class="w-6/12 md:w-2/12 pl-3 text-sm font-semibold inline-flex">
-            <SwdSpinner v-if="isLoadingCreate || isFetching" />
-            <span v-else>{{ currencyFormat(ruleForm.subtotal.discretionary) }}</span>
-          </div>
+      </div>
+      <div class="md:flex mb-4">
+        <div class="w-3/12" />
+        <div class="md:w-5/12 pl-2 text-main text-xss flex items-center">SUBTOTAL</div>
+        <div class="w-6/12 md:w-2/12 text-sm font-semibold inline-flex">
+          <SwdSpinner v-if="isLoadingCreate || isFetching" />
+          <span v-else>{{ currencyFormat(ruleForm.subtotal.essential) }}</span>
+        </div>
+        <div class="w-6/12 md:w-2/12 text-sm font-semibold inline-flex">
+          <SwdSpinner v-if="isLoadingCreate || isFetching" />
+          <span v-else>{{ currencyFormat(ruleForm.subtotal.discretionary) }}</span>
         </div>
       </div>
 
-      <div class="md:flex md:justify-end text-sm font-semibold mb-5">
-        <div class="md:w-3/12">TOTAL MONTHLY EXPENSES</div>
-        <div class="w-2/12">
+      <div class="md:flex mb-4">
+        <div class="w-3/12" />
+        <div class="md:w-5/12 pl-2 text-main text-xss font-semibold flex items-center">TOTAL MONTHLY EXPENSES</div>
+        <div class="w-6/12 md:w-2/12" />
+        <div class="w-6/12 md:w-2/12 text-sm font-semibold inline-flex">
           <SwdSpinner v-if="isLoadingCreate || isFetching" />
           <span v-else>{{ currencyFormat(ruleForm.total) }}</span>
         </div>
