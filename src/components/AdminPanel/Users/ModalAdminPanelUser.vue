@@ -59,7 +59,7 @@
           <el-form-item label="Phone" class="mb-4 w-6/12 pl-2.5" prop="phone">
             <el-input
               v-model="ruleForm.phone"
-              v-maska="'(###)###-####'"
+              v-maska="'(###) ###-####'"
               placeholder="Enter phone number"
               :disabled="disabledForm"
               autocomplete="off"
