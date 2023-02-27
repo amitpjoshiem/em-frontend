@@ -59,7 +59,7 @@
                 <el-form-item label="Phone" prop="phone" class="mb-3 lg:w-4/12 lg:px-2 sm:w-6/12 sm:pl-2">
                   <el-input
                     v-model="ruleForm.phone"
-                    v-maska="'(###)###-####'"
+                    v-maska="'(###) ###-####'"
                     placeholder="Enter phone number"
                     @focus="focus('general')"
                     @blur="blur('general')"
@@ -191,7 +191,7 @@
               <el-form-item label="Phone" prop="spouse.phone" class="mb-3 lg:w-3/12 lg:pl-2 sm:w-6/12">
                 <el-input
                   v-model="ruleForm.spouse.phone"
-                  v-maska="'(###)###-####'"
+                  v-maska="'(###) ###-####'"
                   placeholder="Enter phone number"
                   inputmode="numeric"
                   @focus="focus('spouse')"

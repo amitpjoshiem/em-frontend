@@ -24,7 +24,7 @@ const rules = {
       trigger: 'blur',
     },
   ],
-  phone: [{ required: true, len: 13, trigger: 'blur', message: 'Incorrect phone number' }],
+  phone: [{ required: true, len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
   retirement_date: [
     {
       type: 'date',
@@ -124,7 +124,7 @@ const rules = {
         trigger: 'blur',
       },
     ],
-    phone: [{ len: 13, trigger: 'blur', message: 'Incorrect phone number' }],
+    phone: [{ len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
     retirement_date: [
       {
         type: 'date',
