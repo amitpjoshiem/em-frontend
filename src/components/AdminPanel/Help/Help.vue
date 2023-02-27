@@ -20,7 +20,13 @@
           <SwdButton primary small class="mr-4">Confirmation page</SwdButton>
         </router-link>
         <router-link :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'prospect_email_help' } }">
-          <SwdButton primary small class="">Email Help</SwdButton>
+          <SwdButton primary small class="mr-4">Email Help</SwdButton>
+        </router-link>
+        <router-link
+          v-if="showContent.showAdminPanelTestVideoBtn"
+          :to="{ name: `${route.meta.type}/ap-help-item`, params: { id: 'prospect_test_video' } }"
+        >
+          <SwdButton primary small class="mr-4">Test video (only dev server)</SwdButton>
         </router-link>
       </div>
     </el-card>
@@ -30,11 +36,13 @@
 <script>
 import { useFetchApClientsHelp } from '@/api/admin-panel/use-fetch-ap-clients-help.js'
 import { useRoute } from 'vue-router'
+import { useShowContentEnv } from '@/hooks/use-show-content-env'
 
 export default {
   name: 'Help',
   setup() {
     const route = useRoute()
+    const { showContent } = useShowContentEnv()
 
     const { isLoading, isError, data: dataHelp } = useFetchApClientsHelp()
 
@@ -43,6 +51,7 @@ export default {
       dataHelp,
       isError,
       isLoading,
+      showContent,
     }
   },
 }
