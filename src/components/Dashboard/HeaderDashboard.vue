@@ -11,14 +11,11 @@
 import { useUserProfile } from '@/api/use-user-profile.js'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import { useShowContentEnv } from '@/hooks/use-show-content-env'
 
 export default {
   name: 'HeaderDashboard',
   setup() {
     const store = useStore()
-
-    const { showContent } = useShowContentEnv()
 
     const isRole = computed(() => {
       return store.state.globalComponents.role
@@ -31,7 +28,6 @@ export default {
       isError,
       userProfile,
       isRole,
-      showContent,
     }
   },
 }
