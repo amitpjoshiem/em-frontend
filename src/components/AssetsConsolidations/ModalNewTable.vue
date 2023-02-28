@@ -63,7 +63,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Table create',
+              message: 'Table create.',
             })
             closeDialog()
             queryClient.invalidateQueries(['AsetsConsolidationsMember', memberId])

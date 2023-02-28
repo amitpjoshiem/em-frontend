@@ -3,8 +3,6 @@
     <SwdSubHeader
       v-if="!$can('client', 'all') && !$can('support', 'all')"
       :title="getTitle"
-      witch-info-btn
-      info-btn-destination="MemberDetails"
       :loading="isLoadingProspectDetails"
     />
     <div v-else-if="member?.name" class="flex justify-center w-full">
@@ -36,6 +34,10 @@
       <WidgetAssetsAllocation />
       <WidgetOther />
     </div>
+    <div v-if="$can('client', 'all')" class="border rounded-lg p-5">
+      <div class="text-sm sm:text-title text-primary font-semibold text-center mb-5">Client report</div>
+      <ClientReportListContent />
+    </div>
   </SwdWrapper>
 </template>
 <script>
@@ -50,6 +52,7 @@ import InfoSalesforceStatus from '@/components/MemberDetails/InfoSalesforceStatu
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
 import { useShowContentEnv } from '@/hooks/use-show-content-env'
+import ClientReportListContent from '@/components/ClientReport/ClientReportListContent.vue'
 
 export default {
   name: 'MemberDetails',
@@ -62,6 +65,7 @@ export default {
     InfoSalesforceStatus,
     // WidgetFixedAnnuity,
     MemberStage,
+    ClientReportListContent,
   },
 
   setup() {

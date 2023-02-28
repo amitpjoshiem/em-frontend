@@ -6,6 +6,8 @@
       <SwdUpload
         :upload-data="{ collection: 'avatar' }"
         :upload-before-hook="beforeAvatarUpload"
+        :show-upload-btn="false"
+        :show-tip="false"
         @upload-change="handleChange"
         @upload-success="handleAvatarSuccess"
         @upload-mounted="bindRef"
@@ -18,44 +20,47 @@
       </SwdUpload>
       <div class="text-main text-xl ml-12 font-medium">My profile</div>
     </div>
-    <div class="pt-12">
+    <div class="pt-12 text-sm text-main">
       <div class="flex items-center">
-        <div class="text-xss text-title-gray w-2/12">Full name</div>
-        <div class="text-main text-base mr-3">{{ userFullName }}</div>
+        <div class="w-2/12 font-semibold">Full name:</div>
+        <div class="mr-3">{{ userFullName }}</div>
         <ChangeName />
       </div>
       <div v-if="$can('ceo', 'all')" class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">Default Company</div>
+        <div class="w-2/12 font-semibold">Default Company:</div>
         <ChangeCompany :default-company="user.company" />
       </div>
       <div v-if="$can('advisor', 'all')" class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">Position</div>
-        <div class="text-main text-base mr-3">{{ user.position ? user.position : 'Position not added' }}</div>
+        <div class="w-2/12 font-semibold">Position:</div>
+        <div class="mr-3">{{ user.position ? user.position : 'Position not added' }}</div>
       </div>
       <div v-if="$can('advisor', 'all')" class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">NPN</div>
-        <div class="text-main text-base mr-3">{{ user.npn ? user.npn : 'NPN not added' }}</div>
+        <div class="w-2/12 font-semibold">NPN:</div>
+        <div class="mr-3">{{ user.npn ? user.npn : 'NPN not added' }}</div>
       </div>
       <div class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">Phone</div>
-        <div class="text-main text-base mr-3">{{ user.phone ? user.phone : 'Phone number not added' }}</div>
+        <div class="w-2/12 font-semibold">Phone:</div>
+        <div class="mr-3">{{ user.phone ? user.phone : 'Phone number not added' }}</div>
         <div v-if="user.phone" class="mr-2" :class="getClassStatusPhone">
           {{ user.phone_status }}
         </div>
         <!-- <ChangePhone /> -->
       </div>
       <div class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">E-mail</div>
-        <div class="text-main text-base mr-3">{{ user.email }}</div>
+        <div class="w-2/12 font-semibold">E-mail:</div>
+        <div class="mr-3">{{ user.email }}</div>
       </div>
       <div class="flex items-center pt-11">
-        <div class="text-xss text-title-gray w-2/12">Password</div>
-        <div class="text-main text-base mr-3">...............</div>
-        <ChangePassword />
+        <div class="w-2/12 font-semibold">Password:</div>
+        <div class="mr-3 font-semibold">...............</div>
+        <div class="flex items-center cursor-pointer">
+          <InlineSvg :src="IconPencil" class="mb-1" @click="showModalChangePassword" />
+        </div>
       </div>
     </div>
   </div>
   <el-skeleton v-else :rows="10" animated class="p-5" />
+  <ChangePassword />
 </template>
 
 <script>
@@ -73,6 +78,7 @@ import { computed, reactive, ref } from 'vue'
 import { updateUserAvatar } from '@/api/vueQuery/update-user-avatar'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ProfileSettings',
@@ -85,17 +91,18 @@ export default {
     ChangeCompany,
   },
   setup() {
-    const { isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
-    const { mutateAsync: updateUser } = useMutation(updateUserAvatar)
+    const store = useStore()
     const queryClient = useQueryClient()
     const upload = ref(null)
+
+    const { isError: isErrorUserProfile, data: user, isFetched } = useUserProfile()
+    const { mutateAsync: updateUser } = useMutation(updateUserAvatar)
 
     const state = reactive({
       isShowCropper: false,
       file: '',
       imgSrc: '',
       croppedFile: '',
-      uploadRef: null,
     })
 
     const handleAvatarSuccess = async (res) => {
@@ -106,7 +113,7 @@ export default {
       useAlert({
         title: 'Success',
         type: 'success',
-        message: 'Avatar image changed successfully',
+        message: 'Avatar image changed successfully.',
       })
     }
 
@@ -148,6 +155,14 @@ export default {
       return 'text-green-500'
     })
 
+    const showModalChangePassword = () => {
+      console.log('showModalChangePassword')
+      store.commit('globalComponents/setShowModal', {
+        destination: 'changePassword',
+        value: true,
+      })
+    }
+
     return {
       IconPencil,
       IconEditAvatar,
@@ -161,9 +176,9 @@ export default {
       upload,
       change,
       bindRef,
-      uploadRef: state.uploadRef,
       userFullName,
       getClassStatusPhone,
+      showModalChangePassword,
     }
   },
 }

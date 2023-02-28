@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isMemberAssetsLoading && !isMemberAssetsSchemaLoading && !isLoadingMember">
-    <el-form ref="form" :model="ruleForm">
-      <div v-for="(block, indexGroup) in schema" :key="indexGroup" class="p-5 mb-10">
+    <el-form ref="form" :model="ruleForm" :rules="customRules">
+      <div v-for="(block, indexGroup) in schema" :key="indexGroup" v-loading="isLoadingUpdateModel" class="p-5 mb-10">
         <span class="text-main text-xl font-semibold">{{ block.title }}</span>
 
         <div class="flex pb-2 mt-8">
@@ -13,7 +13,7 @@
             </div>
           </template>
         </div>
-        <div v-for="(row, indexRow) in block.rows" :key="row" class="flex">
+        <div v-for="(row, indexRow) in block.rows" :key="row" class="flex mb-3">
           <div class="w-[25%] flex items-center">
             <div v-if="row.label" class="text-main font-semibold text-xss">
               {{ row.label }}
@@ -38,7 +38,7 @@
               class="px-2 mb-0 item-assets"
               :class="row.joined && item.name === 'owner' ? 'w-[30%]' : 'w-[15%]'"
             >
-              <el-form-item class="mb-4">
+              <el-form-item class="mb-4" :prop="item.model.group + '.' + item.model.model + '.' + item.model.item">
                 <template v-if="item.calculated">
                   <div v-if="isFetching" class="h-[32px] flex justify-center items-center">
                     <SwdSpinner />
@@ -88,10 +88,10 @@
                           :disabled="isDisabled({ option, indexGroup })"
                           @click="
                             addLine({
-                              model: item.model,
-                              variable: option.name,
-                              indexGroup,
-                              canJoin: row.can_join,
+                              group: item.model.group,
+                              row: option.name,
+                              can_join: row.can_join,
+                              parent: item.name,
                             })
                           "
                         >
@@ -121,11 +121,9 @@
                 color="green"
                 @click="
                   addLine({
-                    model: item.model,
-                    variable: item.model.model,
-                    indexGroup,
-                    canJoin: row.can_join,
-                    copyLine: true,
+                    group: item.model.group,
+                    row: item.model.model,
+                    can_join: row.can_join,
                   })
                 "
               >
@@ -173,8 +171,8 @@ import { watchEffect, ref, computed, reactive, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useMutation, useQueryClient } from 'vue-query'
-import { createAssetsIncome } from '@/api/vueQuery/create-assets-income'
 import { checkCreateAssetsIncomeField } from '@/api/vueQuery/check-create-assets-income-field'
+import { createAssetsIncomeRow } from '@/api/vueQuery/create-assets-income-row'
 import { useFetchMemberAssets } from '@/api/use-fetch-member-assets'
 import { useFetchMember } from '@/api/use-fetch-member.js'
 import { useFetchMemberAssetsSchema } from '@/api/use-fetch-member-assets-schema'
@@ -184,6 +182,7 @@ import { updateStepAssetsIncome } from '@/api/vueQuery/update-step-assets-income
 import { scrollTop } from '@/utils/scrollTop'
 import { useAlert } from '@/utils/use-alert'
 import { useAssetsInfoHooks } from '@/hooks/use-assets-info-hooks'
+import { useHookCustomValidate } from '@/hooks/use-hook-custom-validate'
 import { ArrowDown, Delete, Plus } from '@element-plus/icons-vue'
 import { currencyFormat } from '@/utils/currencyFormat'
 import { ElMessageBox } from 'element-plus'
@@ -204,7 +203,10 @@ export default {
     const dialogVisible = ref(false)
     const newField = ref([])
     const fieldName = ref()
-    const isCanJoin = ref()
+    const isCanJoin = ref(false)
+    const customRules = ref({})
+    const isLoadingUpdateModel = ref(false)
+
     const step = computed(() => store.state.newProspect.step)
 
     const ruleForm = reactive({})
@@ -213,27 +215,29 @@ export default {
     const memberId = route.params.id
 
     // FETCH
-    const { data: memberAssets, isLoading: isMemberAssetsLoading, isFetching } = useFetchMemberAssets(memberId)
-    const { data: memberAssetsSchema, isLoading: isMemberAssetsSchemaLoading } = useFetchMemberAssetsSchema(memberId)
     const { isLoading: isLoadingMember, data: member } = useFetchMember({ id: memberId })
+    const { isLoading: isMemberAssetsLoading, data: memberAssets, isFetching } = useFetchMemberAssets(memberId)
+    const { isLoading: isMemberAssetsSchemaLoading, data: memberAssetsSchema } = useFetchMemberAssetsSchema(memberId)
 
     // MUTATION
-    const { mutateAsync: create, data } = useMutation(createAssetsIncome)
-    const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
-    const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
-    const { mutateAsync: deleteRow, isLoading: isLoadingDeleteRow } = useMutation(deleteAssetsIncomeRow)
     const { mutateAsync: updateStep } = useMutation(updateStepAssetsIncome)
+    const { isLoading: isLoadingUpdate, mutateAsync: updateMemberAssets } = useMutation(updateMembersAssets)
+    const { isLoading: isLoadingCreate, mutateAsync: createRow } = useMutation(createAssetsIncomeRow)
+    const { isLoading: isLoadingCheck, mutateAsync: checkCreateField } = useMutation(checkCreateAssetsIncomeField)
+    const { isLoading: isLoadingDeleteRow, mutateAsync: deleteRow } = useMutation(deleteAssetsIncomeRow)
 
     const { setInitValue } = useAssetsInfoHooks()
+    const { setCustomValidate } = useHookCustomValidate()
 
     onMounted(async () => {
       store.commit('newProspect/setStep', 2)
       scrollTop()
     })
 
-    watchEffect(() => {
+    watchEffect(async () => {
       if (!isMemberAssetsLoading.value) {
-        setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
+        await setInitValue({ ruleForm, memberAssets: memberAssets.value, id: memberId })
+        await setCustomValidate({ ruleForm, customRules })
       }
     })
 
@@ -254,7 +258,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Opportunity update successfully',
+          message: 'Opportunity update successfully.',
         })
         store.commit('newProspect/setStep', step.value + 1)
         router.push({
@@ -264,54 +268,67 @@ export default {
       }
     }
 
-    const addLine = async ({ model, variable, indexGroup, canJoin, copyLine = false }) => {
-      if (copyLine) {
-        let newItemIndex = 0
-        let newVariable = variable.split('_')[0]
-        // eslint-disable-next-line no-constant-condition
-        labelAddItem: while (true) {
-          const elem = schema[indexGroup].rows.find((item) => {
-            return item.name === newVariable
-          })
-
-          if (!elem) {
-            break labelAddItem
-          }
-          newItemIndex += 1
-          newVariable = variable.split('_')[0] + '_' + newItemIndex
-        }
-        variable = newVariable
-      }
-      Object.keys(schema[indexGroup].headers).forEach((element) => {
-        ruleForm[model.group][variable] = { [element]: null }
-      })
-
+    const addLine = async ({ group, can_join, row, parent = null }) => {
+      isLoadingUpdateModel.value = true
       const data = {
-        group: model.group,
-        row: variable,
-        element: 'owner',
-        type: 'string',
-        can_join: canJoin,
+        group,
+        row,
+        can_join,
       }
+      if (parent) data.parent = parent
 
-      await updateMemberAssets({ data, id: memberId })
-      await queryClient.invalidateQueries(['memberAssets', memberId])
-      await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
-      updateSchema()
+      const res = await createRow({ id: memberId, data })
+      if (!('error' in res)) {
+        await queryClient.invalidateQueries(['memberAssets', memberId])
+        await queryClient.invalidateQueries(['memberAssetsSchema', memberId])
+        await updateSchema()
+        await setCustomValidate({ ruleForm, customRules })
+        useAlert({
+          title: 'Success',
+          type: 'success',
+          message: 'Successfully created.',
+        })
+      }
+      isLoadingUpdateModel.value = false
+    }
+
+    const confirmCreateField = async () => {
+      const { item } = newField.value
+      const row = fieldName.value
+      const group = item.model.group
+      const can_join = isCanJoin.value
+      const parent = item.name
+      const data = {
+        row,
+        group,
+        can_join,
+      }
+      const res = await checkCreateField({ id: memberId, data })
+
+      if (res.succes) {
+        addLine({ row, group, can_join, parent })
+        dialogVisible.value = false
+        fieldName.value = ''
+        isCanJoin.value = false
+      }
     }
 
     const changeInput = async (item) => {
-      if (ruleForm[item.model.group][item.model.model][item.model.item] !== null) {
-        const data = {
-          group: item.model.group,
-          row: item.model.model,
-          element: item.model.item,
-          type: item.type,
-          value: ruleForm[item.model.group][item.model.model][item.model.item],
+      form.value.validate(async (valid) => {
+        if (valid) {
+          const data = {
+            group: item.model.group,
+            row: item.model.model,
+            element: item.model.item,
+            type: item.type,
+            value: ruleForm[item.model.group][item.model.model][item.model.item],
+          }
+          await updateMemberAssets({ data, id: memberId })
+          queryClient.invalidateQueries(['memberAssets', memberId])
+        } else {
+          return false
         }
-        await updateMemberAssets({ data, id: memberId })
-        queryClient.invalidateQueries(['memberAssets', memberId])
-      }
+      })
     }
 
     const optionsCurrencyInput = {
@@ -339,6 +356,7 @@ export default {
     }
 
     const confirmDelete = async ({ block, row, indexRow, indexGroup }) => {
+      isLoadingUpdateModel.value = true
       const data = {
         row: row.name,
         group: block.name,
@@ -351,30 +369,10 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Remove success',
+          message: 'Remove success.',
         })
       }
-    }
-
-    const confirmCreateField = async () => {
-      const { item, indexGroup, indexRow } = newField.value
-      const data = {
-        row: fieldName.value.trim(),
-        group: item.model.group,
-        can_join: isCanJoin.value,
-      }
-
-      const res = await checkCreateField({ id: memberId, data })
-
-      if (res.succes) {
-        const model = item.model
-        const variable = fieldName.value.trim().toLowerCase().replace(/ /g, '_')
-        const label = fieldName.value
-        addLine({ model, variable, label, indexGroup, indexRow: indexRow + 1, canJoin: isCanJoin.value })
-        dialogVisible.value = false
-        fieldName.value = ''
-        isCanJoin.value = ''
-      }
+      isLoadingUpdateModel.value = false
     }
 
     const showDialog = ({ item, indexGroup, indexRow }) => {
@@ -404,7 +402,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Joint success',
+          message: 'Joint success.',
         })
       }
     }
@@ -426,7 +424,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Unjoint success',
+          message: 'Unjoint success.',
         })
       }
     }
@@ -447,8 +445,6 @@ export default {
       ruleForm,
       schema,
       backStep,
-      create,
-      data,
       nextPage,
       isMemberAssetsLoading,
       form,
@@ -475,6 +471,10 @@ export default {
       handleChange,
       isCanJoin,
       remove,
+      customRules,
+      isLoadingCreate,
+      createRow,
+      isLoadingUpdateModel,
     }
   },
 }

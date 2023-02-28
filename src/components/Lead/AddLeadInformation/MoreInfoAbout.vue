@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isFetchingConfirmationClient && !isFetchingConfirmationAdvisor && !isLoadingInfo" class="my-4 px-5">
+  <div v-if="!isFetchingConfirmationClient && !isFetchingConfirmationAdvisor && !isLoadingInfo" class="my-4 md:px-5">
     <el-form ref="form" :model="ruleForm" label-position="top">
       <!-- I Want More Info About: -->
       <el-form-item label="I Want More Info About ">

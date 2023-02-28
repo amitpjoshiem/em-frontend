@@ -44,7 +44,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Member update successfully',
+          message: 'Member update successfully.',
         })
       }
     }

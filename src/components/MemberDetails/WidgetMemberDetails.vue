@@ -127,20 +127,20 @@
       </div>
 
       <div v-if="member.type === 'prospect'" class="flex justify-between pt-3">
-        <SwdButton v-if="!$can('client', 'all') && !$can('support', 'all')" primary small class="mr-2" @click="convert">
+        <SwdButton v-if="!$can('client', 'all') && !$can('support', 'all')" primary small @click="convert">
           Convert to client
         </SwdButton>
 
         <router-link :to="{ name: `${route.meta.type}/blueprint-report`, params: { id: member.id } }">
-          <SwdButton primary small class="mr-2">Blueprint report</SwdButton>
+          <SwdButton primary small>Blueprint report</SwdButton>
         </router-link>
       </div>
-      <div v-else class="flex justify-end pt-5">
+      <div v-else class="flex justify-end py-3">
         <router-link
-          :to="{ name: `${route.meta.type}/clientreport`, params: { id: member.id } }"
-          class="pl-2.5 font-medium"
+          :to="{ name: `${route.meta.type}/client-reports-list`, params: { id: member.id } }"
+          class="font-medium"
         >
-          <SwdButton primary small class="mr-2">Client report</SwdButton>
+          <SwdButton primary small>Client report</SwdButton>
         </router-link>
       </div>
     </template>
@@ -222,7 +222,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Convert successfully',
+              message: 'Convert successfully.',
             })
             updateMemberInfo()
           } else {
@@ -248,7 +248,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Opportunity update successfully',
+          message: 'Opportunity update successfully.',
         })
       }
     }

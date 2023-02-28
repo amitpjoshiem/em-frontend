@@ -1,25 +1,23 @@
+/* eslint-disable no-useless-escape */
 const rules = {
   name: [
     {
+      errorText: 'Please input name',
       required: true,
-      message: 'Please input prospect name',
       trigger: 'change',
-      transform(value) {
-        return value.trim()
-      },
+      validator: customValidate,
     },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
   birthday: [
     {
       type: 'date',
       required: true,
-      message: 'Please pick a date',
+      message: 'Please pick a Date of birth',
       trigger: 'change',
     },
   ],
   email: [
-    { required: true, message: 'The field cannot be empty', trigger: 'blur' },
+    { required: true, message: 'The field cannot be empty', trigger: 'change' },
     {
       type: 'email',
       message: 'Please enter valid email ID',
@@ -31,87 +29,92 @@ const rules = {
     {
       type: 'date',
       required: true,
-      message: 'Please pick a date',
-      trigger: 'blur',
+      message: 'Please pick a Retirement date',
+      trigger: 'change',
     },
   ],
   state: [
     {
       required: true,
-      message: 'Please input prospect state',
+      message: 'Please input state',
       trigger: 'change',
       transform(value) {
         return value.trim()
       },
     },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
+    { min: 1, message: 'Length should be min 1', trigger: 'change' },
   ],
   city: [
     {
+      errorText: 'Please input city',
       required: true,
-      message: 'Please input prospect city',
       trigger: 'change',
-      transform(value) {
-        return value.trim()
-      },
+      validator: customValidate,
     },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
   address: [
     {
+      errorText: 'Please input address',
       required: true,
-      message: 'Please input prospect address',
       trigger: 'change',
-      transform(value) {
-        return value.trim()
-      },
+      validator: customValidate,
     },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
-
   zip: [{ type: 'string', required: true, len: 5, message: 'Invalid zip', trigger: 'blur' }],
-
-  channels: [
+  employment_history: [
     {
-      required: true,
-      message: 'Please input channels',
-      trigger: 'blur',
-      transform(value) {
-        return value.trim()
-      },
+      company_name: [
+        {
+          type: 'string',
+          errorText: 'The field cannot be empty',
+          required: false,
+          trigger: 'change',
+          validator: customValidate,
+        },
+      ],
+      occupation: [
+        {
+          type: 'string',
+          errorText: 'The field cannot be empty',
+          required: true,
+          trigger: 'change',
+          validator: customValidate,
+        },
+      ],
+      years: [
+        {
+          validator: validateNumber,
+          trigger: 'change',
+          required: true,
+        },
+      ],
     },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
   ],
 
+  // SPOUSE
   spouse: {
     first_name: [
       {
+        errorText: 'Please input spouse first name',
         required: true,
-        message: 'Please input spouse first name',
-        trigger: 'blur',
-        transform(value) {
-          return value.trim()
-        },
+        trigger: 'change',
+        validator: customValidate,
       },
-      { min: 1, message: 'Length should be min 1', trigger: 'blur' },
     ],
     last_name: [
       {
+        errorText: 'Please input spouse last name',
         required: true,
-        message: 'Please input spouse last name',
-        trigger: 'blur',
-        transform(value) {
-          return value.trim()
-        },
+        trigger: 'change',
+        validator: customValidate,
       },
-      { min: 1, message: 'Length should be min 1', trigger: 'blur' },
     ],
     birthday: [
       {
         type: 'date',
         required: true,
-        message: 'Please pick a date',
-        trigger: 'blur',
+        message: 'Please pick a Date of birth',
+        trigger: 'change',
       },
     ],
     email: [
@@ -120,19 +123,14 @@ const rules = {
         message: 'Please input email address',
         trigger: 'blur',
       },
-      {
-        type: 'email',
-        message: 'Please input correct email address',
-        trigger: ['blur'],
-      },
     ],
     phone: [{ len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
     retirement_date: [
       {
         type: 'date',
         required: true,
-        message: 'Please pick a date',
-        trigger: 'blur',
+        message: 'Please pick a Retirement date',
+        trigger: 'change',
       },
     ],
     employment_history: [
@@ -140,111 +138,80 @@ const rules = {
         company_name: [
           {
             type: 'string',
+            errorText: 'The field cannot be empty',
             required: false,
-            message: 'The field cannot be empty',
-            trigger: 'blur',
+            trigger: 'change',
+            validator: customValidate,
           },
         ],
         occupation: [
           {
             type: 'string',
-            required: false,
-            message: 'The field cannot be empty',
-            trigger: 'blur',
+            errorText: 'The field cannot be empty',
+            required: true,
+            trigger: 'change',
+            validator: customValidate,
           },
         ],
         years: [
           {
             validator: validateNumber,
-            trigger: 'blur',
-            required: false,
+            trigger: 'change',
+            required: true,
           },
         ],
       },
     ],
   },
-  // house: {
-  //   market_value: [
-  //     {
-  //       validator: validateNumber,
-  //       trigger: 'blur',
-  //       required: true,
-  //     },
-  //   ],
-  //   total_debt: [
-  //     {
-  //       validator: validateNumber,
-  //       trigger: 'blur',
-  //       required: true,
-  //     },
-  //   ],
-  //   remaining_mortgage_amount: [
-  //     {
-  //       validator: validateNumber,
-  //       trigger: 'blur',
-  //       required: true,
-  //     },
-  //   ],
-  //   monthly_payment: [
-  //     {
-  //       validator: validateNumber,
-  //       trigger: 'blur',
-  //       required: true,
-  //     },
-  //   ],
-  //   total_monthly_expenses: [
-  //     {
-  //       validator: validateNumber,
-  //       trigger: 'blur',
-  //       required: true,
-  //     },
-  //   ],
-  // },
-
-  employment_history: [
-    {
-      company_name: [
-        {
-          type: 'string',
-          required: false,
-          message: 'The field cannot be empty',
-          trigger: 'blur',
-        },
-      ],
-      occupation: [
-        {
-          type: 'string',
-          required: false,
-          message: 'The field cannot be empty',
-          trigger: 'blur',
-        },
-      ],
-      years: [
-        {
-          validator: validateNumber,
-          trigger: 'blur',
-          required: false,
-        },
-      ],
-    },
-  ],
+  house: {
+    market_value: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+      },
+    ],
+    remaining_mortgage_amount: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+      },
+    ],
+    monthly_payment: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+      },
+    ],
+    total_monthly_expenses: [
+      {
+        validator: validateNumber,
+        trigger: 'blur',
+      },
+    ],
+  },
 }
 
 const employmentHistoryRule = {
   company_name: {
+    type: 'string',
+    errorText: 'The field cannot be empty',
     required: false,
-    message: 'Company name can not be null',
-    trigger: 'blur',
+    trigger: 'change',
+    validator: customValidate,
   },
   occupation: {
-    required: false,
-    message: 'Occupation can not be null',
-    trigger: 'blur',
+    type: 'string',
+    errorText: 'The field cannot be empty',
+    required: true,
+    trigger: 'change',
+    validator: customValidate,
   },
   years: {
-    required: false,
-    message: 'Years can not be null',
-    trigger: 'blur',
+    type: 'string',
+    errorText: 'The field cannot be empty',
+    required: true,
+    trigger: 'change',
+    validator: customValidate,
   },
 }
 
@@ -253,8 +220,28 @@ function validateNumber(rule, value, callback) {
     callback(new Error('Data is not a number'))
   }
 
+  if (value < 0) {
+    callback(new Error('Unsupported negative value'))
+  }
+
+  if (Number(value) > 9999999.99) {
+    callback(new Error('The value cannot be greater than 9999999.99'))
+  }
+
   if (rule.required && !value) {
     callback(new Error('The field cannot be empty'))
+  }
+
+  callback()
+}
+
+function customValidate(rule, value, callback) {
+  if (/[^\w|\/,\(\)\-|\s]/g.test(value)) {
+    callback(new Error('Unsupported symbol'))
+  }
+
+  if (rule.required && !value) {
+    callback(new Error(rule.errorText))
   }
 
   callback()

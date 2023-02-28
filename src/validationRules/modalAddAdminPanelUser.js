@@ -49,7 +49,7 @@ const rules = {
       trigger: 'change',
     },
   ],
-  phone: [{ required: true, len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
+  phone: [{ required: true, len: 13, trigger: 'blur', message: 'Incorrect phone number' }],
   npn: [
     {
       required: true,

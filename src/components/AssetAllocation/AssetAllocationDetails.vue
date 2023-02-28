@@ -1,11 +1,6 @@
 <template>
   <div class="px-5">
-    <SwdSubHeader
-      class="p-5"
-      title="Asset Allocation Details 333"
-      witch-info-btn
-      info-btn-destination="AssetAllocationDetails"
-    />
+    <SwdSubHeader class="p-5" title="Asset Allocation Details 333" />
     <AssetAllocation />
     <Assets />
   </div>

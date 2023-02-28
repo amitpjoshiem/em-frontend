@@ -1,12 +1,11 @@
 <template>
   <div
-    :disabled="disabled"
-    :loading="loading"
     class="flex items-center justify-center rounded cursor-pointer"
     :class="{
       'opacity-60': disabled,
       'bg-primary': primary,
       'bg-main-gray': info,
+      'border border-ad-btn-border': plain,
     }"
   >
     <div
@@ -16,6 +15,7 @@
         'text-primary px-2.5': info,
         'text-xs px-2 py-1': small,
         'text-sm py-1.5 px-4': main,
+        'text-gray-600': plain,
         'hover:text-main-blue': !disabled,
         'cursor-not-allowed opacity-50': disabled,
       }"
@@ -36,11 +36,6 @@ export default defineComponent({
       require: false,
       default: false,
     },
-    loading: {
-      type: Boolean,
-      require: false,
-      default: false,
-    },
     main: {
       type: Boolean,
       require: false,
@@ -57,6 +52,11 @@ export default defineComponent({
       default: false,
     },
     info: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+    plain: {
       type: Boolean,
       require: false,
       default: false,

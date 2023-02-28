@@ -15,7 +15,7 @@ const useCreatePassword = () => {
       useAlert({
         title: 'Success',
         type: 'success',
-        message: 'Create password successfully',
+        message: 'Password created successfully.',
       })
       // router.push({ name: 'home' })
       router.push({ path: '/' })

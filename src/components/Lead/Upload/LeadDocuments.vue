@@ -1,13 +1,13 @@
 <template>
   <SwdWrapper>
-    <div v-if="!isLoading && !isLoadingInfo">
+    <div v-if="!isLoading && !isLoadingInfo && !isFetching">
       <div class="mb-5">
         <el-checkbox
-          v-model="state.availabilityDocuments"
+          v-model="state.skipUpload"
           label="I want to skip this document."
           size="large"
           :disabled="isReadOnlyLead"
-          @change="changeStatus"
+          @change="changeSkip"
         />
       </div>
 
@@ -17,59 +17,51 @@
         by clicking this link
       </div>
 
-      <div v-if="!state.availabilityDocuments" class="min-h-[175px] mb-5 p-5 border border-main-gray rounded-md">
-        <div v-if="!isFetching">
-          <SwdUpload
-            :upload-data="{ collection: context }"
-            :doc-list="data.documents"
-            :show-file-list="true"
-            :auto-upload="true"
-            :show-file-block="true"
-            :disabled="state.availabilityDocuments || isReadOnlyLead"
+      <div v-if="!state.skipUpload && !isFetching" class="min-h-[175px] mb-5 p-5 border border-main-gray rounded-md">
+        <SwdButton primary small class="w-full sm:w-4/12 lg:w-3/12" @click="showModalAttachDoc">
+          Attach document
+        </SwdButton>
+        <div v-if="!data.documents.length" class="text-center pt-12">
+          <p>No recently added documents</p>
+        </div>
+        <div v-if="data.documents.length">
+          <DocItem
+            v-for="(item, index) in data.documents"
+            :key="index"
+            :doc="item"
+            :collection="context"
             with-remove-btn
-            @upload-change="handleChange"
-            @upload-success="handleSuccess"
-            @upload-mounted="bindRef"
-            @remove-media="removeMedia"
-            @open-prewiev="openPrewiev"
-          >
-            <template #main>
-              <div class="flex my-5 w-2/12">
-                <SwdButton primary small :disabled="isReadOnlyLead">Click to upload</SwdButton>
-              </div>
-              <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
-            </template>
-          </SwdUpload>
+          />
         </div>
-        <el-skeleton v-else :rows="5" animated class="p-5" />
-      </div>
-      <div v-else class="min-h-[175px] mb-5 text-main flex flex-col items-center justify-center">
-        <div class="bg-main-gray rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
-          <InlineSvg :src="IconEmptyUsers" />
-        </div>
-        <p>No recently added documents</p>
       </div>
     </div>
     <el-skeleton v-else :rows="5" animated />
+
+    <div v-if="state.skipUpload" class="min-h-[175px] mb-5 text-main flex flex-col items-center justify-center">
+      <div class="bg-main-gray rounded-full w-16 h-16 flex flex-col items-center justify-center mb-3">
+        <InlineSvg :src="IconEmptyUsers" />
+      </div>
+      <p>No recently added documents</p>
+    </div>
+    <SwdModalUploadDocuments />
   </SwdWrapper>
 </template>
 
 <script>
 import { computed, reactive, ref, watchEffect } from 'vue'
-import { useMutation, useQueryClient } from 'vue-query'
 import { useStore } from 'vuex'
 import { useFetchClientDocuments } from '@/api/clients/use-fetch-clients-documents.js'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
-import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
-import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
-import { deleteMedia } from '@/api/vueQuery/delete-media'
-import SwdUpload from '@/components/Global/SwdUpload.vue'
+import { useSetStatus } from '../use-set-status'
 import IconEmptyUsers from '@/assets/svg/icon-empty-users.svg'
+import DocItem from './DocItem.vue'
+import SwdModalUploadDocuments from '@/components/Global/SwdModalUploadDocuments.vue'
 
 export default {
   name: 'LeadDocuments',
   components: {
-    SwdUpload,
+    DocItem,
+    SwdModalUploadDocuments,
   },
   props: {
     context: {
@@ -80,14 +72,14 @@ export default {
   },
   setup(props) {
     const store = useStore()
-    const queryClient = useQueryClient()
     const upload = ref(null)
-    const inChangeFile = ref(false)
+
+    const { setStatus } = useSetStatus()
 
     const state = reactive({
       file: '',
       uploadRef: null,
-      availabilityDocuments: false,
+      skipUpload: null,
     })
 
     const { isLoading, isFetching, isError, refetch, data } = useFetchClientDocuments({
@@ -95,71 +87,49 @@ export default {
     })
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
-    const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
-    const { mutateAsync: deleteDocument } = useMutation(deleteMedia)
-    const { mutateAsync: uploadDoc } = useMutation(uploadClientsDocs)
-
     watchEffect(() => {
-      if (isFetching.value === false && data.value.status === 'no_documents') state.availabilityDocuments = true
+      if (
+        isLoading.value === false &&
+        data.value.status === 'no_documents' &&
+        !data.value.documents.length &&
+        state.skipUpload === null
+      ) {
+        state.skipUpload = true
+      }
+      if (isFetching.value === false && !data.value.documents.length && !state.skipUpload) {
+        state.skipUpload = false
+        setStatus({ status: null, context: props.context })
+      }
+      if (!isFetching.value && !isLoading.value && data.value.documents.length) {
+        setStatus({ status: 'completed', context: props.context })
+      }
     })
 
     const bindRef = (ref) => {
       upload.value = ref.value
     }
 
-    const changeStatus = async () => {
-      let status = 'not_completed'
-
-      if (state.availabilityDocuments) {
-        status = 'no_documents'
-      }
-      if (!state.availabilityDocuments && data.value.documents.length) {
-        status = 'completed'
-      }
-
-      const res = await updateSteps({ [props.context]: status })
-      if (!('error' in res)) {
-        queryClient.invalidateQueries(['clients-info'])
-      }
-    }
-
-    const removeMedia = async (media) => {
-      const res = await deleteDocument(media)
-      if (!('error' in res)) {
-        await queryClient.invalidateQueries(['clientsDocuments', props.context])
-      }
-      if (!data.value.documents.length) changeStatus()
-    }
-
-    const handleSuccess = async (res) => {
-      const data = { uuids: [res.data.uuid] }
-      const response = await uploadDoc({ collection: props.context, data })
-      if (!('error' in response)) {
-        inChangeFile.value = false
-        queryClient.invalidateQueries(['clientsDocuments', props.context])
-        changeStatus()
-      }
-    }
-
-    const handleChange = () => {
-      inChangeFile.value = true
+    const changeSkip = () => {
+      if (state.skipUpload) setStatus({ status: 'no_documents', context: props.context })
+      if (!state.skipUpload && data.value.documents.length) setStatus({ status: 'completed', context: props.context })
+      if (!state.skipUpload && !data.value.documents.length) setStatus({ status: null, context: props.context })
     }
 
     const isShowNoDocuments = computed(() => {
-      return !data.value.documents?.length && !inChangeFile.value && !isFetching.value
+      return !data.value.documents?.length && !isFetching.value
     })
-
-    const openPrewiev = (url) => {
-      store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
-        value: true,
-      })
-      store.commit('globalComponents/setPreviewUrlPdf', url)
-    }
 
     const isReadOnlyLead = computed(() => {
       return clientsInfo.value.readonly
     })
+
+    const showModalAttachDoc = () => {
+      store.commit('globalComponents/setShowModal', {
+        destination: 'modalUploadDocuments',
+        value: true,
+      })
+      store.commit('globalComponents/setCollectionUploadMedia', props.context)
+    }
 
     return {
       state,
@@ -170,16 +140,12 @@ export default {
       refetch,
       data,
       IconEmptyUsers,
-      changeStatus,
-      handleChange,
-      removeMedia,
-      handleSuccess,
       isShowNoDocuments,
-      openPrewiev,
-      isLoadingUpdateSteps,
       isLoadingInfo,
       clientsInfo,
       isReadOnlyLead,
+      changeSkip,
+      showModalAttachDoc,
     }
   },
 }

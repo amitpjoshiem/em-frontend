@@ -125,7 +125,7 @@ import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 import { useMutation } from 'vue-query'
 import { ref, computed } from 'vue'
 import { useQueryClient } from 'vue-query'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { convertLeadToOpportunity } from '@/api/vueQuery/fetch-convert-lead-to-opportunity'
 import { deactivatedAccLead } from '@/api/vueQuery/fetch-deactivated-acc-lead'
 import { restoreAccLead } from '@/api/vueQuery/fetch-restore-acc-lead'
@@ -149,7 +149,6 @@ export default {
   setup(props) {
     const queryClient = useQueryClient()
     const router = useRouter()
-    const route = useRoute()
 
     const { mutateAsync: convertLead, isLoading: isLoadingConvertLead } = useMutation(convertLeadToOpportunity)
     const { mutateAsync: fetchDeactivatedAcc, isLoading: isLoadingDeactivatedAcc } = useMutation(deactivatedAccLead)
@@ -187,7 +186,7 @@ export default {
 
       if (props.user.can_convert) {
         options.push({
-          title: 'Convert to opportunity',
+          title: 'Convert To Opportunity',
           command: 'convert-opportunity',
         })
       }
@@ -233,7 +232,7 @@ export default {
     //     useAlert({
     //       title: 'Success',
     //       type: 'success',
-    //       message: 'Lead link deactivated successfully',
+    //       message: 'Lead link deactivated successfully.',
     //     })
     //     queryClient.invalidateQueries(['householders-list'])
     //     dialogVisibleDeactivatedLink.value = false
@@ -246,7 +245,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Lead deactivated successfully',
+          message: 'Lead deactivated successfully.',
         })
         queryClient.invalidateQueries(['householders-list'])
         queryClient.invalidateQueries(['stats-members'])
@@ -274,9 +273,9 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Convert to opportunity successfully',
+          message: 'Convert to opportunity successfully.',
         })
-        router.push({ name: `${route.meta.type}/member-details`, params: { id: props.user.id } })
+        router.push({ name: `advisor/all` })
         dialogVisibleConvertLead.value = false
       }
     }

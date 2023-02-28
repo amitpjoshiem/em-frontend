@@ -15,7 +15,7 @@
               In order to conduct a proper analysis and make your visit productive, we ask that you provide the items
               listed below.
             </span>
-            <span class="text-base my-5 sm:my-10">
+            <span class="text-lg my-5 sm:my-10">
               These items are essential for performing our fiduciary duty and providing the most appropriate financial
               advice.
             </span>
@@ -37,51 +37,73 @@
                   "
                 />
               </el-icon>
-              <div class="text-xs sm:text-base text-main">Step 1 - Completed Financial Fact Finder</div>
+              <div class="text-xs sm:text-base text-main">
+                <span>Step 1 - Completed Financial Fact Finder</span>
+                <span class="text-red-500">*</span>
+              </div>
             </div>
           </el-card>
         </router-link>
 
         <!-- Upload Relevant Financial Documents -->
-        <router-link :to="{ name: 'relevant-financial-documents' }" class="flex items-center">
-          <el-card class="mb-4 w-full">
-            <div class="flex items-center">
-              <el-icon :size="25" class="mr-5">
-                <circle-check-filled :color="getStatusRelevant" />
-              </el-icon>
-              <div class="text-xs sm:text-base text-main">Step 2 - Upload Relevant Financial Documents</div>
+        <el-card
+          class="w-full mb-4"
+          :class="{
+            'bg-main-gray cursor-not-allowed': isDisabledRelevantDocuments,
+            'cursor-pointer': !isDisabledRelevantDocuments,
+          }"
+          @click="openUploadRelevantDocuments"
+        >
+          <div class="flex items-center">
+            <el-icon :size="25" class="mr-5">
+              <circle-check-filled :color="getStatusRelevant" />
+            </el-icon>
+            <div class="text-xs sm:text-base text-main">
+              <span>Step 2 - Upload Relevant Financial Documents</span>
+              <span class="text-red-500">*</span>
             </div>
-          </el-card>
-        </router-link>
+          </div>
+        </el-card>
 
         <!-- Upload Property & Casualty Documents -->
-        <router-link :to="{ name: 'property-casualty' }" class="flex items-center">
-          <el-card class="mb-4 w-full">
-            <div class="flex items-center">
-              <el-icon :size="25" class="mr-5">
-                <circle-check-filled
-                  :color="clientsInfo.steps.property_casualty ? stepsColorSchema.active : stepsColorSchema.notActive"
-                />
-              </el-icon>
-              <div class="text-xs sm:text-base text-main">Step 3 - Upload Property & Casualty Documents</div>
+        <el-card
+          class="w-full mb-4"
+          :class="{ 'bg-main-gray cursor-not-allowed': isDasbledSteps, 'cursor-pointer': !isDasbledSteps }"
+          @click="openUploadPropertyDocuments"
+        >
+          <div class="flex items-center">
+            <el-icon :size="25" class="mr-5">
+              <circle-check-filled
+                :color="clientsInfo.steps.property_casualty ? stepsColorSchema.active : stepsColorSchema.notActive"
+              />
+            </el-icon>
+            <div>
+              <span class="text-xs sm:text-base text-main">Step 3 - Upload Property & Casualty Documents</span>
+              <span class="text-gray-400"> [Optional]</span>
             </div>
-          </el-card>
-        </router-link>
+          </div>
+        </el-card>
 
         <!-- Upload Medicare Documents -->
-        <router-link :to="{ name: 'medicare-details' }" class="flex items-center">
-          <el-card class="mb-4 w-full">
-            <div class="flex items-center">
-              <el-icon :size="25" class="mr-5">
-                <circle-check-filled
-                  :color="clientsInfo.steps.medicare_details ? stepsColorSchema.active : stepsColorSchema.notActive"
-                />
-              </el-icon>
-              <div class="text-xs sm:text-base text-main">Step 4 - Upload Medicare Documents</div>
+        <el-card
+          class="w-full mb-4"
+          :class="{ 'bg-main-gray cursor-not-allowed': isDasbledSteps, 'cursor-pointer': !isDasbledSteps }"
+          @click="openUploadMedicareDocuments"
+        >
+          <div class="flex items-center">
+            <el-icon :size="25" class="mr-5">
+              <circle-check-filled
+                :color="clientsInfo.steps.medicare_details ? stepsColorSchema.active : stepsColorSchema.notActive"
+              />
+            </el-icon>
+            <div>
+              <span class="text-xs sm:text-base text-main">Step 4 - Upload Medicare Documents</span>
+              <span class="text-gray-400"> [Optional]</span>
             </div>
-          </el-card>
-        </router-link>
+          </div>
+        </el-card>
       </template>
+
       <template v-else>
         <div class="flex flex-col items-center my-8">
           <InlineSvg :src="IconSuccesChanged" />
@@ -93,16 +115,18 @@
         </div>
       </template>
 
-      <router-link :to="{ name: 'confirmation-page', params: { id: clientsInfo.member_id } }" class="flex">
-        <el-card class="mb-4 w-full">
-          <div class="flex items-center">
-            <el-icon :size="25" class="mr-5">
-              <document-checked color="#073763" />
-            </el-icon>
-            <div class="text-xs sm:text-base text-main">Confirmation Information</div>
-          </div>
-        </el-card>
-      </router-link>
+      <el-card
+        class="w-full mb-4"
+        :class="{ 'bg-main-gray cursor-not-allowed': isDasbledSteps, 'cursor-pointer': !isDasbledSteps }"
+        @click="openConfirmationInformation"
+      >
+        <div class="flex items-center">
+          <el-icon :size="25" class="mr-5">
+            <document-checked color="#073763" />
+          </el-icon>
+          <div class="text-xs sm:text-base text-main">Confirm Information</div>
+        </div>
+      </el-card>
     </div>
   </div>
 </template>
@@ -114,6 +138,7 @@ import IconSuccesChanged from '@/assets/svg/icon-succes-changed.svg'
 import IrisLogoStandart from '@/assets/svg/iris-logo-standard.svg'
 import { computed, watchEffect } from 'vue'
 import router from '../../router'
+import { useAlert } from '@/utils/use-alert'
 
 export default {
   name: 'LeadInformation',
@@ -155,6 +180,68 @@ export default {
       return clientsInfo.value.readonly
     })
 
+    const isDasbledSteps = computed(() => {
+      if (
+        clientsInfo.value.steps.completed_financial_fact_finder &&
+        clientsInfo.value.steps.investment_and_retirement_accounts &&
+        clientsInfo.value.steps.life_insurance_annuity_and_long_terms_care_policies &&
+        clientsInfo.value.steps.social_security_information
+      ) {
+        return false
+      }
+
+      return true
+    })
+
+    const isDisabledRelevantDocuments = computed(() => {
+      if (clientsInfo.value.steps.completed_financial_fact_finder) return false
+      return true
+    })
+
+    const openUploadRelevantDocuments = () => {
+      if (isDisabledRelevantDocuments.value) {
+        useAlert({
+          title: 'Error',
+          type: 'error',
+          message: 'Please fill out the required information in Step 1.',
+        })
+        return
+      }
+      router.push({ name: 'relevant-financial-documents', params: { id: clientsInfo.value.member_id } })
+    }
+
+    const openUploadPropertyDocuments = () => {
+      if (isDasbledSteps.value) {
+        showMessageMandatory()
+        return
+      }
+      router.push({ name: 'property-casualty', params: { id: clientsInfo.value.member_id } })
+    }
+
+    const openUploadMedicareDocuments = () => {
+      if (isDasbledSteps.value) {
+        showMessageMandatory()
+        return
+      }
+      router.push({ name: 'medicare-details', params: { id: clientsInfo.value.member_id } })
+    }
+
+    const openConfirmationInformation = () => {
+      if (isDasbledSteps.value) {
+        showMessageMandatory()
+        return
+      }
+      router.push({ name: 'confirmation-page', params: { id: clientsInfo.value.member_id } })
+    }
+
+    const showMessageMandatory = () => {
+      useAlert({
+        title: 'Error',
+        type: 'error',
+        message: 'Step 1 & Step 2 are mandatory.',
+      })
+    }
+
     return {
       isLoadingInfo,
       fetchingInfo,
@@ -165,6 +252,14 @@ export default {
       stepsColorSchema,
       getStatusRelevant,
       isReadOnlyLead,
+      openUploadMedicareDocuments,
+      openUploadPropertyDocuments,
+      openUploadRelevantDocuments,
+      openConfirmationInformation,
+      isDasbledSteps,
+      isDisabledRelevantDocuments,
+
+      showMessageMandatory,
     }
   },
 }

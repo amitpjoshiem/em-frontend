@@ -1,6 +1,6 @@
 <template>
   <SwdWrapper>
-    <SwdSubHeader title="Upload Relevant Financial Documents" />
+    <SwdSubHeader title="Upload Relevant Financial Documents" witch-info-btn />
     <!-- Investment/Retirement Statements -->
     <div class="border border-main-blue rounded p-4 my-8">
       <div class="text-center text-main font-semibold py-4">Investment/Retirement Statements</div>
@@ -31,9 +31,10 @@
         <router-link :to="{ name: `lead/dashboard` }" class="w-1/12">
           <SwdButton info main>Back</SwdButton>
         </router-link>
-        <router-link v-if="!isReadOnlyLead" :to="{ name: `lead/dashboard` }" class="w-1/12 ml-4">
-          <SwdButton primary main :disabled="!isStepCompleated">Save</SwdButton>
-        </router-link>
+        <SwdButton primary main :disabled="isDisabledSaveBtn" class="ml-4" @click="saveStep">
+          <SwdSpinner v-show="isLoadingUpdateSteps" class="mr-2" />
+          Save
+        </SwdButton>
       </template>
     </div>
   </SwdWrapper>
@@ -42,24 +43,59 @@
 <script>
 import LeadDocuments from './Upload/LeadDocuments.vue'
 import { useFetchClietsInfo } from '@/api/clients/use-fetch-clients-info'
-import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { updateStepsClients } from '@/api/vueQuery/clients/fetch-update-steps-clients'
+import { useMutation, useQueryClient } from 'vue-query'
+import { useWindowScrollTo } from '@/hooks/use-window-scroll'
+
 export default {
   name: 'RelevantFinancialDocuments',
   components: {
     LeadDocuments,
   },
   setup() {
+    const router = useRouter()
+    const store = useStore()
+    const queryClient = useQueryClient()
+    const { scrollTo } = useWindowScrollTo()
+
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
+    const { isLoading: isLoadingUpdateSteps, mutateAsync: updateSteps } = useMutation(updateStepsClients)
+
+    onMounted(() => {
+      scrollTo()
+    })
 
     const isReadOnlyLead = computed(() => {
       return clientsInfo.value.readonly
     })
 
-    const isStepCompleated = computed(() => {
+    const saveStep = async () => {
+      if (!isDisabledSaveBtn.value) {
+        const res_investment = await updateSteps({
+          ['investment_and_retirement_accounts']: store.state.globalComponents.uploadInvestmentDocsStatus,
+        })
+        const res_life = await updateSteps({
+          ['life_insurance_annuity_and_long_terms_care_policies']: store.state.globalComponents.uploadLifeDocsStatus,
+        })
+        const res_social = await updateSteps({
+          ['social_security_information']: store.state.globalComponents.uploadSocialDocsStatus,
+        })
+        if (!('error' in res_investment) && !('error' in res_life) && !('error' in res_social)) {
+          queryClient.invalidateQueries(['clients-info'])
+          router.push({ name: `lead/dashboard` })
+        }
+      }
+    }
+
+    const isDisabledSaveBtn = computed(() => {
       return (
-        clientsInfo.value.steps.investment_and_retirement_accounts &&
-        clientsInfo.value.steps.life_insurance_annuity_and_long_terms_care_policies &&
-        clientsInfo.value.steps.social_security_information
+        isLoadingUpdateSteps.value ||
+        store.state.globalComponents.uploadInvestmentDocsStatus === null ||
+        store.state.globalComponents.uploadLifeDocsStatus === null ||
+        store.state.globalComponents.uploadSocialDocsStatus === null
       )
     })
 
@@ -67,7 +103,9 @@ export default {
       isReadOnlyLead,
       clientsInfo,
       isLoadingInfo,
-      isStepCompleated,
+      isDisabledSaveBtn,
+      saveStep,
+      isLoadingUpdateSteps,
     }
   },
 }

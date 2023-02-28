@@ -1,28 +1,20 @@
 <template>
-  <div v-if="!isFetching">
+  <div v-if="!isLoading && !isFetching" class="pt-4">
     <SwdUpload
       :upload-data="{ collection: 'assets_consolidation_docs' }"
       :doc-list="assetsConsolidationDocs.data"
       :show-file-list="true"
       :auto-upload="true"
       :show-file-block="true"
-      :disabled="isDisabledUpload"
+      :disabled="disabledUpload"
       @upload-success="handleSuccess"
       @upload-change="handleChange"
       @upload-mounted="bindRef"
       @open-prewiev="openPrewiev"
       @remove-media="removeMedia"
     >
-      <template #main>
-        <div v-if="!isDisabledUpload" class="my-5">
-          <div class="w-2/12">
-            <SwdButton primary small>Click to upload</SwdButton>
-          </div>
-          <div class="el-upload__tip">PDF files only</div>
-        </div>
-        <div v-if="!assetsConsolidationDocs.data.length && !inChangeFile" class="text-main text-center pb-5">
-          No documents uploaded
-        </div>
+      <template #noDocuments>
+        <div v-if="isShowNoDocuments" class="text-main text-center pt-5 pb-10">No documents uploaded</div>
       </template>
     </SwdUpload>
   </div>
@@ -80,12 +72,12 @@ export default {
       upload.value = ref.value
     }
 
-    const openPrewiev = (url) => {
+    const openPrewiev = (file) => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', url)
+      store.commit('globalComponents/setPreviewFile', file)
     }
 
     const removeMedia = async (media) => {
@@ -96,10 +88,10 @@ export default {
     }
 
     const isShowNoDocuments = computed(() => {
-      return !assetsConsolidationDocs.data.length && !inChangeFile.value && !isFetching.value
+      return !assetsConsolidationDocs.value.data?.length && !inChangeFile.value && !isFetching.value
     })
 
-    const isDisabledUpload = computed(() => {
+    const disabledUpload = computed(() => {
       if (route.meta.type !== 'support' && route.meta.type !== 'client') return false
       return true
     })
@@ -121,7 +113,7 @@ export default {
       handleChange,
       isShowNoDocuments,
       inChangeFile,
-      isDisabledUpload,
+      disabledUpload,
     }
   },
 }

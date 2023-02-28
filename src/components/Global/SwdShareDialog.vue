@@ -44,6 +44,7 @@
         <div class="flex justify-end">
           <SwdButton info main @click="closeDialog">Cancel</SwdButton>
           <SwdButton class="ml-2" primary main :disabled="confirmBtnDisabled" @click="confirm">
+            Share
             <SwdSpinner v-show="confirmBtnLoading" class="mr-2" />
             Share
           </SwdButton>
@@ -168,7 +169,7 @@ export default defineComponent({
           useAlert({
             title: 'Success',
             type: 'success',
-            message: 'Success',
+            message: 'Success.',
           })
         }
       }

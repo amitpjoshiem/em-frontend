@@ -38,14 +38,14 @@
                 <span
                   v-if="!item.retired"
                   data-testid="type-member-basic-information-spouse-not-retired"
-                  class="text-border-green text-xxs font-semibold bg-main-green rounded pr-2 pl-1 py-1"
+                  class="text-border-green text-xxs font-semibold bg-main-orange rounded px-2 py-1"
                 >
                   Not Retired
                 </span>
                 <span
                   v-if="item.retired"
                   data-testid="type-member-basic-information-spouse-retired"
-                  class="text-xxs text-orange-badge font-semibold bg-orange-bg rounded pr-2 pl-1 py-1"
+                  class="text-xxs text-orange-badge font-semibold bg-main-green rounded px-2 py-1"
                 >
                   Retired
                 </span>
@@ -169,7 +169,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Delete successfully',
+          message: 'Delete successfully.',
         })
         queryClient.invalidateQueries(['contacts-all', memberId])
       }
@@ -188,7 +188,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Update successfully',
+          message: 'Update successfully.',
         })
         queryClient.invalidateQueries(['contacts-all', memberId])
       }

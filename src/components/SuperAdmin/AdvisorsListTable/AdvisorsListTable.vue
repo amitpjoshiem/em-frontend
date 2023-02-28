@@ -3,8 +3,8 @@
     :data="usersList"
     style="width: 100%"
     row-class-name="row-class"
-    cell-class-name="cell-class"
-    header-cell-class-name="header-class"
+    cell-class-name="custom-cell-class"
+    header-cell-class-name="custom-header-table"
     header-row-class-name="header-row-class"
     :default-sort="getDefaultSort"
     empty-text="No recently added opportunity"
@@ -78,15 +78,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.header-class {
-  background-color: #f2f5fa !important;
-  height: 24px !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  color: #aab5cf;
-  font-size: 10px;
-  text-transform: uppercase;
-}
-</style>

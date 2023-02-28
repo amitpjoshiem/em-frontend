@@ -127,7 +127,8 @@ export const supportRoute = {
     {
       path: 'client-report/:id',
       name: `${type}/clientreport`,
-      component: () => import(/* webpackChunkName: "Clientreport" */ '../../components/ClientReport/ClientReport.vue'),
+      component: () =>
+        import(/* webpackChunkName: "ClientReport" */ '../../components/ClientReport/ClientReportList.vue'),
     },
     {
       path: 'asset-accounts/:id',
@@ -155,7 +156,8 @@ export const supportRoute = {
     {
       path: 'contract-info/:id',
       name: `${type}/contract-info`,
-      component: () => import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractInfo.vue'),
+      component: () =>
+        import(/* webpackChunkName: "ContractInfo" */ '../../components/ClientReport/ContractDetails.vue'),
     },
     {
       path: 'export-report/:id',

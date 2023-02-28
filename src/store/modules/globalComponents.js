@@ -68,7 +68,7 @@ const getDefaultState = () => {
         changeName: false,
         changePassword: false,
         shareFileEmailDialog: false,
-        prewievPdf: false,
+        previewModal: false,
         moreOtherInfo: false,
         moreOwnerInfo: false,
         changePhone: false,
@@ -83,6 +83,8 @@ const getDefaultState = () => {
         addChildOpportunity: false,
         modalSummaryInfo: false,
         restoreDraft: false,
+        newContract: false,
+        modalUploadDocuments: false,
       },
     },
     sortMembers: {
@@ -95,17 +97,22 @@ const getDefaultState = () => {
     needUpdateContent: null,
     docShare: null,
     contact: null,
-    previewUrl: null,
+    previewFile: null,
     opportunityId: null,
     onlyMyMember: false,
     ownerMember: null,
     onlyMyLead: false,
     ownerLead: null,
-
     onlyMyPreLead: false,
     ownerPreLead: null,
-
     summaryInfoMemberId: null,
+    uploadMedicareDocsStatus: null,
+    uploadPropertyDocsStatus: null,
+    uploadInvestmentDocsStatus: null,
+    uploadLifeDocsStatus: null,
+    uploadSocialDocsStatus: null,
+    collectionUploadMedia: null,
+    pageClientsHelp: null,
   }
 }
 
@@ -219,8 +226,8 @@ const mutations = {
     state.dateRangeClientReport = value
   },
 
-  setPreviewUrlPdf(state, value) {
-    state.previewUrl = value
+  setPreviewFile(state, value) {
+    state.previewFile = value
   },
 
   setOnlyMyMember(state, value) {
@@ -257,6 +264,34 @@ const mutations = {
 
   setSummaryInfoMemberId(state, value) {
     state.summaryInfoMemberId = value
+  },
+
+  setUploadMedicareDocsStatus(state, value) {
+    state.uploadMedicareDocsStatus = value
+  },
+
+  setUploadPropertyDocsStatus(state, value) {
+    state.uploadPropertyDocsStatus = value
+  },
+
+  setUploadInvestmentDocsStatus(state, value) {
+    state.uploadInvestmentDocsStatus = value
+  },
+
+  setUploadLifeDocsStatus(state, value) {
+    state.uploadLifeDocsStatus = value
+  },
+
+  setUploadSocialDocsStatus(state, value) {
+    state.uploadSocialDocsStatus = value
+  },
+
+  setCollectionUploadMedia(state, value) {
+    state.collectionUploadMedia = value
+  },
+
+  setPageClientsHelp(state, value) {
+    state.pageClientsHelp = value
   },
 
   resetState(state) {

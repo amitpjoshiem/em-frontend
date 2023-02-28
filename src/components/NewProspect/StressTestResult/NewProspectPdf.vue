@@ -1,24 +1,20 @@
 <template>
-  <div v-if="!isFetching">
+  <div v-if="!isLoading && !isFetching">
     <SwdUpload
       :upload-data="{ collection: 'stress_test' }"
       :doc-list="stressTestDocument.data"
       :show-file-list="true"
       :auto-upload="true"
       :show-file-block="true"
-      :disabled="disbaledUpload"
+      :disabled="disabledUpload"
       @upload-change="handleChange"
       @upload-success="handleSuccess"
       @upload-mounted="bindRef"
       @open-prewiev="openPrewiev"
       @remove-media="removeMedia"
     >
-      <template v-if="!disbaledUpload" #main>
-        <div class="flex my-5">
-          <SwdButton primary small class="w-2/12 mr-4">Click to upload</SwdButton>
-          <div class="el-upload__tip">PDF files only</div>
-        </div>
-        <div v-if="isShowNoDocuments" class="text-main text-center pb-5">No documents uploaded</div>
+      <template #noDocuments>
+        <div v-if="isShowNoDocuments" class="text-main text-center pt-5 pb-10">No documents uploaded</div>
       </template>
     </SwdUpload>
     <div v-if="showNavBtn" class="flex justify-end my-6">
@@ -67,7 +63,7 @@ export default {
     const queryClient = useQueryClient()
     const id = route.params.id
 
-    const { isLoading, isFetching, isError, data: stressTestDocument } = useFetchStressTest(id)
+    const { isLoading, isError, isFetching, data: stressTestDocument } = useFetchStressTest(id)
     const { mutateAsync: create, error } = useMutation(createStressTest)
     const { mutateAsync: deletePdf } = useMutation(deleteMedia)
     const { mutateAsync: stressTestConfirm } = useMutation(fetchStressTestConfirm)
@@ -90,7 +86,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Opportunity update successfully',
+          message: 'Opportunity update successfully.',
         })
         router.push({ name: `${route.meta.type}/blueprint-report`, params: { id: route.params.id } })
       }
@@ -114,12 +110,12 @@ export default {
       upload.value = ref.value
     }
 
-    const openPrewiev = (url) => {
+    const openPrewiev = (file) => {
       store.commit('globalComponents/setShowModal', {
-        destination: 'prewievPdf',
+        destination: 'previewModal',
         value: true,
       })
-      store.commit('globalComponents/setPreviewUrlPdf', url)
+      store.commit('globalComponents/setPreviewFile', file)
     }
 
     const removeMedia = async (media) => {
@@ -134,10 +130,10 @@ export default {
     }
 
     const isShowNoDocuments = computed(() => {
-      return !stressTestDocument.value.data.length && !inChangeFile.value && !isFetching.value
+      return !stressTestDocument.value.data.length && !inChangeFile.value && !isLoading.value
     })
 
-    const disbaledUpload = computed(() => {
+    const disabledUpload = computed(() => {
       if (store.state.globalComponents.role === 'client') return true
       return false
     })
@@ -160,7 +156,7 @@ export default {
       removeMedia,
       handleChange,
       isShowNoDocuments,
-      disbaledUpload,
+      disabledUpload,
     }
   },
 }

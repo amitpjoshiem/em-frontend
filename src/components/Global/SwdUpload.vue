@@ -1,29 +1,38 @@
 <template>
   <el-upload
     ref="innerRef"
+    v-model:file-list="fileList"
     :limit="limit"
-    :file-list="fileList"
     :action="getUrlMedia"
     :show-file-list="showFileList"
     :on-success="($event) => $emit('upload-success', $event)"
-    :before-upload="uploadBeforeHook"
-    with-credentials
+    :before-upload="hookBeforeUploadFile"
     :headers="headers"
     :data="uploadData"
     :on-change="($event) => $emit('upload-change', $event)"
+    :on-exceed="handleExceed"
+    :on-progress="handleProgress"
     :auto-upload="autoUpload"
-    list-type="picture"
     :disabled="disabled"
-    @on-change="($event) => $emit('upload-change', $event)"
+    with-credentials
+    list-type="picture"
   >
-    <slot name="main" />
+    <SwdButton v-if="showUploadBtn" primary small :disabled="disabled">Click to upload</SwdButton>
+    <template v-if="showTip" #tip>
+      <p v-if="!isLoadingMediaRules" class="text-xxs">
+        <span v-if="getRulesFormat.length"> {{ getRulesFormat.join(', ') }} files only </span>
+        (max file size {{ mediaRules.data.size }}Mb)
+      </p>
+      <SwdSpinner v-else />
+    </template>
+
     <template v-if="showFileBlock" #file="{ file }">
       <div
         v-if="file.status !== 'uploading' && file.status !== 'ready'"
         class="sm:flex items-center justify-between w-full"
       >
         <div class="flex items-center">
-          <img class="el-upload-list__item-thumbnail" src="../../assets/img/icon-pdf.png" alt="" />
+          <SwdThumbnail :extension="getExtension(file)" />
           <div class="flex flex-col ml-3">
             <div>
               <span class="text-main">File name: </span>
@@ -38,7 +47,7 @@
 
         <div class="flex justify-end pt-4 sm:pt-0 sm:block">
           <el-button
-            v-if="file.extension === 'pdf'"
+            v-if="file.extension && configExtensionPreview.includes(file.extension.toLowerCase())"
             type="primary"
             size="small"
             plain
@@ -64,16 +73,23 @@
       </div>
     </template>
   </el-upload>
+  <slot name="noDocuments" />
 </template>
 
 <script>
 import { tokenStorage } from '@/api/api-client/TokenStorage'
 import { computed, ref, onMounted, nextTick } from 'vue'
 import { useStore } from 'vuex'
+import { useFetchMediaRules } from '@/api/use-fetch-media-rules.js'
+import { useBeforeUploadFile } from '@/hooks/use-before-upload-file'
+import { ElMessage } from 'element-plus'
+import SwdThumbnail from '@/components/Global/SwdThumbnail.vue'
 
 export default {
   name: 'SwdUpload',
-
+  components: {
+    SwdThumbnail,
+  },
   props: {
     uploadData: {
       type: Object,
@@ -120,6 +136,16 @@ export default {
       required: false,
       default: 10,
     },
+    showTip: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    showUploadBtn: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   emits: [
     'upload-success',
@@ -127,6 +153,7 @@ export default {
     'upload-before',
     'upload-change',
     'upload-mounted',
+    'upload-progress',
     'open-prewiev',
     'remove-media',
   ],
@@ -134,10 +161,16 @@ export default {
     const store = useStore()
     const innerRef = ref(null)
     const idFileRemove = ref(null)
-
     const fileList = ref([])
+    const configExtensionPreview = ['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx']
 
+    const { isLoading: isLoadingMediaRules, data: mediaRules } = useFetchMediaRules({
+      collection: props.uploadData.collection,
+    })
+
+    const { beforeUploadFile } = useBeforeUploadFile()
     const uploadRefFn = () => props.uploadRef
+
     const headers = computed(() => {
       const customHeader = {}
 
@@ -184,10 +217,16 @@ export default {
     })
 
     const handlePictureCardPreview = (file) => {
-      emit('open-prewiev', file.url)
+      emit('open-prewiev', file)
     }
 
     const handleRemove = (media) => {
+      if (media.uid) {
+        const index = fileList.value.findIndex((elem) => {
+          return elem.uid === media.uid
+        })
+        fileList.value.splice(index, 1)
+      }
       if (media.id) {
         idFileRemove.value = media.id
         emit('remove-media', media.id)
@@ -195,6 +234,33 @@ export default {
         idFileRemove.value = media
         emit('remove-media', media)
       }
+    }
+
+    const getRulesFormat = computed(() => {
+      if (mediaRules.value.data.allowed_types) {
+        return mediaRules.value.data.allowed_types.map((element) => {
+          return element.extension
+        })
+      }
+      return []
+    })
+
+    const hookBeforeUploadFile = (rawFile) => {
+      return beforeUploadFile({ rawFile, rules: mediaRules.value.data })
+    }
+
+    const handleExceed = () => {
+      ElMessage.warning(
+        `In one time, only ${props.limit} ${props.limit === 1 ? 'file' : 'files'} uploading is allowed.`
+      )
+    }
+
+    const handleProgress = (e) => {
+      emit('upload-progress', e)
+    }
+
+    const getExtension = (file) => {
+      return file.name.match(/\.([^.]+)$|$/)[1]
     }
 
     return {
@@ -206,6 +272,14 @@ export default {
       handleRemove,
       idFileRemove,
       fileList,
+      hookBeforeUploadFile,
+      isLoadingMediaRules,
+      mediaRules,
+      getRulesFormat,
+      handleExceed,
+      getExtension,
+      configExtensionPreview,
+      handleProgress,
     }
   },
 }

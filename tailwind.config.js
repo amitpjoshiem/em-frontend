@@ -1,7 +1,7 @@
 module.exports = {
-  mode: 'jit',
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: false,
+  // mode: 'jit',
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  // darkMode: false,
   theme: {
     extend: {
       colors: {
@@ -34,8 +34,8 @@ module.exports = {
         'orange-primary-light': '#FFEFEA',
 
         'color-error': '#FF92A5',
-
         'icon-not-active': '#677494',
+        'ad-btn-border': '#c8c9cc',
 
         // gray03: '#AAB5CF',
         // 'input-border': '#D4DDEB',

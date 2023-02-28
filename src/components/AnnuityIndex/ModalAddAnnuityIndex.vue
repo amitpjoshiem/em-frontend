@@ -43,19 +43,15 @@
         :show-file-list="true"
         :auto-upload="true"
         :show-file-block="true"
+        :on-exceed="handleExceed"
         :limit="1"
-        :disabled="!!fileList.length"
         @upload-success="handleSuccess"
         @upload-change="handleChange"
         @upload-mounted="bindRef"
         @remove-media="removeMedia"
       >
-        <template #main>
-          <div class="my-5">
-            <SwdButton :disabled="fileList.length > 0" class="mr-5" primary small>Attach a document</SwdButton>
-            <div class="el-upload__tip">PDF files only (max file size 10Mb)</div>
-          </div>
-          <div v-if="!inChangeFile" class="text-main text-center pt-6">No documents uploaded</div>
+        <template #noDocuments>
+          <div v-if="!inChangeFile" class="text-main text-center pt-5">No documents uploaded</div>
         </template>
       </SwdUpload>
     </div>
@@ -75,16 +71,16 @@
 </template>
 
 <script>
+import SwdUpload from '@/components/Global/SwdUpload.vue'
 import { watchEffect, ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useFetchTaxQualificationInit } from '@/api/use-fetch-tax-qualification-init.js'
-import { ElMessageBox } from 'element-plus'
 import { rules } from '@/validationRules/addAnnuityIndex.js'
-import SwdUpload from '@/components/Global/SwdUpload.vue'
 import { createAnnuityIndex } from '@/api/vueQuery/create-annuity-index'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useAlert } from '@/utils/use-alert'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default {
   name: 'ModalAddAnnuityIndex',
@@ -102,11 +98,9 @@ export default {
     const upload = ref(null)
     const inChangeFile = ref(false)
     const validUpload = ref(true)
-
-    const memberId = route.params.id
-
     const fileList = reactive([])
 
+    const memberId = route.params.id
     const { mutateAsync: create, isLoading: loadingCreate } = useMutation(createAnnuityIndex)
 
     const ruleForm = reactive({
@@ -172,12 +166,13 @@ export default {
       ruleForm.agent_rep_code = ''
       ruleForm.license_number = ''
       ruleForm.uuids = []
+      inChangeFile.value = false
       removeMedia()
     }
 
     const save = (e) => {
       e.preventDefault()
-      if (!fileList.length) validUpload.value = false
+      if (!ruleForm.uuids.length) validUpload.value = false
       form.value.validate(async (valid) => {
         if (valid && validUpload.value) {
           const res = await createAnnuityIndex({ id: memberId, data: ruleForm })
@@ -185,7 +180,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Annuity Index created',
+              message: 'Annuity Index created.',
             })
             queryClient.invalidateQueries(['annuityIndex'])
             doneCloceDialog()
@@ -213,6 +208,14 @@ export default {
       ruleForm.uuids.push(res.data.uuid)
     }
 
+    const handleExceed = (files, uploadFiles) => {
+      ElMessage.warning(
+        `The limit is 1, you selected ${files.length} files this time, add up to ${
+          files.length + uploadFiles.length
+        } totally`
+      )
+    }
+
     return {
       dialogVisible,
       closeDialog,
@@ -233,8 +236,8 @@ export default {
       inChangeFile,
       create,
       loadingCreate,
-
       validUpload,
+      handleExceed,
     }
   },
 }

@@ -50,7 +50,7 @@
         </div>
       </template>
       <div v-if="member.married" class="flex text-main mb-2">
-        <div class="pr-2 text-gray-500">Spouse retired:</div>
+        <div class="pr-2 text-gray-500">Spouse/Partner retired:</div>
         <div class="text-main">
           <SwdRetiredLabel :retired="member.spouse.retired" />
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <SwdSubHeader :title="headerTitle" />
+  <SwdSubHeader :title="headerTitle" witch-info-btn />
 </template>
 <script>
 import { useRouter, useRoute } from 'vue-router'

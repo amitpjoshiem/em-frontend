@@ -90,7 +90,7 @@ class ApiClient {
       }
 
       if (type === 'client') {
-        customHeader['x-user'] = store.state.globalComponents.clientId
+        customHeader['x-user'] = store.state.globalComponents.userId
       }
 
       if (type === 'lead') {

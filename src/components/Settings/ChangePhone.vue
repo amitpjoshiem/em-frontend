@@ -57,7 +57,7 @@ export default {
     })
 
     const rules = reactive({
-      phone: [{ required: true }, { len: 17, trigger: 'blur', message: 'Incorrect phone number' }],
+      phone: [{ required: true }, { len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
       code: [{ required: true }],
     })
 
@@ -82,7 +82,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Send code. Check sms',
+              message: 'Send code. Check sms.',
             })
           }
         } else {
@@ -101,7 +101,7 @@ export default {
             useAlert({
               title: 'Success',
               type: 'success',
-              message: 'Phone verified',
+              message: 'Phone verified.',
             })
             closeDialog()
           }

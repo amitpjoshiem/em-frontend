@@ -6,7 +6,7 @@
       <span
         v-if="house.type"
         data-testid="member-housing-information-type"
-        class="text-border-green text-xxs font-semibold bg-main-green rounded pr-2 pl-1 py-1 capitalize"
+        class="text-border-green text-xxs font-semibold bg-main-green rounded px-2 py-1 capitalize"
       >
         {{ house.type }}
       </span>

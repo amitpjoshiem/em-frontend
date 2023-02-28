@@ -1,15 +1,15 @@
 <template>
-  <div class="flex pb-5">
+  <div class="flex pb-5 items-center">
     <div class="w-2/12">
       <BackButton v-if="withBackBtn" text="Back" @click="$router.go(-1)" />
     </div>
     <div class="flex justify-center w-8/12">
       <SwdSpinner v-if="loading" />
-      <span v-else class="text-sm sm:text-title text-primary font-semibold">{{ title }}</span>
+      <span v-else class="text-sm sm:text-title text-primary font-semibold text-center">{{ title }}</span>
     </div>
     <div class="w-2/12 flex justify-end">
       <ShareBtn v-if="withShareBtn" :pdf-region="region" />
-      <SwdInfoBtn v-if="witchInfoBtn" :destination="infoBtnDestination" />
+      <SwdInfoBtn v-if="witchInfoBtn" />
       <slot name="change-assistent" />
       <slot name="add-user" />
       <slot name="add-company" />
@@ -42,11 +42,6 @@ export default {
       type: Boolean,
       require: false,
       default: false,
-    },
-    infoBtnDestination: {
-      type: String,
-      require: false,
-      default: '',
     },
     region: {
       type: String,

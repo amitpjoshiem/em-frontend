@@ -72,7 +72,7 @@ export default {
         useAlert({
           title: 'Success',
           type: 'success',
-          message: 'Connect success',
+          message: 'Connect success.',
         })
         router.push({ name: `home` })
       }

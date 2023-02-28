@@ -1,28 +1,35 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
-    class="
-      cursor-pointer
-      bg-white
-      rounded
-      flex
-      justify-center
-      items-center
-      border border-color-grey
-      pr-[7px]
-      pl-[6px]
-      py-[6px]
-    "
+    class="cursor-pointer bg-white rounded flex justify-center items-center border border-color-grey px-[6px] py-[6px]"
     @click="showInfo"
   >
     <el-icon>
       <InfoFilled color="#66B6FF" />
     </el-icon>
   </div>
-
-  <el-dialog v-model="dialogVisible" title="Info" width="70%">
-    <el-scrollbar height="400px" class="pr-4">
-      <InfoMemberDetails v-if="destination === 'MemberDetails'" />
-      <InfoAssetAllocationDetails v-if="destination === 'AssetAllocationDetails'" />
+  <el-dialog
+    v-model="dialogVisible"
+    title="Info"
+    :width="getModalWidth"
+    :fullscreen="getFullScreenModal"
+    destroy-on-close
+  >
+    <el-scrollbar v-loading="isFetching" class="pr-[15px]">
+      <div v-if="!isFetching && data" class="text-main">
+        <div v-if="data.url" class="mb-4">
+          <div class="border rounded-md p-5">
+            <video controls style="width: 100%; height: 100%">
+              <source :src="data.url" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+        <div v-if="data.text">
+          <div class="border rounded-md p-5">
+            <div class="help-text-content" v-html="data.text" />
+          </div>
+        </div>
+      </div>
     </el-scrollbar>
     <template #footer>
       <span class="dialog-footer">
@@ -34,34 +41,74 @@
 
 <script>
 import { InfoFilled } from '@element-plus/icons-vue'
-import { ref } from 'vue'
-import InfoMemberDetails from '@/components/Info/InfoMemberDetails.vue'
-import InfoAssetAllocationDetails from '@/components/Info/InfoAssetAllocationDetails.vue'
+import { computed, ref, watchEffect } from 'vue'
+import { useRoute } from 'vue-router'
+import { useFetchClientsHelp } from '@/api/use-fetch-clients-help.js'
+import { useStore } from 'vuex'
+import { useBreakpoints } from '@/hooks/use-breakpoints'
 
 export default {
   name: 'SwdInfoBtn',
   components: {
     InfoFilled,
-    InfoMemberDetails,
-    InfoAssetAllocationDetails,
-  },
-  props: {
-    destination: {
-      type: String,
-      require: false,
-      default: '',
-    },
   },
 
   setup() {
+    const route = useRoute()
+    const store = useStore()
     const dialogVisible = ref(false)
+    const { screenType } = useBreakpoints()
+
+    const { isLoading, data, refetch, isFetching } = useFetchClientsHelp({ enabled: false })
+
+    watchEffect(() => {
+      if (dialogVisible.value) getFetchData()
+    })
+
+    const getFetchData = async () => {
+      if (route.name === 'lead-basic-information') {
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_basic')
+      }
+      if (route.name === 'lead-assets-information') {
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_assets_income')
+      }
+      if (route.name === 'lead-expense-information') {
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_monthly_expenses')
+      }
+      if (route.name === 'relevant-financial-documents') {
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_step_2')
+      }
+      if (route.name === 'confirmation-page') {
+        await store.commit('globalComponents/setPageClientsHelp', 'prospect_confirm')
+      }
+      refetch.value()
+    }
 
     const showInfo = () => {
       dialogVisible.value = true
     }
+
+    const getModalWidth = computed(() => {
+      if (screenType.value === 'lg') return '70%'
+      if (screenType.value === 'md') return '70%'
+      return '100%'
+    })
+
+    const getFullScreenModal = computed(() => {
+      if (screenType.value === 'xs') return true
+      return false
+    })
+
     return {
       showInfo,
       dialogVisible,
+      route,
+      isLoading,
+      data,
+      refetch,
+      isFetching,
+      getModalWidth,
+      getFullScreenModal,
     }
   },
 }
