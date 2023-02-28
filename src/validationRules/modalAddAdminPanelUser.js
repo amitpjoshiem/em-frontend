@@ -1,3 +1,10 @@
+import { rulesEmail } from './fields/rules-email'
+import { rulesFirstName } from './fields/rules-first-name'
+import { rulesLastName } from './fields/rules-last-name'
+import { rulesPhoneRequired } from './fields/rules-phone'
+
+import { customNumberValidation } from './use-custom-number-validation'
+
 const rules = {
   role: [
     {
@@ -13,47 +20,28 @@ const rules = {
       trigger: 'change',
     },
   ],
-  first_name: [
-    {
-      required: true,
-      message: 'Please input first name',
-      trigger: 'change',
-    },
-  ],
-  last_name: [
-    {
-      required: true,
-      message: 'Please input last name',
-      trigger: 'change',
-    },
-  ],
-  email: [
-    { required: true, message: 'The field cannot be empty', trigger: 'blur' },
-    {
-      type: 'email',
-      message: 'Please enter valid email ID',
-      trigger: 'blur',
-    },
-  ],
+  first_name: rulesFirstName,
+  last_name: rulesLastName,
+  email: rulesEmail,
   username: [
     {
       required: true,
-      message: 'Please input first name',
+      message: 'Please input username',
       trigger: 'change',
     },
   ],
   position: [
     {
       required: true,
-      message: 'Please input first name',
+      message: 'Please input  position',
       trigger: 'change',
     },
   ],
-  phone: [{ required: true, len: 13, trigger: 'blur', message: 'Incorrect phone number' }],
+  phone: rulesPhoneRequired,
   npn: [
     {
       required: true,
-      validator: validateNumber,
+      validator: customNumberValidation,
     },
     { trigger: 'blur' },
   ],
@@ -64,18 +52,6 @@ const rules = {
       trigger: 'change',
     },
   ],
-}
-
-function validateNumber(rule, value, callback) {
-  if (isNaN(value)) {
-    callback(new Error('Data is not a number'))
-  }
-
-  if (rule.required && !value) {
-    callback(new Error('The field cannot be empty'))
-  }
-
-  callback()
 }
 
 export { rules }

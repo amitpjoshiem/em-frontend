@@ -13,6 +13,7 @@ import { rulesYears } from './fields/rules-years'
 import { rulesFirstName } from './fields/rules-first-name'
 import { rulesLastName } from './fields/rules-last-name'
 import { rulesPhone, rulesPhoneRequired } from './fields/rules-phone'
+
 import { customNumberValidation } from './use-custom-number-validation'
 
 const rules = {
