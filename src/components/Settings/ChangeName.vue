@@ -68,14 +68,18 @@ export default {
 
     const submit = async (e) => {
       e.preventDefault()
-      changeUserNameProfile({ form: ruleForm, id: user.value.id })
-        .then(() => {
-          queryClient.invalidateQueries(['users'])
-          data.isShowForm = false
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+      form.value.validate(async (valid) => {
+        if (valid) {
+          changeUserNameProfile({ form: ruleForm, id: user.value.id })
+            .then(() => {
+              queryClient.invalidateQueries(['users'])
+              data.isShowForm = false
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+        }
+      })
     }
 
     const closeDialog = () => {

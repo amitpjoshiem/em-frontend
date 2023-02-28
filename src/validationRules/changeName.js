@@ -1,20 +1,9 @@
+import { rulesFirstName } from './fields/rules-first-name'
+import { rulesLastName } from './fields/rules-last-name'
+
 const rules = {
-  first_name: [
-    {
-      required: true,
-      message: 'Please input first name',
-      trigger: 'blur',
-    },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
-  ],
-  last_name: [
-    {
-      required: true,
-      message: 'Please input last name',
-      trigger: 'blur',
-    },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
-  ],
+  first_name: rulesFirstName,
+  last_name: rulesLastName,
 }
 
 export { rules }
