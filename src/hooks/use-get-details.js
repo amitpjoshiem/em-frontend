@@ -5,18 +5,13 @@ export function useGetDetails() {
   const route = useRoute()
 
   const getDetails = ({ member }) => {
-    if (member.type === 'client') {
+    if (member.type === 'client' || member.step !== 'default') {
       router.push({ name: `${route.meta.type}/member-details`, params: { id: member.id } })
       return
     }
 
     if (member.step === 'default') {
       router.push({ name: 'basic-information', params: { id: member.id } })
-      return
-    }
-
-    if (member.step !== 'default') {
-      router.push({ name: `${route.meta.type}/member-details`, params: { id: member.id } })
       return
     }
   }
