@@ -9,6 +9,7 @@
     </div>
     <div v-if="isShowSideBar" class="flex flex-col items-center flex-grow w-[65px] fixed top-1/3">
       <router-link
+        v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
         :to="{ name: `${route.meta.type}/dashboard` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === `${route.meta.type}/dashboard` }"
