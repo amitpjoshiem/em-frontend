@@ -76,7 +76,7 @@ export default {
     }
 
     const getTextBtn = computed(() => {
-      if (member.value.step !== 'default') return 'More Details'
+      if (member.value.step !== 'default' || member.value.type === 'client') return 'More Details'
       return 'Onboarding'
     })
 
