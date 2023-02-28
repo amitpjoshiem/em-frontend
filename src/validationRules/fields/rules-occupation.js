@@ -6,4 +6,7 @@ export const rulesOccupation = {
   required: true,
   trigger: 'change',
   validator: customValidate,
+  transform(value) {
+    return value.trim()
+  },
 }

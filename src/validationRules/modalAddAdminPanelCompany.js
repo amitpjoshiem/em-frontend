@@ -4,6 +4,9 @@ const rules = {
       required: true,
       message: 'Please input name',
       trigger: 'change',
+      transform(value) {
+        return value.trim()
+      },
     },
   ],
   domain: [
@@ -11,6 +14,9 @@ const rules = {
       required: true,
       message: 'Please input domai',
       trigger: 'change',
+      transform(value) {
+        return value.trim()
+      },
     },
   ],
 }

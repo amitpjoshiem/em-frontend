@@ -5,4 +5,7 @@ export const rulesFirstName = {
   errorText: 'Please input first name',
   trigger: 'change',
   validator: customValidate,
+  transform(value) {
+    return value.trim()
+  },
 }

@@ -5,4 +5,7 @@ export const rulesAddress = {
   required: true,
   trigger: 'change',
   validator: customValidate,
+  transform(value) {
+    return value.trim()
+  },
 }

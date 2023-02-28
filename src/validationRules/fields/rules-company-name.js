@@ -6,4 +6,7 @@ export const rulesCompanyName = {
   required: false,
   trigger: 'change',
   validator: customValidate,
+  transform(value) {
+    return value.trim()
+  },
 }
