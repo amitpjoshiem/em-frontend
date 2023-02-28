@@ -1,46 +1,48 @@
+import { customNumberValidation } from './use-custom-number-validation'
+
 const rules = {
   income: {
     income_plan: true,
     member: {
       salary: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       social_security: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       pension: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       rental_income: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       rmds: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       interest_dividends: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       other: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -48,43 +50,43 @@ const rules = {
     spouse: {
       salary: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       social_security: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       pension: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       rental_income: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       rmds: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       interest_dividends: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       other: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -94,73 +96,73 @@ const rules = {
     member: {
       gift_inheritance: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira_59: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cash_value_life_insurance: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       total: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       second_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cash_checking_savings_mm: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       stocks_bonds_mf: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       other_liquid_assets: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cds: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       lump_sum_pension: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       fa_va_not_subject_to_penalty: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -168,73 +170,73 @@ const rules = {
     spouse: {
       gift_inheritance: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira_59: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cash_value_life_insurance: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       total: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       second_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cash_checking_savings_mm: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       stocks_bonds_mf: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       other_liquid_assets: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cds: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       lump_sum_pension: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       fa_va_not_subject_to_penalty: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -242,73 +244,73 @@ const rules = {
     o_nq: {
       gift_inheritance: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira_59: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cash_value_life_insurance: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       total: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       second_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cash_checking_savings_mm: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       stocks_bonds_mf: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       other_liquid_assets: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cds: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       lump_sum_pension: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       fa_va_not_subject_to_penalty: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -316,73 +318,73 @@ const rules = {
     balance: {
       gift_inheritance: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira_59: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cash_value_life_insurance: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       total: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       second_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cash_checking_savings_mm: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       stocks_bonds_mf: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       other_liquid_assets: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       cds: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       lump_sum_pension: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       fa_va_not_subject_to_penalty: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -392,43 +394,43 @@ const rules = {
     member: {
       total: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       other: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       fa_va_subject_to_penalty: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       second_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira_59: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       value_of_home: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -436,43 +438,43 @@ const rules = {
     spouse: {
       total: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       other: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       fa_va_subject_to_penalty: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       second_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira_59: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       value_of_home: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -480,43 +482,43 @@ const rules = {
     o_nq: {
       total: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       other: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       fa_va_subject_to_penalty: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       second_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira_59: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       value_of_home: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -524,58 +526,48 @@ const rules = {
     balance: {
       total: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       other: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       fa_va_subject_to_penalty: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       second_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       first_401k_ira_59: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       value_of_home: [
         {
-          validator: validateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
     },
   },
-}
-
-function validateNumber(rule, value, callback) {
-  if (isNaN(value)) {
-    callback(new Error('Data is not a number'))
-  } else if (Number(value) > 9999999.99) {
-    callback(new Error('The value cannot be greater than 9999999.99'))
-  } else {
-    callback()
-  }
 }
 
 export { rules }

@@ -5,6 +5,7 @@
     width="55%"
     class="dialog-style pdf-viewer"
     :before-close="closeDialog"
+    destroy-on-close
   >
     <el-form ref="form" :model="contact" label-position="top" :rules="rules">
       <div class="flex mb-4">
