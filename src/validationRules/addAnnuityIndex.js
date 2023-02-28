@@ -1,15 +1,7 @@
+import { rulesName } from './fields/rules-name'
+
 const rules = {
-  name: [
-    {
-      required: true,
-      message: 'Please input name',
-      trigger: 'blur',
-      transform(value) {
-        return value.trim()
-      },
-    },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
-  ],
+  name: rulesName,
   insurance_provider: [
     {
       required: true,

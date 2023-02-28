@@ -138,7 +138,7 @@
 import SwdUpload from '@/components/Global/SwdUpload.vue'
 import { watchEffect, ref, reactive, computed, watch } from 'vue'
 import { useStore } from 'vuex'
-import { rules } from '@/validationRules/rulesModalUploadDocuments.js'
+import { rules } from '@/validationRules/modalUploadDocuments.js'
 import { uploadClientsDocs } from '@/api/vueQuery/clients/fetch-upload-clients-docs'
 import { useMutation, useQueryClient } from 'vue-query'
 import { useSetStatus } from '../Lead/use-set-status'
