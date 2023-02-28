@@ -251,9 +251,9 @@
                   @blur="blur('house')"
                 />
               </el-form-item>
-              <el-form-item label="Monthly payments" prop="house.monthly_payments" class="mb-4 sm:w-4/12 sm:px-2">
+              <el-form-item label="Monthly payments" prop="house.monthly_payment" class="mb-4 sm:w-4/12 sm:px-2">
                 <SwdCurrencyInput
-                  v-model="ruleForm.house.monthly_payments"
+                  v-model="ruleForm.house.monthly_payment"
                   :options="optionsCurrencyInput"
                   placeholder="$12345"
                   prepend
@@ -733,7 +733,7 @@ export default {
         type: 'own',
         market_value: null,
         remaining_mortgage_amount: null,
-        monthly_payments: null,
+        monthly_payment: null,
         total_monthly_expenses: null,
       },
       employment_history: [
