@@ -174,9 +174,9 @@
           </el-form-item>
         </div>
         <div class="flex mt-5">
-          <el-form-item label="Monthly payments" prop="house.monthly_payments" class="w-5/12 pr-4">
+          <el-form-item label="Monthly payments" prop="house.monthly_payment" class="w-5/12 pr-4">
             <SwdCurrencyInput
-              v-model="ruleForm.house.monthly_payments"
+              v-model="ruleForm.house.monthly_payment"
               :options="optionsCurrencyInput"
               placeholder="$12345"
               @blur="handleChange"
@@ -490,7 +490,7 @@ export default {
         type: 'own',
         market_value: null,
         remaining_mortgage_amount: null,
-        monthly_payments: null,
+        monthly_payment: null,
         total_monthly_expenses: null,
       },
       employment_history: [
