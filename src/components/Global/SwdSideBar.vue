@@ -1,10 +1,12 @@
 <template>
   <aside class="bg-primary min-h-screen flex-col w-[68px] sm:flex hidden">
-    <router-link :to="{ name: `home` }">
-      <div class="flex items-center justify-center mt-4 w-[63px]">
-        <InlineSvg :src="IrisIconReverse" width="50" height="50" />
-      </div>
-    </router-link>
+    <div class="fixed">
+      <router-link :to="{ name: `home` }">
+        <div class="flex items-center justify-center mt-4 w-[63px]">
+          <InlineSvg :src="IrisIconReverse" width="50" height="50" />
+        </div>
+      </router-link>
+    </div>
     <div v-if="isShowSideBar" class="flex flex-col items-center flex-grow w-[65px] fixed top-1/3">
       <router-link
         v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
