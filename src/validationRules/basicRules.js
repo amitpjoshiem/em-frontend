@@ -176,7 +176,7 @@ const rules = {
         trigger: 'blur',
       },
     ],
-    monthly_payments: [
+    monthly_payment: [
       {
         validator: validateNumber,
         trigger: 'blur',
