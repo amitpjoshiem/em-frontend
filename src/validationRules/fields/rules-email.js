@@ -1,8 +1,8 @@
 export const rulesEmail = [
-  { required: true, message: 'The field cannot be empty', trigger: 'change' },
+  { required: true, message: 'Please input e-mail', trigger: 'change' },
   {
     type: 'email',
-    message: 'Please enter valid email ID',
+    message: 'Please input correct e-mail address',
     trigger: 'blur',
   },
 ]

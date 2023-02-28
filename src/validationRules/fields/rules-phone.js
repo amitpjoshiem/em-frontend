@@ -5,6 +5,6 @@ export const rulesPhone = {
 }
 
 export const rulesPhoneRequired = [
-  { required: true, message: 'The field cannot be empty', trigger: 'change' },
+  { required: true, message: 'Please input phone number', trigger: 'change' },
   { len: 14, trigger: 'blur', message: 'Incorrect phone number' },
 ]

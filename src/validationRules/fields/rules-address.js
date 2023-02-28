@@ -1,10 +1,8 @@
 import { customValidate } from '../use-custom-validation'
 
-export const rulesAddress = [
-  {
-    errorText: 'Please input address',
-    required: true,
-    trigger: 'change',
-    validator: customValidate,
-  },
-]
+export const rulesAddress = {
+  errorText: 'Please input address',
+  required: true,
+  trigger: 'change',
+  validator: customValidate,
+}
