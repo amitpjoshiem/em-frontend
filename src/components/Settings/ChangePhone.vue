@@ -57,7 +57,7 @@ export default {
     })
 
     const rules = reactive({
-      phone: [{ required: true }, { len: 17, trigger: 'blur', message: 'Incorrect phone number' }],
+      phone: [{ required: true }, { len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
       code: [{ required: true }],
     })
 

@@ -8,6 +8,7 @@ export function useShowContentEnv() {
     showRole: false,
     infoSalesforceStatus: false,
     showNewLeadBtn: false,
+    showAdminPanelTestVideoBtn: false,
   })
 
   if (process.env.VUE_APP_ENV === 'development' || process.env.NODE_ENV === 'development') {
@@ -16,6 +17,7 @@ export function useShowContentEnv() {
     showContent.showRole = true
     showContent.infoSalesforceStatus = true
     showContent.showNewLeadBtn = true
+    showContent.showAdminPanelTestVideoBtn = true
   }
 
   return { showContent }
