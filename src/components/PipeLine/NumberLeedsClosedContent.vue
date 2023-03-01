@@ -6,7 +6,6 @@
     </div>
     <div>
       <el-skeleton v-if="isLoading" :rows="3" animated class="p-5" />
-      <!-- <SwdErrorBlock v-else-if="isError" /> -->
       <NumberLeedsClosed v-if="data" class="my-4" :values="data.data" />
     </div>
   </div>
