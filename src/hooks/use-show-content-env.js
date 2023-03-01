@@ -9,6 +9,7 @@ export function useShowContentEnv() {
     infoSalesforceStatus: false,
     showNewLeadBtn: false,
     showAdminPanelTestVideoBtn: false,
+    showFixedAnnuity: false,
   })
 
   if (process.env.VUE_APP_ENV === 'development' || process.env.NODE_ENV === 'development') {
@@ -18,6 +19,7 @@ export function useShowContentEnv() {
     showContent.infoSalesforceStatus = true
     showContent.showNewLeadBtn = true
     showContent.showAdminPanelTestVideoBtn = true
+    showContent.showFixedAnnuity = true
   }
 
   return { showContent }
