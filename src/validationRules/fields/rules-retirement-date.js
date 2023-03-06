@@ -1,6 +1,6 @@
 export const rulesRetirementDate = {
   type: 'date',
   required: true,
-  message: 'Please pick a Retirement date',
+  message: 'The field cannot be empty.',
   trigger: 'change',
 }

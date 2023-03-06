@@ -1,6 +1,6 @@
 export const rulesBirthday = {
   type: 'date',
   required: true,
-  message: 'Please pick a Date of birth',
+  message: 'The field cannot be empty.',
   trigger: 'change',
 }

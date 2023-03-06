@@ -9,14 +9,14 @@ const rules = {
   role: [
     {
       required: true,
-      message: 'Please select role',
+      message: 'The field cannot be empty.',
       trigger: 'change',
     },
   ],
   company_id: [
     {
       required: true,
-      message: 'Please select company',
+      message: 'The field cannot be empty.',
       trigger: 'change',
     },
   ],
@@ -26,14 +26,14 @@ const rules = {
   username: [
     {
       required: true,
-      message: 'Please input username',
+      message: 'The field cannot be empty.',
       trigger: 'change',
     },
   ],
   position: [
     {
       required: true,
-      message: 'Please input  position',
+      message: 'The field cannot be empty.',
       trigger: 'change',
     },
   ],
@@ -48,7 +48,7 @@ const rules = {
   advisors: [
     {
       required: true,
-      message: 'Please select advisors',
+      message: 'The field cannot be empty.',
       trigger: 'change',
     },
   ],

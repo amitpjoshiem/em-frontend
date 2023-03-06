@@ -2,7 +2,7 @@ const rules = {
   name: [
     {
       required: true,
-      message: 'Please input name',
+      message: 'The field cannot be empty.',
       trigger: 'change',
       transform(value) {
         return value.trim()
@@ -12,7 +12,7 @@ const rules = {
   domain: [
     {
       required: true,
-      message: 'Please input domai',
+      message: 'The field cannot be empty.',
       trigger: 'change',
       transform(value) {
         return value.trim()

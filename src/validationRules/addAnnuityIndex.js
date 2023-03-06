@@ -5,7 +5,7 @@ const rules = {
   insurance_provider: [
     {
       required: true,
-      message: 'Please input insurance provider',
+      message: 'The field cannot be empty.',
       trigger: 'blur',
       transform(value) {
         return value.trim()
@@ -27,7 +27,7 @@ const rules = {
   agent_rep_code: [
     {
       required: true,
-      message: 'Please input agent rep code',
+      message: 'The field cannot be empty.',
       trigger: 'blur',
       transform(value) {
         return value.trim()
@@ -38,7 +38,7 @@ const rules = {
   license_number: [
     {
       required: true,
-      message: 'Please input license number',
+      message: 'The field cannot be empty.',
       trigger: 'blur',
       transform(value) {
         return value.trim()

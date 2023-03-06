@@ -2,7 +2,7 @@ import { customValidate } from '../use-custom-validation'
 
 export const rulesFirstName = {
   required: true,
-  errorText: 'Please input first name',
+  errorText: 'The field cannot be empty.',
   trigger: 'change',
   validator: customValidate,
   transform(value) {

@@ -9,7 +9,7 @@ const rules = {
   custom_type: [
     {
       required: true,
-      message: 'Please input custom type',
+      message: 'The field cannot be empty.',
       trigger: 'blur',
       transform(value) {
         return value.trim()
@@ -20,7 +20,7 @@ const rules = {
   type: [
     {
       required: true,
-      message: 'Please select file type',
+      message: 'The field cannot be empty.',
       trigger: 'change',
     },
   ],
