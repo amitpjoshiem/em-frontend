@@ -1,13 +1,9 @@
+import { rulesEmail } from './fields/rules-email'
+import { rulesPassword } from './fields/rules-password'
+
 const rules = {
-  email: [
-    { required: true, message: 'Please input email address', trigger: 'blur' },
-    {
-      type: 'email',
-      message: 'Please input correct email address',
-      trigger: ['blur'],
-    },
-  ],
-  password: [{ type: 'string', required: true, message: 'Please input password' }],
+  email: rulesEmail,
+  password: rulesPassword,
   code: [
     { required: true, message: 'Please input OTP code', trigger: 'blur' },
     { validator: checkOtp, trigger: 'blur' },

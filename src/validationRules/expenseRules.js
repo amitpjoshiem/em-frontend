@@ -1,17 +1,17 @@
-/* eslint-disable no-useless-escape */
+import { customNumberValidation } from './use-custom-number-validation'
 
 const rules = {
   housing: {
     mortgage_rent_fees: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -19,13 +19,13 @@ const rules = {
     property_taxes_and_insurance: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -33,13 +33,13 @@ const rules = {
     utilities: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -47,13 +47,13 @@ const rules = {
     household_improvement: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -61,13 +61,13 @@ const rules = {
     household_maintenance: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -77,13 +77,13 @@ const rules = {
     at_home: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -91,13 +91,13 @@ const rules = {
     dining_out: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -105,13 +105,13 @@ const rules = {
     vehicle_purchases_payments: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -119,13 +119,13 @@ const rules = {
     auto_insurance_and_taxes: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -133,13 +133,13 @@ const rules = {
     fuel_and_maintenance: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -147,13 +147,13 @@ const rules = {
     public_transportation: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -163,13 +163,13 @@ const rules = {
     health_insurance: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -177,13 +177,13 @@ const rules = {
     medicare_medigap: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -191,13 +191,13 @@ const rules = {
     copays_uncovered_medical_services: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -205,13 +205,13 @@ const rules = {
     drugs_and_medical_supplies: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -221,13 +221,13 @@ const rules = {
     life_other: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -235,13 +235,13 @@ const rules = {
     long_term_care: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -249,13 +249,13 @@ const rules = {
     clothing: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -263,13 +263,13 @@ const rules = {
     product_and_services: {
       essential: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
       discretionary: [
         {
-          validator: customValidateNumber,
+          validator: customNumberValidation,
           trigger: 'blur',
         },
       ],
@@ -278,13 +278,13 @@ const rules = {
   entertainment: {
     essential: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
     discretionary: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
@@ -292,13 +292,13 @@ const rules = {
   travel: {
     essential: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
     discretionary: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
@@ -306,13 +306,13 @@ const rules = {
   hobbies: {
     essential: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
     discretionary: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
@@ -320,13 +320,13 @@ const rules = {
   family_care_education: {
     essential: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
     discretionary: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
@@ -334,13 +334,13 @@ const rules = {
   income_taxes: {
     essential: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
     discretionary: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
@@ -348,13 +348,13 @@ const rules = {
   charitable_contributions: {
     essential: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
     discretionary: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
@@ -362,37 +362,17 @@ const rules = {
   other: {
     essential: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
     discretionary: [
       {
-        validator: customValidateNumber,
+        validator: customNumberValidation,
         trigger: 'blur',
       },
     ],
   },
-}
-
-function customValidateNumber(rule, value, callback) {
-  if (/[^\w|\/,\(\)\-|\s]/g.test(value)) {
-    callback(new Error('Unsupported symbol'))
-  }
-
-  if (Number(value) > 9999999.99) {
-    callback(new Error('The value cannot be greater than 9999999.99'))
-  }
-
-  if (value < 0) {
-    callback(new Error('Unsupported negative value'))
-  }
-
-  if (rule.required && !value) {
-    callback(new Error(rule.errorText))
-  }
-
-  callback()
 }
 
 export { rules }

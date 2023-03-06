@@ -7,7 +7,7 @@
   </div>
   <div class="w-5/12 flex justify-end">
     <template v-if="showContent.showNewLeadBtn">
-      <!-- <NewProspectBtn class="mr-4" /> -->
+      <NewProspectBtn class="mr-4" />
       <NewLeadModal />
     </template>
 
@@ -19,6 +19,7 @@
 
 <script>
 import NewLeadModal from '@/components/Modal/NewLeadModal.vue'
+import NewProspectBtn from '@/components/Header/NewProspectBtn.vue'
 import NewOpportunityBtn from '@/components/Header/NewOpportunityBtn.vue'
 import UserAction from '@/components/UserAction.vue'
 import SwdRemoteSearch from '@/components/Global/SwdRemoteSearch.vue'
@@ -34,6 +35,7 @@ export default {
     HeaderNotificationsBlock,
     NewLeadModal,
     NewOpportunityBtn,
+    NewProspectBtn,
   },
   setup() {
     const { showContent } = useShowContentEnv()

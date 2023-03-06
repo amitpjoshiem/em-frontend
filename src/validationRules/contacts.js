@@ -1,29 +1,13 @@
+import { rulesFirstName } from './fields/rules-first-name'
+import { rulesLastName } from './fields/rules-last-name'
+import { rulesEmail } from './fields/rules-email'
+import { rulesPhoneRequired } from './fields/rules-phone'
+
 const rules = {
-  first_name: [
-    {
-      required: true,
-      message: 'Please input first name',
-      trigger: 'blur',
-    },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
-  ],
-  last_name: [
-    {
-      required: true,
-      message: 'Please input last name',
-      trigger: 'blur',
-    },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
-  ],
-  email: [
-    {
-      required: true,
-      type: 'email',
-      message: 'Please enter valid email ID',
-      trigger: 'blur',
-    },
-  ],
-  phone: [{ required: true, len: 14, trigger: 'blur', message: 'Incorrect phone number' }],
+  first_name: rulesFirstName,
+  last_name: rulesLastName,
+  email: rulesEmail,
+  phone: rulesPhoneRequired,
 }
 
 export { rules }
