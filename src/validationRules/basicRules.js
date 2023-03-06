@@ -68,8 +68,7 @@ const rules = {
           type: 'string',
           errorText: 'The field cannot be empty',
           required: false,
-          trigger: 'change',
-          validator: customValidate,
+          trigger: 'change', 
         },
       ],
       occupation: [
@@ -141,7 +140,6 @@ const rules = {
             errorText: 'The field cannot be empty',
             required: false,
             trigger: 'change',
-            validator: customValidate,
           },
         ],
         occupation: [
@@ -197,7 +195,6 @@ const employmentHistoryRule = {
     errorText: 'The field cannot be empty',
     required: false,
     trigger: 'change',
-    validator: customValidate,
   },
   occupation: {
     type: 'string',

@@ -24,14 +24,14 @@
       </p>
       <p class="term-item">
         4. Sending administrative information: We may use your personal information to send details on products and
-        services we offer, or to inform you of changes to our terms, conditions and policies.
+        services we offer, or to inform you of changes to our terms, conditions, and policies.
       </p>
       <p class="term-item">
         5. Protecting our services: We may use your information as part of our ongoing efforts to keep our services safe
         and secure through fraud monitoring and prevention.
       </p>
       <p class="term-item">
-        6. Enforcement of our terms, conditions and policies regarding legal and regulatory requirements in connection
+        6. Enforcement of our terms, conditions, and policies regarding legal and regulatory requirements in connection
         with this contract.
       </p>
       <p class="term-item">

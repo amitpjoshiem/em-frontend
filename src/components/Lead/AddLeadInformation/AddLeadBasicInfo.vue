@@ -319,6 +319,7 @@
                     @change="changeCompanyNameMember({ ruleForm, index })"
                     @focus="focus('employment')"
                     @blur="blur('employment')"
+                    @keypress="isLetter($event)"
                   />
                 </el-form-item>
 
@@ -417,6 +418,7 @@
                       @change="changeCompanyNameSpouse({ ruleForm, index })"
                       @focus="focus('employment')"
                       @blur="blur('employment')"
+                      @keypress="isLetter($event)"
                     />
                   </el-form-item>
 
@@ -583,7 +585,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="What are your goals for Retirement money?" prop="other.retirement_money" class="mb-4">
+            <el-form-item label="What do you want your Retirement money to accomplish?" prop="other.retirement_money" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement_money"
                 type="textarea"
@@ -652,6 +654,13 @@ export default {
   directives: { maska },
   components: {
     ModalRestoreDraft,
+  },
+  methods: {
+    isLetter(e) {
+      let char = String.fromCharCode(e.keyCode);
+      if (/^[A-Za-z0-9' ]+$/.test(char)) return true;
+      else e.preventDefault();
+    },
   },
   setup() {
     const router = useRouter()
