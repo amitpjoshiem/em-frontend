@@ -34,8 +34,8 @@ export default {
     SwdRemoteSearch,
     HeaderNotificationsBlock,
     NewLeadModal,
-    NewProspectBtn,
     NewOpportunityBtn,
+    NewProspectBtn,
   },
   setup() {
     const { showContent } = useShowContentEnv()

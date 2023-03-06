@@ -26,7 +26,7 @@
       </div>
       <OpportunityTable class="w-16/24" />
     </div>
-    <div class="flex mb-5">
+    <div v-if="showContent.showFixedAnnuity" class="flex mb-5">
       <WidgetFixedAnnuity />
     </div>
     <div class="flex mb-5">
@@ -49,10 +49,10 @@ import WidgetFixedAnnuity from '@/components/MemberDetails/WidgetFixedAnnuity.vu
 import WidgetOther from '@/components/MemberDetails/WidgetOther.vue'
 import MemberStage from '@/components/MemberDetails/MemberStage.vue'
 import InfoSalesforceStatus from '@/components/MemberDetails/InfoSalesforceStatus.vue'
+import ClientReportListContent from '@/components/ClientReport/ClientReportListContent.vue'
 import { useProspectDetails } from '@/api/use-prospect-details.js'
 import { computed } from 'vue'
 import { useShowContentEnv } from '@/hooks/use-show-content-env'
-import ClientReportListContent from '@/components/ClientReport/ClientReportListContent.vue'
 
 export default {
   name: 'MemberDetails',

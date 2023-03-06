@@ -14,7 +14,7 @@
           <span class="text-main">Total AUM</span>
           <div
             class="flex rounded-md p-1"
-            :class="{ 'bg-main-green': pipeLine.data.new_aum, 'bg-main-gray': pipeLine.data.new_aum === null }"
+            :class="{ 'bg-main-green': pipeLine.data.new_aum, 'bg-main-gray': !pipeLine.data.new_aum }"
           >
             <InlineSvg v-if="pipeLine.data.new_aum !== null" :src="IconUpArrow" class="mt-[2px] mr-px" />
             <span class="text-main ml-px font-semibold"> ${{ currencyCompact(pipeLine.data.new_aum) }} </span>
@@ -34,7 +34,7 @@
             class="flex rounded-md p-1"
             :class="{
               'bg-main-green': pipeLine.data.new_members,
-              'bg-main-gray': pipeLine.data.new_members === null,
+              'bg-main-gray': !pipeLine.data.new_members,
             }"
           >
             <InlineSvg :src="IconUpArrow" class="mt-[2px]" />
@@ -56,14 +56,13 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-
+import { currencyCompact } from '@/utils/currencyCompactFormat'
+import { useDashboardPipeLine } from '@/api/use-dashboard-pipeline.js'
 import IconTotal from '@/assets/svg/total.svg'
 import IconTotalGray from '@/assets/svg/total-gray.svg'
 import IconMembers from '@/assets/svg/members.svg'
 import IconUpArrow from '@/assets/svg/up-arrow.svg'
 import IconPipeLineEmpty from '@/assets/svg/icon-pipe-line-empty.svg'
-import { currencyCompact } from '@/utils/currencyCompactFormat'
-import { useDashboardPipeLine } from '@/api/use-dashboard-pipeline.js'
 
 export default {
   name: 'PipeLine',
@@ -88,14 +87,13 @@ export default {
       IconMembers,
       IconUpArrow,
       IconPipeLineEmpty,
+      IconTotalGray,
       isLoading,
       isFetching,
       isError,
       pipeLine,
       refetch,
       currencyCompact,
-      IconTotalGray,
-
       getLink,
     }
   },

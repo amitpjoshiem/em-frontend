@@ -1,7 +1,7 @@
 <template>
   <SwdButton primary small class="mr-2" @click="newLead">
     <InlineSvg :src="IconPlus" class="mr-1.5" />
-    New prospect
+    New prosp
   </SwdButton>
 </template>
 

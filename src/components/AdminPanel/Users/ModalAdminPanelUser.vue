@@ -277,6 +277,7 @@ export default {
       ruleForm.npn = ''
       ruleForm.position = ''
       ruleForm.username = ''
+      ruleForm.phone = ''
       ruleForm.advisors = []
       dialogFormVisible.value = false
     }

@@ -1,23 +1,25 @@
 <template>
   <aside class="bg-primary min-h-screen flex-col w-[68px] sm:flex hidden">
-    <router-link :to="{ name: `home` }">
-      <div class="flex items-center justify-center mt-4 w-[63px]">
-        <InlineSvg :src="IrisIconReverse" width="50" height="50" />
-      </div>
-    </router-link>
+    <div class="fixed">
+      <router-link :to="{ name: `home` }">
+        <div class="flex items-center justify-center mt-4 w-[63px]">
+          <InlineSvg :src="IrisIconReverse" width="50" height="50" />
+        </div>
+      </router-link>
+    </div>
     <div v-if="isShowSideBar" class="flex flex-col items-center flex-grow w-[65px] fixed top-1/3">
       <router-link
         v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
-        :to="{ name: `${route.meta.type}/dashboard` }"
+        :to="{ name: `${getType}/dashboard` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
-        :class="{ active: getRouteName === `${route.meta.type}/dashboard` }"
+        :class="{ active: getRouteName === `${getType}/dashboard` }"
       >
-        <InlineSvg v-if="getRouteName === `${route.meta.type}/dashboard`" :src="IconDashboardActive" />
+        <InlineSvg v-if="getRouteName === `${getType}/dashboard`" :src="IconDashboardActive" />
         <InlineSvg v-else :src="IconDashboard" />
       </router-link>
       <router-link
         v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
-        :to="{ name: `${route.meta.type}/all` }"
+        :to="{ name: `${getType}/all` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{
           active: getActiveListOfHouseholds,
@@ -29,15 +31,15 @@
 
       <router-link
         v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
-        :to="{ name: `${route.meta.type}/all-leads` }"
+        :to="{ name: `${getType}/all-leads` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'leads' }"
       >
         <span
           v-if="
-            getRouteName === `${route.meta.type}/all-leads` ||
-            getRouteName === `${route.meta.type}/active-leads` ||
-            getRouteName === `${route.meta.type}/deactivated-leads`
+            getRouteName === `${getType}/all-leads` ||
+            getRouteName === `${getType}/active-leads` ||
+            getRouteName === `${getType}/deactivated-leads`
           "
           class="text-white font-semibold"
         >
@@ -48,11 +50,11 @@
 
       <router-link
         v-if="$can('advisor', 'all') || $can('support', 'all') || $can('ceo', 'all') || $can('admin', 'all')"
-        :to="{ name: `${route.meta.type}/all-pre-leads` }"
+        :to="{ name: `${getType}/all-pre-leads` }"
         class="item flex justify-center items-center cursor-pointer w-full h-14"
         :class="{ active: getRouteName === 'pre-leads' }"
       >
-        <span v-if="getRouteName === `${route.meta.type}/all-pre-leads`" class="text-white font-semibold"> LP </span>
+        <span v-if="getRouteName === `${getType}/all-pre-leads`" class="text-white font-semibold"> LP </span>
         <span v-else class="text-icon-not-active">LP</span>
       </router-link>
 
@@ -125,23 +127,28 @@ export default {
 
     const getActiveListOfHouseholds = computed(() => {
       return (
-        getRouteName.value === `${route.meta.type}/all` ||
-        getRouteName.value === `${route.meta.type}/clients` ||
-        getRouteName.value === `${route.meta.type}/opportunities` ||
-        getRouteName.value === `${route.meta.type}/list-of-advisors`
+        getRouteName.value === `${getType.value}/all` ||
+        getRouteName.value === `${getType.value}/clients` ||
+        getRouteName.value === `${getType.value}/opportunities` ||
+        getRouteName.value === `${getType.value}/list-of-advisors`
       )
     })
 
     const isShowSideBar = computed(() => {
       if (!store.state.auth.isAuth) return false
       if (
-        route.meta.type === 'client' ||
-        route.meta.type === 'lead' ||
-        route.meta.type === 'admin' ||
-        route.meta.type === 'ceo'
+        getType.value === 'client' ||
+        getType.value === 'lead' ||
+        getType.value === 'admin' ||
+        getType.value === 'ceo'
       )
         return false
       return true
+    })
+
+    const getType = computed(() => {
+      if (route.meta.type) return route.meta.type
+      return store.state.globalComponents.role
     })
 
     return {
@@ -164,6 +171,7 @@ export default {
       IrisIconReverse,
       route,
       isShowSideBar,
+      getType,
     }
   },
 }
