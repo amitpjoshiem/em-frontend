@@ -19,8 +19,8 @@
 
 <script>
 import NewLeadModal from '@/components/Modal/NewLeadModal.vue'
-import NewOpportunityBtn from '@/components/Header/NewOpportunityBtn.vue'
 import NewProspectBtn from '@/components/Header/NewProspectBtn.vue'
+import NewOpportunityBtn from '@/components/Header/NewOpportunityBtn.vue'
 import UserAction from '@/components/UserAction.vue'
 import SwdRemoteSearch from '@/components/Global/SwdRemoteSearch.vue'
 import HeaderNotificationsBlock from '@/components/Header/HeaderNotificationsBlock.vue'
