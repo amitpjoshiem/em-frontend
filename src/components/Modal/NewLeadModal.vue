@@ -1,5 +1,11 @@
 <template>
-  <el-dialog v-model="state.dialogVisible" title="New Prospect" width="45%" :before-close="closeDialog">
+  <el-dialog
+    v-model="state.dialogVisible"
+    title="New Prospect"
+    width="45%"
+    :before-close="closeDialog"
+    destroy-on-close
+  >
     <div>
       <el-form ref="form" :model="ruleForm" label-position="top" :rules="rules">
         <el-form-item label="Name" prop="name" class="w-full">

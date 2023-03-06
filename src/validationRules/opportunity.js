@@ -1,3 +1,6 @@
+import { rulesName } from './fields/rules-name'
+import { customNumberValidation } from './use-custom-number-validation'
+
 const rules = {
   close_date: [
     {
@@ -7,28 +10,13 @@ const rules = {
       trigger: 'change',
     },
   ],
-  name: [
-    {
-      required: true,
-      message: 'Please input opportunity name',
-      trigger: 'blur',
-    },
-    { min: 1, message: 'Length should be min 1', trigger: 'blur' },
-  ],
+  name: rulesName,
   amount: [
     {
-      validator: validateNumber,
+      validator: customNumberValidation,
       trigger: 'blur',
     },
   ],
-}
-
-function validateNumber(rule, value, callback) {
-  if (isNaN(value)) {
-    callback(new Error('Data is not a number'))
-  } else {
-    callback()
-  }
 }
 
 export { rules }
