@@ -417,7 +417,6 @@
                       @change="changeCompanyNameSpouse({ ruleForm, index })"
                       @focus="focus('employment')"
                       @blur="blur('employment')"
-                      
                     />
                   </el-form-item>
 
