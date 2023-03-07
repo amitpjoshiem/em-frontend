@@ -226,7 +226,7 @@
               placeholder="Enter company name"
               @change="changeCompanyNameMember({ ruleForm, index })"
               @blur="handleChange"
-              @keypress="isLetter($event)"
+             
             />
           </el-form-item>
 
@@ -298,7 +298,7 @@
                 placeholder="Enter company name"
                 @change="changeCompanyNameSpouse({ ruleForm, index })"
                 @blur="handleChange"
-                @keypress="isLetter($event)"
+                
               />
             </el-form-item>
 
@@ -425,13 +425,7 @@ export default {
   components: {
     ModalRestoreDraft,
   },
-  methods: {
-    isLetter(e) {
-      let char = String.fromCharCode(e.keyCode);
-      if (/^[A-Za-z0-9'-, ]+$/.test(char)) return true;
-      else e.preventDefault();
-    },
-  },
+  
   setup() {
     const router = useRouter()
     const store = useStore()

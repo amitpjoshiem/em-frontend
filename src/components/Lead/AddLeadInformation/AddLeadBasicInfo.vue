@@ -319,7 +319,7 @@
                     @change="changeCompanyNameMember({ ruleForm, index })"
                     @focus="focus('employment')"
                     @blur="blur('employment')"
-                    @keypress="isLetter($event)"
+                   
                   />
                 </el-form-item>
 
@@ -418,7 +418,7 @@
                       @change="changeCompanyNameSpouse({ ruleForm, index })"
                       @focus="focus('employment')"
                       @blur="blur('employment')"
-                      @keypress="isLetter($event)"
+                      
                     />
                   </el-form-item>
 
@@ -654,13 +654,6 @@ export default {
   directives: { maska },
   components: {
     ModalRestoreDraft,
-  },
-  methods: {
-    isLetter(e) {
-      let char = String.fromCharCode(e.keyCode);
-      if (/^[A-Za-z0-9'-, ]+$/.test(char)) return true;
-      else e.preventDefault();
-    },
   },
   setup() {
     const router = useRouter()
