@@ -1,10 +1,10 @@
-import { customValidate } from '../use-custom-validation'
+import { dontAllowAllSpecialCharacters } from '../use-custom-validation'
 
 export const rulesFirstName = {
   required: true,
   errorText: 'The field cannot be empty.',
   trigger: 'change',
-  validator: customValidate,
+  validator: dontAllowAllSpecialCharacters,
   transform(value) {
     return value.trim()
   },
