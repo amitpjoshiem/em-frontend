@@ -220,7 +220,7 @@
         <!-- Spouse -->
 
         <!-- Housing Information -->
-        <div>
+        <div v-loading="isLoadingDeleteHouse">
           <div class="flex items-center my-5">
             <InlineSvg v-show="isFocusHouse && !isDoneCurrentStep" :src="IconActive" />
             <InlineSvg v-show="!isFocusHouse && !isDoneCurrentStep" :src="IconNotActive" />
@@ -228,68 +228,85 @@
             <div class="text-main text-xl font-semibold ml-2">Housing Information</div>
           </div>
           <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusHouse }">
-            <el-form-item label="Type" class="mb-4">
-              <el-radio-group v-model="ruleForm.house.type" @change="handleChange">
-                <el-radio label="own">Own</el-radio>
-                <el-radio label="rent">Rent</el-radio>
-                <el-radio label="family">Live with family</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <div class="sm:flex sm:flex-wrap">
-              <el-form-item
-                v-if="ruleForm.house.type !== 'rent'"
-                label="Market value"
-                prop="house.market_value"
-                class="mb-4 sm:w-4/12"
-              >
-                <SwdCurrencyInput
-                  v-model="ruleForm.house.market_value"
-                  :options="optionsCurrencyInput"
-                  placeholder="$12345"
-                  prepend
-                  @focus="focus('house')"
-                  @blur="blur('house')"
-                />
+            <div v-for="(house, indexHouse) in ruleForm.houses" :key="indexHouse">
+              <el-form-item label="Type" class="mb-4">
+                <el-radio-group v-model="house.type" @change="handleChange">
+                  <el-radio label="own">Own</el-radio>
+                  <el-radio label="rent">Rent</el-radio>
+                  <el-radio label="family">Live with family</el-radio>
+                </el-radio-group>
               </el-form-item>
-              <el-form-item label="Monthly payments" prop="house.monthly_payment" class="mb-4 sm:w-4/12 sm:px-2">
-                <SwdCurrencyInput
-                  v-model="ruleForm.house.monthly_payment"
-                  :options="optionsCurrencyInput"
-                  placeholder="$12345"
-                  prepend
-                  @focus="focus('house')"
-                  @blur="blur('house')"
+              <div class="flex justify-between">
+                <div class="sm:flex sm:flex-wrap sm:w-full">
+                  <el-form-item
+                    v-if="house.type !== 'rent'"
+                    label="Market value"
+                    :prop="'houses.' + indexHouse + '.market_value'"
+                    class="mb-4 sm:w-8/24"
+                  >
+                    <SwdCurrencyInput
+                      v-model="house.market_value"
+                      :options="optionsCurrencyInput"
+                      placeholder="$12345"
+                      prepend
+                      @focus="focus('house')"
+                      @blur="blur('house')"
+                    />
+                  </el-form-item>
+                  <el-form-item
+                    label="Monthly payments"
+                    :prop="'houses.' + indexHouse + '.monthly_payment'"
+                    class="mb-4 sm:w-8/24 sm:px-2"
+                  >
+                    <SwdCurrencyInput
+                      v-model="house.monthly_payment"
+                      :options="optionsCurrencyInput"
+                      placeholder="$12345"
+                      prepend
+                      @focus="focus('house')"
+                      @blur="blur('house')"
+                    />
+                  </el-form-item>
+                  <el-form-item
+                    v-if="house.type !== 'rent'"
+                    label="Remaining mortgage"
+                    :prop="'houses.' + indexHouse + '.remaining_mortgage_amount'"
+                    class="mb-4 sm:w-8/24 sm:pr-4"
+                  >
+                    <SwdCurrencyInput
+                      v-model="house.remaining_mortgage_amount"
+                      :options="optionsCurrencyInput"
+                      prepend
+                      @focus="focus('house')"
+                      @blur="blur('house')"
+                    />
+                  </el-form-item>
+                  <el-form-item
+                    v-if="house.type === 'rent'"
+                    label="Total monthly expences"
+                    :prop="'houses.' + indexHouse + '.total_monthly_expenses'"
+                    class="mb-4 sm:w-8/24 sm:pl-2"
+                  >
+                    <SwdCurrencyInput
+                      v-model="house.total_monthly_expenses"
+                      :options="optionsCurrencyInput"
+                      placeholder="$12345"
+                      prepend
+                      @focus="focus('house')"
+                      @blur="blur('house')"
+                    />
+                  </el-form-item>
+                </div>
+                <BtnRemoveHousing
+                  :index="indexHouse"
+                  :house="house"
+                  :amount-houses="ruleForm.houses.length"
+                  @handleRemoveHouse="handleRemoveHouse"
                 />
-              </el-form-item>
-              <el-form-item
-                v-if="ruleForm.house.type !== 'rent'"
-                label="Remaining mortgage"
-                prop="house.remaining_mortgage_amount"
-                class="mb-4 sm:w-4/12"
-              >
-                <SwdCurrencyInput
-                  v-model="ruleForm.house.remaining_mortgage_amount"
-                  :options="optionsCurrencyInput"
-                  prepend
-                  @focus="focus('house')"
-                  @blur="blur('house')"
-                />
-              </el-form-item>
-              <el-form-item
-                v-if="ruleForm.house.type === 'rent'"
-                label="Total monthly expences"
-                prop="house.total_monthly_expenses"
-                class="mb-4 sm:w-4/12 sm:pl-2"
-              >
-                <SwdCurrencyInput
-                  v-model="ruleForm.house.total_monthly_expenses"
-                  :options="optionsCurrencyInput"
-                  placeholder="$12345"
-                  prepend
-                  @focus="focus('house')"
-                  @blur="blur('house')"
-                />
-              </el-form-item>
+              </div>
+            </div>
+            <div class="flex justify-end mt-2">
+              <SwdButton primary main @click="addHousingInformation(ruleForm)">Add house</SwdButton>
             </div>
           </div>
         </div>
@@ -640,18 +657,21 @@ import { cloneDeep, isEqual } from 'lodash-es'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import { useWindowScrollTo } from '@/hooks/use-window-scroll'
 import { deleteEmploymentHistory } from '@/api/vueQuery/delete-employment-history'
+import { deleteHousingInformation } from '@/api/vueQuery/delete-housing-information'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
 import IconAdd from '@/assets/svg/icon-add.svg'
 import IconDelete from '@/assets/svg/icon-delete.svg'
 import ModalRestoreDraft from '@/components/NewProspect/Draft/ModalRestoreDraft'
+import BtnRemoveHousing from '../../NewProspect/BtnRemoveHousing.vue'
 
 export default {
   name: 'AddLeadBasicInfo',
   directives: { maska },
   components: {
     ModalRestoreDraft,
+    BtnRemoveHousing,
   },
   setup() {
     const router = useRouter()
@@ -671,17 +691,16 @@ export default {
     const { stateList } = useStateHook()
     const { scrollTo } = useWindowScrollTo()
 
-    const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
-
     const {
       isFetching: isFetchingMember,
       data: member,
       refetch: refetchMember,
     } = useFetchMember({ id: route.params.id }, { enabled: false })
-
     const { isLoading: isLoadingInfo, data: clientsInfo } = useFetchClietsInfo()
 
     const { isLoading: isLoadingDeleteEmployment, mutateAsync: deleteEmployment } = useMutation(deleteEmploymentHistory)
+    const { isLoading: isLoadingUpdateMember, mutateAsync: updateMember } = useMutation(updateMembers)
+    const { isLoading: isLoadingDeleteHouse, mutateAsync: deleteHouse } = useMutation(deleteHousingInformation)
 
     const {
       setInitValue,
@@ -695,6 +714,7 @@ export default {
       setInitRules,
       removeEmployment,
       removeEmploymentSpouse,
+      addHousingInformation,
     } = useBasicInfoHooks()
 
     const ruleForm = reactive({
@@ -729,13 +749,15 @@ export default {
           },
         ],
       },
-      house: {
-        type: 'own',
-        market_value: null,
-        remaining_mortgage_amount: null,
-        monthly_payment: null,
-        total_monthly_expenses: null,
-      },
+      houses: [
+        {
+          type: 'own',
+          market_value: null,
+          remaining_mortgage_amount: null,
+          monthly_payment: null,
+          total_monthly_expenses: null,
+        },
+      ],
       employment_history: [
         {
           company_name: '',
@@ -959,6 +981,31 @@ export default {
       return false
     })
 
+    const removeHousingInformation = (index) => {
+      ruleForm.houses.splice(index, 1)
+      if (!ruleForm.houses.length) {
+        ruleForm.houses.push({
+          type: 'own',
+          market_value: null,
+          remaining_mortgage_amount: null,
+          monthly_payment: null,
+          total_monthly_expenses: null,
+        })
+      }
+    }
+
+    const handleRemoveHouse = async (index) => {
+      if (ruleForm.houses[index].id) {
+        const res = await deleteHouse(ruleForm.houses[index].id)
+        if (!('error' in res)) {
+          removeHousingInformation(index)
+          showSuccessMessage()
+        }
+      } else {
+        removeHousingInformation(index)
+      }
+    }
+
     return {
       ruleForm,
       rules,
@@ -1000,6 +1047,9 @@ export default {
       isShowAddJobOwnerBtn,
       isShowAddJobSpouseBtn,
       isLoadingDeleteEmployment,
+      handleRemoveHouse,
+      isLoadingDeleteHouse,
+      addHousingInformation,
     }
   },
 }

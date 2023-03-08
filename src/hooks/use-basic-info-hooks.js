@@ -65,33 +65,21 @@ export function useBasicInfoHooks() {
   }
 
   const addEmployment = (ruleForm) => {
-    // const length = ruleForm.employment_history.length
     ruleForm.employment_history.push({
       company_name: '',
       occupation: '',
       years: '',
     })
     rules.employment_history.push(employmentHistoryRule)
-    // rules.employment_history[length] = {
-    //   company_name: [employmentHistoryRule.company_name],
-    //   occupation: [employmentHistoryRule.occupation],
-    //   years: [employmentHistoryRule.years],
-    // }
   }
 
   const addEmploymentSpouse = (ruleForm) => {
-    // const length = ruleForm.spouse.employment_history.length
     ruleForm.spouse.employment_history.push({
       company_name: '',
       occupation: '',
       years: '',
     })
     rules.spouse.employment_history.push(employmentHistoryRule)
-    // rules.spouse.employment_history[length] = {
-    //   company_name: [employmentHistoryRule.company_name],
-    //   occupation: [employmentHistoryRule.occupation],
-    //   years: [employmentHistoryRule.years],
-    // }
   }
 
   const changeCompanyNameMember = ({ ruleForm, index }) => {
@@ -183,8 +171,6 @@ export function useBasicInfoHooks() {
     currencyDisplay: 'hidden',
     precision: 2,
   }
-
-  console.log('rules - ', rules)
 
   return {
     setInitValue,

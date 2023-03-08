@@ -1,5 +1,5 @@
 <template>
-  <div class="w-2/12 mt-[21px] text-right">
+  <div class="w-2/12 mt-[22px] text-right">
     <el-button type="danger" plain :disabled="isDisabledBtn" @click="handleRemove"> Remove house </el-button>
   </div>
 </template>
