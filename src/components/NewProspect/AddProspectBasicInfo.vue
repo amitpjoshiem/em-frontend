@@ -149,7 +149,7 @@
       <!-- Spouse -->
 
       <!-- Housing Information -->
-      <div class="px-8 py-5 border-b">
+      <div v-loading="isLoadingDeleteHouse" class="px-8 py-5 border-b">
         <span class="text-main text-xl font-semibold">Housing Information</span>
 
         <div v-for="(house, indexHouse) in ruleForm.houses" :key="indexHouse">
@@ -169,34 +169,26 @@
               :prop="'houses.' + indexHouse + '.market_value'"
               class="w-7/24 pr-4"
             >
-              <el-input v-model="house.market_value" placeholder="$12345" prepend type="number" @blur="handleChange" />
-              <!-- <SwdCurrencyInput
+              <SwdCurrencyInput
                 v-model="house.market_value"
                 :options="optionsCurrencyInput"
                 placeholder="$12345"
                 prepend
                 @blur="handleChange"
-              /> -->
+              />
             </el-form-item>
             <el-form-item
               label="Monthly payments"
               :prop="'houses.' + indexHouse + '.monthly_payment'"
               class="w-7/24 pr-4"
             >
-              <el-input
-                v-model="house.monthly_payment"
-                placeholder="$12345"
-                prepend
-                type="number"
-                @blur="handleChange"
-              />
-              <!-- <SwdCurrencyInput
+              <SwdCurrencyInput
                 v-model="house.monthly_payment"
                 :options="optionsCurrencyInput"
                 placeholder="$12345"
                 prepend
                 @blur="handleChange"
-              /> -->
+              />
             </el-form-item>
             <el-form-item
               v-if="house.type !== 'rent'"
@@ -204,20 +196,13 @@
               :prop="'houses.' + indexHouse + '.remaining_mortgage_amount'"
               class="w-7/24 pr-4"
             >
-              <el-input
-                v-model="house.remaining_mortgage_amount"
-                placeholder="$12345"
-                prepend
-                type="number"
-                @blur="handleChange"
-              />
-              <!-- <SwdCurrencyInput
+              <SwdCurrencyInput
                 v-model="house.remaining_mortgage_amount"
                 :options="optionsCurrencyInput"
                 placeholder="$12345"
                 prepend
                 @blur="handleChange"
-              /> -->
+              />
             </el-form-item>
             <el-form-item
               v-if="house.type === 'rent'"
@@ -226,20 +211,13 @@
               class="w-7/24 pr-4"
               @blur="handleChange"
             >
-              <el-input
-                v-model="house.total_monthly_expenses"
-                placeholder="$12345"
-                prepend
-                type="number"
-                @blur="handleChange"
-              />
-              <!-- <SwdCurrencyInput
+              <SwdCurrencyInput
                 v-model="house.total_monthly_expenses"
                 :options="optionsCurrencyInput"
                 placeholder="$12345"
                 prepend
                 @blur="handleChange"
-              /> -->
+              />
             </el-form-item>
             <div v-if="isShowRemoveHouseBtn" class="w-2/12 mt-[22px] text-right">
               <el-button type="danger" plain @click="handleRemoveHouse(indexHouse)"> Remove house </el-button>
