@@ -19,6 +19,11 @@ export default {
       require: true,
       default: () => {},
     },
+    amountHouses: {
+      type: Number,
+      require: true,
+      default: 0,
+    },
   },
   emits: ['handleRemoveHouse'],
 
@@ -28,7 +33,10 @@ export default {
     }
 
     const isDisabledBtn = computed(() => {
+      if (props.amountHouses > 1) return false
+
       if (
+        props.amountHouses === 1 &&
         props.house.type === 'own' &&
         (props.house.market_value || props.house.monthly_payment || props.house.remaining_mortgage_amount)
       ) {
@@ -36,13 +44,18 @@ export default {
       }
 
       if (
+        props.amountHouses === 1 &&
         props.house.type === 'family' &&
         (props.house.market_value || props.house.monthly_payment || props.house.remaining_mortgage_amount)
       ) {
         return false
       }
 
-      if (props.house.type === 'rent' && (props.house.monthly_payment || props.house.total_monthly_expenses)) {
+      if (
+        props.amountHouses === 1 &&
+        props.house.type === 'rent' &&
+        (props.house.monthly_payment || props.house.total_monthly_expenses)
+      ) {
         return false
       }
       return true

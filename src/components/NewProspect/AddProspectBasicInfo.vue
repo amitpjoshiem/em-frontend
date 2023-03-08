@@ -221,11 +221,16 @@
                 />
               </el-form-item>
             </div>
-            <BtnRemoveHousing :index="indexHouse" :house="house" @handleRemoveHouse="handleRemoveHouse" />
+            <BtnRemoveHousing
+              :index="indexHouse"
+              :house="house"
+              :amount-houses="ruleForm.houses.length"
+              @handleRemoveHouse="handleRemoveHouse"
+            />
           </div>
         </div>
         <div class="flex justify-end mt-2">
-          <SwdButton primary main @click="addHouse(ruleForm)">Add house</SwdButton>
+          <SwdButton primary main @click="addHousingInformation(ruleForm)">Add house</SwdButton>
         </div>
       </div>
       <!-- Housing Information -->
@@ -726,12 +731,6 @@ export default {
       return false
     })
 
-    const addHouse = (ruleForm) => {
-      console.log('addHouse')
-      console.log('ruleForm - ', ruleForm)
-      addHousingInformation(ruleForm)
-    }
-
     const removeHousingInformation = (index) => {
       ruleForm.houses.splice(index, 1)
       if (!ruleForm.houses.length) {
@@ -756,11 +755,6 @@ export default {
         removeHousingInformation(index)
       }
     }
-
-    const isShowRemoveHouseBtn = computed(() => {
-      console.log('houses - ', ruleForm.houses)
-      return true
-    })
 
     return {
       ruleForm,
@@ -788,11 +782,9 @@ export default {
       isShowAddJobOwnerBtn,
       isShowAddJobSpouseBtn,
       isLoadingDeleteEmploynent,
-      addHouse,
+      addHousingInformation,
       handleRemoveHouse,
-
       isLoadingDeleteHouse,
-      isShowRemoveHouseBtn,
     }
   },
 }
