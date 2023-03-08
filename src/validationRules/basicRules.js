@@ -13,8 +13,25 @@ import { rulesYears } from './fields/rules-years'
 import { rulesFirstName } from './fields/rules-first-name'
 import { rulesLastName } from './fields/rules-last-name'
 import { rulesPhone, rulesPhoneRequired } from './fields/rules-phone'
+import {
+  rulesHousesMarketValue,
+  rulesHousesRemainingMortgageAmount,
+  rulesHousesMonthlyPayment,
+  rulesHousesTotalMonthlyExpenses,
+} from './fields/rules-houses'
 
-import { customNumberValidation } from './use-custom-number-validation'
+const employmentHistoryRule = {
+  company_name: rulesCompanyName,
+  occupation: rulesOccupation,
+  years: rulesYears,
+}
+
+const housesRule = {
+  market_value: rulesHousesMarketValue,
+  remaining_mortgage_amount: rulesHousesRemainingMortgageAmount,
+  monthly_payment: rulesHousesMonthlyPayment,
+  total_monthly_expenses: rulesHousesTotalMonthlyExpenses,
+}
 
 const rules = {
   name: rulesName,
@@ -26,13 +43,7 @@ const rules = {
   city: rulesCity,
   address: rulesAddress,
   zip: rulesZip,
-  employment_history: [
-    {
-      company_name: rulesCompanyName,
-      occupation: rulesOccupation,
-      years: rulesYears,
-    },
-  ],
+  employment_history: [employmentHistoryRule],
   // SPOUSE
   spouse: {
     first_name: rulesFirstName,
@@ -49,38 +60,7 @@ const rules = {
       },
     ],
   },
-  house: {
-    market_value: [
-      {
-        validator: customNumberValidation,
-        trigger: 'blur',
-      },
-    ],
-    remaining_mortgage_amount: [
-      {
-        validator: customNumberValidation,
-        trigger: 'blur',
-      },
-    ],
-    monthly_payment: [
-      {
-        validator: customNumberValidation,
-        trigger: 'blur',
-      },
-    ],
-    total_monthly_expenses: [
-      {
-        validator: customNumberValidation,
-        trigger: 'blur',
-      },
-    ],
-  },
+  houses: [housesRule],
 }
 
-const employmentHistoryRule = {
-  company_name: rulesCompanyName,
-  occupation: rulesOccupation,
-  years: rulesYears,
-}
-
-export { rules, employmentHistoryRule }
+export { rules, employmentHistoryRule, housesRule }
