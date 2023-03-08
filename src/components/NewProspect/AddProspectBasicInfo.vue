@@ -162,66 +162,66 @@
               </el-radio-group>
             </el-form-item>
           </div>
-          <div class="flex mt-5">
-            <el-form-item
-              v-if="house.type !== 'rent'"
-              label="Market value"
-              :prop="'houses.' + indexHouse + '.market_value'"
-              class="w-7/24 pr-4"
-            >
-              <SwdCurrencyInput
-                v-model="house.market_value"
-                :options="optionsCurrencyInput"
-                placeholder="$12345"
-                prepend
+          <div class="flex justify-between mt-5">
+            <div class="flex w-full">
+              <el-form-item
+                v-if="house.type !== 'rent'"
+                label="Market value"
+                :prop="'houses.' + indexHouse + '.market_value'"
+                class="w-8/24 pr-4"
+              >
+                <SwdCurrencyInput
+                  v-model="house.market_value"
+                  :options="optionsCurrencyInput"
+                  placeholder="$12345"
+                  prepend
+                  @blur="handleChange"
+                />
+              </el-form-item>
+              <el-form-item
+                label="Monthly payments"
+                :prop="'houses.' + indexHouse + '.monthly_payment'"
+                class="w-8/24 pr-4"
+              >
+                <SwdCurrencyInput
+                  v-model="house.monthly_payment"
+                  :options="optionsCurrencyInput"
+                  placeholder="$12345"
+                  prepend
+                  @blur="handleChange"
+                />
+              </el-form-item>
+              <el-form-item
+                v-if="house.type !== 'rent'"
+                label="Remaining mortgage amount"
+                :prop="'houses.' + indexHouse + '.remaining_mortgage_amount'"
+                class="w-8/24 pr-4"
+              >
+                <SwdCurrencyInput
+                  v-model="house.remaining_mortgage_amount"
+                  :options="optionsCurrencyInput"
+                  placeholder="$12345"
+                  prepend
+                  @blur="handleChange"
+                />
+              </el-form-item>
+              <el-form-item
+                v-if="house.type === 'rent'"
+                label="Total monthly expences"
+                :prop="'houses.' + indexHouse + '.total_monthly_expenses'"
+                class="w-8/24 pr-4"
                 @blur="handleChange"
-              />
-            </el-form-item>
-            <el-form-item
-              label="Monthly payments"
-              :prop="'houses.' + indexHouse + '.monthly_payment'"
-              class="w-7/24 pr-4"
-            >
-              <SwdCurrencyInput
-                v-model="house.monthly_payment"
-                :options="optionsCurrencyInput"
-                placeholder="$12345"
-                prepend
-                @blur="handleChange"
-              />
-            </el-form-item>
-            <el-form-item
-              v-if="house.type !== 'rent'"
-              label="Remaining mortgage amount"
-              :prop="'houses.' + indexHouse + '.remaining_mortgage_amount'"
-              class="w-7/24 pr-4"
-            >
-              <SwdCurrencyInput
-                v-model="house.remaining_mortgage_amount"
-                :options="optionsCurrencyInput"
-                placeholder="$12345"
-                prepend
-                @blur="handleChange"
-              />
-            </el-form-item>
-            <el-form-item
-              v-if="house.type === 'rent'"
-              label="Total monthly expences"
-              :prop="'houses.' + indexHouse + '.total_monthly_expenses'"
-              class="w-7/24 pr-4"
-              @blur="handleChange"
-            >
-              <SwdCurrencyInput
-                v-model="house.total_monthly_expenses"
-                :options="optionsCurrencyInput"
-                placeholder="$12345"
-                prepend
-                @blur="handleChange"
-              />
-            </el-form-item>
-            <div v-if="isShowRemoveHouseBtn" class="w-2/12 mt-[22px] text-right">
-              <el-button type="danger" plain @click="handleRemoveHouse(indexHouse)"> Remove house </el-button>
+              >
+                <SwdCurrencyInput
+                  v-model="house.total_monthly_expenses"
+                  :options="optionsCurrencyInput"
+                  placeholder="$12345"
+                  prepend
+                  @blur="handleChange"
+                />
+              </el-form-item>
             </div>
+            <BtnRemoveHousing :index="indexHouse" :house="house" @handleRemoveHouse="handleRemoveHouse" />
           </div>
         </div>
         <div class="flex justify-end mt-2">
@@ -434,12 +434,14 @@ import { ElMessageBox, ElNotification } from 'element-plus'
 import { isEqual } from 'lodash-es'
 import { useWindowScrollTo } from '@/hooks/use-window-scroll'
 import ModalRestoreDraft from './Draft/ModalRestoreDraft.vue'
+import BtnRemoveHousing from './BtnRemoveHousing.vue'
 
 export default {
   name: 'AddProspectBasicInfo',
   directives: { maska },
   components: {
     ModalRestoreDraft,
+    BtnRemoveHousing,
   },
   setup() {
     const router = useRouter()
@@ -756,6 +758,7 @@ export default {
     }
 
     const isShowRemoveHouseBtn = computed(() => {
+      console.log('houses - ', ruleForm.houses)
       return true
     })
 
