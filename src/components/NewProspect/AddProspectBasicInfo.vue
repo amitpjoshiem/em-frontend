@@ -150,10 +150,9 @@
 
       <!-- Housing Information -->
       <div v-loading="isLoadingDeleteHouse" class="px-8 py-5 border-b">
-        <span class="text-main text-xl font-semibold">Housing Information</span>
-
+        <div class="text-main text-xl font-semibold mb-5">Housing Information</div>
         <div v-for="(house, indexHouse) in ruleForm.houses" :key="indexHouse">
-          <div class="flex pt-5">
+          <div class="flex">
             <el-form-item label="Type" class="w-5/12">
               <el-radio-group v-model="house.type" @change="handleChange">
                 <el-radio label="own">Own</el-radio>
@@ -228,6 +227,7 @@
               @handleRemoveHouse="handleRemoveHouse"
             />
           </div>
+          <el-divider v-if="indexHouse !== ruleForm.houses.length - 1" border-style="dashed" />
         </div>
         <div class="flex justify-end mt-2">
           <SwdButton primary main @click="addHousingInformation(ruleForm)">Add house</SwdButton>

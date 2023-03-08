@@ -1,6 +1,5 @@
 import { useQuery, useQueryClient } from 'vue-query'
 import { MemberDetailsUser } from '@/dto/Member/MemberDetailsUser'
-import { MemberDetailsHouse } from '@/dto/Member/MemberDetailsHouse'
 import { MemberDetailsSpouse } from '@/dto/Member/MemberDetailsSpouse'
 import { MemberDetailsOther } from '@/dto/Member/MemberDetailsOther'
 import { MemberLastEmployment } from '@/dto/Member/MemberLastEmployment'
@@ -14,7 +13,7 @@ import { useRoute } from 'vue-router'
 
 export const useProspectDetails = () => {
   let spouse = reactive({})
-  let house = reactive({})
+  let houses = reactive({})
   let other = reactive({})
   let employmentProspect = reactive({})
   let employmentSpouse = reactive({})
@@ -36,7 +35,7 @@ export const useProspectDetails = () => {
     {
       select: (data) => {
         spouse.value = dataFactory(MemberDetailsSpouse, data.data.spouse)
-        house.value = dataFactory(MemberDetailsHouse, data.data.house)
+        houses.value = data.data.houses
         other.value = dataFactory(MemberDetailsOther, data.data.other)
         salesforce.value = dataFactory(MemberDetailsSalesforce, data.data.salesforce.opportunity)
         employmentProspect.value = dataFactory(MemberLastEmployment, data.data.employment_history[0])
@@ -67,7 +66,7 @@ export const useProspectDetails = () => {
 
   return {
     spouse,
-    house,
+    houses,
     employmentProspect,
     employmentSpouse,
     other,

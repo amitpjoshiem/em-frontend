@@ -11,7 +11,7 @@
         :employment-prospect="employmentProspect.value"
         :employment-spouse="employmentSpouse.value"
       />
-      <MemberHousingInformation :house="house.value" />
+      <MemberHousingInformation :houses="houses.value" />
       <MemberBasicInformationOther :other="other.value" />
     </div>
   </div>
@@ -44,7 +44,7 @@ export default {
       isLoading,
       isError,
       data: prospect,
-      house,
+      houses,
       spouse,
       employment,
       other,
@@ -55,7 +55,7 @@ export default {
     return {
       isLoading,
       isError,
-      house,
+      houses,
       spouse,
       employment,
       other,
