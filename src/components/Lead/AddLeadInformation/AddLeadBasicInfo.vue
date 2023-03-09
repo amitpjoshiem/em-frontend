@@ -583,7 +583,7 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="What are your goals for Retirement money?" prop="other.retirement_money" class="mb-4">
+            <el-form-item label="What do you want your Retirement money to accomplish?" prop="other.retirement_money" class="mb-4">
               <el-input
                 v-model="ruleForm.other.retirement_money"
                 type="textarea"
