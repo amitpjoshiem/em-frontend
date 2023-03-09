@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { rules, employmentHistoryRule } from '@/validationRules/basicRules.js'
+import { rules, employmentHistoryRule, housesRule } from '@/validationRules/basicRules.js'
 import { initialBasicInformation } from '@/hooks/initialState/basicInformation'
 import { computed } from 'vue'
 
@@ -39,8 +39,9 @@ export function useBasicInfoHooks() {
         }
       }
 
-      if (member.house.type) Object.assign(ruleForm.house, JSON.parse(JSON.stringify(member.house)))
-
+      if (member.houses.length) {
+        Object.assign(ruleForm.houses, JSON.parse(JSON.stringify(member.houses)))
+      }
       if (member.other.id) Object.assign(ruleForm.other, JSON.parse(JSON.stringify(member.other)))
 
       if (member.type === 'lead') {
@@ -53,66 +54,51 @@ export function useBasicInfoHooks() {
 
   const setInitRules = (ruleForm) => {
     for (let index = 0; index < ruleForm.employment_history.length; index++) {
-      rules.employment_history.push({
-        company_name: [employmentHistoryRule.company_name],
-        occupation: [employmentHistoryRule.occupation],
-        years: [employmentHistoryRule.years],
-      })
+      rules.employment_history.push(employmentHistoryRule)
     }
     for (let index = 0; index < ruleForm.spouse.employment_history.length; index++) {
-      rules.spouse.employment_history.push({
-        company_name: [employmentHistoryRule.company_name],
-        occupation: [employmentHistoryRule.occupation],
-        years: [employmentHistoryRule.years],
-      })
+      rules.spouse.employment_history.push(employmentHistoryRule)
+    }
+    for (let index = 0; index < ruleForm.houses.length; index++) {
+      rules.houses.push(housesRule)
     }
   }
 
   const addEmployment = (ruleForm) => {
-    const length = ruleForm.employment_history.length
     ruleForm.employment_history.push({
       company_name: '',
       occupation: '',
       years: '',
     })
-    rules.employment_history[length] = {
-      company_name: [employmentHistoryRule.company_name],
-      occupation: [employmentHistoryRule.occupation],
-      years: [employmentHistoryRule.years],
-    }
+    rules.employment_history.push(employmentHistoryRule)
   }
 
   const addEmploymentSpouse = (ruleForm) => {
-    const length = ruleForm.spouse.employment_history.length
     ruleForm.spouse.employment_history.push({
       company_name: '',
       occupation: '',
       years: '',
     })
-    rules.spouse.employment_history[length] = {
-      company_name: [employmentHistoryRule.company_name],
-      occupation: [employmentHistoryRule.occupation],
-      years: [employmentHistoryRule.years],
-    }
+    rules.spouse.employment_history.push(employmentHistoryRule)
   }
 
   const changeCompanyNameMember = ({ ruleForm, index }) => {
     if (ruleForm.employment_history[index].company_name.trim().length) {
-      rules.employment_history[index].occupation[0].required = true
-      rules.employment_history[index].years[0].required = true
+      rules.employment_history[index].occupation.required = true
+      rules.employment_history[index].years.required = true
     } else {
-      rules.employment_history[index].occupation[0].required = false
-      rules.employment_history[index].years[0].required = false
+      rules.employment_history[index].occupation.required = false
+      rules.employment_history[index].years.required = false
     }
   }
 
   const changeCompanyNameSpouse = ({ ruleForm, index }) => {
     if (ruleForm.spouse.employment_history[index].company_name.length) {
-      rules.spouse.employment_history[index].occupation[0].required = true
-      rules.spouse.employment_history[index].years[0].required = true
+      rules.spouse.employment_history[index].occupation.required = true
+      rules.spouse.employment_history[index].years.required = true
     } else {
-      rules.spouse.employment_history[index].occupation[0].required = false
-      rules.spouse.employment_history[index].years[0].required = false
+      rules.spouse.employment_history[index].occupation.required = false
+      rules.spouse.employment_history[index].years.required = false
     }
   }
 
@@ -159,6 +145,17 @@ export function useBasicInfoHooks() {
     }
   }
 
+  const addHousingInformation = (ruleForm) => {
+    ruleForm.houses.push({
+      type: 'own',
+      market_value: null,
+      remaining_mortgage_amount: null,
+      monthly_payment: null,
+      total_monthly_expenses: null,
+    })
+    rules.houses.push(housesRule)
+  }
+
   const resetState = (ruleForm) => {
     Object.assign(ruleForm, initialBasicInformation)
   }
@@ -183,9 +180,13 @@ export function useBasicInfoHooks() {
     resetState,
     changeMarried,
     setInitRules,
-    getPlaceholder,
-    optionsCurrencyInput,
+
     removeEmployment,
     removeEmploymentSpouse,
+
+    addHousingInformation,
+
+    getPlaceholder,
+    optionsCurrencyInput,
   }
 }
