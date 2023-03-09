@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-function customValidate(rule, value, callback) {
+function dontAllowAllSpecialCharacters(rule, value, callback) {
   if (/[^\w|\/,\(\)\-|\s]/g.test(value)) {
     callback(new Error('Unsupported symbol'))
   }
@@ -11,4 +11,16 @@ function customValidate(rule, value, callback) {
   callback()
 }
 
-export { customValidate }
+function allowApostropheSpecialCharacters(rule, value, callback) {
+  if (/[^\w|\/,\(\)\-|\s|`'"]/g.test(value)) {
+    callback(new Error('Unsupported symbol'))
+  }
+
+  if (rule.required && !value) {
+    callback(new Error(rule.errorText))
+  }
+
+  callback()
+}
+
+export { dontAllowAllSpecialCharacters, allowApostropheSpecialCharacters }
