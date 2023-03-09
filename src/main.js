@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { createApp } from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
@@ -116,19 +117,20 @@ app.use(abilitiesPlugin, ability, {
   useGlobalProperties: true,
 })
 
-Sentry.init({
-  app,
-  dsn: 'https://c35f75fb2a1f4674b8fa122fb415b584@o1149395.ingest.sentry.io/6247228',
-  // eslint-disable-next-line no-undef
-  environment: process.env.VUE_APP_ENV,
-  integrations: [
-    new Integrations.BrowserTracing({
-      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      // eslint-disable-next-line no-undef
-      tracingOrigins: [process.env.VUE_APP_API_URL, /^\//],
-    }),
-  ],
-  tracesSampleRate: 1.0,
-})
+if (process.env.NODE_ENV !== 'local') {
+  Sentry.init({
+    app,
+    dsn: 'https://c35f75fb2a1f4674b8fa122fb415b584@o1149395.ingest.sentry.io/6247228',
+    environment: process.env.VUE_APP_ENV,
+    integrations: [
+      new Integrations.BrowserTracing({
+        routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+        tracingOrigins: [process.env.VUE_APP_API_URL, /^\//],
+      }),
+    ],
+    tracesSampleRate: 1.0,
+    enabled: false,
+  })
+}
 
 app.mount('#app')
