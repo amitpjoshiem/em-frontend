@@ -305,8 +305,11 @@
                 />
               </div>
             </div>
-            <div class="flex justify-end mt-2">
-              <SwdButton primary main @click="addHousingInformation(ruleForm)">Add house</SwdButton>
+            <div class="flex justify-end">
+              <SwdButton class="w-[90px]" primary main @click="addHousingInformation(ruleForm)">
+                <el-icon class="mr-1"><Plus /></el-icon>
+                Add
+              </SwdButton>
             </div>
           </div>
         </div>
@@ -323,7 +326,7 @@
 
           <div class="border border-main-gray rounded-lg p-5" :class="{ 'border-border-blue': isFocusEmployment }">
             <div class="text-main text-xs uppercase my-2">Contact</div>
-            <div v-for="(eh, index) in ruleForm.employment_history" :key="index" class="mb-2">
+            <div v-for="(eh, index) in ruleForm.employment_history" :key="index">
               <div class="sm:flex sm:flex-wrap">
                 <el-form-item
                   :prop="'employment_history.' + index + '.company_name'"
@@ -397,31 +400,34 @@
                       ruleForm.employment_history[index].occupation.trim().length &&
                       ruleForm.employment_history[index].years
                     "
+                    class="w-[90px]"
                     type="danger"
                     :disabled="isLoadingDeleteEmployment || isLoadingUpdateMember"
                     :loading="isLoadingDeleteEmployment"
                     plain
                     @click="handleRemoveEmployment(index)"
                   >
-                    Remove job
+                    Remove
                   </el-button>
                 </div>
               </div>
             </div>
-            <div v-if="isShowAddJobOwnerBtn" class="flex justify-end mt-4">
+            <div v-if="isShowAddJobOwnerBtn" class="flex justify-end">
               <SwdButton
+                class="w-[90px]"
                 primary
                 main
                 :disabled="isLoadingUpdateMember || isDisabledForm"
                 @click="addEmployment(ruleForm)"
               >
-                Add job
+                <el-icon class="mr-1"><Plus /></el-icon>
+                Add
               </SwdButton>
             </div>
 
             <div v-if="ruleForm.married" class="mt-5">
               <div class="text-main text-xs uppercase my-2">Spouse/Partner</div>
-              <div v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index" class="mb-2">
+              <div v-for="(eh, index) in ruleForm.spouse.employment_history" :key="index">
                 <div class="sm:flex sm:flex-wrap">
                   <el-form-item
                     :prop="'spouse.employment_history.' + index + '.company_name'"
@@ -494,26 +500,29 @@
                         ruleForm.spouse.employment_history[index].occupation.trim().length &&
                         ruleForm.spouse.employment_history[index].years
                       "
+                      class="w-[90px]"
                       type="danger"
                       :disabled="isLoadingDeleteEmployment || isLoadingUpdateMember"
                       :loading="isLoadingDeleteEmployment"
                       plain
                       @click="handleRemoveEmploymentSpouse(index)"
                     >
-                      Remove job
+                      Remove
                     </el-button>
                   </div>
                 </div>
               </div>
-              <div class="flex justify-end mt-4">
+              <div class="flex justify-end">
                 <SwdButton
                   v-if="isShowAddJobSpouseBtn"
+                  class="w-[90px]"
                   primary
                   main
                   :disabled="isLoadingUpdateMember || isDisabledForm"
                   @click="addEmploymentSpouse(ruleForm)"
                 >
-                  Add job
+                  <el-icon class="mr-1"><Plus /></el-icon>
+                  Add
                 </SwdButton>
               </div>
             </div>
@@ -600,7 +609,11 @@
                 @blur="blur('other')"
               />
             </el-form-item>
-            <el-form-item label="What do you want your Retirement money to accomplish?" prop="other.retirement_money" class="mb-4">
+            <el-form-item
+              label="What do you want your Retirement money to accomplish?"
+              prop="other.retirement_money"
+              class="mb-4"
+            >
               <el-input
                 v-model="ruleForm.other.retirement_money"
                 type="textarea"
@@ -658,6 +671,7 @@ import { ElMessageBox, ElNotification } from 'element-plus'
 import { useWindowScrollTo } from '@/hooks/use-window-scroll'
 import { deleteEmploymentHistory } from '@/api/vueQuery/delete-employment-history'
 import { deleteHousingInformation } from '@/api/vueQuery/delete-housing-information'
+import { Plus } from '@element-plus/icons-vue'
 import IconActive from '@/assets/svg/icon-active.svg'
 import IconNotActive from '@/assets/svg/icon-not-active.svg'
 import IconDoneStep from '@/assets/svg/icon-done-step.svg'
@@ -672,6 +686,7 @@ export default {
   components: {
     ModalRestoreDraft,
     BtnRemoveHousing,
+    Plus,
   },
   setup() {
     const router = useRouter()

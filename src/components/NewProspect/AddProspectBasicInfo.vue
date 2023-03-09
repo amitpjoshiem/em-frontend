@@ -230,7 +230,10 @@
           <el-divider v-if="indexHouse !== ruleForm.houses.length - 1" border-style="dashed" />
         </div>
         <div class="flex justify-end mt-2">
-          <SwdButton primary main @click="addHousingInformation(ruleForm)">Add house</SwdButton>
+          <SwdButton class="w-[90px]" primary main @click="addHousingInformation(ruleForm)">
+            <el-icon class="mr-1"><Plus /></el-icon>
+            Add
+          </SwdButton>
         </div>
       </div>
       <!-- Housing Information -->
@@ -288,19 +291,23 @@
                 ruleForm.employment_history[index].occupation.trim().length &&
                 ruleForm.employment_history[index].years
               "
+              class="w-[90px]"
               type="danger"
               :disabled="isLoadingDeleteEmploynent"
               :loading="isLoadingDeleteEmploynent"
               plain
               @click="handleRemoveEmployment(index)"
             >
-              Remove job
+              Remove
             </el-button>
           </div>
         </el-form-item>
 
         <div v-if="isShowAddJobOwnerBtn" class="flex justify-end mb-5 mt-2">
-          <SwdButton primary main @click="addEmployment(ruleForm)">Add job</SwdButton>
+          <SwdButton class="w-[90px]" primary main @click="addEmployment(ruleForm)">
+            <el-icon class="mr-1"><Plus /></el-icon>
+            Add
+          </SwdButton>
         </div>
 
         <div v-if="ruleForm.married" class="my-8">
@@ -438,6 +445,7 @@ import { useStateHook } from '@/hooks/use-state-hook'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import { isEqual } from 'lodash-es'
 import { useWindowScrollTo } from '@/hooks/use-window-scroll'
+import { Plus } from '@element-plus/icons-vue'
 import ModalRestoreDraft from './Draft/ModalRestoreDraft.vue'
 import BtnRemoveHousing from './BtnRemoveHousing.vue'
 
@@ -447,6 +455,7 @@ export default {
   components: {
     ModalRestoreDraft,
     BtnRemoveHousing,
+    Plus,
   },
   setup() {
     const router = useRouter()

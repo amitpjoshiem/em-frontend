@@ -84,7 +84,6 @@ export function useBasicInfoHooks() {
 
   const changeCompanyNameMember = ({ ruleForm, index }) => {
     if (ruleForm.employment_history[index].company_name.trim().length) {
-      console.log('-', rules.employment_history[index].occupation)
       rules.employment_history[index].occupation.required = true
       rules.employment_history[index].years.required = true
     } else {

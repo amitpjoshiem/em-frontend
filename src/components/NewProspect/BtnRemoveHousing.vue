@@ -1,6 +1,6 @@
 <template>
-  <div class="w-2/12 mt-[22px] text-right">
-    <el-button type="danger" plain :disabled="isDisabledBtn" @click="handleRemove"> Remove house </el-button>
+  <div class="w-[90px] mt-[22px] text-right">
+    <el-button type="danger" plain :disabled="isDisabledBtn" @click="handleRemove">Remove</el-button>
   </div>
 </template>
 
